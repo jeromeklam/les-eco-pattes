@@ -1,0 +1,11 @@
+// index is the entry for all styles.
+@import './global';
+
+@import "../../node_modules/bootstrap/scss/bootstrap";
+
+@import '../features/home/style';
+@import '../features/common/style';
+@import '../features/examples/style';
+@import '../features/site/style';
+@import '../features/auth/style';
+@import '../features/layout/style';
