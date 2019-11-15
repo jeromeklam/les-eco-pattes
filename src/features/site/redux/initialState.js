@@ -13,7 +13,9 @@ const initialState = {
   limit_to: 0,
   filters: [],
   loadMorePending: false,
-  loadMoreError: null
+  loadMoreError: null,
+  loadOnePending: false,
+  loadOneError: null
 };
 
 export default initialState;

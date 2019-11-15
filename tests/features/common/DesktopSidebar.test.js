@@ -1,19 +1,19 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import { MainHeader } from '../../../src/features/layout/MainHeader';
+import { DesktopSidebar } from '../../../src/features/common/DesktopSidebar';
 
-describe('layout/MainHeader', () => {
+describe('common/DesktopSidebar', () => {
   it('renders node with correct class name', () => {
     const props = {
-      layout: {},
+      common: {},
       actions: {},
     };
     const renderedComponent = shallow(
-      <MainHeader {...props} />
+      <DesktopSidebar {...props} />
     );
 
     expect(
-      renderedComponent.find('.layout-main-header').length
+      renderedComponent.find('.common-desktop-sidebar').length
     ).toBe(1);
   });
 });

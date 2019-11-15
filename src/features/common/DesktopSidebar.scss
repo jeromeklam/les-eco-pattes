@@ -1,0 +1,41 @@
+@import '../../styles/mixins';
+
+#sidebar-wrapper {
+  min-height: 100vh;
+  margin-left: -15rem;
+  -webkit-transition: margin .25s ease-out;
+  -moz-transition: margin .25s ease-out;
+  -o-transition: margin .25s ease-out;
+  transition: margin .25s ease-out;
+
+  .sidebar-heading {
+    padding: 0.875rem 1.25rem;
+    font-size: 1.2rem;
+  }
+
+  .list-group {
+    width: 15rem;
+  }
+}
+
+@media (min-width: 768px) {
+  #sidebar-wrapper {
+    margin-left: 0;
+  }
+
+  #wrapper.toggled #sidebar-wrapper {
+    margin-left: -15rem;
+  }
+}
+
+    #sidebar-wrapper.sidebar-enter-done {
+      opacity: 1;
+      display: block;
+      transition: all 0.5s ease;
+    }
+    
+    #sidebar-wrapper.sidebar-exit-done {
+      opacity: 0;
+      display: none;
+      transition: all 0.5s ease;
+    }

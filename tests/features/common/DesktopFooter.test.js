@@ -1,19 +1,19 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import { MainFooter } from '../../../src/features/layout/MainFooter';
+import { DesktopFooter } from '../../../src/features/common/DesktopFooter';
 
-describe('layout/MainFooter', () => {
+describe('common/DesktopFooter', () => {
   it('renders node with correct class name', () => {
     const props = {
-      layout: {},
+      common: {},
       actions: {},
     };
     const renderedComponent = shallow(
-      <MainFooter {...props} />
+      <DesktopFooter {...props} />
     );
 
     expect(
-      renderedComponent.find('.layout-main-footer').length
+      renderedComponent.find('.common-desktop-footer').length
     ).toBe(1);
   });
 });

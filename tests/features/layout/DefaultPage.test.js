@@ -1,8 +1,8 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import { DefaultPage } from '../../../src/features/layout/DefaultPage';
+import { DefaultPage } from '../../../src/features/desktop-layout/DefaultPage';
 
-describe('layout/DefaultPage', () => {
+describe('desktop-layout/DefaultPage', () => {
   it('renders node with correct class name', () => {
     const props = {
       layout: {},
@@ -13,7 +13,7 @@ describe('layout/DefaultPage', () => {
     );
 
     expect(
-      renderedComponent.find('.layout-default-page').length
+      renderedComponent.find('.desktop-layout-default-page').length
     ).toBe(1);
   });
 });

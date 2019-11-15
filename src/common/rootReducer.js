@@ -5,7 +5,6 @@ import commonReducer from '../features/common/redux/reducer';
 import examplesReducer from '../features/examples/redux/reducer';
 import siteReducer from '../features/site/redux/reducer';
 import authReducer from '../features/auth/redux/reducer';
-import layoutReducer from '../features/layout/redux/reducer';
 
 // NOTE 1: DO NOT CHANGE the 'reducerMap' name and the declaration pattern.
 // This is used for Rekit cmds to register new features, remove features, etc.
@@ -19,7 +18,6 @@ const reducerMap = {
   examples: examplesReducer,
   site: siteReducer,
   auth: authReducer,
-  layout: layoutReducer,
 };
 
 export default combineReducers(reducerMap);

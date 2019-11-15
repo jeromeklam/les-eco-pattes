@@ -6,8 +6,8 @@ import {
 } from './';
 
 export default {
-  path: 'layout',
-  name: 'Layout',
+  path: 'desktop-layout',
+  name: 'Desktop layout',
   childRoutes: [
     { path: 'default-page', name: 'Default page', component: DefaultPage, isIndex: true },
   ],

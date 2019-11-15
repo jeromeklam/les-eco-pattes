@@ -8,7 +8,7 @@ import rekitLogo from '../../images/rekit-logo.svg';
 import * as actions from './redux/actions';
 import fond from '../../images/fond-les-eco-pattes.png';
 
-export class DefaultPage extends Component {
+export class Home extends Component {
   static propTypes = {
     home: PropTypes.object.isRequired,
     actions: PropTypes.object.isRequired,
@@ -42,4 +42,4 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(DefaultPage);
+export default connect(mapStateToProps, mapDispatchToProps)(Home);

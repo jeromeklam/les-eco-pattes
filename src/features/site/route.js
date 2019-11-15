@@ -6,10 +6,11 @@ import {
 } from './';
 
 export default {
-  path: 'site',
-  name: 'Site',
+  path: '',
+  name: '',
   auth: 'PRIVATE',
   childRoutes: [
-    { path: 'list', name: 'Liste', component: List, isIndex: true, auth: 'PRIVATE' },
+    { path: 'site', name: 'List', component: List, isIndex: true, auth: 'PUBLIC' },
+    { path: 'site/modify', name: 'Modify', component: List, auth: 'PUBLIC' },
   ],
 };

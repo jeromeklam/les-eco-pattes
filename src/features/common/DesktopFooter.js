@@ -5,9 +5,9 @@ import { connect } from 'react-redux';
 import * as actions from './redux/actions';
 import { SocialIcon } from 'react-social-icons';
 
-export class MainFooter extends Component {
+export class DesktopFooter extends Component {
   static propTypes = {
-    layout: PropTypes.object.isRequired,
+    common: PropTypes.object.isRequired,
     actions: PropTypes.object.isRequired,
   };
 
@@ -32,7 +32,7 @@ export class MainFooter extends Component {
 /* istanbul ignore next */
 function mapStateToProps(state) {
   return {
-    layout: state.layout,
+    common: state.common,
   };
 }
 
@@ -46,4 +46,4 @@ function mapDispatchToProps(dispatch) {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(MainFooter);
+)(DesktopFooter);
