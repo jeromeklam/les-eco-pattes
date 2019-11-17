@@ -3,14 +3,15 @@
 
 import {
   List,
+  Form,
 } from './';
 
 export default {
-  path: '',
-  name: '',
+  path: 'site',
+  name: 'site',
   auth: 'PRIVATE',
+  component: List,
   childRoutes: [
-    { path: 'site', name: 'List', component: List, isIndex: true, auth: 'PUBLIC' },
-    { path: 'site/modify', name: 'Modify', component: List, auth: 'PUBLIC' },
+    { path: 'modify', name: 'Modify', isIndex: true, component: Form, auth: 'PUBLIC' },
   ],
 };

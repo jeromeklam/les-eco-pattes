@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { DesktopHeader, DesktopFooter, DesktopSidebar } from '../../features/common';
+import { MobileHeader, MobileFooter } from '../../features/common';
 import { useMediaQuery } from 'react-responsive'
+import fond from '../../images/fond-les-eco-pattes.png';
+import logo from '../../images/logo-les-eco-pattes.jpg';
 
 const Desktop = ({ children }) => {
   const isDesktop = useMediaQuery({ minWidth: 992 })
@@ -39,13 +42,24 @@ export default class App extends Component {
     return (
       <div className="d-flex" id="wrapper">
         <Tablet>Tablet @TODO</Tablet>
-        <Mobile>Mobile @TODO</Mobile>
+        <Mobile>
+          <MobileHeader />
+          <div className="text-center">
+            <img src={logo} />
+          </div>
+          <MobileFooter />
+        </Mobile>
         <Default>
           <DesktopSidebar />
           <div id="page-content-wrapper">
             <DesktopHeader />
             <div className="container-fluid">
-              {this.props.children}
+              <div className="cover-container d-flex h-100 p-3 mx-auto flex-column">
+                <div className="text-center">
+                  <br />
+                  <img src={fond} />
+                </div>
+              </div>
             </div>
           </div>
           <DesktopFooter />

@@ -6,7 +6,6 @@ import { Link } from 'react-router-dom';
 import reactLogo from '../../images/react-logo.svg';
 import rekitLogo from '../../images/rekit-logo.svg';
 import * as actions from './redux/actions';
-import fond from '../../images/fond-les-eco-pattes.png';
 
 export class Home extends Component {
   static propTypes = {
@@ -20,7 +19,6 @@ export class Home extends Component {
         <br />
         <div className="cover-container d-flex h-100 p-3 mx-auto flex-column">
           <div className="text-center">
-            <img src={fond} />
           </div>
         </div>
       </div>

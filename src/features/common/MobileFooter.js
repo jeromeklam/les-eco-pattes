@@ -1,20 +1,14 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as actions from './redux/actions';
-import { CSSTransition } from 'react-transition-group';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import {
-  faMapMarkedAlt,
-  faHome
- } from '@fortawesome/free-solid-svg-icons';
+import { Link } from 'react-router-dom';
 import HomeIcon from '../icons/Home';
 import SiteIcon from '../icons/Site';
 import CauseIcon from '../icons/Cause';
 
-export class DesktopSidebar extends Component {
+export class MobileFooter extends Component {
   static propTypes = {
     common: PropTypes.object.isRequired,
     actions: PropTypes.object.isRequired,
@@ -22,27 +16,27 @@ export class DesktopSidebar extends Component {
 
   render() {
     return (
-      <div>
-        <CSSTransition in={this.props.common.sidebar} timeout={300} classNames="sidebar">
-          <div className="bg-light border-right" id="sidebar-wrapper">
-            <div className="sidebar-heading">{process.env.REACT_APP_APP_NAME}</div>
-            <div className="list-group list-group-flush">
+       <footer className="footer">
+        <div className="container">
+          <div className="row">
+            <div className="col-4">
               <Link className="nav-link" to="/">
                 <HomeIcon/>
-                Accueil
               </Link>
+            </div>
+            <div className="col-4">
               <Link className="nav-link" to="/site">
                 <SiteIcon/>
-                Sites
               </Link>
+            </div>
+            <div className="col-4">
               <Link className="nav-link" to="/">
                 <CauseIcon/>
-                Animaux
               </Link>
             </div>
           </div>
-        </CSSTransition>
-      </div>
+        </div>
+      </footer>
     );
   }
 }
@@ -64,4 +58,4 @@ function mapDispatchToProps(dispatch) {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(DesktopSidebar);
+)(MobileFooter);

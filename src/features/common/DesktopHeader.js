@@ -10,6 +10,8 @@ import {
   faSignOutAlt,
   faBars
  } from '@fortawesome/free-solid-svg-icons'
+ import LoginIcon from '../icons/Login';
+ import LogoutIcon from '../icons/Logout';
 
 export class DesktopHeader extends Component {
   static propTypes = {
@@ -37,8 +39,8 @@ export class DesktopHeader extends Component {
             </li>
             <li className="nav-item">
               {this.props.auth.authenticated 
-                ? <Link className="nav-link" to="/auth/signout">Logout <FontAwesomeIcon icon={faSignOutAlt} title="Logout"/></Link>
-                : <Link className="nav-link" to="/auth/signin"><FontAwesomeIcon icon={faSignInAlt} title="Login"/> Login</Link>
+                ? <Link className="nav-link" to="/auth/signout"><LogoutIcon />Logout</Link>
+                : <Link className="nav-link" to="/auth/signin"><LoginIcon />Login</Link>
               }
             </li>
             <li className="nav-item dropdown">
