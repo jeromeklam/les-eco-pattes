@@ -13,7 +13,7 @@ export class DesktopFooter extends Component {
 
   render() {
     return (
-      <footer className="footer">
+      <footer className="desktop-footer">
         <div className="container">
           <div className="row">
             <div className="col-8">

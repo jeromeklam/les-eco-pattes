@@ -1,6 +1,6 @@
-import reducer from '../../../../src/features/desktop-layout/redux/reducer';
+import reducer from '../../../../src/features/data/redux/reducer';
 
-describe('desktop-layout/redux/reducer', () => {
+describe('data/redux/reducer', () => {
   it('does nothing if no matched action', () => {
     const prevState = {};
     const state = reducer(

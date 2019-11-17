@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import * as actions from './redux/actions';
 import {
   buildModel
@@ -45,10 +46,11 @@ export class List extends Component {
       <div className="site-list">
         {items && items.map(item => (
           <li key={item.id}>
-            <a href={item.id}>{item.site_name}</a>
+            <Link to={"/site/modify/" + item.id}>{item.site_name}</Link>
           </li>
         ))}
-        {this.props.site.loading ? <span>Loading</span> : <span>Not Loading</span>}
+        {this.props.site.loading && <span>Loading</span> }
+        {this.props.site.loaded ? <span>... OK ...</span> : <span>... MORE ...</span>}
         {this.props.site.loadMoreError && <span>Erreur lors du chargement !</span>}
       </div>
     );

@@ -15,12 +15,12 @@ export class MobileHeader extends Component {
 
   render() {
     return (
-      <header className="header w-100">
+      <header className="mobile-header w-100">
         <div className="row">
-          <div className="col-10">
+          <div className="col-8">
             EN-TETE PAGE MOBILE
           </div>
-          <div  className="col-2">
+          <div className="col-4 text-right">
             {this.props.auth.authenticated 
               ? <Link className="nav-link" to="/auth/signout"><LogoutIcon /></Link>
               : <Link className="nav-link" to="/auth/signin"><LoginIcon/></Link>

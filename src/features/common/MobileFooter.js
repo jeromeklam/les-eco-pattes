@@ -16,24 +16,22 @@ export class MobileFooter extends Component {
 
   render() {
     return (
-       <footer className="footer">
-        <div className="container">
-          <div className="row">
-            <div className="col-4">
-              <Link className="nav-link" to="/">
-                <HomeIcon/>
-              </Link>
-            </div>
-            <div className="col-4">
-              <Link className="nav-link" to="/site">
-                <SiteIcon/>
-              </Link>
-            </div>
-            <div className="col-4">
-              <Link className="nav-link" to="/">
-                <CauseIcon/>
-              </Link>
-            </div>
+       <footer className="mobile-footer">
+        <div className="row">
+          <div className="col-4">
+            <Link className="nav-link" to="/">
+              <HomeIcon/>
+            </Link>
+          </div>
+          <div className="col-4">
+            <Link className="nav-link" to="/site">
+              <SiteIcon/>
+            </Link>
+          </div>
+          <div className="col-4">
+            <Link className="nav-link" to="/">
+              <CauseIcon/>
+            </Link>
           </div>
         </div>
       </footer>

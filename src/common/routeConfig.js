@@ -1,13 +1,14 @@
 import { App } from '../features/home';
 import { PageNotFound } from '../features/common';
+import _ from 'lodash';
 import homeRoute from '../features/home/route';
 import commonRoute from '../features/common/route';
 import examplesRoute from '../features/examples/route';
-import _ from 'lodash';
 import siteRoute from '../features/site/route';
 import authRoute from '../features/auth/route';
 import iconsRoute from '../features/icons/route';
 import causeRoute from '../features/cause/route';
+import dataRoute from '../features/data/route';
 
 // NOTE: DO NOT CHANGE the 'childRoutes' name and the declaration pattern.
 // This is used for Rekit cmds to register routes config for new features, and remove config when remove features, etc.
@@ -19,6 +20,7 @@ const childRoutes = [
   authRoute,
   iconsRoute,
   causeRoute,
+  dataRoute,
 ];
 
 const routes = [{

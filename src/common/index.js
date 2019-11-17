@@ -126,5 +126,8 @@ export function objectToQueryString (obj) {
       }
     }
   });
+  if (params !== '') {
+    params = '?' + params;
+  }
   return params;
 }

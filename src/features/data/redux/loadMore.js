@@ -1,21 +1,20 @@
 import axios from 'axios';
 import { jsonApiNormalizer, objectToQueryString } from '../../../common';
 import {
-  SITE_LOAD_MORE_BEGIN,
-  SITE_LOAD_MORE_SUCCESS,
-  SITE_LOAD_MORE_FAILURE,
-  SITE_LOAD_MORE_DISMISS_ERROR,
+  DATA_LOAD_MORE_BEGIN,
+  DATA_LOAD_MORE_SUCCESS,
+  DATA_LOAD_MORE_FAILURE,
+  DATA_LOAD_MORE_DISMISS_ERROR,
 } from './constants';
 
 // Rekit uses redux-thunk for async actions by default: https://github.com/gaearon/redux-thunk
 // If you prefer redux-saga, you can use rekit-plugin-redux-saga: https://github.com/supnate/rekit-plugin-redux-saga
 export function loadMore(args = {}) {
-  return (dispatch, getState) => {
-    // optionally you can have getState as the second argument
+  return (dispatch, getState) => { // optionally you can have getState as the second argument
     const loaded = getState().site.loaded;
     if (!loaded) {
       dispatch({
-        type: SITE_LOAD_MORE_BEGIN,
+        type: DATA_LOAD_MORE_BEGIN,
       });
 
       // Return a promise so that you could control UI flow without states in the store.
@@ -30,26 +29,25 @@ export function loadMore(args = {}) {
           page: { number: getState().site.page_number, size: getState().site.page_size },
         };
         const addUrl = objectToQueryString(params);
-        const doRequest = axios.get(process.env.REACT_APP_BO_URL + '/v1/asso/site' + addUrl, {});
+        const doRequest = axios.get(process.env.REACT_APP_BO_URL + '/v1/asso/data' + addUrl, {});
         doRequest.then(
-          res => {
+          (res) => {
             dispatch({
-              type: SITE_LOAD_MORE_SUCCESS,
+              type: DATA_LOAD_MORE_SUCCESS,
               data: res,
             });
             resolve(res);
           },
           // Use rejectHandler as the second argument so that render errors won't be caught.
-          err => {
+          (err) => {
             dispatch({
-              type: SITE_LOAD_MORE_FAILURE,
+              type: DATA_LOAD_MORE_FAILURE,
               data: { error: err },
             });
             reject(err);
           },
         );
       });
-
       return promise;
     }
   };
@@ -59,22 +57,22 @@ export function loadMore(args = {}) {
 // If you don't want errors to be saved in Redux store, just ignore this method.
 export function dismissLoadMoreError() {
   return {
-    type: SITE_LOAD_MORE_DISMISS_ERROR,
+    type: DATA_LOAD_MORE_DISMISS_ERROR,
   };
 }
 
 export function reducer(state, action) {
   switch (action.type) {
-    case SITE_LOAD_MORE_BEGIN:
+    case DATA_LOAD_MORE_BEGIN:
       // Just after a request is sent
       return {
         ...state,
         loadMorePending: true,
         loadMoreError: null,
-        loading: true,
+        loading: true
       };
 
-    case SITE_LOAD_MORE_SUCCESS:
+    case DATA_LOAD_MORE_SUCCESS:
       // The request is success
       let list = {};
       let nbre = 0;
@@ -104,9 +102,8 @@ export function reducer(state, action) {
         page_number: state.page_number+1
       };
 
-    case SITE_LOAD_MORE_FAILURE:
+    case DATA_LOAD_MORE_FAILURE:
       // The request is failed
-      console.log(action.data.error);
       return {
         ...state,
         loadMorePending: false,
@@ -114,7 +111,7 @@ export function reducer(state, action) {
         loading: false,
       };
 
-    case SITE_LOAD_MORE_DISMISS_ERROR:
+    case DATA_LOAD_MORE_DISMISS_ERROR:
       // Dismiss the request failure error
       return {
         ...state,

@@ -5,12 +5,8 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as actions from './redux/actions';
 import { CSSTransition } from 'react-transition-group';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import {
-  faMapMarkedAlt,
-  faHome
- } from '@fortawesome/free-solid-svg-icons';
 import HomeIcon from '../icons/Home';
+import DataIcon from '../icons/Data';
 import SiteIcon from '../icons/Site';
 import CauseIcon from '../icons/Cause';
 
@@ -38,6 +34,10 @@ export class DesktopSidebar extends Component {
               <Link className="nav-link" to="/">
                 <CauseIcon/>
                 Animaux
+              </Link>
+              <Link className="nav-link" to="/data">
+                <DataIcon/>
+                Données
               </Link>
             </div>
           </div>

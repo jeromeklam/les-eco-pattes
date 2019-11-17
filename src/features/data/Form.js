@@ -3,25 +3,17 @@ import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as actions from './redux/actions';
-import { MainHeader, MainFooter, SidePanel } from '../../features/layout';
 
-export class DefaultPage extends Component {
+export class Form extends Component {
   static propTypes = {
-    layout: PropTypes.object.isRequired,
+    data: PropTypes.object.isRequired,
     actions: PropTypes.object.isRequired,
-    children: PropTypes.node,
   };
 
   render() {
     return (
-      <div className="d-flex" id="wrapper">
-        <SidePanel />
-        <div id="page-content-wrapper">
-          <MainHeader />
-          <div className="container-fluid">
-            {this.props.children}
-          </div>
-        </div>
+      <div className="data-form">
+        Page Content: data/Form
       </div>
     );
   }
@@ -30,7 +22,7 @@ export class DefaultPage extends Component {
 /* istanbul ignore next */
 function mapStateToProps(state) {
   return {
-    layout: state.layout,
+    data: state.data,
   };
 }
 
@@ -44,4 +36,4 @@ function mapDispatchToProps(dispatch) {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(DefaultPage);
+)(Form);
