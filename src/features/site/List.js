@@ -49,8 +49,8 @@ export class List extends Component {
             <Link to={"/site/modify/" + item.id}>{item.site_name}</Link>
           </li>
         ))}
-        {this.props.site.loading && <span>Loading</span> }
-        {this.props.site.loaded ? <span>... OK ...</span> : <span>... MORE ...</span>}
+        {this.props.site.loadMorePending && <span>Chargement</span> }
+        {this.props.site.loadMoreFinish ? <span>... OK ...</span> : <span>... MORE ...</span>}
         {this.props.site.loadMoreError && <span>Erreur lors du chargement !</span>}
       </div>
     );

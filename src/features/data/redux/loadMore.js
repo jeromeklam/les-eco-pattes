@@ -11,7 +11,7 @@ import {
 // If you prefer redux-saga, you can use rekit-plugin-redux-saga: https://github.com/supnate/rekit-plugin-redux-saga
 export function loadMore(args = {}) {
   return (dispatch, getState) => { // optionally you can have getState as the second argument
-    const loaded = getState().site.loaded;
+    const loaded = getState().data.loaded;
     if (!loaded) {
       dispatch({
         type: DATA_LOAD_MORE_BEGIN,
@@ -26,7 +26,7 @@ export function loadMore(args = {}) {
         // See the real-word example at:  https://github.com/supnate/rekit/blob/master/src/features/home/redux/fetchRedditReactjsList.js
         // args.error here is only for test coverage purpose.
         const params = {
-          page: { number: getState().site.page_number, size: getState().site.page_size },
+          page: { number: getState().data.page_number, size: getState().data.page_size },
         };
         const addUrl = objectToQueryString(params);
         const doRequest = axios.get(process.env.REACT_APP_BO_URL + '/v1/asso/data' + addUrl, {});

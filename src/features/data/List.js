@@ -14,6 +14,15 @@ export class List extends Component {
     actions: PropTypes.object.isRequired,
   };
 
+  componentDidMount() {
+    /**
+     *  En async on va demander le chargement des données
+     *  Lorsque fini le store sera modifié
+     */
+    this.props.actions.loadMore();
+  }
+
+
   render() {
     // Les des items à afficher avec remplissage progressif
     let items = false;

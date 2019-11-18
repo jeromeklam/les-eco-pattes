@@ -31,7 +31,7 @@ export class DesktopSidebar extends Component {
                 <SiteIcon/>
                 Sites
               </Link>
-              <Link className="nav-link" to="/">
+              <Link className="nav-link" to="/cause">
                 <CauseIcon/>
                 Animaux
               </Link>

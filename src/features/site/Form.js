@@ -1,39 +1,26 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
-import * as actions from './redux/actions';
 
-export class Form extends Component {
+export default class Form extends Component {
   static propTypes = {
-    site: PropTypes.object.isRequired,
-    actions: PropTypes.object.isRequired,
+
   };
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      site : props.site
+    }
+  }
 
   render() {
     return (
-      <div className="site-form">
-        Page Content: site/Form
+      <div className="site-form">      
+        <div class="card">
+          <div class="card-body">
+            {this.state.site.site_name}                        
+          </div>
+        </div>
       </div>
     );
   }
 }
-
-/* istanbul ignore next */
-function mapStateToProps(state) {
-  return {
-    site: state.site,
-  };
-}
-
-/* istanbul ignore next */
-function mapDispatchToProps(dispatch) {
-  return {
-    actions: bindActionCreators({ ...actions }, dispatch)
-  };
-}
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Form);
