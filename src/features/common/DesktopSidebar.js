@@ -17,7 +17,6 @@ export class DesktopSidebar extends Component {
   };
 
   render() {
-    console.log(this.props);
     return (
       <div>
         <CSSTransition in={this.props.common.sidebar} timeout={300} classNames="sidebar">
@@ -39,6 +38,14 @@ export class DesktopSidebar extends Component {
               <NavLink strict className="nav-link" to="/data">
                 <DataIcon/>
                 Données
+              </NavLink>
+              <NavLink strict className="nav-link" to="/site-type">
+                <DataIcon/>
+                Types de sites
+              </NavLink>
+              <NavLink strict className="nav-link" to="/cause-type">
+                <DataIcon/>
+                Types animaux
               </NavLink>
             </div>
           </div>

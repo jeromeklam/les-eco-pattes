@@ -29,7 +29,7 @@ export class MobileFooter extends Component {
             </Link>
           </div>
           <div className="col-12 text-center">
-            <Link className="nav-link" to="/">
+            <Link className="nav-link" to="/cause">
               <CauseIcon/>
             </Link>
           </div>

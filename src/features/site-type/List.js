@@ -6,14 +6,12 @@ import * as actions from './redux/actions';
 import {
   buildModel
 } from '../../common';
-import {
-    ListLine
-} from './';
+import { Link } from 'react-router-dom';
 
 
 export class List extends Component {
   static propTypes = {
-    cause: PropTypes.object.isRequired,
+    siteType: PropTypes.object.isRequired,
     actions: PropTypes.object.isRequired,
   };
 
@@ -22,19 +20,22 @@ export class List extends Component {
   }
 
   render() {
-    let items = false;
-    if (this.props.cause.items.FreeAsso_Cause) {
-      items = buildModel(this.props.cause.items, 'FreeAsso_Cause');
+    let items = false;    
+    if (this.props.siteType.items.FreeAsso_SiteType) {
+      items = buildModel(this.props.siteType.items, 'FreeAsso_SiteType');
     }
-    // L'affichage, items, loading, loadMoreError
     return (
-      <div className="cause-list">
+      <div className="site-type-list">
         {items && items.map(item => (    
-          <ListLine item={item} />
+          <li>
+            <Link to={"/site-type/modify/" + item.id}>            
+              {item.sitt_name}                     
+            </Link>
+          </li> 
         ))}
-        {this.props.cause.loadMorePending && <span>Chargement</span> }
-        {this.props.cause.loadMoreFinish ? <span>... OK ...</span> : <span>... MORE ...</span>}
-        {this.props.cause.loadMoreError && <span>Erreur lors du chargement !</span>}
+        {this.props.siteType.loadMorePending && <span>Chargement</span> }
+        {this.props.siteType.loadMoreFinish ? <span>... OK ...</span> : <span>... MORE ...</span>}
+        {this.props.siteType.loadMoreError && <span>Erreur lors du chargement !</span>}
       </div>
     );
   }
@@ -42,7 +43,7 @@ export class List extends Component {
 
 function mapStateToProps(state) {
   return {
-    cause: state.cause,
+    siteType: state.siteType,
   };
 }
 
