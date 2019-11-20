@@ -1,6 +1,7 @@
 // index is the entry for all styles.
 @import './global';
 
+@import './variables';
 @import "../../node_modules/bootstrap/scss/bootstrap";
 
 @import '../features/home/style';
@@ -11,3 +12,5 @@
 @import '../features/icons/style';
 @import '../features/cause/style';
 @import '../features/data/style';
+@import '../features/about/style';
+@import '../features/layout/style';

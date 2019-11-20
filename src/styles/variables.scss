@@ -1,0 +1,30 @@
+/* BT4 overides */
+$theme-colors: (
+  "primary": #108813,
+  "danger": #ff4136
+);
+$grid-breakpoints: (
+  xs: 0,
+  sm: 768px,
+  md: 1024px,
+  lg: 1200px,
+  xl: 1600px
+);
+$container-max-widths: (
+  sm: 640px,
+  md: 840px,
+  lg: 1140px,
+  xl: 1340px
+) !default;
+$grid-columns:                36;
+$grid-gutter-width:           20px;
+
+// Menu gauche
+$left-menu-width: 90px;
+$left-menu-item-height: 70px;
+
+// Menu gauche
+$header-login-height : 500px;
+$header-logged-height: 120px;
+$footer-max-height : 120px;
+$footer-link-height: 120px;

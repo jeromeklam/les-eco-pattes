@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
+import { NavLink, withRouter } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as actions from './redux/actions';
@@ -17,28 +17,29 @@ export class DesktopSidebar extends Component {
   };
 
   render() {
+    console.log(this.props);
     return (
       <div>
         <CSSTransition in={this.props.common.sidebar} timeout={300} classNames="sidebar">
           <div className="bg-light border-right" id="sidebar-wrapper">
             <div className="sidebar-heading">{process.env.REACT_APP_APP_NAME}</div>
             <div className="list-group list-group-flush">
-              <Link className="nav-link" to="/">
+              <NavLink exact className="nav-link" to="/">
                 <HomeIcon/>
                 Accueil
-              </Link>
-              <Link className="nav-link" to="/site">
+              </NavLink>
+              <NavLink strict className="nav-link" to="/site">
                 <SiteIcon/>
                 Sites
-              </Link>
-              <Link className="nav-link" to="/cause">
+              </NavLink>
+              <NavLink strict className="nav-link" to="/cause">
                 <CauseIcon/>
                 Animaux
-              </Link>
-              <Link className="nav-link" to="/data">
+              </NavLink>
+              <NavLink strict className="nav-link" to="/data">
                 <DataIcon/>
                 Données
-              </Link>
+              </NavLink>
             </div>
           </div>
         </CSSTransition>
@@ -61,7 +62,7 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default connect(
+export default withRouter(connect(
   mapStateToProps,
   mapDispatchToProps
-)(DesktopSidebar);
+)(DesktopSidebar));

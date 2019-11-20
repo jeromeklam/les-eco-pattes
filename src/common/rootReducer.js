@@ -8,6 +8,8 @@ import authReducer from '../features/auth/redux/reducer';
 import iconsReducer from '../features/icons/redux/reducer';
 import causeReducer from '../features/cause/redux/reducer';
 import dataReducer from '../features/data/redux/reducer';
+import aboutReducer from '../features/about/redux/reducer';
+import layoutReducer from '../features/layout/redux/reducer';
 
 // NOTE 1: DO NOT CHANGE the 'reducerMap' name and the declaration pattern.
 // This is used for Rekit cmds to register new features, remove features, etc.
@@ -24,6 +26,8 @@ const reducerMap = {
   icons: iconsReducer,
   cause: causeReducer,
   data: dataReducer,
+  about: aboutReducer,
+  layout: layoutReducer,
 };
 
 export default combineReducers(reducerMap);

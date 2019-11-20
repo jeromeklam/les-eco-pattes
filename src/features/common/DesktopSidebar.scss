@@ -19,6 +19,10 @@
   .list-group {
     width: 15rem;
   }
+
+  .nav-link.active {
+    font-weight: bold;
+  }
 }
 
 @media (min-width: 768px) {

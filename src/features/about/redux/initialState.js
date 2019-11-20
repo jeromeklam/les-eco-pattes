@@ -6,12 +6,6 @@
 
 // NOTE: initialState constant is necessary so that Rekit could auto add initial state when creating async actions.
 const initialState = {
-  authenticated: false,
-  user: null,
-  checkIsAuthenticatedPending: false,
-  checkIsAuthenticatedError: null,
-  signInPending: false,
-  signInError: null
 };
 
 export default initialState;

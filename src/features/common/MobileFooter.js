@@ -18,17 +18,17 @@ export class MobileFooter extends Component {
     return (
        <footer className="mobile-footer">
         <div className="row">
-          <div className="col-4">
+          <div className="col-12 text-center">
             <Link className="nav-link" to="/">
               <HomeIcon/>
             </Link>
           </div>
-          <div className="col-4">
+          <div className="col-12 text-center">
             <Link className="nav-link" to="/site">
               <SiteIcon/>
             </Link>
           </div>
-          <div className="col-4">
+          <div className="col-12 text-center">
             <Link className="nav-link" to="/">
               <CauseIcon/>
             </Link>
