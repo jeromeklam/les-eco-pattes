@@ -25,14 +25,14 @@ export default class App extends Component {
         <Tablet>Tablet @TODO</Tablet>
         <Mobile>
           <MobileHeader />
-          <div id="page-content-wrapper" classname="w-100">
+          <div id="page-content-wrapper" className="w-100">
             {this.props.children}
           </div>
           <MobileFooter />
         </Mobile>
         <Desktop>
           <DesktopSidebar />
-          <div id="page-content-wrapper" classname="w-100">
+          <div id="page-content-wrapper" className="w-100">
             <DesktopHeader />
             {this.props.children}
           </div>

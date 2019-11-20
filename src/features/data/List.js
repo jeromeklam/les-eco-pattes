@@ -8,6 +8,9 @@ import {
   buildModel
 } from '../../common';
 
+/**
+ * Liste des données
+ */
 export class List extends Component {
   static propTypes = {
     data: PropTypes.object.isRequired,

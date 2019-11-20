@@ -6,16 +6,18 @@
 
 // NOTE: initialState constant is necessary so that Rekit could auto add initial state when creating async actions.
 const initialState = {
-  loading: false,
-  loaded: false,
   items: [],
   page_number: 1,
   page_size: process.env.REACT_APP_PAGE_SIZE,
   filters: [],
   loadMorePending: false,
   loadMoreError: null,
+  LoadMoreFinish: false,
   loadOnePending: false,
-  loadOneError: null
+  loadOneError: null,
+  loadOneItem: false,
+  updateOnePending: false,
+  updateOneError: null,
 };
 
 export default initialState;

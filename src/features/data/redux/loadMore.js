@@ -11,7 +11,7 @@ import {
 // If you prefer redux-saga, you can use rekit-plugin-redux-saga: https://github.com/supnate/rekit-plugin-redux-saga
 export function loadMore(args = {}) {
   return (dispatch, getState) => { // optionally you can have getState as the second argument
-    const loaded = getState().data.loaded;
+    const loaded = getState().data.LoadMoreFinish;
     if (!loaded) {
       dispatch({
         type: DATA_LOAD_MORE_BEGIN,
@@ -69,7 +69,6 @@ export function reducer(state, action) {
         ...state,
         loadMorePending: true,
         loadMoreError: null,
-        loading: true
       };
 
     case DATA_LOAD_MORE_SUCCESS:
@@ -96,8 +95,7 @@ export function reducer(state, action) {
         ...state,
         loadMorePending: false,
         loadMoreError: null,
-        loading: false,
-        loaded: (nbre < state.page_size),
+        LoadMoreFinish: (nbre < state.page_size),
         items: list,
         page_number: state.page_number+1
       };
@@ -108,7 +106,6 @@ export function reducer(state, action) {
         ...state,
         loadMorePending: false,
         loadMoreError: action.data.error,
-        loading: false,
       };
 
     case DATA_LOAD_MORE_DISMISS_ERROR:
@@ -116,7 +113,6 @@ export function reducer(state, action) {
       return {
         ...state,
         loadMoreError: null,
-        loading: false,
       };
 
     default:

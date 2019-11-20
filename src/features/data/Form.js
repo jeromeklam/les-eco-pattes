@@ -1,45 +1,36 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
-import * as actions from './redux/actions';
+import { InputHidden, InputText } from '../layout';
 
-export class Form extends Component {
+export default class Form extends Component {
   static propTypes = {
-    data: PropTypes.object.isRequired,
-    actions: PropTypes.object.isRequired,
+
   };
 
-  componentDidMount() {
-    /**
-     *  En async on va demander le chargement des données
-     *  Lorsque fini le store sera modifié
-     */
-    this.props.actions.loadMore();
-  }
-
   render() {
+    const item = this.props.item;
     return (
-      <div className="data-form">
-        Page Content: data/Form
+      <div className="card">
+        <form>
+          <div className="card-header">
+            Données
+          </div>
+          <div className="card-body">
+            <InputHidden name="id" id="id" value={item.id} />
+            <InputText
+              label="Nom"
+              name="data_name"
+              id="data_name"
+              value={item.data_name}
+              onChange={this.props.onChange}
+            />
+          </div>
+          <div className="card-footer text-right">
+            <button type="button" onClick={this.props.onSubmit} className="btn btn-success">Enregistrer</button>
+            &nbsp;
+            <button type="button" onClick={this.props.onCancel} className="btn btn-danger">Annuler</button>
+          </div>
+        </form>
       </div>
     );
   }
 }
-
-function mapStateToProps(state) {
-  return {
-    data: state.data,
-  };
-}
-
-function mapDispatchToProps(dispatch) {
-  return {
-    actions: bindActionCreators({ ...actions }, dispatch)
-  };
-}
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Form);

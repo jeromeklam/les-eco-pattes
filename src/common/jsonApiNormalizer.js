@@ -184,10 +184,10 @@ export function jsonApiNormalizer(json, origin = {errors: []}, opts = {}) {
 /**
  *
  */
-export function getJsonApi(obj, name, id_field) {
+export function getJsonApi(obj, name, id) {
   let id_obj = 0 ;
-  if (id_field > 0) {
-    id_obj = obj[id_field];
+  if (id > 0) {
+    id_obj = id;
   }
   const jsonApi = {
     data: {
