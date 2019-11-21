@@ -1,21 +1,22 @@
 import axios from 'axios';
 import {
   jsonApiNormalizer,
-  buildModel
+  jsonApiUpdate
 } from '../../../common';
-import {
-  SITE_TYPE_LOAD_ONE_BEGIN,
-  SITE_TYPE_LOAD_ONE_SUCCESS,
-  SITE_TYPE_LOAD_ONE_FAILURE,
-  SITE_TYPE_LOAD_ONE_DISMISS_ERROR,
+import {  
+  CAUSE_TYPE_UPDATE_ONE_BEGIN,
+  CAUSE_TYPE_UPDATE_ONE_SUCCESS,
+  CAUSE_TYPE_UPDATE_ONE_FAILURE,
+  CAUSE_TYPE_UPDATE_ONE_DISMISS_ERROR,
+  CAUSE_TYPE_UPDATE_ONE_UPDATE,
 } from './constants';
 
 // Rekit uses redux-thunk for async actions by default: https://github.com/gaearon/redux-thunk
 // If you prefer redux-saga, you can use rekit-plugin-redux-saga: https://github.com/supnate/rekit-plugin-redux-saga
-export function loadOne(args = {}) {
+export function updateOne(id, args = {}) {
   return (dispatch) => { // optionally you can have getState as the second argument
     dispatch({
-      type: SITE_TYPE_LOAD_ONE_BEGIN,
+      type: CAUSE_TYPE_UPDATE_ONE_BEGIN,
     });
 
     // Return a promise so that you could control UI flow without states in the store.
@@ -26,20 +27,19 @@ export function loadOne(args = {}) {
       // doRequest is a placeholder Promise. You should replace it with your own logic.
       // See the real-word example at:  https://github.com/supnate/rekit/blob/master/src/features/home/redux/fetchRedditReactjsList.js
       // args.error here is only for test coverage purpose.
-      const doRequest = axios.get(process.env.REACT_APP_BO_URL + '/v1/asso/site_type/' + args, {});
+      const doRequest = axios.put(process.env.REACT_APP_BO_URL + '/v1/asso/cause_type/' + id, args);
       doRequest.then(
         (res) => {
           dispatch({
-            type: SITE_TYPE_LOAD_ONE_SUCCESS,
+            type: CAUSE_TYPE_UPDATE_ONE_SUCCESS,
             data: res,
-            id: args
           });
           resolve(res);
         },
         // Use rejectHandler as the second argument so that render errors won't be caught.
         (err) => {
           dispatch({
-            type: SITE_TYPE_LOAD_ONE_FAILURE,
+            type: CAUSE_TYPE_UPDATE_ONE_FAILURE,
             data: { error: err },
           });
           reject(err);
@@ -53,52 +53,54 @@ export function loadOne(args = {}) {
 
 // Async action saves request error by default, this method is used to dismiss the error info.
 // If you don't want errors to be saved in Redux store, just ignore this method.
-export function dismissLoadOneError() {
+export function dismissUpdateOneError() {
   return {
-    type: SITE_TYPE_LOAD_ONE_DISMISS_ERROR,
+    type: CAUSE_TYPE_UPDATE_ONE_DISMISS_ERROR,
   };
 }
 
 export function reducer(state, action) {
   switch (action.type) {
-    case SITE_TYPE_LOAD_ONE_BEGIN:
+    case CAUSE_TYPE_UPDATE_ONE_BEGIN:
       // Just after a request is sent
       return {
         ...state,
-        loadOnePending: true,
-        loadOneError: null,
+        updateOnePending: true,
+        updateOneError: null,
       };
 
-    case SITE_TYPE_LOAD_ONE_SUCCESS:
+    case CAUSE_TYPE_UPDATE_ONE_SUCCESS:
       // The request is success
-      let item = null;      
-      let object = jsonApiNormalizer(action.data.data);
-      item = buildModel(
-          object,
-          'FreeAsso_SiteType',
-          action.id
-        );
       return {
         ...state,
-        loadOnePending: false,
-        loadOneItem: item,
-        loadOneError: null,
+        updateOnePending: false,
+        updateOneError: null,
       };
 
-    case SITE_TYPE_LOAD_ONE_FAILURE:
+    case CAUSE_TYPE_UPDATE_ONE_FAILURE:
       // The request is failed
       return {
         ...state,
-        loadOnePending: false,
-        loadOneError: action.data.error,
+        updateOnePending: false,
+        updateOneError: action.data.error,
       };
 
-    case SITE_TYPE_LOAD_ONE_DISMISS_ERROR:
+    case CAUSE_TYPE_UPDATE_ONE_DISMISS_ERROR:
       // Dismiss the request failure error
       return {
         ...state,
-        loadOneError: null,
+        updateOneError: null,
       };
+
+    case CAUSE_TYPE_UPDATE_ONE_UPDATE:
+      let object  = jsonApiNormalizer(action.data.data);
+      let myItems = state.items;
+      let news = jsonApiUpdate(myItems, 'FreeAsso_CauseType', object);
+      return {
+        ...state,
+        updateOneError: null,
+        items: news
+      };      
 
     default:
       return state;

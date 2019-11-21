@@ -28,7 +28,7 @@ export class Modify extends Component {
       item: false,
     };
     /**
-     * Bind des méthoes locales au contexte courant
+     * Bind des méthodes locales au contexte courant
      */
     this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
@@ -81,7 +81,7 @@ export class Modify extends Component {
     }
     let error = false;
     if (!error) {
-      // COnversion des données en objet pour le service web
+      // Conversion des données en objet pour le service web
       let obj = getJsonApi(this.state.item, 'FreeAsso_Data', this.state.dataId);
       this.props.actions.updateOne(this.state.dataId, obj)
         .then(result => {

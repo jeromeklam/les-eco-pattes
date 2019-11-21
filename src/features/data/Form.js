@@ -1,5 +1,10 @@
 import React, { Component } from 'react';
-import { InputHidden, InputText } from '../layout';
+import { 
+  InputHidden, 
+  InputText,
+  ButtonSubmit,
+  ButtonCancel
+} from '../layout';
 
 export default class Form extends Component {
   static propTypes = {
@@ -25,9 +30,9 @@ export default class Form extends Component {
             />
           </div>
           <div className="card-footer text-right">
-            <button type="button" onClick={this.props.onSubmit} className="btn btn-success">Enregistrer</button>
+            <ButtonSubmit onClick={this.props.onSubmit}/>
             &nbsp;
-            <button type="button" onClick={this.props.onCancel} className="btn btn-danger">Annuler</button>
+            <ButtonCancel onClick={this.props.onCancel}/>
           </div>
         </form>
       </div>

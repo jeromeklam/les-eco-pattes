@@ -9,10 +9,12 @@
 import initialState from './initialState';
 import { reducer as loadMoreReducer } from './loadMore';
 import { reducer as loadOneReducer } from './loadOne';
+import { reducer as updateOneReducer } from './updateOne';
 
 const reducers = [
   loadMoreReducer,
   loadOneReducer,
+  updateOneReducer,
 ];
 
 export default function reducer(state = initialState, action) {

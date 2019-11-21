@@ -7,6 +7,7 @@ import { Link } from 'react-router-dom';
 import HomeIcon from '../icons/Home';
 import SiteIcon from '../icons/Site';
 import CauseIcon from '../icons/Cause';
+import DataIcon from '../icons/Data';
 
 export class MobileFooter extends Component {
   static propTypes = {
@@ -18,20 +19,25 @@ export class MobileFooter extends Component {
     return (
        <footer className="mobile-footer">
         <div className="row">
-          <div className="col-12 text-center">
+          <div className="col-9 text-center">
             <Link className="nav-link" to="/">
               <HomeIcon/>
             </Link>
           </div>
-          <div className="col-12 text-center">
+          <div className="col-9 text-center">
             <Link className="nav-link" to="/site">
               <SiteIcon/>
             </Link>
           </div>
-          <div className="col-12 text-center">
+          <div className="col-9 text-center">
             <Link className="nav-link" to="/cause">
               <CauseIcon/>
             </Link>
+          </div>
+          <div className="col-9 text-center">
+            <a className="nav-link" href="#" onClick={this.props.onToggle}>
+              <DataIcon/>
+            </a>
           </div>
         </div>
       </footer>
@@ -39,14 +45,12 @@ export class MobileFooter extends Component {
   }
 }
 
-/* istanbul ignore next */
 function mapStateToProps(state) {
   return {
     common: state.common,
   };
 }
 
-/* istanbul ignore next */
 function mapDispatchToProps(dispatch) {
   return {
     actions: bindActionCreators({ ...actions }, dispatch)

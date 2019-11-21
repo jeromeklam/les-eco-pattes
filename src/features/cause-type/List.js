@@ -6,6 +6,10 @@ import * as actions from './redux/actions';
 import {
   buildModel
 } from '../../common';
+import { 
+  ButtonAdd
+} from '../layout';
+
 import { Link } from 'react-router-dom';
 
 export class List extends Component {
@@ -14,8 +18,20 @@ export class List extends Component {
     actions: PropTypes.object.isRequired,
   };
 
+  constructor(props) {
+    super(props);
+    this.onAdd = this.onAdd.bind(this);
+  }    
+
   componentDidMount() {
     this.props.actions.loadMore();
+  }
+
+  onAdd(event) {
+    if (event) {
+      event.preventDefault();
+    }
+    this.props.history.push('/cause-type/modify/' + 0);
   }
 
   render() {
@@ -34,8 +50,9 @@ export class List extends Component {
           </li> 
         ))}
         {this.props.causeType.loadMorePending && <span>Chargement</span> }
-        {this.props.causeType.loadMoreFinish ? <span>... OK ...</span> : <span>... MORE ...</span>}
+        {this.props.causeType.loadMoreFinish ? <span></span> : <span>... MORE ...</span>}
         {this.props.causeType.loadMoreError && <span>Erreur lors du chargement !</span>}
+        <ButtonAdd onClick={this.onAdd}/>
       </div>
     );
   }

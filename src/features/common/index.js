@@ -23,3 +23,4 @@ export { default as DesktopFooter } from './DesktopFooter';
 export { default as DesktopSidebar } from './DesktopSidebar';
 export { default as MobileHeader } from './MobileHeader';
 export { default as MobileFooter } from './MobileFooter';
+export { default as MobileMenu } from './MobileMenu';

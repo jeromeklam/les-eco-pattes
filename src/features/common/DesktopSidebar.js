@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { NavLink, withRouter } from 'react-router-dom';
+import { NavLink,
+         withRouter 
+} from 'react-router-dom';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as actions from './redux/actions';
@@ -15,6 +17,18 @@ export class DesktopSidebar extends Component {
     common: PropTypes.object.isRequired,
     actions: PropTypes.object.isRequired,
   };
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      menuDataOpen: false
+    };
+    this.onToggle = this.onToggle.bind(this);
+  }
+
+  onToggle () {
+    this.setState({menuDataOpen: !this.state.menuDataOpen});
+  }
 
   render() {
     return (
@@ -35,18 +49,23 @@ export class DesktopSidebar extends Component {
                 <CauseIcon/>
                 Animaux
               </NavLink>
-              <NavLink strict className="nav-link" to="/data">
+              <a className="nav-link" href="#" onClick={this.onToggle}>
                 <DataIcon/>
                 Données
-              </NavLink>
-              <NavLink strict className="nav-link" to="/site-type">
-                <DataIcon/>
-                Types de sites
-              </NavLink>
-              <NavLink strict className="nav-link" to="/cause-type">
-                <DataIcon/>
-                Types animaux
-              </NavLink>
+              </a>
+              {this.state.menuDataOpen &&
+                <div className="nav-link-group">
+                  <NavLink strict className="nav-link" to="/data">
+                    Divers
+                  </NavLink>
+                  <NavLink strict className="nav-link" to="/site-type">
+                    Type de site
+                  </NavLink>
+                  <NavLink strict className="nav-link" to="/cause-type">
+                    Type d'animaux
+                  </NavLink>
+                </div>
+              }
             </div>
           </div>
         </CSSTransition>
@@ -55,14 +74,12 @@ export class DesktopSidebar extends Component {
   }
 }
 
-/* istanbul ignore next */
 function mapStateToProps(state) {
   return {
     common: state.common,
   };
 }
 
-/* istanbul ignore next */
 function mapDispatchToProps(dispatch) {
   return {
     actions: bindActionCreators({ ...actions }, dispatch)

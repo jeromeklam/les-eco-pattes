@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { DesktopHeader, DesktopFooter, DesktopSidebar } from '../../features/common';
-import { MobileHeader, MobileFooter } from '../../features/common';
+import { MobileHeader, MobileFooter, MobileMenu } from '../../features/common';
 import { Desktop, Tablet, Mobile, Default } from '../common'
 
 /*
@@ -19,6 +19,18 @@ export default class App extends Component {
     children: '',
   };
 
+  constructor(props) {
+    super(props);
+    this.state = {
+      menuDataOpen: false
+    };
+    this.onToggle = this.onToggle.bind(this);
+  }
+
+  onToggle () {
+    this.setState({menuDataOpen: !this.state.menuDataOpen});
+  }
+
   render() {
     return (
       <div className="d-flex" id="wrapper">
@@ -28,7 +40,10 @@ export default class App extends Component {
           <div id="page-content-wrapper" className="w-100">
             {this.props.children}
           </div>
-          <MobileFooter />
+          {this.state.menuDataOpen &&
+            <MobileMenu />
+          }
+          <MobileFooter onToggle={this.onToggle}/>
         </Mobile>
         <Desktop>
           <DesktopSidebar />
