@@ -16,7 +16,9 @@ body,
 #root {
   margin: 0 auto;
   overflow: hidden;
+  overflow-y: auto;
   width: 100%;
+  margin-bottom: 60px;
 }
 #page-content-wrapper {
   margin-top: 40px;
@@ -27,5 +29,8 @@ body,
   #page-content-wrapper {
     margin-top: 0px;
     width: 100%;
+  }
+  #root {
+    margin-bottom: 0px;
   }
 }

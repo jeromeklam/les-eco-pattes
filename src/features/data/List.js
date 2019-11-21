@@ -2,11 +2,20 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
 import * as actions from './redux/actions';
+import { DesktopLine, MobileLine } from '.';
+import { Link } from 'react-router-dom';
+import {
+  LoadingData,
+  LoadMore,
+  LoadError,
+  LoadComplete
+} from '../layout';
+import AddOneIcon from '../icons/AddOne';
 import {
   buildModel
 } from '../../common';
+import { Desktop, Tablet, Mobile, Default } from '../common'
 
 /**
  * Liste des données
@@ -25,7 +34,6 @@ export class List extends Component {
     this.props.actions.loadMore();
   }
 
-
   render() {
     // Les des items à afficher avec remplissage progressif
     let items = false;
@@ -35,14 +43,29 @@ export class List extends Component {
     // L'affichage, items, loading, loadMoreError
     return (
       <div className="data-list">
-        {items && items.map(item => (
-          <li key={item.id}>
-            <Link to={"/data/modify/" + item.id}>{item.data_name}</Link>
-          </li>
-        ))}
-        {this.props.data.loading && <span>Loading</span> }
-        {this.props.data.loaded ? <span>... OK ...</span> : <span>... MORE ...</span>}
-        {this.props.data.loadMoreError && <span>Erreur lors du chargement !</span>}
+        <div className="row data-list-title">
+          <div className="col-26">
+            <span>Données -- divers</span>
+          </div>
+          <div className="col-10">
+            <Link className="btn btn-primary" to="/data/create">
+              <AddOneIcon />
+            </Link>
+          </div>
+        </div>
+        <Mobile>
+          {items && items.map(item => (
+            <MobileLine item={item} />  
+          ))}
+        </Mobile>
+        <Desktop>
+          {items && items.map(item => (
+            <DesktopLine item={item} />  
+          ))}
+          {this.props.data.LoadMorePending && <LoadingData /> }
+          {this.props.data.LoadMoreFinish ? <LoadComplete /> : <LoadMore />}
+          {this.props.data.LoadMoreError && <LoadError />}
+        </Desktop>
       </div>
     );
   }

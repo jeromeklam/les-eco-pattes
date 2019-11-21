@@ -7,3 +7,14 @@ body {
   padding: 0;
   font-family: sans-serif;
 }
+
+.data-list .data-list-title {
+  font-weight: bold;
+  background-color : $header-background-color;
+}
+.data-list .data-list-title span {
+  padding-left: 5px;
+  padding-top: 2px;
+  padding-bottom: 2px;
+  color: $header-color;
+}
