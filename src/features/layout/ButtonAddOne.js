@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
+import AddOneIcon from '../icons/AddOne';
 
-export default class ButtonAdd extends Component {
+export default class ButtonAddOne extends Component {
   static propTypes = {
 
   };
@@ -12,7 +13,7 @@ export default class ButtonAdd extends Component {
         className="btn btn-primary"                
         onClick={this.props.onClick} 
       >
-      +
+        <AddOneIcon />
       </button>
     );
   }

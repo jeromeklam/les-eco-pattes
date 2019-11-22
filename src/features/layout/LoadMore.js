@@ -8,7 +8,7 @@ export default class LoadMore extends Component {
   render() {
     return (
       <div className="layout-load-more">
-        Component content: layout/LoadMore
+        ....Plus....
       </div>
     );
   }

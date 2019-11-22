@@ -8,13 +8,25 @@ body {
   font-family: sans-serif;
 }
 
-.data-list .data-list-title {
+
+.site-list .site-list-title,
+.cause-list .cause-list-title,
+.data-list .data-list-title,
+.site-type-list .site-type-list-title,
+.cause-type-list .cause-type-list-title {
   font-weight: bold;
+  padding-top: 2px;
   background-color : $header-background-color;
 }
-.data-list .data-list-title span {
+.cause-list .cause-list-title span, 
+.site-list .site-list-title span, 
+.data-list .data-list-title span, 
+.site-type-list .site-type-list-title span,
+.cause-type-list .cause-type-list-title span {
   padding-left: 5px;
-  padding-top: 2px;
+  padding-top: 6px;
   padding-bottom: 2px;
+  position: absolute;
   color: $header-color;
 }
+

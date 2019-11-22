@@ -2,12 +2,20 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import * as actions from './redux/actions';
 import {
   buildModel
 } from '../../common';
-import { Link } from 'react-router-dom';
-
+import {
+  LoadingData,
+  LoadMore,
+  LoadError,
+  LoadComplete,
+  ButtonAddOne
+} from '../layout';
+import { Desktop, Tablet, Mobile, Default } from '../common'
+import { DesktopLine, MobileLine } from '.';
 
 export class List extends Component {
   static propTypes = {
@@ -15,27 +23,56 @@ export class List extends Component {
     actions: PropTypes.object.isRequired,
   };
 
+  constructor(props) {
+    super(props);
+    this.onCreate = this.onCreate.bind(this);
+  }
+
   componentDidMount() {
+    /**
+     *  En async on va demander le chargement des données
+     *  Lorsque fini le store sera modifié
+     */
+    console.log("FK site type DM",this.props.actions);
     this.props.actions.loadMore();
   }
 
+  onCreate (event) {
+    if (event) {
+      event.preventDefault();
+    }
+    this.props.history.push('/site-type/create')
+  }
+
   render() {
-    let items = false;    
+    let items = false;
     if (this.props.siteType.items.FreeAsso_SiteType) {
       items = buildModel(this.props.siteType.items, 'FreeAsso_SiteType');
     }
+    // L'affichage, items, loading, loadMoreError
     return (
       <div className="site-type-list">
-        {items && items.map(item => (    
-          <li>
-            <Link to={"/site-type/modify/" + item.id}>            
-              {item.sitt_name}                     
-            </Link>
-          </li> 
-        ))}
-        {this.props.siteType.loadMorePending && <span>Chargement</span> }
-        {this.props.siteType.loadMoreFinish ? <span>... OK ...</span> : <span>... MORE ...</span>}
-        {this.props.siteType.loadMoreError && <span>Erreur lors du chargement !</span>}
+        <div className="row site-type-list-title">
+          <div className="col-26">
+            <span>Types de site</span>
+          </div>
+          <div className="col-10 text-right">            
+            <ButtonAddOne onClick={this.onCreate}/>
+          </div>
+        </div>
+        <Mobile>
+          {items && items.map(item => (
+            <MobileLine item={item} />  
+          ))}
+        </Mobile>
+        <Desktop>
+          {items && items.map(item => (
+            <DesktopLine item={item} />  
+          ))}
+          {this.props.siteType.LoadMorePending && <LoadingData /> }
+          {this.props.siteType.LoadMoreFinish ? <LoadComplete /> : <LoadMore />}
+          {this.props.siteType.LoadMoreError && <LoadError />}
+        </Desktop>
       </div>
     );
   }

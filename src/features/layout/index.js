@@ -4,7 +4,7 @@ export { default as InputHidden } from './InputHidden';
 export { default as InputText } from './InputText';
 export { default as ButtonCancel } from './ButtonCancel';
 export { default as ButtonSubmit } from './ButtonSubmit';
-export { default as ButtonAdd } from './ButtonAdd';
+export { default as ButtonAddOne } from './ButtonAddOne';
 export { default as LoadingData } from './LoadingData';
 export { default as LoadMore } from './LoadMore';
 export { default as LoadComplete } from './LoadComplete';

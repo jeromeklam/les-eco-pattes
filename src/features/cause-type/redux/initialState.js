@@ -17,7 +17,9 @@ const initialState = {
   loadOneItem: null,
   loadOneError: null,
   updateOnePending: false,
-  updateOneError: null
+  updateOneError: null,
+  createOnePending: false,
+  createOneError: null
 };
 
 export default initialState;

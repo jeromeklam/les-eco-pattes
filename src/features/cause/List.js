@@ -7,9 +7,14 @@ import {
   buildModel
 } from '../../common';
 import {
-    ListLine
-} from './';
-
+  LoadingData,
+  LoadMore,
+  LoadError,
+  LoadComplete,
+  ButtonAddOne
+} from '../layout';
+import { Desktop, Tablet, Mobile, Default } from '../common'
+import { DesktopLine, MobileLine } from '.';
 
 export class List extends Component {
   static propTypes = {
@@ -17,11 +22,24 @@ export class List extends Component {
     actions: PropTypes.object.isRequired,
   };
 
+  constructor(props) {
+    super(props);
+    this.onCreate = this.onCreate.bind(this);
+  }
+
   componentDidMount() {
     this.props.actions.loadMore();
   }
 
+  onCreate (event) {
+    if (event) {
+      event.preventDefault();
+    }
+    this.props.history.push('/cause/create')
+  }
+
   render() {
+    // Les des items à afficher avec remplissage progressif
     let items = false;
     if (this.props.cause.items.FreeAsso_Cause) {
       items = buildModel(this.props.cause.items, 'FreeAsso_Cause');
@@ -29,12 +47,27 @@ export class List extends Component {
     // L'affichage, items, loading, loadMoreError
     return (
       <div className="cause-list">
-        {items && items.map(item => (    
-          <ListLine item={item} />
-        ))}
-        {this.props.cause.loadMorePending && <span>Chargement</span> }
-        {this.props.cause.loadMoreFinish ? <span>... OK ...</span> : <span>... MORE ...</span>}
-        {this.props.cause.loadMoreError && <span>Erreur lors du chargement !</span>}
+        <div className="row cause-list-title">
+          <div className="col-26">
+            <span>Animaux</span>
+          </div>
+          <div className="col-10 text-right">            
+            <ButtonAddOne onClick={this.onCreate}/>
+          </div>
+        </div>
+        <Mobile>
+          {items && items.map(item => (
+            <MobileLine item={item} />  
+          ))}
+        </Mobile>
+        <Desktop>
+          {items && items.map(item => (
+            <DesktopLine item={item} />  
+          ))}
+          {this.props.cause.LoadMorePending && <LoadingData /> }
+          {this.props.cause.LoadMoreFinish ? <LoadComplete /> : <LoadMore />}
+          {this.props.cause.LoadMoreError && <LoadError />}
+        </Desktop>
       </div>
     );
   }

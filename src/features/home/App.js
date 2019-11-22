@@ -41,7 +41,7 @@ export default class App extends Component {
             {this.props.children}
           </div>
           {this.state.menuDataOpen &&
-            <MobileMenu />
+            <MobileMenu onToggle={this.onToggle}/>
           }
           <MobileFooter onToggle={this.onToggle}/>
         </Mobile>

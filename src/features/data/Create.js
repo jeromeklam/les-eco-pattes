@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as actions from './redux/actions';
-import { buildModel, getJsonApi, propagateModel } from '../../common';
+import { getJsonApi } from '../../common';
 import Form from './Form';
 import {
   withRouter
@@ -17,9 +17,6 @@ export class Create extends Component {
 
   constructor(props) {
     super(props);
-    /**
-     * On récupère l'id et l'élément à afficher
-     */
     this.state = {
       dataId: 0,
       item: false,
@@ -80,10 +77,8 @@ export class Create extends Component {
     if (!error) {
       // Conversion des données en objet pour le service web
       let obj = getJsonApi(this.state.item, 'FreeAsso_Data', this.state.dataId);
-      this.props.actions.createOne(this.state.dataId, obj)
+      this.props.actions.createOne(obj)
         .then(result => {
-          // @Todo propagate result to store
-          // propagateModel est ajouté aux actions en bas de document
           this.props.actions.reload();
           this.props.history.push('/data')
         })
@@ -98,7 +93,7 @@ export class Create extends Component {
   render() {
     const item = this.state.item;
     return (
-      <div className="data-modify">
+      <div className="data-create">
         {item && (
           <Form
             item={item}
@@ -112,14 +107,12 @@ export class Create extends Component {
   }
 }
 
-/* istanbul ignore next */
 function mapStateToProps(state) {
   return {
     data: state.data,
   };
 }
 
-/* istanbul ignore next */
 function mapDispatchToProps(dispatch) {
   return {
     actions: bindActionCreators({ ...actions }, dispatch)

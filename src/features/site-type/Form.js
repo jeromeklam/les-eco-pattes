@@ -17,7 +17,7 @@ export default class Form extends Component {
       <div class="card">
         <form>
           <div className="card-header">
-            Type de site
+            Types de site
           </div>
           <div class="card-body">
             <InputHidden name="id" id="id" value={item.id} />

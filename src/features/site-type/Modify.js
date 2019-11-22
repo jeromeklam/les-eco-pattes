@@ -3,11 +3,11 @@ import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as actions from './redux/actions';
-import { getJsonApi, propagateModel } from '../../common';
-import Form from './Form';
 import {
   withRouter
-} from 'react-router-dom'
+} from 'react-router-dom';
+import { getJsonApi, propagateModel } from '../../common';
+import Form from './Form';
 
 export class Modify extends Component {
   static propTypes = {
@@ -96,8 +96,11 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    actions: bindActionCreators({ ...actions,propagateModel }, dispatch)
+    actions: bindActionCreators({ ...actions, propagateModel }, dispatch)
   };
 }
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Modify));
+export default withRouter(connect(
+  mapStateToProps, 
+  mapDispatchToProps
+)(Modify));

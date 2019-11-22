@@ -8,7 +8,7 @@ export default {
   isIndex: true,
   childRoutes: [
     { path: 'data', name: 'List', component: List, auth: 'PUBLIC' },
-    { path: 'data/modify/:dataId', name: 'Modify', component: Modify, auth: 'PUBLIC' },
     { path: 'data/create', name: 'Create', component: Create, auth: 'PUBLIC' },
+    { path: 'data/modify/:dataId', name: 'Modify', component: Modify, auth: 'PUBLIC' },
   ],
 };

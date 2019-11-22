@@ -8,7 +8,7 @@ export default class LoadComplete extends Component {
   render() {
     return (
       <div className="layout-load-complete">
-        Component content: layout/LoadComplete
+        ...Fin
       </div>
     );
   }

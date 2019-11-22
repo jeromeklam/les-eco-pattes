@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as actions from './redux/actions';
-import { buildModel, getJsonApi, propagateModel } from '../../common';
+import { getJsonApi, propagateModel } from '../../common';
 import Form from './Form';
 import {
   withRouter

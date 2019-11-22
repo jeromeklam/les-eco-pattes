@@ -10,6 +10,7 @@ import {
 // Rekit uses redux-thunk for async actions by default: https://github.com/gaearon/redux-thunk
 // If you prefer redux-saga, you can use rekit-plugin-redux-saga: https://github.com/supnate/rekit-plugin-redux-saga
 export function loadMore(args = {}) {
+  console.log("FK site type iddmoubnt");
   return (dispatch, getState) => { // optionally you can have getState as the second argument
     const loaded =  getState().siteType.loadMoreFinish;
     if (!loaded) {

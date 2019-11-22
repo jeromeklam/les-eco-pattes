@@ -6,11 +6,15 @@ import * as actions from './redux/actions';
 import {
   buildModel
 } from '../../common';
-import { 
-  ButtonAdd
+import {
+  LoadingData,
+  LoadMore,
+  LoadError,
+  LoadComplete,
+  ButtonAddOne
 } from '../layout';
-
-import { Link } from 'react-router-dom';
+import { Desktop, Tablet, Mobile, Default } from '../common'
+import { DesktopLine, MobileLine } from '.';
 
 export class List extends Component {
   static propTypes = {
@@ -20,18 +24,18 @@ export class List extends Component {
 
   constructor(props) {
     super(props);
-    this.onAdd = this.onAdd.bind(this);
-  }    
+    this.onCreate = this.onCreate.bind(this);
+  }
 
   componentDidMount() {
     this.props.actions.loadMore();
   }
 
-  onAdd(event) {
+  onCreate (event) {
     if (event) {
       event.preventDefault();
     }
-    this.props.history.push('/cause-type/modify/' + 0);
+    this.props.history.push('/cause-type/create')
   }
 
   render() {
@@ -41,18 +45,28 @@ export class List extends Component {
     }
     // L'affichage, items, loading, loadMoreError
     return (
-      <div className="cause-type-list">
-        {items && items.map(item => (    
-          <li>
-            <Link to={"/cause-type/modify/" + item.id}>
-              {item.caut_name}                     
-            </Link>
-          </li> 
-        ))}
-        {this.props.causeType.loadMorePending && <span>Chargement</span> }
-        {this.props.causeType.loadMoreFinish ? <span></span> : <span>... MORE ...</span>}
-        {this.props.causeType.loadMoreError && <span>Erreur lors du chargement !</span>}
-        <ButtonAdd onClick={this.onAdd}/>
+      <div className="cause-type-list">        
+        <div className="row cause-type-list-title">
+          <div className="col-26">
+            <span>Données -- Type d'animaux</span>
+          </div>
+          <div className="col-10 text-right">            
+            <ButtonAddOne onClick={this.onCreate}/>
+          </div>
+        </div>
+        <Mobile>
+          {items && items.map(item => (
+            <MobileLine item={item} />  
+          ))}
+        </Mobile>
+        <Desktop>
+          {items && items.map(item => (
+            <DesktopLine item={item} />  
+          ))}
+          {this.props.causeType.LoadMorePending && <LoadingData /> }
+          {this.props.causeType.LoadMoreFinish ? <LoadComplete /> : <LoadMore />}
+          {this.props.causeType.LoadMoreError && <LoadError />}
+        </Desktop>
       </div>
     );
   }

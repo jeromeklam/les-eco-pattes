@@ -15,7 +15,11 @@ const initialState = {
   loadMoreError: null,  
   loadOnePending: false,
   loadOneItem: null,
-  loadOneError: null
+  loadOneError: null,
+  createOnePending: false,
+  createOneError: null,
+  updateOnePending: false,
+  updateOneError: null
 };
 
 export default initialState;

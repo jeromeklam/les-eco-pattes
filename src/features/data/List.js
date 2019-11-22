@@ -4,14 +4,13 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as actions from './redux/actions';
 import { DesktopLine, MobileLine } from '.';
-import { Link } from 'react-router-dom';
 import {
   LoadingData,
   LoadMore,
   LoadError,
-  LoadComplete
+  LoadComplete,
+  ButtonAddOne
 } from '../layout';
-import AddOneIcon from '../icons/AddOne';
 import {
   buildModel
 } from '../../common';
@@ -26,12 +25,25 @@ export class List extends Component {
     actions: PropTypes.object.isRequired,
   };
 
+  constructor(props) {
+    super(props);
+    this.onCreate = this.onCreate.bind(this);
+  }
+
   componentDidMount() {
     /**
      *  En async on va demander le chargement des données
      *  Lorsque fini le store sera modifié
      */
+    console.log("FK data DM",this.props.actions);
     this.props.actions.loadMore();
+  }
+
+  onCreate (event) {
+    if (event) {
+      event.preventDefault();
+    }
+    this.props.history.push('/data/create') ;
   }
 
   render() {
@@ -47,10 +59,8 @@ export class List extends Component {
           <div className="col-26">
             <span>Données -- divers</span>
           </div>
-          <div className="col-10">
-            <Link className="btn btn-primary" to="/data/create">
-              <AddOneIcon />
-            </Link>
+          <div className="col-10 text-right">            
+            <ButtonAddOne onClick={this.onCreate}/>
           </div>
         </div>
         <Mobile>
