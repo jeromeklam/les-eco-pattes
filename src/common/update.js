@@ -7,11 +7,19 @@ import {
 import {
   CAUSE_TYPE_UPDATE_ONE_UPDATE,
 } from '../features/cause-type/redux/constants';
-
+import {
+  SITE_UPDATE_ONE_UPDATE,
+} from '../features/site/redux/constants';
 
 export function propagateModel(type, model) {
   return (dispatch) => {
     switch (type) {
+      case 'FreeAsso_Site':
+        dispatch({
+          type: SITE_UPDATE_ONE_UPDATE,
+          data: model
+        });
+        break;
       case 'FreeAsso_Data':
         dispatch({
           type: DATA_UPDATE_ONE_UPDATE,
