@@ -3,12 +3,14 @@ import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as actions from './redux/actions';
-import {
-  withRouter
-} from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 import { getJsonApi, propagateModel } from '../../common';
 import Form from './Form';
+import { LoadingData } from '../layout';
 
+/**
+ * Modification d'un type de site
+ */
 export class Modify extends Component {
   static propTypes = {
     siteType: PropTypes.object.isRequired,
@@ -20,11 +22,10 @@ export class Modify extends Component {
     this.state = {
       siteTypeId: this.props.match.params.siteTypeId || false,
       item: false,
-    }
-    this.onChange = this.onChange.bind(this);
+    };
     this.onSubmit = this.onSubmit.bind(this);
     this.onCancel = this.onCancel.bind(this);
-  }    
+  }
 
   componentDidMount() {
     this.props.actions.loadOne(this.state.siteTypeId).then(result => {
@@ -33,56 +34,34 @@ export class Modify extends Component {
     });
   }
 
-  onChange(event) {
-    if (event) {
-      event.preventDefault();
-    }
-    if (event && event.target) {
-      const value = event.target.value;
-      let item = this.state.item;
-      item[event.target.name] = value;
-      this.setState({ item: item });
-    }
+  onCancel() {
+    this.props.history.push('/site-type');
   }
 
-  onCancel(event) {
-    if (event) {
-      event.preventDefault();
-    }
-    this.props.history.push('/site-type')
-  }
-
-  onSubmit(event) {
-    if (event) {
-      event.preventDefault();
-    }
-    let error = false;
-    if (!error) {
-      let obj = getJsonApi(this.state.item, 'FreeAsso_SiteType', this.state.siteTypeId);
-      this.props.actions.updateOne(this.state.siteTypeId, obj)
-        .then(result => {
-          this.props.actions.propagateModel('FreeAsso_SiteType', result);
-          this.props.history.push('/site-type')
-        })
-        .catch((errors) => {
-          console.log(errors);
-        })
-      ;
-    }
+  onSubmit(datas = {}) {
+    let obj = getJsonApi(datas, 'FreeAsso_SiteType', this.state.siteTypeId);
+    this.props.actions
+      .updateOne(this.state.siteTypeId, obj)
+      .then(result => {
+        this.props.actions.propagateModel('FreeAsso_SiteType', result);
+        this.props.history.push('/site-type');
+      })
+      .catch(errors => {
+        console.log(errors);
+      });
   }
 
   render() {
     const item = this.state.item;
-    return (      
+    return (
       <div className="site-type-modify">
-        {item && (
-          <Form 
-            item={this.props.siteType.loadOneItem}
-            onChange={this.onChange}
-            onSubmit={this.onSubmit}
-            onCancel={this.onCancel}
-          />
-        )}         
+        {this.props.siteType.loadOnePending ? (
+          <LoadingData />
+        ) : (
+          <div>
+            {item && <Form item={item} onSubmit={this.onSubmit} onCancel={this.onCancel} />}
+          </div>
+        )}
       </div>
     );
   }
@@ -96,11 +75,8 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    actions: bindActionCreators({ ...actions, propagateModel }, dispatch)
+    actions: bindActionCreators({ ...actions, propagateModel }, dispatch),
   };
 }
 
-export default withRouter(connect(
-  mapStateToProps, 
-  mapDispatchToProps
-)(Modify));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Modify));

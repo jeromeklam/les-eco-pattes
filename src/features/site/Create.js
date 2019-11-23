@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as actions from './redux/actions';
-import { withRouter } from 'react-router-dom'
+import { withRouter } from 'react-router-dom';
 import { getJsonApi } from '../../common';
 import Form from './Form';
 
@@ -34,6 +34,7 @@ export class Create extends Component {
      */
     this.props.actions.loadOne(this.state.siteId).then(result => {
       const item = this.props.site.loadOneItem;
+      console.log(item);
       this.setState({ item: item });
     });
   }
@@ -60,7 +61,7 @@ export class Create extends Component {
     if (event) {
       event.preventDefault();
     }
-    this.props.history.push('/site')
+    this.props.history.push('/site');
   }
 
   /**
@@ -75,12 +76,14 @@ export class Create extends Component {
     if (!error) {
       // Conversion des données en objet pour le service web
       let obj = getJsonApi(this.state.item, 'FreeAsso_Site', this.state.siteId);
+      console.log(obj);
+      return true;
       this.props.actions.createOne(obj)
         .then(result => {
           this.props.actions.reload();
-          this.props.history.push('/site')
+          this.props.history.push('/site');
         })
-        .catch((errors) => {
+        .catch(errors => {
           // @todo display errors to fields
           console.log(errors);
         })
@@ -95,6 +98,7 @@ export class Create extends Component {
         {item && (
           <Form
             item={item}
+            site_types={this.props.siteType.items}
             onChange={this.onChange}
             onSubmit={this.onSubmit}
             onCancel={this.onCancel}
@@ -108,16 +112,14 @@ export class Create extends Component {
 function mapStateToProps(state) {
   return {
     site: state.site,
+    siteType: state.siteType,
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
-    actions: bindActionCreators({ ...actions }, dispatch)
+    actions: bindActionCreators({ ...actions }, dispatch),
   };
 }
 
-export default withRouter(connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Create));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Create));

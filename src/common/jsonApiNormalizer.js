@@ -182,18 +182,29 @@ export function jsonApiNormalizer(json, origin = {errors: []}, opts = {}) {
 }
 
 /**
+ * 
+ */
+export function getJsonApiAttributes(obj) {
+  // Quickly remove id and type if exists...
+  //const {id, type, ...ret} = obj;
+  let ret = {};
+  const keys = Object.getOwnPropertyNames(obj);
+  keys.forEach((key) => {
+    if (key !== 'id' && key !== 'type') {
+      ret[key] = obj[key];
+    }
+  });
+  return ret;
+}
+/**
  *
  */
-export function getJsonApi(obj, name, id) {
-  let id_obj = 0 ;
-  if (id > 0) {
-    id_obj = id;
-  }
+export function getJsonApi(obj) {
   const jsonApi = {
     data: {
-      type: name,
-      id: id_obj,
-      attributes: {...obj}
+      type: obj.type,
+      id: obj.id,
+      attributes: getJsonApiAttributes(obj)
     }
   };
   return jsonApi;

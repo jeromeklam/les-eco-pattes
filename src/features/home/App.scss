@@ -34,3 +34,17 @@ body,
     margin-bottom: 0px;
   }
 }
+
+.main-loader {
+  position: fixed;
+  left: 0px;
+  right: 0px;
+  height: 100%;
+  margin: auto;
+  text-align: center;
+
+  p {
+    color: green;
+    margin-top: 50px;
+  }
+}

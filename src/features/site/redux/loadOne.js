@@ -1,8 +1,5 @@
 import axios from 'axios';
-import {
-  jsonApiNormalizer,
-  buildModel
-} from '../../../common';
+import { jsonApiNormalizer, buildModel } from '../../../common';
 import {
   SITE_LOAD_ONE_BEGIN,
   SITE_LOAD_ONE_SUCCESS,
@@ -13,7 +10,8 @@ import {
 // Rekit uses redux-thunk for async actions by default: https://github.com/gaearon/redux-thunk
 // If you prefer redux-saga, you can use rekit-plugin-redux-saga: https://github.com/supnate/rekit-plugin-redux-saga
 export function loadOne(args = {}) {
-  return (dispatch) => { // optionally you can have getState as the second argument
+  return dispatch => {
+    // optionally you can have getState as the second argument
     dispatch({
       type: SITE_LOAD_ONE_BEGIN,
     });
@@ -28,16 +26,16 @@ export function loadOne(args = {}) {
       // args.error here is only for test coverage purpose.
       const doRequest = axios.get(process.env.REACT_APP_BO_URL + '/v1/asso/site/' + args);
       doRequest.then(
-        (res) => {
+        res => {
           dispatch({
             type: SITE_LOAD_ONE_SUCCESS,
             data: res,
-            id: args
+            id: args,
           });
           resolve(res);
         },
         // Use rejectHandler as the second argument so that render errors won't be caught.
-        (err) => {
+        err => {
           dispatch({
             type: SITE_LOAD_ONE_FAILURE,
             data: { error: err },
@@ -71,17 +69,16 @@ export function reducer(state, action) {
 
     case SITE_LOAD_ONE_SUCCESS:
       // The request is success
-      let item = null;      
+      let item = null;
+      let raw  = null;
       let object = jsonApiNormalizer(action.data.data);
-      item = buildModel(
-          object,
-          'FreeAsso_Site',
-          action.id
-        );
+      raw  = buildModel(object, 'FreeAsso_Site', action.id);
+      item = buildModel(object, 'FreeAsso_Site', action.id, {eager: true});
       return {
         ...state,
         loadOnePending: false,
         loadOneItem: item,
+        loadOneRaw: item,
         loadOneError: null,
       };
 
@@ -90,6 +87,8 @@ export function reducer(state, action) {
       return {
         ...state,
         loadOnePending: false,
+        loadOneItem: null,
+        loadOneRaw: null,
         loadOneError: action.data.error,
       };
 

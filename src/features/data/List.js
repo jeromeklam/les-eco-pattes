@@ -35,7 +35,6 @@ export class List extends Component {
      *  En async on va demander le chargement des données
      *  Lorsque fini le store sera modifié
      */
-    console.log("FK data DM",this.props.actions);
     this.props.actions.loadMore();
   }
 
@@ -65,12 +64,12 @@ export class List extends Component {
         </div>
         <Mobile>
           {items && items.map(item => (
-            <MobileLine item={item} />  
+            <MobileLine key={item.id} item={item} />  
           ))}
         </Mobile>
         <Desktop>
           {items && items.map(item => (
-            <DesktopLine item={item} />  
+            <DesktopLine key={item.id} item={item} />  
           ))}
           {this.props.data.LoadMorePending && <LoadingData /> }
           {this.props.data.LoadMoreFinish ? <LoadComplete /> : <LoadMore />}

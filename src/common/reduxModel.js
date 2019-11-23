@@ -1,3 +1,11 @@
+/**
+ * get unqId
+ * 
+ * @param {String} objectName
+ * @param {Mixed}  id
+ * 
+ * @return {String}
+ */
 function uniqueId(objectName, id) {
   if (!id) {
     return null;
@@ -13,24 +21,34 @@ export function buildModelRelationship(reducer, target, relationship, options, c
   const rel = target.relationships[relationship];
   if (typeof rel.data !== 'undefined') {
     if (Array.isArray(rel.data)) {
-      return rel.data.map(child => buildModel(reducer, child.type, child.id, options, cache) || child);
+      return rel.data.map(
+        child => buildModel(reducer, child.type, child.id, options, cache) || child,
+      );
     } else if (rel.data === null) {
       return null;
     }
     return buildModel(reducer, rel.data.type, rel.data.id, options, cache) || rel.data;
   } else if (!ignoreLinks && rel.links) {
-    throw new Error('Remote lazy loading is not supported. To disable this error, include option \'ignoreLinks: true\' in the buildModel function like so: buildModel(reducer, type, id, { ignoreLinks: true })');
+    throw new Error(
+      "Remote lazy loading is not supported. To disable this error, include option 'ignoreLinks: true' in the buildModel function like so: buildModel(reducer, type, id, { ignoreLinks: true })",
+    );
   }
   return [];
 }
 
 /**
- *
+ * buildModel from a JsonApiNormalizer object
+ * 
+ * @param {Object} reducer - JsonApi Object
+ * @param {String} objectName
+ * @param {Mixed}  id
+ * @param {object} providedOpts
+ * @param {object} cache
  */
 export function buildModel(reducer, objectName, id = null, providedOpts = {}, cache = {}) {
-  const defOpts = { eager: false, ignoreLinks: false, includeType: false };
+  const defOpts = { eager: false, ignoreLinks: false, includeType: true, includeId: true };
   const options = Object.assign({}, defOpts, providedOpts);
-  const { eager, includeType } = options;
+  const { eager, includeType, includeId } = options;
   if (!reducer[objectName]) {
     return null;
   }
@@ -54,40 +72,39 @@ export function buildModel(reducer, objectName, id = null, providedOpts = {}, ca
   if (!target) {
     return null;
   }
-  if (target.id) {
+  if (includeId && target.id) {
     ret.id = target.id;
   }
-  Object.keys(target.attributes).forEach((key) => { ret[key] = target.attributes[key]; });
+  Object.keys(target.attributes).forEach(key => {
+    ret[key] = target.attributes[key];
+  });
   if (includeType && !ret.type) {
     ret.type = objectName;
   }
   cache[uuid] = ret;
   if (target.relationships) {
-    Object.keys(target.relationships).forEach((relationship) => {
+    Object.keys(target.relationships).forEach(relationship => {
       if (eager) {
         ret[relationship] = buildModelRelationship(reducer, target, relationship, options, cache);
       } else {
-        Object.defineProperty(
-          ret,
-          relationship,
-          {
-            get: () => {
-              const field = `__${relationship}`;
-
-              if (ret[field]) {
-                return ret[field];
-              }
-
-              ret[field] = buildModelRelationship(reducer, target, relationship, options, cache);
-
+        Object.defineProperty(ret, relationship, {
+          get: () => {
+            const field = `__${relationship}`;
+            if (ret[field]) {
               return ret[field];
-            },
+            }
+            ret[field] = buildModelRelationship(reducer, target, relationship, options, cache);
+            return ret[field];
           },
-        );
+          set: (value) => {
+            const field = `__${relationship}`;
+            ret[field] = value;
+          },
+        });
       }
     });
   }
-  if (typeof ret.id === 'undefined') {
+  if (includeId && typeof ret.id === 'undefined') {
     ret.id = ids;
   }
   return ret;

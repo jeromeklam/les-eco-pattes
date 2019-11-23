@@ -1,7 +1,11 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import * as actions from './redux/actions';
 import { DesktopHeader, DesktopFooter, DesktopSidebar } from '../../features/common';
 import { MobileHeader, MobileFooter, MobileMenu } from '../../features/common';
+import { LoadingData } from '../layout';
 import { Desktop, Tablet, Mobile, Default } from '../common'
 
 /*
@@ -9,7 +13,7 @@ import { Desktop, Tablet, Mobile, Default } from '../common'
   and the container of the react router.
   You should adjust it according to the requirement of your app.
 */
-export default class App extends Component {
+export class App extends Component {
 
   static propTypes = {
     children: PropTypes.node,
@@ -27,33 +31,64 @@ export default class App extends Component {
     this.onToggle = this.onToggle.bind(this);
   }
 
+  componentDidMount() {
+    this.props.actions.loadAll();
+  }
+
   onToggle () {
     this.setState({menuDataOpen: !this.state.menuDataOpen});
   }
 
   render() {
     return (
-      <div className="d-flex" id="wrapper">
-        <Tablet>Tablet @TODO</Tablet>
-        <Mobile>
-          <MobileHeader />
-          <div id="page-content-wrapper" className="w-100">
-            {this.props.children}
+      <div>
+        {this.props.home.loadDataFinish ? (  
+        <div className="d-flex" id="wrapper">
+          <Tablet>Tablet @TODO</Tablet>
+          <Mobile>
+            <MobileHeader />
+            <div id="page-content-wrapper" className="w-100">
+              {this.props.children}
+            </div>
+            {this.state.menuDataOpen &&
+              <MobileMenu onToggle={this.onToggle}/>
+            }
+            <MobileFooter onToggle={this.onToggle}/>
+          </Mobile>
+          <Desktop>
+            <DesktopSidebar />
+            <div id="page-content-wrapper" className="w-100">
+              <DesktopHeader />
+              {this.props.children}
+            </div>
+            <DesktopFooter />
+          </Desktop>
+        </div>
+        ) : (
+          <div className="main-loader">
+            <p>... Chargement ...</p>
+            <LoadingData />
           </div>
-          {this.state.menuDataOpen &&
-            <MobileMenu onToggle={this.onToggle}/>
-          }
-          <MobileFooter onToggle={this.onToggle}/>
-        </Mobile>
-        <Desktop>
-          <DesktopSidebar />
-          <div id="page-content-wrapper" className="w-100">
-            <DesktopHeader />
-            {this.props.children}
-          </div>
-          <DesktopFooter />
-        </Desktop>
+        )
+      }
       </div>
     );
   }
 }
+
+function mapStateToProps(state) {
+  return {
+    home: state.home,
+  };
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    actions: bindActionCreators({ ...actions }, dispatch)
+  };
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(App);

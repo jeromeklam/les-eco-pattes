@@ -20,7 +20,12 @@ export default class InputText extends Component {
     };
     return (
       <div className="form-group row">
-        <label forname={this.props.id} className="col-sm-6 col-form-label">{this.props.label}</label>
+        <label forname={this.props.id} className="col-sm-6 col-form-label">
+          {this.props.label}
+          {this.props.required && 
+           <span>&nbsp;*</span>
+          }
+        </label>
         <div className="col-sm-30">
           <input
             type="text"

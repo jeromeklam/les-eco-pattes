@@ -25,11 +25,14 @@ export default class InputSelect extends Component {
       <div className="form-group row">
         <label forname={this.props.id} className="col-sm-6 col-form-label">
           {this.props.label}
+          {this.props.required && 
+           <span>&nbsp;*</span>
+          }
         </label>
         <div className="col-sm-30">
           <select type="text" id={props.id} className="form-control" {...props}>
             {empty &&
-              <option key="" value="">
+              <option key="000" value="">
                 Aucune sélection
               </option>
             }

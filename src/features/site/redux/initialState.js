@@ -15,6 +15,7 @@ const initialState = {
   loadMoreError: null,  
   loadOnePending: false,
   loadOneItem: null,
+  loadOneRaw: null,
   loadOneError: null,
   createOnePending: false,
   createOneError: null,

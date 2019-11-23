@@ -5,10 +5,12 @@ import { connect } from 'react-redux';
 import * as actions from './redux/actions';
 import { getJsonApi } from '../../common';
 import Form from './Form';
-import {
-  withRouter
-} from 'react-router-dom'
+import { withRouter } from 'react-router-dom';
+import { LoadingData } from '../layout';
 
+/**
+ * Création d'une donnée
+ */
 export class Create extends Component {
   static propTypes = {
     data: PropTypes.object.isRequired,
@@ -24,7 +26,6 @@ export class Create extends Component {
     /**
      * Bind des méthodes locales au contexte courant
      */
-    this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
     this.onCancel = this.onCancel.bind(this);
   }
@@ -41,66 +42,41 @@ export class Create extends Component {
   }
 
   /**
-   * Sur changement
-   */
-  onChange(event) {
-    if (event) {
-      event.preventDefault();
-    }
-    if (event && event.target) {
-      const value = event.target.value;
-      let item = this.state.item;
-      item[event.target.name] = value;
-      this.setState({ item: item });
-    }
-  }
-
-  /**
    * Sur annulation, on retourne à la liste
    */
-  onCancel(event) {
-    if (event) {
-      event.preventDefault();
-    }
-    this.props.history.push('/data')
+  onCancel() {
+    this.props.history.push('/data');
   }
 
   /**
    * Sur enregistrement, sauvegarde, update store et retour à la liste
    * Sur erreur faut afficher les messages d'anomalie
    */
-  onSubmit(event) {
-    if (event) {
-      event.preventDefault();
-    }
-    let error = false;
-    if (!error) {
-      // Conversion des données en objet pour le service web
-      let obj = getJsonApi(this.state.item, 'FreeAsso_Data', this.state.dataId);
-      this.props.actions.createOne(obj)
-        .then(result => {
-          this.props.actions.reload();
-          this.props.history.push('/data')
-        })
-        .catch((errors) => {
-          // @todo display errors to fields
-          console.log(errors);
-        })
-      ;
-    }
+  onSubmit(datas = {}) {
+    // Conversion des données en objet pour le service web
+    let obj = getJsonApi(datas, 'FreeAsso_Data', this.state.dataId);
+    this.props.actions
+      .createOne(obj)
+      .then(result => {
+        this.props.actions.reload();
+        this.props.history.push('/data');
+      })
+      .catch(errors => {
+        // @todo display errors to fields
+        console.log(errors);
+      });
   }
 
   render() {
     const item = this.state.item;
     return (
       <div className="data-create">
-        {item && (
-          <Form
-            item={item}
-            onChange={this.onChange}
-            onSubmit={this.onSubmit}
-            onCancel={this.onCancel}
-          />
+        {this.props.data.loadOnePending ? (
+          <LoadingData />
+        ) : (
+          <div>
+            {item && <Form item={item} onSubmit={this.onSubmit} onCancel={this.onCancel} />}
+          </div>
         )}
       </div>
     );
@@ -115,11 +91,8 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    actions: bindActionCreators({ ...actions }, dispatch)
+    actions: bindActionCreators({ ...actions }, dispatch),
   };
 }
 
-export default withRouter(connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Create));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Create));

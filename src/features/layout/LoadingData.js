@@ -8,7 +8,17 @@ export default class LoadingData extends Component {
   render() {
     return (
       <div className="layout-loading-data">
-        Component content: layout/LoadingData
+        <div className="lds-grid">
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+        </div>
       </div>
     );
   }

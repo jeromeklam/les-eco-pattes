@@ -76,12 +76,12 @@ export class List extends Component {
         </div>
         <Mobile>
           {items && items.map(item => (
-            <MobileLine item={item} />  
+            <MobileLine key={item.id} item={item} />  
           ))}
         </Mobile>
         <Desktop>
           {items && items.map(item => (
-            <DesktopLine item={item} />  
+            <DesktopLine key={item.id} item={item} />  
           ))}
           {this.props.site.LoadMorePending && <LoadingData /> }
           {this.props.site.LoadMoreFinish ? <LoadComplete /> : <LoadMore />}
