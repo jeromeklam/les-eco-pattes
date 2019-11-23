@@ -182,7 +182,11 @@ export function jsonApiNormalizer(json, origin = {errors: []}, opts = {}) {
 }
 
 /**
+ * Get attributes from an object
  * 
+ * @param {Object} obj
+ * 
+ * @return {Object}
  */
 export function getJsonApiAttributes(obj) {
   // Quickly remove id and type if exists...
@@ -191,22 +195,60 @@ export function getJsonApiAttributes(obj) {
   const keys = Object.getOwnPropertyNames(obj);
   keys.forEach((key) => {
     if (key !== 'id' && key !== 'type') {
-      ret[key] = obj[key];
+      if (!obj[key] || (!obj[key].id && !obj[key].type)) {
+        ret[key] = obj[key];
+      }
     }
   });
   return ret;
 }
+
 /**
- *
+ * Get relationships from an object
+ * 
+ * @param {Object} obj
+ * 
+ * @return {Object}
+ */
+export function getJsonApiRelatinships(obj) {
+  // Quickly remove id and type if exists...
+  //const {id, type, ...ret} = obj;
+  let rels = [];
+  const keys = Object.getOwnPropertyNames(obj);
+  keys.forEach((key) => {
+    if (obj[key] && obj[key].id && obj[key].type) {
+      rels[key] = {
+        data : {
+          id: obj[key].id,
+          type: obj[key].type
+        }
+      }
+    }
+  });
+  return rels;
+}
+
+/**
+ * Get Object (ReduxModel) as JsonApi Object
+ * 
+ * @param {Object} obj
+ * 
+ * @return {Object}
  */
 export function getJsonApi(obj) {
-  const jsonApi = {
+  const attributes = getJsonApiAttributes(obj);
+  const relations  = getJsonApiRelatinships(obj);
+  console.log(relations, relations.length);
+  let jsonApi = {
     data: {
       type: obj.type,
       id: obj.id,
-      attributes: getJsonApiAttributes(obj)
+      attributes: attributes
     }
   };
+  if (relations.len > 0) {
+    jsonApi.data.relationships = relations;
+  }
   return jsonApi;
 }
 
