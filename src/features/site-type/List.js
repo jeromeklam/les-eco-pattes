@@ -33,7 +33,6 @@ export class List extends Component {
      *  En async on va demander le chargement des données
      *  Lorsque fini le store sera modifié
      */
-    console.log("FK site type DM",this.props.actions);
     this.props.actions.loadMore();
   }
 

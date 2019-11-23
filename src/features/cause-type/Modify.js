@@ -7,6 +7,7 @@ import {
   withRouter
 } from 'react-router-dom';
 import { getJsonApi, propagateModel } from '../../common';
+import { LoadingData } from '../layout';
 import Form from './Form';
 
 export class Modify extends Component {
@@ -21,7 +22,6 @@ export class Modify extends Component {
       causeTypeId: this.props.match.params.causeTypeId || false,
       item: false,
     }
-    this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
     this.onCancel = this.onCancel.bind(this);
   }    
@@ -33,18 +33,6 @@ export class Modify extends Component {
     });
   }
 
-  onChange(event) {
-    if (event) {
-      event.preventDefault();
-    }
-    if (event && event.target) {
-      const value = event.target.value;
-      let item = this.state.item;
-      item[event.target.name] = value;
-      this.setState({ item: item });
-    }
-  }
-
   onCancel(event) {
     if (event) {
       event.preventDefault();
@@ -52,37 +40,37 @@ export class Modify extends Component {
     this.props.history.push('/cause-type')
   }
 
-  onSubmit(event) {
-    if (event) {
-      event.preventDefault();
-    }
-    let error = false;
-    if (!error) {
-      let obj = getJsonApi(this.state.item, 'FreeAsso_CauseType', this.state.causeTypeId);
-      this.props.actions.updateOne(this.state.causeTypeId, obj)
-        .then(result => {
-          this.props.actions.propagateModel('FreeAsso_CauseType', result);
-          this.props.history.push('/cause-type')
-        })
-        .catch((errors) => {
-          console.log(errors);
-        })
-      ;
-    }
+  /**
+   * Sur enregistrement, sauvegarde, update store et retour à la liste
+   */
+  onSubmit(datas = {}) {
+    // Conversion des données en objet pour le service web
+    let obj = getJsonApi(datas, 'FreeAsso_CauseType', this.state.dataId);
+    this.props.actions
+      .updateOne(this.state.causeTypeId, obj)
+      .then(result => {
+        // @Todo propagate result to store
+        // propagateModel est ajouté aux actions en bas de document
+        this.props.actions.propagateModel('FreeAsso_CauseType', result);
+        this.props.history.push('/cause-type');
+      })
+      .catch(errors => {
+        // @todo display errors to fields
+        console.log(errors);
+      });
   }
 
   render() {
     const item = this.state.item;
-    return (      
+    return (
       <div className="cause-type-modify">
-        {item && (
-          <Form 
-            item={this.props.causeType.loadOneItem}
-            onChange={this.onChange}
-            onSubmit={this.onSubmit}
-            onCancel={this.onCancel}
-          />
-        )}         
+        {this.props.causeType.loadOnePending ? (
+          <LoadingData />
+        ) : (
+          <div>
+            {item && <Form item={item} onSubmit={this.onSubmit} onCancel={this.onCancel} />}
+          </div>
+        )}
       </div>
     );
   }

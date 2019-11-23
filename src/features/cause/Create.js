@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import * as actions from './redux/actions';
 import { withRouter } from 'react-router-dom';
 import { getJsonApi } from '../../common';
+import { LoadingData } from '../layout';
 import Form from './Form';
 
 export class Create extends Component {
@@ -22,7 +23,6 @@ export class Create extends Component {
     /**
      * Bind des méthodes locales au contexte courant
      */
-    this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
     this.onCancel = this.onCancel.bind(this);
   }
@@ -39,21 +39,6 @@ export class Create extends Component {
   }
 
   /**
-   * Sur changement
-   */
-  onChange(event) {
-    if (event) {
-      event.preventDefault();
-    }
-    if (event && event.target) {
-      const value = event.target.value;
-      let item = this.state.item;
-      item[event.target.name] = value;
-      this.setState({ item: item });
-    }
-  }
-
-  /**
    * Sur annulation, on retourne à la liste
    */
   onCancel(event) {
@@ -67,38 +52,31 @@ export class Create extends Component {
    * Sur enregistrement, sauvegarde, update store et retour à la liste
    * Sur erreur faut afficher les messages d'anomalie
    */
-  onSubmit(event) {
-    if (event) {
-      event.preventDefault();
-    }
-    let error = false;
-    if (!error) {
-      // Conversion des données en objet pour le service web
-      let obj = getJsonApi(this.state.item, 'FreeAsso_Cause', this.state.causeId);
-      this.props.actions.createOne(obj)
-        .then(result => {
-          this.props.actions.reload();
-          this.props.history.push('/cause')
-        })
-        .catch((errors) => {
-          // @todo display errors to fields
-          console.log(errors);
-        })
-      ;
-    }
+  onSubmit(datas = {}) {
+    // Conversion des données en objet pour le service web
+    let obj = getJsonApi(datas, 'FreeAsso_Cause', this.state.causeId);
+    this.props.actions
+      .createOne(obj)
+      .then(result => {
+        this.props.actions.reload();
+        this.props.history.push('/cause');
+      })
+      .catch(errors => {
+        // @todo display errors to fields
+        console.log(errors);
+      });
   }
 
   render() {
     const item = this.state.item;
     return (
       <div className="cause-create">
-        {item && (
-          <Form
-            item={item}
-            onChange={this.onChange}
-            onSubmit={this.onSubmit}
-            onCancel={this.onCancel}
-          />
+        {this.props.cause.loadOnePending ? (
+          <LoadingData />
+        ) : (
+          <div>
+            {item && <Form item={item} onSubmit={this.onSubmit} onCancel={this.onCancel} />}
+          </div>
         )}
       </div>
     );
