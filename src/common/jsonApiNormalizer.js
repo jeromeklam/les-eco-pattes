@@ -213,7 +213,7 @@ export function getJsonApiAttributes(obj) {
 export function getJsonApiRelatinships(obj) {
   // Quickly remove id and type if exists...
   //const {id, type, ...ret} = obj;
-  let rels = [];
+  let rels = {};
   const keys = Object.getOwnPropertyNames(obj);
   keys.forEach((key) => {
     if (obj[key] && obj[key].id && obj[key].type) {
@@ -238,7 +238,6 @@ export function getJsonApiRelatinships(obj) {
 export function getJsonApi(obj) {
   const attributes = getJsonApiAttributes(obj);
   const relations  = getJsonApiRelatinships(obj);
-  console.log(relations, relations.length);
   let jsonApi = {
     data: {
       type: obj.type,
@@ -246,8 +245,8 @@ export function getJsonApi(obj) {
       attributes: attributes
     }
   };
-  if (relations.len > 0) {
-    jsonApi.data.relationships = relations;
+  if (Object.keys(relations).length > 0) {
+    jsonApi.data['relationships'] = relations;
   }
   return jsonApi;
 }
