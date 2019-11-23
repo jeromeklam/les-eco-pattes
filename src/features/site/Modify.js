@@ -57,9 +57,7 @@ export class Modify extends Component {
    */
   onSubmit(datas) {
     // Conversion des données en objet pour le service web
-    let obj = getJsonApi(datas, 'FreeAsso_Site', this.state.siteId);
-    console.log(obj);
-    return false;
+    let obj = getJsonApi(datas);
     this.props.actions
       .updateOne(this.state.siteId, obj)
       .then(result => {
