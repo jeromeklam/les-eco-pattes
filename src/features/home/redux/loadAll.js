@@ -8,6 +8,9 @@ import {
   loadMore as loadMoreData
 } from '../../data/redux/loadMore';
 import {
+  loadMore as loadMoreConfig
+} from '../../config/redux/loadMore';
+import {
   loadMore as loadMoreSiteType
 } from '../../site-type/redux/loadMore';
 import {
@@ -21,7 +24,7 @@ export function loadAll(args = {}) {
     dispatch({
       type: HOME_LOAD_ALL_BEGIN,
     });
-    const promise = Promise.all([dispatch(loadMoreData()), dispatch(loadMoreSiteType()), dispatch(loadMoreCauseType())]);
+    const promise = Promise.all([dispatch(loadMoreData()), dispatch(loadMoreConfig()), dispatch(loadMoreSiteType()), dispatch(loadMoreCauseType())]);
     return promise.then(
           (res) => {
             dispatch({

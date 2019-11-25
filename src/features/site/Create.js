@@ -22,7 +22,6 @@ export class Create extends Component {
     /**
      * Bind des méthodes locales au contexte courant
      */
-    this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
     this.onCancel = this.onCancel.bind(this);
   }
@@ -34,24 +33,8 @@ export class Create extends Component {
      */
     this.props.actions.loadOne(this.state.siteId).then(result => {
       const item = this.props.site.loadOneItem;
-      console.log(item);
       this.setState({ item: item });
     });
-  }
-
-  /**
-   * Sur changement
-   */
-  onChange(event) {
-    if (event) {
-      event.preventDefault();
-    }
-    if (event && event.target) {
-      const value = event.target.value;
-      let item = this.state.item;
-      item[event.target.name] = value;
-      this.setState({ item: item });
-    }
   }
 
   /**
@@ -68,27 +51,19 @@ export class Create extends Component {
    * Sur enregistrement, sauvegarde, update store et retour à la liste
    * Sur erreur faut afficher les messages d'anomalie
    */
-  onSubmit(event) {
-    if (event) {
-      event.preventDefault();
-    }
-    let error = false;
-    if (!error) {
-      // Conversion des données en objet pour le service web
-      let obj = getJsonApi(this.state.item, 'FreeAsso_Site', this.state.siteId);
-      console.log(obj);
-      return true;
-      this.props.actions.createOne(obj)
-        .then(result => {
-          this.props.actions.reload();
-          this.props.history.push('/site');
-        })
-        .catch(errors => {
-          // @todo display errors to fields
-          console.log(errors);
-        })
-      ;
-    }
+  onSubmit(datas = {}) {
+    // Conversion des données en objet pour le service web
+    let obj = getJsonApi(datas, 'FreeAsso_Site', this.state.siteId);
+    this.props.actions
+      .createOne(obj)
+      .then(result => {
+        this.props.actions.reload();
+        this.props.history.push('/site');
+      })
+      .catch(errors => {
+        // @todo display errors to fields
+        console.log(errors);
+      });
   }
 
   render() {
@@ -98,6 +73,7 @@ export class Create extends Component {
         {item && (
           <Form
             item={item}
+            config={this.props.config.items}
             site_types={this.props.siteType.items}
             onChange={this.onChange}
             onSubmit={this.onSubmit}
@@ -112,6 +88,7 @@ export class Create extends Component {
 function mapStateToProps(state) {
   return {
     site: state.site,
+    config: state.config,
     siteType: state.siteType,
   };
 }

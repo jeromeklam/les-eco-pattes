@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { InputHidden, InputText, InputSelect, ButtonSubmit, ButtonCancel } from '../layout';
+import { InputHidden, InputText, InputSelect, FormResponsive } from '../layout';
 import { dataTypes } from './functions';
 import useForm from '../layout/useForm';
 
@@ -10,9 +10,7 @@ export default function Form(props) {
   const { values, handleChange, handleSubmit, handleCancel } = useForm(props.item, props.onSubmit, props.onCancel);
   const optionsType = dataTypes();
   return (
-    <div className="card">
-      <form>
-        <div className="card-header">Données</div>
+    <FormResponsive title="Données" onSubmit={handleSubmit} onCancel={handleCancel}>
         <div className="card-body">
           <InputHidden name="id" id="id" value={values.id} />
           <InputText
@@ -32,12 +30,6 @@ export default function Form(props) {
             options={optionsType}
           />
         </div>
-        <div className="card-footer text-right">
-          <ButtonSubmit onClick={handleSubmit} />
-          &nbsp;
-          <ButtonCancel onClick={handleCancel} />
-        </div>
-      </form>
-    </div>
+    </FormResponsive>
   );
 }

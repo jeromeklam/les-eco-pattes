@@ -10,3 +10,4 @@ export { default as LoadMore } from './LoadMore';
 export { default as LoadComplete } from './LoadComplete';
 export { default as LoadError } from './LoadError';
 export { default as InputSelect } from './InputSelect';
+export { default as FormResponsive } from './FormResponsive';

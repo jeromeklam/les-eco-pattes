@@ -23,7 +23,7 @@ export function reducer(state, action) {
         filters: [],
         loadMorePending: false,
         loadMoreError: null,
-        LoadMoreFinish: false,
+        loadMoreFinish: false,
         loadOnePending: false,
         loadOneError: null,
         loadOneItem: false,

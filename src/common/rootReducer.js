@@ -12,6 +12,7 @@ import aboutReducer from '../features/about/redux/reducer';
 import layoutReducer from '../features/layout/redux/reducer';
 import siteTypeReducer from '../features/site-type/redux/reducer';
 import causeTypeReducer from '../features/cause-type/redux/reducer';
+import configReducer from '../features/config/redux/reducer';
 
 // NOTE 1: DO NOT CHANGE the 'reducerMap' name and the declaration pattern.
 // This is used for Rekit cmds to register new features, remove features, etc.
@@ -32,6 +33,7 @@ const reducerMap = {
   layout: layoutReducer,
   siteType: siteTypeReducer,
   causeType: causeTypeReducer,
+  config: configReducer,
 };
 
 export default combineReducers(reducerMap);

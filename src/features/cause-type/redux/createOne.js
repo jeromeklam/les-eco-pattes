@@ -8,7 +8,7 @@ import {
 
 // Rekit uses redux-thunk for async actions by default: https://github.com/gaearon/redux-thunk
 // If you prefer redux-saga, you can use rekit-plugin-redux-saga: https://github.com/supnate/rekit-plugin-redux-saga
-export function createOne(p_id, args = {}) {
+export function createOne(args = {}) {
   return (dispatch) => { // optionally you can have getState as the second argument
     dispatch({
       type: CAUSE_TYPE_CREATE_ONE_BEGIN,
@@ -22,6 +22,10 @@ export function createOne(p_id, args = {}) {
       // doRequest is a placeholder Promise. You should replace it with your own logic.
       // See the real-word example at:  https://github.com/supnate/rekit/blob/master/src/features/home/redux/fetchRedditReactjsList.js
       // args.error here is only for test coverage purpose.
+      // Mise à jour du type par défaut si non renseigné
+      if (args.data.attributes.caut_mnt_type == null ) {
+        args.data.attributes.caut_mnt_type = 'OTHER';
+      }
       const doRequest = axios.post(process.env.REACT_APP_BO_URL + '/v1/asso/cause_type', args);
       doRequest.then(
         (res) => {

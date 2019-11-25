@@ -12,7 +12,7 @@ export default class DesktopLine extends Component {
     return (
       <div key={item.id} className="row">
         <div className="col-12">
-            <Link to={"/cause/modify/" + item.id}>{item.cause_name}</Link>
+            <Link to={"/cause/modify/" + item.id}>{item.cau_name}</Link>
         </div>
       </div>
     );
