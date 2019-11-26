@@ -42,6 +42,7 @@ export class Modify extends Component {
       const item = this.props.site.loadOneItem;
       this.setState({ item: item });
     });
+
   }
 
   /**
@@ -80,12 +81,17 @@ export class Modify extends Component {
           <LoadingData />
         ) : (
           <div>
-            {item && <Form 
-              item={item} 
-              config={this.props.config.items}
-              site_types={this.props.siteType.items} 
-              onSubmit={this.onSubmit} 
-              onCancel={this.onCancel} />}
+            {item && 
+              <Form 
+                item={item} 
+                datas={this.props.data.items}
+                config={this.props.config.items}
+                site_types={this.props.siteType.items} 
+                properties={this.props.site.properties}
+                onSubmit={this.onSubmit} 
+                onCancel={this.onCancel} 
+              />
+            }
           </div>
         )}
       </div>
@@ -96,7 +102,8 @@ export class Modify extends Component {
 function mapStateToProps(state) {
   return {
     site: state.site,
-    config: state.config,
+    data: state.data,
+    config: state.config,    
     siteType: state.siteType,
   };
 }

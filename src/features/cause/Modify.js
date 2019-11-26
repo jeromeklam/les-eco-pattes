@@ -82,7 +82,13 @@ export class Modify extends Component {
           <LoadingData />
         ) : (
           <div>
-            {item && <Form item={item} onSubmit={this.onSubmit} onCancel={this.onCancel} />}
+            {item && 
+              <Form 
+                item={item} 
+                onSubmit={this.onSubmit} 
+                onCancel={this.onCancel} 
+              />
+            }
           </div>
         )} 
       </div>

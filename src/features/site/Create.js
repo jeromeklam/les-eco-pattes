@@ -73,9 +73,9 @@ export class Create extends Component {
         {item && (
           <Form
             item={item}
+            datas={this.props.data.items}
             config={this.props.config.items}
             site_types={this.props.siteType.items}
-            onChange={this.onChange}
             onSubmit={this.onSubmit}
             onCancel={this.onCancel}
           />
@@ -88,6 +88,7 @@ export class Create extends Component {
 function mapStateToProps(state) {
   return {
     site: state.site,
+    data: state.data,
     config: state.config,
     siteType: state.siteType,
   };

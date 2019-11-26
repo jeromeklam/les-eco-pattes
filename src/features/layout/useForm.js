@@ -5,7 +5,7 @@ const explodeReduxModel = (obj) => {
   return ret;
 }
 
-const useForm = (initialState, onSubmit, onCancel) => {
+const useForm = (initialState, onSubmit, onCancel, onNavTab) => {
   const [values, setValues] = useState(initialState);
 
   const handleSubmit = event => {
@@ -15,7 +15,7 @@ const useForm = (initialState, onSubmit, onCancel) => {
 
   const handleChange = event => {
     event.persist();
-    const tName = event.target.name;
+    const tName = event.target.name;    
     const elems = tName.split('.');
     const first = elems.shift();
     let datas = null;
@@ -35,11 +35,16 @@ const useForm = (initialState, onSubmit, onCancel) => {
     onCancel();
   };
 
+  const handleNavTab = event => {    
+    console.log("handleNavTab FK",event);
+  };
+
   return {
     values,
     handleChange,
     handleSubmit,
     handleCancel,
+    handleNavTab,
   };
 };
 

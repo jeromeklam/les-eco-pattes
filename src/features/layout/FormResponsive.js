@@ -9,12 +9,29 @@ export default class FormResponsive extends Component {
     return (
       <form>
         <div className="card">
-          <div className="card-header">
-            {this.props.title}
-            <Mobile>
-              <ButtonSubmit icon={true} label={false} onClick={this.props.onSubmit} />
-              <ButtonCancel icon={true} label={false} onClick={this.props.onCancel} />
-            </Mobile>
+          <div className="card-header">            
+            <ul class="nav nav-tabs">
+              <li>
+                <a>{this.props.title}</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#D" onClick={() => {this.props.onNavTab('localisation')}}>Localisation</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#D"  onClick={() => {this.props.onNavTab('equipement')}}>Equipement</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#D" onClick={this.props.onNavTab}>Divers</a>
+              </li>
+              <Mobile>
+                <li class="nav-item"> 
+                  <ButtonSubmit icon={true} label={false} onClick={this.props.onSubmit} />
+                </li>
+                <li class="nav-item">
+                  <ButtonCancel icon={true} label={false} onClick={this.props.onCancel} />
+                </li>
+              </Mobile>
+            </ul>
           </div>
           <div className="card-body">{this.props.children}</div>
           <Desktop>

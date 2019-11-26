@@ -1,19 +1,18 @@
 import React, { Component } from 'react';
-import { InputHidden, InputText, InputSelect, FormResponsive } from '../layout';
-import { configAsOptions } from '../config/functions.js';
+import { InputHidden, InputText, InputSelect, InputData, FormResponsive } from '../layout';
 import { siteTypeAsOptions } from '../site-type/functions.js';
 import useForm from '../layout/useForm';
 
 export default function Form(props) {
-  const { values, handleChange, handleSubmit, handleCancel } = useForm(
-    props.item,
+  const { values, handleChange, handleSubmit, handleCancel, handleNavTab } = useForm(
+    props.item,    
     props.onSubmit,
     props.onCancel,
-  );
-  console.log("config FK",props);
-  return (
-    <FormResponsive title="Sites" onSubmit={handleSubmit} onCancel={handleCancel}>
-      <InputHidden name="id" id="id" value={values.id} />
+    props.onNavTab,
+  );  
+  return (    
+    <FormResponsive title="Sites" onSubmit={handleSubmit} onCancel={handleCancel} onNavTab={handleNavTab}>
+      <InputHidden name="id" id="id" value={values.id} />      
       <InputText
         label="Nom"
         required={true}
@@ -21,40 +20,59 @@ export default function Form(props) {
         value={values.site_name}
         onChange={handleChange}
       />
-      <InputText
-        label="Adresse 1"
-        name="site_address1"
-        value={values.site_address1}
-        onChange={handleChange}
-      />
-      <InputText
-        label="Adresse 2"
-        name="site_address2"
-        value={values.site_address2}
-        onChange={handleChange}
-      />
-      <InputText
-        label="Adresse 3"
-        name="site_address3"
-        value={values.site_address3}
-        onChange={handleChange}
-      />
-      <InputText
-        label="Code postal"
-        name="site_cp"
-        value={values.site_cp}
-        onChange={handleChange}
-      />
-      <InputText label="Ville" name="site_town" value={values.site_town} onChange={handleChange} />
-      <InputSelect
-        label="Type"
-        name="site_type.id"
-        required={true}
-        value={values.site_type.id}
-        onChange={handleChange}
-        options={siteTypeAsOptions(props.site_types)}
-        addempty={true}
-      />
+      <div>
+        <InputText
+          label="Adresse"
+          name="site_address1"
+          value={values.site_address1}
+          onChange={handleChange}
+        />
+        <div className="row">
+          <div className="col-sm-9">
+            <InputText
+              label="CP"
+              name="site_cp"
+              value={values.site_cp}
+              onChange={handleChange}
+            />
+          </div>
+          <div className="col-sm-27" >
+            <InputText 
+              label="Commune" 
+              name="site_town" 
+              value={values.site_town} 
+              onChange={handleChange} 
+            />
+          </div>
+        </div>
+        <InputSelect
+          label="Type"
+          name="site_type.id"
+          required={true}
+          value={values.site_type.id}
+          onChange={handleChange}
+          options={siteTypeAsOptions(props.site_types)}
+          addempty={true}
+        />     
+      </div>
+      <div> 
+        {props.properties.map(oneProp => {
+          let nameProp = "site_" + oneProp;
+          let cfgProp = "sitt_" + oneProp      
+          return (          
+            values.site_type[cfgProp] && (            
+              <InputData 
+                key={nameProp}
+                name={nameProp}
+                value={values[nameProp]}
+                datas={props.datas}
+                config={props.config}
+                onChange={handleChange}
+              />          
+            )          
+          )        
+        })}
+      </div>
     </FormResponsive>
   );
 }

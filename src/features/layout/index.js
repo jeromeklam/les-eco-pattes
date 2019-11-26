@@ -11,3 +11,5 @@ export { default as LoadComplete } from './LoadComplete';
 export { default as LoadError } from './LoadError';
 export { default as InputSelect } from './InputSelect';
 export { default as FormResponsive } from './FormResponsive';
+export { default as InputData } from './InputData';
+export { default as InputTextArea } from './InputTextArea';

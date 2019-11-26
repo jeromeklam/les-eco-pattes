@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
+import classnames from 'classnames';
 
-export default class InputSelect extends Component {
+export default class InputTextArea extends Component {
   static propTypes = {};
 
   render() {
@@ -12,14 +13,10 @@ export default class InputSelect extends Component {
     if (this.props.id && this.props.id !== null) {
       id = this.props.id;
     }
-    let options = this.props.options;
-    let empty = this.props.addempty;
     let props = {
       ...this.props,
-      options: null,
-      addempty: null,
       value: value,
-      id: id,
+      id: id
     };
     return (
       <div className="form-group row">
@@ -30,20 +27,12 @@ export default class InputSelect extends Component {
           }
         </label>
         <div className="col-sm-30">
-          <select type="text" id={props.id} className="form-control" {...props}>
-            {empty &&
-              <option key="000" value="">
-                Aucune sélection
-              </option>
-            }
-            {options.map(oneOption => {
-              return (
-                <option key={oneOption.value} value={oneOption.value}>
-                  {oneOption.label}
-                </option>
-              )
-            })}
-          </select>
+          <textarea
+            id={props.id}
+            className="form-control" 
+          >
+            {props.value}            
+          </textarea>
         </div>
       </div>
     );
