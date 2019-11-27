@@ -5,7 +5,8 @@ import { connect } from 'react-redux';
 import * as actions from './redux/actions';
 import logo from '../../images/logo-les-eco-pattes.jpg';
 import { InputEmailUpDown, InputPasswordUpDown } from '../layout';
-import { getJsonApi } from '../../common';
+import { getJsonApi, initAxios } from '../../common';
+import { withRouter } from 'react-router-dom';
 
 export class Signin extends Component {
   static propTypes = {
@@ -23,6 +24,18 @@ export class Signin extends Component {
     };
     this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
+  }
+
+  componentDidMount() {
+    if (this.props.auth.authenticated) {
+      this.props.history.push('/');
+    }
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.auth.authenticated) {
+      nextProps.history.push('/');
+    }
   }
 
   onChange(event) {
@@ -51,11 +64,15 @@ export class Signin extends Component {
     this.setState({ username_error: username_error, password_error: password_error });
     if (!error) {
       const datas = {
+        type: 'FreeSSO_Signin',
         login: this.state.username,
-        password: this.state.password
+        password: this.state.password,
+        remember: false,
       };
-      let obj = getJsonApi(datas, 'FreeSSO_LoginRequest', 0);
-      this.props.actions.signIn(obj);
+      let obj = getJsonApi(datas);
+      this.props.actions.signIn(obj).then(result => {
+        this.props.history.push('/');
+      });
     }
   }
 
@@ -113,4 +130,4 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Signin);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Signin));

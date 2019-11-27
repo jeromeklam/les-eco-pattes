@@ -17,26 +17,26 @@ export class MobileFooter extends Component {
 
   render() {
     return (
-       <footer className="mobile-footer">
+      <footer className="mobile-footer">
         <div className="row">
           <div className="col-9 text-center">
             <Link className="nav-link" to="/">
-              <HomeIcon/>
+              <HomeIcon color="white" />
             </Link>
           </div>
           <div className="col-9 text-center">
             <Link className="nav-link" to="/site">
-              <SiteIcon/>
+              <SiteIcon color="white" />
             </Link>
           </div>
           <div className="col-9 text-center">
             <Link className="nav-link" to="/cause">
-              <CauseIcon/>
+              <CauseIcon color="white" />
             </Link>
           </div>
           <div className="col-9 text-center">
             <a className="nav-link" href="#" onClick={this.props.onToggle}>
-              <DataIcon/>
+              <DataIcon color="white" />
             </a>
           </div>
         </div>
@@ -53,11 +53,8 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    actions: bindActionCreators({ ...actions }, dispatch)
+    actions: bindActionCreators({ ...actions }, dispatch),
   };
 }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(MobileFooter);
+export default connect(mapStateToProps, mapDispatchToProps)(MobileFooter);

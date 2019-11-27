@@ -17,7 +17,6 @@ import {
 import { Desktop, Tablet, Mobile, Default } from '../common'
 import { DesktopLine, MobileLine } from '.';
 
-
 /**
  * Liste des sites
  */
@@ -34,6 +33,7 @@ export class List extends Component {
   constructor(props) {
     super(props);
     this.onCreate = this.onCreate.bind(this);
+    this.onLoadMore = this.onLoadMore.bind(this);
   }
 
   /**
@@ -52,6 +52,13 @@ export class List extends Component {
       event.preventDefault();
     }
     this.props.history.push('/site/create')
+  }
+
+  onLoadMore(event) {
+    if (event) {
+      event.preventDefault();
+    }
+    this.props.actions.loadMore();
   }
 
   /**
@@ -78,14 +85,17 @@ export class List extends Component {
           {items && items.map(item => (
             <MobileLine key={item.id} item={item} />  
           ))}
+          {this.props.site.loadMorePending && <LoadingData /> }
+          {this.props.site.loadMoreFinish ? <LoadComplete /> : <LoadMore onMore={this.onLoadMore} />}
+          {this.props.site.loadMoreError && <LoadError />}
         </Mobile>
         <Desktop>
           {items && items.map(item => (
             <DesktopLine key={item.id} item={item} />  
           ))}
-          {this.props.site.LoadMorePending && <LoadingData /> }
-          {this.props.site.LoadMoreFinish ? <LoadComplete /> : <LoadMore />}
-          {this.props.site.LoadMoreError && <LoadError />}
+          {this.props.site.loadMorePending && <LoadingData /> }
+          {this.props.site.loadMoreFinish ? <LoadComplete /> : <LoadMore onMore={this.onLoadMore} />}
+          {this.props.site.loadMoreError && <LoadError />}
         </Desktop>
       </div>
     );

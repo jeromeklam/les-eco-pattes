@@ -14,6 +14,7 @@ export default class Site extends Component {
       <Icon 
         path={mdiMapMarkerMultiple}
         size={1}
+        {...this.props}
       />
     );
   }

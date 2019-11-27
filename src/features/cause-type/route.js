@@ -7,8 +7,8 @@ export default {
   path: '',
   name: '',
   childRoutes: [
-    { path: 'cause-type', name: 'List', component: List, auth: 'PUBLIC' },
-    { path: 'cause-type/create', name: 'Create', component: Create, auth: 'PUBLIC' },
-    { path: 'cause-type/modify/:causeTypeId', name: 'Modify', component: Modify, auth: 'PUBLIC' },
+    { path: 'cause-type', name: 'List', component: List, auth: 'PRIVATE' },
+    { path: 'cause-type/create', name: 'Create', component: Create, auth: 'PRIVATE' },
+    { path: 'cause-type/modify/:causeTypeId', name: 'Modify', component: Modify, auth: 'PRIVATE' },
   ],
 };

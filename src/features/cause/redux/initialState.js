@@ -11,7 +11,7 @@ const initialState = {
   page_size: process.env.REACT_APP_PAGE_SIZE,
   filters: [],
   loadMorePending: false,
-  loadModeFinish: false,
+  loadMoreFinish: false,
   loadMoreError: null,
   loadOnePending: false,
   loadOneItem: null,

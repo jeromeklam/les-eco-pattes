@@ -14,6 +14,7 @@ export default class Cause extends Component {
       <Icon 
         path={mdiSheep}
         size={1}
+        {...this.props}
       />
     );
   }

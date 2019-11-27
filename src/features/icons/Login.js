@@ -14,6 +14,7 @@ export default class Login extends Component {
       <Icon 
         path={mdiLogin}
         size={1}
+        {...this.props}
       />
     );
   }

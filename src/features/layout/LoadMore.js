@@ -8,7 +8,11 @@ export default class LoadMore extends Component {
   render() {
     return (
       <div className="layout-load-more">
-        ....Plus....
+        <div className="row">
+          <div className="col-36">
+            <button onClick={this.props.onMore} className="btn btn-primary btn-lg btn-block">Plus</button>
+          </div>
+        </div>
       </div>
     );
   }

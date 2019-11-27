@@ -67,7 +67,7 @@ export function reducer(state, action) {
         ...state,
         loadAllPending: false,
         loadAllError: null,
-        loadDataFinish: true,
+        loadAllFinish: true,
       };
 
     case HOME_LOAD_ALL_FAILURE:

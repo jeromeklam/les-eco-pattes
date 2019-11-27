@@ -9,10 +9,12 @@
 import initialState from './initialState';
 import { reducer as checkIsAuthenticatedReducer } from './checkIsAuthenticated';
 import { reducer as signInReducer } from './signIn';
+import { reducer as signOutReducer } from './signOut';
 
 const reducers = [
   checkIsAuthenticatedReducer,
   signInReducer,
+  signOutReducer,
 ];
 
 export default function reducer(state = initialState, action) {

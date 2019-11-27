@@ -8,8 +8,8 @@ export default {
   name: '',
   isIndex: true,
   childRoutes: [
-    { path: 'site', name: 'List', component: List, auth: 'PUBLIC' },
-    { path: 'site/create', name: 'Create', component: Create, auth: 'PUBLIC' },
-    { path: 'site/modify/:siteId', name: 'Modify', component: Modify, auth: 'PUBLIC' },
+    { path: 'site', name: 'List', component: List, auth: 'PRIVATE' },
+    { path: 'site/create', name: 'Create', component: Create, auth: 'PRIVATE' },
+    { path: 'site/modify/:siteId', name: 'Modify', component: Modify, auth: 'PRIVATE' },
   ],
 };
