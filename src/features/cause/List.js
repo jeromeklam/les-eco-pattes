@@ -25,6 +25,7 @@ export class List extends Component {
   constructor(props) {
     super(props);
     this.onCreate = this.onCreate.bind(this);
+    this.onLoadMore = this.onLoadMore.bind(this);
   }
 
   componentDidMount() {
@@ -38,6 +39,13 @@ export class List extends Component {
     this.props.history.push('/cause/create')
   }
 
+  onLoadMore(event) {
+    if (event) {
+      event.preventDefault();
+    }
+    this.props.actions.loadMore();
+  }
+
   render() {
     // Les des items à afficher avec remplissage progressif
     let items = false;
@@ -45,6 +53,7 @@ export class List extends Component {
       items = buildModel(this.props.cause.items, 'FreeAsso_Cause');
     }
     // L'affichage, items, loading, loadMoreError
+    console.log(this.props.cause.LoadMoreFinish);
     return (
       <div className="cause-list">
         <div className="row cause-list-title">
@@ -59,14 +68,17 @@ export class List extends Component {
           {items && items.map(item => (
             <MobileLine item={item} />  
           ))}
+          {this.props.cause.loadMorePending && <LoadingData /> }
+          {this.props.cause.loadMoreFinish ? <LoadComplete /> : <LoadMore onMore={this.onLoadMore} />}
+          {this.props.cause.loadMoreError && <LoadError />}
         </Mobile>
         <Desktop>
           {items && items.map(item => (
             <DesktopLine item={item} />  
           ))}
-          {this.props.cause.LoadMorePending && <LoadingData /> }
-          {this.props.cause.LoadMoreFinish ? <LoadComplete /> : <LoadMore />}
-          {this.props.cause.LoadMoreError && <LoadError />}
+          {this.props.cause.loadMorePending && <LoadingData /> }
+          {this.props.cause.loadMoreFinish ? <LoadComplete /> : <LoadMore onMore={this.onLoadMore} />}
+          {this.props.cause.loadMoreError && <LoadError />}
         </Desktop>
       </div>
     );

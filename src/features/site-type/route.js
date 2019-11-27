@@ -7,8 +7,8 @@ export default {
   path: '',
   name: '',
   childRoutes: [
-    { path: 'site-type', name: 'List', component: List, auth: 'PUBLIC' },
-    { path: 'site-type/create', name: 'Create', component: Create, auth: 'PUBLIC' },
-    { path: 'site-type/modify/:siteTypeId', name: 'Modify', component: Modify, auth: 'PUBLIC' },
+    { path: 'site-type', name: 'List', component: List, auth: 'PRIVATE' },
+    { path: 'site-type/create', name: 'Create', component: Create, auth: 'PRIVATE' },
+    { path: 'site-type/modify/:siteTypeId', name: 'Modify', component: Modify, auth: 'PRIVATE' },
   ],
 };

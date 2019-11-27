@@ -22,13 +22,22 @@ export class Home extends Component {
         <Mobile>
           <div className="text-center">
             <br />
+            <h5>Pensez à l'éco-pâturage pour entretenir vos espaces verts et naturels</h5>
+            <br />
             <img src={logo} />
+            <br />
+            <br />
+            <h6>les moutons seront bien gardés !</h6>
           </div>
         </Mobile>
         <Desktop>
           <div className="text-center">
             <br />
+            <br />
             <img src={fond} />
+            <br />
+            <br />
+            <h3>les moutons seront bien gardés !</h3>
           </div>
         </Desktop>
       </div>

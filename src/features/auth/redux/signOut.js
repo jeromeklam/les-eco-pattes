@@ -1,25 +1,18 @@
-import axios from 'axios';
 import {
-  jsonApiNormalizer,
-  buildModel,
-  objectToQueryString,
-  initAxios
-} from '../../../common';
-import {
-  AUTH_SIGN_IN_BEGIN,
-  AUTH_SIGN_IN_SUCCESS,
-  AUTH_SIGN_IN_FAILURE,
-  AUTH_SIGN_IN_DISMISS_ERROR,
+  AUTH_SIGN_OUT_BEGIN,
+  AUTH_SIGN_OUT_SUCCESS,
+  AUTH_SIGN_OUT_FAILURE,
+  AUTH_SIGN_OUT_DISMISS_ERROR,
 } from './constants';
 import cookie from 'react-cookies';
+import { initAxios } from '../../../common';
 
 // Rekit uses redux-thunk for async actions by default: https://github.com/gaearon/redux-thunk
 // If you prefer redux-saga, you can use rekit-plugin-redux-saga: https://github.com/supnate/rekit-plugin-redux-saga
-export function signIn(args = {}) {
-  return dispatch => {
-    // optionally you can have getState as the second argument
+export function signOut(args = {}) {
+  return (dispatch) => { // optionally you can have getState as the second argument
     dispatch({
-      type: AUTH_SIGN_IN_BEGIN,
+      type: AUTH_SIGN_OUT_BEGIN,
     });
 
     // Return a promise so that you could control UI flow without states in the store.
@@ -30,24 +23,19 @@ export function signIn(args = {}) {
       // doRequest is a placeholder Promise. You should replace it with your own logic.
       // See the real-word example at:  https://github.com/supnate/rekit/blob/master/src/features/home/redux/fetchRedditReactjsList.js
       // args.error here is only for test coverage purpose.
-      const headers = {
-        Authorization: 'JWT',
-      };
-      const doRequest = axios.post(process.env.REACT_APP_BO_URL + '/api/v1/sso/signin', args, {
-        headers: headers,
-      });
+      const doRequest = args.error ? Promise.reject(new Error()) : Promise.resolve();
       doRequest.then(
-        res => {
+        (res) => {
           dispatch({
-            type: AUTH_SIGN_IN_SUCCESS,
+            type: AUTH_SIGN_OUT_SUCCESS,
             data: res,
           });
           resolve(res);
         },
         // Use rejectHandler as the second argument so that render errors won't be caught.
-        err => {
+        (err) => {
           dispatch({
-            type: AUTH_SIGN_IN_FAILURE,
+            type: AUTH_SIGN_OUT_FAILURE,
             data: { error: err },
           });
           reject(err);
@@ -61,70 +49,53 @@ export function signIn(args = {}) {
 
 // Async action saves request error by default, this method is used to dismiss the error info.
 // If you don't want errors to be saved in Redux store, just ignore this method.
-export function dismissSignInError() {
+export function dismissSignOutError() {
   return {
-    type: AUTH_SIGN_IN_DISMISS_ERROR,
+    type: AUTH_SIGN_OUT_DISMISS_ERROR,
   };
 }
 
 export function reducer(state, action) {
   switch (action.type) {
-    case AUTH_SIGN_IN_BEGIN:
+    case AUTH_SIGN_OUT_BEGIN:
       // Just after a request is sent
       return {
         ...state,
-        signInPending: true,
-        signInError: null,
+        signOutPending: true,
+        signOutError: null,
       };
 
-    case AUTH_SIGN_IN_SUCCESS:
+    case AUTH_SIGN_OUT_SUCCESS:
       // The request is success
-      const datas = action.data;
-      let user = false;
-      let token = false;
-      let authenticated = false;
-      if (datas && datas.headers && datas.headers.authorization) {
-        token = datas.headers.authorization;
-      }
-      if (datas.data) {
-        let object = jsonApiNormalizer(datas.data);
-        user = buildModel(
-          object,
-          'FreeSSO_User'
-        );
-      }
-      if (token && user) {
-        authenticated = true;
-        cookie.save('Authorization', token, { path: '/' });
-        initAxios(token);
-      }
+      cookie.remove('Authorization', { path: '/' });
+      initAxios(false);
       return {
         ...state,
-        token: token,
-        user: user,
-        authenticated: authenticated,
-        signInPending: false,
-        signInError: null,
+        authenticated: false,
+        token: false,
+        user: false,
+        signOutPending: false,
+        signOutError: null,
       };
 
-    case AUTH_SIGN_IN_FAILURE:
+    case AUTH_SIGN_OUT_FAILURE:
+      cookie.remove('Authorization', { path: '/' });
+      initAxios(false);
       // The request is failed
-      let error = 'Erreur inconnue';
-      if (action.data.error && action.data.error.response) {
-        let object = jsonApiNormalizer(action.data.error.response);
-        console.log(object);
-      }
       return {
         ...state,
-        signInPending: false,
-        signInError: action.data.error,
+        authenticated: false,
+        token: false,
+        user: false,
+        signOutPending: false,
+        signOutError: action.data.error,
       };
 
-    case AUTH_SIGN_IN_DISMISS_ERROR:
+    case AUTH_SIGN_OUT_DISMISS_ERROR:
       // Dismiss the request failure error
       return {
         ...state,
-        signInError: null,
+        signOutError: null,
       };
 
     default:

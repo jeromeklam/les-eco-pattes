@@ -14,6 +14,7 @@ export default class Data extends Component {
       <Icon 
         path={mdiDatabase}
         size={1}
+        {...this.props}
       />
     );
   }

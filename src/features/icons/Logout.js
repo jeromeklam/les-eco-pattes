@@ -14,6 +14,7 @@ export default class Logout extends Component {
       <Icon 
         path={mdiLogout}
         size={1}
+        {...this.props}
       />
     );
   }

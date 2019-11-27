@@ -1,7 +1,5 @@
 const initialState = {
-  loadDataPending : false,
-  loadDataFinish : false,
-  loadDataError: null,
+  loadAllFinish : false,
   loadAllPending: false,
   loadAllError: null,
 };

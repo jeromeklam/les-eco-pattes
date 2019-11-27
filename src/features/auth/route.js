@@ -3,12 +3,14 @@
 
 import {
   Signin,
+  Signout,
 } from './';
 
 export default {
   path: 'auth',
   name: 'Auth',
   childRoutes: [
-    { path: 'signin', name: 'Identification', component: Signin, isIndex: true },
+    { path: 'signin', name: 'Connexion', component: Signin, isIndex: true },
+    { path: 'signout', name: 'Deconnexion', component: Signout, isIndex: true },
   ],
 };

@@ -3,10 +3,12 @@ import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as actions from './redux/actions';
+import * as authActions from '../auth/redux/actions';
 import { DesktopHeader, DesktopFooter, DesktopSidebar } from '../../features/common';
 import { MobileHeader, MobileFooter, MobileMenu } from '../../features/common';
 import { LoadingData } from '../layout';
 import { Desktop, Tablet, Mobile, Default } from '../common'
+import { initAxios } from '../../common';
 
 /*
   This is the root component of your app. Here you define the overall layout
@@ -32,7 +34,19 @@ export class App extends Component {
   }
 
   componentDidMount() {
-    this.props.actions.loadAll();
+    if (this.props.auth.authenticated) {
+      this.props.actions.loadAll();
+    } else {
+      // Check auth...
+      this.props.actions.checkIsAuthenticated();
+    }
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.auth.authenticated && !nextProps.home.loadAllFinish && !nextProps.home.loadAllError && !nextProps.home.loadAllPending) {
+      initAxios(nextProps.auth.token);
+      nextProps.actions.loadAll();
+    }
   }
 
   onToggle () {
@@ -42,35 +56,43 @@ export class App extends Component {
   render() {
     return (
       <div>
-        {this.props.home.loadDataFinish ? (  
-        <div className="d-flex" id="wrapper">
-          <Tablet>Tablet @TODO</Tablet>
-          <Mobile>
-            <MobileHeader />
-            <div id="page-content-wrapper" className="w-100">
-              {this.props.children}
-            </div>
-            {this.state.menuDataOpen &&
-              <MobileMenu onToggle={this.onToggle}/>
-            }
-            <MobileFooter onToggle={this.onToggle}/>
-          </Mobile>
-          <Desktop>
-            <DesktopSidebar />
-            <div id="page-content-wrapper" className="w-100">
-              <DesktopHeader />
-              {this.props.children}
-            </div>
-            <DesktopFooter />
-          </Desktop>
-        </div>
-        ) : (
-          <div className="main-loader">
-            <p>... Chargement ...</p>
-            <LoadingData />
+        {this.props.home.loadAllError ? (  
+          <div class="text-danger">
+            <span>Erreur d'accès au service</span>
           </div>
-        )
-      }
+        ) : (
+          <div>
+            {(!this.props.auth.authenticated || this.props.home.loadAllFinish) ? (  
+              <div className="d-flex" id="wrapper">
+                <Tablet>Tablet @TODO</Tablet>
+                <Mobile>
+                  <MobileHeader />
+                  <div id="page-content-wrapper" className="w-100">
+                    {this.props.children}
+                  </div>
+                  {this.state.menuDataOpen &&
+                    <MobileMenu onToggle={this.onToggle}/>
+                  }
+                  <MobileFooter onToggle={this.onToggle}/>
+                </Mobile>
+                <Desktop>
+                  <DesktopSidebar />
+                  <div id="page-content-wrapper" className="w-100">
+                    <DesktopHeader />
+                    {this.props.children}
+                  </div>
+                  <DesktopFooter />
+                </Desktop>
+              </div>
+            ) : (
+              <div className="main-loader">
+                <p>... Chargement ...</p>
+                <LoadingData />
+              </div>
+            )
+          }
+        </div>
+      )}
       </div>
     );
   }
@@ -79,12 +101,13 @@ export class App extends Component {
 function mapStateToProps(state) {
   return {
     home: state.home,
+    auth: state.auth,
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
-    actions: bindActionCreators({ ...actions }, dispatch)
+    actions: bindActionCreators({ ...actions, ...authActions }, dispatch)
   };
 }
 

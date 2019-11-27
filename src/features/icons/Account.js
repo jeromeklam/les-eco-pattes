@@ -1,20 +1,20 @@
 import React, { Component } from 'react';
 import Icon from '@mdi/react';
 import {
-  mdiHome
+  mdiAccount
 } from '@mdi/js';
 
-export default class Home extends Component {
+export default class Account extends Component {
   static propTypes = {
 
   };
 
   render() {
     return (
-      <Icon 
-        path={mdiHome}
+      <Icon
+        path={mdiAccount}
         size={1}
-        {...this.props}
+        color={this.props.color}
       />
     );
   }

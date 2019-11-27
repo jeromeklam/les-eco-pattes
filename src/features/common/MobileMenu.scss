@@ -5,5 +5,9 @@
   bottom: 60px;
   left: 0px;
   right: 0px;
-  background-color: #f5f5f5 ;
+  background-color: lighten($footer-background-color, 20%) ;
+
+  a {
+    color: $footer-color;
+  }
 }

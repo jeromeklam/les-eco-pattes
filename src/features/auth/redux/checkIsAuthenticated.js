@@ -1,9 +1,17 @@
+import axios from 'axios';
 import {
   AUTH_CHECK_IS_AUTHENTICATED_BEGIN,
   AUTH_CHECK_IS_AUTHENTICATED_SUCCESS,
   AUTH_CHECK_IS_AUTHENTICATED_FAILURE,
   AUTH_CHECK_IS_AUTHENTICATED_DISMISS_ERROR,
 } from './constants';
+import {
+  jsonApiNormalizer,
+  buildModel,
+  objectToQueryString,
+  initAxios
+} from '../../../common';
+import cookie from 'react-cookies';
 
 // Rekit uses redux-thunk for async actions by default: https://github.com/gaearon/redux-thunk
 // If you prefer redux-saga, you can use rekit-plugin-redux-saga: https://github.com/supnate/rekit-plugin-redux-saga
@@ -21,7 +29,7 @@ export function checkIsAuthenticated(args = {}) {
       // doRequest is a placeholder Promise. You should replace it with your own logic.
       // See the real-word example at:  https://github.com/supnate/rekit/blob/master/src/features/home/redux/fetchRedditReactjsList.js
       // args.error here is only for test coverage purpose.
-      const doRequest = args.error ? Promise.reject(new Error()) : Promise.resolve();
+      const doRequest = axios.post(process.env.REACT_APP_BO_URL + '/api/v1/sso/check');
       doRequest.then(
         (res) => {
           dispatch({
@@ -65,8 +73,30 @@ export function reducer(state, action) {
 
     case AUTH_CHECK_IS_AUTHENTICATED_SUCCESS:
       // The request is success
+      const datas = action.data;
+      let user = false;
+      let token = false;
+      let authenticated = false;
+      if (datas && datas.headers && datas.headers.authorization) {
+        token = datas.headers.authorization;
+      }
+      if (datas.data) {
+        let object = jsonApiNormalizer(datas.data);
+        user = buildModel(
+          object,
+          'FreeSSO_User'
+        );
+      }
+      if (token && user) {
+        authenticated = true;
+        cookie.save('Authorization', token, { path: '/' });
+        initAxios(token);
+      }
       return {
         ...state,
+        token: token,
+        user: user,
+        authenticated: authenticated,
         checkIsAuthenticatedPending: false,
         checkIsAuthenticatedError: null,
       };
