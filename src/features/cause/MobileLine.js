@@ -14,7 +14,10 @@ export default class MobileLine extends Component {
         <div className="col-36">
           <div className="card">
             <div className="card-heading">
-              <Link to={"/cause/modify/" + item.id}>{item.cau_name}</Link>
+              <Link to={"/cause/modify/" + item.id}>
+                {item.cau_name}
+                
+              </Link>
             </div>
             <div className="card-body">
               {item.cau_name}

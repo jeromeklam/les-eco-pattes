@@ -21,7 +21,6 @@ export function createOne(args = {}) {
       // doRequest is a placeholder Promise. You should replace it with your own logic.
       // See the real-word example at:  https://github.com/supnate/rekit/blob/master/src/features/home/redux/fetchRedditReactjsList.js
       // args.error here is only for test coverage purpose.
-      console.log("create site",args);
       const doRequest = axios.post(process.env.REACT_APP_BO_URL + '/v1/asso/site', args);
       doRequest.then(
         (res) => {

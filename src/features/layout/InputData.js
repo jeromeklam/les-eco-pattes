@@ -12,7 +12,7 @@ function getFieldData(field_name, tab_config, tab_data) {
     if (tab_config.FreeAsso_Config[key].attributes.acfg_code == ('DATA_ID@' + field_name.toUpperCase())) {
       const data_id = tab_config.FreeAsso_Config[key].attributes.acfg_value;
       myDatas.forEach((oneData) => {
-        if (oneData.id == data_id) {
+        if (oneData.id === data_id) {
           data = oneData;
           return true;
         }
@@ -24,9 +24,7 @@ function getFieldData(field_name, tab_config, tab_data) {
 }
 
 export default class InputData extends Component {
-  static propTypes = {
-
-  };
+  static propTypes = { };
 
   constructor(props) {
     super(props);
@@ -38,7 +36,7 @@ export default class InputData extends Component {
 
   render() {            
     let options = [];
-    if (this.state.data.data_type == "LIST" ) {         
+    if (this.state.data.data_type === "LIST" ) {         
       const list = JSON.parse(this.state.data.data_content);         
       list.forEach((option) => {        
         options.push({value: option, label: option});
@@ -46,7 +44,7 @@ export default class InputData extends Component {
     }     
     return (
       <div>
-        {this.state.data.data_type == "STRING" &&
+        {this.state.data.data_type === "STRING" &&
           <InputText
             label={this.state.data.data_name}
             name={this.state.field}
@@ -54,7 +52,7 @@ export default class InputData extends Component {
             onChange={this.props.onChange}
           />
         }
-        {this.state.data.data_type == "TEXT" &&
+        {this.state.data.data_type === "TEXT" &&
           <InputTextArea
             label={this.state.data.data_name}
             name={this.state.field}
@@ -62,7 +60,7 @@ export default class InputData extends Component {
             onChange={this.props.onChange}
           />
         }
-        {this.state.data.data_type == "LIST" &&            
+        {this.state.data.data_type === "LIST" &&            
           <InputSelect
             label={this.state.data.data_name}
             name={this.state.field}

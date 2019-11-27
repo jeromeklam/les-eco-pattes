@@ -8,3 +8,4 @@ export { default as Data } from './Data';
 export { default as AddOne } from './AddOne';
 export { default as Submit } from './Submit';
 export { default as Cancel } from './Cancel';
+export { default as Tab } from './Tab';

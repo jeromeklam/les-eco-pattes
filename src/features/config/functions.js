@@ -16,6 +16,5 @@ export function configAsOptions(object) {
     object,
     'FreeAsso_Config',
   );
-  console.log("config items",items);
   return arr;
 }

@@ -9,7 +9,12 @@ const initialState = {
   items: [],
   page_number: 1,
   page_size: process.env.REACT_APP_PAGE_SIZE,
-  nav_tab: 1,
+  tab: "1",
+  tabs: [
+    {key:"1", name:"localisation", label:"Localisation", shortcut:"L", icon:"location"},
+    {key:"2", name:"equipement", label:"Equipement", shortcut:"E", icon:"settings"},
+    {key:"3", name:"divers", label:"Divers", shortcut:"D", icon:"misc"}
+  ], 
   filters: [],
   properties: ["string_1","string_2","string_3","string_4",
               "number_1","number_2","number_3","number_4",
