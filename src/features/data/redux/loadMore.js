@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { jsonApiNormalizer, objectToQueryString } from '../../../common';
 import {
+  DATA_LOAD_MORE_INIT,
   DATA_LOAD_MORE_BEGIN,
   DATA_LOAD_MORE_SUCCESS,
   DATA_LOAD_MORE_FAILURE,
@@ -9,14 +10,20 @@ import {
 
 // Rekit uses redux-thunk for async actions by default: https://github.com/gaearon/redux-thunk
 // If you prefer redux-saga, you can use rekit-plugin-redux-saga: https://github.com/supnate/rekit-plugin-redux-saga
-export function loadMore(args = {}) {
-  return (dispatch, getState) => { // optionally you can have getState as the second argument
-    const loaded = getState().data.LoadMoreFinish;
-    if (!loaded) {
-      dispatch({
-        type: DATA_LOAD_MORE_BEGIN,
-      });
-
+export function loadMore(args = {}, reload = false) {
+  return (dispatch, getState) => {
+    // optionally you can have getState as the second argument
+    const loaded = getState().data.loadMoreFinish;
+    if (!loaded || reload) {
+      if (reload) {
+        dispatch({
+          type: DATA_LOAD_MORE_INIT,
+        });
+      } else {
+        dispatch({
+          type: DATA_LOAD_MORE_BEGIN,
+        });
+      }
       // Return a promise so that you could control UI flow without states in the store.
       // For example: after submit a form, you need to redirect the page to another when succeeds or show some errors message if fails.
       // It's hard to use state to manage it, but returning a promise allows you to easily achieve it.
@@ -31,7 +38,7 @@ export function loadMore(args = {}) {
         const addUrl = objectToQueryString(params);
         const doRequest = axios.get(process.env.REACT_APP_BO_URL + '/v1/asso/data' + addUrl, {});
         doRequest.then(
-          (res) => {
+          res => {
             dispatch({
               type: DATA_LOAD_MORE_SUCCESS,
               data: res,
@@ -39,7 +46,7 @@ export function loadMore(args = {}) {
             resolve(res);
           },
           // Use rejectHandler as the second argument so that render errors won't be caught.
-          (err) => {
+          err => {
             dispatch({
               type: DATA_LOAD_MORE_FAILURE,
               data: { error: err },
@@ -63,6 +70,19 @@ export function dismissLoadMoreError() {
 
 export function reducer(state, action) {
   switch (action.type) {
+    case DATA_LOAD_MORE_INIT:
+      // Just after a request is sent
+      return {
+        ...state,
+        loadMorePending: true,
+        loadMoreError: null,
+        loadMoreFinish: false,
+        items: [],
+        page_number: 1,
+        page_size: process.env.REACT_APP_PAGE_SIZE,
+        filters: [],
+      };
+
     case DATA_LOAD_MORE_BEGIN:
       // Just after a request is sent
       return {
@@ -95,9 +115,9 @@ export function reducer(state, action) {
         ...state,
         loadMorePending: false,
         loadMoreError: null,
-        LoadMoreFinish: (nbre < state.page_size),
+        loadMoreFinish: nbre < state.page_size,
         items: list,
-        page_number: state.page_number+1
+        page_number: state.page_number + 1,
       };
 
     case DATA_LOAD_MORE_FAILURE:

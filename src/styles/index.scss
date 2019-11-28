@@ -2,8 +2,6 @@
 
 @import './variables';
 
-@import './global';
-
 @import "../../node_modules/bootstrap/scss/bootstrap";
 
 @import '../features/home/style';
@@ -19,3 +17,6 @@
 @import '../features/site-type/style';
 @import '../features/cause-type/style';
 @import '../features/config/style';
+
+@import './global';
+@import '../features/cause-main-type/style';

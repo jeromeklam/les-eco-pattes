@@ -32,7 +32,7 @@ export class DesktopSidebar extends Component {
 
   render() {
     return (
-      <div>
+      <div class="sidebar-wrapper">
         <CSSTransition in={this.props.common.sidebar} timeout={300} classNames="sidebar">
           <div className="bg-light border-right" id="sidebar-wrapper">
             <div className="sidebar-heading">{process.env.REACT_APP_APP_NAME}</div>

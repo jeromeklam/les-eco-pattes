@@ -72,7 +72,7 @@ export class List extends Component {
     if (this.state.quickSearch === "") {
       this.setState({mobileQuickSearch: !this.state.mobileQuickSearch});
     } else {  
-      this.props.actions.loadMore(this.state.quickSearch);
+      this.props.actions.loadMore(this.state.quickSearch, true);
     }
   }
 
@@ -92,7 +92,7 @@ export class List extends Component {
     // L'affichage, items, loading, loadMoreError
     return (
       <div className="site-list">
-        <div className="row site-list-title">
+        <div className="row row-list-title">
           <div className="col-20">
             <span>Sites</span>
           </div>

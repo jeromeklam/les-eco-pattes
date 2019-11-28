@@ -54,7 +54,7 @@ export class Modify extends Component {
   render() {
     const item = this.state.item;
     return (
-      <div className="site-type-modify">
+      <div className="site-type-modify global-card">
         {this.props.siteType.loadOnePending ? (
           <LoadingData />
         ) : (

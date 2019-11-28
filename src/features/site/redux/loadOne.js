@@ -12,6 +12,7 @@ import {
 export function loadOne(args = {}) {
   return dispatch => {
     // optionally you can have getState as the second argument
+
     dispatch({
       type: SITE_LOAD_ONE_BEGIN,
     });

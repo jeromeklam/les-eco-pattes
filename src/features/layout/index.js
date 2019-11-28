@@ -15,3 +15,8 @@ export { default as InputData } from './InputData';
 export { default as InputTextArea } from './InputTextArea';
 export { default as InputFilter } from './InputFilter';
 export { default as InputQuickSearch } from './InputQuickSearch';
+export { default as InputValues } from './InputValues';
+export { default as ButtonReload } from './ButtonReload';
+export { default as HoverObserver } from './HoverObserver';
+export { default as ButtonGetOne } from './ButtonGetOne';
+export { default as ButtonDelOne } from './ButtonDelOne';

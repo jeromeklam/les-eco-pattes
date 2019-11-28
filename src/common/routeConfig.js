@@ -14,6 +14,7 @@ import layoutRoute from '../features/layout/route';
 import siteTypeRoute from '../features/site-type/route';
 import causeTypeRoute from '../features/cause-type/route';
 import configRoute from '../features/config/route';
+import causeMainTypeRoute from '../features/cause-main-type/route';
 
 // NOTE: DO NOT CHANGE the 'childRoutes' name and the declaration pattern.
 // This is used for Rekit cmds to register routes config for new features, and remove config when remove features, etc.
@@ -31,6 +32,7 @@ const childRoutes = [
   siteTypeRoute,
   causeTypeRoute,
   configRoute,
+  causeMainTypeRoute,
 ];
 
 const routes = [{

@@ -11,11 +11,11 @@ export default class FormResponsive extends Component {
     return (
       <form>
         <div className="card">
-          <div className="card-header">                        
-            <ul className="nav nav-tabs">
-              <li>
-                <a>{this.props.title}</a>
-              </li>
+          <div className="card-header">         
+            <div className="float-left">
+              <span className="navbar-brand">{this.props.title}</span>  
+            </div>            
+            <ul className="nav justify-content-end">
               {this.props.tabs && this.props.tabs.map(oneTab => {
                 return (       
                   <li key={oneTab.key} className="nav-item">

@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { jsonApiNormalizer, objectToQueryString } from '../../../common';
 import {
+  SITE_LOAD_MORE_INIT,
   SITE_LOAD_MORE_BEGIN,
   SITE_LOAD_MORE_SUCCESS,
   SITE_LOAD_MORE_FAILURE,
@@ -9,15 +10,20 @@ import {
 
 // Rekit uses redux-thunk for async actions by default: https://github.com/gaearon/redux-thunk
 // If you prefer redux-saga, you can use rekit-plugin-redux-saga: https://github.com/supnate/rekit-plugin-redux-saga
-export function loadMore(args = null) {
+export function loadMore(args = false, reload = false) {
   return (dispatch, getState) => {
     // optionally you can have getState as the second argument
     const loaded = getState().site.loadMoreFinish;
-    if (!loaded) {
-      dispatch({
-        type: SITE_LOAD_MORE_BEGIN,
-      });
-
+    if (!loaded || reload) {
+      if (reload) {
+        dispatch({
+          type: SITE_LOAD_MORE_INIT,
+        });
+      } else {
+        dispatch({
+          type: SITE_LOAD_MORE_BEGIN,
+        });
+      }
       // Return a promise so that you could control UI flow without states in the store.
       // For example: after submit a form, you need to redirect the page to another when succeeds or show some errors message if fails.
       // It's hard to use state to manage it, but returning a promise allows you to easily achieve it.
@@ -30,7 +36,7 @@ export function loadMore(args = null) {
         let params = {
           page: { number: getState().site.page_number, size: getState().site.page_size },
         };
-        if (args) {
+        if (args && args != {} && args != '') {
           params.filter = { 
             and: {
               site_name: args
@@ -74,6 +80,18 @@ export function dismissLoadMoreError() {
 
 export function reducer(state, action) {
   switch (action.type) {
+    case SITE_LOAD_MORE_INIT:
+      // Just after a request is sent
+      return {
+        ...state,
+        loadMorePending: true,
+        loadMoreError: null,
+        loadMoreFinish: false,
+        items: [],
+        page_number: 1,
+        page_size: process.env.REACT_APP_PAGE_SIZE,
+      };
+
     case SITE_LOAD_MORE_BEGIN:
       // Just after a request is sent
       return {

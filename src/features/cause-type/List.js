@@ -11,7 +11,8 @@ import {
   LoadMore,
   LoadError,
   LoadComplete,
-  ButtonAddOne
+  ButtonAddOne,
+  ButtonReload
 } from '../layout';
 import { Desktop, Tablet, Mobile, Default } from '../common'
 import { DesktopLine, MobileLine } from '.';
@@ -25,6 +26,7 @@ export class List extends Component {
   constructor(props) {
     super(props);
     this.onCreate = this.onCreate.bind(this);
+    this.onReload = this.onReload.bind(this);
   }
 
   componentDidMount() {
@@ -38,6 +40,13 @@ export class List extends Component {
     this.props.history.push('/cause-type/create')
   }
 
+  onReload(event) {
+    if (event) {
+      event.preventDefault();
+    }
+    this.props.actions.loadMore({}, true);
+  }
+
   render() {
     let items = false;    
     if (this.props.causeType.items.FreeAsso_CauseType) {
@@ -45,27 +54,68 @@ export class List extends Component {
     }
     // L'affichage, items, loading, loadMoreError
     return (
-      <div className="cause-type-list">        
-        <div className="row cause-type-list-title">
-          <div className="col-26">
-            <span>Données -- Type d'animaux</span>
-          </div>
-          <div className="col-10 text-right">            
-            <ButtonAddOne onClick={this.onCreate}/>
-          </div>
-        </div>
+      <div className="">        
         <Mobile>
-          {items && items.map(item => (
-            <MobileLine item={item} />  
-          ))}
+          <div className="row row-list-title">
+            <div className="col-20">
+              <span>Données -- Type d'animaux</span>
+            </div>
+            <div className="col-16 text-right">            
+              <ul className="nav justify-content-end">         
+                <li className="nav-item">
+                  <ButtonReload color="white" onClick={this.onReload}/>
+                </li>
+                <li className="nav-item">
+                  <ButtonAddOne color="white" onClick={this.onCreate}/>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div className="row-list data-list">
+            {items && items.map(item => (
+              <MobileLine item={item} />  
+            ))}
+          </div>
+          {this.props.causeType.loadMorePending ? (
+              <LoadingData /> 
+            ) : (
+              <div>
+                {this.props.causeType.loadMoreFinish ? <LoadComplete /> : <LoadMore />}
+              </div>
+            )
+          }
+          {this.props.causeType.loadMoreError && <LoadError />}
         </Mobile>
         <Desktop>
-          {items && items.map(item => (
-            <DesktopLine item={item} />  
-          ))}
-          {this.props.causeType.LoadMorePending && <LoadingData /> }
-          {this.props.causeType.LoadMoreFinish ? <LoadComplete /> : <LoadMore />}
-          {this.props.causeType.LoadMoreError && <LoadError />}
+          <div className="row row-list-title">
+            <div className="col-26">
+              <span>Données -- Type d'animaux</span>
+            </div>
+            <div className="col-10 text-right">            
+              <ul className="nav justify-content-end">         
+                <li className="nav-item">
+                  <ButtonReload color="white" onClick={this.onReload}/>
+                </li>
+                <li className="nav-item">
+                  <ButtonAddOne color="white" onClick={this.onCreate}/>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div className="row-list data-list">
+            {items && items.map(item => (
+              <DesktopLine item={item} />  
+            ))}
+          </div>
+          {this.props.causeType.loadMorePending ? (
+              <LoadingData /> 
+            ) : (
+              <div>
+                {this.props.causeType.loadMoreFinish ? <LoadComplete /> : <LoadMore />}
+              </div>
+            )
+          }
+          {this.props.causeType.loadMoreError && <LoadError />}
         </Desktop>
       </div>
     );

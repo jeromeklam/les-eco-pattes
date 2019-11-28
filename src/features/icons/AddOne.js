@@ -12,6 +12,7 @@ export default class AddOne extends Component {
       <Icon 
         path={mdiPlus}
         size={1}
+        color={this.props.color}
       />
     );
   }

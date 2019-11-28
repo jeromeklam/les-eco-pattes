@@ -5,12 +5,12 @@ import useForm from '../layout/useForm';
 export default function Form(props) {
   const { values, handleChange, handleSubmit, handleCancel } = useForm(
     props.item,
+    '',
     props.onSubmit,
     props.onCancel,
   );
   return (
     <FormResponsive title="Types de site" onSubmit={handleSubmit} onCancel={handleCancel}>
-      <div className="card-header">Types de site</div>
       <div className="card-body">
         <InputHidden name="id" id="id" value={values.id} />
         <InputText

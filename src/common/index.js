@@ -100,10 +100,22 @@ export function objectToQueryString (obj) {
     if (Array.isArray(vals)) {
       for (let key2 in vals) {
           let val2 = vals[key2];
-          if (params == '') {
-            params = key + '[' + key2 + ']=' + val2;
+          if (typeof val2 == 'object') {
+            const keys21 = Object.keys(val2);
+            keys21.forEach((key21) => {
+              let val21 = val2[key21];
+              if (params == '') {
+                params = key + '[' + key2 + '][' + key21 + ']=' + val21;
+              } else {
+                params = params + '&' + key + '[' + key2 + '][' + key21 + ']=' + val21;
+              }
+            });
           } else {
-            params = params + '&' + key + '[' + key2 + ']=' + val2;
+            if (params == '') {
+              params = key + '[' + key2 + ']=' + val2;
+            } else {
+              params = params + '&' + key + '[' + key2 + ']=' + val2;
+            }
           }
       }
     } else {
@@ -111,10 +123,22 @@ export function objectToQueryString (obj) {
         const keys2 = Object.keys(vals);
         keys2.forEach((key3) => {
           let val3 = vals[key3];
-          if (params == '') {
-            params = key + '[' + key3 + ']=' + val3
+          if (typeof val3 == 'object') {
+            const keys31 = Object.keys(val3);
+            keys31.forEach((key31) => {
+              let val31 = val3[key31];
+              if (params == '') {
+                params = key + '[' + key3 + '][' + key31 + ']=' + val31;
+              } else {
+                params = params + '&' + key + '[' + key3 + '][' + key31 + ']=' + val31;
+              }
+            });
           } else {
-            params = params + '&' + key + '[' + key3 + ']=' + val3;
+            if (params == '') {
+              params = key + '[' + key3 + ']=' + val3
+            } else {
+              params = params + '&' + key + '[' + key3 + ']=' + val3;
+            }
           }
         });
       } else {

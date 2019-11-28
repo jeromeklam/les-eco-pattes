@@ -12,3 +12,6 @@ export { default as Tab } from './Tab';
 export { default as Account } from './Account';
 export { default as Filter } from './Filter';
 export { default as Search } from './Search';
+export { default as Reload } from './Reload';
+export { default as GetOne } from './GetOne';
+export { default as DelOne } from './DelOne';

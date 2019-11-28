@@ -74,7 +74,7 @@ export class Modify extends Component {
   render() {
     const item = this.state.item;
     return (
-      <div className="data-modify">
+      <div className="data-modify global-card">
         {this.props.data.loadOnePending ? (
           <LoadingData />
         ) : (

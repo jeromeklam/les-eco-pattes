@@ -70,7 +70,7 @@ export class Create extends Component {
   render() {
     const item = this.state.item;
     return (
-      <div className="cause-type-create">
+      <div className="cause-type-create global-card">
         {this.props.causeType.loadOnePending ? (
           <LoadingData />
         ) : (

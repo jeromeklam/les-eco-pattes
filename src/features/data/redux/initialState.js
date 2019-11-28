@@ -12,7 +12,7 @@ const initialState = {
   filters: [],
   loadMorePending: false,
   loadMoreError: null,
-  LoadMoreFinish: false,
+  loadMoreFinish: false,
   loadOnePending: false,
   loadOneError: null,
   loadOneItem: false,

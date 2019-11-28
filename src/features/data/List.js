@@ -9,7 +9,8 @@ import {
   LoadMore,
   LoadError,
   LoadComplete,
-  ButtonAddOne
+  ButtonAddOne,
+  ButtonReload
 } from '../layout';
 import {
   buildModel
@@ -28,6 +29,8 @@ export class List extends Component {
   constructor(props) {
     super(props);
     this.onCreate = this.onCreate.bind(this);
+    this.onReload = this.onReload.bind(this);
+    this.onGetOne = this.onGetOne.bind(this);
   }
 
   componentDidMount() {
@@ -38,11 +41,22 @@ export class List extends Component {
     this.props.actions.loadMore();
   }
 
-  onCreate (event) {
+  onCreate(event) {
     if (event) {
       event.preventDefault();
     }
     this.props.history.push('/data/create') ;
+  }
+
+  onGetOne(id) {
+    this.props.history.push('/data/modify/' + id) ;
+  }
+
+  onReload(event) {
+    if (event) {
+      event.preventDefault();
+    }
+    this.props.actions.loadMore({}, true);
   }
 
   render() {
@@ -53,27 +67,68 @@ export class List extends Component {
     }
     // L'affichage, items, loading, loadMoreError
     return (
-      <div className="data-list">
-        <div className="row data-list-title">
-          <div className="col-26">
-            <span>Données -- divers</span>
-          </div>
-          <div className="col-10 text-right">            
-            <ButtonAddOne onClick={this.onCreate}/>
-          </div>
-        </div>
+      <div className="">
         <Mobile>
-          {items && items.map(item => (
-            <MobileLine key={item.id} item={item} />  
-          ))}
+          <div className="row row-list-title">
+            <div className="col-20">
+              <span>Données -- divers</span>
+            </div>
+            <div className="col-16 text-right">    
+              <ul className="nav justify-content-end">         
+                <li className="nav-item">
+                  <ButtonReload color="white" onClick={this.onReload}/>
+                </li>
+                <li className="nav-item">
+                  <ButtonAddOne color="white" onClick={this.onCreate}/>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div className="row-list data-list">
+            {items && items.map(item => (
+              <MobileLine key={item.id} item={item} />  
+            ))}
+          </div>
+          {this.props.data.loadMorePending ? (
+              <LoadingData /> 
+            ) : (
+              <div>
+                {this.props.data.loadMoreFinish ? <LoadComplete /> : <LoadMore />}
+              </div>
+            )
+          }
+          {this.props.data.loadMoreError && <LoadError />}
         </Mobile>
         <Desktop>
-          {items && items.map(item => (
-            <DesktopLine key={item.id} item={item} />  
-          ))}
-          {this.props.data.LoadMorePending && <LoadingData /> }
-          {this.props.data.LoadMoreFinish ? <LoadComplete /> : <LoadMore />}
-          {this.props.data.LoadMoreError && <LoadError />}
+          <div className="row row-list-title">
+            <div className="col-26">
+              <span>Données -- divers</span>
+            </div>
+            <div className="col-10 text-right">   
+              <ul className="nav justify-content-end">         
+                <li className="nav-item">
+                  <ButtonReload color="white" onClick={this.onReload}/>
+                </li>
+                <li className="nav-item">
+                  <ButtonAddOne color="white" onClick={this.onCreate}/>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div className="row-list data-list">
+            {items && items.map(item => (
+              <DesktopLine key={item.id} item={item} onGetOne={this.onGetOne}/>  
+            ))}
+          </div>
+          {this.props.data.loadMorePending ? (
+              <LoadingData /> 
+            ) : (
+              <div>
+                {this.props.data.loadMoreFinish ? <LoadComplete /> : <LoadMore />}
+              </div>
+            )
+          }
+          {this.props.data.loadMoreError && <LoadError />}
         </Desktop>
       </div>
     );
