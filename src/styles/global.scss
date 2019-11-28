@@ -8,7 +8,6 @@ body {
   font-family: sans-serif;
 }
 
-
 .site-list .site-list-title,
 .cause-list .cause-list-title,
 .data-list .data-list-title,
@@ -29,4 +28,9 @@ body {
   position: absolute;
   color: $header-color;
 }
+
+.desktop-line .misc {
+  color: #212529;
+}
+
 

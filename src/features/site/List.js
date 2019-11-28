@@ -12,7 +12,8 @@ import {
   LoadMore,
   LoadError,
   LoadComplete,
-  ButtonAddOne
+  ButtonAddOne,
+  InputQuickSearch
 } from '../layout';
 import { Desktop, Tablet, Mobile, Default } from '../common'
 import { DesktopLine, MobileLine } from '.';
@@ -32,8 +33,14 @@ export class List extends Component {
 
   constructor(props) {
     super(props);
+    this.state = {
+      quickSearch: "",
+      mobileQuickSearch: false
+    };
     this.onCreate = this.onCreate.bind(this);
     this.onLoadMore = this.onLoadMore.bind(this);
+    this.onQuickSearch = this.onQuickSearch.bind(this);
+    this.onChangeSearch = this.onChangeSearch.bind(this);
   }
 
   /**
@@ -61,6 +68,18 @@ export class List extends Component {
     this.props.actions.loadMore();
   }
 
+  onQuickSearch(event) {    
+    if (this.state.quickSearch === "") {
+      this.setState({mobileQuickSearch: !this.state.mobileQuickSearch});
+    } else {  
+      this.props.actions.loadMore(this.state.quickSearch);
+    }
+  }
+
+  onChangeSearch(event) {
+    this.setState({[event.target.name]: event.target.value});
+  }
+
   /**
    * Génération du contenu
    */
@@ -74,10 +93,19 @@ export class List extends Component {
     return (
       <div className="site-list">
         <div className="row site-list-title">
-          <div className="col-26">
+          <div className="col-20">
             <span>Sites</span>
           </div>
-          <div className="col-10 text-right">            
+          <div className="col-10">            
+            <InputQuickSearch 
+              name="quickSearch"
+              quickSearch={this.state.quickSearch}  
+              mobileQuickSearch={this.state.mobileQuickSearch}  
+              onClick={this.onQuickSearch}
+              onChange={this.onChangeSearch}
+            />      
+          </div>          
+          <div className="col-6 text-right">            
             <ButtonAddOne onClick={this.onCreate}/>
           </div>
         </div>

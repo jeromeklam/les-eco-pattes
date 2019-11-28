@@ -13,3 +13,5 @@ export { default as InputSelect } from './InputSelect';
 export { default as FormResponsive } from './FormResponsive';
 export { default as InputData } from './InputData';
 export { default as InputTextArea } from './InputTextArea';
+export { default as InputFilter } from './InputFilter';
+export { default as InputQuickSearch } from './InputQuickSearch';

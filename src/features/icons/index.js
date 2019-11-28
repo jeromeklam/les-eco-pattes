@@ -10,3 +10,5 @@ export { default as Submit } from './Submit';
 export { default as Cancel } from './Cancel';
 export { default as Tab } from './Tab';
 export { default as Account } from './Account';
+export { default as Filter } from './Filter';
+export { default as Search } from './Search';

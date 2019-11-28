@@ -23,21 +23,21 @@ export class MobileHeader extends Component {
           </div>
           <div className="col-16 text-right">
             {this.props.auth.authenticated ? (
-              <ul class="nav justify-content-end">
-                <li class="nav-item">
+              <ul className="nav justify-content-end">
+                <li className="nav-item">
                   <Link className="nav-link" to="/auth/account">
                     <AccountIcon color="white"/>
                   </Link>
                 </li>
-                <li class="nav-item">
+                <li className="nav-item">
                   <Link className="nav-link" to="/auth/signout">
                     <LogoutIcon color="white"/>
                   </Link>
                 </li>
               </ul>
             ) : (
-              <ul class="nav justify-content-end">
-                <li class="nav-item">
+              <ul className="nav justify-content-end">
+                <li className="nav-item">
                   <Link className="nav-link" to="/auth/signin">
                     <LoginIcon color="white"/>
                   </Link>

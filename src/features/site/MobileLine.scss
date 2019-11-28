@@ -1,5 +1,8 @@
 @import '../../styles/mixins';
 
-.site-mobile-line {
-
+.site-mobile-line .card-body {
+  padding-top: 0.3rem;  
+  padding-left: 1rem;
+  padding-right: 1rem;
+  padding-bottom: 0.3rem;
 }

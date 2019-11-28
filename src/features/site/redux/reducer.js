@@ -12,6 +12,7 @@ import { reducer as loadOneReducer } from './loadOne';
 import { reducer as reloadReducer } from './reload';
 import { reducer as createOneReducer } from './createOne';
 import { reducer as updateOneReducer } from './updateOne';
+import { reducer as filterReducer } from './filter';
 
 const reducers = [
   loadMoreReducer,
@@ -19,6 +20,7 @@ const reducers = [
   reloadReducer,
   createOneReducer,
   updateOneReducer,
+  filterReducer,
 ];
 
 export default function reducer(state = initialState, action) {

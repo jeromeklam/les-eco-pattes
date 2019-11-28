@@ -2,9 +2,7 @@ import React, { Component } from 'react';
 import { NavLink } from 'react-router-dom';
 
 export default class MobileMenu extends Component {
-  static propTypes = {
-
-  };
+  static propTypes = {};
 
   render() {
     return (

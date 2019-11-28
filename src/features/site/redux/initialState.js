@@ -21,6 +21,9 @@ const initialState = {
               "date_1","date_2","date_3","date_4",
               "text_1","text_2","text_3","text_4",
               "bool_1","bool_2","bool_3","bool_4"],
+  filters: [],
+  quickSearch: "",       
+  mobileQuickSearch: false,       
   loadMorePending: false,
   loadMoreFinish: false,
   loadMoreError: null,  
@@ -31,7 +34,9 @@ const initialState = {
   createOnePending: false,
   createOneError: null,
   updateOnePending: false,
-  updateOneError: null
+  updateOneError: null,
+  filterPending: false,
+  filterError: null
 };
 
 export default initialState;

@@ -9,7 +9,7 @@ import {
 
 // Rekit uses redux-thunk for async actions by default: https://github.com/gaearon/redux-thunk
 // If you prefer redux-saga, you can use rekit-plugin-redux-saga: https://github.com/supnate/rekit-plugin-redux-saga
-export function loadMore(args = {}) {
+export function loadMore(args = null) {
   return (dispatch, getState) => {
     // optionally you can have getState as the second argument
     const loaded = getState().site.loadMoreFinish;
@@ -26,10 +26,19 @@ export function loadMore(args = {}) {
         // doRequest is a placeholder Promise. You should replace it with your own logic.
         // See the real-word example at:  https://github.com/supnate/rekit/blob/master/src/features/home/redux/fetchRedditReactjsList.js
         // args.error here is only for test coverage purpose.
-        const params = {
+
+        let params = {
           page: { number: getState().site.page_number, size: getState().site.page_size },
         };
+        if (args) {
+          params.filter = { 
+            and: {
+              site_name: args
+            }
+          };
+        }
         const addUrl = objectToQueryString(params);
+        //http://freeasso.fr:8080/api/v1/asso/site?page[number]=1&page[size]=20&filter[and][site_name]=local
         const doRequest = axios.get(process.env.REACT_APP_BO_URL + '/v1/asso/site' + addUrl, {});
         doRequest.then(
           res => {
