@@ -27,6 +27,7 @@ export class List extends Component {
     super(props);
     this.onCreate = this.onCreate.bind(this);
     this.onReload = this.onReload.bind(this);
+    this.onGetOne = this.onGetOne.bind(this);
   }
 
   componentDidMount() {
@@ -38,6 +39,10 @@ export class List extends Component {
       event.preventDefault();
     }
     this.props.history.push('/cause-type/create')
+  }
+
+   onGetOne(id) {
+    this.props.history.push('/cause-type/modify/' + id) ;
   }
 
   onReload(event) {
@@ -73,7 +78,7 @@ export class List extends Component {
           </div>
           <div className="row-list data-list">
             {items && items.map(item => (
-              <MobileLine item={item} />  
+              <MobileLine key={item.id} item={item} />  
             ))}
           </div>
           {this.props.causeType.loadMorePending ? (
@@ -104,7 +109,7 @@ export class List extends Component {
           </div>
           <div className="row-list data-list">
             {items && items.map(item => (
-              <DesktopLine item={item} />  
+              <DesktopLine key={item.id} item={item} onGetOne={this.onGetOne}/>  
             ))}
           </div>
           {this.props.causeType.loadMorePending ? (

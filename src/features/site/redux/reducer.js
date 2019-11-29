@@ -9,7 +9,6 @@
 import initialState from './initialState';
 import { reducer as loadMoreReducer } from './loadMore';
 import { reducer as loadOneReducer } from './loadOne';
-import { reducer as reloadReducer } from './reload';
 import { reducer as createOneReducer } from './createOne';
 import { reducer as updateOneReducer } from './updateOne';
 import { reducer as filterReducer } from './filter';
@@ -17,7 +16,6 @@ import { reducer as filterReducer } from './filter';
 const reducers = [
   loadMoreReducer,
   loadOneReducer,
-  reloadReducer,
   createOneReducer,
   updateOneReducer,
   filterReducer,

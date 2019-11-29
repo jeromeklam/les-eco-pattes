@@ -13,6 +13,7 @@ import {
   LoadError,
   LoadComplete,
   ButtonAddOne,
+  ButtonReload,
   InputQuickSearch
 } from '../layout';
 import { Desktop, Tablet, Mobile, Default } from '../common'
@@ -38,7 +39,8 @@ export class List extends Component {
       mobileQuickSearch: false
     };
     this.onCreate = this.onCreate.bind(this);
-    this.onLoadMore = this.onLoadMore.bind(this);
+    this.onReload = this.onReload.bind(this);
+    this.onGetOne = this.onGetOne.bind(this);
     this.onQuickSearch = this.onQuickSearch.bind(this);
     this.onChangeSearch = this.onChangeSearch.bind(this);
   }
@@ -61,11 +63,15 @@ export class List extends Component {
     this.props.history.push('/site/create')
   }
 
-  onLoadMore(event) {
+  onGetOne(id) {
+    this.props.history.push('/site/modify/' + id) ;
+  }
+
+  onReload(event) {
     if (event) {
       event.preventDefault();
     }
-    this.props.actions.loadMore();
+    this.props.actions.loadMore({}, true);
   }
 
   onQuickSearch(event) {    
@@ -105,24 +111,45 @@ export class List extends Component {
               onChange={this.onChangeSearch}
             />      
           </div>          
-          <div className="col-6 text-right">            
-            <ButtonAddOne onClick={this.onCreate}/>
+          <div className="col-6 text-right">       
+            <ul className="nav justify-content-end">         
+              <li className="nav-item">
+                <ButtonReload color="white" onClick={this.onReload}/>
+              </li>
+              <li className="nav-item">
+                <ButtonAddOne color="white" onClick={this.onCreate}/>
+              </li>
+            </ul>     
           </div>
         </div>
         <Mobile>
           {items && items.map(item => (
             <MobileLine key={item.id} item={item} />  
           ))}
-          {this.props.site.loadMorePending && <LoadingData /> }
-          {this.props.site.loadMoreFinish ? <LoadComplete /> : <LoadMore onMore={this.onLoadMore} />}
+          {this.props.site.loadMorePending ? (
+              <LoadingData /> 
+            ) : (
+              <div>
+                {this.props.site.loadMoreFinish ? <LoadComplete /> : <LoadMore />}
+              </div>
+            )
+          }
           {this.props.site.loadMoreError && <LoadError />}
         </Mobile>
         <Desktop>
-          {items && items.map(item => (
-            <DesktopLine key={item.id} item={item} />  
-          ))}
-          {this.props.site.loadMorePending && <LoadingData /> }
-          {this.props.site.loadMoreFinish ? <LoadComplete /> : <LoadMore onMore={this.onLoadMore} />}
+          <div className="row-list data-list">
+            {items && items.map(item => (
+              <DesktopLine key={item.id} item={item} onGetOne={this.onGetOne}/>  
+            ))}
+          </div>
+          {this.props.site.loadMorePending ? (
+              <LoadingData /> 
+            ) : (
+              <div>
+                {this.props.site.loadMoreFinish ? <LoadComplete /> : <LoadMore />}
+              </div>
+            )
+          }
           {this.props.site.loadMoreError && <LoadError />}
         </Desktop>
       </div>
