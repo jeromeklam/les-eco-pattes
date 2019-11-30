@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as actions from './redux/actions';
-import { DesktopLine, MobileLine } from '.';
 import { buildModel } from '../../common';
 import {
   Desktop,
@@ -11,7 +10,11 @@ import {
   ResponsiveListHeader,
   ResponsiveListFooter,
   ResponsiveListLines,
+  DesktopListTitle,
+  MobileListLine,
+  DesktopListLine,
 } from '../common';
+import { dataTypes } from './functions';
 
 /**
  * Liste des données
@@ -61,20 +64,38 @@ export class List extends Component {
     if (this.props.data.items.FreeAsso_Data) {
       items = buildModel(this.props.data.items, 'FreeAsso_Data');
     }
+    const cols = [
+      { name: 'name', label: 'Nom', size: "20", col: 'data_name', title: true },
+      { name: 'type', label: 'Type', size: "10", col: 'data_type', type: "switch", values: dataTypes() },
+    ];
     // L'affichage, items, loading, loadMoreError
     return (
       <div className="responsive-list">
         <ResponsiveListHeader title="Variables" onReload={this.onReload} onCreate={this.onCreate} />
+        <Desktop>
+          <DesktopListTitle cols={cols} />
+        </Desktop>
         <ResponsiveListLines>
           {items &&
             items.map(item => {
               return (
                 <div key={item.id}>
                   <Mobile>
-                    <MobileLine item={item} onGetOne={this.onGetOne} />
+                    <MobileListLine 
+                      onGetOne={this.onGetOne} 
+                      id={item.id}
+                      item={item}
+                      title={item.data_name}
+                      lines={cols}
+                    />
                   </Mobile>
                   <Desktop>
-                    <DesktopLine item={item} onGetOne={this.onGetOne} />
+                    <DesktopListLine 
+                      id={item.id}
+                      item={item}
+                      onGetOne={this.onGetOne}
+                      cols={cols}
+                    />
                   </Desktop>
                 </div>
               );

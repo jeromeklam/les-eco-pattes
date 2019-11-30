@@ -9,6 +9,6 @@ export default {
   childRoutes: [
     { path: 'site-type', name: 'List', component: List, auth: 'PRIVATE' },
     { path: 'site-type/create', name: 'Create', component: Create, auth: 'PRIVATE' },
-    { path: 'site-type/modify/:siteTypeId', name: 'Modify', component: Modify, auth: 'PRIVATE' },
+    { path: 'site-type/modify/:id', name: 'Modify', component: Modify, auth: 'PRIVATE' },
   ],
 };

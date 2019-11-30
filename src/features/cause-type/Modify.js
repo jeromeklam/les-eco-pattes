@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as actions from './redux/actions';
 import { withRouter } from 'react-router-dom';
-import { getJsonApi, propagateModel } from '../../common';
+import { getJsonApi, propagateModel, modelsToSelect } from '../../common';
 import { LoadingData } from '../layout';
 import Form from './Form';
 
@@ -60,13 +60,14 @@ export class Modify extends Component {
 
   render() {
     const item = this.state.item;
+    const options = modelsToSelect(this.props.causeMainType.items, 'id', 'camt_name');
     return (
       <div className="cause-type-modify global-card">
         {this.props.causeType.loadOnePending ? (
           <LoadingData />
         ) : (
           <div>
-            {item && <Form item={item} onSubmit={this.onSubmit} onCancel={this.onCancel} />}
+            {item && <Form item={item} onSubmit={this.onSubmit} onCancel={this.onCancel} causeMainType={options} />}
           </div>
         )}
       </div>
@@ -76,6 +77,7 @@ export class Modify extends Component {
 
 function mapStateToProps(state) {
   return {
+    causeMainType: state.causeMainType,
     causeType: state.causeType,
   };
 }

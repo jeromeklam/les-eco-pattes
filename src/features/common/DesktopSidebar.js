@@ -30,54 +30,50 @@ export class DesktopSidebar extends Component {
 
   render() {
     return (
-      <div className="sidebar-wrapper sidebar-container">
-          <ul class="sidebar-navigation">
-            <li class="header">Navigation</li>
-            <li>
-              <NavLink exact className="nav-link" to="/">
-                <HomeIcon />
-                Accueil
-              </NavLink>
-            </li>
-          </ul>
-          <br />
-          <div className="bg-light border-right" id="sidebar-wrapper">
-            <div className="sidebar-heading">{process.env.REACT_APP_APP_NAME}</div>
-            <div className="list-group list-group-flush">
-              <NavLink exact className="nav-link" to="/">
-                <HomeIcon />
-                Accueil
-              </NavLink>
-              <NavLink strict className="nav-link" to="/site">
-                <SiteIcon />
-                Sites
-              </NavLink>
-              <NavLink strict className="nav-link" to="/cause">
-                <CauseIcon />
-                Animaux
-              </NavLink>
-              <a className="nav-link" href="#" onClick={this.onToggle}>
-                <DataIcon />
-                Données
-              </a>
-              {this.state.menuDataOpen && (
-                <div className="nav-link-group">
-                  <NavLink strict className="nav-link" to="/data">
-                    Variables
-                  </NavLink>
-                  <NavLink strict className="nav-link" to="/site-type">
-                    Type de site
-                  </NavLink>
-                  <NavLink strict className="nav-link" to="/cause-type">
-                    Races d'animaux
-                  </NavLink>
-                  <NavLink strict className="nav-link" to="/cause-main-type">
-                    Espèces d'animaux
-                  </NavLink>
-                </div>
-              )}
-            </div>
-          </div>
+      <div className="sidebar-wrapper sidebar-container bg-light border-right">
+        <ul class="sidebar-navigation ">
+          <li class="header">Navigation</li>
+          <li>
+            <NavLink exact className="nav-link" to="/">
+              <HomeIcon />
+              <span>Accueil</span>
+            </NavLink>
+          </li>
+          <li>
+            <NavLink strict className="nav-link" to="/site">
+              <SiteIcon />
+              <span>Sites</span>
+            </NavLink>
+          </li>
+          <li>
+            <NavLink strict className="nav-link" to="/cause">
+              <CauseIcon />
+              <span>Animaux</span>
+            </NavLink>
+          </li>
+          <li class="header"><hr /></li>
+          <li>
+            <NavLink strict className="nav-link" to="/data">
+              <span>Variables</span>
+            </NavLink>
+          </li>
+          <li>
+            <NavLink strict className="nav-link" to="/site-type">
+              <span>Type de site</span>
+            </NavLink>
+          </li>
+          <li>
+            <NavLink strict className="nav-link" to="/cause-type">
+              <span>Races d'animaux</span>
+            </NavLink>
+          </li>
+          <li>
+            <NavLink strict className="nav-link" to="/cause-main-type">
+              <span>Espèces d'animaux</span>
+            </NavLink>
+          </li>
+        </ul>
+        <br />
       </div>
     );
   }

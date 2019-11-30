@@ -26,22 +26,21 @@ export default class MobileListLine extends Component {
             </div>
             <div className="card-body">
               <div className="row">
-              {this.props.lines.map(oneLine => {
-                const line = { ...oneLine, id: this.props.id };
-                const content = item[oneLine.col];
-                return (
-                  <div  className={classnames('col-' + line.mob_size)}>
-                  {!oneLine.title &&
-                    <MobileListLineCol
-                      key={line.name}
-                      content={content}
-                      {...line}
-                      onGetOne={this.props.onGetOne}
-                    />
-                  }
-                  </div>
-                );
-              })}
+                {this.props.lines.map(oneLine => {
+                  const line = { ...oneLine, id: this.props.id };
+                  const content = item[oneLine.col];
+                  return (
+                    <div key={line.name} className={classnames('col-' + line.mob_size)}>
+                      {!oneLine.title && (
+                        <MobileListLineCol
+                          content={content}
+                          {...line}
+                          onGetOne={this.props.onGetOne}
+                        />
+                      )}
+                    </div>
+                  );
+                })}
               </div>
             </div>
           </div>

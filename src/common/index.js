@@ -155,3 +155,26 @@ export function objectToQueryString (obj) {
   }
   return params;
 }
+
+export function getObjectmemberValue (obj, member) {
+  const elems = member.split('.');
+  let value = obj;
+  while (elems.length > 0) {
+    let mb = elems.shift();
+    value = value[mb];
+  }
+  return value;
+}
+
+export function modelsToSelect(models, value, label) {
+  let arr = [];
+  const ME = models.MAINELEM;
+  const elems = models[ME];
+  if (elems) {
+    Object.keys(elems).forEach(oneKey => {
+      const oneElem = elems[oneKey];
+      arr.push({value: oneElem.id, label: oneElem.attributes[label]});
+    });
+  }
+  return arr;
+}

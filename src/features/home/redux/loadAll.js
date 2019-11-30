@@ -4,42 +4,42 @@ import {
   HOME_LOAD_ALL_FAILURE,
   HOME_LOAD_ALL_DISMISS_ERROR,
 } from './constants';
-import {
-  loadMore as loadMoreData
-} from '../../data/redux/loadMore';
-import {
-  loadMore as loadMoreConfig
-} from '../../config/redux/loadMore';
-import {
-  loadMore as loadMoreSiteType
-} from '../../site-type/redux/loadMore';
-import {
-  loadMore as loadMoreCauseType
-} from '../../cause-type/redux/loadMore';
+import { loadMore as loadMoreData } from '../../data/redux/loadMore';
+import { loadMore as loadMoreConfig } from '../../config/redux/loadMore';
+import { loadMore as loadMoreSiteType } from '../../site-type/redux/loadMore';
+import { loadMore as loadMoreCauseType } from '../../cause-type/redux/loadMore';
+import { loadMore as loadMoreCauseMainType } from '../../cause-main-type/redux/loadMore';
 
 // Rekit uses redux-thunk for async actions by default: https://github.com/gaearon/redux-thunk
 // If you prefer redux-saga, you can use rekit-plugin-redux-saga: https://github.com/supnate/rekit-plugin-redux-saga
 export function loadAll(args = {}) {
-  return (dispatch) => { // optionally you can have getState as the second argument
+  return dispatch => {
+    // optionally you can have getState as the second argument
     dispatch({
       type: HOME_LOAD_ALL_BEGIN,
     });
-    const promise = Promise.all([dispatch(loadMoreData()), dispatch(loadMoreConfig()), dispatch(loadMoreSiteType()), dispatch(loadMoreCauseType())]);
+    const promise = Promise.all([
+      dispatch(loadMoreData()),
+      dispatch(loadMoreConfig()),
+      dispatch(loadMoreSiteType()),
+      dispatch(loadMoreCauseType()),
+      dispatch(loadMoreCauseMainType()),
+    ]);
     return promise.then(
-          (res) => {
-            dispatch({
-              type: HOME_LOAD_ALL_SUCCESS,
-              data: res,
-            });
-          },
-          // Use rejectHandler as the second argument so that render errors won't be caught.
-          (err) => {
-            dispatch({
-              type: HOME_LOAD_ALL_FAILURE,
-              data: { error: err },
-            });
-          },
-        );
+      res => {
+        dispatch({
+          type: HOME_LOAD_ALL_SUCCESS,
+          data: res,
+        });
+      },
+      // Use rejectHandler as the second argument so that render errors won't be caught.
+      err => {
+        dispatch({
+          type: HOME_LOAD_ALL_FAILURE,
+          data: { error: err },
+        });
+      },
+    );
   };
 }
 

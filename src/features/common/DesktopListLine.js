@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import { HoverObserver, ButtonGetOne, ButtonDelOne } from '../layout';
 import { DesktopListLineCol } from './';
+import { getObjectmemberValue } from '../../common';
 
 export default class DesktopListLine extends Component {
   static propTypes = {
@@ -35,8 +36,15 @@ export default class DesktopListLine extends Component {
         <div className="row">
           {this.props.cols.map(oneCol => {
             const line = { ...oneCol, id: this.props.id };
-            const content = item[oneCol.col];
-            return <DesktopListLineCol key={line.name} content={content} {...line} onGetOne={this.props.onGetOne} />;
+            const content = getObjectmemberValue(item, oneCol.col);
+            return (
+              <DesktopListLineCol
+                key={line.name}
+                content={content}
+                {...line}
+                onGetOne={this.props.onGetOne}
+              />
+            );
           })}
           {this.state.flipped && (
             <div className="col-6">

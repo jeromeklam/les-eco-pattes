@@ -10,7 +10,6 @@ export default class DesktopListLineCol extends Component {
 
   render() {
     let content = this.props.content;
-    //console.log("Line Col",this.props);
     if (this.props.type && this.props.values) {
       switch (this.props.type) {
         case 'switch':
@@ -18,6 +17,8 @@ export default class DesktopListLineCol extends Component {
           if (pos) {
             content = pos.label;
           }
+          break;
+        default:
           break;
       }
     }

@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as actions from './redux/actions';
 import { withRouter } from 'react-router-dom';
-import { getJsonApi } from '../../common';
+import { getJsonApi, modelsToSelect } from '../../common';
 import { LoadingData } from '../layout';
 import Form from './Form';
 
@@ -69,13 +69,14 @@ export class Create extends Component {
 
   render() {
     const item = this.state.item;
+    const options = modelsToSelect(this.props.causeMainType.items, 'id', 'camt_name');
     return (
       <div className="cause-type-create global-card">
         {this.props.causeType.loadOnePending ? (
           <LoadingData />
         ) : (
           <div>
-            {item && <Form item={item} onSubmit={this.onSubmit} onCancel={this.onCancel} />}
+            {item && <Form item={item} onSubmit={this.onSubmit} onCancel={this.onCancel} causeMainType={options} />}
           </div>
         )}
       </div>
@@ -85,6 +86,7 @@ export class Create extends Component {
 
 function mapStateToProps(state) {
   return {
+    causeMainType: state.causeMainType,
     causeType: state.causeType,
   };
 }

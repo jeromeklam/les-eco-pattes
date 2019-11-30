@@ -5,8 +5,8 @@ import { connect } from 'react-redux';
 import * as actions from './redux/actions';
 import { withRouter } from 'react-router-dom';
 import { getJsonApi, propagateModel } from '../../common';
-import Form from './Form';
 import { LoadingData } from '../layout';
+import Form from './Form';
 
 /**
  * Modification d'un type de site
@@ -20,7 +20,7 @@ export class Modify extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      siteTypeId: this.props.match.params.siteTypeId || false,
+      id: this.props.match.params.id || false,
       item: false,
     };
     this.onSubmit = this.onSubmit.bind(this);
@@ -28,7 +28,7 @@ export class Modify extends Component {
   }
 
   componentDidMount() {
-    this.props.actions.loadOne(this.state.siteTypeId).then(result => {
+    this.props.actions.loadOne(this.state.id).then(result => {
       const item = this.props.siteType.loadOneItem;
       this.setState({ item: item });
     });
@@ -39,9 +39,9 @@ export class Modify extends Component {
   }
 
   onSubmit(datas = {}) {
-    let obj = getJsonApi(datas, 'FreeAsso_SiteType', this.state.siteTypeId);
+    let obj = getJsonApi(datas, 'FreeAsso_SiteType', this.state.id);
     this.props.actions
-      .updateOne(this.state.siteTypeId, obj)
+      .updateOne(obj)
       .then(result => {
         this.props.actions.propagateModel('FreeAsso_SiteType', result);
         this.props.history.push('/site-type');

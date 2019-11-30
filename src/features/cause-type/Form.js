@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { InputHidden, InputText, FormResponsive } from '../layout';
+import { InputHidden, InputText, InputSelect, FormResponsive } from '../layout';
 import useForm from '../layout/useForm';
 
 export default function Form(props) {
@@ -19,6 +19,14 @@ export default function Form(props) {
           id="caut_name"
           value={values.caut_name}
           onChange={handleChange}
+        />
+        <InputSelect
+          label="Espèce"
+          name="cause_main_type.id"
+          id="cause_main_type.id"
+          value={values.cause_main_type.id}
+          onChange={handleChange}
+          options={props.causeMainType}
         />
       </div>
     </FormResponsive>

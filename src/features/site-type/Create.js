@@ -20,7 +20,7 @@ export class Create extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      siteTypeId: 0,
+      id: 0,
       item: false,
     };
     /**
@@ -35,7 +35,7 @@ export class Create extends Component {
      *  En async on va demander le chargement des données
      *  Lorsque fini le store sera modifié
      */
-    this.props.actions.loadOne(this.state.siteTypeId).then(result => {
+    this.props.actions.loadOne(this.state.id).then(result => {
       const item = this.props.siteType.loadOneItem;
       this.setState({ item: item });
     });
@@ -54,11 +54,11 @@ export class Create extends Component {
    */
   onSubmit(datas = {}) {
     // Conversion des données en objet pour le service web
-    let obj = getJsonApi(datas, 'FreeAsso_SiteType', this.state.siteTypeId);
+    let obj = getJsonApi(datas, 'FreeAsso_SiteType', this.state.id);
     this.props.actions
       .createOne(obj)
       .then(result => {
-        this.props.actions.reload();
+        this.props.actions.clearItems();
         this.props.history.push('/site-type');
       })
       .catch(errors => {

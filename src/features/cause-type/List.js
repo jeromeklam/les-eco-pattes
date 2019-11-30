@@ -8,10 +8,12 @@ import {
   ResponsiveListHeader,
   ResponsiveListFooter,
   ResponsiveListLines,
+  DesktopListTitle,
+  DesktopListLine,
+  MobileListLine,
   Desktop,
   Mobile,
 } from '../common';
-import { DesktopLine, MobileLine } from '.';
 
 export class List extends Component {
   static propTypes = {
@@ -54,19 +56,37 @@ export class List extends Component {
     if (this.props.causeType.items.FreeAsso_CauseType) {
       items = buildModel(this.props.causeType.items, 'FreeAsso_CauseType');
     }
+    const cols = [
+      { name: "name", label: "Nom", col: "caut_name", size:"20", mob_size:"", title: true},
+      { name: "espece", label: "Espèce", col: "cause_main_type.camt_name", size:"10", mob_size:""}
+    ];
     return (
-      <div className="">
+      <div className="responsive-list">
         <ResponsiveListHeader title="Races" onReload={this.onReload} onCreate={this.onCreate} />
+        <Desktop>
+          <DesktopListTitle cols={cols} />
+        </Desktop>
         <ResponsiveListLines>
           {items &&
             items.map(item => {
               return (
                 <div key={item.id}>
                   <Mobile>
-                    <MobileLine item={item} onGetOne={this.onGetOne} />
+                    <MobileListLine 
+                      id={item.id}
+                      item={item}
+                      title={item.caut_name}
+                      onGetOne={this.onGetOne}
+                      lines={cols}
+                    />
                   </Mobile>
                   <Desktop>
-                    <DesktopLine item={item} onGetOne={this.onGetOne} />
+                    <DesktopListLine 
+                      id={item.id}
+                      item={item}
+                      onGetOne={this.onGetOne}
+                      cols={cols}
+                    />
                   </Desktop>
                 </div>
               );
@@ -85,6 +105,7 @@ export class List extends Component {
 function mapStateToProps(state) {
   return {
     causeType: state.causeType,
+    causeMainType: state.causeMainType,
   };
 }
 

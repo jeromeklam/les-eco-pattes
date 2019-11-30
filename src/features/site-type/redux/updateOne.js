@@ -11,13 +11,14 @@ import {
   SITE_TYPE_UPDATE_ONE_UPDATE,
 } from './constants';
 
-export function updateOne(id, args = {}) {
+export function updateOne(args = {}) {
     return (dispatch) => {
     dispatch({
       type: SITE_TYPE_UPDATE_ONE_BEGIN,
     });
 
     const promise = new Promise((resolve, reject) => {
+      const id = args.id;
       const doRequest = axios.put(process.env.REACT_APP_BO_URL + '/v1/asso/site_type/' + id, args);
       doRequest.then(
         (res) => {

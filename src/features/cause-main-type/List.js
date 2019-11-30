@@ -57,10 +57,10 @@ export class List extends Component {
       items = buildModel(this.props.causeMainType.items, 'FreeAsso_CauseMainType');
     }
     const cols = [
-      { name: "name", label: "Nom", col: "camt_name", size:"30", mob_size:""}
+      { name: "name", label: "Nom", col: "camt_name", size:"30", mob_size:"", title: true}
     ];
     return (
-      <div className="">
+      <div className="responsive-list">
         <ResponsiveListHeader title="Espèces" onReload={this.onReload} onCreate={this.onCreate} />
         <Desktop>
           <DesktopListTitle cols={cols}/>

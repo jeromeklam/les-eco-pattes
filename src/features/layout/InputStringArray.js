@@ -10,8 +10,14 @@ export default class InputStringArray extends Component {
 
   constructor(props) {
     super(props);
+    let items = [];
+    try {
+      items = JSON.parse(this.props.value) || [];
+    } catch (ex) {
+      items = [];
+    }
     this.state = {
-      items: JSON.parse(this.props.value) || [],
+      items: items,
       newItem: '',
     };
     this.onChange = this.onChange.bind(this);
@@ -29,7 +35,7 @@ export default class InputStringArray extends Component {
       this.setState({ newItem: event.target.value });
     } else {
       let items = this.state.items;
-      items[idx] = event.target.value;
+      items[idx].label = event.target.value;
       this.setState({ items: items });
       this.props.onChange({
         target: {
@@ -57,7 +63,7 @@ export default class InputStringArray extends Component {
       event.preventDefault();
     }
     let items = this.state.items;
-    items.push(this.state.newItem);
+    items.push({value: this.state.newItem, label: this.state.newItem});
     this.setState({ items: items, newItem: '' });
     this.props.onChange({
       target: {
@@ -84,7 +90,7 @@ export default class InputStringArray extends Component {
                       <input
                         type="text"
                         name={'field-' + idx}
-                        value={oneItem}
+                        value={oneItem.label}
                         className="form-control"
                         onChange={this.onChange}
                       />
