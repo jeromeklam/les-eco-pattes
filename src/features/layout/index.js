@@ -20,3 +20,4 @@ export { default as ButtonReload } from './ButtonReload';
 export { default as HoverObserver } from './HoverObserver';
 export { default as ButtonGetOne } from './ButtonGetOne';
 export { default as ButtonDelOne } from './ButtonDelOne';
+export { default as InputStringArray } from './InputStringArray';

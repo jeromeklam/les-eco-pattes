@@ -1,5 +1,11 @@
 import React, { Component } from 'react';
-import { InputHidden, InputText, InputSelect, InputValues, FormResponsive } from '../layout';
+import {
+  InputHidden,
+  InputText,
+  InputSelect,
+  InputStringArray,
+  FormResponsive,
+} from '../layout';
 import { dataTypes } from './functions';
 import useForm from '../layout/useForm';
 
@@ -35,7 +41,7 @@ export default function Form(props) {
           options={optionsType}
         />
         {values.data_type == 'LIST' && (
-          <InputValues
+          <InputStringArray
             label="Valeurs"
             name="data_content"
             value={values.data_content}
