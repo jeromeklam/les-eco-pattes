@@ -38,7 +38,7 @@ export class List extends Component {
     if (event) {
       event.preventDefault();
     }
-    this.props.history.push('/cause/create')
+    this.props.history.push('/cause/create');
   }
 
   onGetOne(id) {

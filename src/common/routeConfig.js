@@ -3,7 +3,6 @@ import { PageNotFound } from '../features/common';
 import _ from 'lodash';
 import homeRoute from '../features/home/route';
 import commonRoute from '../features/common/route';
-import examplesRoute from '../features/examples/route';
 import siteRoute from '../features/site/route';
 import authRoute from '../features/auth/route';
 import iconsRoute from '../features/icons/route';
@@ -21,7 +20,6 @@ import causeMainTypeRoute from '../features/cause-main-type/route';
 const childRoutes = [
   homeRoute,
   commonRoute,
-  examplesRoute,
   siteRoute,
   authRoute,
   iconsRoute,

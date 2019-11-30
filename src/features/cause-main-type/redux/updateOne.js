@@ -1,18 +1,19 @@
 import axios from 'axios';
+import { jsonApiNormalizer, buildModel, jsonApiUpdate } from '../../../common';
 import {
-  EXAMPLES_FETCH_REDDIT_LIST_BEGIN,
-  EXAMPLES_FETCH_REDDIT_LIST_SUCCESS,
-  EXAMPLES_FETCH_REDDIT_LIST_FAILURE,
-  EXAMPLES_FETCH_REDDIT_LIST_DISMISS_ERROR,
+  CAUSE_MAIN_TYPE_UPDATE_ONE_BEGIN,
+  CAUSE_MAIN_TYPE_UPDATE_ONE_SUCCESS,
+  CAUSE_MAIN_TYPE_UPDATE_ONE_FAILURE,
+  CAUSE_MAIN_TYPE_UPDATE_ONE_DISMISS_ERROR,
+  CAUSE_MAIN_TYPE_UPDATE_ONE_UPDATE,
 } from './constants';
 
 // Rekit uses redux-thunk for async actions by default: https://github.com/gaearon/redux-thunk
 // If you prefer redux-saga, you can use rekit-plugin-redux-saga: https://github.com/supnate/rekit-plugin-redux-saga
-export function fetchRedditList(args = {}) {
-  return dispatch => {
-    // optionally you can have getState as the second argument
+export function updateOne(args = {}) {
+  return (dispatch) => { // optionally you can have getState as the second argument
     dispatch({
-      type: EXAMPLES_FETCH_REDDIT_LIST_BEGIN,
+      type: CAUSE_MAIN_TYPE_UPDATE_ONE_BEGIN,
     });
 
     // Return a promise so that you could control UI flow without states in the store.
@@ -23,24 +24,24 @@ export function fetchRedditList(args = {}) {
       // doRequest is a placeholder Promise. You should replace it with your own logic.
       // See the real-word example at:  https://github.com/supnate/rekit/blob/master/src/features/home/redux/fetchRedditReactjsList.js
       // args.error here is only for test coverage purpose.
-      const doRequest = axios.get('http://www.reddit.com/r/reactjs.json');
-
+      const id = args.id;
+      const doRequest = axios.put(process.env.REACT_APP_BO_URL + '/v1/asso/cause_main_type/' + id, args);
       doRequest.then(
-        res => {
+        (res) => {
           dispatch({
-            type: EXAMPLES_FETCH_REDDIT_LIST_SUCCESS,
-            data: res.data,
+            type: CAUSE_MAIN_TYPE_UPDATE_ONE_SUCCESS,
+            data: res,
           });
           resolve(res);
         },
         // Use rejectHandler as the second argument so that render errors won't be caught.
-        err => {
+        (err) => {
           dispatch({
-            type: EXAMPLES_FETCH_REDDIT_LIST_FAILURE,
+            type: CAUSE_MAIN_TYPE_UPDATE_ONE_FAILURE,
             data: { error: err },
           });
           reject(err);
-        }
+        },
       );
     });
 
@@ -50,45 +51,54 @@ export function fetchRedditList(args = {}) {
 
 // Async action saves request error by default, this method is used to dismiss the error info.
 // If you don't want errors to be saved in Redux store, just ignore this method.
-export function dismissFetchRedditListError() {
+export function dismissUpdateOneError() {
   return {
-    type: EXAMPLES_FETCH_REDDIT_LIST_DISMISS_ERROR,
+    type: CAUSE_MAIN_TYPE_UPDATE_ONE_DISMISS_ERROR,
   };
 }
 
 export function reducer(state, action) {
   switch (action.type) {
-    case EXAMPLES_FETCH_REDDIT_LIST_BEGIN:
+    case CAUSE_MAIN_TYPE_UPDATE_ONE_BEGIN:
       // Just after a request is sent
       return {
         ...state,
-        fetchRedditListPending: true,
-        fetchRedditListError: null,
+        updateOnePending: true,
+        updateOneError: null,
       };
 
-    case EXAMPLES_FETCH_REDDIT_LIST_SUCCESS:
+    case CAUSE_MAIN_TYPE_UPDATE_ONE_SUCCESS:
       // The request is success
       return {
         ...state,
-        redditList: action.data.data.children,
-
-        fetchRedditListPending: false,
-        fetchRedditListError: null,
+        updateOnePending: false,
+        updateOneError: null,
       };
 
-    case EXAMPLES_FETCH_REDDIT_LIST_FAILURE:
+    case CAUSE_MAIN_TYPE_UPDATE_ONE_FAILURE:
       // The request is failed
       return {
         ...state,
-        fetchRedditListPending: false,
-        fetchRedditListError: action.data.error,
+        updateOnePending: false,
+        updateOneError: action.data.error,
       };
 
-    case EXAMPLES_FETCH_REDDIT_LIST_DISMISS_ERROR:
+    case CAUSE_MAIN_TYPE_UPDATE_ONE_DISMISS_ERROR:
       // Dismiss the request failure error
       return {
         ...state,
-        fetchRedditListError: null,
+        updateOneError: null,
+      };
+
+    case CAUSE_MAIN_TYPE_UPDATE_ONE_UPDATE:
+      // Dismiss the request failure error
+      let object = jsonApiNormalizer(action.data.data);
+      let myItems = state.items;
+      let news = jsonApiUpdate(myItems, 'FreeAsso_CauseMainType', object);
+      return {
+        ...state,
+        updateOneError: null,
+        items: news,
       };
 
     default:

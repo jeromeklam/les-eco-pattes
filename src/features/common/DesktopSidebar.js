@@ -32,7 +32,7 @@ export class DesktopSidebar extends Component {
 
   render() {
     return (
-      <div class="sidebar-wrapper">
+      <div className="sidebar-wrapper">
         <CSSTransition in={this.props.common.sidebar} timeout={300} classNames="sidebar">
           <div className="bg-light border-right" id="sidebar-wrapper">
             <div className="sidebar-heading">{process.env.REACT_APP_APP_NAME}</div>
@@ -56,13 +56,16 @@ export class DesktopSidebar extends Component {
               {this.state.menuDataOpen &&
                 <div className="nav-link-group">
                   <NavLink strict className="nav-link" to="/data">
-                    Divers
+                    Variables
                   </NavLink>
                   <NavLink strict className="nav-link" to="/site-type">
                     Type de site
                   </NavLink>
                   <NavLink strict className="nav-link" to="/cause-type">
-                    Type d'animaux
+                    Races d'animaux
+                  </NavLink>
+                  <NavLink strict className="nav-link" to="/cause-main-type">
+                    Espèces d'animaux
                   </NavLink>
                 </div>
               }

@@ -10,12 +10,10 @@ import {
   LoadError,
   LoadComplete,
   ButtonAddOne,
-  ButtonReload
+  ButtonReload,
 } from '../layout';
-import {
-  buildModel
-} from '../../common';
-import { Desktop, Tablet, Mobile, Default } from '../common'
+import { buildModel } from '../../common';
+import { Desktop, Tablet, Mobile, Default } from '../common';
 
 /**
  * Liste des données
@@ -45,11 +43,11 @@ export class List extends Component {
     if (event) {
       event.preventDefault();
     }
-    this.props.history.push('/data/create') ;
+    this.props.history.push('/data/create');
   }
 
   onGetOne(id) {
-    this.props.history.push('/data/modify/' + id) ;
+    this.props.history.push('/data/modify/' + id);
   }
 
   onReload(event) {
@@ -73,30 +71,25 @@ export class List extends Component {
             <div className="col-20">
               <span>Données -- divers</span>
             </div>
-            <div className="col-16 text-right">    
-              <ul className="nav justify-content-end">         
+            <div className="col-16 text-right">
+              <ul className="nav justify-content-end">
                 <li className="nav-item">
-                  <ButtonReload color="white" onClick={this.onReload}/>
+                  <ButtonReload color="white" onClick={this.onReload} />
                 </li>
                 <li className="nav-item">
-                  <ButtonAddOne color="white" onClick={this.onCreate}/>
+                  <ButtonAddOne color="white" onClick={this.onCreate} />
                 </li>
               </ul>
             </div>
           </div>
           <div className="row-list data-list">
-            {items && items.map(item => (
-              <MobileLine key={item.id} item={item} />  
-            ))}
+            {items && items.map(item => <MobileLine key={item.id} item={item} />)}
           </div>
           {this.props.data.loadMorePending ? (
-              <LoadingData /> 
-            ) : (
-              <div>
-                {this.props.data.loadMoreFinish ? <LoadComplete /> : <LoadMore />}
-              </div>
-            )
-          }
+            <LoadingData />
+          ) : (
+            <div>{this.props.data.loadMoreFinish ? <LoadComplete /> : <LoadMore />}</div>
+          )}
           {this.props.data.loadMoreError && <LoadError />}
         </Mobile>
         <Desktop>
@@ -104,30 +97,26 @@ export class List extends Component {
             <div className="col-26">
               <span>Données -- divers</span>
             </div>
-            <div className="col-10 text-right">   
-              <ul className="nav justify-content-end">         
+            <div className="col-10 text-right">
+              <ul className="nav justify-content-end">
                 <li className="nav-item">
-                  <ButtonReload color="white" onClick={this.onReload}/>
+                  <ButtonReload color="white" onClick={this.onReload} />
                 </li>
                 <li className="nav-item">
-                  <ButtonAddOne color="white" onClick={this.onCreate}/>
+                  <ButtonAddOne color="white" onClick={this.onCreate} />
                 </li>
               </ul>
             </div>
           </div>
           <div className="row-list data-list">
-            {items && items.map(item => (
-              <DesktopLine key={item.id} item={item} onGetOne={this.onGetOne}/>  
-            ))}
+            {items &&
+              items.map(item => <DesktopLine key={item.id} item={item} onGetOne={this.onGetOne} />)}
           </div>
           {this.props.data.loadMorePending ? (
-              <LoadingData /> 
-            ) : (
-              <div>
-                {this.props.data.loadMoreFinish ? <LoadComplete /> : <LoadMore />}
-              </div>
-            )
-          }
+            <LoadingData />
+          ) : (
+            <div>{this.props.data.loadMoreFinish ? <LoadComplete /> : <LoadMore />}</div>
+          )}
           {this.props.data.loadMoreError && <LoadError />}
         </Desktop>
       </div>
@@ -145,11 +134,8 @@ function mapStateToProps(state) {
 /* istanbul ignore next */
 function mapDispatchToProps(dispatch) {
   return {
-    actions: bindActionCreators({ ...actions }, dispatch)
+    actions: bindActionCreators({ ...actions }, dispatch),
   };
 }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(List);
+export default connect(mapStateToProps, mapDispatchToProps)(List);
