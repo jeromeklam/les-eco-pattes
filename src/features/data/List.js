@@ -63,7 +63,7 @@ export class List extends Component {
     }
     // L'affichage, items, loading, loadMoreError
     return (
-      <div className="">
+      <div className="responsive-list">
         <ResponsiveListHeader title="Variables" onReload={this.onReload} onCreate={this.onCreate} />
         <ResponsiveListLines>
           {items &&

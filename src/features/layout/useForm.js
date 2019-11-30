@@ -14,7 +14,9 @@ const useForm = (initialState, initialTab, onSubmit, onCancel, onNavTab) => {
   };
 
   const handleChange = event => {
-    event.persist();
+    if (event && event.persist) {
+      event.persist();
+    }
     const tName = event.target.name;    
     const elems = tName.split('.');
     const first = elems.shift();

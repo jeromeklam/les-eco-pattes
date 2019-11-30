@@ -25,7 +25,9 @@ body {
     color: $header-color;
   }
 }
-
+.responsive-list {
+  margin-top: 40px;
+}
 .desktop-line .misc {
   color: #212529;
 }
@@ -65,5 +67,8 @@ body {
   }
   .data-list {
     padding: 20px;
+  }
+  .responsive-list {
+    margin-top: 40px;
   }
 }

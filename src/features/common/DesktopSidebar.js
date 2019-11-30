@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { NavLink,
-         withRouter 
-} from 'react-router-dom';
+import { NavLink, withRouter } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as actions from './redux/actions';
@@ -21,39 +19,48 @@ export class DesktopSidebar extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      menuDataOpen: false
+      menuDataOpen: false,
     };
     this.onToggle = this.onToggle.bind(this);
   }
 
-  onToggle () {
-    this.setState({menuDataOpen: !this.state.menuDataOpen});
+  onToggle() {
+    this.setState({ menuDataOpen: !this.state.menuDataOpen });
   }
 
   render() {
     return (
-      <div className="sidebar-wrapper">
-        <CSSTransition in={this.props.common.sidebar} timeout={300} classNames="sidebar">
+      <div className="sidebar-wrapper sidebar-container">
+          <ul class="sidebar-navigation">
+            <li class="header">Navigation</li>
+            <li>
+              <NavLink exact className="nav-link" to="/">
+                <HomeIcon />
+                Accueil
+              </NavLink>
+            </li>
+          </ul>
+          <br />
           <div className="bg-light border-right" id="sidebar-wrapper">
             <div className="sidebar-heading">{process.env.REACT_APP_APP_NAME}</div>
             <div className="list-group list-group-flush">
               <NavLink exact className="nav-link" to="/">
-                <HomeIcon/>
+                <HomeIcon />
                 Accueil
               </NavLink>
               <NavLink strict className="nav-link" to="/site">
-                <SiteIcon/>
+                <SiteIcon />
                 Sites
               </NavLink>
               <NavLink strict className="nav-link" to="/cause">
-                <CauseIcon/>
+                <CauseIcon />
                 Animaux
               </NavLink>
               <a className="nav-link" href="#" onClick={this.onToggle}>
-                <DataIcon/>
+                <DataIcon />
                 Données
               </a>
-              {this.state.menuDataOpen &&
+              {this.state.menuDataOpen && (
                 <div className="nav-link-group">
                   <NavLink strict className="nav-link" to="/data">
                     Variables
@@ -68,10 +75,9 @@ export class DesktopSidebar extends Component {
                     Espèces d'animaux
                   </NavLink>
                 </div>
-              }
+              )}
             </div>
           </div>
-        </CSSTransition>
       </div>
     );
   }
@@ -85,11 +91,8 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    actions: bindActionCreators({ ...actions }, dispatch)
+    actions: bindActionCreators({ ...actions }, dispatch),
   };
 }
 
-export default withRouter(connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(DesktopSidebar));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(DesktopSidebar));

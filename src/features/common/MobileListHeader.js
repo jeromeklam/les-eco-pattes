@@ -11,7 +11,7 @@ export default class MobileListHeader extends Component {
 
   render() {
     return (
-      <div className="row row-list-title">
+      <div className="row row-list-title common-mobile-list-header">
         <div className="col-20">
           <span>{this.props.title}</span>
         </div>

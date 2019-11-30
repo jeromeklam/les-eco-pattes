@@ -15,3 +15,5 @@ export { default as Search } from './Search';
 export { default as Reload } from './Reload';
 export { default as GetOne } from './GetOne';
 export { default as DelOne } from './DelOne';
+export { default as Plus } from './Plus';
+export { default as Minus } from './Minus';
