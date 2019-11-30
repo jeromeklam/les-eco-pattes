@@ -37,3 +37,4 @@ export { default as ResponsiveListLines } from './ResponsiveListLines';
 export { default as MobileListLine } from './MobileListLine';
 export { default as DesktopListLineCol } from './DesktopListLineCol';
 export { default as MobileListLineCol } from './MobileListLineCol';
+export { default as DesktopListTitle } from './DesktopListTitle';

@@ -16,7 +16,15 @@ import {
   ButtonReload,
   InputQuickSearch
 } from '../layout';
-import { Desktop, Tablet, Mobile, Default } from '../common'
+import { ResponsiveListHeader,
+         ResponsiveListLines,
+         ResponsiveListFooter,
+         DesktopListTitle,
+         DesktopListLine,
+         MobileListLine,
+         Desktop, 
+         Mobile 
+} from '../common'
 import { DesktopLine, MobileLine } from '.';
 
 /**
@@ -39,8 +47,8 @@ export class List extends Component {
       mobileQuickSearch: false
     };
     this.onCreate = this.onCreate.bind(this);
-    this.onReload = this.onReload.bind(this);
     this.onGetOne = this.onGetOne.bind(this);
+    this.onReload = this.onReload.bind(this); 
     this.onQuickSearch = this.onQuickSearch.bind(this);
     this.onChangeSearch = this.onChangeSearch.bind(this);
   }
@@ -63,7 +71,7 @@ export class List extends Component {
     this.props.history.push('/site/create')
   }
 
-  onGetOne(id) {
+ onGetOne(id) {
     this.props.history.push('/site/modify/' + id) ;
   }
 
@@ -95,76 +103,61 @@ export class List extends Component {
     if (this.props.site.items.FreeAsso_Site) {
       items = buildModel(this.props.site.items, 'FreeAsso_Site');
     }
+    const cols = [
+      { name: "name", label: "Nom", col: "site_name", size: "10", mob_size: "", title: true},
+      { name: "address", label: "Adresse", col: "site_address1", size:"10", mob_size: "36", title: false},
+      { name: "cp", label: "CP", col: "site_cp", size:"4", mob_size: "7", title: false},
+      { name: "town", label: "Commune", col: "site_town", size:"12", mob_size: "29", title: false},
+    ];
     // L'affichage, items, loading, loadMoreError
     return (
-      <div className="site-list">
-        <div className="row row-list-title">
-          <div className="col-20">
-            <span>Sites</span>
-          </div>
-          <div className="col-10">            
-            <InputQuickSearch 
-              name="quickSearch"
-              quickSearch={this.state.quickSearch}  
-              mobileQuickSearch={this.state.mobileQuickSearch}  
-              onClick={this.onQuickSearch}
-              onChange={this.onChangeSearch}
-            />      
-          </div>          
-          <div className="col-6 text-right">       
-            <ul className="nav justify-content-end">         
-              <li className="nav-item">
-                <ButtonReload color="white" onClick={this.onReload}/>
-              </li>
-              <li className="nav-item">
-                <ButtonAddOne color="white" onClick={this.onCreate}/>
-              </li>
-            </ul>     
-          </div>
-        </div>
-        <Mobile>
-          {items && items.map(item => (
-            <MobileLine key={item.id} item={item} />  
-          ))}
-          {this.props.site.loadMorePending ? (
-              <LoadingData /> 
-            ) : (
-              <div>
-                {this.props.site.loadMoreFinish ? <LoadComplete /> : <LoadMore />}
-              </div>
-            )
-          }
-          {this.props.site.loadMoreError && <LoadError />}
-        </Mobile>
+      <div className="">
+        <ResponsiveListHeader title="Sites" onReload={this.onReload} onCreate={this.onCreate} />
         <Desktop>
-          <div className="row-list data-list">
-            {items && items.map(item => (
-              <DesktopLine key={item.id} item={item} onGetOne={this.onGetOne}/>  
-            ))}
-          </div>
-          {this.props.site.loadMorePending ? (
-              <LoadingData /> 
-            ) : (
-              <div>
-                {this.props.site.loadMoreFinish ? <LoadComplete /> : <LoadMore />}
-              </div>
-            )
-          }
-          {this.props.site.loadMoreError && <LoadError />}
+          <DesktopListTitle cols={cols}/>
         </Desktop>
+        <ResponsiveListLines>
+          {items &&
+            items.map(item => {
+              return (
+                <div key={item.id}>
+                  <Mobile>
+                    <MobileListLine 
+                      onGetOne={this.onGetOne} 
+                      id={item.id}
+                      item={item}
+                      title={item.site_name}
+                      lines={cols}
+                    />
+                  </Mobile>
+                  <Desktop>
+                    <DesktopListLine 
+                      id={item.id}
+                      item={item}
+                      onGetOne={this.onGetOne}
+                      cols={cols}
+                    />
+                  </Desktop>
+                </div>
+              );
+            })}
+        </ResponsiveListLines>
+        <ResponsiveListFooter
+          loadMorePending={this.props.site.loadMorePending}
+          loadMoreFinish={this.props.site.loadMoreFinish}
+          loadMoreError={this.props.site.loadMoreError}
+        />
       </div>
     );
   }
 }
 
-/* istanbul ignore next */
 function mapStateToProps(state) {
   return {
     site: state.site,
   };
 }
 
-/* istanbul ignore next */
 function mapDispatchToProps(dispatch) {
   return {
     actions: bindActionCreators({ ...actions }, dispatch),

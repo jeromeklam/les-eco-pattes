@@ -8,10 +8,12 @@ import {
   ResponsiveListHeader,
   ResponsiveListFooter,
   ResponsiveListLines,
+  DesktopListTitle,
+  DesktopListLine,
+  MobileListLine,
   Desktop,
   Mobile,
 } from '../common';
-import { DesktopLine, MobileLine } from '.';
 
 export class List extends Component {
   static propTypes = {
@@ -54,19 +56,36 @@ export class List extends Component {
     if (this.props.causeMainType.items.FreeAsso_CauseMainType) {
       items = buildModel(this.props.causeMainType.items, 'FreeAsso_CauseMainType');
     }
+    const cols = [
+      { name: "name", label: "Nom", col: "camt_name", size:"30", mob_size:""}
+    ];
     return (
       <div className="">
         <ResponsiveListHeader title="Espèces" onReload={this.onReload} onCreate={this.onCreate} />
+        <Desktop>
+          <DesktopListTitle cols={cols}/>
+        </Desktop>
         <ResponsiveListLines>
           {items &&
             items.map(item => {
               return (
                 <div key={item.id}>
                   <Mobile>
-                    <MobileLine item={item} onGetOne={this.onGetOne} />
+                    <MobileListLine 
+                      id={item.id}
+                      item={item}
+                      title={item.camt_name}
+                      onGetOne={this.onGetOne}
+                      lines={cols}
+                    />
                   </Mobile>
                   <Desktop>
-                    <DesktopLine item={item} onGetOne={this.onGetOne} />
+                    <DesktopListLine 
+                      id={item.id}
+                      item={item}
+                      onGetOne={this.onGetOne}
+                      cols={cols}
+                    />
                   </Desktop>
                 </div>
               );

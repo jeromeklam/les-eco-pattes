@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
 
 export default class MobileListLineCol extends Component {
-  static propTypes = {
-
-  };
+  static propTypes = {};
 
   render() {
     let content = this.props.content;

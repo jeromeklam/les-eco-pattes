@@ -5,12 +5,12 @@ import classnames from 'classnames';
 export default class DesktopListLineCol extends Component {
   static propTypes = {
     id: PropTypes.string.isRequired,
-    content: PropTypes.string.isRequired,
     onGetOne: PropTypes.func.isRequired,
   };
 
   render() {
     let content = this.props.content;
+    //console.log("Line Col",this.props);
     if (this.props.type && this.props.values) {
       switch (this.props.type) {
         case 'switch':
