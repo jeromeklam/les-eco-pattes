@@ -10,6 +10,9 @@ import {
 import {
   SITE_UPDATE_ONE_UPDATE,
 } from '../features/site/redux/constants';
+import {
+  CAUSE_MAIN_TYPE_UPDATE_ONE_UPDATE,
+} from '../features/cause-main-type/redux/constants';
 
 export function propagateModel(type, model) {
   return (dispatch) => {
@@ -35,6 +38,11 @@ export function propagateModel(type, model) {
       case 'FreeAsso_CauseType':
         dispatch({
           type: CAUSE_TYPE_UPDATE_ONE_UPDATE,
+          data: model
+        });
+      case 'FreeAsso_CauseMainType':
+        dispatch({
+          type: CAUSE_MAIN_TYPE_UPDATE_ONE_UPDATE,
           data: model
         });
       break;

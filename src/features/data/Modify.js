@@ -4,9 +4,9 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as actions from './redux/actions';
 import { getJsonApi, propagateModel } from '../../common';
-import Form from './Form';
 import { withRouter } from 'react-router-dom';
 import { LoadingData } from '../layout';
+import Form from './Form';
 
 /**
  * Modification d'une donnée

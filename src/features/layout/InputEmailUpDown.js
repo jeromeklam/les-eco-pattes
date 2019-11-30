@@ -8,7 +8,7 @@ export default class InputEmailUpDown extends Component {
     let props = this.props;
     return (
       <div>
-        <label for={this.props.id} className="sr-only">
+        <label htmlFor={this.props.id} className="sr-only">
           {this.props.label}
         </label>
         <input
