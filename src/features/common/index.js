@@ -35,3 +35,5 @@ export { default as ResponsiveListHeader } from './ResponsiveListHeader';
 export { default as ResponsiveListFooter } from './ResponsiveListFooter';
 export { default as ResponsiveListLines } from './ResponsiveListLines';
 export { default as MobileListLine } from './MobileListLine';
+export { default as DesktopListLineCol } from './DesktopListLineCol';
+export { default as MobileListLineCol } from './MobileListLineCol';

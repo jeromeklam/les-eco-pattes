@@ -3,18 +3,14 @@ import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as actions from './redux/actions';
+import { buildModel } from '../../common';
 import {
-  buildModel
-} from '../../common';
-import {
-  LoadingData,
-  LoadMore,
-  LoadError,
-  LoadComplete,
-  ButtonAddOne,
-  ButtonReload
-} from '../layout';
-import { Desktop, Tablet, Mobile, Default } from '../common'
+  ResponsiveListHeader,
+  ResponsiveListFooter,
+  ResponsiveListLines,
+  Desktop,
+  Mobile,
+} from '../common';
 import { DesktopLine, MobileLine } from '.';
 
 export class List extends Component {
@@ -34,15 +30,15 @@ export class List extends Component {
     this.props.actions.loadMore();
   }
 
-  onCreate (event) {
+  onCreate(event) {
     if (event) {
       event.preventDefault();
     }
-    this.props.history.push('/cause-type/create')
+    this.props.history.push('/cause-type/create');
   }
 
-   onGetOne(id) {
-    this.props.history.push('/cause-type/modify/' + id) ;
+  onGetOne(id) {
+    this.props.history.push('/cause-type/modify/' + id);
   }
 
   onReload(event) {
@@ -53,75 +49,34 @@ export class List extends Component {
   }
 
   render() {
-    let items = false;    
+    // Les des items à afficher avec remplissage progressif
+    let items = false;
     if (this.props.causeType.items.FreeAsso_CauseType) {
       items = buildModel(this.props.causeType.items, 'FreeAsso_CauseType');
     }
-    // L'affichage, items, loading, loadMoreError
     return (
-      <div className="">        
-        <Mobile>
-          <div className="row row-list-title">
-            <div className="col-20">
-              <span>Données -- Type d'animaux</span>
-            </div>
-            <div className="col-16 text-right">            
-              <ul className="nav justify-content-end">         
-                <li className="nav-item">
-                  <ButtonReload color="white" onClick={this.onReload}/>
-                </li>
-                <li className="nav-item">
-                  <ButtonAddOne color="white" onClick={this.onCreate}/>
-                </li>
-              </ul>
-            </div>
-          </div>
-          <div className="row-list data-list">
-            {items && items.map(item => (
-              <MobileLine key={item.id} item={item} />  
-            ))}
-          </div>
-          {this.props.causeType.loadMorePending ? (
-              <LoadingData /> 
-            ) : (
-              <div>
-                {this.props.causeType.loadMoreFinish ? <LoadComplete /> : <LoadMore />}
-              </div>
-            )
-          }
-          {this.props.causeType.loadMoreError && <LoadError />}
-        </Mobile>
-        <Desktop>
-          <div className="row row-list-title">
-            <div className="col-26">
-              <span>Données -- Type d'animaux</span>
-            </div>
-            <div className="col-10 text-right">            
-              <ul className="nav justify-content-end">         
-                <li className="nav-item">
-                  <ButtonReload color="white" onClick={this.onReload}/>
-                </li>
-                <li className="nav-item">
-                  <ButtonAddOne color="white" onClick={this.onCreate}/>
-                </li>
-              </ul>
-            </div>
-          </div>
-          <div className="row-list data-list">
-            {items && items.map(item => (
-              <DesktopLine key={item.id} item={item} onGetOne={this.onGetOne}/>  
-            ))}
-          </div>
-          {this.props.causeType.loadMorePending ? (
-              <LoadingData /> 
-            ) : (
-              <div>
-                {this.props.causeType.loadMoreFinish ? <LoadComplete /> : <LoadMore />}
-              </div>
-            )
-          }
-          {this.props.causeType.loadMoreError && <LoadError />}
-        </Desktop>
+      <div className="">
+        <ResponsiveListHeader title="Races" onReload={this.onReload} onCreate={this.onCreate} />
+        <ResponsiveListLines>
+          {items &&
+            items.map(item => {
+              return (
+                <div key={item.id}>
+                  <Mobile>
+                    <MobileLine item={item} onGetOne={this.onGetOne} />
+                  </Mobile>
+                  <Desktop>
+                    <DesktopLine item={item} onGetOne={this.onGetOne} />
+                  </Desktop>
+                </div>
+              );
+            })}
+        </ResponsiveListLines>
+        <ResponsiveListFooter
+          loadMorePending={this.props.causeType.loadMorePending}
+          loadMoreFinish={this.props.causeType.loadMoreFinish}
+          loadMoreError={this.props.causeType.loadMoreError}
+        />
       </div>
     );
   }
@@ -135,11 +90,8 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    actions: bindActionCreators({ ...actions }, dispatch)
+    actions: bindActionCreators({ ...actions }, dispatch),
   };
 }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(List);
+export default connect(mapStateToProps, mapDispatchToProps)(List);

@@ -3,9 +3,7 @@ import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as actions from './redux/actions';
-import {
-  withRouter
-} from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 import { getJsonApi, propagateModel } from '../../common';
 import { LoadingData } from '../layout';
 import Form from './Form';
@@ -19,15 +17,15 @@ export class Modify extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      causeTypeId: this.props.match.params.causeTypeId || false,
+      id: this.props.match.params.id || false,
       item: false,
-    }
+    };
     this.onSubmit = this.onSubmit.bind(this);
     this.onCancel = this.onCancel.bind(this);
-  }    
+  }
 
   componentDidMount() {
-    this.props.actions.loadOne(this.state.causeTypeId).then(result => {
+    this.props.actions.loadOne(this.state.id).then(result => {
       const item = this.props.causeType.loadOneItem;
       this.setState({ item: item });
     });
@@ -37,7 +35,7 @@ export class Modify extends Component {
     if (event) {
       event.preventDefault();
     }
-    this.props.history.push('/cause-type')
+    this.props.history.push('/cause-type');
   }
 
   /**
@@ -47,7 +45,7 @@ export class Modify extends Component {
     // Conversion des données en objet pour le service web
     let obj = getJsonApi(datas, 'FreeAsso_CauseType', this.state.dataId);
     this.props.actions
-      .updateOne(this.state.causeTypeId, obj)
+      .updateOne(obj)
       .then(result => {
         // @Todo propagate result to store
         // propagateModel est ajouté aux actions en bas de document
@@ -68,13 +66,7 @@ export class Modify extends Component {
           <LoadingData />
         ) : (
           <div>
-            {item && 
-              <Form 
-                item={item} 
-                onSubmit={this.onSubmit} 
-                onCancel={this.onCancel} 
-              />
-            }
+            {item && <Form item={item} onSubmit={this.onSubmit} onCancel={this.onCancel} />}
           </div>
         )}
       </div>
@@ -90,11 +82,8 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    actions: bindActionCreators({ ...actions,propagateModel  }, dispatch)
+    actions: bindActionCreators({ ...actions, propagateModel }, dispatch),
   };
 }
 
-export default withRouter(connect(
-  mapStateToProps, 
-  mapDispatchToProps
-)(Modify));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Modify));

@@ -3,23 +3,13 @@ import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as actions from './redux/actions';
-import {
-  LoadingData,
-  LoadMore,
-  LoadError,
-  LoadComplete,
-  ButtonAddOne,
-  ButtonReload,
-} from '../layout';
 import { buildModel } from '../../common';
 import {
   ResponsiveListHeader,
   ResponsiveListFooter,
   ResponsiveListLines,
   Desktop,
-  Tablet,
   Mobile,
-  Default,
 } from '../common';
 import { DesktopLine, MobileLine } from '.';
 

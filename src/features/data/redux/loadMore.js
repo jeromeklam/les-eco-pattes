@@ -125,7 +125,7 @@ export function reducer(state, action) {
       return {
         ...state,
         loadMorePending: false,
-        loadMoreError: action.data.error,
+        loadMoreError: action.data.error || null,
       };
 
     case DATA_LOAD_MORE_DISMISS_ERROR:

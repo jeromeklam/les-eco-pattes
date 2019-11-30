@@ -23,7 +23,7 @@ export class Modify extends Component {
      * On récupère l'id et l'élément à afficher
      */
     this.state = {
-      dataId: this.props.match.params.dataId || false,
+      id: this.props.match.params.id || false,
       item: false,
     };
     /**
@@ -38,7 +38,7 @@ export class Modify extends Component {
      *  En async on va demander le chargement des données
      *  Lorsque fini le store sera modifié
      */
-    this.props.actions.loadOne(this.state.dataId).then(result => {
+    this.props.actions.loadOne(this.state.id).then(result => {
       const item = this.props.data.loadOneItem;
       this.setState({ item: item });
     });
@@ -56,9 +56,9 @@ export class Modify extends Component {
    */
   onSubmit(datas = {}) {
     // Conversion des données en objet pour le service web
-    let obj = getJsonApi(datas, 'FreeAsso_Data', this.state.dataId);
+    let obj = getJsonApi(datas, 'FreeAsso_Data', this.state.id);
     this.props.actions
-      .updateOne(this.state.dataId, obj)
+      .updateOne(obj)
       .then(result => {
         // @Todo propagate result to store
         // propagateModel est ajouté aux actions en bas de document

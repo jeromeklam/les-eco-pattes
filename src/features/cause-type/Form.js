@@ -10,7 +10,7 @@ export default function Form(props) {
     props.onCancel,
   );
   return (
-    <FormResponsive title="Types d'animaux" onSubmit={handleSubmit} onCancel={handleCancel}>
+    <FormResponsive title="Race" onSubmit={handleSubmit} onCancel={handleCancel}>
       <div className="card-body">
         <InputHidden name="id" id="id" value={values.id} />
         <InputText

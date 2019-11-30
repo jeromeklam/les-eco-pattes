@@ -1,27 +1,27 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
+import { MobileListLine } from '../common';
+import { dataTypes } from './functions';
 
 export default class MobileLine extends Component {
   static propTypes = {
     item: PropTypes.object.isRequired,
+    onGetOne: PropTypes.func.isRequired,
   };
 
   render() {
     const item = this.props.item;
+    const lines = [
+      { name: "Nom", content: item.data_name },
+      { name: "Type", content: item.data_type, type: "switch", values: dataTypes() },
+    ];
     return (
-      <div key={item.id} className="row">
-        <div className="col-36">
-          <div className="card">
-            <div className="card-heading">
-              <Link to={"/data/modify/" + item.id}>{item.data_name}</Link>
-            </div>
-            <div className="card-body">
-              {item.data_name}
-            </div>
-          </div>
-        </div>
-      </div>
+      <MobileListLine
+        id={item.id}
+        title={item.data_name}
+        onGetOne={this.props.onGetOne}
+        lines={lines}
+      />
     );
   }
 }

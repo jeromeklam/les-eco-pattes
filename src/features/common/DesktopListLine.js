@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import { HoverObserver, ButtonGetOne, ButtonDelOne } from '../layout';
+import { DesktopListLineCol } from './';
 
 export default class DesktopListLine extends Component {
   static propTypes = {
@@ -33,17 +34,8 @@ export default class DesktopListLine extends Component {
       <HoverObserver onMouseEnter={this.mouseEnter} onMouseLeave={this.mouseLeave}>
         <div className="row">
           {this.props.cols.map(oneItem => {
-            return (
-              <div
-                key={oneItem.name}
-                className={classnames('col-' + oneItem.size)}
-                onClick={() => {
-                  this.props.onGetOne(this.props.id);
-                }}
-              >
-                <span>{oneItem.content}</span>
-              </div>
-            );
+            const line = { ...oneItem, id: this.props.id };
+            return <DesktopListLineCol key={line.name} {...line} onGetOne={this.props.onGetOne} />;
           })}
           {this.state.flipped && (
             <div className="col-6">

@@ -9,6 +9,6 @@ export default {
   childRoutes: [
     { path: 'data', name: 'List', component: List, auth: 'PRIVATE' },
     { path: 'data/create', name: 'Create', component: Create, auth: 'PRIVATE' },
-    { path: 'data/modify/:dataId', name: 'Modify', component: Modify, auth: 'PRIVATE' },
+    { path: 'data/modify/:id', name: 'Modify', component: Modify, auth: 'PRIVATE' },
   ],
 };

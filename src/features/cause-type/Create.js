@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as actions from './redux/actions';
-import { withRouter } from 'react-router-dom'
+import { withRouter } from 'react-router-dom';
 import { getJsonApi } from '../../common';
 import { LoadingData } from '../layout';
 import Form from './Form';
@@ -17,7 +17,7 @@ export class Create extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      causeTypeId: 0,
+      id: 0,
       item: false,
     };
     /**
@@ -32,7 +32,7 @@ export class Create extends Component {
      *  En async on va demander le chargement des données
      *  Lorsque fini le store sera modifié
      */
-    this.props.actions.loadOne(this.state.causeTypeId).then(result => {
+    this.props.actions.loadOne(this.state.id).then(result => {
       const item = this.props.causeType.loadOneItem;
       this.setState({ item: item });
     });
@@ -45,7 +45,7 @@ export class Create extends Component {
     if (event) {
       event.preventDefault();
     }
-    this.props.history.push('/cause-type')
+    this.props.history.push('/cause-type');
   }
 
   /**
@@ -54,11 +54,11 @@ export class Create extends Component {
    */
   onSubmit(datas = {}) {
     // Conversion des données en objet pour le service web
-    let obj = getJsonApi(datas, 'FreeAsso_CauseType', this.state.causeTypeId);
+    let obj = getJsonApi(datas, 'FreeAsso_CauseType', this.state.id);
     this.props.actions
       .createOne(obj)
       .then(result => {
-        this.props.actions.reload();
+        this.props.actions.clearItems();
         this.props.history.push('/cause-type');
       })
       .catch(errors => {
@@ -75,13 +75,7 @@ export class Create extends Component {
           <LoadingData />
         ) : (
           <div>
-            {item && 
-              <Form 
-                item={item} 
-                onSubmit={this.onSubmit} 
-                onCancel={this.onCancel} 
-              />
-            }
+            {item && <Form item={item} onSubmit={this.onSubmit} onCancel={this.onCancel} />}
           </div>
         )}
       </div>
@@ -97,11 +91,8 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    actions: bindActionCreators({ ...actions }, dispatch)
+    actions: bindActionCreators({ ...actions }, dispatch),
   };
 }
 
-export default withRouter(connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Create));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Create));

@@ -4,16 +4,14 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as actions from './redux/actions';
 import { DesktopLine, MobileLine } from '.';
-import {
-  LoadingData,
-  LoadMore,
-  LoadError,
-  LoadComplete,
-  ButtonAddOne,
-  ButtonReload,
-} from '../layout';
 import { buildModel } from '../../common';
-import { Desktop, Tablet, Mobile, Default } from '../common';
+import {
+  Desktop,
+  Mobile,
+  ResponsiveListHeader,
+  ResponsiveListFooter,
+  ResponsiveListLines,
+} from '../common';
 
 /**
  * Liste des données
@@ -66,59 +64,27 @@ export class List extends Component {
     // L'affichage, items, loading, loadMoreError
     return (
       <div className="">
-        <Mobile>
-          <div className="row row-list-title">
-            <div className="col-20">
-              <span>Données -- divers</span>
-            </div>
-            <div className="col-16 text-right">
-              <ul className="nav justify-content-end">
-                <li className="nav-item">
-                  <ButtonReload color="white" onClick={this.onReload} />
-                </li>
-                <li className="nav-item">
-                  <ButtonAddOne color="white" onClick={this.onCreate} />
-                </li>
-              </ul>
-            </div>
-          </div>
-          <div className="row-list data-list">
-            {items && items.map(item => <MobileLine key={item.id} item={item} />)}
-          </div>
-          {this.props.data.loadMorePending ? (
-            <LoadingData />
-          ) : (
-            <div>{this.props.data.loadMoreFinish ? <LoadComplete /> : <LoadMore />}</div>
-          )}
-          {this.props.data.loadMoreError && <LoadError />}
-        </Mobile>
-        <Desktop>
-          <div className="row row-list-title">
-            <div className="col-26">
-              <span>Données -- divers</span>
-            </div>
-            <div className="col-10 text-right">
-              <ul className="nav justify-content-end">
-                <li className="nav-item">
-                  <ButtonReload color="white" onClick={this.onReload} />
-                </li>
-                <li className="nav-item">
-                  <ButtonAddOne color="white" onClick={this.onCreate} />
-                </li>
-              </ul>
-            </div>
-          </div>
-          <div className="row-list data-list">
-            {items &&
-              items.map(item => <DesktopLine key={item.id} item={item} onGetOne={this.onGetOne} />)}
-          </div>
-          {this.props.data.loadMorePending ? (
-            <LoadingData />
-          ) : (
-            <div>{this.props.data.loadMoreFinish ? <LoadComplete /> : <LoadMore />}</div>
-          )}
-          {this.props.data.loadMoreError && <LoadError />}
-        </Desktop>
+        <ResponsiveListHeader title="Variables" onReload={this.onReload} onCreate={this.onCreate} />
+        <ResponsiveListLines>
+          {items &&
+            items.map(item => {
+              return (
+                <div key={item.id}>
+                  <Mobile>
+                    <MobileLine item={item} onGetOne={this.onGetOne} />
+                  </Mobile>
+                  <Desktop>
+                    <DesktopLine item={item} onGetOne={this.onGetOne} />
+                  </Desktop>
+                </div>
+              );
+            })}
+        </ResponsiveListLines>
+        <ResponsiveListFooter
+          loadMorePending={this.props.data.loadMorePending}
+          loadMoreFinish={this.props.data.loadMoreFinish}
+          loadMoreError={this.props.data.loadMoreError}
+        />
       </div>
     );
   }

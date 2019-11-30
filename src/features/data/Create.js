@@ -4,9 +4,9 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as actions from './redux/actions';
 import { getJsonApi } from '../../common';
-import Form from './Form';
 import { withRouter } from 'react-router-dom';
 import { LoadingData } from '../layout';
+import Form from './Form';
 
 /**
  * Création d'une donnée
@@ -20,7 +20,7 @@ export class Create extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      dataId: 0,
+      id: 0,
       item: false,
     };
     /**
@@ -35,7 +35,7 @@ export class Create extends Component {
      *  En async on va demander le chargement des données
      *  Lorsque fini le store sera modifié
      */
-    this.props.actions.loadOne(this.state.dataId).then(result => {
+    this.props.actions.loadOne(this.state.id).then(result => {
       const item = this.props.data.loadOneItem;
       this.setState({ item: item });
     });
@@ -54,11 +54,11 @@ export class Create extends Component {
    */
   onSubmit(datas = {}) {
     // Conversion des données en objet pour le service web
-    let obj = getJsonApi(datas, 'FreeAsso_Data', this.state.dataId);
+    let obj = getJsonApi(datas, 'FreeAsso_Data', this.state.id);
     this.props.actions
       .createOne(obj)
       .then(result => {
-        this.props.actions.reload();
+        this.props.actions.clearItems();
         this.props.history.push('/data');
       })
       .catch(errors => {
