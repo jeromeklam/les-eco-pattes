@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import classnames from 'classnames';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as actions from './redux/actions';
@@ -76,9 +77,9 @@ export class App extends Component {
                   <MobileFooter onToggle={this.onToggle}/>
                 </Mobile>
                 <Desktop>
+                  <DesktopHeader />
                   <DesktopSidebar />
-                  <div id="page-content-wrapper" className="w-100">
-                    <DesktopHeader />
+                  <div id="page-content-wrapper" className={classnames(this.props.common.sidebar && "page-content-wrapper-menu",  "w-100")}>
                     {this.props.children}
                   </div>
                   <DesktopFooter />
@@ -102,6 +103,7 @@ function mapStateToProps(state) {
   return {
     home: state.home,
     auth: state.auth,
+    common: state.common
   };
 }
 

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import {AddOne, DelOne} from '../icons';
+import { Plus, Minus } from '../icons';
 
 export default class InputStringArray extends Component {
   static propTypes = {
@@ -8,24 +8,96 @@ export default class InputStringArray extends Component {
     name: PropTypes.string.isRequired,
   };
 
+  constructor(props) {
+    super(props);
+    this.state = {
+      items: JSON.parse(this.props.value) || [],
+      newItem: '',
+    };
+    this.onChange = this.onChange.bind(this);
+    this.onMinus = this.onMinus.bind(this);
+    this.onPlus = this.onPlus.bind(this);
+  }
+
+  onChange(event) {
+    if (event) {
+      event.preventDefault();
+    }
+    const name = event.target.name;
+    const idx = name.replace('field-', '');
+    if (idx == '@') {
+      this.setState({ newItem: event.target.value });
+    } else {
+      let items = this.state.items;
+      items[idx] = event.target.value;
+      this.setState({ items: items });
+      this.props.onChange({
+        target: {
+          name: this.props.name,
+          value: JSON.stringify(items)
+        },
+      });
+    }
+  }
+
+  onMinus(idx) {
+    let items = this.state.items;
+    items.splice(idx, 1);
+    this.setState({ items: items });
+    this.props.onChange({
+      target: {
+        name: this.props.name,
+        value: JSON.stringify(items)
+      },
+    });
+  }
+
+  onPlus(event) {
+    if (event) {
+      event.preventDefault();
+    }
+    let items = this.state.items;
+    items.push(this.state.newItem);
+    this.setState({ items: items, newItem: '' });
+    this.props.onChange({
+      target: {
+        name: this.props.name,
+        value: JSON.stringify(items)
+      },
+    });
+  }
+
   render() {
-    const items = JSON.parse(this.props.value);
-    console.log(items);
+    const { items, newItem } = this.state;
     return (
       <div className="form-group row">
         <label htmlFor={this.props.id} className="col-sm-6 col-form-label">
           {this.props.label}
         </label>
         <div className="col-sm-30">
-          {items.length && (
+          {items.length > 0 && (
             <div>
               {items.map((oneItem, idx) => {
                 return (
                   <div className="row" key={idx}>
                     <div className="col-36 input-group">
-                      <input type="text" value={oneItem} className="form-control" />
+                      <input
+                        type="text"
+                        name={'field-' + idx}
+                        value={oneItem}
+                        className="form-control"
+                        onChange={this.onChange}
+                      />
                       <div className="input-group-append">
-                        <div className="input-group-text"><DelOne /></div>
+                        <button
+                          type="button"
+                          className="btn btn-outline-danger"
+                          onClick={() => {
+                            this.onMinus(idx);
+                          }}
+                        >
+                          <Minus color="red" />
+                        </button>
                       </div>
                     </div>
                   </div>
@@ -35,9 +107,17 @@ export default class InputStringArray extends Component {
           )}
           <div className="row">
             <div className="col-36 input-group">
-              <input type="text" value="" className="form-control" />
+              <input
+                type="text"
+                name={'field-@'}
+                value={newItem}
+                className="form-control"
+                onChange={this.onChange}
+              />
               <div className="input-group-append">
-                <div className="input-group-text"><AddOne /></div>
+                <button type="button" className="btn btn-outline-success" onClick={this.onPlus}>
+                  <Plus color="green" />
+                </button>
               </div>
             </div>
           </div>

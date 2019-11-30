@@ -24,11 +24,15 @@ body,
   margin-top: 40px;
   margin-bottom: 60px;
   width: 100%;
+  margin-left: 0;
+}
+#page-content-wrapper.page-content-wrapper-menu {
+  margin-left: $left-menu-width;
 }
 
 @media (min-width: 768px) {
   #page-content-wrapper {
-    margin-top: 0px;
+    margin-top: $desktop-navbar-height;
     width: 100%;
   }
   #root {

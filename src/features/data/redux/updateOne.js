@@ -95,7 +95,7 @@ export function reducer(state, action) {
       // On update, refresh store
       let object = jsonApiNormalizer(action.data.data);
       let myItems = state.items;
-      let news = jsonApiUpdate(myItems, 'FreeAsso_CauseMainType', object);
+      let news = jsonApiUpdate(myItems, 'FreeAsso_Data', object);
       return {
         ...state,
         updateOneError: null,

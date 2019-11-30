@@ -1,5 +1,9 @@
 @import '../../styles/mixins';
 
 .common-mobile-list-header {
-
+  position: fixed;
+  top: 40px;
+  left: 0px;
+  right: 0px;
+  z-index: 700;
 }
