@@ -33,7 +33,7 @@ export function signIn(args = {}) {
       const headers = {
         Authorization: 'JWT',
       };
-      const doRequest = axios.post(process.env.REACT_APP_BO_URL + '/api/v1/sso/signin', args, {
+      const doRequest = axios.post(process.env.REACT_APP_BO_URL + '/v1/sso/signin', args, {
         headers: headers,
       });
       doRequest.then(
