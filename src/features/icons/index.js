@@ -17,3 +17,4 @@ export { default as GetOne } from './GetOne';
 export { default as DelOne } from './DelOne';
 export { default as Plus } from './Plus';
 export { default as Minus } from './Minus';
+export { default as About } from './About';

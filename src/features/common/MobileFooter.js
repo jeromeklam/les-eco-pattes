@@ -8,6 +8,7 @@ import HomeIcon from '../icons/Home';
 import SiteIcon from '../icons/Site';
 import CauseIcon from '../icons/Cause';
 import DataIcon from '../icons/Data';
+import AboutIcon from '../icons/About';
 
 export class MobileFooter extends Component {
   static propTypes = {
@@ -18,28 +19,45 @@ export class MobileFooter extends Component {
   render() {
     return (
       <footer className="mobile-footer">
-        <div className="row">
-          <div className="col-9 text-center">
-            <Link className="nav-link" to="/">
-              <HomeIcon color="white" />
-            </Link>
+        {this.props.auth.authenticated ? (
+          <div className="row">
+            <div className="col-9 text-center">
+              <Link className="nav-link" to="/">
+                <HomeIcon color="white" />
+              </Link>
+            </div>
+            <div className="col-9 text-center">
+              <Link className="nav-link" to="/site">
+                <SiteIcon color="white" />
+              </Link>
+            </div>
+            <div className="col-9 text-center">
+              <Link className="nav-link" to="/cause">
+                <CauseIcon color="white" />
+              </Link>
+            </div>
+            <div className="col-9 text-center">
+              <a className="nav-link" href="#" onClick={this.props.onToggle}>
+                <DataIcon color="white" />
+              </a>
+            </div>
           </div>
-          <div className="col-9 text-center">
-            <Link className="nav-link" to="/site">
-              <SiteIcon color="white" />
-            </Link>
+        ) : (
+          <div className="row">
+            <div className="col-9 text-center">
+              <Link className="nav-link" to="/">
+                <HomeIcon color="white" />
+              </Link>
+            </div>
+            <div className="col-9 text-center"></div>
+            <div className="col-9 text-center"></div>
+            <div className="col-9 text-center">
+              <Link className="nav-link" to="/about">
+                <AboutIcon color="white" />
+              </Link>
+            </div>
           </div>
-          <div className="col-9 text-center">
-            <Link className="nav-link" to="/cause">
-              <CauseIcon color="white" />
-            </Link>
-          </div>
-          <div className="col-9 text-center">
-            <a className="nav-link" href="#" onClick={this.props.onToggle}>
-              <DataIcon color="white" />
-            </a>
-          </div>
-        </div>
+        )}
       </footer>
     );
   }
@@ -48,6 +66,7 @@ export class MobileFooter extends Component {
 function mapStateToProps(state) {
   return {
     common: state.common,
+    auth: state.auth,
   };
 }
 
