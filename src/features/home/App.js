@@ -8,7 +8,7 @@ import * as authActions from '../auth/redux/actions';
 import { DesktopHeader, DesktopFooter, DesktopSidebar } from '../../features/common';
 import { MobileHeader, MobileFooter, MobileMenu } from '../../features/common';
 import { LoadingData } from '../layout';
-import { Desktop, Tablet, Mobile, Default } from '../common'
+import { Desktop, Tablet, Mobile } from '../common'
 import { initAxios } from '../../common';
 
 /*

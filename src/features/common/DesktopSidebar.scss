@@ -61,12 +61,15 @@
 
 .sidebar-container {
   position: fixed;
-  width: $left-menu-width;
+  width: 0px;
   height: 100%;
   left: 0;
   overflow-x: hidden;
   overflow-y: auto;
   color: $primary;
+}
+.sidebar-container-menu.sidebar-container {
+  width: $left-menu-width;
 }
 
 .sidebar-logo {
@@ -97,6 +100,7 @@
   color: theme-color('primary');
   -webkit-transition: color 0.2s ease-in;
   transition: color 0.2s ease-in;
+  height: 40px;
 }
 .sidebar-navigation li a span {
   margin-left: 10px;

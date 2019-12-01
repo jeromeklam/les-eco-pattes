@@ -12,7 +12,7 @@ export function initAxios(token) {
     if (cookie.load('Authorization')) {
       axios.defaults.headers.common['Authorization'] = cookie.load('Authorization');
     } else {
-      delete axios.defaults.headers.common['Authorization'];
+      axios.defaults.headers.common['Authorization'] = 'JWT';
     }
   }
   if (cookie.load('SSO_ID')) {

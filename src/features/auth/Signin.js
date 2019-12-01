@@ -7,6 +7,7 @@ import logo from '../../images/logo-les-eco-pattes.jpg';
 import { InputEmailUpDown, InputPasswordUpDown } from '../layout';
 import { getJsonApi, initAxios } from '../../common';
 import { withRouter } from 'react-router-dom';
+import { Copyright } from '../common';
 
 export class Signin extends Component {
   static propTypes = {
@@ -18,9 +19,9 @@ export class Signin extends Component {
     super(props);
     this.state = {
       username: '',
-      username_error: false,
+      username_error: null,
       password: '',
-      password_error: false,
+      password_error: null,
     };
     this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
@@ -87,7 +88,7 @@ export class Signin extends Component {
             name="username"
             label="Adresse email"
             required=""
-            autofocus=""
+            autoFocus=""
             value={this.state.username}
             error={this.state.username_error}
             onChange={this.onChange}
@@ -109,7 +110,7 @@ export class Signin extends Component {
           <button className="btn btn-lg btn-primary btn-block" type="submit">
             Connexion
           </button>
-          <p className="mt-5 mb-3 text-muted">©FreeAsso 2018-2019</p>
+          <Copyright />
         </form>
       </div>
     );

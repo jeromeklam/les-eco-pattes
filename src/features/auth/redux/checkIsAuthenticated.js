@@ -8,7 +8,6 @@ import {
 import {
   jsonApiNormalizer,
   buildModel,
-  objectToQueryString,
   initAxios
 } from '../../../common';
 import cookie from 'react-cookies';
@@ -106,7 +105,7 @@ export function reducer(state, action) {
       return {
         ...state,
         checkIsAuthenticatedPending: false,
-        checkIsAuthenticatedError: action.data.error,
+        checkIsAuthenticatedError: action.data.error || null,
       };
 
     case AUTH_CHECK_IS_AUTHENTICATED_DISMISS_ERROR:

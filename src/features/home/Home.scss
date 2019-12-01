@@ -1,1 +1,19 @@
 @import '../../styles/mixins';
+
+.fond-site {
+  width: 100%;
+  position: fixed;
+  left: 0px;
+  top: 0px;
+}
+.logo-ecopattes {
+  right: 2.0px;
+  top: 60px;
+  width: 200px;
+  position: fixed;
+}
+.home-title {
+  position: absolute;
+  margin-top: 20px;
+  margin-right: 200px;
+}
