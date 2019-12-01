@@ -13,6 +13,7 @@ export default class InputQuickSearch extends Component {
             type="text" 
             className="form-control" 
             name={this.props.name}
+            placeholder={this.props.label}
             value={this.props.quickSearch}
             onChange={this.props.onChange}
           />            

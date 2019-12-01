@@ -10,7 +10,7 @@ import {
 
 // Rekit uses redux-thunk for async actions by default: https://github.com/gaearon/redux-thunk
 // If you prefer redux-saga, you can use rekit-plugin-redux-saga: https://github.com/supnate/rekit-plugin-redux-saga
-export function loadMore(args = {}, reload = false) {
+export function loadMore(args = false, reload = false) {
   return (dispatch, getState) => { // optionally you can have getState as the second argument
     const loaded =  getState().cause.loadMoreFinish;
     if (!loaded || reload) {
@@ -36,6 +36,13 @@ export function loadMore(args = {}, reload = false) {
         const params = {
           page: { number: getState().cause.page_number, size: getState().cause.page_size },
         };
+        if (args && Object.keys(args).length > 0 && args !== '') {
+          params.filter = { 
+            and: {
+              cau_name: args
+            }
+          };
+        }
         const addUrl = objectToQueryString(params);
         const doRequest = axios.get(process.env.REACT_APP_BO_URL + '/v1/asso/cause' + addUrl, {});
         doRequest.then(

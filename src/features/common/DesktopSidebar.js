@@ -31,8 +31,8 @@ export class DesktopSidebar extends Component {
   render() {
     return (
       <div className="sidebar-wrapper sidebar-container bg-light border-right">
-        <ul class="sidebar-navigation ">
-          <li class="header">Navigation</li>
+        <ul className="sidebar-navigation ">
+          <li className="header">Navigation</li>
           <li>
             <NavLink exact className="nav-link" to="/">
               <HomeIcon />
@@ -51,7 +51,7 @@ export class DesktopSidebar extends Component {
               <span>Animaux</span>
             </NavLink>
           </li>
-          <li class="header"><hr /></li>
+          <li className="header"><hr /></li>
           <li>
             <NavLink strict className="nav-link" to="/data">
               <span>Variables</span>

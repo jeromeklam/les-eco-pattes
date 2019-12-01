@@ -42,15 +42,10 @@ export class List extends Component {
 
   constructor(props) {
     super(props);
-    this.state = {
-      quickSearch: "",
-      mobileQuickSearch: false
-    };
     this.onCreate = this.onCreate.bind(this);
     this.onGetOne = this.onGetOne.bind(this);
     this.onReload = this.onReload.bind(this); 
     this.onQuickSearch = this.onQuickSearch.bind(this);
-    this.onChangeSearch = this.onChangeSearch.bind(this);
   }
 
   /**
@@ -82,16 +77,8 @@ export class List extends Component {
     this.props.actions.loadMore({}, true);
   }
 
-  onQuickSearch(event) {    
-    if (this.state.quickSearch === "") {
-      this.setState({mobileQuickSearch: !this.state.mobileQuickSearch});
-    } else {  
-      this.props.actions.loadMore(this.state.quickSearch, true);
-    }
-  }
-
-  onChangeSearch(event) {
-    this.setState({[event.target.name]: event.target.value});
+  onQuickSearch(quickSearch) {    
+    this.props.actions.loadMore(quickSearch, true);
   }
 
   /**
@@ -104,15 +91,21 @@ export class List extends Component {
       items = buildModel(this.props.site.items, 'FreeAsso_Site');
     }
     const cols = [
-      { name: "name", label: "Nom", col: "site_name", size: "10", mob_size: "", title: true},
+      { name: "name", label: "Nom", col: "site_name", size: "8", mob_size: "", title: true},
       { name: "address", label: "Adresse", col: "site_address1", size:"10", mob_size: "36", title: false},
-      { name: "cp", label: "CP", col: "site_cp", size:"4", mob_size: "7", title: false},
-      { name: "town", label: "Commune", col: "site_town", size:"12", mob_size: "29", title: false},
+      { name: "cp", label: "CP", col: "site_cp", size:"2", mob_size: "7", title: false},
+      { name: "town", label: "Commune", col: "site_town", size:"10", mob_size: "29", title: false},
     ];
     // L'affichage, items, loading, loadMoreError
     return (
-      <div className="">
-        <ResponsiveListHeader title="Sites" onReload={this.onReload} onCreate={this.onCreate} />
+      <div className="responsive-list">
+        <ResponsiveListHeader  
+          title="Sites" 
+          labelSearch="Recherche sur nom"
+          onQuickSearch={this.onQuickSearch}
+          onReload={this.onReload} 
+          onCreate={this.onCreate} 
+        />
         <Desktop>
           <DesktopListTitle cols={cols}/>
         </Desktop>
