@@ -36,7 +36,7 @@ export function loadMore(args = false, reload = false) {
         let params = {
           page: { number: getState().site.page_number, size: getState().site.page_size },
         };
-        if (args && args != {} && args != '') {
+        if (args && Object.keys(args).length > 0 && args !== '') {
           params.filter = { 
             and: {
               site_name: args
