@@ -1,7 +1,13 @@
 import React, { Component } from 'react';
-import { InputHidden, InputText, InputSelect, InputData, FormResponsive } from '../layout';
-import { siteTypeAsOptions } from '../site-type/functions.js';
+import { 
+  InputHidden, 
+  InputText, 
+  InputSelect, 
+  InputData, 
+  FormResponsive 
+} from '../layout';
 import useForm from '../layout/useForm';
+import { siteTypeAsOptions } from '../site-type/functions.js';
 
 export default function Form(props) {
   const { values, handleChange, handleSubmit, handleCancel, handleNavTab } = useForm(
