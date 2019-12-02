@@ -13,6 +13,9 @@ import {
 import {
   CAUSE_MAIN_TYPE_UPDATE_ONE_UPDATE,
 } from '../features/cause-main-type/redux/constants';
+import {
+  EMAIL_UPDATE_ONE_UPDATE,
+} from '../features/email/redux/constants';
 
 export function propagateModel(type, model) {
   return (dispatch) => {
@@ -43,6 +46,11 @@ export function propagateModel(type, model) {
       case 'FreeAsso_CauseMainType':
         dispatch({
           type: CAUSE_MAIN_TYPE_UPDATE_ONE_UPDATE,
+          data: model
+        });
+      case 'FreeFW_Email':
+        dispatch({
+          type: EMAIL_UPDATE_ONE_UPDATE,
           data: model
         });
       break;

@@ -21,3 +21,5 @@ export { default as HoverObserver } from './HoverObserver';
 export { default as ButtonGetOne } from './ButtonGetOne';
 export { default as ButtonDelOne } from './ButtonDelOne';
 export { default as InputStringArray } from './InputStringArray';
+export { default as ModalResponsive } from './ModalResponsive';
+export { default as ConfirmResponsive } from './ConfirmResponsive';

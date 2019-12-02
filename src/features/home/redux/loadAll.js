@@ -4,6 +4,7 @@ import {
   HOME_LOAD_ALL_FAILURE,
   HOME_LOAD_ALL_DISMISS_ERROR,
 } from './constants';
+import { loadMore as loadMoreLang } from '../../lang/redux/loadMore';
 import { loadMore as loadMoreData } from '../../data/redux/loadMore';
 import { loadMore as loadMoreConfig } from '../../config/redux/loadMore';
 import { loadMore as loadMoreSiteType } from '../../site-type/redux/loadMore';
@@ -19,6 +20,7 @@ export function loadAll(args = {}) {
       type: HOME_LOAD_ALL_BEGIN,
     });
     const promise = Promise.all([
+      dispatch(loadMoreLang()),
       dispatch(loadMoreData()),
       dispatch(loadMoreConfig()),
       dispatch(loadMoreSiteType()),

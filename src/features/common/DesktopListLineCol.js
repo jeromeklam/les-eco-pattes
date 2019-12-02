@@ -24,7 +24,7 @@ export default class DesktopListLineCol extends Component {
     }
     return (
       <div
-        className={classnames('col-' + this.props.size)}
+        className={classnames('col-' + this.props.size, 'col-vertical-align')}
         onClick={() => {
           this.props.onGetOne(this.props.id);
         }}

@@ -31,7 +31,12 @@ export class DesktopSidebar extends Component {
 
   render() {
     return (
-      <div className={classnames(this.props.common.sidebar && "sidebar-container-menu", "sidebar-wrapper sidebar-container bg-light border-right")}>
+      <div
+        className={classnames(
+          this.props.common.sidebar && 'sidebar-container-menu',
+          'sidebar-wrapper sidebar-container bg-light border-right',
+        )}
+      >
         <ul class="sidebar-navigation ">
           <li class="header">Navigation</li>
           <li>
@@ -75,6 +80,14 @@ export class DesktopSidebar extends Component {
               <li>
                 <NavLink strict className="nav-link" to="/cause-main-type">
                   <span>Espèces d'animaux</span>
+                </NavLink>
+              </li>
+              <li class="header">
+                <hr />
+              </li>
+              <li>
+                <NavLink strict className="nav-link" to="/email">
+                  <span>Emails</span>
                 </NavLink>
               </li>
             </div>

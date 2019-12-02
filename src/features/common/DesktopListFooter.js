@@ -7,6 +7,7 @@ export default class DesktopListFooter extends Component {
     loadMorePending: PropTypes.bool.isRequired,
     loadMoreFinish: PropTypes.bool.isRequired,
     loadMoreError: PropTypes.object,
+    onLoadMore: PropTypes.func.isRequired,
   };
 
   render() {
@@ -15,7 +16,13 @@ export default class DesktopListFooter extends Component {
         {this.props.loadMorePending ? (
           <LoadingData />
         ) : (
-          <div>{this.props.loadMoreFinish ? <LoadComplete /> : <LoadMore />}</div>
+          <div>
+            {this.props.loadMoreFinish ? (
+              <LoadComplete />
+            ) : (
+              <LoadMore onLoadMore={this.props.onLoadMore} />
+            )}
+          </div>
         )}
         {this.props.loadMoreError && <LoadError />}
       </div>

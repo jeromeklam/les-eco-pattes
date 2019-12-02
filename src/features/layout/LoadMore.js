@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 export default class LoadMore extends Component {
   static propTypes = {
-
+    onLoadMore: PropTypes.func.isRequired,
   };
 
   render() {
@@ -10,7 +11,7 @@ export default class LoadMore extends Component {
       <div className="layout-load-more">
         <div className="row">
           <div className="col-36">
-            <button onClick={this.props.onMore} className="btn btn-primary btn-lg btn-block">Plus</button>
+            <button onClick={this.props.onLoadMore} className="btn btn-primary btn-lg btn-block">Plus</button>
           </div>
         </div>
       </div>
