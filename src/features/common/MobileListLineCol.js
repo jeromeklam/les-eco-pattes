@@ -16,7 +16,7 @@ export default class MobileListLineCol extends Component {
       }
     }
     return (
-      <div
+      <div className="mobile-list-line-col"
         onClick={() => {
           this.props.onGetOne(this.props.id);
         }}

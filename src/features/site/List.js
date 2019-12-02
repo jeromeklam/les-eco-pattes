@@ -91,17 +91,17 @@ export class List extends Component {
       items = buildModel(this.props.site.items, 'FreeAsso_Site');
     }
     const cols = [
-      { name: "name", label: "Nom", col: "site_name", size: "8", mob_size: "", title: true},
+      { name: "name", label: "Nom site", col: "site_name", size: "8", mob_size: "", title: true},
       { name: "address", label: "Adresse", col: "site_address1", size:"10", mob_size: "36", title: false},
-      { name: "cp", label: "CP", col: "site_cp", size:"2", mob_size: "7", title: false},
-      { name: "town", label: "Commune", col: "site_town", size:"10", mob_size: "29", title: false},
+      { name: "cp", label: "CP", col: "site_cp", size:"2", mob_size: "10", title: false},
+      { name: "town", label: "Commune", col: "site_town", size:"10", mob_size: "26", title: false},
     ];
     // L'affichage, items, loading, loadMoreError
     return (
       <div className="responsive-list">
         <ResponsiveListHeader  
           title="Sites" 
-          labelSearch="Recherche sur nom"
+          labelSearch="Recherche nom du site"
           onQuickSearch={this.onQuickSearch}
           onReload={this.onReload} 
           onCreate={this.onCreate} 

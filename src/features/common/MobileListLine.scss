@@ -1,5 +1,15 @@
 @import '../../styles/mixins';
 
 .common-mobile-list-line {
+}
 
+.responsive-list .card .card-body {
+  padding-top: 0.3rem;  
+  padding-left: 1rem;
+  padding-right: 1rem;
+  padding-bottom: 0.3rem;
+}
+
+.responsive-list .row-list .row  {
+  line-height: 25px;
 }

@@ -6,7 +6,10 @@ import * as actions from './redux/actions';
 import {
   withRouter
 } from 'react-router-dom';
-import { getJsonApi, propagateModel } from '../../common';
+import { buildModel, 
+         getJsonApi, 
+         propagateModel 
+} from '../../common';
 import { LoadingData } from '../layout';
 import Form from './Form';
 
@@ -84,7 +87,11 @@ export class Modify extends Component {
           <div>
             {item && 
               <Form 
-                item={item} 
+                item={item}       
+                cause_types={this.props.causeType.items} 
+                cause_main_types={this.props.causeMainType.items}
+                tab_datas={this.props.data.items}
+                tab_configs={this.props.config.items}
                 onSubmit={this.onSubmit} 
                 onCancel={this.onCancel} 
               />
@@ -98,7 +105,11 @@ export class Modify extends Component {
 
 function mapStateToProps(state) {
   return {
+    data: state.data,
+    config: state.config,
     cause: state.cause,
+    causeType: state.causeType,
+    causeMainType : state.causeMainType,
   };
 }
 

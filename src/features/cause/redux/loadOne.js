@@ -76,7 +76,8 @@ export function reducer(state, action) {
       item = buildModel(
           object,
           'FreeAsso_Cause',
-          action.id
+          action.id,
+          {eager: true}
         );
       return {
         ...state,

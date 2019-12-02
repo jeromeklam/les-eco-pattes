@@ -54,5 +54,6 @@ export function dataAsOptions(object) {
     }
     return 0;
   });
+  console.log("data options", arr);
   return arr;
 }

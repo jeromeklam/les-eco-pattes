@@ -12,38 +12,47 @@ export default class FormResponsive extends Component {
       <form>
         <div className="card">
           <div className="card-header">         
-            <div className="float-left">
-              <span className="navbar-brand">{this.props.title}</span>  
-            </div>            
-            <ul className="nav justify-content-end">
-              {this.props.tabs && this.props.tabs.map(oneTab => {
-                return (       
-                  <li key={oneTab.key} className="nav-item">
-                    <Mobile>
-                      <a className="nav-link" href="#" onClick={() => {this.props.onNavTab(oneTab.key)}}>
-                      {oneTab.icon && 
-                        <TabIcon name={oneTab.icon}/>
-                      } 
-                      {oneTab.icon == "" && 
-                        oneTab.shortcut
-                      }
-                      </a>
-                    </Mobile>
-                    <Desktop>
+            <Desktop>
+              <div className="float-left">
+                <span className="navbar-brand">{this.props.title}</span>  
+              </div>            
+              <ul className="nav justify-content-end">
+                {this.props.tabs && this.props.tabs.map(oneTab => {
+                  return (       
+                    <li key={oneTab.key} className="nav-item">
                       <a className="nav-link" href="#" onClick={() => {this.props.onNavTab(oneTab.key)}}>{oneTab.label}</a>
-                    </Desktop>
-                  </li>
-                )        
-              })}
-              <Mobile>
+                    </li>
+                  )        
+                })}
+              </ul>
+            </Desktop>            
+            <Mobile>
+              <div>
+                <span className="navbar-brand">{this.props.title}</span>  
+              </div>            
+              <ul className="nav">              
+                {this.props.tabs && this.props.tabs.map(oneTab => {
+                  return (       
+                    <li key={oneTab.key} className="nav-item">
+                      <a className="nav-link" href="#" onClick={() => {this.props.onNavTab(oneTab.key)}}>
+                        {oneTab.icon && 
+                          <TabIcon name={oneTab.icon}/>
+                        } 
+                        {oneTab.icon == "" && 
+                          oneTab.shortcut
+                        }
+                      </a>
+                    </li>
+                  )
+                })}
                 <li className="nav-item"> 
                   <ButtonSubmit icon={true} label={false} onClick={this.props.onSubmit} />
                 </li>
                 <li className="nav-item">
                   <ButtonCancel icon={true} label={false} onClick={this.props.onCancel} />
                 </li>
-              </Mobile>
-            </ul>
+              </ul>
+            </Mobile>
           </div>
           <div className="card-body">{this.props.children}</div>
           <Desktop>

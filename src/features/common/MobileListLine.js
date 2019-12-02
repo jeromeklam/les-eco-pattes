@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { MobileListLineCol } from './';
 import classnames from 'classnames';
+import { getObjectmemberValue } from '../../common';
 
 export default class MobileListLine extends Component {
   static propTypes = {
@@ -11,7 +12,7 @@ export default class MobileListLine extends Component {
   };
 
   render() {
-    const item = this.props.item;
+    const item = this.props.item;    
     return (
       <div className="row">
         <div className="col-36">
@@ -28,7 +29,7 @@ export default class MobileListLine extends Component {
               <div className="row">
                 {this.props.lines.map(oneLine => {
                   const line = { ...oneLine, id: this.props.id };
-                  const content = item[oneLine.col];
+                  const content = getObjectmemberValue(item, oneLine.col);  
                   return (
                     <div key={line.name} className={classnames('col-' + line.mob_size)}>
                       {!oneLine.title && (
