@@ -36,7 +36,9 @@ const initialState = {
   updateOnePending: false,
   updateOneError: null,
   filterPending: false,
-  filterError: null
+  filterError: null,
+  delOnePending: false,
+  delOneError: null
 };
 
 export default initialState;

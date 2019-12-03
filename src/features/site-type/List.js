@@ -25,8 +25,9 @@ export class List extends Component {
   constructor(props) {
     super(props);
     this.onCreate = this.onCreate.bind(this);
-    this.onReload = this.onReload.bind(this);
     this.onGetOne = this.onGetOne.bind(this);
+    this.onDelOne = this.onDelOne.bind(this);
+    this.onReload = this.onReload.bind(this);
   }
 
   componentDidMount() {
@@ -46,6 +47,10 @@ export class List extends Component {
 
   onGetOne(id) {
     this.props.history.push('/site-type/modify/' + id);
+  }
+
+  onDelOne(id) {
+    this.props.actions.delOne(id).then(result => this.props.actions.loadMore({}, true));
   }
 
   onReload(event) {
@@ -85,6 +90,7 @@ export class List extends Component {
                       item={item}
                       title={item.sitt_name}
                       onGetOne={this.onGetOne}
+                      onDelOne={this.onDelOne}
                       lines={cols}
                     />
                   </Mobile>
@@ -93,6 +99,7 @@ export class List extends Component {
                       id={item.id}
                       item={item}
                       onGetOne={this.onGetOne}
+                      onDelOne={this.onDelOne}
                       cols={cols}
                     />
                   </Desktop>

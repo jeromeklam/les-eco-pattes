@@ -10,11 +10,13 @@ import {
  * 
  * @return {array}
  */
-export function configAsOptions(object) {
+export function configAsOptions(object) {  
   let arr   = [];
   let items = buildModel(
     object,
     'FreeAsso_Config',
   );
+  console.log("configAsOptions",items);
+  console.log("configAsOptions2",object);
   return arr;
 }

@@ -58,7 +58,7 @@ export class Create extends Component {
     this.props.actions
       .createOne(obj)
       .then(result => {
-        this.props.actions.reload();
+        this.props.actions.clearItems();
         this.props.history.push('/cause');
       })
       .catch(errors => {
@@ -78,6 +78,10 @@ export class Create extends Component {
             {item && 
               <Form 
                 item={item} 
+                cause_types={this.props.causeType.items} 
+                cause_main_types={this.props.causeMainType.items}
+                tab_datas={this.props.data.items}
+                tab_configs={this.props.config.items}
                 onSubmit={this.onSubmit} 
                 onCancel={this.onCancel} 
               />
@@ -91,7 +95,11 @@ export class Create extends Component {
 
 function mapStateToProps(state) {
   return {
+    data: state.data,
+    config: state.config,
     cause: state.cause,
+    causeType: state.causeType,
+    causeMainType : state.causeMainType,
   };
 }
 

@@ -42,6 +42,7 @@ export class List extends Component {
     super(props);
     this.onCreate = this.onCreate.bind(this);
     this.onGetOne = this.onGetOne.bind(this);
+    this.onDelOne = this.onDelOne.bind(this);
     this.onReload = this.onReload.bind(this);
     this.onQuickSearch = this.onQuickSearch.bind(this);
     this.onLoadMore = this.onLoadMore.bind(this);
@@ -60,6 +61,10 @@ export class List extends Component {
 
   onGetOne(id) {
     this.props.history.push('/site/modify/' + id);
+  }
+  
+  onDelOne(id) {
+    this.props.actions.delOne(id).then(result => this.props.actions.loadMore({}, true));
   }
 
   onReload(event) {
@@ -87,24 +92,10 @@ export class List extends Component {
       items = buildModel(this.props.site.items, 'FreeAsso_Site');
     }
     const cols = [
-      { name: 'name', label: 'Nom site', col: 'site_name', size: '8', mob_size: '', title: true },
-      {
-        name: 'address',
-        label: 'Adresse',
-        col: 'site_address1',
-        size: '10',
-        mob_size: '36',
-        title: false,
-      },
-      { name: 'cp', label: 'CP', col: 'site_cp', size: '2', mob_size: '10', title: false },
-      {
-        name: 'town',
-        label: 'Commune',
-        col: 'site_town',
-        size: '10',
-        mob_size: '26',
-        title: false,
-      },
+      { name: 'name',    label: 'Nom site', col: 'site_name',     size: '8',  mob_size: '',   title: true },
+      { name: 'address', label: 'Adresse',  col: 'site_address1', size: '10', mob_size: '36', title: false },
+      { name: 'cp',      label: 'CP',       col: 'site_cp',       size: '2',  mob_size: '10', title: false },
+      { name: 'town',    label: 'Commune',  col: 'site_town',     size: '10', mob_size: '26', title: false },
     ];
     // L'affichage, items, loading, loadMoreError
     return (
@@ -125,11 +116,12 @@ export class List extends Component {
               return (
                 <div key={item.id}>
                   <Mobile>
-                    <MobileListLine
-                      onGetOne={this.onGetOne}
+                    <MobileListLine                      
                       id={item.id}
                       item={item}
                       title={item.site_name}
+                      onGetOne={this.onGetOne}
+                      onDelOne={this.onDelOne}
                       lines={cols}
                     />
                   </Mobile>
@@ -138,6 +130,7 @@ export class List extends Component {
                       id={item.id}
                       item={item}
                       onGetOne={this.onGetOne}
+                      onDelOne={this.onDelOne}
                       cols={cols}
                     />
                   </Desktop>

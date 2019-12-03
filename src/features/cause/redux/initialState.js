@@ -19,7 +19,9 @@ const initialState = {
   createOnePending: false,
   createOneError: null,
   updateOnePending: false,
-  updateOneError: null
+  updateOneError: null,
+  delOnePending: false,
+  delOneError: null
 };
 
 export default initialState;

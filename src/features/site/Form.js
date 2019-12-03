@@ -57,7 +57,7 @@ export default function Form(props) {
             label="Type"
             name="site_type.id"
             required={true}
-            value={values.site_type.id}
+            value={values.site_type ? values.site_type.id : null}            
             onChange={handleChange}
             options={siteTypeAsOptions(props.site_types)}
             addempty={true}

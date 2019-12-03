@@ -57,7 +57,7 @@ export class Create extends Component {
     this.props.actions
       .createOne(obj)
       .then(result => {
-        this.props.actions.reload();
+        this.props.actions.clearItems();
         this.props.history.push('/site');
       })
       .catch(errors => {

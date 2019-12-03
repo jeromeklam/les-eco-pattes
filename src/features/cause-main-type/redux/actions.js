@@ -3,4 +3,4 @@ export { loadOne, dismissLoadOneError } from './loadOne';
 export { updateOne, dismissUpdateOneError } from './updateOne';
 export { createOne, dismissCreateOneError } from './createOne';
 export { clearItems } from './clearItems';
-export { deleteOne, dismissDeleteOneError } from './deleteOne';
+export { delOne, dismissDelOneError } from './delOne';

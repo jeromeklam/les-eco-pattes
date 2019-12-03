@@ -109,7 +109,7 @@ function mapStateToProps(state) {
     config: state.config,
     cause: state.cause,
     causeType: state.causeType,
-    causeMainType : state.causeMainType,
+    causeMainType: state.causeMainType,
   };
 }
 

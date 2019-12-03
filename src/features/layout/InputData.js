@@ -4,7 +4,6 @@ import { InputText, InputTextArea, InputSelect } from '../layout';
 
 function getFieldData(field_name, tab_config, tab_data) {
   const myDatas = buildModel(tab_data, 'FreeAsso_Data');
-  //console.log(myDatas, tab_data);
   let data = false;
   Object.keys(tab_config.FreeAsso_Config).forEach((key) => {
     //console.log(key);
@@ -35,12 +34,9 @@ export default class InputData extends Component {
   }
 
   render() {            
-    let options = [];
+    let list = [];
     if (this.state.data.data_type === "LIST" ) {         
-      const list = JSON.parse(this.state.data.data_content);         
-      list.forEach((option) => {        
-        options.push({value: option, label: option});
-      });
+      list = JSON.parse(this.state.data.data_content);         
     }     
     return (
       <div>
@@ -67,7 +63,7 @@ export default class InputData extends Component {
             required={this.props.required}
             value={this.props.value}
             onChange={this.props.onChange}
-            options={options}
+            options={list}
             addempty={true}
           />
         }

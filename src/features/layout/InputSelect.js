@@ -4,7 +4,6 @@ export default class InputSelect extends Component {
   static propTypes = {};
 
   render() {
-    console.log("inputSelect",this.props);
     let value = '';
     if (this.props.value && this.props.value !== null) {
       value = this.props.value;

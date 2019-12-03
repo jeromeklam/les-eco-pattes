@@ -20,8 +20,8 @@ const initialState = {
   updateOneError: null,
   createOnePending: false,
   createOneError: null,
-  deleteOnePending: false,
-  deleteOneError: null,
+  delOnePending: false,
+  delOneError: null,
 };
 
 export default initialState;
