@@ -1,5 +1,4 @@
-import axios from 'axios';
-import { jsonApiNormalizer, objectToQueryString } from '../../../common';
+import { freeAssoApi, jsonApiNormalizer, objectToQueryString } from '../../../common';
 import {
   CAUSE_MAIN_TYPE_LOAD_MORE_INIT,
   CAUSE_MAIN_TYPE_LOAD_MORE_BEGIN,
@@ -37,7 +36,7 @@ export function loadMore(args = {}, reload = false) {
           page: { number: getState().causeMainType.page_number, size: getState().causeMainType.page_size },
         };
         const addUrl = objectToQueryString(params);
-        const doRequest = axios.get(process.env.REACT_APP_BO_URL + '/v1/asso/cause_main_type' + addUrl, {});
+        const doRequest = freeAssoApi.get('/v1/asso/cause_main_type' + addUrl, {});
         doRequest.then(
           res => {
             dispatch({

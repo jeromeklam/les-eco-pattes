@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { 
   InputHidden, 
   InputText, 
@@ -18,7 +18,7 @@ export default function Form(props) {
     props.onNavTab,
   );  
   return (    
-    <FormResponsive title="Sites" tabs={props.tabs} onSubmit={handleSubmit} onCancel={handleCancel} onNavTab={handleNavTab}>
+    <FormResponsive title="Sites" tab={values.currentTab} tabs={props.tabs} onSubmit={handleSubmit} onCancel={handleCancel} onNavTab={handleNavTab}>
       <InputHidden name="id" id="id" value={values.id} />      
       <InputText
         label="Nom"
@@ -27,6 +27,7 @@ export default function Form(props) {
         value={values.site_name}
         onChange={handleChange}
       />  
+      <hr />
       {values.currentTab === "1" && 
         <div>
           <InputText

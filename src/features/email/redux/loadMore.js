@@ -1,5 +1,4 @@
-import axios from 'axios';
-import { jsonApiNormalizer, objectToQueryString } from '../../../common';
+import { freeAssoApi, jsonApiNormalizer, objectToQueryString } from '../../../common';
 import {
   EMAIL_LOAD_MORE_INIT,
   EMAIL_LOAD_MORE_BEGIN,
@@ -36,7 +35,7 @@ export function loadMore(args = {}, reload = false) {
           page: { number: getState().email.page_number, size: getState().email.page_size },
         };
         const addUrl = objectToQueryString(params);
-        const doRequest = axios.get(process.env.REACT_APP_BO_URL + '/v1/core/email' + addUrl, {});
+        const doRequest = freeAssoApi.get('/v1/core/email' + addUrl, {});
         doRequest.then(
           (res) => {
             dispatch({

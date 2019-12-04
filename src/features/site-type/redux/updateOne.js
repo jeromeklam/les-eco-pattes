@@ -1,5 +1,5 @@
-import axios from 'axios';
 import {
+  freeAssoApi,
   jsonApiNormalizer,
   jsonApiUpdate
 } from '../../../common';
@@ -19,7 +19,7 @@ export function updateOne(args = {}) {
 
     const promise = new Promise((resolve, reject) => {
       const id = args.id;
-      const doRequest = axios.put(process.env.REACT_APP_BO_URL + '/v1/asso/site_type/' + id, args);
+      const doRequest = freeAssoApi.put('/v1/asso/site_type/' + id, args);
       doRequest.then(
         (res) => {
           dispatch({

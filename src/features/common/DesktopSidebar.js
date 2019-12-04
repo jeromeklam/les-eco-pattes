@@ -37,8 +37,8 @@ export class DesktopSidebar extends Component {
           'sidebar-wrapper sidebar-container bg-light border-right',
         )}
       >
-        <ul class="sidebar-navigation ">
-          <li class="header">Navigation</li>
+        <ul className="sidebar-navigation ">
+          <li className="header">Navigation</li>
           <li>
             <NavLink exact className="nav-link" to="/">
               <HomeIcon />
@@ -54,12 +54,18 @@ export class DesktopSidebar extends Component {
                 </NavLink>
               </li>
               <li>
+                <NavLink strict className="nav-link" to="/client">
+                  <SiteIcon />
+                  <span>Personnes</span>
+                </NavLink>
+              </li>
+              <li>
                 <NavLink strict className="nav-link" to="/cause">
                   <CauseIcon />
                   <span>Animaux</span>
                 </NavLink>
               </li>
-              <li class="header">
+              <li className="header">
                 <hr />
               </li>
               <li>
@@ -68,8 +74,18 @@ export class DesktopSidebar extends Component {
                 </NavLink>
               </li>
               <li>
+                <NavLink strict className="nav-link" to="/client-type">
+                  <span>Types de personne</span>
+                </NavLink>
+              </li>
+              <li>
+                <NavLink strict className="nav-link" to="/client-category">
+                  <span>Catégories de personne</span>
+                </NavLink>
+              </li>
+              <li>
                 <NavLink strict className="nav-link" to="/site-type">
-                  <span>Type de site</span>
+                  <span>Types de site</span>
                 </NavLink>
               </li>
               <li>
@@ -82,7 +98,7 @@ export class DesktopSidebar extends Component {
                   <span>Espèces d'animaux</span>
                 </NavLink>
               </li>
-              <li class="header">
+              <li className="header">
                 <hr />
               </li>
               <li>
@@ -99,7 +115,7 @@ export class DesktopSidebar extends Component {
                   <span>Login</span>
                 </NavLink>
               </li>
-              <li class="header">
+              <li className="header">
                 <hr />
               </li>
               <li>

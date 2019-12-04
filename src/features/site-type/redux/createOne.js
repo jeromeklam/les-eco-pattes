@@ -1,4 +1,4 @@
-import axios from 'axios';
+import { freeAssoApi } from '../../../common';
 import {
   SITE_TYPE_CREATE_ONE_BEGIN,
   SITE_TYPE_CREATE_ONE_SUCCESS,
@@ -22,7 +22,7 @@ export function createOne(args = {}) {
       // doRequest is a placeholder Promise. You should replace it with your own logic.
       // See the real-word example at:  https://github.com/supnate/rekit/blob/master/src/features/home/redux/fetchRedditReactjsList.js
       // args.error here is only for test coverage purpose.
-      const doRequest = axios.post(process.env.REACT_APP_BO_URL + '/v1/asso/site_type', args);
+      const doRequest = freeAssoApi.post('/v1/asso/site_type', args);
       doRequest.then(
         (res) => {
           dispatch({

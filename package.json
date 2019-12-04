@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@hot-loader/react-dom": "^16.11.0",
     "@mdi/js": "^4.5.95",
     "@mdi/react": "^1.2.1",
     "autoprefixer": "7.1.6",

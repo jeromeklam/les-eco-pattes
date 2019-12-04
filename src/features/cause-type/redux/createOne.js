@@ -1,4 +1,4 @@
-import axios from 'axios';
+import { freeAssoApi } from '../../../common';
 import {
   CAUSE_TYPE_CREATE_ONE_BEGIN,
   CAUSE_TYPE_CREATE_ONE_SUCCESS,
@@ -26,7 +26,7 @@ export function createOne(args = {}) {
       if (args.data.attributes.caut_mnt_type == null ) {
         args.data.attributes.caut_mnt_type = 'OTHER';
       }
-      const doRequest = axios.post(process.env.REACT_APP_BO_URL + '/v1/asso/cause_type', args);
+      const doRequest = freeAssoApi.post('/v1/asso/cause_type', args);
       doRequest.then(
         (res) => {
           dispatch({

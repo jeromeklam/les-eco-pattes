@@ -1,5 +1,5 @@
-import axios from 'axios';
 import {
+  freeAssoApi,
   jsonApiNormalizer,
   buildModel
 } from '../../../common';
@@ -26,7 +26,7 @@ export function loadOne(args = {}) {
       // doRequest is a placeholder Promise. You should replace it with your own logic.
       // See the real-word example at:  https://github.com/supnate/rekit/blob/master/src/features/home/redux/fetchRedditReactjsList.js
       // args.error here is only for test coverage purpose.
-      const doRequest = axios.get(process.env.REACT_APP_BO_URL + '/v1/asso/site_type/' + args, {});
+      const doRequest = freeAssoApi.get('/v1/asso/site_type/' + args, {});
       doRequest.then(
         (res) => {
           dispatch({

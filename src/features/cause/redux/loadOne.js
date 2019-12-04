@@ -1,8 +1,4 @@
-import axios from 'axios';
-import {
-  jsonApiNormalizer,
-  buildModel
-} from '../../../common';
+import { freeAssoApi, jsonApiNormalizer, buildModel } from '../../../common';
 import {
   CAUSE_LOAD_ONE_BEGIN,
   CAUSE_LOAD_ONE_SUCCESS,
@@ -13,7 +9,8 @@ import {
 // Rekit uses redux-thunk for async actions by default: https://github.com/gaearon/redux-thunk
 // If you prefer redux-saga, you can use rekit-plugin-redux-saga: https://github.com/supnate/rekit-plugin-redux-saga
 export function loadOne(args = {}) {
-  return (dispatch) => { // optionally you can have getState as the second argument
+  return dispatch => {
+    // optionally you can have getState as the second argument
     dispatch({
       type: CAUSE_LOAD_ONE_BEGIN,
     });
@@ -26,18 +23,18 @@ export function loadOne(args = {}) {
       // doRequest is a placeholder Promise. You should replace it with your own logic.
       // See the real-word example at:  https://github.com/supnate/rekit/blob/master/src/features/home/redux/fetchRedditReactjsList.js
       // args.error here is only for test coverage purpose.
-      const doRequest = axios.get(process.env.REACT_APP_BO_URL + '/v1/asso/cause/' + args);
+      const doRequest = freeAssoApi.get('/v1/asso/cause/' + args);
       doRequest.then(
-        (res) => {
+        res => {
           dispatch({
             type: CAUSE_LOAD_ONE_SUCCESS,
             data: res,
-            id: args
+            id: args,
           });
           resolve(res);
         },
         // Use rejectHandler as the second argument so that render errors won't be caught.
-        (err) => {
+        err => {
           dispatch({
             type: CAUSE_LOAD_ONE_FAILURE,
             data: { error: err },
@@ -71,14 +68,9 @@ export function reducer(state, action) {
 
     case CAUSE_LOAD_ONE_SUCCESS:
       // The request is success
-      let item = null;      
+      let item = null;
       let object = jsonApiNormalizer(action.data.data);
-      item = buildModel(
-          object,
-          'FreeAsso_Cause',
-          action.id,
-          {eager: true}
-        );
+      item = buildModel(object, 'FreeAsso_Cause', action.id, { eager: true });
       return {
         ...state,
         loadOnePending: false,

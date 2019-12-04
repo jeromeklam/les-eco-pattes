@@ -1,4 +1,3 @@
-import axios from 'axios';
 import {
   AUTH_CHECK_IS_AUTHENTICATED_BEGIN,
   AUTH_CHECK_IS_AUTHENTICATED_SUCCESS,
@@ -8,7 +7,8 @@ import {
 import {
   jsonApiNormalizer,
   buildModel,
-  initAxios
+  initAxios,
+  freeAssoApi
 } from '../../../common';
 import cookie from 'react-cookies';
 
@@ -28,7 +28,7 @@ export function checkIsAuthenticated(args = {}) {
       // doRequest is a placeholder Promise. You should replace it with your own logic.
       // See the real-word example at:  https://github.com/supnate/rekit/blob/master/src/features/home/redux/fetchRedditReactjsList.js
       // args.error here is only for test coverage purpose.
-      const doRequest = axios.post(process.env.REACT_APP_BO_URL + '/v1/sso/check');
+      const doRequest = freeAssoApi.post('/v1/sso/check');
       doRequest.then(
         (res) => {
           dispatch({

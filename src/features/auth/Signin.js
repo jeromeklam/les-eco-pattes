@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import * as actions from './redux/actions';
 import logo from '../../images/logo-les-eco-pattes.jpg';
 import { InputEmailUpDown, InputPasswordUpDown } from '../layout';
-import { getJsonApi, initAxios } from '../../common';
+import { getJsonApi } from '../../common';
 import { withRouter } from 'react-router-dom';
 import { Copyright } from '../common';
 
@@ -33,9 +33,9 @@ export class Signin extends Component {
     }
   }
 
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.auth.authenticated) {
-      nextProps.history.push('/');
+  static getDerivedStateFromProps(props, state) {
+    if (props.auth.authenticated) {
+      props.history.push('/');
     }
   }
 

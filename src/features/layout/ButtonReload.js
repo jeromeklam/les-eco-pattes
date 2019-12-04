@@ -6,7 +6,7 @@ export default class ButtonReload extends Component {
 
   render() {
     return (
-      <button type="button" className="btn btn-secondary" onClick={this.props.onClick}>
+      <button title="Recharger" type="button" className="btn btn-secondary" onClick={this.props.onClick}>
         <ReloadIcon color={this.props.color} />
       </button>
     );

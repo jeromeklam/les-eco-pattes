@@ -1,4 +1,4 @@
-import axios from 'axios';
+import { freeAssoApi } from '../../../common';
 import {
   EMAIL_DEL_ONE_BEGIN,
   EMAIL_DEL_ONE_SUCCESS,
@@ -23,7 +23,7 @@ export function delOne(args = {}) {
       // See the real-word example at:  https://github.com/supnate/rekit/blob/master/src/features/home/redux/fetchRedditReactjsList.js
       // args.error here is only for test coverage purpose.
       const id = args;
-      const doRequest = axios.delete(process.env.REACT_APP_BO_URL + '/v1/core/email/' + id);
+      const doRequest = freeAssoApi.delete('/v1/core/email/' + id);
       doRequest.then(
         (res) => {
           dispatch({

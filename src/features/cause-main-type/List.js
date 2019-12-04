@@ -26,7 +26,8 @@ export class List extends Component {
     this.onCreate = this.onCreate.bind(this);
     this.onGetOne = this.onGetOne.bind(this);
     this.onDelOne = this.onDelOne.bind(this);
-    this.onReload = this.onReload.bind(this);    
+    this.onReload = this.onReload.bind(this);  
+    this.onLoadMore = this.onLoadMore.bind(this);  
   }
 
   componentDidMount() {
@@ -53,6 +54,10 @@ export class List extends Component {
       event.preventDefault();
     }
     this.props.actions.loadMore({}, true);
+  }
+
+  onLoadMore(event) {
+    this.props.actions.loadMore();
   }
 
   render() {
@@ -102,6 +107,7 @@ export class List extends Component {
           loadMorePending={this.props.causeMainType.loadMorePending}
           loadMoreFinish={this.props.causeMainType.loadMoreFinish}
           loadMoreError={this.props.causeMainType.loadMoreError}
+          onLoadMore={this.onLoadMore}
         />
       </div>
     );

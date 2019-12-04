@@ -2,18 +2,8 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
 import * as actions from './redux/actions';
 import { buildModel } from '../../common';
-import {
-  LoadingData,
-  LoadMore,
-  LoadError,
-  LoadComplete,
-  ButtonAddOne,
-  ButtonReload,
-  InputQuickSearch,
-} from '../layout';
 import {
   ResponsiveListHeader,
   ResponsiveListLines,
@@ -24,7 +14,6 @@ import {
   Desktop,
   Mobile,
 } from '../common';
-import { DesktopLine, MobileLine } from '.';
 
 /**
  * Liste des sites

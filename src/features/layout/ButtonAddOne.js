@@ -6,7 +6,7 @@ export default class ButtonAddOne extends Component {
 
   render() {
     return (
-      <button type="button" className="btn btn-primary" onClick={this.props.onClick}>
+      <button title="Ajouter" type="button" className="btn btn-primary" onClick={this.props.onClick}>
         <AddOneIcon color={this.props.color} />
       </button>
     );

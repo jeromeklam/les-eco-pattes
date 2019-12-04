@@ -16,6 +16,9 @@ import configRoute from '../features/config/route';
 import causeMainTypeRoute from '../features/cause-main-type/route';
 import emailRoute from '../features/email/route';
 import langRoute from '../features/lang/route';
+import clientRoute from '../features/client/route';
+import clientTypeRoute from '../features/client-type/route';
+import clientCategoryRoute from '../features/client-category/route';
 
 // NOTE: DO NOT CHANGE the 'childRoutes' name and the declaration pattern.
 // This is used for Rekit cmds to register routes config for new features, and remove config when remove features, etc.
@@ -35,6 +38,9 @@ const childRoutes = [
   causeMainTypeRoute,
   emailRoute,
   langRoute,
+  clientRoute,
+  clientTypeRoute,
+  clientCategoryRoute,
 ];
 
 const routes = [{

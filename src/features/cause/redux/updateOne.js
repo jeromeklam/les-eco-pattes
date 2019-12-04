@@ -1,8 +1,4 @@
-import axios from 'axios';
-import {
-  jsonApiNormalizer,
-  jsonApiUpdate
-} from '../../../common';
+import { freeAssoApi, jsonApiNormalizer, jsonApiUpdate } from '../../../common';
 import {
   CAUSE_UPDATE_ONE_BEGIN,
   CAUSE_UPDATE_ONE_SUCCESS,
@@ -14,7 +10,8 @@ import {
 // Rekit uses redux-thunk for async actions by default: https://github.com/gaearon/redux-thunk
 // If you prefer redux-saga, you can use rekit-plugin-redux-saga: https://github.com/supnate/rekit-plugin-redux-saga
 export function updateOne(id, args = {}) {
-  return (dispatch) => { // optionally you can have getState as the second argument
+  return dispatch => {
+    // optionally you can have getState as the second argument
     dispatch({
       type: CAUSE_UPDATE_ONE_BEGIN,
     });
@@ -27,9 +24,9 @@ export function updateOne(id, args = {}) {
       // doRequest is a placeholder Promise. You should replace it with your own logic.
       // See the real-word example at:  https://github.com/supnate/rekit/blob/master/src/features/home/redux/fetchRedditReactjsList.js
       // args.error here is only for test coverage purpose.
-      const doRequest = axios.put(process.env.REACT_APP_BO_URL + '/v1/asso/cause/' + id, args);
+      const doRequest = freeAssoApi.put('/v1/asso/cause/' + id, args);
       doRequest.then(
-        (res) => {
+        res => {
           dispatch({
             type: CAUSE_UPDATE_ONE_SUCCESS,
             data: res,
@@ -37,7 +34,7 @@ export function updateOne(id, args = {}) {
           resolve(res);
         },
         // Use rejectHandler as the second argument so that render errors won't be caught.
-        (err) => {
+        err => {
           dispatch({
             type: CAUSE_UPDATE_ONE_FAILURE,
             data: { error: err },
@@ -93,14 +90,14 @@ export function reducer(state, action) {
       };
 
     case CAUSE_UPDATE_ONE_UPDATE:
-      let object  = jsonApiNormalizer(action.data.data);
+      let object = jsonApiNormalizer(action.data.data);
       let myItems = state.items;
       let news = jsonApiUpdate(myItems, 'FreeAsso_Cause', object);
       return {
         ...state,
         updateOneError: null,
-        items: news
-      };      
+        items: news,
+      };
 
     default:
       return state;

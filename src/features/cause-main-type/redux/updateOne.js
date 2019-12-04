@@ -1,5 +1,4 @@
-import axios from 'axios';
-import { jsonApiNormalizer, buildModel, jsonApiUpdate } from '../../../common';
+import { freeAssoApi, jsonApiNormalizer, buildModel, jsonApiUpdate } from '../../../common';
 import {
   CAUSE_MAIN_TYPE_UPDATE_ONE_BEGIN,
   CAUSE_MAIN_TYPE_UPDATE_ONE_SUCCESS,
@@ -11,7 +10,8 @@ import {
 // Rekit uses redux-thunk for async actions by default: https://github.com/gaearon/redux-thunk
 // If you prefer redux-saga, you can use rekit-plugin-redux-saga: https://github.com/supnate/rekit-plugin-redux-saga
 export function updateOne(args = {}) {
-  return (dispatch) => { // optionally you can have getState as the second argument
+  return dispatch => {
+    // optionally you can have getState as the second argument
     dispatch({
       type: CAUSE_MAIN_TYPE_UPDATE_ONE_BEGIN,
     });
@@ -25,9 +25,9 @@ export function updateOne(args = {}) {
       // See the real-word example at:  https://github.com/supnate/rekit/blob/master/src/features/home/redux/fetchRedditReactjsList.js
       // args.error here is only for test coverage purpose.
       const id = args.id;
-      const doRequest = axios.put(process.env.REACT_APP_BO_URL + '/v1/asso/cause_main_type/' + id, args);
+      const doRequest = freeAssoApi.put('/v1/asso/cause_main_type/' + id, args);
       doRequest.then(
-        (res) => {
+        res => {
           dispatch({
             type: CAUSE_MAIN_TYPE_UPDATE_ONE_SUCCESS,
             data: res,
@@ -35,7 +35,7 @@ export function updateOne(args = {}) {
           resolve(res);
         },
         // Use rejectHandler as the second argument so that render errors won't be caught.
-        (err) => {
+        err => {
           dispatch({
             type: CAUSE_MAIN_TYPE_UPDATE_ONE_FAILURE,
             data: { error: err },

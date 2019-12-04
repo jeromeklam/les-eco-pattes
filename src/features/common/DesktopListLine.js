@@ -49,7 +49,6 @@ export default class DesktopListLine extends Component {
 
   render() {
     const item = this.props.item;
-    console.log(this.state.confirm);
     return (
       <div>
         <HoverObserver onMouseEnter={this.mouseEnter} onMouseLeave={this.mouseLeave}>

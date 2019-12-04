@@ -1,5 +1,5 @@
-import axios from 'axios';
 import {
+  freeAssoApi,
   jsonApiNormalizer,
   jsonApiUpdate
 } from '../../../common';
@@ -28,7 +28,7 @@ export function updateOne(args = {}) {
       // See the real-word example at:  https://github.com/supnate/rekit/blob/master/src/features/home/redux/fetchRedditReactjsList.js
       // args.error here is only for test coverage purpose.
       const id = args.id;
-      const doRequest = axios.put(process.env.REACT_APP_BO_URL + '/v1/core/email/' + id, args);
+      const doRequest = freeAssoApi.put('/v1/core/email/' + id, args);
       doRequest.then(
         (res) => {
           dispatch({

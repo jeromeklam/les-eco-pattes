@@ -1,5 +1,4 @@
-import axios from 'axios';
-import { jsonApiNormalizer, buildModel, jsonApiUpdate } from '../../../common';
+import { jsonApiNormalizer, freeAssoApi, jsonApiUpdate } from '../../../common';
 import {
   DATA_UPDATE_ONE_BEGIN,
   DATA_UPDATE_ONE_SUCCESS,
@@ -26,7 +25,7 @@ export function updateOne(args = {}) {
       // See the real-word example at:  https://github.com/supnate/rekit/blob/master/src/features/home/redux/fetchRedditReactjsList.js
       // args.error here is only for test coverage purpose.
       const id = args.id;
-      const doRequest = axios.put(process.env.REACT_APP_BO_URL + '/v1/asso/data/' + id, args);
+      const doRequest = freeAssoApi.put('/v1/asso/data/' + id, args);
       doRequest.then(
         res => {
           dispatch({

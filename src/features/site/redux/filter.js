@@ -1,5 +1,4 @@
-import axios from 'axios';
-import { jsonApiNormalizer, objectToQueryString } from '../../../common';
+import { freeAssoApi, objectToQueryString } from '../../../common';
 import {
   SITE_FILTER_BEGIN,
   SITE_FILTER_SUCCESS,
@@ -34,7 +33,7 @@ export function filter(args = {}) {
         }
       };
       const addUrl = objectToQueryString(params);
-      const doRequest = axios.get(process.env.REACT_APP_BO_URL + '/v1/asso/site' + addUrl, {});
+      const doRequest = freeAssoApi.get('/v1/asso/site' + addUrl, {});
       doRequest.then(
         (res) => {
           dispatch({

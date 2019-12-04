@@ -1,5 +1,6 @@
 import moment from 'moment';
 
+export {default as freeAssoApi} from './api';
 export {initAxios as initAxios} from './init';
 export {buildModel as buildModel} from './reduxModel';
 export {buildFirstModel as buildFirstModel} from './reduxModel';

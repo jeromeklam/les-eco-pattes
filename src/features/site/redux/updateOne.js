@@ -1,5 +1,5 @@
-import axios from 'axios';
 import {
+  freeAssoApi,
   jsonApiNormalizer,
   jsonApiUpdate
 } from '../../../common';
@@ -27,7 +27,7 @@ export function updateOne(id, args = {}) {
       // doRequest is a placeholder Promise. You should replace it with your own logic.
       // See the real-word example at:  https://github.com/supnate/rekit/blob/master/src/features/home/redux/fetchRedditReactjsList.js
       // args.error here is only for test coverage purpose.
-      const doRequest = axios.put(process.env.REACT_APP_BO_URL + '/v1/asso/site/' + id, args);
+      const doRequest = freeAssoApi.put('/v1/asso/site/' + id, args);
       doRequest.then(
         (res) => {
           dispatch({

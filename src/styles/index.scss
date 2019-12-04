@@ -4,6 +4,9 @@
 
 @import "../../node_modules/bootstrap/scss/bootstrap";
 
+@import './global';
+@import './form';
+
 @import '../features/home/style';
 @import '../features/common/style';
 @import '../features/site/style';
@@ -17,7 +20,8 @@
 @import '../features/cause-type/style';
 @import '../features/config/style';
 @import '../features/cause-main-type/style';
-
-@import './global';
 @import '../features/email/style';
 @import '../features/lang/style';
+@import '../features/client/style';
+@import '../features/client-type/style';
+@import '../features/client-category/style';

@@ -1,5 +1,4 @@
-import axios from 'axios';
-import { jsonApiNormalizer, objectToQueryString } from '../../../common';
+import { freeAssoApi, jsonApiNormalizer } from '../../../common';
 import {
   LANG_LOAD_MORE_BEGIN,
   LANG_LOAD_MORE_SUCCESS,
@@ -25,7 +24,7 @@ export function loadMore(args = {}) {
         // doRequest is a placeholder Promise. You should replace it with your own logic.
         // See the real-word example at:  https://github.com/supnate/rekit/blob/master/src/features/home/redux/fetchRedditReactjsList.js
         // args.error here is only for test coverage purpose.
-        const doRequest = axios.get(process.env.REACT_APP_BO_URL + '/v1/core/lang', {});
+        const doRequest = freeAssoApi.get('/v1/core/lang', {});
         doRequest.then(
           (res) => {
             dispatch({

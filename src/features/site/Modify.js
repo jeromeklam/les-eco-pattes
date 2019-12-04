@@ -75,7 +75,6 @@ export class Modify extends Component {
 
   render() {
     const item = this.state.item;
-    console.log("modify site",this.props);
     return (
       <div className="site-modify global-card">
         {this.props.site.loadOnePending ? (
