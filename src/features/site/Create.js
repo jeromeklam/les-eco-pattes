@@ -69,7 +69,7 @@ export class Create extends Component {
   render() {
     const item = this.state.item;
     return (
-      <div className="site-type-create">
+      <div className="site-type-create global-card">
         {item && (
           <Form
             item={item}

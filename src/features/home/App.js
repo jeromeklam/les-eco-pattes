@@ -35,6 +35,7 @@ export class App extends Component {
   }
 
   componentDidMount() {
+    initAxios();
     if (this.props.auth.authenticated) {
       this.props.actions.loadAll();
     } else {

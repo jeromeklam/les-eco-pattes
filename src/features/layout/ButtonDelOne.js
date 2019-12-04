@@ -8,7 +8,7 @@ export default class ButtonDelOne extends Component {
 
   render() {
     return (
-      <button type="button" className="btn btn-danger" onClick={this.props.onClick}>
+      <button type="button" className="btn btn-warning" onClick={this.props.onClick}>
         <DelOneIcon color={this.props.color} />
       </button>
     );

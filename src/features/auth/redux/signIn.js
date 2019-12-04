@@ -31,7 +31,8 @@ export function signIn(args = {}) {
       // See the real-word example at:  https://github.com/supnate/rekit/blob/master/src/features/home/redux/fetchRedditReactjsList.js
       // args.error here is only for test coverage purpose.
       const headers = {
-        Authorization: 'JWT',
+        'Authorization': 'JWT',
+        'Content-Type': 'application/vnd.api+json'
       };
       const doRequest = axios.post(process.env.REACT_APP_BO_URL + '/v1/sso/signin', args, {
         headers: headers,

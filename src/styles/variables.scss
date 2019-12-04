@@ -1,7 +1,8 @@
 /* BT4 overides */
 $theme-colors: (
-  "primary": #108813,
-  "danger": #ff4136
+  "primary": #7ab255,
+  "danger": #ff4136,
+  "light": lighten(#5a4e4e, 60%)
 );
 $grid-breakpoints: (
   xs: 0,

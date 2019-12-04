@@ -80,7 +80,7 @@ export class Modify extends Component {
   render() {
     const item = this.state.item;
     return (      
-      <div className="cause-modify">
+      <div className="cause-modify global-card">
         {this.props.cause.loadOnePending ? (
           <LoadingData />
         ) : (

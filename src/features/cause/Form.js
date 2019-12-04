@@ -31,17 +31,6 @@ export default function Form(props) {
         </div>
         <div className="col-sm-16">
         </div>
-        <div className="col-sm-12">
-          <InputSelect
-            label="Espèce"
-            name="cause_type.cause_main_type.id"    
-            value={(values.cause_type && values.cause_type.cause_main_type) ? values.cause_type.cause_main_type.id : null}        
-            required={true}
-            addempty={true}
-            onChange={handleChange}                     
-            options={causeMainTypeAsOptions(props.cause_main_types)}
-          />
-        </div>
         <div className="col-sm-12" >
           <InputSelect
             label="Race"
