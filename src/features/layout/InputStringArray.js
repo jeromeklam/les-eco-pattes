@@ -97,12 +97,12 @@ export default class InputStringArray extends Component {
                       <div className="input-group-append">
                         <button
                           type="button"
-                          className="btn btn-outline-danger"
+                          className="btn btn-outline-warning"
                           onClick={() => {
                             this.onMinus(idx);
                           }}
                         >
-                          <Minus color="red" />
+                          <Minus color="orange" />
                         </button>
                       </div>
                     </div>

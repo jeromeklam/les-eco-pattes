@@ -85,7 +85,7 @@ export class List extends Component {
       { name: 'type',  label: 'Race',           col: 'cause_type.caut_name',                 size: '4', mob_size: '18', title: false },
       { name: 'sex',   label: 'M/F',            col: 'cau_string_1',                         size: '4', mob_size: '18', title: false },
       { name: 'color', label: 'Couleur',        col: 'cau_string_2',                         size: '4', mob_size: '18', title: false },
-      { name: 'site',  label: 'Site',           col: 'site.site_town',                       size: '9', mob_size: '',   title: false },
+      { name: 'site',  label: 'Site',           col: 'site.site_name',                       size: '9', mob_size: '',   title: false },
     ];
     // L'affichage, items, loading, loadMoreError
     return (

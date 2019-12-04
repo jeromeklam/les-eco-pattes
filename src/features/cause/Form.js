@@ -4,6 +4,7 @@ import {
   InputText, 
   InputSelect,
   InputData,
+  InputPicker,
   FormResponsive } from '../layout';
 import useForm from '../layout/useForm';
 import { causeTypeAsOptions } from '../cause-type/functions.js';
@@ -48,6 +49,17 @@ export default function Form(props) {
             value={values.cau_string_1}
             datas={props.tab_datas}
             config={props.tab_configs}
+            onChange={handleChange}
+          />          
+        </div>
+        <div className="col-sm-12">
+        </div>
+        <div className="col-sm-12">
+          <InputPicker 
+            label="Site"
+            key="site_id"
+            name="site"
+            value={values.site.site_name}
             onChange={handleChange}
           />          
         </div>

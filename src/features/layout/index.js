@@ -23,3 +23,4 @@ export { default as ButtonDelOne } from './ButtonDelOne';
 export { default as InputStringArray } from './InputStringArray';
 export { default as ModalResponsive } from './ModalResponsive';
 export { default as ConfirmResponsive } from './ConfirmResponsive';
+export { default as InputPicker } from './InputPicker';
