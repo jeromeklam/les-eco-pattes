@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import { Desktop, Tablet, Mobile, Default, MobileListLines, DesktopListLines } from '.';
+import { Desktop, Mobile, MobileListLines, DesktopListLines } from '.';
 
 export default class ResponsiveListLines extends Component {
   static propTypes = {};

@@ -103,7 +103,6 @@ export function reducer(state, action) {
 
     case AUTH_SIGN_IN_FAILURE:
       // The request is failed
-      let error = 'Erreur inconnue';
       if (action.data.error && action.data.error.response) {
         let object = jsonApiNormalizer(action.data.error.response);
         console.log(object);

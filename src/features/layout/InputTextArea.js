@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import classnames from 'classnames';
 
 export default class InputTextArea extends Component {
   static propTypes = {};

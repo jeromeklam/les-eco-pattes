@@ -1,5 +1,7 @@
 @import '../../styles/mixins';
 
 .layout-input-picker {
-
+  .dropdown-menu {
+    left: 10px;
+  }
 }

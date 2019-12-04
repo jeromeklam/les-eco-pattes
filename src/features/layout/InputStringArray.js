@@ -31,7 +31,7 @@ export default class InputStringArray extends Component {
     }
     const name = event.target.name;
     const idx = name.replace('field-', '');
-    if (idx == '@') {
+    if (idx === '@') {
       this.setState({ newItem: event.target.value });
     } else {
       let items = this.state.items;

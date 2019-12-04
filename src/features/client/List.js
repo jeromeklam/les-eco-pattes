@@ -5,14 +5,7 @@ import { connect } from 'react-redux';
 import * as actions from './redux/actions';
 import { buildModel } from '../../common';
 import {
-  ResponsiveListHeader,
-  ResponsiveListLines,
-  ResponsiveListFooter,
-  DesktopListTitle,
-  DesktopListLine,
-  MobileListLine,
-  Desktop,
-  Mobile,
+  ResponsiveList
 } from '../common';
 
 export class List extends Component {
@@ -45,7 +38,7 @@ export class List extends Component {
   onGetOne(id) {
     this.props.history.push('/client/modify/' + id);
   }
-  
+
   onDelOne(id) {
     this.props.actions.delOne(id).then(result => this.props.actions.loadMore({}, true));
   }
@@ -72,57 +65,42 @@ export class List extends Component {
       items = buildModel(this.props.client.items, 'FreeAsso_Client');
     }
     const cols = [
-      { name: 'firstname',    label: 'Prénom', col: 'cli_firstname',     size: '8',  mob_size: '',   title: true },
-      { name: 'lastname', label: 'Nom',  col: 'cli_lastname', size: '10', mob_size: '36', title: false },
+      {
+        name: 'lastname',
+        label: 'Nom',
+        col: 'cli_lastname',
+        size: '10',
+        mob_size: '36',
+        title: false,
+      },
+
+      {
+        name: 'firstname',
+        label: 'Prénom',
+        col: 'cli_firstname',
+        size: '8',
+        mob_size: '',
+        title: true,
+      },
     ];
     // L'affichage, items, loading, loadMoreError
     return (
-      <div className="responsive-list">
-        <ResponsiveListHeader
-          title="Personnes"
-          labelSearch="Recherche nom"
-          onQuickSearch={this.onQuickSearch}
-          onReload={this.onReload}
-          onCreate={this.onCreate}
-        />
-        <Desktop>
-          <DesktopListTitle cols={cols} />
-        </Desktop>
-        <ResponsiveListLines>
-          {items &&
-            items.map(item => {
-              return (
-                <div key={item.id}>
-                  <Mobile>
-                    <MobileListLine                      
-                      id={item.id}
-                      item={item}
-                      title={item.cli_firstname}
-                      onGetOne={this.onGetOne}
-                      onDelOne={this.onDelOne}
-                      lines={cols}
-                    />
-                  </Mobile>
-                  <Desktop>
-                    <DesktopListLine
-                      id={item.id}
-                      item={item}
-                      onGetOne={this.onGetOne}
-                      onDelOne={this.onDelOne}
-                      cols={cols}
-                    />
-                  </Desktop>
-                </div>
-              );
-            })}
-        </ResponsiveListLines>
-        <ResponsiveListFooter
-          loadMorePending={this.props.client.loadMorePending}
-          loadMoreFinish={this.props.client.loadMoreFinish}
-          loadMoreError={this.props.client.loadMoreError}
-          onLoadMore={this.onLoadMore}
-        />
-      </div>
+      <ResponsiveList
+        title="Personnes"
+        titleSearch="Recherche nom"
+        cols={cols}
+        items={items}
+        onSearch={this.onQuickSearch}
+        onReload={this.onReload}
+        onCreate={this.onCreate}
+        onGetOne={this.onGetOne}
+        onDelOne={this.onDelOne}
+        mainCol="cli_firstname"
+        loadMorePending={this.props.client.loadMorePending}
+        loadMoreFinish={this.props.client.loadMoreFinish}
+        loadMoreError={this.props.client.loadMoreError}
+        onLoadMore={this.onLoadMore}
+      />
     );
   }
 }
@@ -137,11 +115,8 @@ function mapStateToProps(state) {
 /* istanbul ignore next */
 function mapDispatchToProps(dispatch) {
   return {
-    actions: bindActionCreators({ ...actions }, dispatch)
+    actions: bindActionCreators({ ...actions }, dispatch),
   };
 }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(List);
+export default connect(mapStateToProps, mapDispatchToProps)(List);

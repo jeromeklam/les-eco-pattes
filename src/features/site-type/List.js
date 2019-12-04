@@ -6,14 +6,7 @@ import { Link } from 'react-router-dom';
 import * as actions from './redux/actions';
 import { buildModel } from '../../common';
 import {
-  ResponsiveListHeader,
-  ResponsiveListFooter,
-  ResponsiveListLines,
-  DesktopListTitle,
-  DesktopListLine,
-  MobileListLine,
-  Desktop,
-  Mobile,
+  ResponsiveList,
 } from '../common';
 
 export class List extends Component {
@@ -69,50 +62,24 @@ export class List extends Component {
     const cols = [
       { name: 'name', label: 'Nom', col: 'sitt_name', size: '30', mob_size: '', title: true },
     ];
+    // L'affichage, items, loading, loadMoreError
     return (
-      <div className="responsive-list">
-        <ResponsiveListHeader
-          title="Types de sites"
-          onReload={this.onReload}
-          onCreate={this.onCreate}
-        />
-        <Desktop>
-          <DesktopListTitle cols={cols} />
-        </Desktop>
-        <ResponsiveListLines>
-          {items &&
-            items.map(item => {
-              return (
-                <div key={item.id}>
-                  <Mobile>
-                    <MobileListLine
-                      id={item.id}
-                      item={item}
-                      title={item.sitt_name}
-                      onGetOne={this.onGetOne}
-                      onDelOne={this.onDelOne}
-                      lines={cols}
-                    />
-                  </Mobile>
-                  <Desktop>
-                    <DesktopListLine
-                      id={item.id}
-                      item={item}
-                      onGetOne={this.onGetOne}
-                      onDelOne={this.onDelOne}
-                      cols={cols}
-                    />
-                  </Desktop>
-                </div>
-              );
-            })}
-        </ResponsiveListLines>
-        <ResponsiveListFooter
-          loadMorePending={this.props.siteType.loadMorePending}
-          loadMoreFinish={this.props.siteType.loadMoreFinish}
-          loadMoreError={this.props.siteType.loadMoreError}
-        />
-      </div>
+      <ResponsiveList
+        title="Types de site"
+        titleSearch="Recherche nom"
+        cols={cols}
+        items={items}
+        onSearch={this.onQuickSearch}
+        onReload={this.onReload}
+        onCreate={this.onCreate}
+        onGetOne={this.onGetOne}
+        onDelOne={this.onDelOne}
+        mainCol="sitt_name"
+        loadMorePending={this.props.siteType.loadMorePending}
+        loadMoreFinish={this.props.siteType.loadMoreFinish}
+        loadMoreError={this.props.siteType.loadMoreError}
+        onLoadMore={this.onLoadMore}
+      />
     );
   }
 }

@@ -4,16 +4,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as actions from './redux/actions';
 import { buildModel } from '../../common';
-import {
-  ResponsiveListHeader,
-  ResponsiveListFooter,
-  ResponsiveListLines,
-  DesktopListTitle,
-  DesktopListLine,
-  MobileListLine,
-  Desktop,
-  Mobile,
-} from '../common';
+import { ResponsiveList } from '../common';
 
 export class List extends Component {
   static propTypes = {
@@ -78,46 +69,22 @@ export class List extends Component {
       { name: 'code', label: 'Code', col: 'email_code', size: '10', mob_size: '' },
     ];
     return (
-      <div className="responsive-list">
-        <ResponsiveListHeader title="Emails" onReload={this.onReload} onCreate={this.onCreate} />
-        <Desktop>
-          <DesktopListTitle cols={cols} />
-        </Desktop>
-        <ResponsiveListLines>
-          {items &&
-            items.map(item => {
-              return (
-                <div key={item.id}>
-                  <Mobile>
-                    <MobileListLine
-                      id={item.id}
-                      item={item}
-                      title={item.caut_name}
-                      onGetOne={this.onGetOne}
-                      onDelOne={this.onDelOne}
-                      lines={cols}
-                    />
-                  </Mobile>
-                  <Desktop>
-                    <DesktopListLine
-                      id={item.id}
-                      item={item}
-                      onGetOne={this.onGetOne}
-                      onDelOne={this.onDelOne}
-                      cols={cols}
-                    />
-                  </Desktop>
-                </div>
-              );
-            })}
-        </ResponsiveListLines>
-        <ResponsiveListFooter
-          loadMorePending={this.props.email.loadMorePending}
-          loadMoreFinish={this.props.email.loadMoreFinish}
-          loadMoreError={this.props.email.loadMoreError}
-          onLoadMore={this.props.onLoadMore}
-        />
-      </div>
+      <ResponsiveList
+        title="Email"
+        titleSearch="Recherche sujet"
+        cols={cols}
+        items={items}
+        onSearch={this.onQuickSearch}
+        onReload={this.onReload}
+        onCreate={this.onCreate}
+        onGetOne={this.onGetOne}
+        onDelOne={this.onDelOne}
+        mainCol="email_subject"
+        loadMorePending={this.props.email.loadMorePending}
+        loadMoreFinish={this.props.email.loadMoreFinish}
+        loadMoreError={this.props.email.loadMoreError}
+        onLoadMore={this.onLoadMore}
+      />
     );
   }
 }

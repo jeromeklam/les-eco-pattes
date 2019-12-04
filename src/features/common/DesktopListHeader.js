@@ -33,10 +33,10 @@ constructor(props) {
   render() {
     return (
       <div className={classnames(this.props.common.sidebar && "common-desktop-list-header-menu", "common-desktop-list-header row row-list-title")}>
-        <div className="col-4">
+        <div className="col-16">
           <span>{this.props.title}</span>
         </div>
-        <div className="col-8">   
+        <div className="col-14">   
           {this.props.onQuickSearch &&         
             <InputQuickSearch 
               name="quickSearch"
@@ -47,7 +47,7 @@ constructor(props) {
             />
           }            
         </div>    
-        <div className="col-24 text-right">
+        <div className="col-6 text-right">
           <ul className="nav justify-content-end">
             <li className="nav-item">
               <ButtonReload color="white" onClick={this.props.onReload} />

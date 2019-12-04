@@ -1,5 +1,4 @@
 import {
-  jsonApiNormalizer,
   buildModel
 } from '../../common';
 

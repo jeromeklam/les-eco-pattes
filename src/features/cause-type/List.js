@@ -5,14 +5,7 @@ import { connect } from 'react-redux';
 import * as actions from './redux/actions';
 import { buildModel } from '../../common';
 import {
-  ResponsiveListHeader,
-  ResponsiveListFooter,
-  ResponsiveListLines,
-  DesktopListTitle,
-  DesktopListLine,
-  MobileListLine,
-  Desktop,
-  Mobile,
+  ResponsiveList,
 } from '../common';
 
 export class List extends Component {
@@ -66,45 +59,22 @@ export class List extends Component {
       { name: "espece", label: "Espèce", col: "cause_main_type.camt_name", size:"10", mob_size:""}
     ];
     return (
-      <div className="responsive-list">
-        <ResponsiveListHeader title="Races" onReload={this.onReload} onCreate={this.onCreate} />
-        <Desktop>
-          <DesktopListTitle cols={cols} />
-        </Desktop>
-        <ResponsiveListLines>
-          {items &&
-            items.map(item => {
-              return (
-                <div key={item.id}>
-                  <Mobile>
-                    <MobileListLine 
-                      id={item.id}
-                      item={item}
-                      title={item.caut_name}
-                      onGetOne={this.onGetOne}
-                      onDelOne={this.onDelOne}
-                      lines={cols}
-                    />
-                  </Mobile>
-                  <Desktop>
-                    <DesktopListLine 
-                      id={item.id}
-                      item={item}
-                      onGetOne={this.onGetOne}
-                      onDelOne={this.onDelOne}
-                      cols={cols}
-                    />
-                  </Desktop>
-                </div>
-              );
-            })}
-        </ResponsiveListLines>
-        <ResponsiveListFooter
-          loadMorePending={this.props.causeType.loadMorePending}
-          loadMoreFinish={this.props.causeType.loadMoreFinish}
-          loadMoreError={this.props.causeType.loadMoreError}
-        />
-      </div>
+      <ResponsiveList
+        title="Races"
+        titleSearch="Recherche nom"
+        cols={cols}
+        items={items}
+        onSearch={this.onQuickSearch}
+        onReload={this.onReload}
+        onCreate={this.onCreate}
+        onGetOne={this.onGetOne}
+        onDelOne={this.onDelOne}
+        mainCol="caut_name"
+        loadMorePending={this.props.causeType.loadMorePending}
+        loadMoreFinish={this.props.causeType.loadMoreFinish}
+        loadMoreError={this.props.causeType.loadMoreError}
+        onLoadMore={this.onLoadMore}
+      />
     );
   }
 }

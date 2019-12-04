@@ -12,6 +12,7 @@ const initialState = {
   filters: [],
   loadMorePending: false,
   loadMoreError: null,
+  loadMoreFinish: false,
 };
 
 export default initialState;

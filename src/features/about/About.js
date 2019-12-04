@@ -35,7 +35,7 @@ export default class About extends Component {
                 <p className="card-text mb-auto">
                   <a href="mailto:contact@lesecopattes.fr">contact@lesecopattes.fr</a>
                 </p>
-                <a href="http://lesecopattes.fr" target="_blank">
+                <a href="http://lesecopattes.fr" target="_blank" rel="noopener noreferrer">
                   Notre site internet
                 </a>
               </div>

@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { InputHidden, InputText, InputSelect, FormResponsive } from '../layout';
 import useForm from '../layout/useForm';
 

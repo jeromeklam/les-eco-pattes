@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Desktop, Tablet, Mobile, Default } from '../common'
+import { Desktop, Mobile } from '../common'
 import SearchIcon from '../icons/Search';
 
 export default class InputQuickSearch extends Component {

@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import { Desktop, Tablet, Mobile, Default, MobileListHeader, DesktopListHeader } from '.';
+import { Desktop, Mobile, MobileListHeader, DesktopListHeader } from '.';
 
 export default class ResponsiveListHeader extends Component {
   static propTypes = {};

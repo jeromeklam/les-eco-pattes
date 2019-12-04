@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { 
   InputHidden, 
   InputText, 
@@ -8,7 +8,6 @@ import {
   FormResponsive } from '../layout';
 import useForm from '../layout/useForm';
 import { causeTypeAsOptions } from '../cause-type/functions.js';
-import { causeMainTypeAsOptions } from '../cause-main-type/functions.js';
 
 export default function Form(props) {
   const { values, handleChange, handleSubmit, handleCancel } = useForm(
@@ -57,10 +56,14 @@ export default function Form(props) {
         <div className="col-sm-12">
           <InputPicker 
             label="Site"
-            key="site_id"
-            name="site"
-            value={values.site.site_name}
+            key="site.id"
+            name="site.id"
+            value={values.site && values.site.id}
+            content={values.site && values.site.site_name}
             onChange={handleChange}
+            pickerAutocomplete="/v1/asso/site/autocomplete/"
+            pickerId="site_id"
+            pickerValue="site_name"
           />          
         </div>
       </div>

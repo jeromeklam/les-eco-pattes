@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import classnames from 'classnames';
 
 export default class InputHidden extends Component {
   static propTypes = {};

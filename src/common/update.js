@@ -16,6 +16,9 @@ import {
 import {
   EMAIL_UPDATE_ONE_UPDATE,
 } from '../features/email/redux/constants';
+import {
+  CAUSE_UPDATE_ONE_UPDATE,
+} from '../features/cause/redux/constants';
 
 export function propagateModel(type, model) {
   return (dispatch) => {
@@ -23,6 +26,12 @@ export function propagateModel(type, model) {
       case 'FreeAsso_Site':
         dispatch({
           type: SITE_UPDATE_ONE_UPDATE,
+          data: model
+        });
+        break;
+      case 'FreeAsso_Cause':
+        dispatch({
+          type: CAUSE_UPDATE_ONE_UPDATE,
           data: model
         });
         break;
@@ -43,17 +52,21 @@ export function propagateModel(type, model) {
           type: CAUSE_TYPE_UPDATE_ONE_UPDATE,
           data: model
         });
+        break;
       case 'FreeAsso_CauseMainType':
         dispatch({
           type: CAUSE_MAIN_TYPE_UPDATE_ONE_UPDATE,
           data: model
         });
+        break;
       case 'FreeFW_Email':
         dispatch({
           type: EMAIL_UPDATE_ONE_UPDATE,
           data: model
         });
-      break;
+        break;
+      default:
+        break;
     }
   }
 }

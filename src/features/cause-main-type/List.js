@@ -5,14 +5,7 @@ import { connect } from 'react-redux';
 import * as actions from './redux/actions';
 import { buildModel } from '../../common';
 import {
-  ResponsiveListHeader,
-  ResponsiveListFooter,
-  ResponsiveListLines,
-  DesktopListTitle,
-  DesktopListLine,
-  MobileListLine,
-  Desktop,
-  Mobile,
+  ResponsiveList,
 } from '../common';
 
 export class List extends Component {
@@ -70,46 +63,22 @@ export class List extends Component {
       { name: "name", label: "Nom", col: "camt_name", size:"30", mob_size:"", title: true}
     ];
     return (
-      <div className="responsive-list">
-        <ResponsiveListHeader title="Espèces" onReload={this.onReload} onCreate={this.onCreate} />
-        <Desktop>
-          <DesktopListTitle cols={cols}/>
-        </Desktop>
-        <ResponsiveListLines>
-          {items &&
-            items.map(item => {
-              return (
-                <div key={item.id}>
-                  <Mobile>
-                    <MobileListLine 
-                      id={item.id}
-                      item={item}
-                      title={item.camt_name}
-                      onGetOne={this.onGetOne}
-                      onDelOne={this.onDelOne}
-                      lines={cols}
-                    />
-                  </Mobile>
-                  <Desktop>
-                    <DesktopListLine 
-                      id={item.id}
-                      item={item}
-                      onGetOne={this.onGetOne}
-                      onDelOne={this.onDelOne}
-                      cols={cols}
-                    />
-                  </Desktop>
-                </div>
-              );
-            })}
-        </ResponsiveListLines>
-        <ResponsiveListFooter
-          loadMorePending={this.props.causeMainType.loadMorePending}
-          loadMoreFinish={this.props.causeMainType.loadMoreFinish}
-          loadMoreError={this.props.causeMainType.loadMoreError}
-          onLoadMore={this.onLoadMore}
-        />
-      </div>
+      <ResponsiveList
+        title="Espèces"
+        titleSearch="Recherche nom"
+        cols={cols}
+        items={items}
+        onSearch={this.onQuickSearch}
+        onReload={this.onReload}
+        onCreate={this.onCreate}
+        onGetOne={this.onGetOne}
+        onDelOne={this.onDelOne}
+        mainCol="camt_name"
+        loadMorePending={this.props.causeMainType.loadMorePending}
+        loadMoreFinish={this.props.causeMainType.loadMoreFinish}
+        loadMoreError={this.props.causeMainType.loadMoreError}
+        onLoadMore={this.onLoadMore}
+      />
     );
   }
 }

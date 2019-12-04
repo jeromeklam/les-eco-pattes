@@ -5,14 +5,7 @@ import { connect } from 'react-redux';
 import * as actions from './redux/actions';
 import { buildModel } from '../../common';
 import {
-  Desktop,
-  Mobile,
-  ResponsiveListHeader,
-  ResponsiveListFooter,
-  ResponsiveListLines,
-  DesktopListTitle,
-  MobileListLine,
-  DesktopListLine,
+  ResponsiveList,
 } from '../common';
 import { dataTypes } from './functions';
 
@@ -70,43 +63,22 @@ export class List extends Component {
     ];
     // L'affichage, items, loading, loadMoreError
     return (
-      <div className="responsive-list">
-        <ResponsiveListHeader title="Variables" onReload={this.onReload} onCreate={this.onCreate} />
-        <Desktop>
-          <DesktopListTitle cols={cols} />
-        </Desktop>
-        <ResponsiveListLines>
-          {items &&
-            items.map(item => {
-              return (
-                <div key={item.id}>
-                  <Mobile>
-                    <MobileListLine 
-                      onGetOne={this.onGetOne} 
-                      id={item.id}
-                      item={item}
-                      title={item.data_name}
-                      lines={cols}
-                    />
-                  </Mobile>
-                  <Desktop>
-                    <DesktopListLine 
-                      id={item.id}
-                      item={item}
-                      onGetOne={this.onGetOne}
-                      cols={cols}
-                    />
-                  </Desktop>
-                </div>
-              );
-            })}
-        </ResponsiveListLines>
-        <ResponsiveListFooter
-          loadMorePending={this.props.data.loadMorePending}
-          loadMoreFinish={this.props.data.loadMoreFinish}
-          loadMoreError={this.props.data.loadMoreError}
-        />
-      </div>
+      <ResponsiveList
+        title="Variables"
+        titleSearch="Recherche nom"
+        cols={cols}
+        items={items}
+        onSearch={this.onQuickSearch}
+        onReload={this.onReload}
+        onCreate={this.onCreate}
+        onGetOne={this.onGetOne}
+        onDelOne={this.onDelOne}
+        mainCol="data_name"
+        loadMorePending={this.props.data.loadMorePending}
+        loadMoreFinish={this.props.data.loadMoreFinish}
+        loadMoreError={this.props.data.loadMoreError}
+        onLoadMore={this.onLoadMore}
+      />
     );
   }
 }

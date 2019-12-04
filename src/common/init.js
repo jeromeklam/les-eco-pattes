@@ -2,12 +2,8 @@ import axios  from 'axios';
 import cookie from 'react-cookies';
 
 export function initAxios(token) {
-  axios.defaults.headers.common['Api-Id']       = process.env.REACT_APP_API_ID;
-  axios.defaults.headers.common['Content-Type'] = 'application/vnd.api+json';
-  axios.defaults.headers.common['Accept']       = 'application/vnd.api+json';
-  axios.defaults.headers.post['Content-Type']   = 'application/vnd.api+json';
-  axios.defaults.headers.put['Content-Type']    = 'application/vnd.api+json';
-  axios.defaults.timeout                        = 40000;
+  axios.defaults.headers.common['Api-Id'] = process.env.REACT_APP_API_ID;
+  axios.defaults.timeout                  = 40000;
   if (token) {
     axios.defaults.headers.common['Authorization'] = token;
   } else {

@@ -5,22 +5,7 @@ import { connect } from 'react-redux';
 import * as actions from './redux/actions';
 import { buildModel } from '../../common';
 import {
-  LoadingData,
-  LoadMore,
-  LoadError,
-  LoadComplete,
-  ButtonAddOne,
-  ButtonReload,
-} from '../layout';
-import {
-  ResponsiveListHeader,
-  ResponsiveListLines,
-  ResponsiveListFooter,
-  DesktopListTitle,
-  DesktopListLine,
-  MobileListLine,
-  Desktop,
-  Mobile,
+  ResponsiveList,
 } from '../common';
 
 export class List extends Component {
@@ -89,52 +74,22 @@ export class List extends Component {
     ];
     // L'affichage, items, loading, loadMoreError
     return (
-      <div className="responsive-list">
-        <ResponsiveListHeader
-          title="Animaux"
-          labelSearch="Recherche identification animal"
-          onQuickSearch={this.onQuickSearch}
-          onReload={this.onReload}
-          onCreate={this.onCreate}
-        />
-        <Desktop>
-          <DesktopListTitle cols={cols} />
-        </Desktop>
-        <ResponsiveListLines>
-          {items &&
-            items.map(item => {
-              return (
-                <div key={item.id}>
-                  <Mobile>
-                    <MobileListLine                      
-                      id={item.id}
-                      item={item}
-                      title={item.cau_name}
-                      onGetOne={this.onGetOne}
-                      onDelOne={this.onDelOne}
-                      lines={cols}
-                    />
-                  </Mobile>
-                  <Desktop>
-                    <DesktopListLine
-                      id={item.id}
-                      item={item}
-                      onGetOne={this.onGetOne}
-                      onDelOne={this.onDelOne}
-                      cols={cols}
-                    />
-                  </Desktop>
-                </div>
-              );
-            })}
-        </ResponsiveListLines>
-        <ResponsiveListFooter
-          loadMorePending={this.props.cause.loadMorePending}
-          loadMoreFinish={this.props.cause.loadMoreFinish}
-          loadMoreError={this.props.cause.loadMoreError}
-          onLoadMore={this.onLoadMore}
-        />
-      </div>
+      <ResponsiveList
+        title="Animax"
+        titleSearch="Recherche nom"
+        cols={cols}
+        items={items}
+        onSearch={this.onQuickSearch}
+        onReload={this.onReload}
+        onCreate={this.onCreate}
+        onGetOne={this.onGetOne}
+        onDelOne={this.onDelOne}
+        mainCol="cau_name"
+        loadMorePending={this.props.cause.loadMorePending}
+        loadMoreFinish={this.props.cause.loadMoreFinish}
+        loadMoreError={this.props.cause.loadMoreError}
+        onLoadMore={this.onLoadMore}
+      />
     );
   }
 }

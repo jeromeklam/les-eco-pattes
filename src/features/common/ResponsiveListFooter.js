@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Desktop, Tablet, Mobile, Default, MobileListFooter, DesktopListFooter } from '.';
+import { Desktop, Mobile, MobileListFooter, DesktopListFooter } from '.';
 
 export default class ResponsiveListFooter extends Component {
   static propTypes = {
