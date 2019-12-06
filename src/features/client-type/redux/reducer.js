@@ -8,9 +8,19 @@
 
 import initialState from './initialState';
 import { reducer as loadMoreReducer } from './loadMore';
+import { reducer as clearItemsReducer } from './clearItems';
+import { reducer as createOneReducer } from './createOne';
+import { reducer as delOneReducer } from './delOne';
+import { reducer as loadOneReducer } from './loadOne';
+import { reducer as updateOneReducer } from './updateOne';
 
 const reducers = [
   loadMoreReducer,
+  clearItemsReducer,
+  createOneReducer,
+  delOneReducer,
+  loadOneReducer,
+  updateOneReducer,
 ];
 
 export default function reducer(state = initialState, action) {

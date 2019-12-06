@@ -32,11 +32,11 @@ export class List extends Component {
     if (event) {
       event.preventDefault();
     }
-    this.props.history.push('/client_type/create');
+    this.props.history.push('/client-type/create');
   }
 
   onGetOne(id) {
-    this.props.history.push('/client_type/modify/' + id);
+    this.props.history.push('/client-type/modify/' + id);
   }
 
   onDelOne(id) {

@@ -1,5 +1,5 @@
 import React from 'react';
-import { InputHidden, InputText, InputSelect, FormResponsive } from '../layout';
+import { InputHidden, InputText, InputSelect, InputTextArea, FormResponsive } from '../layout';
 import useForm from '../layout/useForm';
 
 export default function Form(props) {
@@ -57,7 +57,7 @@ export default function Form(props) {
           value={values.email_reply_to}
           onChange={handleChange}
         />
-        <InputText
+        <InputTextArea
           label="Corps"
           name="email_body"
           id="email_body"

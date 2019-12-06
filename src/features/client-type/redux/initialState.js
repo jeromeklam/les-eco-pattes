@@ -13,6 +13,14 @@ const initialState = {
   loadMorePending: false,
   loadMoreError: null,
   loadMoreFinish: false,
+  createOnePending: false,
+  createOneError: null,
+  delOnePending: false,
+  delOneError: null,
+  loadOnePending: false,
+  loadOneError: null,
+  updateOnePending: false,
+  updateOneError: null,
 };
 
 export default initialState;

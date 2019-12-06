@@ -1,37 +1,65 @@
+import Editor from 'draft-js-plugins-editor';
+import { EditorState } from 'draft-js';
+import { convertToHTML, convertFromHTML } from 'draft-convert';
+import createImagePlugin from 'draft-js-image-plugin';
+import createInlineToolbarPlugin from 'draft-js-inline-toolbar-plugin';
 import React, { Component } from 'react';
+import 'draft-js-inline-toolbar-plugin/lib/plugin.css';
+
+const imagePlugin = createImagePlugin();
+const inlineToolbarPlugin = createInlineToolbarPlugin();
+const { InlineToolbar } = inlineToolbarPlugin;
+const plugins = [inlineToolbarPlugin, imagePlugin];
 
 export default class InputTextArea extends Component {
   static propTypes = {};
 
-  render() {
-    let value = '';
-    if (this.props.value && this.props.value !== null) {
-      value = this.props.value;
-    }
-    let id = this.props.name;
-    if (this.props.id && this.props.id !== null) {
-      id = this.props.id;
-    }
-    let props = {
-      ...this.props,
-      value: value,
-      id: id
+  constructor(props) {
+    super(props);
+    this.state = {
+      editorState: EditorState.createWithContent(convertFromHTML(this.props.value)),
     };
+    this.focus = this.focus.bind(this);
+    this.onChange = this.onChange.bind(this);
+  }
+
+  focus() {
+    this.editor.focus();
+  }
+
+  onChange = editorState => {
+    this.setState({
+      editorState,
+    });
+    const content = this.state.editorState.getCurrentContent();
+    const event = {
+      target: {
+        name: this.props.name,
+        value: convertToHTML(content),
+      },
+    };
+    this.props.onChange(event);
+  };
+
+  render() {
     return (
       <div className="form-group row">
-        <label forname={this.props.id} className="col-sm-6 col-form-label">
+        <label forName={this.props.id} className="col-sm-6 col-form-label">
           {this.props.label}
-          {this.props.required && 
-           <span>&nbsp;*</span>
-          }
+          {this.props.required && <span>&nbsp;*</span>}
         </label>
         <div className="col-sm-30">
-          <textarea
-            id={props.id}
-            className="form-control" 
-          >
-            {props.value}            
-          </textarea>
+          <div className="editor" onClick={this.focus}>
+            <Editor
+              editorState={this.state.editorState}
+              onChange={this.onChange}
+              plugins={plugins}
+              ref={element => {
+                this.editor = element;
+              }}
+            />
+            <InlineToolbar />
+          </div>
         </div>
       </div>
     );

@@ -4,54 +4,62 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as actions from './redux/actions';
 import { withRouter } from 'react-router-dom';
-import { getJsonApi, propagateModel, modelsToSelect } from '../../common';
+import { getJsonApi } from '../../common';
 import { LoadingData } from '../layout';
 import Form from './Form';
 
-export class Modify extends Component {
+export class Create extends Component {
   static propTypes = {
-    email: PropTypes.object.isRequired,
+    clientType: PropTypes.object.isRequired,
     actions: PropTypes.object.isRequired,
   };
 
   constructor(props) {
     super(props);
     this.state = {
-      id: this.props.match.params.id || false,
+      id: 0,
       item: false,
     };
+    /**
+     * Bind des méthodes locales au contexte courant
+     */
     this.onSubmit = this.onSubmit.bind(this);
     this.onCancel = this.onCancel.bind(this);
   }
 
   componentDidMount() {
+    /**
+     *  En async on va demander le chargement des données
+     *  Lorsque fini le store sera modifié
+     */
     this.props.actions.loadOne(this.state.id).then(result => {
-      const item = this.props.email.loadOneItem;
-      console.log(item);
+      const item = this.props.clientType.loadOneItem;
       this.setState({ item: item });
     });
   }
 
+  /**
+   * Sur annulation, on retourne à la liste
+   */
   onCancel(event) {
     if (event) {
       event.preventDefault();
     }
-    this.props.history.push('/email');
+    this.props.history.push('/client-type');
   }
 
   /**
    * Sur enregistrement, sauvegarde, update store et retour à la liste
+   * Sur erreur faut afficher les messages d'anomalie
    */
   onSubmit(datas = {}) {
     // Conversion des données en objet pour le service web
-    let obj = getJsonApi(datas, 'FreeFW_Email', this.state.id);
+    let obj = getJsonApi(datas, 'FreeAsso_ClientType', this.state.id);
     this.props.actions
-      .updateOne(obj)
+      .createOne(obj)
       .then(result => {
-        // @Todo propagate result to store
-        // propagateModel est ajouté aux actions en bas de document
-        this.props.actions.propagateModel('FreeFW_Email', result);
-        this.props.history.push('/email');
+        this.props.actions.clearItems();
+        this.props.history.push('/client-type');
       })
       .catch(errors => {
         // @todo display errors to fields
@@ -61,14 +69,13 @@ export class Modify extends Component {
 
   render() {
     const item = this.state.item;
-    const options = modelsToSelect(this.props.lang.items, 'id', 'lang_name');
     return (
-      <div className="email-modify global-card">
-        {this.props.email.loadOnePending ? (
+      <div className="client-type-create global-card">
+        {this.props.clientType.loadOnePending ? (
           <LoadingData />
         ) : (
           <div>
-            {item && <Form item={item} onSubmit={this.onSubmit} onCancel={this.onCancel} langs={options} />}
+            {item && <Form item={item} onSubmit={this.onSubmit} onCancel={this.onCancel} />}
           </div>
         )}
       </div>
@@ -79,16 +86,18 @@ export class Modify extends Component {
 /* istanbul ignore next */
 function mapStateToProps(state) {
   return {
-    email: state.email,
-    lang: state.lang,
+    clientType: state.clientType,
   };
 }
 
 /* istanbul ignore next */
 function mapDispatchToProps(dispatch) {
   return {
-    actions: bindActionCreators({ ...actions, propagateModel }, dispatch),
+    actions: bindActionCreators({ ...actions }, dispatch)
   };
 }
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Modify));
+export default withRouter(connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Create));

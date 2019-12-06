@@ -4,11 +4,11 @@ import {
   jsonApiUpdate
 } from '../../../common';
 import {
-  EMAIL_UPDATE_ONE_BEGIN,
-  EMAIL_UPDATE_ONE_SUCCESS,
-  EMAIL_UPDATE_ONE_FAILURE,
-  EMAIL_UPDATE_ONE_DISMISS_ERROR,
-  EMAIL_UPDATE_ONE_UPDATE
+  CLIENT_TYPE_UPDATE_ONE_BEGIN,
+  CLIENT_TYPE_UPDATE_ONE_SUCCESS,
+  CLIENT_TYPE_UPDATE_ONE_FAILURE,
+  CLIENT_TYPE_UPDATE_ONE_DISMISS_ERROR,
+  CLIENT_TYPE_UPDATE_ONE_UPDATE,
 } from './constants';
 
 // Rekit uses redux-thunk for async actions by default: https://github.com/gaearon/redux-thunk
@@ -16,7 +16,7 @@ import {
 export function updateOne(args = {}) {
   return (dispatch) => { // optionally you can have getState as the second argument
     dispatch({
-      type: EMAIL_UPDATE_ONE_BEGIN,
+      type: CLIENT_TYPE_UPDATE_ONE_BEGIN,
     });
 
     // Return a promise so that you could control UI flow without states in the store.
@@ -28,20 +28,19 @@ export function updateOne(args = {}) {
       // See the real-word example at:  https://github.com/supnate/rekit/blob/master/src/features/home/redux/fetchRedditReactjsList.js
       // args.error here is only for test coverage purpose.
       const id = args.id;
-      const doRequest = freeAssoApi.put('/v1/core/email/' + id, args);
+      const doRequest = freeAssoApi.put('/v1/asso/client_type/' + id, args);
       doRequest.then(
         (res) => {
           dispatch({
-            type: EMAIL_UPDATE_ONE_SUCCESS,
+            type: CLIENT_TYPE_UPDATE_ONE_SUCCESS,
             data: res,
-            id: args,
           });
           resolve(res);
         },
         // Use rejectHandler as the second argument so that render errors won't be caught.
         (err) => {
           dispatch({
-            type: EMAIL_UPDATE_ONE_FAILURE,
+            type: CLIENT_TYPE_UPDATE_ONE_FAILURE,
             data: { error: err },
           });
           reject(err);
@@ -57,13 +56,13 @@ export function updateOne(args = {}) {
 // If you don't want errors to be saved in Redux store, just ignore this method.
 export function dismissUpdateOneError() {
   return {
-    type: EMAIL_UPDATE_ONE_DISMISS_ERROR,
+    type: CLIENT_TYPE_UPDATE_ONE_DISMISS_ERROR,
   };
 }
 
 export function reducer(state, action) {
   switch (action.type) {
-    case EMAIL_UPDATE_ONE_BEGIN:
+    case CLIENT_TYPE_UPDATE_ONE_BEGIN:
       // Just after a request is sent
       return {
         ...state,
@@ -71,7 +70,7 @@ export function reducer(state, action) {
         updateOneError: null,
       };
 
-    case EMAIL_UPDATE_ONE_SUCCESS:
+    case CLIENT_TYPE_UPDATE_ONE_SUCCESS:
       // The request is success
       return {
         ...state,
@@ -79,7 +78,7 @@ export function reducer(state, action) {
         updateOneError: null,
       };
 
-    case EMAIL_UPDATE_ONE_FAILURE:
+    case CLIENT_TYPE_UPDATE_ONE_FAILURE:
       // The request is failed
       return {
         ...state,
@@ -87,22 +86,22 @@ export function reducer(state, action) {
         updateOneError: action.data.error,
       };
 
-    case EMAIL_UPDATE_ONE_DISMISS_ERROR:
+    case CLIENT_TYPE_UPDATE_ONE_DISMISS_ERROR:
       // Dismiss the request failure error
       return {
         ...state,
         updateOneError: null,
       };
 
-    case EMAIL_UPDATE_ONE_UPDATE:
+    case CLIENT_TYPE_UPDATE_ONE_UPDATE:
       let object  = jsonApiNormalizer(action.data.data);
       let myItems = state.items;
-      let news = jsonApiUpdate(myItems, 'FreeFW_Email', object);
+      let news = jsonApiUpdate(myItems, 'FreeAsso_ClientType', object);
       return {
         ...state,
         updateOneError: null,
         items: news
-      };     
+      };
 
     default:
       return state;
