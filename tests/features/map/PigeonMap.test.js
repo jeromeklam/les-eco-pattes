@@ -1,19 +1,19 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import { Map } from '../../../src/features/map/Map';
+import { PigeonMap } from '../../../src/features/map/PigeonMap';
 
-describe('map/Map', () => {
+describe('map/PigeonMap', () => {
   it('renders node with correct class name', () => {
     const props = {
       map: {},
       actions: {},
     };
     const renderedComponent = shallow(
-      <Map {...props} />
+      <PigeonMap {...props} />
     );
 
     expect(
-      renderedComponent.find('.map-map').length
+      renderedComponent.find('.map-pigeon-map').length
     ).toBe(1);
   });
 });

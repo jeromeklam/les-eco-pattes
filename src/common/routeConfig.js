@@ -19,7 +19,6 @@ import langRoute from '../features/lang/route';
 import clientRoute from '../features/client/route';
 import clientTypeRoute from '../features/client-type/route';
 import clientCategoryRoute from '../features/client-category/route';
-import googleMapRoute from '../features/google-map/route';
 import mapRoute from '../features/map/route';
 
 // NOTE: DO NOT CHANGE the 'childRoutes' name and the declaration pattern.
@@ -43,7 +42,6 @@ const childRoutes = [
   clientRoute,
   clientTypeRoute,
   clientCategoryRoute,
-  googleMapRoute,
   mapRoute,
 ];
 

@@ -48,7 +48,7 @@ export class DesktopSidebar extends Component {
           {this.props.auth.authenticated ? (
             <div>
               <li>
-                <NavLink strict className="nav-link" to="/map">
+                <NavLink strict className="nav-link" to="/pigeon-map">
                   <SiteIcon />
                   <span>Carte</span>
                 </NavLink>
