@@ -1,6 +1,6 @@
 @import '../../styles/mixins';
 
-$map-list-width: 250px;
+$map-list-width: 350px;
 
 .map-pigeon-map {
   width: 100%;
@@ -12,13 +12,45 @@ $map-list-width: 250px;
     right: $map-list-width;
     bottom: $footer-height;
   }
-  .map-list {
+
+  .map-list-header {
     position: absolute;
     right: 0px;
+    top: $desktop-navbar-height;
+    right: 0px;
+    bottom: $footer-height;
     width: $map-list-width;
-
-    .map-list-header {
-    
-    }
+    height: 100px;
   }
+
+  .map-list-scroll {
+    position: absolute;
+    right: 0px;
+    top: 200px;;
+    right: 0px;
+    bottom: $footer-height;
+    width: $map-list-width;
+    overflow-y: auto;
+  }
+}
+
+.site-selector {
+  border-top: 1px solid;
+  border-bottom: 1px solid;
+}
+.site-selector.active .site-selector-title {
+  font-weight: bold;
+}
+
+.map-selector {
+  width: 29px; 
+  height: 34px;
+}
+
+.scroll-visible {
+  display: flex;
+}
+
+.scroll-invisible {
+  display: none;
 }

@@ -60,7 +60,7 @@ export class Modify extends Component {
     // Conversion des données en objet pour le service web
     let obj = getJsonApi(datas);
     this.props.actions
-      .updateOne(this.state.siteId, obj)
+      .updateOne(obj)
       .then(result => {
         // @Todo propagate result to store
         // propagateModel est ajouté aux actions en bas de document
