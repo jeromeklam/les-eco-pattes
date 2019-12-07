@@ -1,5 +1,24 @@
 @import '../../styles/mixins';
 
-.map-pigeon-map {
+$map-list-width: 250px;
 
+.map-pigeon-map {
+  width: 100%;
+
+  .map-content {
+    position: absolute;
+    top: $desktop-navbar-height;
+    left: $left-menu-width;
+    right: $map-list-width;
+    bottom: $footer-height;
+  }
+  .map-list {
+    position: absolute;
+    right: 0px;
+    width: $map-list-width;
+
+    .map-list-header {
+    
+    }
+  }
 }
