@@ -8,7 +8,7 @@
 const initialState = {
   items: [],
   page_number: 1,
-  page_size: process.env.REACT_APP_PAGE_SIZE,
+  page_size: 999999,
   tab: "1",
   tabs: [
     {key:"1", name:"localisation", label:"Localisation", shortcut:"L", icon:"location"},

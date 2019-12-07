@@ -18,6 +18,8 @@ import langReducer from '../features/lang/redux/reducer';
 import clientReducer from '../features/client/redux/reducer';
 import clientTypeReducer from '../features/client-type/redux/reducer';
 import clientCategoryReducer from '../features/client-category/redux/reducer';
+import googleMapReducer from '../features/google-map/redux/reducer';
+import mapReducer from '../features/map/redux/reducer';
 
 // NOTE 1: DO NOT CHANGE the 'reducerMap' name and the declaration pattern.
 // This is used for Rekit cmds to register new features, remove features, etc.
@@ -44,6 +46,8 @@ const reducerMap = {
   client: clientReducer,
   clientType: clientTypeReducer,
   clientCategory: clientCategoryReducer,
+  googleMap: googleMapReducer,
+  map: mapReducer,
 };
 
 export default combineReducers(reducerMap);
