@@ -19,3 +19,5 @@ export { default as Plus } from './Plus';
 export { default as Minus } from './Minus';
 export { default as About } from './About';
 export { default as More } from './More';
+export { default as Map } from './Map';
+export { default as Person } from './Person';
