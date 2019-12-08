@@ -16,9 +16,17 @@ export default class InputTextArea extends Component {
 
   constructor(props) {
     super(props);
+    let content = "";
+    if (this.props.value) {
+      content = this.props.value;
+    } else {
+      content = "<p/>"
+    }
     this.state = {
-      editorState: EditorState.createWithContent(convertFromHTML(this.props.value)),
+      editorState: EditorState.createWithContent(convertFromHTML(content)),
     };
+
+    
     this.focus = this.focus.bind(this);
     this.onChange = this.onChange.bind(this);
   }
@@ -44,7 +52,7 @@ export default class InputTextArea extends Component {
   render() {
     return (
       <div className="form-group row">
-        <label forName={this.props.id} className="col-sm-6 col-form-label">
+        <label className="col-sm-6 col-form-label">
           {this.props.label}
           {this.props.required && <span>&nbsp;*</span>}
         </label>

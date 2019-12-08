@@ -4,6 +4,7 @@ import {
   InputText, 
   InputSelect, 
   InputData, 
+  InputTextArea,
   FormResponsive 
 } from '../layout';
 import useForm from '../layout/useForm';
@@ -17,16 +18,29 @@ export default function Form(props) {
     props.onCancel,
     props.onNavTab,
   );  
+  console.log("FK site",values);
   return (    
     <FormResponsive title="Sites" tab={values.currentTab} tabs={props.tabs} onSubmit={handleSubmit} onCancel={handleCancel} onNavTab={handleNavTab}>
-      <InputHidden name="id" id="id" value={values.id} />      
-      <InputText
-        label="Nom"
-        required={true}
-        name="site_name"
-        value={values.site_name}
-        onChange={handleChange}
-      />  
+      <InputHidden name="id" id="id" value={values.id} />    
+      <div className="row">  
+        <div className="col-sm-28" >
+          <InputText
+            label="Nom"
+            required={true}
+            name="site_name"
+            value={values.site_name}
+            onChange={handleChange}
+          />  
+        </div>
+        <div className="col-sm-8" >
+          <InputText
+            label="N°"
+            name="site_code"
+            value={values.site_code}
+            onChange={handleChange}
+          />  
+        </div>
+      </div>
       <hr />
       {values.currentTab === "1" && 
         <div>
@@ -54,6 +68,18 @@ export default function Form(props) {
               />
             </div>
           </div>
+          <InputText 
+            label="Surface" 
+            name="site_area" 
+            value={values.site_area} 
+            onChange={handleChange} 
+          />
+          <InputText 
+            label="Parcelles" 
+            name="site_plots" 
+            value={values.site_plots} 
+            onChange={handleChange} 
+          />
           <InputSelect
             label="Type"
             name="site_type.id"
@@ -65,24 +91,40 @@ export default function Form(props) {
           />     
         </div>
       }
-      {values.currentTab === "2" &&        
+      {values.currentTab === "2" &&  
         <div>             
           {props.properties.map(oneProp => {
             let nameProp = "site_" + oneProp;
-            let cfgProp = "sitt_" + oneProp      
-            return (          
-              values.site_type[cfgProp] && (            
+            return (                      
                 <InputData 
                   key={nameProp}
                   name={nameProp}
                   value={values[nameProp]}
                   datas={props.datas}
                   config={props.config}
+                  addempty={false}
                   onChange={handleChange}
                 />          
               )          
-            )        
+             
           })}
+        </div>
+      }
+      {values.currentTab === "3" &&       
+        <div>
+          <InputText 
+            label="N° élevage EDE" 
+            name="site_code_ex" 
+            value={values.site_code_ex} 
+            onChange={handleChange} 
+          /> 
+   
+          <InputTextArea
+            label="Observations" 
+            name="site_desc" 
+            value={values.site_desc} 
+            onChange={handleChange} 
+          />
         </div>
       }
     </FormResponsive>

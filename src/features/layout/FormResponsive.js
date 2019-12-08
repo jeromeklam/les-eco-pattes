@@ -8,7 +8,6 @@ export default class FormResponsive extends Component {
   static propTypes = {};
 
   render() {
-    console.log(this.props.tab);
     return (
       <form className="layout-form-responsive">
         <div className="card">

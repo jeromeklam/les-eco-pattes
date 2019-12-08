@@ -16,11 +16,8 @@ const initialState = {
     {key:"3", name:"divers", label:"Divers", shortcut:"D", icon:"misc"}
   ], 
   filters: [],
-  properties: ["string_1","string_2","string_3","string_4",
-              "number_1","number_2","number_3","number_4",
-              "date_1","date_2","date_3","date_4",
-              "text_1","text_2","text_3","text_4",
-              "bool_1","bool_2","bool_3","bool_4"],
+  properties: ["number_1","string_1","string_2","number_3","string_3",,
+               "number_4","string_4","bool_1","number_5","string_5","string_6"],
   quickSearch: "",       
   mobileQuickSearch: false,       
   loadMorePending: false,

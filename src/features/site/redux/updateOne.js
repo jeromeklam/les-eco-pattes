@@ -27,7 +27,6 @@ export function updateOne(args = {}) {
       // doRequest is a placeholder Promise. You should replace it with your own logic.
       // See the real-word example at:  https://github.com/supnate/rekit/blob/master/src/features/home/redux/fetchRedditReactjsList.js
       // args.error here is only for test coverage purpose.
-      console.log(args);
       const id = args.data.id;
       const doRequest = freeAssoApi.put('/v1/asso/site/' + id, args);
       doRequest.then(

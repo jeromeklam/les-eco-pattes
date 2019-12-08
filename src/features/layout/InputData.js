@@ -1,19 +1,27 @@
 import React, { Component } from 'react';
 import { buildModel } from '../../common';
-import { InputText, InputTextArea, InputSelect } from '../layout';
+import { 
+  InputText, 
+  InputTextArea, 
+  InputSelect, 
+  InputCheckbox 
+} from '../layout';
 
 function getFieldData(field_name, tab_config, tab_data) {
   const myDatas = buildModel(tab_data, 'FreeAsso_Data');
   let data = false;
-  Object.keys(tab_config.FreeAsso_Config).forEach((key) => {
+  Object.keys(tab_config.FreeAsso_Config).forEach(key => {
     //console.log(key);
     //console.log(tab_config.FreeAsso_Config[key]);
-    if (tab_config.FreeAsso_Config[key].attributes.acfg_code == ('DATA_ID@' + field_name.toUpperCase())) {
+    if (
+      tab_config.FreeAsso_Config[key].attributes.acfg_code ==
+      'DATA_ID@' + field_name.toUpperCase()
+    ) {
       const data_id = tab_config.FreeAsso_Config[key].attributes.acfg_value;
-      myDatas.forEach((oneData) => {
+      myDatas.forEach(oneData => {
         if (oneData.id === data_id) {
           data = oneData;
-          return true;
+          return data;
         }
       });
       return false; // pour quitter la boucle
@@ -23,40 +31,56 @@ function getFieldData(field_name, tab_config, tab_data) {
 }
 
 export default class InputData extends Component {
-  static propTypes = { };
+  static propTypes = {};
 
   constructor(props) {
     super(props);
     this.state = {
       field: props.name,
-      data: getFieldData(props.name, props.config, props.datas)
+      data: getFieldData(props.name, props.config, props.datas),
     };
   }
 
-  render() {            
+  render() {
     let list = [];
-    if (this.state.data.data_type === "LIST" ) {         
-      list = JSON.parse(this.state.data.data_content);         
-    }     
+    if (this.state.data.data_type === 'LIST') {
+      list = JSON.parse(this.state.data.data_content);
+    }
     return (
       <div>
-        {this.state.data.data_type === "STRING" &&
+        {this.state.data.data_type === 'BOOLEAN' && (
+          <InputCheckbox
+            label={this.state.data.data_name}
+            name={this.state.field}
+            checked={this.props.value}
+            onChange={this.props.onChange}
+          />
+        )}
+        {this.state.data.data_type === 'NUMBER' && (
           <InputText
             label={this.state.data.data_name}
             name={this.state.field}
             value={this.props.value}
             onChange={this.props.onChange}
           />
-        }
-        {this.state.data.data_type === "TEXT" &&
+        )}
+        {this.state.data.data_type === 'STRING' && (
+          <InputText
+            label={this.state.data.data_name}
+            name={this.state.field}
+            value={this.props.value}
+            onChange={this.props.onChange}
+          />
+        )}
+        {this.state.data.data_type === 'TEXT' && (
           <InputTextArea
             label={this.state.data.data_name}
             name={this.state.field}
             value={this.props.value}
             onChange={this.props.onChange}
           />
-        }
-        {this.state.data.data_type === "LIST" &&            
+        )}
+        {this.state.data.data_type === 'LIST' && (
           <InputSelect
             label={this.state.data.data_name}
             name={this.state.field}
@@ -64,9 +88,9 @@ export default class InputData extends Component {
             value={this.props.value}
             onChange={this.props.onChange}
             options={list}
-            addempty={true}
+            addempty={this.props.addempty}
           />
-        }
+        )}
       </div>
     );
   }
