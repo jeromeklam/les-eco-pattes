@@ -11,7 +11,8 @@ import {
 export function loadMore(args = {}) {
   return (dispatch, getState) => { // optionally you can have getState as the second argument
     const loaded = getState().lang.LoadMoreFinish;
-    if (!loaded) {
+    const loading = getState().lang.LoadMorePending;
+    if (!loading && (!loaded)) {
       dispatch({
         type: LANG_LOAD_MORE_BEGIN,
       });

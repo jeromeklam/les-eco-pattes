@@ -12,7 +12,8 @@ import {
 export function loadMore(args = {}, reload = false) {
   return (dispatch, getState) => { // optionally you can have getState as the second argument
     const loaded =  getState().email.loadMoreFinish;
-    if (!loaded || reload) {
+    const loading =  getState().email.loadMorePending;
+    if (!loading && (!loaded || reload)) {
       if (reload) {
         dispatch({
           type: EMAIL_LOAD_MORE_INIT,

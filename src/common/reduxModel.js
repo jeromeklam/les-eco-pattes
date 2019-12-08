@@ -64,8 +64,9 @@ export function buildModel(reducer, objectName, id = null, providedOpts = {}, ca
   const ids = id.toString();
   const uuid = uniqueId(objectName, ids);
   const cachedObject = cache[uuid];
-  if (cachedObject && !eager) {
-    return cachedObject;
+  if (cachedObject) {
+    const clone = {...cachedObject};
+    return clone;
   }
   const ret = {};
   const target = reducer[objectName][ids];

@@ -162,7 +162,11 @@ export function getObjectmemberValue (obj, member) {
   let value = obj;
   while (elems.length > 0) {
     let mb = elems.shift();
-    value = value[mb];
+    if (value.hasOwnProperty(mb)) {
+      value = value[mb];
+    } else {
+      return null;
+    }
   }
   return value;
 }

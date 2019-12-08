@@ -13,7 +13,8 @@ export function loadMore(args = {}, reload = false) {
   return (dispatch, getState) => {
     // optionally you can have getState as the second argument
     const loaded = getState().clientCategory.loadMoreFinish;
-    if (!loaded || reload) {
+    const loading = getState().clientCategory.loadMorePending;
+    if (!loading && (!loaded || reload)) {
       if (reload) {
         dispatch({
           type: CLIENT_CATEGORY_LOAD_MORE_INIT,

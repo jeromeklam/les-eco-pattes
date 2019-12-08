@@ -12,7 +12,8 @@ import {
 export function loadMore(args = {}, reload = false) {
   return (dispatch, getState) => { // optionally you can have getState as the second argument
     const loaded =  getState().siteType.loadMoreFinish;
-    if (!loaded || reload) {
+    const loading =  getState().siteType.loadMorePending;
+    if (!loading && (!loaded || reload)) {
       if (reload) {
         dispatch({
           type: SITE_TYPE_LOAD_MORE_INIT,

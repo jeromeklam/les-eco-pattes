@@ -27,8 +27,8 @@ export default class Search extends Component {
       doRequest.then(
         result => {
           let items = [];
-          if (result && result.data && result.data.data) {
-            const lines = jsonApiNormalizer(result.data.data);
+          if (result && result.data) {
+            const lines = jsonApiNormalizer(result.data);
             items = buildModel(lines, 'FreeAsso_Client');
           }
           this.setState({ loading: false, finish: true, list: items });

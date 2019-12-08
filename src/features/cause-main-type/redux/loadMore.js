@@ -13,7 +13,8 @@ export function loadMore(args = {}, reload = false) {
   return (dispatch, getState) => {
     // optionally you can have getState as the second argument
     const loaded =  getState().causeMainType.loadMoreFinish;
-    if (!loaded || reload) {
+    const loading =  getState().causeMainType.loadMorePending;
+    if (!loading && (!loaded || reload)) {
       if (reload) {
         dispatch({
           type: CAUSE_MAIN_TYPE_LOAD_MORE_INIT,
