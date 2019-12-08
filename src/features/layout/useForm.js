@@ -14,11 +14,10 @@ const useForm = (initialState, initialTab, onSubmit, onCancel, onNavTab) => {
   };
 
   const handleChange = event => {
-    console.log(event);
     if (event && event.persist) {
       event.persist();
     }
-    const tType = event.target.type || "texte";    
+    const tType = event.target.type || "text";    
     const tName = event.target.name;    
     const elems = tName.split('.');
     const first = elems.shift();

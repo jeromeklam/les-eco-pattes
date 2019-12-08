@@ -9,6 +9,7 @@ import {
 } from '../layout';
 import useForm from '../layout/useForm';
 import { siteTypeAsOptions } from '../site-type/functions.js';
+import { InputPicker as ClientInputPicker } from '../client';
 
 export default function Form(props) {
   const { values, handleChange, handleSubmit, handleCancel, handleNavTab } = useForm(
@@ -89,6 +90,22 @@ export default function Form(props) {
             options={siteTypeAsOptions(props.site_types)}
             addempty={true}
           />     
+          <ClientInputPicker 
+            label="Vétérinaire"
+            key="sanitary.id"
+            name="sanitary.id"
+            value={values.sanitary && values.sanitary.id}
+            content={values.sanitary && values.sanitary.cli_lastname}
+            onChange={handleChange}
+          />       
+          <ClientInputPicker 
+            label="Propriétaire"
+            key="owner.id"
+            name="owner.id"
+            value={values.owner && values.owner.id}
+            content={values.owner && values.owner.cli_lastname}
+            onChange={handleChange}
+          />       
         </div>
       }
       {values.currentTab === "2" &&  

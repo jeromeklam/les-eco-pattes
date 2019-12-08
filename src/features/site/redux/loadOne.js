@@ -74,6 +74,7 @@ export function reducer(state, action) {
       let object = jsonApiNormalizer(action.data.data);
       raw  = buildModel(object, 'FreeAsso_Site', action.id);
       item = buildModel(object, 'FreeAsso_Site', action.id, {eager: true});
+      console.log('JK', item);
       return {
         ...state,
         loadOnePending: false,

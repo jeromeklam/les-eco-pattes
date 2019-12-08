@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { More } from '../icons';
+import { More, DelOne } from '../icons';
 import axios from 'axios';
 
 export default class InputPicker extends Component {
@@ -10,6 +10,7 @@ export default class InputPicker extends Component {
     pickerId: PropTypes.string.isRequired,
     pickerValue: PropTypes.string.isRequired,
     onChange: PropTypes.func.isRequired,
+    onSearchMore: PropTypes.func,
   };
 
   constructor(props) {
@@ -21,13 +22,17 @@ export default class InputPicker extends Component {
       list: null,
       cancel: false,
     };
-    this.onMore = this.onMore.bind(this);
+    this.onClear = this.onClear.bind(this);
     this.onChange = this.onChange.bind(this);
     this.onSelect = this.onSelect.bind(this);
   }
 
-  onMore() {
-    this.setState({ search: true });
+  onClear() {
+    if (this.state.source) {
+      this.state.source.cancel();
+    }
+    this.setState({ content: '', loading: false, cancel: false });
+    this.props.onChange({ target: { name: this.props.name, value: null } });
   }
 
   onChange(event) {
@@ -41,26 +46,28 @@ export default class InputPicker extends Component {
       Accept: 'application/json',
       cancelToken: source.token,
     };
-    this.setState({ content: event.target.value, loading: true, cancel: source });
-    axios
-      .get(process.env.REACT_APP_BO_URL + this.props.pickerAutocomplete + event.target.value, {
-        headers: headers,
-      })
-      .then(result => {
-        this.setState({ list: result.data, loading: false });
-      });
+    const search = '' + event.target.value;
+    this.setState({ content: search, loading: true, cancel: source });
+    if (search.length >= 2) {
+      axios
+        .get(process.env.REACT_APP_BO_URL + this.props.pickerAutocomplete + event.target.value, {
+          headers: headers,
+        })
+        .then(result => {
+          this.setState({ list: result.data, loading: false });
+        });
+    }
   }
 
   onSelect(item) {
     const id = item[this.props.pickerId];
     const value = item[this.props.pickerValue];
-    console.log(id, value, this.props.pickerOnChange);
     this.setState({ value: id, content: value, list: false });
     this.props.onChange({ target: { name: this.props.name, value: id } });
   }
 
   render() {
-    console.log('search inputPicker', this.state.search);
+    console.log('search inputPicker', this.props.pickerSearch);
 
     return (
       <div className="form-group row layout-input-picker">
@@ -79,9 +86,14 @@ export default class InputPicker extends Component {
                 onChange={this.onChange}
               />
               <div className="input-group-append">
-                <button type="button" className="btn btn-outline-success" onClick={this.onMore}>
-                  <More color="green" />
+                <button type="button" className="btn btn-outline-warning" onClick={this.onClear}>
+                  <DelOne color="orange" />
                 </button>
+                {this.props.onSearchMore &&
+                  <button type="button" className="btn btn-outline-success" onClick={this.props.onSearchMore}>
+                    <More color="green" />
+                  </button>
+                }
               </div>
               {this.state.list && this.state.list.length > 0 && (
                 <div className="dropdown-menu show">

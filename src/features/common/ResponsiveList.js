@@ -22,7 +22,7 @@ export default class ResponsiveList extends Component {
     onReload: PropTypes.func.isRequired,
     onCreate: PropTypes.func.isRequired,
     onLoadMore: PropTypes.func.isRequired,
-    titleSearch: PropTypes.Sstring,
+    titleSearch: PropTypes.string,
     onSearch: PropTypes.func,
   };
 
@@ -71,7 +71,7 @@ export default class ResponsiveList extends Component {
               </ResponsiveListLines>
             ) : (
               <div>
-                {!this.propd.loadMorePending &&
+                {!this.props.loadMorePending &&
                   <p>Liste Vide</p>
                 }
               </div>

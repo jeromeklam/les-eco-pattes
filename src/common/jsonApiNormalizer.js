@@ -196,7 +196,9 @@ export function getJsonApiAttributes(obj) {
   keys.forEach((key) => {
     if (key !== 'id' && key !== 'type') {
       if (!obj[key] || (!obj[key].id && !obj[key].type)) {
-        ret[key] = obj[key];
+        if (!obj[key] || !obj[key].id || (obj[key].id && obj[key].id !== "0")) {
+          ret[key] = obj[key];
+        }
       }
     }
   });
@@ -216,7 +218,7 @@ export function getJsonApiRelatinships(obj) {
   let rels = {};
   const keys = Object.getOwnPropertyNames(obj);
   keys.forEach((key) => {
-    if (obj[key] && obj[key].id && obj[key].type) {
+    if (obj[key] && obj[key].id && obj[key].id !== "0" && obj[key].type) {
       rels[key] = {
         data : {
           id: obj[key].id,
@@ -238,10 +240,14 @@ export function getJsonApiRelatinships(obj) {
 export function getJsonApi(obj) {
   const attributes = getJsonApiAttributes(obj);
   const relations  = getJsonApiRelatinships(obj);
+  let id = obj.id;
+  if (id === "0") {
+    id = null;
+  }
   let jsonApi = {
     data: {
       type: obj.type,
-      id: obj.id,
+      id: id,
       attributes: attributes
     }
   };

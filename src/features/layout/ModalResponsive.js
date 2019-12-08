@@ -7,6 +7,7 @@ export default class ModalResponsive extends Component {
     onClose: PropTypes.func.isRequired,
     show: PropTypes.bool,
     children: PropTypes.node,
+    buttons: PropTypes.array
   };
 
   render() {
@@ -21,28 +22,30 @@ export default class ModalResponsive extends Component {
             <div className="modal-dialog">
               <div className="modal-content">
                 <div className="modal-header">
-                  <h5 class="modal-title" id="exampleModalLabel">
+                  <h5 className="modal-title" id="exampleModalLabel">
                     {this.props.title}
                   </h5>
-                  <button type="button" className="close">
+                  <button type="button" className="close" onClick={this.props.onClose}>
                     <span aria-hidden="true">&times;</span>
                   </button>
                 </div>
                 <div className="modal-body">{this.props.children}</div>
-                <div className="modal-footer">
-                  {this.props.buttons.map(button => {
-                    return (
-                      <button
-                        key={button.name}
-                        type="button"
-                        className={classnames("btn", "btn-" + button.theme)}
-                        onClick={button.function}
-                      >
-                        {button.name}
-                      </button>
-                    );
-                  })}
-                </div>
+                {this.props.buttons &&
+                  <div className="modal-footer">
+                    {this.props.buttons.map(button => {
+                      return (
+                        <button
+                          key={button.name}
+                          type="button"
+                          className={classnames("btn", "btn-" + button.theme)}
+                          onClick={button.function}
+                        >
+                          {button.name}
+                        </button>
+                      );
+                    })}
+                  </div>
+                }
               </div>
             </div>
           </div>

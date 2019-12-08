@@ -85,7 +85,7 @@ export class List extends Component {
         title="Sites"
         titleSearch="Recherche nom du site"
         cols={cols}
-        items={items}
+        items={items || []}
         onSearch={this.onQuickSearch}
         onReload={this.onReload}
         onCreate={this.onCreate}
