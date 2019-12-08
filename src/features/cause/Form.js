@@ -4,6 +4,7 @@ import {
   InputText, 
   InputSelect,
   InputData,
+  InputDate,
   InputPicker,
   FormResponsive } from '../layout';
 import useForm from '../layout/useForm';
@@ -20,7 +21,7 @@ export default function Form(props) {
     <FormResponsive title="Animaux" onSubmit={handleSubmit} onCancel={handleCancel}>
       <InputHidden name="id" id="id" value={values.id} />
       <div className="row">
-        <div className="col-sm-20">
+        <div className="col-36">
           <InputText
             label="Identification"
             name="cau_name"
@@ -29,9 +30,16 @@ export default function Form(props) {
             onChange={handleChange}            
           />
         </div>
-        <div className="col-sm-16">
+        <div className="col-36">
+          <InputDate
+            label="Depuis"
+            name="cau_from"
+            id="cau_from"
+            value={values.cau_from}
+            onChange={handleChange}            
+          />
         </div>
-        <div className="col-sm-12" >
+        <div className="col-36" >
           <InputSelect
             label="Race"
             name="cause_type.id" 
@@ -41,7 +49,7 @@ export default function Form(props) {
             options={causeTypeAsOptions(props.cause_types)}
           />
         </div>
-        <div className="col-sm-12">
+        <div className="col-36">
           <InputData 
             key="cau_string_1"
             name="cau_string_1"
@@ -51,9 +59,7 @@ export default function Form(props) {
             onChange={handleChange}
           />          
         </div>
-        <div className="col-sm-12">
-        </div>
-        <div className="col-sm-12">
+        <div className="col-36">
           <InputPicker 
             label="Site"
             key="site.id"

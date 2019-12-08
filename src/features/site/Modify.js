@@ -7,6 +7,7 @@ import { withRouter } from 'react-router-dom';
 import { getJsonApi, propagateModel } from '../../common';
 import Form from './Form';
 import { LoadingData } from '../layout';
+import cogoToast from 'cogo-toast';
 
 /**
  * Modification d'un site
@@ -63,12 +64,13 @@ export class Modify extends Component {
       .then(result => {
         // @Todo propagate result to store
         // propagateModel est ajouté aux actions en bas de document
+        cogoToast.success("Enregistrement effectué");
         this.props.actions.propagateModel('FreeAsso_Site', result);
         this.props.history.push('/site');
       })
       .catch(errors => {
         // @todo display errors to fields
-        console.log(errors);
+        cogoToast.error("Erreur lors de l'enregistrement");
       });
   }
 

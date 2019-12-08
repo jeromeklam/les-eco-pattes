@@ -75,7 +75,7 @@ export class List extends Component {
     // L'affichage, items, loading, loadMoreError
     return (
       <ResponsiveList
-        title="Animax"
+        title="Animaux"
         titleSearch="Recherche nom"
         cols={cols}
         items={items}

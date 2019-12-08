@@ -1,3 +1,5 @@
+import cloneDeep from 'lodash/cloneDeep';
+
 /**
  * get unqId
  * 
@@ -64,8 +66,8 @@ export function buildModel(reducer, objectName, id = null, providedOpts = {}, ca
   const ids = id.toString();
   const uuid = uniqueId(objectName, ids);
   const cachedObject = cache[uuid];
-  if (cachedObject) {
-    const clone = {...cachedObject};
+  if (cachedObject && eager) {
+    const clone = JSON.parse(JSON.stringify(cachedObject));
     return clone;
   }
   const ret = {};
