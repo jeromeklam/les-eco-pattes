@@ -10,23 +10,19 @@ export default class InputCheckbox extends Component {
     }
     let props = {
       ...this.props,
-      id: id
+      id: id,
     };
     return (
       <div className="form-group row">
-        <div className="col-sm-6 col-form-label">
-          {this.props.label}
-        </div>
+        <div className="col-sm-6 col-form-label">{this.props.label}</div>
         <div className="col-sm-30">
-          <div className="form-check">
-            <input 
-              className="form-check-input" 
-              type="checkbox" 
-              id={props.id}
-              {...props}
-            />
+          <div className="">
             <label className="form-check-label" htmlFor={this.props.id}>
               {this.props.text}
+            </label>
+            <label className="switch">
+              <input type="checkbox" class="form-check-input primary" id={props.id} {...props} />
+              <span class="slider round"></span>
             </label>
           </div>
         </div>

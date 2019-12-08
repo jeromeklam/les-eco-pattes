@@ -14,6 +14,7 @@ const useForm = (initialState, initialTab, onSubmit, onCancel, onNavTab) => {
   };
 
   const handleChange = event => {
+    console.log(event);
     if (event && event.persist) {
       event.persist();
     }
