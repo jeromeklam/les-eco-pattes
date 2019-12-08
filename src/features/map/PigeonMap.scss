@@ -34,23 +34,9 @@ $map-list-width: 350px;
   }
 }
 
-.site-selector {
-  border-top: 1px solid;
-  border-bottom: 1px solid;
-}
-.site-selector.active .site-selector-title {
-  font-weight: bold;
-}
+
 
 .map-selector {
   width: 29px; 
   height: 34px;
-}
-
-.scroll-visible {
-  display: flex;
-}
-
-.scroll-invisible {
-  display: none;
 }

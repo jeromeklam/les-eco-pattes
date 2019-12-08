@@ -13,7 +13,8 @@ export function loadMore(args = {}, reload = false) {
   return (dispatch, getState) => {
     // optionally you can have getState as the second argument
     const loaded = getState().site.loadMoreFinish;
-    if (!loaded || reload) {
+    const loading = getState().site.loadMorePending;
+    if (!loading && (!loaded || reload)) {
       if (reload) {
         dispatch({
           type: SITE_LOAD_MORE_INIT,

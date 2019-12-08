@@ -1,0 +1,25 @@
+@import '../../styles/mixins';
+
+.site-list-group {
+  .card.active {
+    .card-header {
+      font-weight: bold;
+    }
+  }
+  .card-header-title {
+    float: left;
+    padding-top: 5px;
+  }
+  .card-header {
+    height: 56px;
+  }
+  .list-group-item {
+    padding-top: 10px;
+  }
+  .scroll-visible {
+    display: flex;
+  }
+  .scroll-invisible {
+    display: none;
+  }
+}

@@ -1,25 +1,17 @@
 import React, { Component } from 'react';
-import classnames from 'classnames';
 import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as actions from './redux/actions';
 import Map from 'pigeon-maps';
 import Marker from 'pigeon-marker';
-import Overlay from 'pigeon-overlay';
 import { buildModel, getJsonApi, propagateModel } from '../../common';
 import { loadMore as loadMoreSite, updateOne as updateOneSite } from '../site/redux/actions';
 import Draggable from 'pigeon-draggable';
 import Icon from '@mdi/react';
-import {
-  mdiMagnifyMinus,
-  mdiMagnifyPlus,
-  mdiCrosshairsGps,
-  mdiCursorMove,
-  mdiFileImage,
-} from '@mdi/js';
+import { mdiMagnifyMinus, mdiMagnifyPlus } from '@mdi/js';
 import mapselect from '../../images/mapselect.png';
-import { HoverObserver } from '../layout';
+import { ListGroup } from '../site';
 
 const providers = {
   osm: (x, y, z) => {
@@ -76,8 +68,6 @@ export class PigeonMap extends Component {
     this.onClick = this.onClick.bind(this);
     this.onMarkerClick = this.onMarkerClick.bind(this);
     this.onSiteClick = this.onSiteClick.bind(this);
-    this.scrollMouseEnter = this.scrollMouseEnter.bind(this);
-    this.scrollMouseLeave = this.scrollMouseLeave.bind(this);
   }
 
   componentDidMount() {
@@ -133,7 +123,6 @@ export class PigeonMap extends Component {
 
   onMarkerClick({ event, anchor, payload }) {
     this.setState({ selected: payload, center: anchor, moved: false });
-    this.refs['site-selector-' + payload].scrollIntoView();
   }
 
   onSiteClick(id, anchorCoord) {
@@ -152,14 +141,6 @@ export class PigeonMap extends Component {
       coord = [json.lat, json.long];
     }
     this.setState({ selected: id, center: coord, moved: item });
-  }
-
-  scrollMouseEnter(id) {
-    this.setState({ scrollHover: id });
-  }
-
-  scrollMouseLeave() {
-    this.setState({ scrollHover: 0 });
   }
 
   render() {
@@ -228,75 +209,12 @@ export class PigeonMap extends Component {
           <hr />
         </div>
         <div className="map-list-scroll">
-          {items &&
-            items.map(item => {
-              return (
-                <HoverObserver
-                  key={item.id}
-                  onMouseEnter={() => {
-                    this.scrollMouseEnter(item.id);
-                  }}
-                  onMouseLeave={() => {
-                    this.scrollMouseLeave();
-                  }}
-                >
-                  <div
-                    ref={'site-selector-' + item.id}
-                    className={classnames(
-                      'row site-selector',
-                      this.state.selected == item.id && 'active',
-                    )}
-                  >
-                    <div className="col-24">
-                      <p className="site-selector-title">{item.site_name}</p>
-                      <p>{item.site_address1}</p>
-                      <p>
-                        {item.site_cp} {item.site_town}
-                      </p>
-                    </div>
-                    <div className="col-12">
-                      <ul
-                        className={classnames(
-                          'nav justify-content-end',
-                          this.state.scrollHover == item.id ? 'scroll-visible' : 'scroll-invisible',
-                        )}
-                      >
-                        <li>
-                          <a
-                            className="btn btn-primary btn-sm"
-                            onClick={() => {
-                              this.onSiteClick(item.id, item.site_coord);
-                            }}
-                          >
-                            <Icon path={mdiCrosshairsGps} size={1} color="white" />
-                          </a>
-                        </li>
-                        <li>
-                          <a
-                            className="btn btn-primary btn-sm"
-                            onClick={() => {
-                              this.onSiteMove(item.id, item);
-                            }}
-                          >
-                            <Icon path={mdiCursorMove} size={1} color="white" />
-                          </a>
-                        </li>
-                        <li>
-                          <a
-                            className="btn btn-primary btn-sm"
-                            onClick={() => {
-                              this.onSiteMove(item.id, item);
-                            }}
-                          >
-                            <Icon path={mdiFileImage} size={1} color="white" />
-                          </a>
-                        </li>
-                      </ul>
-                    </div>
-                  </div>
-                </HoverObserver>
-              );
-            })}
+          <ListGroup
+            selected={this.state.selected}
+            onSiteClick={this.onSiteClick}
+            onSiteGallery={this.onSiteGallery}
+            onSiteMove={this.onSiteMove}
+          />
         </div>
       </div>
     );

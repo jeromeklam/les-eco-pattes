@@ -21,3 +21,7 @@ export { default as About } from './About';
 export { default as More } from './More';
 export { default as Map } from './Map';
 export { default as Person } from './Person';
+export { default as MapCenter } from './MapCenter';
+export { default as MapMove } from './MapMove';
+export { default as ImageGallery } from './ImageGallery';
+export { default as Documents } from './Documents';
