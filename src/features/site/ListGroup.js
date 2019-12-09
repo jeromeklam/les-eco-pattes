@@ -5,7 +5,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as actions from './redux/actions';
 import { HoverObserver } from '../layout';
-import { buildModel } from '../../common';
+import { buildModel, isInViewPort } from '../../common';
 import {
   MapCenter as MapCenterIcon,
   MapMove as MapMoveIcon,
@@ -84,9 +84,8 @@ export class ListGroup extends Component {
     if (this.state.selected !== prevState.selected) {
       if (this.refs) {
         const elem = this.refs['site-selector-' + this.state.selected];
-        if (elem) {
-          console.log(elem);
-          elem.scrollIntoView();
+        if (elem && !isInViewPort(elem)) {
+          elem.scrollIntoView({ behavior: 'smooth' });
         }
       }
     }
@@ -120,66 +119,64 @@ export class ListGroup extends Component {
                         )}
                       >
                         <div className="card-header">
-                          <div className="float-right">
-                            <ul
-                              className={classnames(
-                                'nav justify-content-end',
-                                (this.state.scrollHover === item.id || this.state.selected === item.id)
-                                  ? 'scroll-visible'
-                                  : 'scroll-invisible',
-                              )}
-                            >
-                              {this.props.onSiteClick && (
-                                <li>
-                                  <a
-                                    className="btn btn-primary btn-sm"
-                                    onClick={() => {
-                                      this.props.onSiteClick(item.id, item.site_coord);
-                                    }}
-                                  >
-                                    <MapCenterIcon color="white" />
-                                  </a>
-                                </li>
-                              )}
-                              {this.props.onSiteMove && (
-                                <li>
-                                  <a
-                                    className="btn btn-primary btn-sm"
-                                    onClick={() => {
-                                      this.props.onSiteMove(item.id, item);
-                                    }}
-                                  >
-                                    <MapMoveIcon color="white" />
-                                  </a>
-                                </li>
-                              )}
-                              <li>
-                                <a
-                                  className="btn btn-primary btn-sm"
-                                  onClick={() => {
-                                    this.props.onSiteClick &&
-                                      this.props.onSiteClick(item.id, item.site_coord);
-                                    this.onSiteDocuments(item.id);
-                                  }}
-                                >
-                                  <DocumentsIcon color="white" />
-                                </a>
-                              </li>
-                              <li>
-                                <a
-                                  className="btn btn-primary btn-sm"
-                                  onClick={() => {
-                                    this.props.onSiteClick &&
-                                      this.props.onSiteClick(item.id, item.site_coord);
-                                    this.onSiteCauses(item.id);
-                                  }}
-                                >
-                                  <CauseIcon color="white" />
-                                </a>
-                              </li>
-                            </ul>
-                          </div>
                           <div className="card-header-title">{item.site_name}</div>
+                          <ul
+                            className={classnames(
+                              'nav justify-content-end',
+                              this.state.scrollHover === item.id || this.state.selected === item.id
+                                ? 'scroll-visible'
+                                : 'scroll-invisible',
+                            )}
+                          >
+                            {this.props.onSiteClick && (
+                              <li>
+                                <a
+                                  className="btn btn-primary btn-sm"
+                                  onClick={() => {
+                                    this.props.onSiteClick(item.id, item.site_coord);
+                                  }}
+                                >
+                                  <MapCenterIcon color="white" />
+                                </a>
+                              </li>
+                            )}
+                            {this.props.onSiteMove && (
+                              <li>
+                                <a
+                                  className="btn btn-primary btn-sm"
+                                  onClick={() => {
+                                    this.props.onSiteMove(item.id, item);
+                                  }}
+                                >
+                                  <MapMoveIcon color="white" />
+                                </a>
+                              </li>
+                            )}
+                            <li>
+                              <a
+                                className="btn btn-primary btn-sm"
+                                onClick={() => {
+                                  this.props.onSiteClick &&
+                                    this.props.onSiteClick(item.id, item.site_coord);
+                                  this.onSiteDocuments(item.id);
+                                }}
+                              >
+                                <DocumentsIcon color="white" />
+                              </a>
+                            </li>
+                            <li>
+                              <a
+                                className="btn btn-primary btn-sm"
+                                onClick={() => {
+                                  this.props.onSiteClick &&
+                                    this.props.onSiteClick(item.id, item.site_coord);
+                                  this.onSiteCauses(item.id);
+                                }}
+                              >
+                                <CauseIcon color="white" />
+                              </a>
+                            </li>
+                          </ul>
                         </div>
                         <div className="card-body">
                           <p>{item.site_address1}</p>

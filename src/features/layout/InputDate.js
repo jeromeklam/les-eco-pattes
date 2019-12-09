@@ -25,6 +25,13 @@ export default class InputDate extends Component {
 
   onClear(event) {
     this.setState({value: null});
+    const event2 = {
+      target: {
+        name: this.props.name,
+        value: null
+      }
+    }
+    this.props.onChange(event2);
   }
 
   onDatePicker(date) {

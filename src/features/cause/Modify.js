@@ -3,16 +3,10 @@ import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as actions from './redux/actions';
-import {
-  withRouter
-} from 'react-router-dom';
-import { buildModel, 
-         getJsonApi, 
-         propagateModel 
-} from '../../common';
+import { withRouter } from 'react-router-dom';
+import { getJsonApi, propagateModel } from '../../common';
 import { LoadingData } from '../layout';
 import Form from './Form';
-
 
 export class Modify extends Component {
   static propTypes = {
@@ -37,7 +31,7 @@ export class Modify extends Component {
   }
 
   componentDidMount() {
-     /**
+    /**
      *  En async on va demander le chargement des données
      *  Lorsque fini le store sera modifié
      */
@@ -55,7 +49,7 @@ export class Modify extends Component {
     if (event) {
       event.preventDefault();
     }
-    this.props.history.push('/cause')
+    this.props.history.push('/cause');
   }
 
   /**
@@ -80,27 +74,27 @@ export class Modify extends Component {
 
   render() {
     const item = this.state.item;
-    return (      
+    return (
       <div className="cause-modify global-card">
         {this.props.cause.loadOnePending ? (
           <LoadingData />
         ) : (
           <div>
-            {item && 
-              <Form 
-                item={item}       
-                cause_types={this.props.causeType.items} 
+            {item && (
+              <Form
+                item={item}
+                cause_types={this.props.causeType.items}
                 cause_main_types={this.props.causeMainType.items}
                 tab_datas={this.props.data.items}
                 tab_configs={this.props.config.items}
                 tab={this.props.cause.tab}
                 tabs={this.props.cause.tabs}
-                onSubmit={this.onSubmit} 
-                onCancel={this.onCancel} 
+                onSubmit={this.onSubmit}
+                onCancel={this.onCancel}
               />
-            }
+            )}
           </div>
-        )} 
+        )}
       </div>
     );
   }
@@ -118,11 +112,8 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    actions: bindActionCreators({ ...actions, propagateModel }, dispatch)
+    actions: bindActionCreators({ ...actions, propagateModel }, dispatch),
   };
 }
 
-export default withRouter(connect(
-  mapStateToProps, 
-  mapDispatchToProps
-)(Modify));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Modify));
