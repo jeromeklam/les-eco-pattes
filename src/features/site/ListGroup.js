@@ -119,7 +119,7 @@ export class ListGroup extends Component {
                           this.state.selected == item.id && 'active',
                         )}
                       >
-                        <div class="card-header">
+                        <div className="card-header">
                           <div className="float-right">
                             <ul
                               className={classnames(

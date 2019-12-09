@@ -42,7 +42,7 @@ const useForm = (initialState, initialTab, onSubmit, onCancel, onNavTab) => {
     onCancel();
   };
 
-  const handleNavTab = keyTab => {    
+  const handleNavTab = keyTab => {   
      setValues({...values, currentTab: keyTab});
   };
 

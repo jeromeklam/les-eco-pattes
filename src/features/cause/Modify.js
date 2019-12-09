@@ -93,6 +93,8 @@ export class Modify extends Component {
                 cause_main_types={this.props.causeMainType.items}
                 tab_datas={this.props.data.items}
                 tab_configs={this.props.config.items}
+                tab={this.props.cause.tab}
+                tabs={this.props.cause.tabs}
                 onSubmit={this.onSubmit} 
                 onCancel={this.onCancel} 
               />

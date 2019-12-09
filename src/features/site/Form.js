@@ -18,8 +18,8 @@ export default function Form(props) {
     props.onSubmit,
     props.onCancel,
     props.onNavTab,
-  );  
-  console.log("FK site",values);
+  ); 
+  console.log("FK tab site",values.currentTab); 
   return (    
     <FormResponsive title="Sites" tab={values.currentTab} tabs={props.tabs} onSubmit={handleSubmit} onCancel={handleCancel} onNavTab={handleNavTab}>
       <InputHidden name="id" id="id" value={values.id} />    
@@ -91,14 +91,6 @@ export default function Form(props) {
             addempty={true}
           />     
           <ClientInputPicker 
-            label="Vétérinaire"
-            key="sanitary.id"
-            name="sanitary.id"
-            value={values.sanitary && values.sanitary.id}
-            content={values.sanitary && values.sanitary.cli_lastname}
-            onChange={handleChange}
-          />       
-          <ClientInputPicker 
             label="Propriétaire"
             key="owner.id"
             name="owner.id"
@@ -135,7 +127,14 @@ export default function Form(props) {
             value={values.site_code_ex} 
             onChange={handleChange} 
           /> 
-   
+         <ClientInputPicker 
+            label="Vétérinaire"
+            key="sanitary.id"
+            name="sanitary.id"
+            value={values.sanitary && values.sanitary.id}
+            content={values.sanitary && values.sanitary.cli_lastname}
+            onChange={handleChange}
+          />       
           <InputTextArea
             label="Observations" 
             name="site_desc" 

@@ -9,6 +9,11 @@ const initialState = {
   items: [],
   page_number: 1,
   page_size: process.env.REACT_APP_PAGE_SIZE,
+  tab: "1",
+  tabs: [
+    {key:"1", name:"identification", label:"Identification", shortcut:"A", icon:"cause"},
+    {key:"2", name:"divers", label:"Divers", shortcut:"D", icon:"misc"}
+  ], 
   filters: [],
   loadMorePending: false,
   loadMoreFinish: false,
