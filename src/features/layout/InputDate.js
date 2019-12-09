@@ -1,4 +1,10 @@
 import React, { Component } from 'react';
+import DatePicker from  "react-datepicker";
+import { registerLocale, setDefaultLocale } from  "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import fr from 'date-fns/locale/fr';
+
+registerLocale('fr', fr)
 
 export default class InputDate extends Component {
   static propTypes = {
@@ -37,11 +43,12 @@ export default class InputDate extends Component {
           }
         </label>
         <div className="col-sm-30">
-          <input
+          <DatePicker
+            locale="fr"
             type="text"
             id={props.id}
             className="form-control" 
-            {...props}
+            onChange={this.onChange}
           />
         </div>
       </div>

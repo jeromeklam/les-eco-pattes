@@ -1,5 +1,3 @@
-import moment from 'moment';
-
 export {default as freeAssoApi} from './api';
 export {initAxios as initAxios} from './init';
 export {buildModel as buildModel} from './reduxModel';
@@ -14,71 +12,6 @@ export {default as getFieldErrorMessage} from './errorNormalizer';
 
 /**/
 export {propagateModel as propagateModel} from './update';
-
-/**/
-
-export function monthAsString(moment) {
-  switch (moment.month()+1) {
-    case 1: return 'janvier';
-    case 2: return 'fevrier';
-    case 3: return 'mars';
-    case 4: return 'avril';
-    case 5: return 'mai';
-    case 6: return 'juin';
-    case 7: return 'juillet';
-    case 8: return 'aout';
-    case 9: return 'septembre';
-    case 10: return 'octobre';
-    case 11: return 'novembre';
-    case 12: return 'decembre';
-  }
-  return '';
-}
-
-export function dayAsString(moment) {
-  switch (moment.day()) {
-    case 0: return 'dimanche';
-    case 1: return 'lundi';
-    case 2: return 'mardi';
-    case 3: return 'mercredi';
-    case 4: return 'jeudi';
-    case 5: return 'vendredi';
-    case 6: return 'samedi';
-  }
-  return '';
-}
-
-export function todayAsDate() {
-  let today = new moment().format("YYYY-MM-DD");
-  return today;
-}
-
-export function dateAsMoment(date, djour) {
-  if (date && date != '' && date != '0000-00-00') {
-    return moment(date,"YYYY-MM-DD");
-  } else {
-    if (djour) {
-      return moment()
-    } else {
-      return ''
-    }
-  }
-}
-
-export function momentAsDate(date) {
-  if (date) {
-    return date.format("YYYY-MM-DD");
-  }
-  return null;
-}
-
-export function canUseDOM() {
-  return
-    typeof window !== 'undefined' &&
-    window.document &&
-    window.document.createElement
-  ;
-};
 
 export function queryStringToObject (search = '') {
   if (search.indexOf('?') >= 0) {
