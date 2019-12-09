@@ -68,6 +68,7 @@ export class PigeonMap extends Component {
     this.onClick = this.onClick.bind(this);
     this.onMarkerClick = this.onMarkerClick.bind(this);
     this.onSiteClick = this.onSiteClick.bind(this);
+    this.onSiteMove = this.onSiteMove.bind(this);
   }
 
   componentDidMount() {
@@ -126,7 +127,7 @@ export class PigeonMap extends Component {
   }
 
   onSiteClick(id, anchorCoord) {
-    let coord = this.state.center;
+    let coord = this.state.center || [49.096306, 6.160053];
     const json = JSON.parse(anchorCoord);
     if (json) {
       coord = [json.lat, json.long];
@@ -135,7 +136,7 @@ export class PigeonMap extends Component {
   }
 
   onSiteMove(id, item) {
-    let coord = this.state.center;
+    let coord = this.state.center || [49.096306, 6.160053];
     const json = JSON.parse(item.site_coord);
     if (json) {
       coord = [json.lat, json.long];

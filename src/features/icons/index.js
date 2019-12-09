@@ -25,3 +25,4 @@ export { default as MapCenter } from './MapCenter';
 export { default as MapMove } from './MapMove';
 export { default as ImageGallery } from './ImageGallery';
 export { default as Documents } from './Documents';
+export { default as Calendar } from './Calendar';
