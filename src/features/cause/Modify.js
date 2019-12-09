@@ -37,7 +37,6 @@ export class Modify extends Component {
      */
     this.props.actions.loadOne(this.state.causeId).then(result => {
       const item = this.props.cause.loadOneItem;
-      console.log(item);
       this.setState({ item: item });
     });
   }

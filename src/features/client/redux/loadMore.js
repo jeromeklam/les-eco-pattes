@@ -33,7 +33,7 @@ export function loadMore(args = {}, reload = false) {
         // See the real-word example at:  https://github.com/supnate/rekit/blob/master/src/features/home/redux/fetchRedditReactjsList.js
         // args.error here is only for test coverage purpose.
         let params = {
-          page: { number: getState().site.page_number, size: getState().site.page_size },
+          page: { number: getState().client.page_number, size: getState().client.page_size },
         };
         if (args && Object.keys(args).length > 0 && args !== '') {
           params.filter = { 
