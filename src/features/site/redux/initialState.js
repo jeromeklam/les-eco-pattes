@@ -11,7 +11,7 @@ const initialState = {
   page_size: 999999,
   tab: "1",
   tabs: [
-    {key:"1", name:"localisation", label:"Localisation", shortcut:"L", icon:"location"},
+    {key:"1", name:"identification", label:"Identification", shortcut:"L", icon:"location"},
     {key:"2", name:"equipement", label:"Equipement", shortcut:"E", icon:"settings"},
     {key:"3", name:"divers", label:"Divers", shortcut:"D", icon:"misc"}
   ], 
