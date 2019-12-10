@@ -131,6 +131,8 @@ export class ListGroup extends Component {
                             {this.props.onSiteClick && (
                               <li>
                                 <a
+                                  data-toggle="tooltip" 
+                                  title="Recentrer"
                                   className="btn btn-primary btn-sm"
                                   onClick={() => {
                                     this.props.onSiteClick(item.id, item.site_coord);
@@ -143,6 +145,8 @@ export class ListGroup extends Component {
                             {this.props.onSiteMove && (
                               <li>
                                 <a
+                                  data-toggle="tooltip" 
+                                  title="Déplacement du site"
                                   className="btn btn-primary btn-sm"
                                   onClick={() => {
                                     this.props.onSiteMove(item.id, item);
@@ -154,6 +158,8 @@ export class ListGroup extends Component {
                             )}
                             <li>
                               <a
+                                data-toggle="tooltip" 
+                                title="Document"
                                 className="btn btn-primary btn-sm"
                                 onClick={() => {
                                   this.props.onSiteClick &&
@@ -166,6 +172,8 @@ export class ListGroup extends Component {
                             </li>
                             <li>
                               <a
+                                data-toggle="tooltip" 
+                                title="Animaux"
                                 className="btn btn-primary btn-sm"
                                 onClick={() => {
                                   this.props.onSiteClick &&

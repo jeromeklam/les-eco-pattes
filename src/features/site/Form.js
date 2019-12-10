@@ -19,7 +19,6 @@ export default function Form(props) {
     props.onCancel,
     props.onNavTab,
   ); 
-  console.log("FK tab site",values.currentTab); 
   return (    
     <FormResponsive title="Sites" tab={values.currentTab} tabs={props.tabs} onSubmit={handleSubmit} onCancel={handleCancel} onNavTab={handleNavTab}>
       <InputHidden name="id" id="id" value={values.id} />    
