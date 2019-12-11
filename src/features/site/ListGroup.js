@@ -76,11 +76,9 @@ export class ListGroup extends Component {
   }
 
   componentWillUpdate(nextProps, nextState) {
-    console.log(nextState);
   }
 
   componentDidUpdate(prevProps, prevState) {
-    console.log(prevState, this.state);
     if (this.state.selected !== prevState.selected) {
       if (this.refs) {
         const elem = this.refs['site-selector-' + this.state.selected];

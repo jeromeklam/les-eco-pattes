@@ -17,7 +17,7 @@ export default class InputPicker extends Component {
     super(props);
     this.state = {
       value: this.props.value,
-      content: this.props.content,
+      display: this.props.display,
       search: false,
       list: null,
       cancel: false,

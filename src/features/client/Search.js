@@ -47,7 +47,7 @@ export default class Search extends Component {
             <ul className="list-group">
             {this.state.list && this.state.list.map((item) => {
               return (
-                <li className="list-item">
+                <li className="list-group-item list-group-item-action" onClick={() => {this.props.onSelect(item)}}>
                   <p>{item.cli_lastname}</p>
                 </li>
               )
