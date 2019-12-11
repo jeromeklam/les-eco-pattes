@@ -10,6 +10,7 @@ import { loadMore as loadMoreConfig } from '../../config/redux/loadMore';
 import { loadMore as loadMoreSiteType } from '../../site-type/redux/loadMore';
 import { loadMore as loadMoreCauseType } from '../../cause-type/redux/loadMore';
 import { loadMore as loadMoreCauseMainType } from '../../cause-main-type/redux/loadMore';
+import { loadMore as loadMoreDashboard } from '../../dashboard/redux/loadMore';
 
 // Rekit uses redux-thunk for async actions by default: https://github.com/gaearon/redux-thunk
 // If you prefer redux-saga, you can use rekit-plugin-redux-saga: https://github.com/supnate/rekit-plugin-redux-saga
@@ -26,6 +27,7 @@ export function loadAll(args = {}) {
       dispatch(loadMoreSiteType()),
       dispatch(loadMoreCauseType()),
       dispatch(loadMoreCauseMainType()),
+      dispatch(loadMoreDashboard()),
     ]);
     return promise.then(
       res => {

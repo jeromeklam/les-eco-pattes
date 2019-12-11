@@ -9,6 +9,7 @@ import * as actions from './redux/actions';
 import { Desktop, Tablet, Mobile, Default } from '../common'
 import fond from '../../images/fond2.jpg';
 import logo from '../../images/logo-les-eco-pattes.jpg';
+import {Stats} from '../dashboard';
 
 export class Home extends Component {
   static propTypes = {
@@ -18,7 +19,7 @@ export class Home extends Component {
 
   render() {
     return (
-      <div className="container">
+      <div className="container-fluid">
         <Mobile>
           <div className="text-center">
             <br />
@@ -33,7 +34,10 @@ export class Home extends Component {
         <Desktop>
             <div className="text-center">
               <img className="fond-site" src={fond} />
-              <h3 className="home-title">Pensez à l'éco-pâturage pour entretenir vos espaces verts et naturels</h3>
+              <br />
+              <br />
+              <br />
+              <Stats />
             </div>
         </Desktop>
       </div>

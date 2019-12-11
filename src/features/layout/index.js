@@ -28,3 +28,4 @@ export { default as InputCheckbox } from './InputCheckbox';
 export { default as InputDate } from './InputDate';
 export { default as SearchModal } from './SearchModal';
 export { default as InlineLoader } from './InlineLoader';
+export { default as StatCard } from './StatCard';
