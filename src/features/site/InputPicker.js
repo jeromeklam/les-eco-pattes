@@ -17,7 +17,7 @@ export default class InputPicker extends Component {
     let display = '';
     if (this.props.item) {
       value = this.props.item.id;
-      display = this.props.item.cau_name || '';
+      display = this.props.item.site_name || '';
     }
     this.state = {
       search: false,
@@ -41,7 +41,7 @@ export default class InputPicker extends Component {
       let display = '';
       if (props.item) {
         value = props.item.id;
-        display = props.item.cau_name;
+        display = props.item.site_name;
       }
       return { item: props.item, value: value, display: display };
     }
@@ -63,7 +63,7 @@ export default class InputPicker extends Component {
     this.setState({ display: search, loading: true, cancel: source });
     if (search.length >= 2) {
       axios
-        .get(process.env.REACT_APP_BO_URL + '/v1/asso/cause/autocomplete/' + event.target.value, {
+        .get(process.env.REACT_APP_BO_URL + '/v1/asso/site/autocomplete/' + event.target.value, {
           headers: headers,
         })
         .then(result => {
@@ -79,14 +79,14 @@ export default class InputPicker extends Component {
   onClear() {
     this.setState({ autocomplete: false });
     this.props.onChange({
-      target: { name: this.props.name, value: null, type: 'FreeAsso_Cause' },
+      target: { name: this.props.name, value: null, type: 'FreeAsso_Site' },
     });
   }
 
   onSelect(item) {
     this.setState({ search: false, autocomplete: false, list: [] });
     this.props.onChange({
-      target: { name: this.props.name, value: item.id, type: 'FreeAsso_Cause' },
+      target: { name: this.props.name, value: item.id, type: 'FreeAsso_Site' },
     });
   }
 
@@ -96,7 +96,7 @@ export default class InputPicker extends Component {
 
   render() {
     return (
-      <div className="cause-input-picker">
+      <div className="site-input-picker">
         <LayoutInputPicker 
           name={this.props.name}
           label={this.props.label}
@@ -107,8 +107,8 @@ export default class InputPicker extends Component {
           onClear={this.onClear}
           onMore={this.onMore}
           onSelect={this.onSelect}
-          pickerId="cau_id"
-          pickerDisplay="cau_name"
+          pickerId="site_id"
+          pickerDisplay="site_name"
         />
         <Search
           title={this.props.label}

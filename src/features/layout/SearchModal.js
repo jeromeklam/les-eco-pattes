@@ -24,6 +24,7 @@ export default class SearchModal extends Component {
     });
     this.state = {
       fields: filters,
+      condition: 'or',
     };
     this.onChange = this.onChange.bind(this);
     this.onClear = this.onClear.bind(this);
@@ -50,7 +51,16 @@ export default class SearchModal extends Component {
   }
 
   onSearch(event) {
-    const filters = {};
+    let params = false;
+    this.state.fields.map(item => {
+        if (item.value != '') {
+          if (params === false) {
+            params = { filter: { [this.state.condition]: {} }};
+          }
+          params.filter[this.state.condition][item.name] = item.value;
+      }
+    });
+    const filters = params || {};
     this.props.onSearch(filters);
   }
 

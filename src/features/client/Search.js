@@ -17,8 +17,6 @@ export default class Search extends Component {
       list: [],
       loading: false,
       finish: false,
-      cli_lastname: '',
-      cli_firstname: '',
     };
     this.onChange = this.onChange.bind(this);
     this.onSearch = this.onSearch.bind(this);

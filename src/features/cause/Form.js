@@ -13,7 +13,8 @@ import useForm from '../layout/useForm';
 import { causeTypeAsOptions } from '../cause-type/functions.js';
 import { causeMainTypeAsOptions } from '../cause-main-type/functions.js';
 import { InputPicker as ClientInputPicker } from '../client';
-import { InputPicker as CauseInputPicker } from '.';
+import { InputPicker as SiteInputPicker } from '../site';
+import { InputPicker as CauseInputPicker } from './';
 
 
 export default function Form(props) {
@@ -66,16 +67,12 @@ export default function Form(props) {
           />
         </div>
         <div className="col-36">
-          <InputPicker
+          <SiteInputPicker
             label="Site"
-            key="site.id"
-            name="site.id"
-            value={values.site && values.site.id}
-            content={values.site && values.site.site_name}
+            key="site"
+            name="site"
+            item={values.site || null}
             onChange={handleChange}
-            pickerAutocomplete="/v1/asso/site/autocomplete/"
-            pickerId="site_id"
-            pickerValue="site_name"
           />
         </div>
       </div>
@@ -117,20 +114,18 @@ export default function Form(props) {
             <div className="col-18">
               <CauseInputPicker 
                 label="Père"
-                key="parent1.id"
-                name="parent1.id"
-                value={values.parent1 && values.parent1.id}
-                content={values.parent1 && values.parent1.cau_name}
+                key="parent1"
+                name="parent1"
+                item={values.parent1 || null}
                 onChange={handleChange}
               />  
             </div>
             <div className="col-18">
               <CauseInputPicker 
                 label="Mère"                
-                key="parent2.id"
-                name="parent2.id"
-                value={values.parent2 && values.parent2.id}
-                content={values.parent2 && values.parent2.cau_name}
+                key="parent2"
+                name="parent2"
+                item={values.parent2 || null}
                 onChange={handleChange}
               />  
             </div>
@@ -173,10 +168,9 @@ export default function Form(props) {
         <div>
          <ClientInputPicker 
             label="Eleveur"
-            key="proprietary.id"
-            name="proprietary.id"
-            value={values.proprietary && values.proprietary.id}
-            content={values.proprietary && values.proprietary.cli_lastname}
+            key="proprietary"
+            name="proprietary"
+            item={values.proprietary || null}
             onChange={handleChange}
           />     
           <InputTextArea

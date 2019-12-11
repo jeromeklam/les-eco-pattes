@@ -30,13 +30,13 @@ export default class Search extends Component {
   onSearch(filters) {
     if (!this.state.loading) {
       const addUrl = objectToQueryString(filters);
-      const doRequest = freeAssoApi.get('/v1/asso/cause' + addUrl, {});
+      const doRequest = freeAssoApi.get('/v1/asso/site' + addUrl, {});
       this.setState({ loading: true, finish: false, list: [] });
       doRequest.then(result => {
         let items = [];
         if (result && result.data) {
           const lines = jsonApiNormalizer(result.data);
-          items = buildModel(lines, 'FreeAsso_Cause');
+          items = buildModel(lines, 'FreeAsso_Site');
         }
         this.setState({ loading: false, finish: true, list: items });
       });
@@ -49,7 +49,7 @@ export default class Search extends Component {
 
   render() {
     const filters = [
-      {name: 'cau_name', label:"Nom", type:'text'},
+      {name: 'site_name', label:"Site", type:'text'},
     ]
     return (
       <SearchModal 
@@ -61,7 +61,7 @@ export default class Search extends Component {
         onSearch={this.onSearch}
         onSelect={this.props.onSelect}
         list={this.state.list}
-        pickerDisplay="cau_name"
+        pickerDisplay="site_name"
         filters={filters}
       />
     );
