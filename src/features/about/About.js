@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Copyright } from '../common';
+import logo from '../../images/logo-les-eco-pattes.jpg';
 
 export default class About extends Component {
   static propTypes = {};
@@ -19,7 +20,7 @@ export default class About extends Component {
           </div>
         </div>
         <div className="row mb-2">
-          <div className="col-md-18"></div>
+          <div className="col-md-18"><img src={logo} /></div>
           <div className="col-md-18">
             <div className="card flex-md-row mb-4 box-shadow h-md-250">
               <div className="card-body d-flex flex-column align-items-start">

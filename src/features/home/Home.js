@@ -7,7 +7,7 @@ import reactLogo from '../../images/react-logo.svg';
 import rekitLogo from '../../images/rekit-logo.svg';
 import * as actions from './redux/actions';
 import { Desktop, Tablet, Mobile, Default } from '../common'
-import fond from '../../images/fond.jpg';
+import fond from '../../images/fond2.jpg';
 import logo from '../../images/logo-les-eco-pattes.jpg';
 
 export class Home extends Component {
@@ -33,7 +33,6 @@ export class Home extends Component {
         <Desktop>
             <div className="text-center">
               <img className="fond-site" src={fond} />
-              <img className="logo-ecopattes" src={logo} />
               <h3 className="home-title">Pensez à l'éco-pâturage pour entretenir vos espaces verts et naturels</h3>
             </div>
         </Desktop>
