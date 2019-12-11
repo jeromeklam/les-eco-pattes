@@ -7,7 +7,8 @@ export default class ModalResponsive extends Component {
     onClose: PropTypes.func.isRequired,
     show: PropTypes.bool,
     children: PropTypes.node,
-    buttons: PropTypes.array
+    buttons: PropTypes.array,
+    size: PropTypes.string.isRequired,
   };
 
   render() {
@@ -19,7 +20,7 @@ export default class ModalResponsive extends Component {
       <div className="backdrop-style">
         <div className="modal-style">
           <div className="modal fade show">
-            <div className="modal-dialog">
+            <div className={classnames("modal-dialog", "modal-" + this.props.size)}>
               <div className="modal-content">
                 <div className="modal-header">
                   <h5 className="modal-title" id="exampleModalLabel">

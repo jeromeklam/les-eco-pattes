@@ -91,10 +91,9 @@ export default function Form(props) {
           />     
           <ClientInputPicker 
             label="Propriétaire"
-            key="owner.id"
-            name="owner.id"
-            value={values.owner && values.owner.id}
-            content={values.owner && values.owner.cli_lastname}
+            key="owner"
+            name="owner"
+            item={values.owner || null}
             onChange={handleChange}
           />       
         </div>
@@ -128,10 +127,9 @@ export default function Form(props) {
           /> 
          <ClientInputPicker 
             label="Vétérinaire"
-            key="sanitary.id"
-            name="sanitary.id"
-            value={values.sanitary && values.sanitary.id}
-            content={values.sanitary && values.sanitary.cli_lastname}
+            key="sanitary"
+            name="sanitary"
+            item={values.sanitary || null}
             onChange={handleChange}
           />       
           <InputTextArea

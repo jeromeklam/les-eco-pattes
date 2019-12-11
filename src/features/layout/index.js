@@ -26,3 +26,4 @@ export { default as ConfirmResponsive } from './ConfirmResponsive';
 export { default as InputPicker } from './InputPicker';
 export { default as InputCheckbox } from './InputCheckbox';
 export { default as InputDate } from './InputDate';
+export { default as SearchModal } from './SearchModal';

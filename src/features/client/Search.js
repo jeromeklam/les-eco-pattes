@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { ModalResponsive, LoadingData } from '../layout';
-import { freeAssoApi, jsonApiNormalizer, buildModel } from '../../common';
+import { SearchModal } from '../layout';
+import { freeAssoApi, jsonApiNormalizer, buildModel, objectToQueryString } from '../../common';
 
 export default class Search extends Component {
   static propTypes = {
@@ -17,45 +17,56 @@ export default class Search extends Component {
       list: [],
       loading: false,
       finish: false,
+      cli_lastname: '',
+      cli_firstname: '',
     };
+    this.onChange = this.onChange.bind(this);
+    this.onSearch = this.onSearch.bind(this);
+    this.onClear = this.onClear.bind(this);
   }
 
-  componentDidMount() {
+  onClear() {
+    this.setState({ loading: false, finish: true, list: [] });
+  }
+
+  onSearch(filters) {
     if (!this.state.loading) {
-      const doRequest = freeAssoApi.get('/v1/asso/client', {});
+      const addUrl = objectToQueryString(filters);
+      const doRequest = freeAssoApi.get('/v1/asso/client' + addUrl, {});
       this.setState({ loading: true, finish: false, list: [] });
-      doRequest.then(
-        result => {
-          let items = [];
-          if (result && result.data) {
-            const lines = jsonApiNormalizer(result.data);
-            items = buildModel(lines, 'FreeAsso_Client');
-          }
-          this.setState({ loading: false, finish: true, list: items });
+      doRequest.then(result => {
+        let items = [];
+        if (result && result.data) {
+          const lines = jsonApiNormalizer(result.data);
+          items = buildModel(lines, 'FreeAsso_Client');
         }
-      );
+        this.setState({ loading: false, finish: true, list: items });
+      });
     }
   }
 
+  onChange(event) {
+    this.setState({ [event.target.name]: event.target.value });
+  }
+
   render() {
+    const filters = [
+      {name: 'cli_firstname', label:"Prénom", type:'text'},
+      {name: 'cli_lastname', label:"Nom", type:'text'}
+    ]
     return (
-      <ModalResponsive title={this.props.title} show={this.props.show} onClose={this.props.onClose}>
-        {this.state.loading ? (
-          <LoadingData />
-        ) : (
-          <div>
-            <ul className="list-group">
-            {this.state.list && this.state.list.map((item) => {
-              return (
-                <li className="list-group-item list-group-item-action" onClick={() => {this.props.onSelect(item)}}>
-                  <p>{item.cli_lastname}</p>
-                </li>
-              )
-            })}
-            </ul>
-          </div>
-        )}
-      </ModalResponsive>
+      <SearchModal 
+        title={this.props.title}
+        show={this.props.show}
+        loading={this.state.loading}
+        onClose={this.props.onClose}
+        onClear={this.onClear}
+        onSearch={this.onSearch}
+        onSelect={this.props.onSelect}
+        list={this.state.list}
+        pickerDisplay="cli_lastname"
+        filters={filters}
+      />
     );
   }
 }
