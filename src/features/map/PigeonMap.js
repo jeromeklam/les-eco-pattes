@@ -98,7 +98,7 @@ export class PigeonMap extends Component {
     console.log(anchor, item);
     item.site_coord = JSON.stringify({
       lat: anchor[0],
-      long: anchor[1],
+      lon: anchor[1],
     });
     this.setState({
       dragging: false,
@@ -130,7 +130,7 @@ export class PigeonMap extends Component {
     let coord = this.state.center || [49.096306, 6.160053];
     const json = JSON.parse(anchorCoord);
     if (json) {
-      coord = [json.lat, json.long];
+      coord = [json.lat, json.lon];
     }
     this.setState({ selected: id, center: coord, moved: false });
   }
@@ -139,7 +139,7 @@ export class PigeonMap extends Component {
     let coord = this.state.center || [49.096306, 6.160053];
     const json = JSON.parse(item.site_coord);
     if (json) {
-      coord = [json.lat, json.long];
+      coord = [json.lat, json.lon];
     }
     this.setState({ selected: id, center: coord, moved: item });
   }
@@ -163,7 +163,8 @@ export class PigeonMap extends Component {
               items.map(item => {
                 const json = JSON.parse(item.site_coord);
                 if (json) {
-                  const coord = [json.lat, json.long];
+                  const coord = [json.lat, json.lon];
+                  console.log(coord);
                   return (
                     <Marker
                       key={item.id}
@@ -173,6 +174,8 @@ export class PigeonMap extends Component {
                       hover={this.state.selected == item.id}
                     />
                   );
+                } else {
+                  console.log(item.site_coord);
                 }
               })}
             {this.state.moved && this.state.moved.id == this.state.selected && (

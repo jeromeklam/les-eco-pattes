@@ -6,6 +6,7 @@ import { connect } from 'react-redux';
 import * as actions from './redux/actions';
 import { HoverObserver } from '../layout';
 import { buildModel, isInViewPort } from '../../common';
+import { InlineList as InlineListCause } from '../cause';
 import {
   MapCenter as MapCenterIcon,
   MapMove as MapMoveIcon,
@@ -200,6 +201,7 @@ export class ListGroup extends Component {
                           this.state.selected === this.state.causes && (
                             <div className="card-footer bg-transparent">
                               <p>Animaux :</p>
+                              <InlineListCause site_id={item.id} />
                             </div>
                           )}
                       </div>

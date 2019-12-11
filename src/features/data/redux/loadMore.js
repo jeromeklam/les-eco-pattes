@@ -1,4 +1,4 @@
-import { freeAssoApi, jsonApiNormalizer, objectToQueryString } from '../../../common';
+import { freeAssoApi, jsonApiNormalizer, objectToQueryString, buildModel } from '../../../common';
 import {
   DATA_LOAD_MORE_INIT,
   DATA_LOAD_MORE_BEGIN,
@@ -111,12 +111,14 @@ export function reducer(state, action) {
       } else {
         list = state.items;
       }
+
       return {
         ...state,
         loadMorePending: false,
         loadMoreError: null,
         loadMoreFinish: nbre < state.page_size,
         items: list,
+        models: buildModel(list, 'FreeAsso_Data'),
         page_number: state.page_number + 1,
       };
 
