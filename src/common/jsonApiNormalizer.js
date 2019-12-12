@@ -137,8 +137,11 @@ function extractMetaData(json, endpoint, { camelizeKeys, filterEndpoint }) {
 export function jsonApiUpdate(json, key, value) {
   if (json[key]) {
     const main = value.MAINELEM;
+    const ids  = value.SORTEDELEMS;
     keys(value[main]).forEach((elem) => {
-      json[key][elem] = value[main][elem];
+      if (ids.indexOf(elem) >= 0) {
+        json[key][elem] = value[main][elem];
+      }
     });
   }
   return json;
