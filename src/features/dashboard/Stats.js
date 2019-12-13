@@ -4,7 +4,12 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as actions from './redux/actions';
 import { StatCard } from '../layout';
-import { Site as SiteIcon, Cause as CauseIcon } from '../icons';
+import { 
+  Site as SiteIcon, 
+  Cause as CauseIcon,
+  Area as AreaIcon,
+  Fence as FenceIcon
+} from '../icons';
 
 export class Stats extends Component {
   static propTypes = {
@@ -32,12 +37,12 @@ export class Stats extends Component {
             <StatCard
               title="Surface"
               count={this.props.dashboard.stats.area_site}
-              icon={<SiteIcon />}
+              icon={<AreaIcon />}
             />
             <StatCard
               title="Clôture"
               count={this.props.dashboard.stats.clot_site}
-              icon={<SiteIcon />}
+              icon={<FenceIcon />}
             />
           </div>
         ) : (

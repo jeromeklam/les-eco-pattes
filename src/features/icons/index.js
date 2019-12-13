@@ -26,3 +26,5 @@ export { default as MapMove } from './MapMove';
 export { default as ImageGallery } from './ImageGallery';
 export { default as Documents } from './Documents';
 export { default as Calendar } from './Calendar';
+export { default as Area } from './Area';
+export { default as Fence } from './Fence';
