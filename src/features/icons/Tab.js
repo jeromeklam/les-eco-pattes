@@ -1,33 +1,32 @@
 import React, { Component } from 'react';
 import Icon from '@mdi/react';
-import {
-  mdiMapMarkerOutline,
-  mdiSettingsOutline,
-  mdiClipboardTextOutline
-} from '@mdi/js';
+import { mdiMapMarkerOutline, mdiSettingsOutline, mdiClipboardTextOutline, mdiSheep } from '@mdi/js';
 
 export default class AddOne extends Component {
   static propTypes = {};
 
-  render() {    
-    let path = "" ;
+  render() {
+    let path = '';
     switch (this.props.name) {
-      case "location":
-        path=mdiMapMarkerOutline;
+      case 'cause':
+        path = mdiSheep;
         break;
-      case "settings":
-        path=mdiSettingsOutline;
+      case 'location':
+        path = mdiMapMarkerOutline;
         break;
-      case "misc":
-        path=mdiClipboardTextOutline;
+      case 'settings':
+        path = mdiSettingsOutline;
         break;
-    };
-    return (
-      <Icon className="icons-tab"
-        path={path}
-        size={1}
-        color="green"
-      />
-    );
+      case 'misc':
+        path = mdiClipboardTextOutline;
+        break;
+      case 'move':
+        path = mdiClipboardTextOutline;
+        break;
+      default:
+        path = this.props.name;
+        break;
+    }
+    return <Icon className="icons-tab" path={path} size={1} color={this.props.color || 'green'} />;
   }
 }

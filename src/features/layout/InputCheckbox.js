@@ -21,8 +21,8 @@ export default class InputCheckbox extends Component {
               {this.props.text}
             </label>
             <label className="switch">
-              <input type="checkbox" class="form-check-input primary" id={props.id} {...props} />
-              <span class="slider round"></span>
+              <input type="checkbox" className="form-check-input primary" id={props.id} {...props} />
+              <span className="slider round"></span>
             </label>
           </div>
         </div>

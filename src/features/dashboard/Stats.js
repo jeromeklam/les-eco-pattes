@@ -20,7 +20,7 @@ export class Stats extends Component {
   render() {
     return (
       <div className="dashboard-stats ">
-        {this.props.dashboard.stats ? (
+        {(this.props.auth.authenticated  && this.props.dashboard.stats) ? (
           <div className="row">
             <StatCard
               title="Animaux"
@@ -57,6 +57,7 @@ export class Stats extends Component {
 function mapStateToProps(state) {
   return {
     dashboard: state.dashboard,
+    auth: state.auth,
   };
 }
 

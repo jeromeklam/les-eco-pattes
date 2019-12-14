@@ -4,8 +4,14 @@
 
 body {
   margin: 0;
+  border: 0 none;
   padding: 0;
   font-family: sans-serif;
+}
+
+html,
+body {
+  overflow: hidden;
 }
 
 .data-list {
@@ -25,9 +31,7 @@ body {
     color: $header-color;
   }
 }
-.responsive-list {
-  margin-top: 40px;
-}
+
 .desktop-line .misc {
   color: #212529;
 }

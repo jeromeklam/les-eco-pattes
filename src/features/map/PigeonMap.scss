@@ -7,18 +7,17 @@ $map-list-width: 350px;
 
   .map-content {
     position: absolute;
-    top: $desktop-navbar-height;
-    left: $left-menu-width;
+    top: 0px;
+    left: 0px;
     right: $map-list-width;
-    bottom: $footer-height;
+    bottom: 0px;
   }
 
   .map-list-header {
     position: absolute;
+    top: 0px;
     right: 0px;
-    top: $desktop-navbar-height;
-    right: 0px;
-    bottom: $footer-height;
+    bottom: 0px;
     width: $map-list-width;
     height: 100px;
   }
@@ -26,15 +25,31 @@ $map-list-width: 350px;
   .map-list-scroll {
     position: absolute;
     right: 0px;
-    top: 200px;;
-    right: 0px;
-    bottom: $footer-height;
+    top: 120px;;
+    bottom: 0px;
     width: $map-list-width;
     overflow-y: auto;
   }
+
+  .map-content-mobile {
+    position: fixed;
+    top: $mobile-header-height;
+    left: 0px;
+    right: 0px;
+    bottom: $mobile-footer-height + 200px;
+  }
+  .map-list-header-mobile {
+    display: none;
+  }
+  .map-list-scroll-mobile {
+    position: fixed;
+    height: 200px;;
+    left: 0px;
+    right: 0px;
+    bottom: $mobile-footer-height;
+    overflow: auto;
+  }
 }
-
-
 
 .map-selector {
   width: 29px; 

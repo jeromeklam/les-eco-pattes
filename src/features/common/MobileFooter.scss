@@ -4,9 +4,13 @@
   position: fixed;
   bottom: 0px;
   width: 100%;
-  height: 60px;
-  line-height: 60px;
+  height: $mobile-footer-height;
+  line-height: $mobile-footer-height;
   background-color: $footer-background-color;
   color: $header-color;
   z-index: 800;
+
+  .nav-link {
+    padding: 0px;
+  }
 }

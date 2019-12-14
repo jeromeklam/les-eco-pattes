@@ -21,6 +21,9 @@ export class Home extends Component {
     return (
       <div className="container-fluid">
         <Mobile>
+          {this.props.auth.authenticated ? (
+            <Stats />
+          ) : (
           <div className="text-center">
             <br />
             <h5>Pensez à l'éco-pâturage pour entretenir vos espaces verts et naturels</h5>
@@ -30,6 +33,7 @@ export class Home extends Component {
             <br />
             <h6>les moutons seront bien gardés !</h6>
           </div>
+          )}
         </Mobile>
         <Desktop>
             <div className="text-center">
@@ -49,6 +53,7 @@ export class Home extends Component {
 function mapStateToProps(state) {
   return {
     home: state.home,
+    auth: state.auth,
   };
 }
 

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import classnames from 'classnames';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as actions from './redux/actions';
@@ -9,6 +10,7 @@ import { buildModel, getJsonApi, propagateModel } from '../../common';
 import { loadMore as loadMoreSite, updateOne as updateOneSite } from '../site/redux/actions';
 import Draggable from 'pigeon-draggable';
 import Icon from '@mdi/react';
+import { Mobile, Desktop } from '../common';
 import { mdiMagnifyMinus, mdiMagnifyPlus } from '@mdi/js';
 import mapselect from '../../images/mapselect.png';
 import { ListGroup } from '../site';
@@ -151,75 +153,148 @@ export class PigeonMap extends Component {
     }
     return (
       <div className="map-pigeon-map">
-        <div className="map-content">
-          <Map
-            provider={providers[this.state.provider]}
-            center={this.state.center}
-            zoom={this.state.zoom}
-            animate={this.state.animate}
-            onClick={this.onClick}
-          >
-            {items &&
-              items.map(item => {
-                const json = JSON.parse(item.site_coord);
-                if (json) {
-                  const coord = [json.lat, json.lon];
-                  console.log(coord);
-                  return (
-                    <Marker
-                      key={item.id}
-                      anchor={coord}
-                      payload={item.id}
-                      onClick={this.onMarkerClick}
-                      hover={this.state.selected == item.id}
-                    />
-                  );
-                } else {
-                  console.log(item.site_coord);
-                }
-              })}
-            {this.state.moved && this.state.moved.id == this.state.selected && (
-              <Draggable
-                anchor={this.state.center}
-                offset={[14, 30]}
-                onDragStart={this.onDragStart}
-                onDragEnd={anchor => {
-                  this.onDragEnd(anchor, this.state.moved);
-                }}
-              >
-                <img className="map-selector" src={mapselect} />
-              </Draggable>
-            )}
-          </Map>
-        </div>
-        <div className="map-list-header">
-          <button className="btn btn-primary btn-sm" onClick={this.zoomIn}>
-            <Icon path={mdiMagnifyPlus} size={1} color="white" />
-          </button>
-          <button className="btn btn-primary btn-sm" onClick={this.zoomOut}>
-            <Icon path={mdiMagnifyMinus} size={1} color="white" />
-          </button>
-          <br />
-          <span title={lat2tile(this.state.center[0], this.state.zoom)}>
-            Lat: {Math.round(this.state.center[0] * 10000) / 10000}
-          </span>
-          <br />
-          <span title={lng2tile(this.state.center[1], this.state.zoom)}>
-            Lon: {Math.round(this.state.center[1] * 10000) / 10000}
-          </span>
-          <br />
-          <span>Zoom: {Math.round(this.state.zoom * 100) / 100}</span>
-          <br />
-          <hr />
-        </div>
-        <div className="map-list-scroll">
-          <ListGroup
-            selected={this.state.selected}
-            onSiteClick={this.onSiteClick}
-            onSiteGallery={this.onSiteGallery}
-            onSiteMove={this.onSiteMove}
-          />
-        </div>
+        <Desktop>
+          <div className={classnames('map-content')}>
+            <Map
+              provider={providers[this.state.provider]}
+              center={this.state.center}
+              zoom={this.state.zoom}
+              animate={this.state.animate}
+              onClick={this.onClick}
+            >
+              {items &&
+                items.map(item => {
+                  const json = JSON.parse(item.site_coord);
+                  if (json) {
+                    const coord = [json.lat, json.lon];
+                    console.log(coord);
+                    return (
+                      <Marker
+                        key={item.id}
+                        anchor={coord}
+                        payload={item.id}
+                        onClick={this.onMarkerClick}
+                        hover={this.state.selected == item.id}
+                      />
+                    );
+                  } else {
+                    console.log(item.site_coord);
+                  }
+                })}
+              {this.state.moved && this.state.moved.id == this.state.selected && (
+                <Draggable
+                  anchor={this.state.center}
+                  offset={[14, 30]}
+                  onDragStart={this.onDragStart}
+                  onDragEnd={anchor => {
+                    this.onDragEnd(anchor, this.state.moved);
+                  }}
+                >
+                  <img className="map-selector" src={mapselect} />
+                </Draggable>
+              )}
+            </Map>
+          </div>
+          <div className="map-list-header">
+            <button className="btn btn-primary btn-sm" onClick={this.zoomIn}>
+              <Icon path={mdiMagnifyPlus} size={1} color="white" />
+            </button>
+            <button className="btn btn-primary btn-sm" onClick={this.zoomOut}>
+              <Icon path={mdiMagnifyMinus} size={1} color="white" />
+            </button>
+            <br />
+            <span title={lat2tile(this.state.center[0], this.state.zoom)}>
+              Lat: {Math.round(this.state.center[0] * 10000) / 10000}
+            </span>
+            <br />
+            <span title={lng2tile(this.state.center[1], this.state.zoom)}>
+              Lon: {Math.round(this.state.center[1] * 10000) / 10000}
+            </span>
+            <br />
+            <span>Zoom: {Math.round(this.state.zoom * 100) / 100}</span>
+            <br />
+            <hr />
+          </div>
+          <div className="map-list-scroll">
+            <ListGroup
+              selected={this.state.selected}
+              onSiteClick={this.onSiteClick}
+              onSiteGallery={this.onSiteGallery}
+              onSiteMove={this.onSiteMove}
+            />
+          </div>
+        </Desktop>
+        <Mobile>
+        <div className={classnames('map-content-mobile')}>
+            <Map
+              provider={providers[this.state.provider]}
+              center={this.state.center}
+              zoom={this.state.zoom}
+              animate={this.state.animate}
+              onClick={this.onClick}
+            >
+              {items &&
+                items.map(item => {
+                  const json = JSON.parse(item.site_coord);
+                  if (json) {
+                    const coord = [json.lat, json.lon];
+                    console.log(coord);
+                    return (
+                      <Marker
+                        key={item.id}
+                        anchor={coord}
+                        payload={item.id}
+                        onClick={this.onMarkerClick}
+                        hover={this.state.selected == item.id}
+                      />
+                    );
+                  } else {
+                    console.log(item.site_coord);
+                  }
+                })}
+              {this.state.moved && this.state.moved.id == this.state.selected && (
+                <Draggable
+                  anchor={this.state.center}
+                  offset={[14, 30]}
+                  onDragStart={this.onDragStart}
+                  onDragEnd={anchor => {
+                    this.onDragEnd(anchor, this.state.moved);
+                  }}
+                >
+                  <img className="map-selector" src={mapselect} />
+                </Draggable>
+              )}
+            </Map>
+          </div>
+          <div className="map-list-header-mobile">
+            <button className="btn btn-primary btn-sm" onClick={this.zoomIn}>
+              <Icon path={mdiMagnifyPlus} size={1} color="white" />
+            </button>
+            <button className="btn btn-primary btn-sm" onClick={this.zoomOut}>
+              <Icon path={mdiMagnifyMinus} size={1} color="white" />
+            </button>
+            <br />
+            <span title={lat2tile(this.state.center[0], this.state.zoom)}>
+              Lat: {Math.round(this.state.center[0] * 10000) / 10000}
+            </span>
+            <br />
+            <span title={lng2tile(this.state.center[1], this.state.zoom)}>
+              Lon: {Math.round(this.state.center[1] * 10000) / 10000}
+            </span>
+            <br />
+            <span>Zoom: {Math.round(this.state.zoom * 100) / 100}</span>
+            <br />
+            <hr />
+          </div>
+          <div className="map-list-scroll-mobile">
+            <ListGroup
+              selected={this.state.selected}
+              onSiteClick={this.onSiteClick}
+              onSiteGallery={this.onSiteGallery}
+              onSiteMove={this.onSiteMove}
+            />
+          </div>
+        </Mobile>
       </div>
     );
   }

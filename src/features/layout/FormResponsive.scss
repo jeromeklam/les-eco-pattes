@@ -1,7 +1,37 @@
 @import '../../styles/mixins';
 
 .layout-form-responsive {
-  a:not([href]):not([tabindex]):hover, a:not([href]):not([tabindex]):focus {
-    color: darken(theme-color("primary"), 10%);
+  a:not([href]):not([tabindex]):hover,
+  a:not([href]):not([tabindex]):focus {
+    color: darken(theme-color('primary'), 10%);
+  }
+}
+
+.mobile-navbar {
+  position: fixed;
+  left: 0px;
+  right: 0px;
+  background-color: $header-background-color;
+  color: $header-color;
+  top: $mobile-header-height;
+  .nav-link {
+    padding-left: 5px;
+    padding-right: 5px;
+  }
+  .navbar-brand {
+    float: left;
+    font-weight: bold;
+    padding-left: 5px;
+    font-size: 1rem;
+  }
+  button {
+    padding-left: 5px;
+    padding-right: 5px;
+  }
+  .tab-item-action {
+    button {
+      padding-left: 10px;
+      padding-right: 10px;
+    }
   }
 }
