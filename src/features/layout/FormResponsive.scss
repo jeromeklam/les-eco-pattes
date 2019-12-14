@@ -1,13 +1,17 @@
 @import '../../styles/mixins';
 
+.display-mobile .layout-form-responsive {
+  margin-top: $mobile-header-height;
+}
+
 .layout-form-responsive {
   a:not([href]):not([tabindex]):hover,
   a:not([href]):not([tabindex]):focus {
     color: darken(theme-color('primary'), 10%);
   }
 }
-
 .mobile-navbar {
+  z-index: 800;
   position: fixed;
   left: 0px;
   right: 0px;

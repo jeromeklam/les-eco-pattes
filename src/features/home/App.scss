@@ -11,7 +11,7 @@
 
 .display-mobile {
   #page-content-wrapper {
-    top: $mobile-header-height * 2;
+    top: $mobile-header-height;
     position: fixed;
     bottom: $mobile-footer-height;
     overflow-x: hidden;
