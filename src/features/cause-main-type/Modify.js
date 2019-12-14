@@ -70,6 +70,7 @@ export class Modify extends Component {
 
   render() {
     const item = this.state.item;
+    console.log("FK modif camt",item);
     return (
       <div className="cause-main-type-modify global-card">
         {this.props.causeMainType.loadOnePending ? (
@@ -84,14 +85,12 @@ export class Modify extends Component {
   }
 }
 
-/* istanbul ignore next */
 function mapStateToProps(state) {
   return {
     causeMainType: state.causeMainType,
   };
 }
 
-/* istanbul ignore next */
 function mapDispatchToProps(dispatch) {
   return {
     actions: bindActionCreators({ ...actions, propagateModel }, dispatch),

@@ -14,7 +14,6 @@ export default function Form(props) {
     props.onSubmit,
     props.onCancel,
   );
-  console.log(values);
   return (
     <FormResponsive title="Personne" onSubmit={handleSubmit} onCancel={handleCancel}>
       <div className="card-body">
@@ -23,6 +22,7 @@ export default function Form(props) {
           label="Nom"
           name="cli_lastname"
           id="cli_lastname"
+          required={true}
           value={values.cli_lastname}
           onChange={handleChange}
         />

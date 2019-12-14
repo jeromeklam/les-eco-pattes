@@ -10,6 +10,6 @@ export default {
   childRoutes: [
     { path: 'client', name: 'List', component: List, auth: 'PRIVATE' },
     { path: 'client/create', name: 'Create', component: Create, auth: 'PRIVATE' },
-    { path: 'client/modify/:id', name: 'Modify', component: Modify, auth: 'PRIVATE' },
+    { path: 'client/modify/:clientId', name: 'Modify', component: Modify, auth: 'PRIVATE' },
   ],
 };
