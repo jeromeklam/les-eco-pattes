@@ -68,10 +68,9 @@ export class Create extends Component {
 
   render() {
     const item = this.state.item;
-    const options = modelsToSelect(this.props.causeMainType.items, 'id', 'cli_lastname');
     return (
       <div className="client-create global-card">
-        {this.props.causeType.loadOnePending ? (
+        {this.props.client.loadOnePending ? (
           <LoadingData />
         ) : (
           <div>
@@ -82,7 +81,6 @@ export class Create extends Component {
                 client_categories={this.props.clientCategory.items}
                 onSubmit={this.onSubmit} 
                 onCancel={this.onCancel} 
-                client={options} 
               />
             }
           </div>
@@ -95,6 +93,8 @@ export class Create extends Component {
 function mapStateToProps(state) {
   return {
     client: state.client,
+    clientType: state.clientType,
+    clientCategory: state.clientCategory,
   };
 }
 

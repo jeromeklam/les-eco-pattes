@@ -20,39 +20,27 @@ export default function Form(props) {
     <FormResponsive title="Personne" onSubmit={handleSubmit} onCancel={handleCancel}>
       <div className="card-body">
         <InputHidden name="id" id="id" value={values.id} />
-        {values.cli_firstname === null &&
-          <InputText
-            label="Nom"
-            name="cli_lastname"
-            id="cli_lastname"
-            required={true}
-            value={values.cli_lastname}
-            onChange={handleChange}
-          />
-        } 
-        {values.cli_firstname !== null &&
-          <div className="row">
-            <div className="col-sm-18">
-              <InputText
-                label="Nom"
-                name="cli_lastname"
-                id="cli_lastname"
-                required={true}
-                value={values.cli_lastname}
-                onChange={handleChange}
-              />
-            </div>
-            <div className="col-sm-18">
-              <InputText
-                label="Prénom"
-                name="cli_firstname"
-                id="cli_firstname"
-                value={values.cli_firstname}
-                onChange={handleChange}
-              />
-            </div>
+        <div className="row">
+          <div className="col-sm-18">
+            <InputText
+              label="Nom"
+              name="cli_lastname"
+              id="cli_lastname"
+              required={true}
+              value={values.cli_lastname}
+              onChange={handleChange}
+            />
           </div>
-        }
+          <div className="col-sm-18">
+            <InputText
+              label="Prénom"
+              name="cli_firstname"
+              id="cli_firstname"
+              value={values.cli_firstname}
+              onChange={handleChange}
+            />
+          </div>
+        </div>
         <InputText
           label="Adresse"
           name="cli_address1"
