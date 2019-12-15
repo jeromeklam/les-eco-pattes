@@ -49,7 +49,6 @@ export default function Form(props) {
             label="Espèce"
             name="cause_type.cause_main_type.camt_id"
             value={values.cause_type.cause_main_type ? values.cause_type.cause_main_type.id : null}
-            addempty={true}
             onChange={handleChange}
             options={causeMainTypeAsOptions(props.cause_main_types)}
           />  

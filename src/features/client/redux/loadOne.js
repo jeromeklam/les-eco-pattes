@@ -69,7 +69,7 @@ export function reducer(state, action) {
       // The request is success
       let item = null;
       let object = jsonApiNormalizer(action.data.data);
-      item = buildModel(object, 'FreeAsso_Client', action.id);
+      item = buildModel(object, 'FreeAsso_Client', action.id, { eager: true } );
       return {
         ...state,
         loadOnePending: false,

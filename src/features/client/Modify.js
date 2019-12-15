@@ -79,6 +79,8 @@ export class Modify extends Component {
             {item && (
               <Form
                 item={item}
+                client_types={this.props.clientType.items}
+                client_categories={this.props.clientCategory.items}
                 onSubmit={this.onSubmit}
                 onCancel={this.onCancel}
               />
@@ -93,12 +95,14 @@ export class Modify extends Component {
 function mapStateToProps(state) {
   return {
     client: state.client,
+    clientType: state.clientType,
+    clientCategory: state.clientCategory,
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
-    actions: bindActionCreators({ ...actions }, dispatch)
+    actions: bindActionCreators({ ...actions, propagateModel }, dispatch)
   };
 }
 

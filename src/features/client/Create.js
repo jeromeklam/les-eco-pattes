@@ -75,7 +75,16 @@ export class Create extends Component {
           <LoadingData />
         ) : (
           <div>
-            {item && <Form item={item} onSubmit={this.onSubmit} onCancel={this.onCancel} client={options} />}
+            {item && 
+              <Form 
+                item={item} 
+                client_types={this.props.clientType.items}
+                client_categories={this.props.clientCategory.items}
+                onSubmit={this.onSubmit} 
+                onCancel={this.onCancel} 
+                client={options} 
+              />
+            }
           </div>
         )}
       </div>
