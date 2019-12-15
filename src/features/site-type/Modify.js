@@ -41,7 +41,7 @@ export class Modify extends Component {
   onSubmit(datas = {}) {
     let obj = getJsonApi(datas, 'FreeAsso_SiteType', this.state.id);
     this.props.actions
-      .updateOne(obj)
+      .updateOne(this.state.id, obj)
       .then(result => {
         this.props.actions.propagateModel('FreeAsso_SiteType', result);
         this.props.history.push('/site-type');

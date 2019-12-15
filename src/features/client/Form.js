@@ -14,7 +14,6 @@ export default function Form(props) {
     props.onSubmit,
     props.onCancel,
   );
-  console.log("FK form client",values.cli_firstname);
   return (
     <FormResponsive title="Personne" onSubmit={handleSubmit} onCancel={handleCancel}>
       <div className="card-body">

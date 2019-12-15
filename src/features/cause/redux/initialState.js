@@ -12,8 +12,8 @@ const initialState = {
   tab: "1",
   tabs: [
     {key:"1", name:"identification", label:"Identification", shortcut:"A", icon:"cause"},
-    {key:"2", name:"mouvements", label:"Mouvements", shortcut:"M", icon:"misc"},
-    {key:"3", name:"divers", label:"Divers", shortcut:"D", icon:"move"}
+    {key:"2", name:"mouvements", label:"Mouvements", shortcut:"M", icon:"move"},
+    {key:"3", name:"divers", label:"Divers", shortcut:"D", icon:"misc"}
   ], 
   filters: [],
   loadMorePending: false,

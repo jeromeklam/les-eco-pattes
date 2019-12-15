@@ -1,6 +1,10 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { ModalResponsive, LoadingData } from './';
+import { ResponsiveModal } from '../common';
+import { LoadingData } from './';
+import FilterIcon from '../icons/Filter';
+import DeleteIcon from '../icons/DelOne';
+import CloseIcon from '../icons/Close';
 
 export default class SearchModal extends Component {
   static propTypes = {
@@ -53,7 +57,7 @@ export default class SearchModal extends Component {
   onSearch(event) {
     let params = false;
     this.state.fields.map(item => {
-        if (item.value != '') {
+        if (item.value !== '') {
           if (params === false) {
             params = { filter: { [this.state.condition]: {} }};
           }
@@ -65,43 +69,37 @@ export default class SearchModal extends Component {
   }
 
   render() {
+    const buttons = [
+      {name: "Filtrer", function: this.onSearch, theme: "primary", icon: "filter" },
+      {name: "Effacer", function: this.onClear, theme: "warning" , icon: "delete"},
+      {name: "Annuler", function: this.props.onClose, theme: "dark", icon: "close"},
+    ];
     return (
-      <ModalResponsive
+      <ResponsiveModal
         size="lg"
         title={this.props.title}
         show={this.props.show}
         onClose={this.props.onClose}
+        buttons={buttons}
       >
         <div>
           <div className="search-filters">
-            <div className="row">
-              <div className="col-30">
-                {this.state.fields &&
-                  this.state.fields.map(item => {
-                    return (
-                      <input
-                        key={item.name}
-                        className="form-control"
-                        value={item.value}
-                        name={item.name}
-                        placeholder={item.label}
-                        type="text"
-                        onChange={this.onChange}
-                      />
-                    );
-                  })}
-              </div>
-              <div className="col-6">
-                <button type="button" onClick={this.onClear} className="btn btn-warning btn-block">
-                  Effacer
-                </button>
-                <button type="button" onClick={this.onSearch} className="btn btn-primary btn-block">
-                  Filtrer
-                </button>
-              </div>
-            </div>
+            {this.state.fields &&
+              this.state.fields.map(item => {
+                return (
+                  <input
+                    key={item.name}
+                    className="form-control"
+                    value={item.value}
+                    name={item.name}
+                    placeholder={item.label}
+                    type="text"
+                    onChange={this.onChange}
+                  />
+                );
+              })
+            }
           </div>
-          <hr />
           <div className="search-results">
             {this.props.loading ? (
               <LoadingData />
@@ -125,7 +123,7 @@ export default class SearchModal extends Component {
             )}
           </div>
         </div>
-      </ModalResponsive>
+      </ResponsiveModal>
     );
   }
 }

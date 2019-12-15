@@ -5,7 +5,6 @@ import {
   InputSelect,
   InputData,
   InputDate,
-  InputPicker,
   InputTextArea,
   FormResponsive,
 } from '../layout';
@@ -25,7 +24,6 @@ export default function Form(props) {
     props.onCancel,
     props.onNavTab,
   );
-  console.log('FK tab cause', values);
   return (
     <FormResponsive
       title="Animaux"

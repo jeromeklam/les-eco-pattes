@@ -1,6 +1,15 @@
 import React, { Component } from 'react';
 import Icon from '@mdi/react';
-import { mdiMapMarkerOutline, mdiSettingsOutline, mdiClipboardTextOutline, mdiSheep } from '@mdi/js';
+import { 
+  mdiSheep,
+  mdiSwapHorizontal,
+  mdiMapMarkerOutline, 
+  mdiSettingsOutline, 
+  mdiClipboardTextOutline,
+  mdiFilter,
+  mdiDelete,
+  mdiCloseCircle
+} from '@mdi/js';
 
 export default class AddOne extends Component {
   static propTypes = {};
@@ -21,7 +30,16 @@ export default class AddOne extends Component {
         path = mdiClipboardTextOutline;
         break;
       case 'move':
-        path = mdiClipboardTextOutline;
+        path = mdiSwapHorizontal;
+        break;
+      case 'filter' :
+        path = mdiFilter;
+        break;
+      case 'delete' :
+        path = mdiDelete;
+        break;
+      case 'close' :
+        path = mdiCloseCircle;
         break;
       default:
         path = this.props.name;

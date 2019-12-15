@@ -30,3 +30,4 @@ export { default as SearchModal } from './SearchModal';
 export { default as InlineLoader } from './InlineLoader';
 export { default as StatCard } from './StatCard';
 export { default as ButtonTab } from './ButtonTab';
+export { default as ButtonResponsive } from './ButtonResponsive';

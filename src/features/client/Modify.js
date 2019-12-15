@@ -53,9 +53,9 @@ export class Modify extends Component {
    */
   onSubmit(datas = {}) {
     // Conversion des données en objet pour le service web
-    let obj = getJsonApi(datas, 'FreeAsso_Client', this.state.id);
+    let obj = getJsonApi(datas, 'FreeAsso_Client', this.state.clientId);
     this.props.actions
-      .updateOne(obj)
+      .updateOne(this.state.clientId, obj)
       .then(result => {
         // @Todo propagate result to store
         // propagateModel est ajouté aux actions en bas de document

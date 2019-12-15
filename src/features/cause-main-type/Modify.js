@@ -55,7 +55,7 @@ export class Modify extends Component {
     // Conversion des données en objet pour le service web
     let obj = getJsonApi(datas, 'FreeAsso_CauseMainType', this.state.id);
     this.props.actions
-      .updateOne(obj)
+      .updateOne(this.state.id, obj)
       .then(result => {
         // @Todo propagate result to store
         // propagateModel est ajouté aux actions en bas de document
@@ -70,7 +70,6 @@ export class Modify extends Component {
 
   render() {
     const item = this.state.item;
-    console.log("FK modif camt",item);
     return (
       <div className="cause-main-type-modify global-card">
         {this.props.causeMainType.loadOnePending ? (

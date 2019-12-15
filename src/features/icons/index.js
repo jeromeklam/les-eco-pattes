@@ -28,3 +28,4 @@ export { default as Documents } from './Documents';
 export { default as Calendar } from './Calendar';
 export { default as Area } from './Area';
 export { default as Fence } from './Fence';
+export { default as Close } from './Close';

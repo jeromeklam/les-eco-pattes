@@ -11,14 +11,13 @@ import {
   SITE_TYPE_UPDATE_ONE_UPDATE,
 } from './constants';
 
-export function updateOne(args = {}) {
+export function updateOne(id, args = {}) {
     return (dispatch) => {
     dispatch({
       type: SITE_TYPE_UPDATE_ONE_BEGIN,
     });
 
     const promise = new Promise((resolve, reject) => {
-      const id = args.id;
       const doRequest = freeAssoApi.put('/v1/asso/site_type/' + id, args);
       doRequest.then(
         (res) => {

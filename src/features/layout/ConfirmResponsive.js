@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { ModalResponsive } from './';
+import { ResponsiveModal } from '../common';
 
 export default class ConfirmResponsive extends Component {
   static propTypes = {
@@ -15,9 +15,15 @@ export default class ConfirmResponsive extends Component {
       {name: "Non", function: this.props.onClose, theme: "warning"},
     ];
     return (
-      <ModalResponsive show={this.props.show} onClose={this.props.onClose} title="Confirmation" buttons={buttons}>
+      <ResponsiveModal 
+        title="Confirmation"
+        size="md"
+        show={this.props.show} 
+        onClose={this.props.onClose}  
+        buttons={buttons}
+      >
         <p>Confirmez-vous la suppression ?</p>
-      </ModalResponsive>
+      </ResponsiveModal>
     );
   }
 }

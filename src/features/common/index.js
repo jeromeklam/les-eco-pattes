@@ -40,3 +40,4 @@ export { default as MobileListLineCol } from './MobileListLineCol';
 export { default as DesktopListTitle } from './DesktopListTitle';
 export { default as Copyright } from './Copyright';
 export { default as ResponsiveList } from './ResponsiveList';
+export { default as ResponsiveModal } from './ResponsiveModal';
