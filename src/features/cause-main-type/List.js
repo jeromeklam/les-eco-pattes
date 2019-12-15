@@ -55,7 +55,7 @@ export class List extends Component {
 
   render() {
     // Les des items à afficher avec remplissage progressif
-    let items = false;
+    let items = [];
     if (this.props.causeMainType.items.FreeAsso_CauseMainType) {
       items = buildModel(this.props.causeMainType.items, 'FreeAsso_CauseMainType');
     }

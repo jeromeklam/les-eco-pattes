@@ -54,7 +54,7 @@ export class List extends Component {
   }
 
   render() {
-    let items = false;
+    let items = [];
     if (this.props.siteType.items.FreeAsso_SiteType) {
       items = buildModel(this.props.siteType.items, 'FreeAsso_SiteType');
     }

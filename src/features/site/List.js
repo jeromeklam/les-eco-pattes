@@ -69,7 +69,7 @@ export class List extends Component {
    */
   render() {
     // Les des items à afficher avec remplissage progressif
-    let items = false;
+    let items = [];
     if (this.props.site.items.FreeAsso_Site) {
       items = buildModel(this.props.site.items, 'FreeAsso_Site');
     }

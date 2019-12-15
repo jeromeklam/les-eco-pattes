@@ -60,7 +60,7 @@ export class List extends Component {
 
   render() {
     // Les des items à afficher avec remplissage progressif
-    let items = false;
+    let items = [];
     if (this.props.clientCategory.items.FreeAsso_ClientCategory) {
       items = buildModel(this.props.clientCategory.items, 'FreeAsso_ClientCategory');
     }

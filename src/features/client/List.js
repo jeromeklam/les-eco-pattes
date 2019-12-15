@@ -60,7 +60,7 @@ export class List extends Component {
 
   render() {
     // Les des items à afficher avec remplissage progressif
-    let items = false;
+    let items = [];
     if (this.props.client.items.FreeAsso_Client) {
       items = buildModel(this.props.client.items, 'FreeAsso_Client');
     }
@@ -69,18 +69,17 @@ export class List extends Component {
         name: 'lastname',
         label: 'Nom',
         col: 'cli_lastname',
-        size: '10',
-        mob_size: '36',
-        title: false,
+        size: '18',
+        mob_size: '',
+        title: true,
       },
-
       {
         name: 'firstname',
         label: 'Prénom',
         col: 'cli_firstname',
-        size: '8',
-        mob_size: '',
-        title: true,
+        size: '12',
+        mob_size: '36',
+        title: false,
       },
     ];
     // L'affichage, items, loading, loadMoreError
