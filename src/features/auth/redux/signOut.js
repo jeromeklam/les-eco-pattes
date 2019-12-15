@@ -26,6 +26,7 @@ export function signOut(args = {}) {
       const doRequest = args.error ? Promise.reject(new Error()) : Promise.resolve();
       doRequest.then(
         (res) => {
+          cookie.remove('AutoLogin');
           dispatch({
             type: AUTH_SIGN_OUT_SUCCESS,
             data: res,

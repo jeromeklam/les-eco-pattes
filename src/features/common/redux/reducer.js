@@ -8,9 +8,11 @@
 
 import initialState from './initialState';
 import { reducer as toggleSidebarReducer } from './toggleSidebar';
+import { reducer as setCoordsReducer } from './setCoords';
 
 const reducers = [
   toggleSidebarReducer,
+  setCoordsReducer,
 ];
 
 export default function reducer(state = initialState, action) {

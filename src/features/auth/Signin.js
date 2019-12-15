@@ -4,8 +4,8 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as actions from './redux/actions';
 import logo from '../../images/logo-les-eco-pattes.jpg';
-import { InputEmailUpDown, InputPasswordUpDown } from '../layout';
-import { getJsonApi } from '../../common';
+import { InputEmailUpDown, InputPasswordUpDown, InputCheckbox } from '../layout';
+import { getJsonApi, getFieldErrorMessage } from '../../common';
 import { withRouter } from 'react-router-dom';
 import { Copyright } from '../common';
 
@@ -18,6 +18,7 @@ export class Signin extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      remember: false,
       username: '',
       username_error: null,
       password: '',
@@ -36,16 +37,33 @@ export class Signin extends Component {
   static getDerivedStateFromProps(props, state) {
     if (props.auth.authenticated) {
       props.history.push('/');
+    } else {
+      if (props.auth.signInError) {
+        const errors = {
+          username_error: getFieldErrorMessage(props.auth.signInError, 'login'),
+          password_error: getFieldErrorMessage(props.auth.signInError, 'password'),
+        };
+        return errors;
+      }
     }
+    return null;
   }
 
   onChange(event) {
-    if (event) {
-      event.preventDefault();
+    if (event && event.persist) {
+      event.persist();
     }
     if (event && event.target) {
-      const value = event.target.value;
-      this.setState({ [event.target.name]: value });
+      switch (event.target.type) {
+        case 'checkbox':
+          const valcheck = event.target.checked || false;
+          this.setState({ [event.target.name]: valcheck });
+          break;
+        default:
+          const value = event.target.value;
+          this.setState({ [event.target.name]: value });
+          break;
+      }
     }
   }
 
@@ -53,8 +71,8 @@ export class Signin extends Component {
     if (event) {
       event.preventDefault();
     }
-    let username_error = false;
-    let password_error = false;
+    let username_error = '';
+    let password_error = '';
     let error = false;
     if (this.state.username == '') {
       username_error = "L'email est obligatoire";
@@ -68,7 +86,7 @@ export class Signin extends Component {
         type: 'FreeSSO_Signin',
         login: this.state.username,
         password: this.state.password,
-        remember: false,
+        remember: this.state.remember,
       };
       let obj = getJsonApi(datas);
       this.props.actions.signIn(obj).then(result => {
@@ -103,9 +121,12 @@ export class Signin extends Component {
             onChange={this.onChange}
           />
           <div className="checkbox mb-3 mt-2">
-            <label>
-              <input type="checkbox" value="remember-me" /> Se souvenir de moi
-            </label>
+            <InputCheckbox
+              name="remember"
+              checked={this.state.remember}
+              detail="Se souvenir de moi"
+              onChange={this.onChange}
+            />
           </div>
           <button className="btn btn-lg btn-primary btn-block" type="submit">
             Connexion

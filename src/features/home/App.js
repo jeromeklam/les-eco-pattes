@@ -5,10 +5,19 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as actions from './redux/actions';
 import * as authActions from '../auth/redux/actions';
-import { DesktopHeader, DesktopFooter, DesktopSidebar } from '../../features/common';
-import { MobileHeader, MobileFooter, MobileMenu } from '../../features/common';
+import * as commonActions from '../common/redux/actions';
+import {
+  Desktop,
+  Tablet,
+  Mobile,
+  DesktopHeader,
+  DesktopFooter,
+  DesktopSidebar,
+  MobileHeader,
+  MobileFooter,
+  MobileMenu,
+} from '../common';
 import { LoadingData } from '../layout';
-import { Desktop, Tablet, Mobile } from '../common';
 import { initAxios } from '../../common';
 
 /*
@@ -31,6 +40,7 @@ export class App extends Component {
       menuDataOpen: false,
     };
     this.onToggle = this.onToggle.bind(this);
+    this.onGeo = this.onGeo.bind(this);
   }
 
   componentDidMount() {
@@ -40,6 +50,9 @@ export class App extends Component {
     } else {
       // Check auth...
       this.props.actions.checkIsAuthenticated();
+    }
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(this.onGeo);
     }
   }
 
@@ -53,6 +66,13 @@ export class App extends Component {
       initAxios(nextProps.auth.token);
       nextProps.actions.loadAll();
     }
+  }
+
+  onGeo(position) {
+    if (position && position.coords) {
+      this.props.actions.setCoords({ lat: position.coords.latitude, lon: position.coords.longitude})
+    }
+    console.log(position);
   }
 
   onToggle() {
@@ -89,9 +109,7 @@ export class App extends Component {
                 <DesktopSidebar />
                 <div
                   id="page-content-wrapper"
-                  className={classnames(
-                    this.props.common.sidebar && 'page-content-wrapper-menu',
-                  )}
+                  className={classnames(this.props.common.sidebar && 'page-content-wrapper-menu')}
                 >
                   {this.props.children}
                 </div>
@@ -122,7 +140,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    actions: bindActionCreators({ ...actions, ...authActions }, dispatch),
+    actions: bindActionCreators({ ...actions, ...authActions, ...commonActions }, dispatch),
   };
 }
 

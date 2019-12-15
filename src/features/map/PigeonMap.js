@@ -45,8 +45,16 @@ export class PigeonMap extends Component {
 
   constructor(props) {
     super(props);
+    let center = [49.096306, 6.160053];
+    if (this.props.common.geoOn) {
+      if (this.props.common.geoCoord) {
+        center = [this.props.common.geoCoord.lat, this.props.common.geoCoord.lon];
+      }
+    }
+    console.log(this.props.common);
     this.state = {
-      center: [49.096306, 6.160053],
+      geoCoord: this.props.common.geoCoord,
+      center: center,
       zoom: 12,
       provider: 'osm',
       metaWheelZoom: false,
@@ -77,6 +85,22 @@ export class PigeonMap extends Component {
     this.props.actions.loadMoreSite();
   }
 
+  static getDerivedStateFromProps(props, state) {
+    if (props.common.geoCoord !== state.geoCoord) {
+      let center = [49.096306, 6.160053];
+      if (props.common.geoOn) {
+        if (props.common.geoCoord) {
+          center = [props.common.geoCoord.lat, props.common.geoCoord.lon];
+          return {
+            geoCoord: props.common.geoCoord,
+            center: center,
+          }
+        }
+      }
+    }
+    return null;
+  }
+
   zoomIn(event) {
     this.setState({
       zoom: Math.min(this.state.zoom + 1, this.state.maxZoom),
@@ -90,14 +114,12 @@ export class PigeonMap extends Component {
   }
 
   onDragStart() {
-    console.log('start');
     this.setState({
       dragging: true,
     });
   }
 
   onDragEnd(anchor, item) {
-    console.log(anchor, item);
     item.site_coord = JSON.stringify({
       lat: anchor[0],
       lon: anchor[1],
@@ -167,7 +189,6 @@ export class PigeonMap extends Component {
                   const json = JSON.parse(item.site_coord);
                   if (json) {
                     const coord = [json.lat, json.lon];
-                    console.log(coord);
                     return (
                       <Marker
                         key={item.id}
@@ -177,8 +198,6 @@ export class PigeonMap extends Component {
                         hover={this.state.selected == item.id}
                       />
                     );
-                  } else {
-                    console.log(item.site_coord);
                   }
                 })}
               {this.state.moved && this.state.moved.id == this.state.selected && (
@@ -225,7 +244,7 @@ export class PigeonMap extends Component {
           </div>
         </Desktop>
         <Mobile>
-        <div className={classnames('map-content-mobile')}>
+          <div className={classnames('map-content-mobile')}>
             <Map
               provider={providers[this.state.provider]}
               center={this.state.center}
@@ -238,7 +257,6 @@ export class PigeonMap extends Component {
                   const json = JSON.parse(item.site_coord);
                   if (json) {
                     const coord = [json.lat, json.lon];
-                    console.log(coord);
                     return (
                       <Marker
                         key={item.id}
@@ -248,8 +266,6 @@ export class PigeonMap extends Component {
                         hover={this.state.selected == item.id}
                       />
                     );
-                  } else {
-                    console.log(item.site_coord);
                   }
                 })}
               {this.state.moved && this.state.moved.id == this.state.selected && (
@@ -303,6 +319,7 @@ export class PigeonMap extends Component {
 /* istanbul ignore next */
 function mapStateToProps(state) {
   return {
+    common: state.common,
     map: state.map,
     site: state.site,
   };

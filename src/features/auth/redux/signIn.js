@@ -80,17 +80,29 @@ export function reducer(state, action) {
       if (datas && datas.headers && datas.headers.authorization) {
         token = datas.headers.authorization;
       }
+      let autologin = false;
+      if (datas && datas.headers && datas.headers.autologin) {
+        autologin = datas.headers.autologin;
+      }
       if (datas.data) {
         let object = jsonApiNormalizer(datas.data);
         user = buildModel(
           object,
-          'FreeSSO_User'
+          'FreeSSO_User',
+          object.SORTEDELEMS[0]
         );
       }
-      if (token && user) {
+      if (user) {
         authenticated = true;
-        cookie.save('Authorization', token, { path: '/' });
-        initAxios(token);
+        if (token) {
+          cookie.save('Authorization', token, { path: '/' });
+          initAxios(token);
+        }
+        if (autologin) {
+          let aYearFromNow = new Date();
+          aYearFromNow.setFullYear(aYearFromNow.getFullYear() + 1);
+          cookie.save('AutoLogin', autologin, { path: '/', expires: aYearFromNow });
+        }
       }
       return {
         ...state,
@@ -103,14 +115,14 @@ export function reducer(state, action) {
 
     case AUTH_SIGN_IN_FAILURE:
       // The request is failed
+      let error = null;
       if (action.data.error && action.data.error.response) {
-        let object = jsonApiNormalizer(action.data.error.response);
-        console.log(object);
+        error = jsonApiNormalizer(action.data.error.response);
       }
       return {
         ...state,
         signInPending: false,
-        signInError: action.data.error,
+        signInError: error,
       };
 
     case AUTH_SIGN_IN_DISMISS_ERROR:

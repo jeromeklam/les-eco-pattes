@@ -28,7 +28,14 @@ export function checkIsAuthenticated(args = {}) {
       // doRequest is a placeholder Promise. You should replace it with your own logic.
       // See the real-word example at:  https://github.com/supnate/rekit/blob/master/src/features/home/redux/fetchRedditReactjsList.js
       // args.error here is only for test coverage purpose.
-      const doRequest = freeAssoApi.post('/v1/sso/check');
+      const autologin = cookie.load('AutoLogin');
+      let headers= {};
+      if (autologin) {
+        headers = {
+          headers: {AutoLogin: autologin}
+        }
+      }
+      const doRequest = freeAssoApi.post('/v1/sso/check', {}, headers);
       doRequest.then(
         (res) => {
           dispatch({
@@ -83,7 +90,8 @@ export function reducer(state, action) {
         let object = jsonApiNormalizer(datas.data);
         user = buildModel(
           object,
-          'FreeSSO_User'
+          'FreeSSO_User',
+          object.SORTEDELEMS[0]
         );
       }
       if (token && user) {
