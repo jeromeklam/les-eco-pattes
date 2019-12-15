@@ -94,7 +94,7 @@ export class PigeonMap extends Component {
           return {
             geoCoord: props.common.geoCoord,
             center: center,
-          }
+          };
         }
       }
     }
@@ -222,17 +222,11 @@ export class PigeonMap extends Component {
               <Icon path={mdiMagnifyMinus} size={1} color="white" />
             </button>
             <br />
-            <span title={lat2tile(this.state.center[0], this.state.zoom)}>
-              Lat: {Math.round(this.state.center[0] * 10000) / 10000}
-            </span>
-            <br />
-            <span title={lng2tile(this.state.center[1], this.state.zoom)}>
-              Lon: {Math.round(this.state.center[1] * 10000) / 10000}
-            </span>
-            <br />
-            <span>Zoom: {Math.round(this.state.zoom * 100) / 100}</span>
-            <br />
-            <hr />
+            <p>
+              Position : {Math.round(this.state.center[0] * 10000) / 10000},{' '}
+              {Math.round(this.state.center[1] * 10000) / 10000} /{' '}
+              {Math.round(this.state.zoom * 100) / 100}
+            </p>
           </div>
           <div className="map-list-scroll">
             <ListGroup

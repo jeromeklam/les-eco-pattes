@@ -83,12 +83,12 @@ export class DesktopHeader extends Component {
                 {this.props.auth.authenticated ? (
                   <Link className="nav-link" to="/auth/signout">
                     <LogoutIcon />
-                    Logout
+                    Déconnexion
                   </Link>
                 ) : (
                   <Link className="nav-link" to="/auth/signin">
                     <LoginIcon />
-                    Login
+                    Connexion
                   </Link>
                 )}
               </li>

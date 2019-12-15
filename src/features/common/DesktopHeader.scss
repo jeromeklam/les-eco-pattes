@@ -13,6 +13,10 @@
   color: $header-color;
   overflow: hidden;
 
+  form {
+    margin: 10px;
+  }
+
   nav {
     height: $desktop-header-height;
     position: absolute;
@@ -23,7 +27,7 @@
 }
 
 .common-desktop-header.common-desktop-header-open {
-  height: 300px;
+  height: 400px;
   transition: height 0.5s ease 0.5s;
   animation-iteration-count: 1;
 }

@@ -1,5 +1,8 @@
 @import '../../styles/mixins';
 
-.common-responsive-modal {
-
+.modal {
+  margin-top: 60px;
+}
+.modal-content {
+  max-height: 500px;
 }
