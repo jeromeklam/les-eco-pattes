@@ -51,7 +51,6 @@ export class PigeonMap extends Component {
         center = [this.props.common.geoCoord.lat, this.props.common.geoCoord.lon];
       }
     }
-    console.log(this.props.common);
     this.state = {
       geoCoord: this.props.common.geoCoord,
       center: center,

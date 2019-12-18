@@ -200,7 +200,6 @@ export class ListGroup extends Component {
                         {this.state.selected === item.id &&
                           this.state.selected === this.state.causes && (
                             <div className="card-footer bg-transparent">
-                              <p>Animaux :</p>
                               <InlineListCause site_id={item.id} />
                             </div>
                           )}

@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import { freeAssoApi, jsonApiNormalizer, objectToQueryString, buildModel } from '../../common';
 import { InlineLoader } from '../layout';
 import { SimpleLabel as DataSimpleLabel } from '../data';
+import { InlineListGroup } from '.';
+import { causeGroup } from './functions.js';
 
 export default class InlineList extends Component {
   static propTypes = {
@@ -42,17 +44,7 @@ export default class InlineList extends Component {
         {this.state.loading ? (
           <InlineLoader />
         ) : (
-          <div>
-            {this.state.list &&
-              this.state.list.map(item => {
-                return (
-                  <p key={item.id} title={item.cau_name}>{item.cause_type.caut_name}
-                    &nbsp;( {item.cau_sex} )
-                    &nbsp;( <DataSimpleLabel code="COULEUR" value={item.cau_string_1} /> )
-                  </p>
-                );
-              })}
-          </div>
+          <InlineListGroup list={causeGroup(this.state.list)}/>
         )}
       </div>
     );
