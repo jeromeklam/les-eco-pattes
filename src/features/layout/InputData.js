@@ -54,6 +54,7 @@ export default class InputData extends Component {
             name={this.state.field}
             checked={this.props.value}
             onChange={this.props.onChange}
+            labtop={this.props.labtop}
           />
         )}
         {this.state.data.data_type === 'NUMBER' && (
@@ -62,6 +63,7 @@ export default class InputData extends Component {
             name={this.state.field}
             value={this.props.value}
             onChange={this.props.onChange}
+            labtop={this.props.labtop}
           />
         )}
         {this.state.data.data_type === 'STRING' && (
@@ -70,6 +72,7 @@ export default class InputData extends Component {
             name={this.state.field}
             value={this.props.value}
             onChange={this.props.onChange}
+            labtop={this.props.labtop}
           />
         )}
         {this.state.data.data_type === 'TEXT' && (
@@ -78,6 +81,7 @@ export default class InputData extends Component {
             name={this.state.field}
             value={this.props.value}
             onChange={this.props.onChange}
+            labtop={this.props.labtop}
           />
         )}
         {this.state.data.data_type === 'LIST' && (
@@ -89,6 +93,7 @@ export default class InputData extends Component {
             onChange={this.props.onChange}
             options={list}
             addempty={this.props.addempty}
+            labtop={this.props.labtop}
           />
         )}
       </div>

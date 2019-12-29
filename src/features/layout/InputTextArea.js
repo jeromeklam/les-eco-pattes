@@ -4,6 +4,7 @@ import { convertToHTML, convertFromHTML } from 'draft-convert';
 import createImagePlugin from 'draft-js-image-plugin';
 import createInlineToolbarPlugin from 'draft-js-inline-toolbar-plugin';
 import React, { Component } from 'react';
+import classnames from 'classnames';
 import 'draft-js-inline-toolbar-plugin/lib/plugin.css';
 
 const imagePlugin = createImagePlugin();
@@ -50,13 +51,21 @@ export default class InputTextArea extends Component {
   };
 
   render() {
+    let singleLine = "row";
+    let colLabel = "col-sm-6";
+    let colText = "col-sm-30"
+    if (this.props.labtop && this.props.labtop !== null) {
+      singleLine = "";
+      colLabel = ""
+      colText = ""
+    }
     return (
-      <div className="form-group row">
-        <label className="col-sm-6 col-form-label">
+      <div className={classnames("form-group",singleLine)}>
+        <label className={classnames(colLabel,"col-form-label")}>
           {this.props.label}
           {this.props.required && <span>&nbsp;*</span>}
         </label>
-        <div className="col-sm-30">
+        <div className={classnames(colText)}>
           <div className="editor" onClick={this.focus}>
             <Editor
               editorState={this.state.editorState}

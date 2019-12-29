@@ -3,6 +3,10 @@ import classnames from 'classnames';
 import { ButtonSubmit, ButtonCancel, ButtonTab } from '../layout';
 import { Desktop, Mobile } from '../common';
 import TabIcon from '../icons/Tab';
+import { ButtonPrevious, ButtonNext } from './';
+import PreviousIcon from '../icons/Previous';
+import NextIcon from '../icons/Next';
+import { Link } from 'react-router-dom';
 
 export default class FormResponsive extends Component {
   static propTypes = {};
@@ -24,7 +28,7 @@ export default class FormResponsive extends Component {
                         }}
                       >
                         {oneTab.icon && <TabIcon name={oneTab.icon} color="white" />}
-                        {oneTab.icon == '' && oneTab.shortcut}
+                        {oneTab.icon === '' && oneTab.shortcut}
                       </ButtonTab>
                     </li>
                   );
@@ -43,6 +47,8 @@ export default class FormResponsive extends Component {
           <div className="card">
             <div className="card-header">
               <div className="float-right">
+                <a classname="nav-link"><PreviousIcon /></a>
+                <a classname="nav-link"><NextIcon /></a>
                 <span className="navbar-brand">{this.props.title}</span>
               </div>
               {this.props.tabs && this.props.tabs.length > 0 && (

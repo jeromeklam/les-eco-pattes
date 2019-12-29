@@ -42,6 +42,7 @@ export default function Form(props) {
             id="cau_name"
             value={values.cau_name}
             onChange={handleChange}
+            labtop={true}
           />
         </div>
         <div className="col-12">
@@ -51,6 +52,7 @@ export default function Form(props) {
             value={values.cause_type.cause_main_type ? values.cause_type.cause_main_type.id : null}
             onChange={handleChange}
             options={causeMainTypeAsOptions(props.cause_main_types)}
+            labtop={true}
           />  
         </div>
         <div className="col-12">
@@ -61,6 +63,7 @@ export default function Form(props) {
             addempty={true}
             onChange={handleChange}
             options={causeTypeAsOptions(props.cause_types)}
+            labtop={true}
           />
         </div>
         <div className="col-36">
@@ -70,6 +73,7 @@ export default function Form(props) {
             name="site"
             item={values.site || null}
             onChange={handleChange}
+            labtop={true}
           />
         </div>
       </div>
@@ -85,6 +89,7 @@ export default function Form(props) {
                 datas={props.tab_datas}
                 config={props.tab_configs}
                 onChange={handleChange}
+                labtop={true}
               />
             </div>
             <div className="col-18">
@@ -94,6 +99,7 @@ export default function Form(props) {
                 id="cau_sex"
                 value={values.cau_sex}
                 onChange={handleChange}
+                labtop={true}
               />
             </div>
           </div>
@@ -105,6 +111,7 @@ export default function Form(props) {
               datas={props.tab_datas}
               config={props.tab_configs}
               onChange={handleChange}
+              labtop={true}
             />
           </div>
           <div className="row">
@@ -115,6 +122,7 @@ export default function Form(props) {
                 name="parent1"
                 item={values.parent1 || null}
                 onChange={handleChange}
+                labtop={true}
               />  
             </div>
             <div className="col-18">
@@ -124,6 +132,7 @@ export default function Form(props) {
                 name="parent2"
                 item={values.parent2 || null}
                 onChange={handleChange}
+                labtop={true}
               />  
             </div>
           </div>
@@ -157,6 +166,7 @@ export default function Form(props) {
               id="cau_from"
               value={values.cau_from}
               onChange={handleChange}
+              labtop={true}
             />
           </div>
         </div>

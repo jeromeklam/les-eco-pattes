@@ -32,3 +32,5 @@ export { default as StatCard } from './StatCard';
 export { default as ButtonTab } from './ButtonTab';
 export { default as ButtonResponsive } from './ButtonResponsive';
 export { default as InputPassword } from './InputPassword';
+export { default as ButtonPrevious } from './ButtonPrevious';
+export { default as ButtonNext } from './ButtonNext';

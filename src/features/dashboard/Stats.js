@@ -37,11 +37,13 @@ export class Stats extends Component {
             <StatCard
               title="Surface"
               count={this.props.dashboard.stats.area_site}
+              unit="m2"
               icon={<AreaIcon />}
             />
             <StatCard
-              title="Clôture"
+              title="Clôtures"
               count={this.props.dashboard.stats.clot_site}
+              unit="m"
               icon={<FenceIcon />}
             />
           </div>

@@ -1,9 +1,18 @@
 import React, { Component } from 'react';
+import classnames from 'classnames';
 
 export default class InputCheckbox extends Component {
   static propTypes = {};
 
   render() {
+    let singleLine = "row";
+    let colLabel = "col-sm-6";
+    let colText = "col-sm-30"
+    if (this.props.labtop && this.props.labtop !== null) {
+      singleLine = "";
+      colLabel = ""
+      colText = ""
+    }
     let id = this.props.name;
     if (this.props.id && this.props.id !== null) {
       id = this.props.id;
@@ -13,9 +22,11 @@ export default class InputCheckbox extends Component {
       id: id,
     };
     return (
-      <div className="form-group row">
-        <div className="col-sm-6 col-form-label">{this.props.label}</div>
-        <div className="col-sm-30 text-left">
+      <div className={classnames("form-group",singleLine)}>
+        <div className={classnames(colLabel,"col-form-label")}>
+          {this.props.label}
+        </div>
+        <div className={classnames(colText,"text-left")}>
           <div className="">
             <label className="form-check-label" htmlFor={this.props.id}>
               {this.props.text}

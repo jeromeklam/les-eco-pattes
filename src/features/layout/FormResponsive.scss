@@ -10,6 +10,12 @@
     color: darken(theme-color('primary'), 10%);
   }
 }
+
+.nav-btns {
+  color: white;
+  border-bottom: 1px solid #dee2e6;
+}
+
 .mobile-navbar {
   z-index: 800;
   position: fixed;

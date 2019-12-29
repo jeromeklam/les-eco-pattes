@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { More, DelOne } from '../icons';
 import axios from 'axios';
+import classnames from 'classnames';
 
 export default class InputPicker extends Component {
   static propTypes = {
@@ -19,13 +20,21 @@ export default class InputPicker extends Component {
   };
 
   render() {
+    let singleLine = "row";
+    let colLabel = "col-sm-6";
+    let colText = "col-sm-30"
+    if (this.props.labtop && this.props.labtop !== null) {
+      singleLine = "";
+      colLabel = ""
+      colText = ""
+    }
     return (
       <div className="client-input-picker">
-        <div className="form-group row layout-input-picker">
-          <label className="col-sm-6 col-form-label">
+        <div className={classnames("form-group",singleLine,"layout-input-picker")}>
+          <label className={classnames(colLabel,"col-form-label")}>
             {this.props.label}
           </label>
-          <div className="col-sm-30">
+          <div className={classnames(colText)}>
             <div className="row">
               <div className="col-36 input-group">
                 <input type="hidden" name={'autocomplete-field-@'} value={this.props.value} />
@@ -33,14 +42,14 @@ export default class InputPicker extends Component {
                   type="text"
                   name="display"
                   value={this.props.display || ''}
-                  className="form-control"
+                  className="form-control input-picker"
                   onChange={this.props.onChange}
                 />
                 <div className="input-group-append">
                   {this.props.onClear && (
                     <button
                       type="button"
-                      className="btn btn-outline-warning"
+                      className="btn btn-input-picker btn-outline-warning"
                       onClick={this.props.onClear}
                     >
                       <DelOne color="orange" />
@@ -49,7 +58,7 @@ export default class InputPicker extends Component {
                   {this.props.onMore && (
                     <button
                       type="button"
-                      className="btn btn-outline-success"
+                      className="btn btn-input-picker btn-outline-success"
                       onClick={this.props.onMore}
                     >
                       <More color="green" />

@@ -103,6 +103,7 @@ export default class InputPicker extends Component {
           value={this.state.value}
           list={this.state.list}
           display={this.state.display}
+          labtop={this.props.labtop}
           onChange={this.onChange}
           onClear={this.onClear}
           onMore={this.onMore}

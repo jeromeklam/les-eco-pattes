@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import classnames from 'classnames';
 
 export default class InputSelect extends Component {
   static propTypes = {};
@@ -52,6 +53,14 @@ export default class InputSelect extends Component {
   }
 
   render() {
+    let singleLine = "row";
+    let colLabel = "col-sm-6";
+    let colText = "col-sm-30"
+    if (this.props.labtop && this.props.labtop !== null) {
+      singleLine = "";
+      colLabel = ""
+      colText = ""
+    }
     let props = {
       ...this.props,
       options: null,
@@ -60,14 +69,14 @@ export default class InputSelect extends Component {
       value: this.state.value,
     };
     return (
-      <div className="form-group row">
-        <label forname={this.state.id} className="col-sm-6 col-form-label">
+      <div className={classnames("form-group", singleLine)}>
+        <label forname={this.state.id} className={classnames(colLabel, "col-form-label")}>
           {this.props.label}
           {this.props.required && 
            <span>&nbsp;*</span>
           }
         </label>
-        <div className="col-sm-30">
+        <div className={classnames(colText)}>
           <select type="text" id={this.state.id} className="form-control" {...props}>
             {this.state.addEmpty &&
               <option key="000" value="">

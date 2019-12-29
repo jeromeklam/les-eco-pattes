@@ -29,3 +29,5 @@ export { default as Calendar } from './Calendar';
 export { default as Area } from './Area';
 export { default as Fence } from './Fence';
 export { default as Close } from './Close';
+export { default as Next } from './Next';
+export { default as Previous } from './Previous';

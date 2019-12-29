@@ -49,6 +49,7 @@ export default function Form(props) {
             name="site_address1"
             value={values.site_address1}
             onChange={handleChange}
+            labtop={true}
           />
           <div className="row">
             <div className="col-sm-9">
@@ -57,6 +58,7 @@ export default function Form(props) {
                 name="site_cp"
                 value={values.site_cp}
                 onChange={handleChange}
+                labtop={true}
               />
             </div>
             <div className="col-sm-27" >
@@ -65,6 +67,7 @@ export default function Form(props) {
                 name="site_town" 
                 value={values.site_town} 
                 onChange={handleChange} 
+                labtop={true}
               />
             </div>
           </div>
