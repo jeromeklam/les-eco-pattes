@@ -41,6 +41,18 @@ export class Modify extends Component {
     });
   }
 
+  componentDidUpdate(prevProps, prevState) {
+    if (prevProps.match.params.causeId && this.props.match.params.causeId) {
+      if (prevProps.match.params.causeId !== this.props.match.params.causeId) {
+        this.setState({causeId: this.props.match.params.causeId})
+        this.props.actions.loadOne(this.props.match.params.causeId).then(result => {
+          const item = this.props.cause.loadOneItem;
+          this.setState({ item: item });
+        });
+      }
+    }
+  }
+
   /**
    * Sur annulation, on retourne à la liste
    */
@@ -73,6 +85,8 @@ export class Modify extends Component {
 
   render() {
     const item = this.state.item;
+    const prev = "/cause/modify/" + this.props.cause.loadItemPrev;
+    const next = "/cause/modify/" + this.props.cause.loadItemNext;
     return (
       <div className="cause-modify global-card">
         {this.props.cause.loadOnePending ? (
@@ -82,6 +96,8 @@ export class Modify extends Component {
             {item && (
               <Form
                 item={item}
+                prev={prev}
+                next={next}
                 cause_types={this.props.causeType.items}
                 cause_main_types={this.props.causeMainType.items}
                 tab_datas={this.props.data.items}

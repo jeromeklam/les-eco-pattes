@@ -131,3 +131,17 @@ export function modelsToSelect(models, value, label) {
   }
   return arr;
 }
+
+export function getPreviousNext(items, id) {
+  let ret = {prev : null, next : null};
+  if (items.SORTEDELEMS) {
+    const idx = items.SORTEDELEMS.findIndex(elt => elt === id);
+    if (idx > 0) {
+      ret.prev = items.SORTEDELEMS[idx-1]
+    }
+    if (idx < items.SORTEDELEMS.length) {
+      ret.next = items.SORTEDELEMS[idx+1]
+    }
+  }
+  return ret;
+}

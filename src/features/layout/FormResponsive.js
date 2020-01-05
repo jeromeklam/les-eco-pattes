@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { NavLink } from 'react-router-dom';
 import classnames from 'classnames';
 import { ButtonSubmit, ButtonCancel, ButtonTab } from '../layout';
 import { Desktop, Mobile } from '../common';
@@ -12,6 +13,7 @@ export default class FormResponsive extends Component {
   static propTypes = {};
 
   render() {
+    console.log("FK", this.props);
     return (
       <form className="layout-form-responsive">
         <Mobile>
@@ -47,8 +49,16 @@ export default class FormResponsive extends Component {
           <div className="card">
             <div className="card-header">
               <div className="float-right">
-                <a classname="nav-link"><PreviousIcon /></a>
-                <a classname="nav-link"><NextIcon /></a>
+                {this.props.itemPrev &&
+                  <NavLink strict className="nav-btn" to={this.props.itemPrev}>
+                    <span>&lt;</span>
+                  </NavLink>
+                }
+                {this.props.itemNext &&
+                  <NavLink strict className="nav-btn" to={this.props.itemNext}>
+                    <span>&gt;</span>
+                  </NavLink>
+                }
                 <span className="navbar-brand">{this.props.title}</span>
               </div>
               {this.props.tabs && this.props.tabs.length > 0 && (

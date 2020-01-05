@@ -11,11 +11,20 @@
   }
 }
 
-.nav-btns {
+.nav-btn {
   color: white;
+  padding-right: 10px;
+  padding-bottom: 10.7px;
   border-bottom: 1px solid #dee2e6;
 }
-
+.nav-btn:hover {
+  color: darken(theme-color('primary'), 10%);
+}
+.nav-btn > svg {
+  path:nth-child(2) {
+    fill: blue;
+  }
+}
 .mobile-navbar {
   z-index: 800;
   position: fixed;

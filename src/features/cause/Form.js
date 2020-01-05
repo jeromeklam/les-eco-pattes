@@ -32,6 +32,8 @@ export default function Form(props) {
       onSubmit={handleSubmit}
       onCancel={handleCancel}
       onNavTab={handleNavTab}
+      itemPrev={props.prev}
+      itemNext={props.next}
     >
       <InputHidden name="id" id="id" value={values.id} />
       <div className="row"> 

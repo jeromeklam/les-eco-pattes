@@ -1,4 +1,4 @@
-import { freeAssoApi, jsonApiNormalizer, buildModel } from '../../../common';
+import { freeAssoApi, jsonApiNormalizer, buildModel, getPreviousNext } from '../../../common';
 import {
   CAUSE_LOAD_ONE_BEGIN,
   CAUSE_LOAD_ONE_SUCCESS,
@@ -69,12 +69,16 @@ export function reducer(state, action) {
     case CAUSE_LOAD_ONE_SUCCESS:
       // The request is success
       let item = null;
+      let itemPrevNext = null;
       let object = jsonApiNormalizer(action.data.data);
       item = buildModel(object, 'FreeAsso_Cause', action.id, { eager: true });
+      itemPrevNext = getPreviousNext(state.items, action.id);
       return {
         ...state,
         loadOnePending: false,
+        loadItemPrev: itemPrevNext.prev || null,
         loadOneItem: item,
+        loadItemNext: itemPrevNext.next || null,
         loadOneError: null,
       };
 

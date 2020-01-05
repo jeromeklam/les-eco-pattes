@@ -218,7 +218,7 @@ const useForm = (initialState, initialTab, onSubmit, onCancel, onNavTab) => {
     handleChange,
     handleSubmit,
     handleCancel,
-    handleNavTab,
+    handleNavTab
   };
 };
 

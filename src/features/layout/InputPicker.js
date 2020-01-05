@@ -23,7 +23,7 @@ export default class InputPicker extends Component {
     let singleLine = "row";
     let colLabel = "col-sm-6";
     let colText = "col-sm-30"
-    if (this.props.labtop && this.props.labtop !== null) {
+    if (this.props.labtop && this.props.labtop === true) {
       singleLine = "";
       colLabel = ""
       colText = ""
