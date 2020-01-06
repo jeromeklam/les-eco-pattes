@@ -45,6 +45,18 @@ export class Modify extends Component {
     });
   }
 
+  componentDidUpdate(prevProps, prevState) {
+    if (prevProps.match.params.siteId && this.props.match.params.siteId) {
+      if (prevProps.match.params.siteId !== this.props.match.params.siteId) {
+        this.setState({siteId: this.props.match.params.siteId})
+        this.props.actions.loadOne(this.props.match.params.siteId).then(result => {
+          const item = this.props.site.loadOneItem;
+          this.setState({ item: item });
+        });
+      }
+    }
+  }
+
   /**
    * Sur annulation, on retourne à la liste
    */

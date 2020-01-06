@@ -50,12 +50,12 @@ export default class FormResponsive extends Component {
             <div className="card-header">
               <div className="float-right">
                 {this.props.itemPrev &&
-                  <NavLink strict className="nav-btn" to={this.props.itemPrev}>
+                  <NavLink strict className="nav-btn prev" to={this.props.itemPrev}>
                     <span>&lt;</span>
                   </NavLink>
                 }
                 {this.props.itemNext &&
-                  <NavLink strict className="nav-btn" to={this.props.itemNext}>
+                  <NavLink strict className="nav-btn next" to={this.props.itemNext}>
                     <span>&gt;</span>
                   </NavLink>
                 }
