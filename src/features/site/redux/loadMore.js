@@ -1,4 +1,5 @@
-import { freeAssoApi, jsonApiNormalizer, objectToQueryString } from '../../../common';
+import { freeAssoApi } from '../../../common';
+import { jsonApiNormalizer, objectToQueryString } from 'freejsonapi';
 import {
   SITE_LOAD_MORE_INIT,
   SITE_LOAD_MORE_BEGIN,
@@ -29,21 +30,27 @@ export function loadMore(args = {}, reload = false) {
       // It's hard to use state to manage it, but returning a promise allows you to easily achieve it.
       // e.g.: handleSubmit() { this.props.actions.submitForm(data).then(()=> {}).catch(() => {}); }
       const promise = new Promise((resolve, reject) => {
-        // doRequest is a placeholder Promise. You should replace it with your own logic.
-        // See the real-word example at:  https://github.com/supnate/rekit/blob/master/src/features/home/redux/fetchRedditReactjsList.js
-        // args.error here is only for test coverage purpose.
+        let filters = getState().site.filters.asJsonApiObject()
         let params = {
           page: { number: getState().site.page_number, size: getState().site.page_size },
+          ...filters
         };
-        if (args && Object.keys(args).length > 0 && args !== '') {
-          params.filter = { 
-            and: {
-              site_name: args
-            }
-          };
+        let sort = '';
+        getState().site.sort.forEach(elt => {
+          let add = elt.col;
+          if (elt.way === 'down') {
+            add = '-' + add;
+          }
+          if (sort === '') {
+            sort = add;
+          } else {
+            sort = sort + ',' + add;
+          }
+        });
+        if (sort !== '') {
+          params.sort = sort;
         }
         const addUrl = objectToQueryString(params);
-        //http://freeasso.fr:8080/api/v1/asso/site?page[number]=1&page[size]=20&filter[and][site_name]=local
         const doRequest = freeAssoApi.get('/v1/asso/site' + addUrl, {});
         doRequest.then(
           res => {

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Copyright } from '../common';
+import { Copyright } from '../ui';
 import logo from '../../images/logo-les-eco-pattes.jpg';
 
 export default class About extends Component {
@@ -7,7 +7,7 @@ export default class About extends Component {
 
   render() {
     return (
-      <div className="about-about container">
+      <div className="about-about container pt-5">
         <div className="jumbotron p-9 p-md-15 text-white rounded bg-primary">
           <div className="col-md-36 px-0">
             <h1 className="display-32 font-italic">Application de gestion pour les Eco-Pattes</h1>

@@ -14,65 +14,95 @@ body {
   overflow: hidden;
 }
 
-.data-list {
-  padding: 0px;
+.noselect {
+  -webkit-user-select: none; /* Safari 3.1+ */
+  -moz-user-select: none; /* Firefox 2+ */
+  -ms-user-select: none; /* IE 10+ */
+  user-select: none; /* Standard syntax */
 }
 
-.row-list-title {
-  font-weight: bold;
-  padding-top: 2px;
-  background-color : $header-background-color;
-  
-  span {
-    padding-left: 5px;
-    padding-top: 6px;
-    padding-bottom: 2px;
-    position: absolute;
-    color: $header-color;
+svg.text-danger {
+  fill: theme-color('danger');
+  path {
+    fill: theme-color('danger');
+  }
+}
+svg.text-warning {
+  fill: theme-color('warning');
+  path {
+    fill: theme-color('warning');
+  }
+}
+svg.text-success {
+  fill: theme-color('success');
+  path {
+    fill: theme-color('success');
+  }
+}
+svg.text-dark {
+  fill: theme-color('dark');
+  path {
+    fill: theme-color('dark');
+  }
+}
+svg.text-light {
+  fill: theme-color('light');
+  path {
+    fill: theme-color('light');
+  }
+}
+svg.text-secondary {
+  fill: theme-color('secondary');
+  path {
+    fill: theme-color('secondary');
+  }
+}
+svg.text-primary {
+  fill: theme-color('primary');
+  path {
+    fill: theme-color('primary');
   }
 }
 
-.desktop-line .misc {
-  color: #212529;
-}
-
-.row-list {
-  .row {
-    min-height: 50px;
-    line-height: 50px;
-    vertical-align: middle;
-  }
-  .card {
-    margin: 10px;
-
-    .card-heading {
-      margin-left: 10px;
-    }
-  }
-  .row:hover {
-    background-color: #eeeeee;
+.text-danger svg {
+  fill: theme-color('danger');
+  path {
+    fill: theme-color('danger');
   }
 }
-
-.global-card {
-  padding: 10px;
-
-  .card-body {
-    padding: 5px;
+.text-warning svg {
+  fill: theme-color('warning');
+  path {
+    fill: theme-color('warning');
   }
 }
-@include media-breakpoint-up(sm) {
-  .global-card {
-    padding: 20px;
-
-    .card-body {
-      padding: 10px;
-    }
+.text-success svg {
+  fill: theme-color('success');
+  path {
+    fill: theme-color('success');
   }
-  .data-list {
-    padding: 20px;
+}
+.text-dark svg {
+  fill: theme-color('dark');
+  path {
+    fill: theme-color('dark');
   }
-  .responsive-list {
-    margin-top: 80px;
+}
+.text-light svg {
+  fill: theme-color('light');
+  path {
+    fill: theme-color('light');
+  }
+}
+.text-secondary svg {
+  fill: theme-color('secondary');
+  path {
+    fill: theme-color('secondary');
+  }
+}
+.text-primary svg {
+  fill: theme-color('primary');
+  path {
+    fill: theme-color('primary');
   }
 }

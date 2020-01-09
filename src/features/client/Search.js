@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { SearchModal } from '../layout';
-import { freeAssoApi, jsonApiNormalizer, buildModel, objectToQueryString } from '../../common';
+import { SearchModal } from '../ui';
+import { jsonApiNormalizer, buildModel, objectToQueryString } from 'freejsonapi';
+import { freeAssoApi } from '../../common';
 
 export default class Search extends Component {
   static propTypes = {

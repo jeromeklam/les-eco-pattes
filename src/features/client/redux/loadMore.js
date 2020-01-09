@@ -1,4 +1,5 @@
-import { freeAssoApi, jsonApiNormalizer, objectToQueryString } from '../../../common';
+import { freeAssoApi } from '../../../common';
+import { jsonApiNormalizer, objectToQueryString } from 'freejsonapi';
 import {
   CLIENT_LOAD_MORE_INIT,
   CLIENT_LOAD_MORE_BEGIN,
@@ -23,25 +24,26 @@ export function loadMore(args = {}, reload = false) {
           type: CLIENT_LOAD_MORE_BEGIN,
         });
       }
-
-      // Return a promise so that you could control UI flow without states in the store.
-      // For example: after submit a form, you need to redirect the page to another when succeeds or show some errors message if fails.
-      // It's hard to use state to manage it, but returning a promise allows you to easily achieve it.
-      // e.g.: handleSubmit() { this.props.actions.submitForm(data).then(()=> {}).catch(() => {}); }
       const promise = new Promise((resolve, reject) => {
-        // doRequest is a placeholder Promise. You should replace it with your own logic.
-        // See the real-word example at:  https://github.com/supnate/rekit/blob/master/src/features/home/redux/fetchRedditReactjsList.js
-        // args.error here is only for test coverage purpose.
+        let filters = getState().client.filters.asJsonApiObject()
         let params = {
           page: { number: getState().client.page_number, size: getState().client.page_size },
+          ...filters
         };
-        if (args && Object.keys(args).length > 0 && args !== '') {
-          params.filter = { 
-            or: {
-              cli_firstname: args,
-              cli_lastname: args
-            }
-          };
+        let sort = '';
+        getState().client.sort.forEach(elt => {
+          let add = elt.col;
+          if (elt.way === 'down') {
+            add = '-' + add;
+          }
+          if (sort === '') {
+            sort = add;
+          } else {
+            sort = sort + ',' + add;
+          }
+        });
+        if (sort !== '') {
+          params.sort = sort;
         }
         const addUrl = objectToQueryString(params);
         const doRequest = freeAssoApi.get('/v1/asso/client' + addUrl, {});

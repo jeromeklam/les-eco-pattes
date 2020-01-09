@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as actions from './redux/actions';
 import logo from '../../images/logo-les-eco-pattes.jpg';
-import { InputEmailUpDown, InputPasswordUpDown, InputCheckbox } from '../layout';
+import { InputEmail, InputPassword, InputCheckbox } from 'freeassofront';
 import { getJsonApi, getFieldErrorMessage } from '../../common';
 import { withRouter } from 'react-router-dom';
 import { Copyright } from '../common';
@@ -101,21 +101,23 @@ export class Signin extends Component {
         <form className="form-signin text-center" onSubmit={this.onSubmit}>
           <img className="mb-4" src={logo} alt="" width="72" height="72" />
           <h1 className="h3 mb-3 font-weight-normal">Identification</h1>
-          <InputEmailUpDown
+          <InputEmail
             id="username"
             name="username"
             label="Adresse email"
             required=""
             autoFocus=""
+            labelInline
             value={this.state.username}
             error={this.state.username_error}
             onChange={this.onChange}
           />
-          <InputPasswordUpDown
+          <InputPassword
             id="password"
             name="password"
             label="Mot de passe"
             required=""
+            labelInline
             value={this.state.password}
             error={this.state.password_error}
             onChange={this.onChange}

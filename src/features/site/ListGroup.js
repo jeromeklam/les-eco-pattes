@@ -4,8 +4,9 @@ import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as actions from './redux/actions';
-import { HoverObserver } from '../layout';
-import { buildModel, isInViewPort } from '../../common';
+import { HoverObserver } from 'freeassofront';
+import { buildModel } from 'freejsonapi';
+import { isInViewPort } from '../../common';
 import { InlineList as InlineListCause } from '../cause';
 import {
   MapCenter as MapCenterIcon,

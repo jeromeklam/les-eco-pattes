@@ -4,8 +4,9 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as actions from './redux/actions';
 import { withRouter } from 'react-router-dom';
-import { getJsonApi, propagateModel } from '../../common';
-import { LoadingData } from '../layout';
+import { getJsonApi } from 'freejsonapi';
+import { propagateModel } from '../../common';
+import { Loading9x9 } from 'freeassofront';
 import Form from './Form';
 
 export class Modify extends Component {
@@ -90,7 +91,7 @@ export class Modify extends Component {
     return (
       <div className="cause-modify global-card">
         {this.props.cause.loadOnePending ? (
-          <LoadingData />
+          <Loading9x9 />
         ) : (
           <div>
             {item && (

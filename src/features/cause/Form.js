@@ -1,20 +1,12 @@
 import React from 'react';
-import {
-  InputHidden,
-  InputText,
-  InputSelect,
-  InputData,
-  InputDate,
-  InputTextArea,
-  FormResponsive,
-} from '../layout';
-import useForm from '../layout/useForm';
+import { InputHidden, InputText, InputSelect, InputTextArea, ResponsiveForm } from 'freeassofront';
+import { InputData, InputDate } from '../ui';
+import useForm from '../ui/useForm';
 import { causeTypeAsOptions } from '../cause-type/functions.js';
 import { causeMainTypeAsOptions } from '../cause-main-type/functions.js';
 import { InputPicker as ClientInputPicker } from '../client';
 import { InputPicker as SiteInputPicker } from '../site';
 import { InputPicker as CauseInputPicker } from './';
-
 
 export default function Form(props) {
   const { values, handleChange, handleSubmit, handleCancel, handleNavTab } = useForm(
@@ -25,7 +17,7 @@ export default function Form(props) {
     props.onNavTab,
   );
   return (
-    <FormResponsive
+    <ResponsiveForm
       title="Animaux"
       tab={values.currentTab}
       tabs={props.tabs}
@@ -36,7 +28,7 @@ export default function Form(props) {
       itemNext={props.next}
     >
       <InputHidden name="id" id="id" value={values.id} />
-      <div className="row"> 
+      <div className="row">
         <div className="col-12">
           <InputText
             label="N° boucle"
@@ -55,7 +47,7 @@ export default function Form(props) {
             onChange={handleChange}
             options={causeMainTypeAsOptions(props.cause_main_types)}
             labtop={true}
-          />  
+          />
         </div>
         <div className="col-12">
           <InputSelect
@@ -118,24 +110,24 @@ export default function Form(props) {
           </div>
           <div className="row">
             <div className="col-18">
-              <CauseInputPicker 
+              <CauseInputPicker
                 label="Père"
                 key="parent1"
                 name="parent1"
                 item={values.parent1 || null}
                 onChange={handleChange}
                 labtop={true}
-              />  
+              />
             </div>
             <div className="col-18">
-              <CauseInputPicker 
-                label="Mère"                
+              <CauseInputPicker
+                label="Mère"
                 key="parent2"
                 name="parent2"
                 item={values.parent2 || null}
                 onChange={handleChange}
                 labtop={true}
-              />  
+              />
             </div>
           </div>
         </div>
@@ -175,13 +167,13 @@ export default function Form(props) {
       )}
       {values.currentTab === '3' && (
         <div>
-         <ClientInputPicker 
+          <ClientInputPicker
             label="Eleveur"
             key="proprietary"
             name="proprietary"
             item={values.proprietary || null}
             onChange={handleChange}
-          />     
+          />
           <InputTextArea
             label="Observations"
             name="cau_desc"
@@ -190,6 +182,6 @@ export default function Form(props) {
           />
         </div>
       )}
-    </FormResponsive>
+    </ResponsiveForm>
   );
 }

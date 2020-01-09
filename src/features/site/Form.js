@@ -5,9 +5,9 @@ import {
   InputSelect, 
   InputData, 
   InputTextArea,
-  FormResponsive 
-} from '../layout';
-import useForm from '../layout/useForm';
+  ResponsiveForm,
+} from 'freeassofront';
+import useForm from '../ui/useForm';
 import { siteTypeAsOptions } from '../site-type/functions.js';
 import { InputPicker as ClientInputPicker } from '../client';
 
@@ -20,7 +20,7 @@ export default function Form(props) {
     props.onNavTab,
   ); 
   return (    
-    <FormResponsive title="Sites" tab={values.currentTab} tabs={props.tabs} onSubmit={handleSubmit} onCancel={handleCancel} onNavTab={handleNavTab}>
+    <ResponsiveForm title="Sites" tab={values.currentTab} tabs={props.tabs} onSubmit={handleSubmit} onCancel={handleCancel} onNavTab={handleNavTab}>
       <InputHidden name="id" id="id" value={values.id} />    
       <div className="row">  
         <div className="col-sm-28" >
@@ -143,6 +143,6 @@ export default function Form(props) {
           />
         </div>
       }
-    </FormResponsive>
+    </ResponsiveForm>
   );
 }

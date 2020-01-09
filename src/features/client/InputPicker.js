@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { InputPicker as LayoutInputPicker } from '../layout';
+import { InputPicker as DefaultInputPicker } from 'freeassofront';
 import { Search } from './';
 import axios from 'axios';
 
@@ -97,7 +97,7 @@ export default class InputPicker extends Component {
   render() {
     return (
       <div className="client-input-picker">
-        <LayoutInputPicker 
+        <DefaultInputPicker 
           name={this.props.name}
           label={this.props.label}
           value={this.state.value}

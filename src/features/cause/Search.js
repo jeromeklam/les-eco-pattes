@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { SearchModal } from '../layout';
-import { freeAssoApi, jsonApiNormalizer, buildModel, objectToQueryString } from '../../common';
+import { jsonApiNormalizer, buildModel, objectToQueryString } from 'freejsonapi';
+import { SearchModal } from '../ui';
+import { freeAssoApi } from '../../common';
 
 export default class Search extends Component {
- static propTypes = {
+  static propTypes = {
     title: PropTypes.string.isRequired,
     show: PropTypes.bool.isRequired,
     onClose: PropTypes.func.isRequired,
@@ -48,11 +49,9 @@ export default class Search extends Component {
   }
 
   render() {
-    const filters = [
-      {name: 'cau_name', label:"Nom", type:'text'},
-    ]
+    const filters = [{ name: 'cau_name', label: 'Nom', type: 'text' }];
     return (
-      <SearchModal 
+      <SearchModal
         title={this.props.title}
         show={this.props.show}
         loading={this.state.loading}

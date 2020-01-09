@@ -9,34 +9,6 @@
   bottom: 0px;
 }
 
-.display-mobile {
-  #page-content-wrapper {
-    top: $mobile-header-height;
-    position: fixed;
-    bottom: $mobile-footer-height;
-    overflow-x: hidden;
-    overflow-y: auto;
-    left: 0px;
-    right: 0px;
-  }
-}
-
-.display-desktop {
-  #page-content-wrapper {
-    top: $desktop-header-height;
-    position: fixed;
-    bottom: $desktop-footer-height;
-    overflow-x: hidden;
-    overflow-y: auto;
-    left: 0px;
-    right: 0px;
-  }
-  #page-content-wrapper.page-content-wrapper-menu {
-    left: $left-menu-width;
-    right: 0px;
-  }
-}
-
 .main-loader {
   position: fixed;
   left: 0px;

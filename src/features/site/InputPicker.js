@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { InputPicker as LayoutInputPicker } from '../layout';
+import { InputPicker as DefaultInputPicker } from 'freeassofront';
 import { Search } from './';
 import axios from 'axios';
+import { More, DelOne } from '../icons';
 
 export default class InputPicker extends Component {
   static propTypes = {
@@ -68,7 +69,10 @@ export default class InputPicker extends Component {
         })
         .then(result => {
           this.setState({ list: result.data, loading: false });
-        }).catch (err => {this.setState({ list: [], loading: false });});
+        })
+        .catch(err => {
+          this.setState({ list: [], loading: false });
+        });
     }
   }
 
@@ -97,19 +101,21 @@ export default class InputPicker extends Component {
   render() {
     return (
       <div className="site-input-picker">
-        <LayoutInputPicker 
+        <DefaultInputPicker
           name={this.props.name}
           label={this.props.label}
           value={this.state.value}
+          labelTop={this.props.labelTop || false}
           list={this.state.list}
           display={this.state.display}
-          labtop={this.props.labtop}
           onChange={this.onChange}
           onClear={this.onClear}
           onMore={this.onMore}
           onSelect={this.onSelect}
           pickerId="site_id"
           pickerDisplay="site_name"
+          clearIcon={<DelOne className="text-warning" />}
+          moreIcon={<More className="text-primary" />}
         />
         <Search
           title={this.props.label}

@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as actions from './redux/actions';
-import { getJsonApi, modelsToSelect } from '../../common';
-import { LoadingData } from '../layout';
+import { getJsonApi } from 'freejsonapi';
+import { Loading9x9 } from 'freeassofront';
 import Form from './Form';
 
 export class Create extends Component {
@@ -71,7 +71,7 @@ export class Create extends Component {
     return (
       <div className="client-create global-card">
         {this.props.client.loadOnePending ? (
-          <LoadingData />
+          <Loading9x9 />
         ) : (
           <div>
             {item && 
