@@ -19,6 +19,7 @@ import {
   Sort as SortNoneIcon,
   Search as SearchIcon,
 } from '../icons';
+import { deleteSuccess, deleteError } from '../ui';
 
 /**
  * Liste des sites
@@ -64,7 +65,16 @@ export class List extends Component {
   }
 
   onDelOne(id) {
-    this.props.actions.delOne(id).then(result => this.props.actions.loadMore({}, true));
+    this.props.actions
+      .delOne(id)
+      .then(result => {
+        this.props.actions.loadMore({}, true);
+        deleteSuccess();
+      })
+      .catch(errors => {
+        // @todo display errors to fields
+        deleteError();
+      });
   }
 
   onReload(event) {
@@ -151,6 +161,7 @@ export class List extends Component {
         onClick: this.onCreate,
         theme: 'primary',
         icon: <AddOneIcon color="white" />,
+        role: 'CREATE',
       },
     ];
     const inlineActions = [
@@ -160,6 +171,7 @@ export class List extends Component {
         onClick: this.onGetOne,
         theme: 'secondary',
         icon: <GetOneIcon color="white" />,
+        role: 'MODIFY',
       },
       {
         name: 'delete',
@@ -167,6 +179,7 @@ export class List extends Component {
         onClick: this.onDelOne,
         theme: 'warning',
         icon: <DelOneIcon color="white" />,
+        role: 'DELETE',
       },
     ];
     const cols = [

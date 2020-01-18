@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import * as actions from './redux/actions';
 import { withRouter } from 'react-router-dom';
 import { getJsonApi } from 'freejsonapi';
-import { CenteredLoading9X9 } from '../ui';
+import { CenteredLoading9X9, createSuccess, createError } from '../ui';
 import Form from './Form';
 
 export class Create extends Component {
@@ -58,12 +58,13 @@ export class Create extends Component {
     this.props.actions
       .createOne(obj)
       .then(result => {
+        createSuccess();
         this.props.actions.clearItems();
         this.props.history.push('/site');
       })
       .catch(errors => {
         // @todo display errors to fields
-        console.log(errors);
+        createError();
       });
   }
 

@@ -7,8 +7,7 @@ import { withRouter } from 'react-router-dom';
 import Form from './Form';
 import { getJsonApi } from 'freejsonapi';
 import { propagateModel } from '../../common';
-import { CenteredLoading9X9 } from '../ui';
-import cogoToast from 'cogo-toast';
+import { CenteredLoading9X9, modifySuccess, modifyError } from '../ui';
 
 /**
  * Modification d'un site
@@ -49,7 +48,7 @@ export class Modify extends Component {
   componentDidUpdate(prevProps, prevState) {
     if (prevProps.match.params.siteId && this.props.match.params.siteId) {
       if (prevProps.match.params.siteId !== this.props.match.params.siteId) {
-        this.setState({siteId: this.props.match.params.siteId})
+        this.setState({ siteId: this.props.match.params.siteId });
         this.props.actions.loadOne(this.props.match.params.siteId).then(result => {
           const item = this.props.site.loadOneItem;
           this.setState({ item: item });
@@ -77,13 +76,13 @@ export class Modify extends Component {
       .then(result => {
         // @Todo propagate result to store
         // propagateModel est ajouté aux actions en bas de document
-        cogoToast.success("Enregistrement effectué");
+        modifySuccess();
         this.props.actions.propagateModel('FreeAsso_Site', result);
         this.props.history.push('/site');
       })
       .catch(errors => {
         // @todo display errors to fields
-        cogoToast.error("Erreur lors de l'enregistrement");
+        modifyError();
       });
   }
 
@@ -95,19 +94,19 @@ export class Modify extends Component {
           <CenteredLoading9X9 />
         ) : (
           <div>
-            {item && 
-              <Form 
-                item={item} 
+            {item && (
+              <Form
+                item={item}
                 datas={this.props.data.items}
                 config={this.props.config.items}
-                site_types={this.props.siteType.items} 
+                site_types={this.props.siteType.items}
                 properties={this.props.site.properties}
                 tab={this.props.site.tab}
                 tabs={this.props.site.tabs}
-                onSubmit={this.onSubmit} 
-                onCancel={this.onCancel} 
+                onSubmit={this.onSubmit}
+                onCancel={this.onCancel}
               />
-            }
+            )}
           </div>
         )}
       </div>
@@ -119,7 +118,7 @@ function mapStateToProps(state) {
   return {
     site: state.site,
     data: state.data,
-    config: state.config,    
+    config: state.config,
     siteType: state.siteType,
   };
 }

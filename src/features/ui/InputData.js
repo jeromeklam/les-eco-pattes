@@ -50,7 +50,7 @@ export default class InputData extends Component {
         {this.state.data.data_type === 'BOOLEAN' && (
           <InputCheckbox
             label={this.state.data.data_name}
-            labelTop={this.props.labelTop || false}
+            labelTop={this.props.labelTop || true}
             name={this.state.field}
             checked={this.props.value}
             onChange={this.props.onChange}
@@ -59,7 +59,7 @@ export default class InputData extends Component {
         {this.state.data.data_type === 'NUMBER' && (
           <InputText
             label={this.state.data.data_name}
-            labelTop={this.props.labelTop || false}
+            labelTop={this.props.labelTop || true}
             name={this.state.field}
             value={this.props.value}
             onChange={this.props.onChange}
@@ -68,7 +68,7 @@ export default class InputData extends Component {
         {this.state.data.data_type === 'STRING' && (
           <InputText
             label={this.state.data.data_name}
-            labelTop={this.props.labelTop || false}
+            labelTop={this.props.labelTop || true}
             name={this.state.field}
             value={this.props.value}
             onChange={this.props.onChange}
@@ -77,7 +77,7 @@ export default class InputData extends Component {
         {this.state.data.data_type === 'TEXT' && (
           <InputTextArea
             label={this.state.data.data_name}
-            labelTop={this.props.labelTop || false}
+            labelTop={this.props.labelTop || true}
             name={this.state.field}
             value={this.props.value}
             onChange={this.props.onChange}
@@ -86,7 +86,7 @@ export default class InputData extends Component {
         {this.state.data.data_type === 'LIST' && (
           <InputSelect
             label={this.state.data.data_name}
-            labelTop={this.props.labelTop || false}
+            labelTop={this.props.labelTop || true}
             name={this.state.field}
             required={this.props.required}
             value={this.props.value}

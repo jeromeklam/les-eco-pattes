@@ -6,24 +6,12 @@ import {
   SITE_FILTER_DISMISS_ERROR,
 } from './constants';
 
-// Rekit uses redux-thunk for async actions by default: https://github.com/gaearon/redux-thunk
-// If you prefer redux-saga, you can use rekit-plugin-redux-saga: https://github.com/supnate/rekit-plugin-redux-saga
 export function filter(args = {}) {
-  return (dispatch, getState) => { // optionally you can have getState as the second argument
+  return (dispatch, getState) => {
     dispatch({
       type: SITE_FILTER_BEGIN,
     });
-
-    // Return a promise so that you could control UI flow without states in the store.
-    // For example: after submit a form, you need to redirect the page to another when succeeds or show some errors message if fails.
-    // It's hard to use state to manage it, but returning a promise allows you to easily achieve it.
-    // e.g.: handleSubmit() { this.props.actions.submitForm(data).then(()=> {}).catch(() => {}); }
     const promise = new Promise((resolve, reject) => {
-      // doRequest is a placeholder Promise. You should replace it with your own logic.
-      // See the real-word example at:  https://github.com/supnate/rekit/blob/master/src/features/home/redux/fetchRedditReactjsList.js
-      // args.error here is only for test coverage purpose.
-
-      //http://freeasso.fr:8080/api/v1/asso/site?page[number]=1&page[size]=20&filter[and][site_name]=local
       const params = {
         page: { number: getState().site.page_number, size: getState().site.page_size },
         filter: { 
@@ -42,7 +30,6 @@ export function filter(args = {}) {
           });
           resolve(res);
         },
-        // Use rejectHandler as the second argument so that render errors won't be caught.
         (err) => {
           dispatch({
             type: SITE_FILTER_FAILURE,
@@ -52,13 +39,10 @@ export function filter(args = {}) {
         },
       );
     });
-
     return promise;
   };
 }
 
-// Async action saves request error by default, this method is used to dismiss the error info.
-// If you don't want errors to be saved in Redux store, just ignore this method.
 export function dismissFilterError() {
   return {
     type: SITE_FILTER_DISMISS_ERROR,

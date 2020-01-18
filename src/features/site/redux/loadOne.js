@@ -84,6 +84,8 @@ export function reducer(state, action) {
         loadOneRaw: raw,
         loadItemNext: itemPrevNext.next || null,        
         loadOneError: null,
+        createOneError: null,
+        updateOneError: null,
       };
 
     case SITE_LOAD_ONE_FAILURE:

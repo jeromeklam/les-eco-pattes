@@ -8,21 +8,21 @@ import {
 } from './constants';
 
 export function createOne(args = {}) {
-  return (dispatch) => {
+  return dispatch => {
     dispatch({
       type: SITE_CREATE_ONE_BEGIN,
     });
     const promise = new Promise((resolve, reject) => {
       const doRequest = freeAssoApi.post('/v1/asso/site', args);
       doRequest.then(
-        (res) => {
+        res => {
           dispatch({
             type: SITE_CREATE_ONE_SUCCESS,
             data: res,
           });
           resolve(res);
         },
-        (err) => {
+        err => {
           dispatch({
             type: SITE_CREATE_ONE_FAILURE,
             data: { error: err },
@@ -35,8 +35,6 @@ export function createOne(args = {}) {
   };
 }
 
-// Async action saves request error by default, this method is used to dismiss the error info.
-// If you don't want errors to be saved in Redux store, just ignore this method.
 export function dismissCreateOneError() {
   return {
     type: SITE_CREATE_ONE_DISMISS_ERROR,
