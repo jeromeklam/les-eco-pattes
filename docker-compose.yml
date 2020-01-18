@@ -1,0 +1,17 @@
+version: "3.2"
+services:
+  rekit:
+    image: jeromeklam/u18_rekit
+    networks:
+      - frontend
+      - backend
+    ports:
+      - "6075:6075"
+      - "6076:6076"
+    volumes:
+      - ./:/home/node/app
+      - ../freejsonapi/:/home/node/freejsonapi/
+      - ../freeassofront/:/home/node/freeassofront/
+networks:
+  frontend:
+  backend:
