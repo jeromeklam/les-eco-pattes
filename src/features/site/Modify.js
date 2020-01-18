@@ -7,7 +7,7 @@ import { withRouter } from 'react-router-dom';
 import Form from './Form';
 import { getJsonApi } from 'freejsonapi';
 import { propagateModel } from '../../common';
-import { Loading9x9 } from 'freeassofront';
+import { CenteredLoading9X9 } from '../ui';
 import cogoToast from 'cogo-toast';
 
 /**
@@ -92,7 +92,7 @@ export class Modify extends Component {
     return (
       <div className="site-modify global-card">
         {this.props.site.loadOnePending ? (
-          <Loading9x9 />
+          <CenteredLoading9X9 />
         ) : (
           <div>
             {item && 

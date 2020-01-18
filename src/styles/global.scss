@@ -14,54 +14,15 @@ body {
   overflow: hidden;
 }
 
+.form-group-sm {
+  margin-bottom: 0.3rem;
+}
+
 .noselect {
   -webkit-user-select: none; /* Safari 3.1+ */
   -moz-user-select: none; /* Firefox 2+ */
   -ms-user-select: none; /* IE 10+ */
   user-select: none; /* Standard syntax */
-}
-
-svg.text-danger {
-  fill: theme-color('danger');
-  path {
-    fill: theme-color('danger');
-  }
-}
-svg.text-warning {
-  fill: theme-color('warning');
-  path {
-    fill: theme-color('warning');
-  }
-}
-svg.text-success {
-  fill: theme-color('success');
-  path {
-    fill: theme-color('success');
-  }
-}
-svg.text-dark {
-  fill: theme-color('dark');
-  path {
-    fill: theme-color('dark');
-  }
-}
-svg.text-light {
-  fill: theme-color('light');
-  path {
-    fill: theme-color('light');
-  }
-}
-svg.text-secondary {
-  fill: theme-color('secondary');
-  path {
-    fill: theme-color('secondary');
-  }
-}
-svg.text-primary {
-  fill: theme-color('primary');
-  path {
-    fill: theme-color('primary');
-  }
 }
 
 .text-danger svg {
@@ -104,5 +65,48 @@ svg.text-primary {
   fill: theme-color('primary');
   path {
     fill: theme-color('primary');
+  }
+}
+
+svg.text-danger {
+  fill: theme-color('danger');
+  path {
+    fill: theme-color('danger') !important;
+  }
+}
+svg.text-warning {
+  fill: theme-color('warning');
+  path {
+    fill: theme-color('warning') !important;
+  }
+}
+svg.text-success {
+  fill: theme-color('success');
+  path {
+    fill: theme-color('success') !important;
+  }
+}
+svg.text-dark {
+  fill: theme-color('dark');
+  path {
+    fill: theme-color('dark') !important;
+  }
+}
+svg.text-light {
+  fill: theme-color('light');
+  path {
+    fill: theme-color('light') !important;
+  }
+}
+svg.text-secondary {
+  fill: theme-color('secondary');
+  path {
+    fill: theme-color('secondary') !important;
+  }
+}
+svg.text-primary {
+  fill: theme-color('primary');
+  path {
+    fill: theme-color('primary') !important;
   }
 }

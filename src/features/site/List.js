@@ -171,6 +171,16 @@ export class List extends Component {
     ];
     const cols = [
       {
+        name: 'id',
+        label: 'Identifiant',
+        col: 'id',
+        size: '5',
+        mob_size: '',
+        title: true,
+        sortable: true,
+        filterable: { type: 'text' },
+      },
+      {
         name: 'name',
         label: 'Nom site',
         col: 'site_name',
@@ -194,7 +204,7 @@ export class List extends Component {
         name: 'cp',
         label: 'CP',
         col: 'site_cp',
-        size: '2',
+        size: '4',
         mob_size: '10',
         title: false,
         sortable: true,
@@ -204,7 +214,7 @@ export class List extends Component {
         name: 'town',
         label: 'Commune',
         col: 'site_town',
-        size: '10',
+        size: '5',
         mob_size: '26',
         title: false,
         sortable: true,

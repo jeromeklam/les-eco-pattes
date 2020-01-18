@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { InputPicker as DefaultInputPicker } from 'freeassofront';
-import { Search } from './';
 import axios from 'axios';
+import { Search } from './';
+import { More, DelOne } from '../icons';
 
 export default class InputPicker extends Component {
   static propTypes = {
@@ -101,6 +102,10 @@ export default class InputPicker extends Component {
           name={this.props.name}
           label={this.props.label}
           value={this.state.value}
+          labelTop={this.props.labelTop || true}
+          size={this.props.size}
+          labelSize={this.props.labelSize || 6}
+          inputSize={this.props.inputSize || 30}
           list={this.state.list}
           display={this.state.display}
           onChange={this.onChange}
@@ -109,6 +114,8 @@ export default class InputPicker extends Component {
           onSelect={this.onSelect}
           pickerId="cli_id"
           pickerDisplay="cli_lastname"
+          clearIcon={<DelOne size={this.props.size === 'sm' ? 0.7 : 1} className="text-warning" />}
+          moreIcon={<More size={this.props.size === 'sm' ? 0.7 : 1} className="text-primary" />}
         />
         <Search
           title={this.props.label}

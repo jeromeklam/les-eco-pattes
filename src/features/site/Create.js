@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import * as actions from './redux/actions';
 import { withRouter } from 'react-router-dom';
 import { getJsonApi } from 'freejsonapi';
+import { CenteredLoading9X9 } from '../ui';
 import Form from './Form';
 
 export class Create extends Component {
@@ -69,19 +70,26 @@ export class Create extends Component {
   render() {
     const item = this.state.item;
     return (
-      <div className="site-type-create global-card">
-        {item && (
-          <Form
-            item={item}
-            datas={this.props.data.items}
-            config={this.props.config.items}
-            site_types={this.props.siteType.items}
-            properties={this.props.site.properties}
-            tab={this.props.site.tab}
-            tabs={this.props.site.tabs}
-            onSubmit={this.onSubmit}
-            onCancel={this.onCancel}
-          />
+      <div className="site-modify global-card">
+        {this.props.site.loadOnePending ? (
+          <CenteredLoading9X9 />
+        ) : (
+          <div>
+            {item && (
+              <Form
+                item={item}
+                datas={this.props.data.items}
+                config={this.props.config.items}
+                site_types={this.props.siteType.items}
+                properties={this.props.site.properties}
+                errors={this.props.site.createOneError}
+                tab={this.props.site.tab}
+                tabs={this.props.site.tabs}
+                onSubmit={this.onSubmit}
+                onCancel={this.onCancel}
+              />
+            )}
+          </div>
         )}
       </div>
     );
