@@ -6,7 +6,7 @@ import * as actions from './redux/actions';
 import { withRouter } from 'react-router-dom';
 import { getJsonApi } from 'freejsonapi';
 import { propagateModel } from '../../common';
-import { Loading9x9 } from 'freeassofront';
+import { CenteredLoading9X9, modifySuccess, modifyError } from '../ui';
 import Form from './Form';
 
 export class Modify extends Component {
@@ -75,11 +75,13 @@ export class Modify extends Component {
       .then(result => {
         // @Todo propagate result to store
         // propagateModel est ajouté aux actions en bas de document
+        modifySuccess();
         this.props.actions.propagateModel('FreeAsso_Cause', result);
         this.props.history.push('/cause');
       })
       .catch(errors => {
         // @todo display errors to fields
+        modifyError();
         console.log(errors);
       });
   }
@@ -91,7 +93,7 @@ export class Modify extends Component {
     return (
       <div className="cause-modify global-card">
         {this.props.cause.loadOnePending ? (
-          <Loading9x9 />
+          <CenteredLoading9X9 />
         ) : (
           <div>
             {item && (

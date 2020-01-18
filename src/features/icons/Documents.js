@@ -14,7 +14,7 @@ export default class Documents extends Component {
       <Icon 
         path={mdiFileDocumentBox}
         size={1}
-        color={this.props.color}
+        {...this.props}
       />
     );
   }

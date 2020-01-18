@@ -1,6 +1,14 @@
 @import '../../styles/mixins';
 
 .site-list-group {
+  svg.inline-action:hover {
+    cursor: pointer;
+    color: theme-color('primary-light');
+    fill: theme-color('primary-light');
+    path {
+      fill: theme-color('primary-light') !important;
+    }
+  }
   .card.active {
     .card-header {
       font-weight: bold;

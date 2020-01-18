@@ -2,6 +2,9 @@ import { Filter } from 'freeassofront';
 
 const initialState = {
   items: [],
+  causes: [],
+  photos: [],
+  currentItem: null,
   page_number: 1,
   page_size: 999999,
   tab: '1',
@@ -42,6 +45,12 @@ const initialState = {
   filterError: null,
   delOnePending: false,
   delOneError: null,
+  loadCausesPending: false,
+  loadCausesError: null,
+  loadPhotosPending: false,
+  loadPhotosError: null,
+  uploadPhotoPending: false,
+  uploadPhotoError: null,
 };
 
 export default initialState;

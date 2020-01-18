@@ -14,7 +14,7 @@ export default class MapCenter extends Component {
       <Icon 
         path={mdiCrosshairsGps}
         size={1}
-        color={this.props.color}
+        {...this.props}
       />
     );
   }

@@ -1,5 +1,5 @@
 import React from 'react';
-import { InputHidden, InputText, InputSelect, InputTextArea, ResponsiveForm } from 'freeassofront';
+import { InputHidden, InputText, InputSelect, InputTextarea, ResponsiveForm } from 'freeassofront';
 import { InputData, InputDate } from '../ui';
 import useForm from '../ui/useForm';
 import { causeTypeAsOptions } from '../cause-type/functions.js';
@@ -9,13 +9,14 @@ import { InputPicker as SiteInputPicker } from '../site';
 import { InputPicker as CauseInputPicker } from './';
 
 export default function Form(props) {
-  const { values, handleChange, handleSubmit, handleCancel, handleNavTab } = useForm(
-    props.item,
-    props.tab,
-    props.onSubmit,
-    props.onCancel,
-    props.onNavTab,
-  );
+  const {
+    values,
+    handleChange,
+    handleSubmit,
+    handleCancel,
+    handleNavTab,
+    getErrorMessage,
+  } = useForm(props.item, props.tab, props.onSubmit, props.onCancel, props.onNavTab, props.errors);
   return (
     <ResponsiveForm
       title="Animaux"
@@ -29,27 +30,18 @@ export default function Form(props) {
     >
       <InputHidden name="id" id="id" value={values.id} />
       <div className="row">
-        <div className="col-12">
+        <div className="col-8">
           <InputText
             label="N° boucle"
             name="cau_name"
             id="cau_name"
             value={values.cau_name}
             onChange={handleChange}
-            labtop={true}
+            labelTop={true}
+            error={getErrorMessage('cau_name')}
           />
         </div>
-        <div className="col-12">
-          <InputSelect
-            label="Espèce"
-            name="cause_type.cause_main_type.camt_id"
-            value={values.cause_type.cause_main_type ? values.cause_type.cause_main_type.id : null}
-            onChange={handleChange}
-            options={causeMainTypeAsOptions(props.cause_main_types)}
-            labtop={true}
-          />
-        </div>
-        <div className="col-12">
+        <div className="col-10">
           <InputSelect
             label="Race"
             name="cause_type.id"
@@ -57,17 +49,19 @@ export default function Form(props) {
             addempty={true}
             onChange={handleChange}
             options={causeTypeAsOptions(props.cause_types)}
-            labtop={true}
+            labelTop={true}
+            error={getErrorMessage('cause_type')}
           />
         </div>
-        <div className="col-36">
+        <div className="col-18">
           <SiteInputPicker
             label="Site"
             key="site"
             name="site"
             item={values.site || null}
             onChange={handleChange}
-            labtop={true}
+            labelTop={true}
+            error={getErrorMessage('site')}
           />
         </div>
       </div>
@@ -83,7 +77,7 @@ export default function Form(props) {
                 datas={props.tab_datas}
                 config={props.tab_configs}
                 onChange={handleChange}
-                labtop={true}
+                labelTop={true}
               />
             </div>
             <div className="col-18">
@@ -93,40 +87,75 @@ export default function Form(props) {
                 id="cau_sex"
                 value={values.cau_sex}
                 onChange={handleChange}
-                labtop={true}
+                labelTop={true}
+                error={getErrorMessage('cau_sex')}
               />
             </div>
           </div>
-          <div className="col-36">
-            <InputData
-              key="cau_number_1"
-              name="cau_number_1"
-              value={values.cau_number_1}
-              datas={props.tab_datas}
-              config={props.tab_configs}
-              onChange={handleChange}
-              labtop={true}
-            />
-          </div>
           <div className="row">
-            <div className="col-18">
+            <div className="col-6">
+              <InputData
+                key="cau_number_1"
+                name="cau_number_1"
+                value={values.cau_number_1}
+                datas={props.tab_datas}
+                config={props.tab_configs}
+                onChange={handleChange}
+                labelTop={true}
+              />
+            </div>
+            <div className="col-15">
               <CauseInputPicker
                 label="Père"
                 key="parent1"
                 name="parent1"
                 item={values.parent1 || null}
                 onChange={handleChange}
-                labtop={true}
+                labelTop={true}
+                error={getErrorMessage('parent1')}
               />
             </div>
-            <div className="col-18">
+            <div className="col-15">
               <CauseInputPicker
                 label="Mère"
                 key="parent2"
                 name="parent2"
                 item={values.parent2 || null}
                 onChange={handleChange}
-                labtop={true}
+                labelTop={true}
+                error={getErrorMessage('parent2')}
+              />
+            </div>
+          </div>
+          <div className="row">
+            <div className="col-10">
+              <InputDate
+                label="Entrée"
+                name="cau_from"
+                id="cau_from"
+                value={values.cau_from}
+                onChange={handleChange}
+                error={getErrorMessage('cau_from')}
+              />
+            </div>
+            <div className="col-10">
+              <InputDate
+                label="Sortie"
+                name="cau_to"
+                id="cau_to"
+                value={values.cau_to}
+                onChange={handleChange}
+                labelTop={true}
+              />
+            </div>
+            <div className="col-16">
+              <InputData
+                key="cau_string_2"
+                name="cau_string_2"
+                value={values.cau_string_2}
+                datas={props.tab_datas}
+                config={props.tab_configs}
+                onChange={handleChange}
               />
             </div>
           </div>
@@ -134,51 +163,21 @@ export default function Form(props) {
       )}
       {values.currentTab === '2' && (
         <div>
-          <div className="col-36">
-            <InputDate
-              label="Entrée"
-              name="cau_from"
-              id="cau_from"
-              value={values.cau_from}
-              onChange={handleChange}
-            />
-          </div>
-          <div className="col-36">
-            <InputData
-              key="cau_string_2"
-              name="cau_string_2"
-              value={values.cau_string_2}
-              datas={props.tab_datas}
-              config={props.tab_configs}
-              onChange={handleChange}
-            />
-          </div>
-          <div className="col-36">
-            <InputDate
-              label="Sortie"
-              name="cau_from"
-              id="cau_from"
-              value={values.cau_from}
-              onChange={handleChange}
-              labtop={true}
-            />
-          </div>
-        </div>
-      )}
-      {values.currentTab === '3' && (
-        <div>
           <ClientInputPicker
             label="Eleveur"
             key="proprietary"
             name="proprietary"
             item={values.proprietary || null}
             onChange={handleChange}
+            error={getErrorMessage('proprietary')}
           />
-          <InputTextArea
+          <InputTextarea
             label="Observations"
             name="cau_desc"
             value={values.cau_desc}
             onChange={handleChange}
+            labelTop={true}
+            error={getErrorMessage('cau_desc')}
           />
         </div>
       )}

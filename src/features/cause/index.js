@@ -6,3 +6,4 @@ export { default as InputPicker } from './InputPicker';
 export { default as Search } from './Search';
 export { default as InlineList } from './InlineList';
 export { default as InlineListGroup } from './InlineListGroup';
+export { default as InlineListDetail } from './InlineListDetail';

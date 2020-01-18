@@ -7,6 +7,7 @@ import { buildModel } from 'freejsonapi';
 import { ResponsiveList, ResponsiveQuickSearch } from 'freeassofront';
 import {
   AddOne as AddOneIcon,
+  Cause as CauseIcon,
   GetOne as GetOneIcon,
   DelOne as DelOneIcon,
   Filter as FilterIcon,
@@ -18,8 +19,10 @@ import {
   SortUp as SortUpIcon,
   Sort as SortNoneIcon,
   Search as SearchIcon,
+  Photo as PhotoIcon,
 } from '../icons';
 import { deleteSuccess, deleteError } from '../ui';
+import { InlineCauses, InlinePhotos } from './';
 
 /**
  * Liste des sites
@@ -37,6 +40,8 @@ export class List extends Component {
     super(props);
     this.state = {
       timer: null,
+      animalsSite: 0,
+      photosSite: 0,
     };
     this.onCreate = this.onCreate.bind(this);
     this.onGetOne = this.onGetOne.bind(this);
@@ -47,6 +52,8 @@ export class List extends Component {
     this.onClearFilters = this.onClearFilters.bind(this);
     this.onSetFiltersAndSort = this.onSetFiltersAndSort.bind(this);
     this.onUpdateSort = this.onUpdateSort.bind(this);
+    this.onListCause = this.onListCause.bind(this);
+    this.onListPhoto = this.onListPhoto.bind(this);
   }
 
   componentDidMount() {
@@ -75,6 +82,26 @@ export class List extends Component {
         // @todo display errors to fields
         deleteError();
       });
+  }
+
+  onListCause(id) {
+    const { animalsSite } = this.state;
+    if (animalsSite === id) {
+      this.setState({animalsSite: 0, photosSite: 0});
+    } else {
+      this.props.actions.loadCauses(id, true).then(result => {});
+      this.setState({animalsSite: id, photosSite: 0});
+    }
+  }
+
+  onListPhoto(id) {
+    const { photosSite } = this.state;
+    if (photosSite === id) {
+      this.setState({animalsSite: 0, photosSite: 0});
+    } else {
+      this.props.actions.loadPhotos(id, true).then(result => {});
+      this.setState({animalsSite: 0, photosSite: id});
+    }
   }
 
   onReload(event) {
@@ -166,6 +193,22 @@ export class List extends Component {
     ];
     const inlineActions = [
       {
+        name: 'animals',
+        label: 'Animaux',
+        onClick: this.onListCause,
+        theme: 'secondary',
+        icon: <CauseIcon color="white" />,
+        role: 'DETAIL',
+      },
+      {
+        name: 'photos',
+        label: 'Photos',
+        onClick: this.onListPhoto,
+        theme: 'secondary',
+        icon: <PhotoIcon color="white" />,
+        role: 'DETAIL',
+      },
+      {
         name: 'modify',
         label: 'Modifier',
         onClick: this.onGetOne,
@@ -187,7 +230,7 @@ export class List extends Component {
         name: 'id',
         label: 'Identifiant',
         col: 'id',
-        size: '5',
+        size: '4',
         mob_size: '',
         title: true,
         sortable: true,
@@ -197,7 +240,7 @@ export class List extends Component {
         name: 'name',
         label: 'Nom site',
         col: 'site_name',
-        size: '8',
+        size: '7',
         mob_size: '',
         title: true,
         sortable: true,
@@ -227,7 +270,7 @@ export class List extends Component {
         name: 'town',
         label: 'Commune',
         col: 'site_town',
-        size: '5',
+        size: '7',
         mob_size: '26',
         title: false,
         sortable: true,
@@ -251,10 +294,21 @@ export class List extends Component {
       />
     );
     const filterIcon = this.props.site.filters.isEmpty() ? (
-      <FilterIcon color="white" />
+      <FilterIcon className="text-light" />
     ) : (
-      <FilterFullIcon color="white" />
+      <FilterFullIcon className="text-light" />
     );
+    let inlineComponent = null;
+    let id = null;
+    if (this.state.photosSite > 0) {
+      inlineComponent = <InlinePhotos />
+      id = this.state.photosSite;
+    } else {
+      if (this.state.animalsSite > 0 ) {
+        inlineComponent = <InlineCauses />
+        id = this.state.animalsSite;
+      }
+    }
     return (
       <ResponsiveList
         title="Sites"
@@ -269,6 +323,8 @@ export class List extends Component {
         sortUpIcon={<SortUpIcon color="secondary" />}
         sortNoneIcon={<SortNoneIcon color="secondary" />}
         inlineActions={inlineActions}
+        inlineOpenedId={id}
+        inlineComponent={inlineComponent}
         globalActions={globalActions}
         sort={this.props.site.sort}
         filters={this.props.site.filters}

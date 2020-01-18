@@ -38,3 +38,7 @@ export { default as SimpleValid } from './SimpleValid';
 export { default as SortDown } from './SortDown';
 export { default as SortUp } from './SortUp';
 export { default as Sort } from './Sort';
+export { default as Photo } from './Photo';
+export { default as View } from './View';
+export { default as Download } from './Download';
+export { default as Upload } from './Upload';

@@ -14,7 +14,7 @@ export default class MapMove extends Component {
       <Icon 
         path={mdiCursorMove}
         size={1}
-        color={this.props.color}
+        {...this.props}
       />
     );
   }

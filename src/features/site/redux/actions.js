@@ -11,3 +11,6 @@ export { setFilters } from './setFilters';
 export { setSort } from './setSort';
 export { updateQuickSearch } from './updateQuickSearch';
 export { updateSort } from './updateSort';
+export { loadCauses, dismissLoadCausesError } from './loadCauses';
+export { loadPhotos, dismissLoadPhotosError } from './loadPhotos';
+export { uploadPhoto, dismissUploadPhotoError } from './uploadPhoto';

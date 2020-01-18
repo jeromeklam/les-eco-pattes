@@ -20,6 +20,9 @@ import { reducer as setFiltersReducer } from './setFilters';
 import { reducer as setSortReducer } from './setSort';
 import { reducer as updateQuickSearchReducer } from './updateQuickSearch';
 import { reducer as updateSortReducer } from './updateSort';
+import { reducer as loadCausesReducer } from './loadCauses';
+import { reducer as loadPhotosReducer } from './loadPhotos';
+import { reducer as uploadPhotoReducer } from './uploadPhoto';
 
 const reducers = [
   loadMoreReducer,
@@ -35,6 +38,9 @@ const reducers = [
   setSortReducer,
   updateQuickSearchReducer,
   updateSortReducer,
+  loadCausesReducer,
+  loadPhotosReducer,
+  uploadPhotoReducer,
 ];
 
 export default function reducer(state = initialState, action) {

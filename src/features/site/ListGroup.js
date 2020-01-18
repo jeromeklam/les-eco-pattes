@@ -13,6 +13,7 @@ import {
   MapMove as MapMoveIcon,
   Documents as DocumentsIcon,
   Cause as CauseIcon,
+  Photo as PhotoIcon,
 } from '../icons';
 
 export class ListGroup extends Component {
@@ -130,59 +131,73 @@ export class ListGroup extends Component {
                           >
                             {this.props.onSiteClick && (
                               <li>
-                                <a
+                                <div
                                   data-toggle="tooltip" 
                                   title="Recentrer"
-                                  className="btn btn-primary btn-sm"
+                                  className="ml-2"
                                   onClick={() => {
                                     this.props.onSiteClick(item.id, item.site_coord);
                                   }}
                                 >
-                                  <MapCenterIcon color="white" />
-                                </a>
+                                  <MapCenterIcon size={0.8} className="text-secondary inline-action" />
+                                </div>
                               </li>
                             )}
                             {this.props.onSiteMove && (
                               <li>
-                                <a
+                                <div
                                   data-toggle="tooltip" 
                                   title="Déplacement du site"
-                                  className="btn btn-primary btn-sm"
+                                  className="ml-2"
                                   onClick={() => {
                                     this.props.onSiteMove(item.id, item);
                                   }}
                                 >
-                                  <MapMoveIcon color="white" />
-                                </a>
+                                  <MapMoveIcon size={0.8} className="text-secondary inline-action" />
+                                </div>
                               </li>
                             )}
                             <li>
-                              <a
+                              <div
                                 data-toggle="tooltip" 
-                                title="Document"
-                                className="btn btn-primary btn-sm"
+                                title="Photos"
+                                className="ml-2"
                                 onClick={() => {
                                   this.props.onSiteClick &&
                                     this.props.onSiteClick(item.id, item.site_coord);
                                   this.onSiteDocuments(item.id);
                                 }}
                               >
-                                <DocumentsIcon color="white" />
-                              </a>
+                                <PhotoIcon size={0.8} className="text-secondary inline-action" />
+                              </div>
                             </li>
                             <li>
-                              <a
+                              <div
+                                data-toggle="tooltip" 
+                                title="Document"
+                                className="ml-2"
+                                onClick={() => {
+                                  this.props.onSiteClick &&
+                                    this.props.onSiteClick(item.id, item.site_coord);
+                                  this.onSiteDocuments(item.id);
+                                }}
+                              >
+                                <DocumentsIcon size={0.8} className="text-secondary inline-action" />
+                              </div>
+                            </li>
+                            <li>
+                              <div
                                 data-toggle="tooltip" 
                                 title="Animaux"
-                                className="btn btn-primary btn-sm"
+                                className="ml-2"
                                 onClick={() => {
                                   this.props.onSiteClick &&
                                     this.props.onSiteClick(item.id, item.site_coord);
                                   this.onSiteCauses(item.id);
                                 }}
                               >
-                                <CauseIcon color="white" />
-                              </a>
+                                <CauseIcon size={0.8} className="text-secondary inline-action" />
+                              </div>
                             </li>
                           </ul>
                         </div>

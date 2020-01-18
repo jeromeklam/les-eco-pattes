@@ -1,21 +1,11 @@
 import React, { Component } from 'react';
 import Icon from '@mdi/react';
-import {
-  mdiDelete
-} from '@mdi/js';
+import { mdiDelete as myIcon } from '@mdi/js';
 
 export default class DelOne extends Component {
-  static propTypes = {
-
-  };
+  static propTypes = {};
 
   render() {
-    return (
-      <Icon 
-        path={mdiDelete}
-        size={1}
-        color={this.props.color}
-      />
-    );
+    return <Icon path={myIcon} size={1} {...this.props} />;
   }
 }

@@ -6,7 +6,6 @@ import * as actions from './redux/actions';
 import { buildModel } from 'freejsonapi';
 import { ResponsiveList, ResponsiveQuickSearch } from 'freeassofront';
 import { causeTypeAsOptions } from '../cause-type/functions';
-import { siteAsOptions } from '../site/functions';
 import {
   AddOne as AddOneIcon,
   GetOne as GetOneIcon,
@@ -21,6 +20,7 @@ import {
   Sort as SortNoneIcon,
   Search as SearchIcon,
 } from '../icons';
+import { deleteSuccess, deleteError } from '../ui';
 
 export class List extends Component {
   static propTypes = {
@@ -65,7 +65,16 @@ export class List extends Component {
   }
 
   onDelOne(id) {
-    this.props.actions.delOne(id).then(result => this.props.actions.loadMore({}, true));
+    this.props.actions
+      .delOne(id)
+      .then(result => {
+        this.props.actions.loadMore({}, true);
+        deleteSuccess();
+      })
+      .catch(errors => {
+        // @todo display errors to fields
+        deleteError();
+      });
   }
 
   onReload(event) {
@@ -142,6 +151,7 @@ export class List extends Component {
         onClick: this.onClearFilters,
         theme: 'secondary',
         icon: <FilterClearIcon color="white" />,
+        role: 'OTHER',
       },
       {
         name: 'create',
@@ -149,6 +159,7 @@ export class List extends Component {
         onClick: this.onCreate,
         theme: 'primary',
         icon: <AddOneIcon color="white" />,
+        role: 'CREATE',
       },
     ];
     const inlineActions = [
@@ -158,6 +169,7 @@ export class List extends Component {
         onClick: this.onGetOne,
         theme: 'secondary',
         icon: <GetOneIcon color="white" />,
+        role: 'MODIFY',
       },
       {
         name: 'delete',
@@ -165,6 +177,7 @@ export class List extends Component {
         onClick: this.onDelOne,
         theme: 'warning',
         icon: <DelOneIcon color="white" />,
+        role: 'DELETE',
       },
     ];
     const cols = [
@@ -218,6 +231,17 @@ export class List extends Component {
           options: causeTypeAsOptions(this.props.causeType.items),
         },
       },
+      {
+        name: 'site',
+        label: 'Site',
+        col: 'site.site_name',
+        size: '0',
+        mob_size: '0',
+        hidden: true,
+        filterable: {
+          type: 'text',
+        },
+      },
     ];
     // L'affichage, items, loading, loadMoreError
     let search = '';
@@ -235,10 +259,11 @@ export class List extends Component {
         icon={<SearchIcon className="text-secondary"/>}
       />
     );
+    console.log(this.props.cause.filters, this.props.cause.filters.isEmpty());
     const filterIcon = this.props.cause.filters.isEmpty() ? (
-      <FilterIcon color="white" />
+      <FilterIcon className="text-light" />
     ) : (
-      <FilterFullIcon color="white" />
+      <FilterFullIcon className="text-light" />
     );
     return (
       <ResponsiveList
