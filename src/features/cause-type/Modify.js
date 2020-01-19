@@ -55,7 +55,7 @@ export class Modify extends Component {
     // Conversion des données en objet pour le service web
     let obj = getJsonApi(datas);
     this.props.actions
-      .updateOne(this.state.causeTypeId, obj)
+      .updateOne(obj)
       .then(result => {
         modifySuccess();
         // propagateModel est ajouté aux actions en bas de document
@@ -80,8 +80,9 @@ export class Modify extends Component {
                 item={item}
                 datas={this.props.data.items}
                 config={this.props.config.items}
-                causeMainType={this.props.causeMainType.items}
+                causeMainTypes={this.props.causeMainType.items}
                 properties={this.props.causeType.properties}
+                errors={this.props.causeType.updateOneError}
                 onSubmit={this.onSubmit}
                 onCancel={this.onCancel}
               />

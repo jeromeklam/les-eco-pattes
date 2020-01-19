@@ -46,7 +46,7 @@ export class Modify extends Component {
     // Conversion des données en objet pour le service web
     let obj = getJsonApi(datas, 'FreeAsso_ClientCategory', this.state.clientCategoryId);
     this.props.actions
-      .updateOne(this.state.id, obj)
+      .updateOne(obj)
       .then(result => {
         modifySuccess();
         this.props.actions.propagateModel('FreeAsso_ClientCategory', result);
@@ -68,8 +68,12 @@ export class Modify extends Component {
             {item && (
               <Form 
                 item={item} 
-                onSubmit={this.onSubmit} 
-                onCancel={this.onCancel} 
+                datas={this.props.data.items}
+                config={this.props.config.items}
+                properties={this.props.clientCategory.properties}
+                errors={this.props.clientCategory.updateOneError}
+                onSubmit={this.onSubmit}
+                onCancel={this.onCancel}
               />
             )}
           </div>
@@ -82,6 +86,8 @@ export class Modify extends Component {
 function mapStateToProps(state) {
   return {
     clientCategory: state.clientCategory,
+    data: state.data,
+    config: state.config,
   };
 }
 

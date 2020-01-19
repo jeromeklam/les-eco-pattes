@@ -79,6 +79,7 @@ export class Modify extends Component {
                 datas={this.props.data.items}
                 config={this.props.config.items}
                 properties={this.props.siteType.properties}
+                errors={this.props.siteType.updateOneError}
                 onSubmit={this.onSubmit}
                 onCancel={this.onCancel}
               />
