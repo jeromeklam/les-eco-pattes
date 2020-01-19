@@ -1,19 +1,22 @@
 import React from 'react';
-import { InputHidden, InputText, FormResponsive } from '../layout';
-import useForm from '../layout/useForm';
+import { InputHidden, InputText, InputSelect, ResponsiveForm } from 'freeassofront';
+import useForm from '../ui/useForm';
 
-/**
- * Functionnal Component
- */
 export default function Form(props) {
-  const { values, handleChange, handleSubmit, handleCancel } = useForm(
+  const { values, handleChange, handleSubmit, handleCancel, getErrorMessage } = useForm(
     props.item,
     '',
     props.onSubmit,
     props.onCancel,
+    props.errors,
   );
   return (
-    <FormResponsive title="Espèce" onSubmit={handleSubmit} onCancel={handleCancel}>
+    <ResponsiveForm 
+      className=""
+      title="Espèce" 
+      onSubmit={handleSubmit} 
+      onCancel={handleCancel}
+    >
       <div className="card-body">
         <InputHidden name="id" id="id" value={values.id} />
         <InputText
@@ -22,8 +25,9 @@ export default function Form(props) {
           required={true}
           value={values.camt_name}
           onChange={handleChange}
+          error={getErrorMessage("camt_name")}
         />
       </div>
-    </FormResponsive>
+    </ResponsiveForm>
   );
 }

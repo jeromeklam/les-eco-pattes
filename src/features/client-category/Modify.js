@@ -4,8 +4,9 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as actions from './redux/actions';
 import { withRouter } from 'react-router-dom';
-import { getJsonApi, propagateModel } from '../../common';
-import { LoadingData } from '../layout';
+import { propagateModel } from '../../common';
+import { getJsonApi } from 'freejsonapi';
+import { CenteredLoading9X9, modifySuccess, modifyError } from '../ui';
 import Form from './Form';
 
 export class Modify extends Component {
@@ -17,7 +18,7 @@ export class Modify extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      id: this.props.match.params.id || false,
+      clientCategoryId: this.props.match.params.id || false,
       item: false,
     };
     this.onSubmit = this.onSubmit.bind(this);
@@ -25,7 +26,7 @@ export class Modify extends Component {
   }
 
   componentDidMount() {
-    this.props.actions.loadOne(this.state.id).then(result => {
+    this.props.actions.loadOne(this.state.clientCategoryId).then(result => {
       const item = this.props.clientCategory.loadOneItem;
       this.setState({ item: item });
     });
@@ -43,18 +44,16 @@ export class Modify extends Component {
    */
   onSubmit(datas = {}) {
     // Conversion des données en objet pour le service web
-    let obj = getJsonApi(datas, 'FreeAsso_ClientCategory', this.state.id);
+    let obj = getJsonApi(datas, 'FreeAsso_ClientCategory', this.state.clientCategoryId);
     this.props.actions
       .updateOne(this.state.id, obj)
       .then(result => {
-        // @Todo propagate result to store
-        // propagateModel est ajouté aux actions en bas de document
+        modifySuccess();
         this.props.actions.propagateModel('FreeAsso_ClientCategory', result);
         this.props.history.push('/client-category');
       })
       .catch(errors => {
-        // @todo display errors to fields
-        console.log(errors);
+        modifyError();
       });
   }
 
@@ -63,10 +62,16 @@ export class Modify extends Component {
     return (
       <div className="client-category-modify global-card">
         {this.props.clientCategory.loadOnePending ? (
-          <LoadingData />
+          <CenteredLoading9X9 />
         ) : (
           <div>
-            {item && <Form item={item} onSubmit={this.onSubmit} onCancel={this.onCancel} />}
+            {item && (
+              <Form 
+                item={item} 
+                onSubmit={this.onSubmit} 
+                onCancel={this.onCancel} 
+              />
+            )}
           </div>
         )}
       </div>
@@ -74,14 +79,12 @@ export class Modify extends Component {
   }
 }
 
-/* istanbul ignore next */
 function mapStateToProps(state) {
   return {
     clientCategory: state.clientCategory,
   };
 }
 
-/* istanbul ignore next */
 function mapDispatchToProps(dispatch) {
   return {
     actions: bindActionCreators({ ...actions, propagateModel }, dispatch)

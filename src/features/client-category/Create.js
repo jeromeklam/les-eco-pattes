@@ -4,8 +4,8 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as actions from './redux/actions';
 import { withRouter } from 'react-router-dom';
-import { getJsonApi } from '../../common';
-import { LoadingData } from '../layout';
+import { getJsonApi } from 'freejsonapi';
+import { CenteredLoading9X9, createSuccess, createError } from '../ui';
 import Form from './Form';
 
 export class Create extends Component {
@@ -17,7 +17,7 @@ export class Create extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      id: 0,
+      clientCategoryId: 0,
       item: false,
     };
     /**
@@ -32,7 +32,7 @@ export class Create extends Component {
      *  En async on va demander le chargement des données
      *  Lorsque fini le store sera modifié
      */
-    this.props.actions.loadOne(this.state.id).then(result => {
+    this.props.actions.loadOne(this.state.clientCategoryId).then(result => {
       const item = this.props.clientCategory.loadOneItem;
       this.setState({ item: item });
     });
@@ -54,16 +54,16 @@ export class Create extends Component {
    */
   onSubmit(datas = {}) {
     // Conversion des données en objet pour le service web
-    let obj = getJsonApi(datas, 'FreeAsso_ClientCategory', this.state.id);
+    let obj = getJsonApi(datas, 'FreeAsso_ClientCategory', this.state.clientCategoryId);
     this.props.actions
       .createOne(obj)
       .then(result => {
+        createSuccess();
         this.props.actions.clearItems();
         this.props.history.push('/client-category');
       })
       .catch(errors => {
-        // @todo display errors to fields
-        console.log(errors);
+        createError();
       });
   }
 
@@ -72,10 +72,20 @@ export class Create extends Component {
     return (
       <div className="client-category-create global-card">
         {this.props.clientCategory.loadOnePending ? (
-          <LoadingData />
+          <CenteredLoading9X9 />
         ) : (
           <div>
-            {item && <Form item={item} onSubmit={this.onSubmit} onCancel={this.onCancel} />}
+            {item && (
+              <Form 
+                item={item} 
+                datas={this.props.data.items}
+                config={this.props.config.items}
+                properties={this.props.clientCategory.properties}
+                errors={this.props.clientCategory.createOneError}
+                onSubmit={this.onSubmit} 
+                onCancel={this.onCancel} 
+              />
+            )}
           </div>
         )}
       </div>
@@ -83,14 +93,14 @@ export class Create extends Component {
   }
 }
 
-/* istanbul ignore next */
 function mapStateToProps(state) {
   return {
     clientCategory: state.clientCategory,
+    data: state.data,
+    config: state.config,
   };
 }
 
-/* istanbul ignore next */
 function mapDispatchToProps(dispatch) {
   return {
     actions: bindActionCreators({ ...actions }, dispatch)

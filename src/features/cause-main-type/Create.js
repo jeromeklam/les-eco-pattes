@@ -3,9 +3,9 @@ import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as actions from './redux/actions';
-import { getJsonApi, propagateModel } from '../../common';
 import { withRouter } from 'react-router-dom';
-import { LoadingData } from '../layout';
+import { getJsonApi } from 'freejsonapi';
+import { CenteredLoading9X9, createSuccess, createError } from '../ui';
 import Form from './Form';
 
 export class Create extends Component {
@@ -20,7 +20,7 @@ export class Create extends Component {
      * On récupère l'id et l'élément à afficher
      */
     this.state = {
-      id: 0,
+      causeMainTypeId: 0,
       item: false,
     };
     /**
@@ -35,9 +35,8 @@ export class Create extends Component {
      *  En async on va demander le chargement des données
      *  Lorsque fini le store sera modifié
      */
-    this.props.actions.loadOne(this.state.id).then(result => {
+    this.props.actions.loadOne(this.state.causeMainTypeId).then(result => {
       const item = this.props.causeMainType.loadOneItem;
-      console.log(item);
       this.setState({ item: item });
     });
   }
@@ -54,29 +53,38 @@ export class Create extends Component {
    */
   onSubmit(datas = {}) {
     // Conversion des données en objet pour le service web
-    let obj = getJsonApi(datas, 'FreeAsso_CauseMainType', this.state.id);
+    let obj = getJsonApi(datas, 'FreeAsso_CauseMainType', this.state.causeMainTypeId);
     this.props.actions
       .createOne(obj)
       .then(result => {
+        createSuccess();
         this.props.actions.clearItems();
         this.props.history.push('/cause-main-type');
       })
       .catch(errors => {
-        // @todo display errors to fields
-        console.log(errors);
+        createError();
       });
   }
 
   render() {
     const item = this.state.item;
-    console.log(item);
     return (
       <div className="cause-main-type-modify global-card">
         {this.props.causeMainType.loadOnePending ? (
-          <LoadingData />
+          <CenteredLoading9X9 />
         ) : (
           <div>
-            {item && <Form item={item} onSubmit={this.onSubmit} onCancel={this.onCancel} />}
+            {item && (
+              <Form 
+                item={item} 
+                datas={this.props.data.items}
+                config={this.props.config.items}
+                properties={this.props.causeMainType.properties}
+                errors={this.props.causeMainType.createOneError}
+                onSubmit={this.onSubmit} 
+                onCancel={this.onCancel}
+              />
+            )}
           </div>
         )}
       </div>
@@ -84,17 +92,17 @@ export class Create extends Component {
   }
 }
 
-/* istanbul ignore next */
 function mapStateToProps(state) {
   return {
     causeMainType: state.causeMainType,
+    ata: state.data,
+    config: state.config,
   };
 }
 
-/* istanbul ignore next */
 function mapDispatchToProps(dispatch) {
   return {
-    actions: bindActionCreators({ ...actions, propagateModel }, dispatch),
+    actions: bindActionCreators({ ...actions }, dispatch),
   };
 }
 

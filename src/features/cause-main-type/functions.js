@@ -1,12 +1,5 @@
 import { buildModel } from '../../common';
 
-/**
- * Export all cause main types as an array of value=>label
- * 
- * @param {object} object
- * 
- * @return {array}
- */
 export function causeMainTypeAsOptions(object) {
   let arr   = [];
   let items = buildModel(

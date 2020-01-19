@@ -18,7 +18,7 @@ export class Modify extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      id: this.props.match.params.id || false,
+      causeTypeId: this.props.match.params.id || false,
       item: false,
     };
     this.onSubmit = this.onSubmit.bind(this);
@@ -26,7 +26,7 @@ export class Modify extends Component {
   }
 
   componentDidMount() {
-    this.props.actions.loadOne(this.state.id).then(result => {
+    this.props.actions.loadOne(this.state.causeTypeId).then(result => {
       const item = this.props.causeType.loadOneItem;
       this.setState({ item: item });
     });
@@ -55,25 +55,20 @@ export class Modify extends Component {
     // Conversion des données en objet pour le service web
     let obj = getJsonApi(datas);
     this.props.actions
-      .updateOne(this.state.id, obj)
+      .updateOne(this.state.causeTypeId, obj)
       .then(result => {
-        // @Todo propagate result to store
+        modifySuccess();
         // propagateModel est ajouté aux actions en bas de document
         this.props.actions.propagateModel('FreeAsso_CauseType', result);
         this.props.history.push('/cause-type');
       })
       .catch(errors => {
-        // @todo display errors to fields
-        console.log(errors);
+        modifyError();
       });
   }
 
   render() {
     const item = this.state.item;
-    //const options = modelsToSelect(this.props.causeMainType.items, 'id', 'camt_name');
-    //{causeMainType={options}
-    // properties={this.props.causeType.properties}
-    //site_types={this.props.causeType.items}
     return (
       <div className="cause-type-modify global-card">
         {this.props.causeType.loadOnePending ? (
@@ -85,6 +80,8 @@ export class Modify extends Component {
                 item={item}
                 datas={this.props.data.items}
                 config={this.props.config.items}
+                causeMainType={this.props.causeMainType.items}
+                properties={this.props.causeType.properties}
                 onSubmit={this.onSubmit}
                 onCancel={this.onCancel}
               />
@@ -98,8 +95,10 @@ export class Modify extends Component {
 
 function mapStateToProps(state) {
   return {
-    causeMainType: state.causeMainType,
     causeType: state.causeType,
+    data: state.data,
+    config: state.config,
+    causeMainType: state.causeMainType,
   };
 }
 
