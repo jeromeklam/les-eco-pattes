@@ -81,12 +81,17 @@ export default function Form(props) {
               />
             </div>
             <div className="col-18">
-              <InputText
+              <InputSelect
                 label="M/F"
                 name="cau_sex"
                 id="cau_sex"
                 value={values.cau_sex}
                 onChange={handleChange}
+                options={[
+                  { label: 'Femelle', value: 'F' },
+                  { label: 'Mâle', value: 'M' },
+                  { label: 'Indéfini', value: 'OTHER' },
+                ]}
                 labelTop={true}
                 error={getErrorMessage('cau_sex')}
               />

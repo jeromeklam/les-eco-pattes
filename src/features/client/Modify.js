@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import * as actions from './redux/actions';
 import { getJsonApi } from 'freejsonapi';
 import { propagateModel } from '../../common';
-import { Loading9x9 } from 'freeassofront';
+import { CenteredLoading9X9 } from '../ui';
 import Form from './Form';
 
 export class Modify extends Component {
@@ -74,7 +74,7 @@ export class Modify extends Component {
     return (
       <div className="client-modify global-card">
         {this.props.client.loadOnePending ? (
-          <Loading9x9 />
+          <CenteredLoading9X9 />
         ) : (
           <div>
             {item && (
@@ -82,6 +82,7 @@ export class Modify extends Component {
                 item={item}
                 client_types={this.props.clientType.items}
                 client_categories={this.props.clientCategory.items}
+                errors={this.props.client.updateOneError}
                 onSubmit={this.onSubmit}
                 onCancel={this.onCancel}
               />

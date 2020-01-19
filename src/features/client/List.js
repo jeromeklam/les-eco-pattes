@@ -143,6 +143,7 @@ export class List extends Component {
         onClick: this.onCreate,
         theme: 'primary',
         icon: <AddOneIcon color="white" />,
+        role: 'CREATE',
       },
     ];
     const inlineActions = [
@@ -152,6 +153,7 @@ export class List extends Component {
         onClick: this.onGetOne,
         theme: 'secondary',
         icon: <GetOneIcon color="white" />,
+        role: 'MODIFY',
       },
       {
         name: 'delete',
@@ -159,6 +161,7 @@ export class List extends Component {
         onClick: this.onDelOne,
         theme: 'warning',
         icon: <DelOneIcon color="white" />,
+        role: 'DELETE',
       },
     ];
     const cols = [

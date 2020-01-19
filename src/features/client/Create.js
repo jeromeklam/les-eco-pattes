@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as actions from './redux/actions';
 import { getJsonApi } from 'freejsonapi';
-import { Loading9x9 } from 'freeassofront';
+import { CenteredLoading9X9 } from '../ui';
 import Form from './Form';
 
 export class Create extends Component {
@@ -71,7 +71,7 @@ export class Create extends Component {
     return (
       <div className="client-create global-card">
         {this.props.client.loadOnePending ? (
-          <Loading9x9 />
+          <CenteredLoading9X9 />
         ) : (
           <div>
             {item && 
@@ -79,6 +79,7 @@ export class Create extends Component {
                 item={item} 
                 client_types={this.props.clientType.items}
                 client_categories={this.props.clientCategory.items}
+                errors={this.props.client.createOneError}
                 onSubmit={this.onSubmit} 
                 onCancel={this.onCancel} 
               />
