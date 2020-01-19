@@ -1,16 +1,23 @@
 import React from 'react';
-import { InputHidden, InputText, InputSelect, FormResponsive } from '../layout';
-import useForm from '../layout/useForm';
+import { InputHidden, InputText, InputSelect, ResponsiveForm } from 'freeassofront';
+import useForm from '../ui/useForm';
+import { causeMainTypeAsOptions } from '../cause-main-type/functions.js';
 
 export default function Form(props) {
-  const { values, handleChange, handleSubmit, handleCancel } = useForm(
+  const { values, handleChange, handleSubmit, handleCancel, getErrorMessage } = useForm(
     props.item,
     '',
     props.onSubmit,
     props.onCancel,
+    props.errors,
   );
   return (
-    <FormResponsive title="Race" onSubmit={handleSubmit} onCancel={handleCancel}>
+    <ResponsiveForm
+      className=""
+      title="Race" 
+      onSubmit={handleSubmit} 
+      onCancel={handleCancel}
+    >
       <div className="card-body">
         <InputHidden name="id" id="id" value={values.id} />
         <InputText
@@ -19,6 +26,7 @@ export default function Form(props) {
           id="caut_name"
           value={values.caut_name}
           onChange={handleChange}
+          error={getErrorMessage("caut_name")}
         />
         <InputSelect
           label="Espèce"
@@ -26,9 +34,10 @@ export default function Form(props) {
           id="cause_main_type.id"
           value={values.cause_main_type.id}
           onChange={handleChange}
-          options={props.causeMainType}
+          options={causeMainTypeAsOptions(props.cause_main_type)}
+          error={getErrorMessage("cause_main_type")}
         />
       </div>
-    </FormResponsive>
+    </ResponsiveForm>
   );
 }

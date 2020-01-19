@@ -15,7 +15,7 @@ export function updateQuickSearch(value) {
 export function reducer(state, action) {
   switch (action.type) {
     case CAUSE_TYPE_UPDATE_QUICK_SEARCH:
-    let filters = state.filters;
+      let filters = state.filters;
       filters.init(FILTER_MODE_OR, FILTER_OPER_LIKE);
       filters.setSearch(FILTER_SEARCH_QUICK);
       filters.addFilter('caut_name', action.value);

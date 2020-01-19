@@ -11,7 +11,7 @@ export function reducer(state, action) {
     case SITE_TYPE_INIT_SORT:
       return {
         ...state,
-        sort: [{ col: 'site_name', way: 'up' }],
+        sort: [{ col: 'sitt_name', way: 'up' }],
       };
 
     default:

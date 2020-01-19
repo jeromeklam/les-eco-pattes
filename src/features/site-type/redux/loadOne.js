@@ -1,9 +1,5 @@
-import {
-  freeAssoApi,
-  jsonApiNormalizer,
-  buildModel,
-  getPreviousNext,
-} from '../../../common';
+import { jsonApiNormalizer, buildModel } from 'freejsonapi';
+import { freeAssoApi, getPreviousNext } from '../../../common';
 import {
   SITE_TYPE_LOAD_ONE_BEGIN,
   SITE_TYPE_LOAD_ONE_SUCCESS,
@@ -42,8 +38,6 @@ export function loadOne(args = {}) {
   };
 }
 
-// Async action saves request error by default, this method is used to dismiss the error info.
-// If you don't want errors to be saved in Redux store, just ignore this method.
 export function dismissLoadOneError() {
   return {
     type: SITE_TYPE_LOAD_ONE_DISMISS_ERROR,

@@ -12,7 +12,7 @@ export function updateSort(col, way, pos = 9) {
 export function reducer(state, action) {
   switch (action.type) {
     case CLIENT_TYPE_UPDATE_SORT:
-    let sort = state.sort;
+      let sort = state.sort;
       let nSort = [];
       sort.forEach(elt => {
         if (elt.col !== action.col) {

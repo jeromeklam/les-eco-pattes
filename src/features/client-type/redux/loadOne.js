@@ -60,7 +60,7 @@ export function reducer(state, action) {
       let raw = null;
       let itemPrevNext = null;  
       let object = jsonApiNormalizer(action.data.data);
-      raw = buildModel(object, 'FreeAsso_Site', action.id);
+      raw = buildModel(object, 'FreeAsso_ClientType', action.id);
       item = buildModel(
           object,
           'FreeAsso_ClientType',

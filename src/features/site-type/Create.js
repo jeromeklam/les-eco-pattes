@@ -4,9 +4,9 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as actions from './redux/actions';
 import { withRouter } from 'react-router-dom';
-import { getJsonApi } from '../../common';
+import { getJsonApi } from 'freejsonapi';
+import { CenteredLoading9X9, createSuccess, createError } from '../ui';
 import Form from './Form';
-import { LoadingData } from '../layout';
 
 /**
  * Création d'un type de site
@@ -20,7 +20,7 @@ export class Create extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      id: 0,
+      siteTypeId: 0,
       item: false,
     };
     /**
@@ -35,7 +35,7 @@ export class Create extends Component {
      *  En async on va demander le chargement des données
      *  Lorsque fini le store sera modifié
      */
-    this.props.actions.loadOne(this.state.id).then(result => {
+    this.props.actions.loadOne(this.state.siteTypeId).then(result => {
       const item = this.props.siteType.loadOneItem;
       this.setState({ item: item });
     });
@@ -44,7 +44,10 @@ export class Create extends Component {
   /**
    * Sur annulation, on retourne à la liste
    */
-  onCancel() {
+  onCancel(event) {
+    if (event) {
+      event.preventDefault();
+    }
     this.props.history.push('/site-type');
   }
 
@@ -58,12 +61,12 @@ export class Create extends Component {
     this.props.actions
       .createOne(obj)
       .then(result => {
+        createSuccess();
         this.props.actions.clearItems();
         this.props.history.push('/site-type');
       })
       .catch(errors => {
-        // @todo display errors to fields
-        console.log(errors);
+        createError();
       });
   }
 
@@ -72,12 +75,16 @@ export class Create extends Component {
     return (
       <div className="site-type-create global-card">
         {this.props.siteType.loadOnePending ? (
-          <LoadingData />
+          <CenteredLoading9X9 />
         ) : (
           <div>
             {item && 
               <Form 
                 item={item} 
+                datas={this.props.data.items}
+                config={this.props.config.items}
+                properties={this.props.siteType.properties}
+                errors={this.props.siteType.createOneError}
                 onSubmit={this.onSubmit} 
                 onCancel={this.onCancel} 
               />
@@ -92,6 +99,8 @@ export class Create extends Component {
 function mapStateToProps(state) {
   return {
     siteType: state.siteType,
+    data: state.data,
+    config: state.config,
   };
 }
 

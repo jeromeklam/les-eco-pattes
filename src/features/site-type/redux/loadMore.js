@@ -46,14 +46,14 @@ export function loadMore(args = {}, reload = false) {
         const addUrl = objectToQueryString(params);
         const doRequest = freeAssoApi.get('/v1/asso/site_type' + addUrl, {});
         doRequest.then(
-          (res) => {
+          res => {
             dispatch({
               type: SITE_TYPE_LOAD_MORE_SUCCESS,
               data: res,
             });
             resolve(res);
           },
-          (err) => {
+          err => {
             dispatch({
               type: SITE_TYPE_LOAD_MORE_FAILURE,
               data: { error: err },
@@ -68,8 +68,6 @@ export function loadMore(args = {}, reload = false) {
   };
 }
 
-// Async action saves request error by default, this method is used to dismiss the error info.
-// If you don't want errors to be saved in Redux store, just ignore this method.
 export function dismissLoadMoreError() {
   return {
     type: SITE_TYPE_LOAD_MORE_DISMISS_ERROR,

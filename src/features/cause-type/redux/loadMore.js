@@ -67,8 +67,6 @@ export function loadMore(args = {}, reload = false) {
   };
 }
 
-// Async action saves request error by default, this method is used to dismiss the error info.
-// If you don't want errors to be saved in Redux store, just ignore this method.
 export function dismissLoadMoreError() {
   return {
     type: CAUSE_TYPE_LOAD_MORE_DISMISS_ERROR,

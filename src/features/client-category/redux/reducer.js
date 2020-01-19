@@ -13,6 +13,13 @@ import { reducer as clearItemsReducer } from './clearItems';
 import { reducer as createOneReducer } from './createOne';
 import { reducer as delOneReducer } from './delOne';
 import { reducer as updateOneReducer } from './updateOne';
+import { reducer as initSortReducer } from './initSort';
+import { reducer as setSortReducer } from './setSort';
+import { reducer as updateSortReducer } from './updateSort';
+import { reducer as initFiltersReducer } from './initFilters';
+import { reducer as setFiltersReducer } from './setFilters';
+import { reducer as updateQuickSearchReducer } from './updateQuickSearch';
+import { reducer as filterReducer } from './filter';
 
 const reducers = [
   loadMoreReducer,
@@ -21,6 +28,13 @@ const reducers = [
   createOneReducer,
   delOneReducer,
   updateOneReducer,
+  initSortReducer,
+  setSortReducer,
+  updateSortReducer,
+  initFiltersReducer,
+  setFiltersReducer,
+  updateQuickSearchReducer,
+  filterReducer,
 ];
 
 export default function reducer(state = initialState, action) {

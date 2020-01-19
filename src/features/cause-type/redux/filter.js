@@ -13,7 +13,7 @@ export function filter(args = {}) {
     });
 
     const promise = new Promise((resolve, reject) => {
-       const params = {
+      const params = {
         page: { number: getState().causeType.page_number, size: getState().causeType.page_size },
         filter: { 
           and: {
@@ -45,8 +45,6 @@ export function filter(args = {}) {
   };
 }
 
-// Async action saves request error by default, this method is used to dismiss the error info.
-// If you don't want errors to be saved in Redux store, just ignore this method.
 export function dismissFilterError() {
   return {
     type: CAUSE_TYPE_FILTER_DISMISS_ERROR,

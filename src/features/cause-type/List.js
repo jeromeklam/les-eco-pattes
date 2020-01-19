@@ -30,7 +30,7 @@ export class List extends Component {
     actions: PropTypes.object.isRequired,
   };
 
-constructor(props) {
+  constructor(props) {
     super(props);
     this.state = {
       timer: null,
@@ -81,7 +81,7 @@ constructor(props) {
     this.props.actions.loadMore({}, true);
   }
 
-onQuickSearch(quickSearch) {
+  onQuickSearch(quickSearch) {
     this.props.actions.updateQuickSearch(quickSearch);
     let timer = this.state.timer;
     if (timer) {
@@ -157,11 +157,6 @@ onQuickSearch(quickSearch) {
         icon: <AddOneIcon color="white" />,
       },
     ];
-
-    const cols = [
-      { name: "name", label: "Nom", col: "caut_name", size:"20", mob_size:"", title: true},
-      { name: "espece", label: "Espèce", col: "cause_main_type.camt_name", size:"10", mob_size:""}
-    ];
     const inlineActions = [
       {
         name: 'modify',
@@ -177,6 +172,10 @@ onQuickSearch(quickSearch) {
         theme: 'warning',
         icon: <DelOneIcon color="white" />,
       },
+    ];
+    const cols = [
+      { name: "name", label: "Nom", col: "caut_name", size:"20", mob_size:"", title: true},
+      { name: "espece", label: "Espèce", col: "cause_main_type.camt_name", size:"10", mob_size:""}
     ];
     // L'affichage, items, loading, loadMoreError
     let search = '';
