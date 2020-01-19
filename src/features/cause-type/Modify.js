@@ -4,8 +4,9 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as actions from './redux/actions';
 import { withRouter } from 'react-router-dom';
-import { getJsonApi, propagateModel, modelsToSelect } from '../../common';
-import { LoadingData } from '../layout';
+import { getJsonApi } from 'freejsonapi';
+import { propagateModel } from '../../common';
+import { CenteredLoading9X9, modifySuccess, modifyError } from '../ui';
 import Form from './Form';
 
 export class Modify extends Component {
@@ -31,19 +32,28 @@ export class Modify extends Component {
     });
   }
 
-  onCancel(event) {
-    if (event) {
-      event.preventDefault();
+  componentDidUpdate(prevProps, prevState) {
+    if (prevProps.match.params.cautId && this.props.match.params.cautId) {
+      if (prevProps.match.params.cautId !== this.props.match.params.cautId) {
+        this.setState({ cautId: this.props.match.params.cautId });
+        this.props.actions.loadOne(this.props.match.params.cautId).then(result => {
+          const item = this.props.causeType.loadOneItem;
+          this.setState({ item: item });
+        });
+      }
     }
+  }
+
+  onCancel() {
     this.props.history.push('/cause-type');
   }
 
   /**
    * Sur enregistrement, sauvegarde, update store et retour à la liste
    */
-  onSubmit(datas = {}) {
+  onSubmit(datas) {
     // Conversion des données en objet pour le service web
-    let obj = getJsonApi(datas, 'FreeAsso_CauseType', this.state.id);
+    let obj = getJsonApi(datas);
     this.props.actions
       .updateOne(this.state.id, obj)
       .then(result => {
@@ -60,16 +70,27 @@ export class Modify extends Component {
 
   render() {
     const item = this.state.item;
-    const options = modelsToSelect(this.props.causeMainType.items, 'id', 'camt_name');
+    //const options = modelsToSelect(this.props.causeMainType.items, 'id', 'camt_name');
+    //{causeMainType={options}
+    // properties={this.props.causeType.properties}
+    //site_types={this.props.causeType.items}
     return (
       <div className="cause-type-modify global-card">
         {this.props.causeType.loadOnePending ? (
-          <LoadingData />
+          <CenteredLoading9X9 />
         ) : (
           <div>
-            {item && <Form item={item} onSubmit={this.onSubmit} onCancel={this.onCancel} causeMainType={options} />}
+            {item && (
+              <Form
+                item={item}
+                datas={this.props.data.items}
+                config={this.props.config.items}
+                onSubmit={this.onSubmit}
+                onCancel={this.onCancel}
+              />
+            )}
           </div>
-        )}
+        )}  
       </div>
     );
   }

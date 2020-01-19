@@ -1,4 +1,5 @@
-import { freeAssoApi, jsonApiNormalizer, objectToQueryString } from '../../../common';
+import { freeAssoApi } from '../../../common';
+import { jsonApiNormalizer, objectToQueryString } from 'freejsonapi';
 import {
   CLIENT_TYPE_LOAD_MORE_INIT,
   CLIENT_TYPE_LOAD_MORE_BEGIN,
@@ -7,11 +8,8 @@ import {
   CLIENT_TYPE_LOAD_MORE_DISMISS_ERROR,
 } from './constants';
 
-// Rekit uses redux-thunk for async actions by default: https://github.com/gaearon/redux-thunk
-// If you prefer redux-saga, you can use rekit-plugin-redux-saga: https://github.com/supnate/rekit-plugin-redux-saga
 export function loadMore(args = {}, reload = false) {
   return (dispatch, getState) => {
-    // optionally you can have getState as the second argument
     const loaded = getState().clientType.loadMoreFinish;
     const loading = getState().clientType.loadMorePending;
     if (!loading && (!loaded || reload)) {
@@ -25,18 +23,25 @@ export function loadMore(args = {}, reload = false) {
         });
       }
       const promise = new Promise((resolve, reject) => {
+        let filters = getState().site.filters.asJsonApiObject()
         let params = {
-          page: {
-            number: getState().clientType.page_number,
-            size: getState().clientType.page_size,
-          },
+          page: { number: getState().clientType.page_number, size: getState().clientType.page_size },
+          ...filters
         };
-        if (args && Object.keys(args).length > 0 && args !== '') {
-          params.filter = {
-            and: {
-              clit_name: args,
-            },
-          };
+        let sort = '';
+        getState().site.sort.forEach(elt => {
+          let add = elt.col;
+          if (elt.way === 'down') {
+            add = '-' + add;
+          }
+          if (sort === '') {
+            sort = add;
+          } else {
+            sort = sort + ',' + add;
+          }
+        });
+        if (sort !== '') {
+          params.sort = sort;
         }
         const addUrl = objectToQueryString(params);
         const doRequest = freeAssoApi.get('/v1/asso/client_type' + addUrl, {});
@@ -48,7 +53,6 @@ export function loadMore(args = {}, reload = false) {
             });
             resolve(res);
           },
-          // Use rejectHandler as the second argument so that render errors won't be caught.
           err => {
             dispatch({
               type: CLIENT_TYPE_LOAD_MORE_FAILURE,
@@ -63,8 +67,6 @@ export function loadMore(args = {}, reload = false) {
   };
 }
 
-// Async action saves request error by default, this method is used to dismiss the error info.
-// If you don't want errors to be saved in Redux store, just ignore this method.
 export function dismissLoadMoreError() {
   return {
     type: CLIENT_TYPE_LOAD_MORE_DISMISS_ERROR,
