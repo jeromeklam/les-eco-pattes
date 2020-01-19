@@ -9,6 +9,7 @@ export default function Form(props) {
     '',
     props.onSubmit,
     props.onCancel,
+    null,
     props.errors,
   );
   return (
@@ -32,9 +33,9 @@ export default function Form(props) {
           label="Espèce"
           name="cause_main_type.id"
           id="cause_main_type.id"
-          value={values.cause_main_type.id}
+          value={values.cause_main_type ? values.cause_main_type.id : null}
           onChange={handleChange}
-          options={causeMainTypeAsOptions(props.cause_main_type)}
+          options={causeMainTypeAsOptions(props.causeMainTypes)}
           error={getErrorMessage("cause_main_type")}
         />
       </div>
