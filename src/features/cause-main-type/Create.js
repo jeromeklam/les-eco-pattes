@@ -95,7 +95,7 @@ export class Create extends Component {
 function mapStateToProps(state) {
   return {
     causeMainType: state.causeMainType,
-    ata: state.data,
+    data: state.data,
     config: state.config,
   };
 }

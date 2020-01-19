@@ -1,5 +1,5 @@
 import React from 'react';
-import { InputHidden, InputText, InputSelect, ResponsiveForm } from 'freeassofront';
+import { InputHidden, InputText, ResponsiveForm } from 'freeassofront';
 import useForm from '../ui/useForm';
 
 export default function Form(props) {
@@ -8,6 +8,7 @@ export default function Form(props) {
     '',
     props.onSubmit,
     props.onCancel,
+    null,
     props.errors,
   );
   return (

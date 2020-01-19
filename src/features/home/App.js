@@ -94,13 +94,6 @@ const options = [
     options: [
       {
         icon: null,
-        label: 'Sites',
-        url: '/site',
-        role: 'NAV',
-        position: 1,
-      },
-      {
-        icon: null,
         label: 'Types de site',
         url: '/site-type',
         role: 'NAV',
