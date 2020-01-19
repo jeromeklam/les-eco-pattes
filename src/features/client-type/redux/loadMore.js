@@ -23,13 +23,13 @@ export function loadMore(args = {}, reload = false) {
         });
       }
       const promise = new Promise((resolve, reject) => {
-        let filters = getState().site.filters.asJsonApiObject()
+        let filters = getState().clientType.filters.asJsonApiObject()
         let params = {
           page: { number: getState().clientType.page_number, size: getState().clientType.page_size },
           ...filters
         };
         let sort = '';
-        getState().site.sort.forEach(elt => {
+        getState().clientType.sort.forEach(elt => {
           let add = elt.col;
           if (elt.way === 'down') {
             add = '-' + add;

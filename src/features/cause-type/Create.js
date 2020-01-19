@@ -4,8 +4,8 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as actions from './redux/actions';
 import { withRouter } from 'react-router-dom';
-import { getJsonApi, modelsToSelect } from '../../common';
-import { LoadingData } from '../layout';
+import { getJsonApi } from 'freejsonapi';
+import { CenteredLoading9X9, createSuccess, createError } from '../ui';
 import Form from './Form';
 
 export class Create extends Component {
@@ -17,7 +17,7 @@ export class Create extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      id: 0,
+      causeTypeId: 0,
       item: false,
     };
     /**
@@ -32,7 +32,7 @@ export class Create extends Component {
      *  En async on va demander le chargement des données
      *  Lorsque fini le store sera modifié
      */
-    this.props.actions.loadOne(this.state.id).then(result => {
+    this.props.actions.loadOne(this.state.causeTypeId).then(result => {
       const item = this.props.causeType.loadOneItem;
       this.setState({ item: item });
     });
@@ -54,29 +54,39 @@ export class Create extends Component {
    */
   onSubmit(datas = {}) {
     // Conversion des données en objet pour le service web
-    let obj = getJsonApi(datas, 'FreeAsso_CauseType', this.state.id);
+    let obj = getJsonApi(datas, 'FreeAsso_CauseType', this.state.causeTypeId);
     this.props.actions
       .createOne(obj)
       .then(result => {
+        createSuccess();
         this.props.actions.clearItems();
         this.props.history.push('/cause-type');
       })
       .catch(errors => {
-        // @todo display errors to fields
-        console.log(errors);
+        createError();
       });
   }
 
   render() {
     const item = this.state.item;
-    const options = modelsToSelect(this.props.causeMainType.items, 'id', 'camt_name');
     return (
       <div className="cause-type-create global-card">
         {this.props.causeType.loadOnePending ? (
-          <LoadingData />
+          <CenteredLoading9X9 />
         ) : (
           <div>
-            {item && <Form item={item} onSubmit={this.onSubmit} onCancel={this.onCancel} causeMainType={options} />}
+            {item && (
+              <Form 
+                item={item} 
+                datas={this.props.data.items}
+                config={this.props.config.items}
+                causeMainType={this.props.causeMainType.items}
+                properties={this.props.causeType.properties}
+                errors={this.props.causeType.createOneError}
+                onSubmit={this.onSubmit} 
+                onCancel={this.onCancel} 
+              />
+            )}
           </div>
         )}
       </div>
@@ -86,8 +96,10 @@ export class Create extends Component {
 
 function mapStateToProps(state) {
   return {
-    causeMainType: state.causeMainType,
     causeType: state.causeType,
+    data: state.data,
+    config: state.config,
+    causeMainType: state.causeMainType,
   };
 }
 

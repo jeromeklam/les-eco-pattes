@@ -1,8 +1,5 @@
-import {
-  freeAssoApi,
-  jsonApiNormalizer,
-  jsonApiUpdate
-} from '../../../common';
+import { jsonApiNormalizer, jsonApiUpdate } from 'freejsonapi';
+import { freeAssoApi } from '../../../common';
 import {  
   CAUSE_TYPE_UPDATE_ONE_BEGIN,
   CAUSE_TYPE_UPDATE_ONE_SUCCESS,
@@ -27,7 +24,6 @@ export function updateOne(args = {}) {
           });
           resolve(res);
         },
-        // Use rejectHandler as the second argument so that render errors won't be caught.
         (err) => {
           dispatch({
             type: CAUSE_TYPE_UPDATE_ONE_FAILURE,
@@ -42,8 +38,6 @@ export function updateOne(args = {}) {
   };
 }
 
-// Async action saves request error by default, this method is used to dismiss the error info.
-// If you don't want errors to be saved in Redux store, just ignore this method.
 export function dismissUpdateOneError() {
   return {
     type: CAUSE_TYPE_UPDATE_ONE_DISMISS_ERROR,

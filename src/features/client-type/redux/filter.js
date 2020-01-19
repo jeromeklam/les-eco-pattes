@@ -16,7 +16,7 @@ export function filter(args = {}) {
         page: { number: getState().clit.page_number, size: getState().clit.page_size },
         filter: { 
           and: {
-            site_name: args
+            clit_name: args
           }
         }
       };

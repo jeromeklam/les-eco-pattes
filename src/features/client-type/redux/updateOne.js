@@ -1,8 +1,5 @@
-import {
-  freeAssoApi,
-  jsonApiNormalizer,
-  jsonApiUpdate
-} from '../../../common';
+import { jsonApiNormalizer, jsonApiUpdate } from 'freejsonapi';
+import { freeAssoApi } from '../../../common';
 import {
   CLIENT_TYPE_UPDATE_ONE_BEGIN,
   CLIENT_TYPE_UPDATE_ONE_SUCCESS,
@@ -27,7 +24,6 @@ export function updateOne(args = {}) {
           });
           resolve(res);
         },
-        // Use rejectHandler as the second argument so that render errors won't be caught.
         (err) => {
           dispatch({
             type: CLIENT_TYPE_UPDATE_ONE_FAILURE,
