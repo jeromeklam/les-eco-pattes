@@ -42,3 +42,4 @@ export { default as Photo } from './Photo';
 export { default as View } from './View';
 export { default as Download } from './Download';
 export { default as Upload } from './Upload';
+export { default as Document } from './Document';

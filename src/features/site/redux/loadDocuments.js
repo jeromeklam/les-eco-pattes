@@ -1,22 +1,22 @@
 import { freeAssoApi } from '../../../common';
 import { jsonApiNormalizer, objectToQueryString, buildModel } from 'freejsonapi';
 import {
-  SITE_LOAD_PHOTOS_BEGIN,
-  SITE_LOAD_PHOTOS_SUCCESS,
-  SITE_LOAD_PHOTOS_FAILURE,
-  SITE_LOAD_PHOTOS_DISMISS_ERROR,
+  SITE_LOAD_DOCUMENTS_BEGIN,
+  SITE_LOAD_DOCUMENTS_SUCCESS,
+  SITE_LOAD_DOCUMENTS_FAILURE,
+  SITE_LOAD_DOCUMENTS_DISMISS_ERROR,
 } from './constants';
 
-export function loadPhotos(args = {}) {
+export function loadDocuments(args = {}) {
   return (dispatch) => {
     dispatch({
-      type: SITE_LOAD_PHOTOS_BEGIN,
+      type: SITE_LOAD_DOCUMENTS_BEGIN,
     });
     const promise = new Promise((resolve, reject) => {
       const filter = {
         filter: {
           site_id: args,
-          sitm_type: 'PHOTO',
+          sitm_type: 'OTHER',
         }
       }
       const addUrl = objectToQueryString(filter);
@@ -24,7 +24,7 @@ export function loadPhotos(args = {}) {
       doRequest.then(
         (res) => {
           dispatch({
-            type: SITE_LOAD_PHOTOS_SUCCESS,
+            type: SITE_LOAD_DOCUMENTS_SUCCESS,
             data: res,
             site_id: args,
           });
@@ -32,7 +32,7 @@ export function loadPhotos(args = {}) {
         },
         (err) => {
           dispatch({
-            type: SITE_LOAD_PHOTOS_FAILURE,
+            type: SITE_LOAD_DOCUMENTS_FAILURE,
             data: { error: err },
           });
           reject(err);
@@ -43,25 +43,25 @@ export function loadPhotos(args = {}) {
   };
 }
 
-export function dismissLoadPhotosError() {
+export function dismissLoadDocumentsError() {
   return {
-    type: SITE_LOAD_PHOTOS_DISMISS_ERROR,
+    type: SITE_LOAD_DOCUMENTS_DISMISS_ERROR,
   };
 }
 
 export function reducer(state, action) {
   switch (action.type) {
-    case SITE_LOAD_PHOTOS_BEGIN:
+    case SITE_LOAD_DOCUMENTS_BEGIN:
       // Just after a request is sent
       return {
         ...state,
-        loadPhotosPending: true,
-        loadPhotosError: null,
-        photos: [],
+        loadDocumentsPending: true,
+        loadDocumentsError: null,
+        documents: [],
         currentItem: null,
       };
 
-    case SITE_LOAD_PHOTOS_SUCCESS:
+    case SITE_LOAD_DOCUMENTS_SUCCESS:
       // The request is success
       let list = {};
       let nbre = 0;
@@ -80,26 +80,26 @@ export function reducer(state, action) {
       let currentItem = buildModel(state.items, 'FreeAsso_Site', action.site_id);
       return {
         ...state,
-        loadPhotosPending: false,
-        loadPhotosError: null,
-        loadPhotosFinish: true,
-        photos: list,
+        loadDocumentsPending: false,
+        loadDocumentsError: null,
+        loadDocumentsFinish: true,
+        documents: list,
         currentItem: currentItem,
       };
 
-    case SITE_LOAD_PHOTOS_FAILURE:
+    case SITE_LOAD_DOCUMENTS_FAILURE:
       // The request is failed
       return {
         ...state,
-        loadPhotosPending: false,
-        loadPhotosError: action.data.error,
+        loadDocumentsPending: false,
+        loadDocumentsError: action.data.error,
       };
 
-    case SITE_LOAD_PHOTOS_DISMISS_ERROR:
+    case SITE_LOAD_DOCUMENTS_DISMISS_ERROR:
       // Dismiss the request failure error
       return {
         ...state,
-        loadPhotosError: null,
+        loadDocumentsError: null,
       };
 
     default:

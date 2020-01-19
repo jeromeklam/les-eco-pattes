@@ -1,4 +1,4 @@
-import { freeAssoApi, jsonApiNormalizer, jsonApiUpdate } from '../../../common';
+import { jsonApiNormalizer, buildModel, jsonApiUpdate } from 'freejsonapi';
 import {
   SITE_UPDATE_ONE_BEGIN,
   SITE_UPDATE_ONE_SUCCESS,
@@ -6,6 +6,7 @@ import {
   SITE_UPDATE_ONE_DISMISS_ERROR,
   SITE_UPDATE_ONE_UPDATE,
 } from './constants';
+import { freeAssoApi } from '../../../common';
 
 export function updateOne(args = {}) {
   return dispatch => {

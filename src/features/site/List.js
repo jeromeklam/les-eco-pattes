@@ -20,9 +20,10 @@ import {
   Sort as SortNoneIcon,
   Search as SearchIcon,
   Photo as PhotoIcon,
+  Document as DocumentIcon,
 } from '../icons';
 import { deleteSuccess, deleteError } from '../ui';
-import { InlineCauses, InlinePhotos } from './';
+import { InlineCauses, InlinePhotos, InlineDocuments } from './';
 
 /**
  * Liste des sites
@@ -42,6 +43,7 @@ export class List extends Component {
       timer: null,
       animalsSite: 0,
       photosSite: 0,
+      documentsSite: 0,
     };
     this.onCreate = this.onCreate.bind(this);
     this.onGetOne = this.onGetOne.bind(this);
@@ -54,6 +56,7 @@ export class List extends Component {
     this.onUpdateSort = this.onUpdateSort.bind(this);
     this.onListCause = this.onListCause.bind(this);
     this.onListPhoto = this.onListPhoto.bind(this);
+    this.onListDocument = this.onListDocument.bind(this);
   }
 
   componentDidMount() {
@@ -87,20 +90,30 @@ export class List extends Component {
   onListCause(id) {
     const { animalsSite } = this.state;
     if (animalsSite === id) {
-      this.setState({animalsSite: 0, photosSite: 0});
+      this.setState({animalsSite: 0, photosSite: 0, documentsSite: 0});
     } else {
       this.props.actions.loadCauses(id, true).then(result => {});
-      this.setState({animalsSite: id, photosSite: 0});
+      this.setState({animalsSite: id, photosSite: 0, documentsSite: 0});
     }
   }
 
   onListPhoto(id) {
     const { photosSite } = this.state;
     if (photosSite === id) {
-      this.setState({animalsSite: 0, photosSite: 0});
+      this.setState({animalsSite: 0, photosSite: 0, documentsSite: 0});
     } else {
       this.props.actions.loadPhotos(id, true).then(result => {});
-      this.setState({animalsSite: 0, photosSite: id});
+      this.setState({animalsSite: 0, photosSite: id, documentsSite: 0});
+    }
+  }
+
+  onListDocument(id) {
+    const { documentsSite } = this.state;
+    if (documentsSite === id) {
+      this.setState({animalsSite: 0, photosSite: 0, documentsSite: 0});
+    } else {
+      this.props.actions.loadDocuments(id, true).then(result => {});
+      this.setState({animalsSite: 0, photosSite: 0, documentsSite: id});
     }
   }
 
@@ -198,6 +211,14 @@ export class List extends Component {
         onClick: this.onListCause,
         theme: 'secondary',
         icon: <CauseIcon color="white" />,
+        role: 'DETAIL',
+      },
+      {
+        name: 'documents',
+        label: 'Documents',
+        onClick: this.onListDocument,
+        theme: 'secondary',
+        icon: <DocumentIcon color="white" />,
         role: 'DETAIL',
       },
       {
@@ -307,6 +328,11 @@ export class List extends Component {
       if (this.state.animalsSite > 0 ) {
         inlineComponent = <InlineCauses />
         id = this.state.animalsSite;
+      } else {
+        if (this.state.documentsSite > 0 ) {
+          inlineComponent = <InlineDocuments />
+          id = this.state.documentsSite;
+        }
       }
     }
     return (

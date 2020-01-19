@@ -3,9 +3,10 @@ import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import Dropzone from 'react-dropzone';
+import * as actions from './redux/actions';
 import { buildModel } from 'freejsonapi';
 import { Loading3Dots, ResponsiveConfirm } from 'freeassofront';
-import * as actions from './redux/actions';
+import FileIcon, { defaultStyles } from 'react-file-icon';
 import {
   DelOne as DelOneIcon,
   Download as DownloadIcon,
@@ -17,7 +18,7 @@ import {
 import { downloadSiteMediaBlob } from './';
 import { downloadBlob } from '../ui';
 
-export class InlinePhotos extends Component {
+export class InlineDocuments extends Component {
   static propTypes = {
     site: PropTypes.object.isRequired,
     actions: PropTypes.object.isRequired,
@@ -31,7 +32,7 @@ export class InlinePhotos extends Component {
     };
     this.onDropFiles = this.onDropFiles.bind(this);
     this.onConfirmClose = this.onConfirmClose.bind(this);
-    this.onConfirmPhoto = this.onConfirmPhoto.bind(this);
+    this.onConfirmDocument = this.onConfirmDocument.bind(this);
     this.onConfirm = this.onConfirm.bind(this);
     this.onDownload = this.onDownload.bind(this);
   }
@@ -58,7 +59,7 @@ export class InlinePhotos extends Component {
     });
     const reload = Promise.all(promises);
     reload.then(result => {
-      this.props.actions.loadPhotos(item.id, true);
+      this.props.actions.loadDocuments(item.id, true);
     });
   }
 
@@ -66,7 +67,7 @@ export class InlinePhotos extends Component {
     this.setState({ confirm: false, sitm_id: 0 });
   }
 
-  onConfirmPhoto(id) {
+  onConfirmDocument(id) {
     this.setState({ confirm: !this.state.confirm, sitm_id: id });
   }
 
@@ -84,35 +85,35 @@ export class InlinePhotos extends Component {
     this.setState({ confirm: false, sitm_id: 0 });
     this.props.actions.delSiteMedia(sitm_id).then(result => {
       const id = this.props.site.currentItem.id;
-      this.props.actions.loadPhotos(id, true);
+      this.props.actions.loadDocuments(id, true);
     });
   }
 
   render() {
-    let photos = [];
-    if (this.props.site.photos.FreeAsso_SiteMedia) {
-      photos = buildModel(this.props.site.photos, 'FreeAsso_SiteMedia');
+    let documents = [];
+    if (this.props.site.documents.FreeAsso_SiteMedia) {
+      documents = buildModel(this.props.site.documents, 'FreeAsso_SiteMedia');
     }
     return (
       <div>
-        <div className="site-inline-photos">
-          {this.props.site.loadPhotosPending ? (
+        <div className="site-inline-documents">
+          {this.props.site.loadDocumentsPending ? (
             <div className="text-center">
               <Loading3Dots className="text-light" />
             </div>
           ) : (
             <div className="row p-2 row-cols-1 row-cols-sm-2 row-cols-md-2 row-cols-lg-3">
-              {photos.map(photo => {
-                let img = '';
+              {documents.map(document => {
+                let content = <FileIcon type="document" size={80} {...defaultStyles.docx} />;
                 try {
-                  if (photo.sitm_short_blob) {
-                    img = `data:image/jpeg;base64,${photo.sitm_short_blob}`;
-                  }
+                  const ext = document.sitm_title.split('.').pop();
+                  let style = defaultStyles[ext];
+                  content = <FileIcon size={80} extension={ext} {...style} />;
                 } catch (ex) {
                   console.log(ex);
                 }
                 return (
-                  <div className="col" key={photo.id}>
+                  <div className="col" key={document.id}>
                     <div className="card mt-2">
                       <div className="card-header bg-light">
                         <div className="row">
@@ -121,12 +122,9 @@ export class InlinePhotos extends Component {
                             <div className="btn-group btn-group-sm" role="group" aria-label="...">
                               <div className="btn-group" role="group" aria-label="First group">
                                 <div className="ml-2">
-                                  <ViewIcon className="text-secondary inline-action" />
-                                </div>
-                                <div className="ml-2">
                                   <DownloadIcon
+                                    onClick={() => this.onDownload(document)}
                                     className="text-secondary inline-action"
-                                    onClick={() => this.onDownload(photo)}
                                   />
                                 </div>
                                 <div className="ml-2">
@@ -134,7 +132,7 @@ export class InlinePhotos extends Component {
                                 </div>
                                 <div className="ml-2">
                                   <DelOneIcon
-                                    onClick={() => this.onConfirmPhoto(photo.id)}
+                                    onClick={() => this.onConfirmDocument(document.id)}
                                     className="text-secondary inline-action"
                                   />
                                 </div>
@@ -145,11 +143,11 @@ export class InlinePhotos extends Component {
                       </div>
                       <div className="card-body text-center">
                         <div className="row">
+                          <div className="col-36">{content}</div>
                           <div className="col-36">
-                            {img && <img src={img} className="rounded" />}
-                          </div>
-                          <div className="col-36">
-                            <small className="text-center text-secondary">{photo.sitm_title}</small>
+                            <small className="text-center text-secondary">
+                              {document.sitm_title}
+                            </small>
                           </div>
                         </div>
                       </div>
@@ -162,12 +160,12 @@ export class InlinePhotos extends Component {
                   <div className="card-header bg-light text-secondary">
                     <div className="row">
                       <div className="col-36">
-                        <span className="">Ajouter une photo</span>
+                        <span className="">Ajouter un document</span>
                       </div>
                     </div>
                   </div>
                   <div className="card-body text-center">
-                    {this.props.site.uploadPhotoPending ? (
+                    {this.props.site.uploadDocumentPending ? (
                       <div className="text-center">
                         <Loading3Dots />
                       </div>
@@ -219,4 +217,4 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(InlinePhotos);
+export default connect(mapStateToProps, mapDispatchToProps)(InlineDocuments);

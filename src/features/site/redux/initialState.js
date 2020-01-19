@@ -53,6 +53,8 @@ const initialState = {
   uploadSiteMediaError: null,
   delSiteMediaPending: false,
   delSiteMediaError: null,
+  loadDocumentsPending: false,
+  loadDocumentsError: null,
 };
 
 export default initialState;

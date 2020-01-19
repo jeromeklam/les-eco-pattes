@@ -15,3 +15,4 @@ export { loadCauses, dismissLoadCausesError } from './loadCauses';
 export { loadPhotos, dismissLoadPhotosError } from './loadPhotos';
 export { uploadSiteMedia, dismissUploadSiteMediaError } from './uploadSiteMedia';
 export { delSiteMedia, dismissDelSiteMediaError } from './delSiteMedia';
+export { loadDocuments, dismissLoadDocumentsError } from './loadDocuments';

@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import Icon from '@mdi/react';
 import {
-  mdiImageFilter as myIcon
+  mdiFileDocumentBoxMultipleOutline as myIcon
 } from '@mdi/js';
 
-export default class Photo extends Component {
+export default class Document extends Component {
   static propTypes = {
 
   };
