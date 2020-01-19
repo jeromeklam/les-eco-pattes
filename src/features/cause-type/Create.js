@@ -80,7 +80,7 @@ export class Create extends Component {
                 item={item} 
                 datas={this.props.data.items}
                 config={this.props.config.items}
-                causeMainType={this.props.causeMainType.items}
+                causeMainTypes={this.props.causeMainType.items}
                 properties={this.props.causeType.properties}
                 errors={this.props.causeType.createOneError}
                 onSubmit={this.onSubmit} 
