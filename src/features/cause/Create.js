@@ -86,6 +86,7 @@ export class Create extends Component {
                 tab_configs={this.props.config.items}
                 tab={this.props.cause.tab}
                 tabs={this.props.cause.tabs}
+                errors={this.props.cause.createOneError}
                 onSubmit={this.onSubmit} 
                 onCancel={this.onCancel} 
               />
