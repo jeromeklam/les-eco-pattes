@@ -25,7 +25,7 @@ export class InlinePhotos extends Component {
     super(props);
     this.state = {
       confirm: false,
-      caum_id: 0,
+      sitm_id: 0,
     };
     this.onDropFiles = this.onDropFiles.bind(this);
     this.onConfirmClose = this.onConfirmClose.bind(this);
@@ -46,7 +46,7 @@ export class InlinePhotos extends Component {
         reader.onload = () => {
           // Do whatever you want with the file contents
           const binaryStr = reader.result;
-          this.props.actions.uploadPhoto(0, item.id, binaryStr).then(result => resolve(true));
+          this.props.actions.uploadSiteMedia(0, item.id, binaryStr, file.name).then(result => resolve(true));
         };
         reader.readAsDataURL(file);
       });
@@ -65,11 +65,12 @@ export class InlinePhotos extends Component {
     this.setState({ confirm: !this.state.confirm, sitm_id: id });
   }
 
-  onConfirm(item) {
-    const caum_id = this.state.caum_id;
-    this.setState({ confirm: false, caum_id: 0 });
-    this.props.actions.delSiteMedia(caum_id).then(result => {
-      this.props.actions.loadPhotos(item.id, true);
+  onConfirm() {
+    const sitm_id = this.state.sitm_id;
+    this.setState({ confirm: false, sitm_id: 0 });
+    this.props.actions.delSiteMedia(sitm_id).then(result => {
+      const id = this.props.site.currentItem.id;
+      this.props.actions.loadPhotos(id, true);
     });
   }
 
@@ -99,14 +100,11 @@ export class InlinePhotos extends Component {
                 return (
                   <div className="col" key={photo.id}>
                     <div className="card mt-2">
-                      <div className="card-header">
+                      <div className="card-header bg-light">
                         <div className="row">
-                          <div className="col-12">
-                            <span className="">
-                              <small>Photo</small>
-                            </span>
+                          <div className="col-16">
                           </div>
-                          <div className="col-24 text-right">
+                          <div className="col-20 text-right">
                             <div className="btn-group btn-group-sm" role="group" aria-label="...">
                               <div className="btn-group" role="group" aria-label="First group">
                                 <div className="ml-2">
@@ -130,7 +128,14 @@ export class InlinePhotos extends Component {
                         </div>
                       </div>
                       <div className="card-body text-center">
-                        {img && <img src={img} className="rounded" />}
+                        <div className="row">
+                          <div className="col-36">
+                            {img && <img src={img} className="rounded" />}
+                          </div>
+                          <div className="col-36">
+                            <small className="text-center text-secondary">{photo.sitm_title}</small>
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -138,7 +143,7 @@ export class InlinePhotos extends Component {
               })}
               <div className="col" key={'000'}>
                 <div className="card mt-2">
-                  <div className="card-header">
+                  <div className="card-header bg-light text-secondary">
                     <div className="row">
                       <div className="col-36">
                         <span className="">Ajouter une photo</span>

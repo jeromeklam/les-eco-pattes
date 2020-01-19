@@ -49,8 +49,10 @@ const initialState = {
   loadCausesError: null,
   loadPhotosPending: false,
   loadPhotosError: null,
-  uploadPhotoPending: false,
-  uploadPhotoError: null,
+  uploadSiteMediaPending: false,
+  uploadSiteMediaError: null,
+  delSiteMediaPending: false,
+  delSiteMediaError: null,
 };
 
 export default initialState;

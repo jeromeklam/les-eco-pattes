@@ -22,7 +22,8 @@ import { reducer as updateQuickSearchReducer } from './updateQuickSearch';
 import { reducer as updateSortReducer } from './updateSort';
 import { reducer as loadCausesReducer } from './loadCauses';
 import { reducer as loadPhotosReducer } from './loadPhotos';
-import { reducer as uploadPhotoReducer } from './uploadPhoto';
+import { reducer as uploadSiteMediaReducer } from './uploadSiteMedia';
+import { reducer as delSiteMediaReducer } from './delSiteMedia';
 
 const reducers = [
   loadMoreReducer,
@@ -40,7 +41,8 @@ const reducers = [
   updateSortReducer,
   loadCausesReducer,
   loadPhotosReducer,
-  uploadPhotoReducer,
+  uploadSiteMediaReducer,
+  delSiteMediaReducer,
 ];
 
 export default function reducer(state = initialState, action) {

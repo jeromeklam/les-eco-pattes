@@ -13,4 +13,5 @@ export { updateQuickSearch } from './updateQuickSearch';
 export { updateSort } from './updateSort';
 export { loadCauses, dismissLoadCausesError } from './loadCauses';
 export { loadPhotos, dismissLoadPhotosError } from './loadPhotos';
-export { uploadPhoto, dismissUploadPhotoError } from './uploadPhoto';
+export { uploadSiteMedia, dismissUploadSiteMediaError } from './uploadSiteMedia';
+export { delSiteMedia, dismissDelSiteMediaError } from './delSiteMedia';
