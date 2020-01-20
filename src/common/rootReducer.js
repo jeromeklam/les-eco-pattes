@@ -21,6 +21,7 @@ import clientCategoryReducer from '../features/client-category/redux/reducer';
 import mapReducer from '../features/map/redux/reducer';
 import dashboardReducer from '../features/dashboard/redux/reducer';
 import uiReducer from '../features/ui/redux/reducer';
+import causeMovementReducer from '../features/cause-movement/redux/reducer';
 
 // NOTE 1: DO NOT CHANGE the 'reducerMap' name and the declaration pattern.
 // This is used for Rekit cmds to register new features, remove features, etc.
@@ -50,6 +51,7 @@ const reducerMap = {
   map: mapReducer,
   dashboard: dashboardReducer,
   ui: uiReducer,
+  causeMovement: causeMovementReducer,
 };
 
 export default combineReducers(reducerMap);

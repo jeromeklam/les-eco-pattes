@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as actions from './redux/actions';
+import * as causeMovementActions from '../cause-movement/redux/actions';
 import { buildModel } from 'freejsonapi';
 import { ResponsiveList, ResponsiveQuickSearch } from 'freeassofront';
 import { causeTypeAsOptions } from '../cause-type/functions';
@@ -13,6 +14,7 @@ import {
   Filter as FilterIcon,
   FilterFull as FilterFullIcon,
   FilterClear as FilterClearIcon,
+  Movement as MovementIcon,
   SimpleCancel as CancelPanelIcon,
   SimpleValid as ValidPanelIcon,
   SortDown as SortDownIcon,
@@ -21,6 +23,7 @@ import {
   Search as SearchIcon,
 } from '../icons';
 import { deleteSuccess, deleteError } from '../ui';
+import { InlineMovements } from '../cause-movement';
 
 export class List extends Component {
   static propTypes = {
@@ -32,6 +35,7 @@ export class List extends Component {
     super(props);
     this.state = {
       timer: null,
+      movementsCause: 0,
     };
     this.onCreate = this.onCreate.bind(this);
     this.onGetOne = this.onGetOne.bind(this);
@@ -43,6 +47,7 @@ export class List extends Component {
     this.onSetFiltersAndSort = this.onSetFiltersAndSort.bind(this);
     this.onUpdateSort = this.onUpdateSort.bind(this);
     this.onOpenPhoto = this.onOpenPhoto.bind(this);
+    this.onListMovement = this.onListMovement.bind(this);
   }
 
   componentDidMount() {
@@ -75,6 +80,16 @@ export class List extends Component {
         // @todo display errors to fields
         deleteError();
       });
+  }
+
+  onListMovement(id) {
+    const { movementsCause } = this.state;
+    if (movementsCause === id) {
+      this.setState({movementsCause: 0});
+    } else {
+      this.props.actions.loadMovements(id, true).then(result => {});
+      this.setState({movementsCause: id});
+    }
   }
 
   onReload(event) {
@@ -163,6 +178,14 @@ export class List extends Component {
       },
     ];
     const inlineActions = [
+      {
+        name: 'move',
+        label: 'Mouvements',
+        onClick: this.onListMovement,
+        theme: 'secondary',
+        icon: <MovementIcon color="white" />,
+        role: 'OTHER',
+      },
       {
         name: 'modify',
         label: 'Modifier',
@@ -265,6 +288,8 @@ export class List extends Component {
     ) : (
       <FilterFullIcon className="text-light" />
     );
+    let inlineComponent = <InlineMovements />
+    let id = this.state.movementsCause;
     return (
       <ResponsiveList
         title="Causes"
@@ -279,6 +304,8 @@ export class List extends Component {
         sortUpIcon={<SortUpIcon color="secondary" />}
         sortNoneIcon={<SortNoneIcon color="secondary" />}
         inlineActions={inlineActions}
+        inlineOpenedId={id}
+        inlineComponent={inlineComponent}
         globalActions={globalActions}
         sort={this.props.cause.sort}
         filters={this.props.cause.filters}
@@ -306,7 +333,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    actions: bindActionCreators({ ...actions }, dispatch),
+    actions: bindActionCreators({ ...actions, ...causeMovementActions }, dispatch),
   };
 }
 

@@ -6,15 +6,15 @@ import { siteTypeAsOptions } from '../site-type/functions.js';
 import { InputPicker as ClientInputPicker } from '../client';
 
 export default function Form(props) {
-  const { values, handleChange, handleSubmit, handleCancel, handleNavTab, getErrorMessage } = useForm(
-    props.item,
-    props.tab,
-    props.onSubmit,
-    props.onCancel,
-    props.onNavTab,
-    props.errors,
-  );
-  console.log(getErrorMessage("site_name"));
+  const {
+    values,
+    handleChange,
+    handleSubmit,
+    handleCancel,
+    handleNavTab,
+    getErrorMessage,
+  } = useForm(props.item, props.tab, props.onSubmit, props.onCancel, props.onNavTab, props.errors);
+  console.log(getErrorMessage('site_name'));
   return (
     <ResponsiveForm
       className=""
@@ -35,7 +35,7 @@ export default function Form(props) {
             name="site_name"
             value={values.site_name}
             onChange={handleChange}
-            error={getErrorMessage("site_name")}
+            error={getErrorMessage('site_name')}
           />
         </div>
         <div className="col-sm-10">
@@ -48,11 +48,17 @@ export default function Form(props) {
             onChange={handleChange}
             options={siteTypeAsOptions(props.site_types)}
             addempty={true}
-            error={getErrorMessage("site_type")}
+            error={getErrorMessage('site_type')}
           />
         </div>
         <div className="col-sm-8">
-          <InputText label="N°" name="site_code" value={values.site_code} onChange={handleChange} />
+          <InputText
+            label="N° Elevage DE"
+            name="site_code_ex"
+            value={values.site_code_ex}
+            onChange={handleChange}
+            error={getErrorMessage('site_code_ex')}
+          />
         </div>
       </div>
       <hr />
@@ -64,7 +70,7 @@ export default function Form(props) {
             value={values.site_address1}
             onChange={handleChange}
             labtop={true}
-            error={getErrorMessage("site_address1")}
+            error={getErrorMessage('site_address1')}
           />
           <div className="row">
             <div className="col-sm-8">
@@ -74,7 +80,7 @@ export default function Form(props) {
                 value={values.site_cp}
                 onChange={handleChange}
                 labtop={true}
-                error={getErrorMessage("site_cp")}
+                error={getErrorMessage('site_cp')}
               />
             </div>
             <div className="col-sm-28">
@@ -84,7 +90,7 @@ export default function Form(props) {
                 value={values.site_town}
                 onChange={handleChange}
                 labtop={true}
-                error={getErrorMessage("site_town")}
+                error={getErrorMessage('site_town')}
               />
             </div>
           </div>
@@ -95,7 +101,7 @@ export default function Form(props) {
                 name="site_area"
                 value={values.site_area}
                 onChange={handleChange}
-                error={getErrorMessage("site_area")}
+                error={getErrorMessage('site_area')}
               />
             </div>
             <div className="col-sm-28">
@@ -104,7 +110,7 @@ export default function Form(props) {
                 name="site_plots"
                 value={values.site_plots}
                 onChange={handleChange}
-                error={getErrorMessage("site_plots")}
+                error={getErrorMessage('site_plots')}
               />
             </div>
           </div>
@@ -116,7 +122,7 @@ export default function Form(props) {
                 name="owner"
                 item={values.owner || null}
                 onChange={handleChange}
-                error={getErrorMessage("owner")}
+                error={getErrorMessage('owner')}
               />
             </div>
           </div>
@@ -145,11 +151,11 @@ export default function Form(props) {
       {values.currentTab === '3' && (
         <div>
           <InputText
-            label="N° élevage EDE"
-            name="site_code_ex"
-            value={values.site_code_ex}
+            label="Code"
+            name="site_code"
+            value={values.site_code}
             onChange={handleChange}
-            error={getErrorMessage("site_code_ex")}
+            error={getErrorMessage('site_code')}
           />
           <ClientInputPicker
             label="Vétérinaire"
@@ -157,14 +163,14 @@ export default function Form(props) {
             name="sanitary"
             item={values.sanitary || null}
             onChange={handleChange}
-            error={getErrorMessage("sanitary")}
+            error={getErrorMessage('sanitary')}
           />
           <InputTextarea
             label="Observations"
             name="site_desc"
             value={values.site_desc}
             onChange={handleChange}
-            error={getErrorMessage("site_desc")}
+            error={getErrorMessage('site_desc')}
           />
         </div>
       )}

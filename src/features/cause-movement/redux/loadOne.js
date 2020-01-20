@@ -1,31 +1,31 @@
 import { jsonApiNormalizer, buildModel } from 'freejsonapi';
 import { freeAssoApi } from '../../../common';
 import {
-  CLIENT_LOAD_ONE_BEGIN,
-  CLIENT_LOAD_ONE_SUCCESS,
-  CLIENT_LOAD_ONE_FAILURE,
-  CLIENT_LOAD_ONE_DISMISS_ERROR,
+  CAUSE_MOVEMENT_LOAD_ONE_BEGIN,
+  CAUSE_MOVEMENT_LOAD_ONE_SUCCESS,
+  CAUSE_MOVEMENT_LOAD_ONE_FAILURE,
+  CAUSE_MOVEMENT_LOAD_ONE_DISMISS_ERROR,
 } from './constants';
 
 export function loadOne(args = {}) {
-  return dispatch => {
+  return (dispatch) => {
     dispatch({
-      type: CLIENT_LOAD_ONE_BEGIN,
+      type: CAUSE_MOVEMENT_LOAD_ONE_BEGIN,
     });
     const promise = new Promise((resolve, reject) => {
-      const doRequest = freeAssoApi.get('/v1/asso/client/' + args, {});
+      const doRequest = freeAssoApi.get('/v1/asso/cause_movement/' + args, {});
       doRequest.then(
-        res => {
+        (res) => {
           dispatch({
-            type: CLIENT_LOAD_ONE_SUCCESS,
+            type: CAUSE_MOVEMENT_LOAD_ONE_SUCCESS,
             data: res,
             id: args,
           });
           resolve(res);
         },
-        err => {
+        (err) => {
           dispatch({
-            type: CLIENT_LOAD_ONE_FAILURE,
+            type: CAUSE_MOVEMENT_LOAD_ONE_FAILURE,
             data: { error: err },
           });
           reject(err);
@@ -38,13 +38,13 @@ export function loadOne(args = {}) {
 
 export function dismissLoadOneError() {
   return {
-    type: CLIENT_LOAD_ONE_DISMISS_ERROR,
+    type: CAUSE_MOVEMENT_LOAD_ONE_DISMISS_ERROR,
   };
 }
 
 export function reducer(state, action) {
   switch (action.type) {
-    case CLIENT_LOAD_ONE_BEGIN:
+    case CAUSE_MOVEMENT_LOAD_ONE_BEGIN:
       // Just after a request is sent
       return {
         ...state,
@@ -52,19 +52,24 @@ export function reducer(state, action) {
         loadOneError: null,
       };
 
-    case CLIENT_LOAD_ONE_SUCCESS:
+    case CAUSE_MOVEMENT_LOAD_ONE_SUCCESS:
       // The request is success
       let item = null;
       let object = jsonApiNormalizer(action.data.data);
-      item = buildModel(object, 'FreeAsso_Client', action.id, { eager: true });
+      let emptyItem = state.emptyItem;
+      item = buildModel(object, 'FreeAsso_CauseMovement', action.id, {eager: true});
+      if (action.id <= 0) {
+        emptyItem = {...item};
+      }
       return {
         ...state,
         loadOnePending: false,
-        loadOneError: null,
         loadOneItem: item,
+        loadOneError: null,
+        emptyItem: emptyItem,
       };
 
-    case CLIENT_LOAD_ONE_FAILURE:
+    case CAUSE_MOVEMENT_LOAD_ONE_FAILURE:
       // The request is failed
       return {
         ...state,
@@ -72,7 +77,7 @@ export function reducer(state, action) {
         loadOneError: action.data.error,
       };
 
-    case CLIENT_LOAD_ONE_DISMISS_ERROR:
+    case CAUSE_MOVEMENT_LOAD_ONE_DISMISS_ERROR:
       // Dismiss the request failure error
       return {
         ...state,

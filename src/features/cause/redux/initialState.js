@@ -2,6 +2,8 @@ import { Filter } from 'freeassofront';
 
 const initialState = {
   items: [],
+  movements: [],
+  currentItem: null,
   page_number: 1,
   page_size: process.env.REACT_APP_PAGE_SIZE,
   tab: '1',
