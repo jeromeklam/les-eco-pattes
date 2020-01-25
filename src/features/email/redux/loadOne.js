@@ -1,8 +1,9 @@
 import {
-  freeAssoApi,
+  freeAssoApi } from '../../../common';
+import {
   jsonApiNormalizer,
   buildModel
-} from '../../../common';
+} from 'freejsonapi';
 import {
   EMAIL_LOAD_ONE_BEGIN,
   EMAIL_LOAD_ONE_SUCCESS,

@@ -1,21 +1,11 @@
 import React, { Component } from 'react';
-import Icon from '@mdi/react';
-import {
-  mdiLogout
-} from '@mdi/js';
+import { mdiLogout } from '@mdi/js';
+import { Icon } from './';
 
 export default class Logout extends Component {
-  static propTypes = {
-
-  };
+  static propTypes = {};
 
   render() {
-    return (
-      <Icon 
-        path={mdiLogout}
-        size={1}
-        {...this.props}
-      />
-    );
+    return <Icon path={mdiLogout} {...this.props} />;
   }
 }

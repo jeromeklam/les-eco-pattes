@@ -1,21 +1,11 @@
 import React, { Component } from 'react';
-import Icon from '@mdi/react';
-import {
-  mdiCancel
-} from '@mdi/js';
+import { mdiCancel } from '@mdi/js';
+import { Icon } from './';
 
 export default class SimpleCancel extends Component {
-  static propTypes = {
-
-  };
+  static propTypes = {};
 
   render() {
-    return (
-      <Icon 
-        path={mdiCancel}
-        size={1}
-        color={this.props.color}
-      />
-    );
+    return <Icon path={mdiCancel} {...this.props} />;
   }
 }

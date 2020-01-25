@@ -1,21 +1,11 @@
 import React, { Component } from 'react';
-import Icon from '@mdi/react';
-import {
-  mdiAccount
-} from '@mdi/js';
+import { mdiAccount } from '@mdi/js';
+import { Icon } from './';
 
 export default class Account extends Component {
-  static propTypes = {
-
-  };
+  static propTypes = {};
 
   render() {
-    return (
-      <Icon
-        path={mdiAccount}
-        size={1}
-        color={this.props.color}
-      />
-    );
+    return <Icon path={mdiAccount} {...this.props} />;
   }
 }

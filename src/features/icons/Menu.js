@@ -1,20 +1,11 @@
 import React, { Component } from 'react';
-import Icon from '@mdi/react';
-import {
-  mdiMenu
-} from '@mdi/js';
+import { mdiMenu } from '@mdi/js';
+import { Icon } from './';
 
 export default class Menu extends Component {
-  static propTypes = {
-
-  };
+  static propTypes = {};
 
   render() {
-    return (
-      <Icon 
-        path={mdiMenu}
-        size={1}
-      />
-    );
+    return <Icon path={mdiMenu} {...this.props} />;
   }
 }

@@ -87,7 +87,8 @@ export class List extends Component {
       });
   }
 
-  onListCause(id) {
+  onListCause(obj) {
+    const { id } = obj;
     const { animalsSite } = this.state;
     if (animalsSite === id) {
       this.setState({animalsSite: 0, photosSite: 0, documentsSite: 0});
@@ -97,7 +98,8 @@ export class List extends Component {
     }
   }
 
-  onListPhoto(id) {
+  onListPhoto(obj) {
+    const { id } = obj;
     const { photosSite } = this.state;
     if (photosSite === id) {
       this.setState({animalsSite: 0, photosSite: 0, documentsSite: 0});
@@ -107,7 +109,8 @@ export class List extends Component {
     }
   }
 
-  onListDocument(id) {
+  onListDocument(obj) {
+    const { id } = obj;
     const { documentsSite } = this.state;
     if (documentsSite === id) {
       this.setState({animalsSite: 0, photosSite: 0, documentsSite: 0});
@@ -209,6 +212,7 @@ export class List extends Component {
         name: 'animals',
         label: 'Animaux',
         onClick: this.onListCause,
+        param: 'object',
         theme: 'secondary',
         icon: <CauseIcon color="white" />,
         role: 'DETAIL',
@@ -217,6 +221,7 @@ export class List extends Component {
         name: 'documents',
         label: 'Documents',
         onClick: this.onListDocument,
+        param: 'object',
         theme: 'secondary',
         icon: <DocumentIcon color="white" />,
         role: 'DETAIL',
@@ -225,6 +230,7 @@ export class List extends Component {
         name: 'photos',
         label: 'Photos',
         onClick: this.onListPhoto,
+        param: 'object',
         theme: 'secondary',
         icon: <PhotoIcon color="white" />,
         role: 'DETAIL',

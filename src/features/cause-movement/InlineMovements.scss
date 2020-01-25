@@ -1,5 +1,10 @@
 @import '../../styles/mixins';
 
-.cause-movement-inline-movements {
-
+svg.inline-action:hover {
+  cursor: pointer;
+  color: theme-color('light');
+  fill: theme-color('light');
+  path {
+    fill: theme-color('light') !important;
+  }
 }

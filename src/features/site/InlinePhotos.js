@@ -11,8 +11,6 @@ import {
   Download as DownloadIcon,
   View as ViewIcon,
   Upload as UploadIcon,
-  Checked as CheckedIcon,
-  Unchecked as UncheckedIcon,
 } from '../icons';
 import { downloadSiteMediaBlob } from './';
 import { downloadBlob } from '../ui';
@@ -146,7 +144,7 @@ export class InlinePhotos extends Component {
                       <div className="card-body text-center">
                         <div className="row">
                           <div className="col-36">
-                            {img && <img src={img} className="rounded" />}
+                            {img && <img src={img} className="rounded" alt="" />}
                           </div>
                           <div className="col-36">
                             <small className="text-center text-secondary">{photo.sitm_title}</small>

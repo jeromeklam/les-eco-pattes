@@ -1,8 +1,9 @@
 import {
-  freeAssoApi,
+  freeAssoApi } from '../../../common';
+import {
   jsonApiNormalizer,
   jsonApiUpdate
-} from '../../../common';
+} from 'freejsonapi';
 import {
   EMAIL_UPDATE_ONE_BEGIN,
   EMAIL_UPDATE_ONE_SUCCESS,

@@ -82,12 +82,13 @@ export class List extends Component {
       });
   }
 
-  onListMovement(id) {
+  onListMovement(obj) {
+    const { id } = obj;
     const { movementsCause } = this.state;
     if (movementsCause === id) {
       this.setState({movementsCause: 0});
     } else {
-      this.props.actions.loadMovements(id, true).then(result => {});
+      this.props.actions.loadMovements(obj, true).then(result => {});
       this.setState({movementsCause: id});
     }
   }
@@ -182,6 +183,7 @@ export class List extends Component {
         name: 'move',
         label: 'Mouvements',
         onClick: this.onListMovement,
+        param: 'object',
         theme: 'secondary',
         icon: <MovementIcon color="white" />,
         role: 'OTHER',
@@ -282,7 +284,6 @@ export class List extends Component {
         icon={<SearchIcon className="text-secondary"/>}
       />
     );
-    console.log(this.props.cause.filters, this.props.cause.filters.isEmpty());
     const filterIcon = this.props.cause.filters.isEmpty() ? (
       <FilterIcon className="text-light" />
     ) : (

@@ -40,7 +40,7 @@ export default function Form(props) {
           onChange={handleChange}
           options={optionsType}
         />
-        {values.data_type == 'LIST' && (
+        {values.data_type === 'LIST' && (
           <InputStringArray
             label="Valeurs"
             name="data_content"

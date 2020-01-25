@@ -18,20 +18,4 @@ export const Default = ({ children }) => {
 };
 
 export { default as PageNotFound } from './PageNotFound';
-export { default as DesktopListLine } from './DesktopListLine';
-export { default as DesktopListHeader } from './DesktopListHeader';
-export { default as DesktopListFooter } from './DesktopListFooter';
-export { default as DesktopListLines } from './DesktopListLines';
-export { default as MobileListHeader } from './MobileListHeader';
-export { default as MobileListFooter } from './MobileListFooter';
-export { default as MobileListLines } from './MobileListLines';
-export { default as ResponsiveListHeader } from './ResponsiveListHeader';
-export { default as ResponsiveListFooter } from './ResponsiveListFooter';
-export { default as ResponsiveListLines } from './ResponsiveListLines';
-export { default as MobileListLine } from './MobileListLine';
-export { default as DesktopListLineCol } from './DesktopListLineCol';
-export { default as MobileListLineCol } from './MobileListLineCol';
-export { default as DesktopListTitle } from './DesktopListTitle';
 export { default as Copyright } from './Copyright';
-export { default as ResponsiveList } from './ResponsiveList';
-export { default as ResponsiveModal } from './ResponsiveModal';

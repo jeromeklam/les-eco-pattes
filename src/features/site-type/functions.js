@@ -1,6 +1,4 @@
-import {
-  buildModel
-} from '../../common';
+import { buildModel } from 'freejsonapi';
 
 /**
  * Export all site types as an array of value=>label

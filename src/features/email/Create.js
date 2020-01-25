@@ -4,8 +4,9 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as actions from './redux/actions';
 import { withRouter } from 'react-router-dom';
-import { getJsonApi, modelsToSelect } from '../../common';
-import { LoadingData } from '../layout';
+import { getJsonApi } from 'freejsonapi';
+import { modelsToSelect } from '../../common';
+import { CenteredLoading9X9 } from '../ui';
 import Form from './Form';
 
 export class Create extends Component {
@@ -73,7 +74,7 @@ export class Create extends Component {
     return (
       <div className="email-create global-card">
         {this.props.email.loadOnePending ? (
-          <LoadingData />
+          <CenteredLoading9X9 />
         ) : (
           <div>
             {item && <Form item={item} onSubmit={this.onSubmit} onCancel={this.onCancel} langs={options} />}

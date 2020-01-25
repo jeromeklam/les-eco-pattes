@@ -3,7 +3,6 @@ import { InputHidden, InputText, InputSelect, InputTextarea, ResponsiveForm } fr
 import { InputData, InputDate } from '../ui';
 import useForm from '../ui/useForm';
 import { causeTypeAsOptions } from '../cause-type/functions.js';
-import { causeMainTypeAsOptions } from '../cause-main-type/functions.js';
 import { InputPicker as ClientInputPicker } from '../client';
 import { InputPicker as SiteInputPicker } from '../site';
 import { InputPicker as CauseInputPicker } from './';

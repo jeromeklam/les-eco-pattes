@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { freeAssoApi, jsonApiNormalizer, buildModel } from '../../common';
+import { freeAssoApi, jsonApiNormalizer, buildModel } from 'freejsonapi';
 
 const explodeReduxModel = obj => {
   let ret = { ...obj };

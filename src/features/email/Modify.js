@@ -4,7 +4,8 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as actions from './redux/actions';
 import { withRouter } from 'react-router-dom';
-import { getJsonApi, propagateModel, modelsToSelect } from '../../common';
+import { getJsonApi } from 'freejsonapi';
+import { propagateModel, modelsToSelect } from '../../common';
 import { LoadingData } from '../layout';
 import Form from './Form';
 

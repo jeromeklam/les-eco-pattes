@@ -1,6 +1,4 @@
-import {
-  buildModel
-} from '../../common';
+import { buildModel } from 'freejsonapi';
 
 /**
  * Export all data types as an array of value=>label

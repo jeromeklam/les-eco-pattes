@@ -1,19 +1,11 @@
 import React, { Component } from 'react';
-import Icon from '@mdi/react';
-import {
-  mdiSelection
-} from '@mdi/js';
+import { mdiSelection } from '@mdi/js';
+import { Icon } from './';
 
 export default class Area extends Component {
-  static propTypes = { };
+  static propTypes = {};
 
   render() {
-    return (
-      <Icon 
-        path={mdiSelection}
-        size={1}
-        {...this.props}
-      />
-    );
+    return <Icon path={mdiSelection} {...this.props} />;
   }
 }

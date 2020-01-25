@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import * as actions from './redux/actions';
 import logo from '../../images/logo-les-eco-pattes.jpg';
 import { InputEmail, InputPassword, InputCheckbox } from 'freeassofront';
-import { getJsonApi, getFieldErrorMessage } from '../../common';
+import { getJsonApi, getFieldErrorMessage } from 'freejsonapi';
 import { withRouter } from 'react-router-dom';
 import { Copyright } from '../common';
 
@@ -74,10 +74,10 @@ export class Signin extends Component {
     let username_error = '';
     let password_error = '';
     let error = false;
-    if (this.state.username == '') {
+    if (this.state.username === '') {
       username_error = "L'email est obligatoire";
     }
-    if (this.state.password == '') {
+    if (this.state.password === '') {
       password_error = 'Le mot de passe est obligatoire';
     }
     this.setState({ username_error: username_error, password_error: password_error });

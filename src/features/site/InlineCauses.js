@@ -19,7 +19,6 @@ export class InlineCauses extends Component {
         <CenteredLoading3Dots />
       );
     } else {
-      console.log(this.props.site.causes);
       let causes = [];
       if (this.props.site.causes && this.props.site.causes.length) {
         causes = buildModel(this.props.site.causes, 'FreeAsso_Cause');

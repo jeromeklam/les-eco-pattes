@@ -6,8 +6,9 @@ import {
 } from './constants';
 import {
   jsonApiNormalizer,
-  buildModel,
-  initAxios,
+  buildModel
+} from 'freejsonapi';
+import { initAxios,
   freeAssoApi
 } from '../../../common';
 import cookie from 'react-cookies';

@@ -1,21 +1,11 @@
 import React, { Component } from 'react';
-import Icon from '@mdi/react';
-import {
-  mdiCrosshairsGps
-} from '@mdi/js';
+import { mdiCrosshairsGps } from '@mdi/js';
+import { Icon } from './';
 
 export default class MapCenter extends Component {
-  static propTypes = {
-
-  };
+  static propTypes = {};
 
   render() {
-    return (
-      <Icon 
-        path={mdiCrosshairsGps}
-        size={1}
-        {...this.props}
-      />
-    );
+    return <Icon path={mdiCrosshairsGps} {...this.props} />;
   }
 }

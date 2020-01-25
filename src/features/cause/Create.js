@@ -45,7 +45,7 @@ export class Create extends Component {
     if (event) {
       event.preventDefault();
     }
-    this.props.history.push('/cause')
+    this.props.history.push('/cause');
   }
 
   /**
@@ -58,7 +58,7 @@ export class Create extends Component {
     this.props.actions
       .createOne(obj)
       .then(result => {
-        createSuccess()
+        createSuccess();
         this.props.actions.clearItems();
         this.props.history.push('/cause');
       })
@@ -77,20 +77,20 @@ export class Create extends Component {
           <CenteredLoading9X9 />
         ) : (
           <div>
-            {item && 
-              <Form 
-                item={item} 
-                cause_types={this.props.causeType.items} 
+            {item && (
+              <Form
+                item={item}
+                cause_types={this.props.causeType.items}
                 cause_main_types={this.props.causeMainType.items}
                 tab_datas={this.props.data.items}
                 tab_configs={this.props.config.items}
                 tab={this.props.cause.tab}
                 tabs={this.props.cause.tabs}
                 errors={this.props.cause.createOneError}
-                onSubmit={this.onSubmit} 
-                onCancel={this.onCancel} 
+                onSubmit={this.onSubmit}
+                onCancel={this.onCancel}
               />
-            }
+            )}
           </div>
         )}
       </div>
@@ -104,17 +104,14 @@ function mapStateToProps(state) {
     config: state.config,
     cause: state.cause,
     causeType: state.causeType,
-    causeMainType : state.causeMainType,
+    causeMainType: state.causeMainType,
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
-    actions: bindActionCreators({ ...actions }, dispatch)
+    actions: bindActionCreators({ ...actions }, dispatch),
   };
 }
 
-export default withRouter(connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Create));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Create));

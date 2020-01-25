@@ -1,4 +1,4 @@
-import { buildModel } from '../../common';
+import { buildModel } from 'freejsonapi';
 
 /**
  * Export all cause types as an array of value=>label

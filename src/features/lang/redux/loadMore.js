@@ -1,4 +1,5 @@
-import { freeAssoApi, jsonApiNormalizer } from '../../../common';
+import { freeAssoApi } from '../../../common';
+import { jsonApiNormalizer } from 'freejsonapi';
 import {
   LANG_LOAD_MORE_BEGIN,
   LANG_LOAD_MORE_SUCCESS,

@@ -1,21 +1,11 @@
 import React, { Component } from 'react';
-import Icon from '@mdi/react';
-import {
-  mdiCheck
-} from '@mdi/js';
+import { mdiCheck } from '@mdi/js';
+import { Icon } from './';
 
 export default class SimpleValid extends Component {
-  static propTypes = {
-
-  };
+  static propTypes = {};
 
   render() {
-    return (
-      <Icon 
-        path={mdiCheck}
-        size={1}
-        color={this.props.color}
-      />
-    );
+    return <Icon path={mdiCheck} {...this.props} />;
   }
 }

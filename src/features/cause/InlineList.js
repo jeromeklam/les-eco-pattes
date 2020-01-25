@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { freeAssoApi } from '../../common';
 import { jsonApiNormalizer, objectToQueryString, buildModel } from 'freejsonapi';
 import { Loading3Dots } from 'freeassofront';
-import { SimpleLabel as DataSimpleLabel } from '../data';
 import { InlineListGroup } from '.';
 import { causeGroup } from './functions.js';
 

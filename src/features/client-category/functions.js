@@ -1,4 +1,4 @@
-import { buildModel } from '../../common';
+import { buildModel } from 'freejsonapi';
 
 /**
  * Export all clientcategories as an array of value=>label

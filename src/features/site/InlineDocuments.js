@@ -10,10 +10,7 @@ import FileIcon, { defaultStyles } from 'react-file-icon';
 import {
   DelOne as DelOneIcon,
   Download as DownloadIcon,
-  View as ViewIcon,
   Upload as UploadIcon,
-  Checked as CheckedIcon,
-  Unchecked as UncheckedIcon,
 } from '../icons';
 import { downloadSiteMediaBlob } from './';
 import { downloadBlob } from '../ui';

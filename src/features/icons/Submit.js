@@ -1,21 +1,11 @@
 import React, { Component } from 'react';
-import Icon from '@mdi/react';
-import {
-  mdiFileCheck
-} from '@mdi/js';
+import { mdiFileCheck } from '@mdi/js';
+import { Icon } from './';
 
 export default class Submit extends Component {
-  static propTypes = {
-
-  };
+  static propTypes = {};
 
   render() {
-    return (
-      <Icon
-        path={mdiFileCheck}
-        size={1}
-        color={this.props.color}
-      />
-    );
+    return <Icon path={mdiFileCheck} {...this.props} />;
   }
 }

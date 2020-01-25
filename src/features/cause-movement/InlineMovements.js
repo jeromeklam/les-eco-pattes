@@ -4,7 +4,8 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { buildModel } from 'freejsonapi';
 import * as actions from './redux/actions';
-import { CenteredLoading3Dots } from '../ui';
+import { getJsonApi } from 'freejsonapi';
+import { CenteredLoading3Dots, createSuccess, createError } from '../ui';
 import { InlineMovementForm } from '../cause-movement';
 
 export class InlineMovements extends Component {
@@ -13,10 +14,30 @@ export class InlineMovements extends Component {
     actions: PropTypes.object.isRequired,
   };
 
+  constructor(props) {
+    super(props);
+    this.onSubmit = this.onSubmit.bind(this);
+  }
+
   componentDidMount() {
     if (!this.props.causeMovement.emptyItem) {
       this.props.actions.loadOne(0);
     }
+  }
+
+  onSubmit(datas = {}) {
+    console.log(datas);
+    // Conversion des données en objet pour le service web
+    let obj = getJsonApi(datas, 'FreeAsso_CauseMovement');
+    this.props.actions
+      .createOne(obj)
+      .then(result => {
+        createSuccess();
+      })
+      .catch(errors => {
+        // @todo display errors to fields
+        createError();
+      });
   }
 
   render() {
@@ -31,20 +52,27 @@ export class InlineMovements extends Component {
         </div>
       );
     } else {
-      if (movements && movements.legnth > 0) {
+      if (movements && movements.length > 0) {
         return (
           <div className="cause-inline-mevements">
             {movements.map(movement => {
-              <div className="row">
-                <div className="col-5">
+              return (
+                <div className="row" key={movement.id}>
+                  <div className="col-5"></div>
+                  <div className="col-10">{movement.from_site.site_name}</div>
+                  <div className="col-10">{movement.to_site.site_name}</div>
                 </div>
-              </div>
+              );
             })}
             <div className="row p-3">
               <div className="col-36">
-                {this.props.causeMovement.emptyItem &&
-                  <InlineMovementForm item={this.props.causeMovement.emptyItem} />
-                }
+                {this.props.causeMovement.emptyItem && (
+                  <InlineMovementForm
+                    cause={this.props.causeMovement.cause}
+                    item={this.props.causeMovement.emptyItem}
+                    onSubmit={this.onSubmit}
+                  />
+                )}
               </div>
             </div>
           </div>
@@ -54,9 +82,13 @@ export class InlineMovements extends Component {
           <div className="cause-inline-mevements">
             <div className="row p-3">
               <div className="col-36">
-                {this.props.causeMovement.emptyItem &&
-                  <InlineMovementForm item={this.props.causeMovement.emptyItem} />
-                }
+                {this.props.causeMovement.emptyItem && (
+                  <InlineMovementForm
+                    cause={this.props.causeMovement.cause}
+                    item={this.props.causeMovement.emptyItem}
+                    onSubmit={this.onSubmit}
+                  />
+                )}
               </div>
             </div>
           </div>

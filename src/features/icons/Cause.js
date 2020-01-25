@@ -1,21 +1,11 @@
 import React, { Component } from 'react';
-import Icon from '@mdi/react';
-import {
-  mdiSheep
-} from '@mdi/js';
+import { mdiSheep } from '@mdi/js';
+import { Icon } from './';
 
 export default class Cause extends Component {
-  static propTypes = {
-
-  };
+  static propTypes = {};
 
   render() {
-    return (
-      <Icon 
-        path={mdiSheep}
-        size={1}
-        {...this.props}
-      />
-    );
+    return <Icon path={mdiSheep} {...this.props} />;
   }
 }

@@ -11,10 +11,11 @@ import { InlineList as InlineListCause } from '../cause';
 import {
   MapCenter as MapCenterIcon,
   MapMove as MapMoveIcon,
-  Documents as DocumentsIcon,
   Cause as CauseIcon,
   Photo as PhotoIcon,
+  Document as DocumentIcon,
 } from '../icons';
+import { InlineMapPhotos } from './';
 
 export class ListGroup extends Component {
   static propTypes = {
@@ -31,11 +32,13 @@ export class ListGroup extends Component {
       scrollHover: 0,
       documents: 0,
       causes: 0,
+      photos: 0,
       selected: this.props.selected || 0,
     };
     this.scrollMouseEnter = this.scrollMouseEnter.bind(this);
     this.scrollMouseLeave = this.scrollMouseLeave.bind(this);
     this.onSiteDocuments = this.onSiteDocuments.bind(this);
+    this.onSitePhotos = this.onSitePhotos.bind(this);
     this.onSiteCauses = this.onSiteCauses.bind(this);
   }
 
@@ -52,11 +55,17 @@ export class ListGroup extends Component {
   }
 
   onSiteDocuments(id) {
-    this.setState({ documents: id, causes: 0 });
+    this.setState({ photos: 0, documents: id, causes: 0 });
+    this.props.actions.loadDocuments(id, true).then(result => {});
+  }
+
+  onSitePhotos(id) {
+    this.setState({ photos: id, documents: 0, causes: 0 });
+    this.props.actions.loadPhotos(id, true).then(result => {});
   }
 
   onSiteCauses(id) {
-    this.setState({ causes: id, documents: 0 });
+    this.setState({ photos: 0, causes: id, documents: 0 });
   }
 
   static getDerivedStateFromProps(props, state) {
@@ -116,7 +125,7 @@ export class ListGroup extends Component {
                       <div
                         className={classnames(
                           'card w-100',
-                          this.state.selected == item.id && 'active',
+                          this.state.selected === item.id && 'active',
                         )}
                       >
                         <div className="card-header">
@@ -160,7 +169,7 @@ export class ListGroup extends Component {
                             <li>
                               <div
                                 data-toggle="tooltip" 
-                                title="Photos"
+                                title="Documents"
                                 className="ml-2"
                                 onClick={() => {
                                   this.props.onSiteClick &&
@@ -168,21 +177,21 @@ export class ListGroup extends Component {
                                   this.onSiteDocuments(item.id);
                                 }}
                               >
-                                <PhotoIcon size={0.8} className="text-secondary inline-action" />
+                                <DocumentIcon size={0.8} className="text-secondary inline-action" />
                               </div>
                             </li>
                             <li>
                               <div
                                 data-toggle="tooltip" 
-                                title="Document"
+                                title="Photos"
                                 className="ml-2"
                                 onClick={() => {
                                   this.props.onSiteClick &&
                                     this.props.onSiteClick(item.id, item.site_coord);
-                                  this.onSiteDocuments(item.id);
+                                  this.onSitePhotos(item.id);
                                 }}
                               >
-                                <DocumentsIcon size={0.8} className="text-secondary inline-action" />
+                                <PhotoIcon size={0.8} className="text-secondary inline-action" />
                               </div>
                             </li>
                             <li>
@@ -212,13 +221,23 @@ export class ListGroup extends Component {
                             <div className="card-footer bg-transparent">
                               <p>Documents :</p>
                             </div>
-                          )}
+                          )
+                        }
+                        {this.state.selected === item.id &&
+                          this.state.selected === this.state.photos && (
+                            <div className="card-footer bg-transparent">
+                              <p>Photos :</p>
+                              <InlineMapPhotos />
+                            </div>
+                          )
+                        }
                         {this.state.selected === item.id &&
                           this.state.selected === this.state.causes && (
                             <div className="card-footer bg-transparent">
                               <InlineListCause site_id={item.id} />
                             </div>
-                          )}
+                          )
+                        }
                       </div>
                     </div>
                   </HoverObserver>

@@ -1,21 +1,11 @@
 import React, { Component } from 'react';
-import Icon from '@mdi/react';
-import {
-  mdiChevronLeft
-} from '@mdi/js';
+import { mdiChevronLeft } from '@mdi/js';
+import { Icon } from './';
 
 export default class Previous extends Component {
-  static propTypes = {
-
-  };
+  static propTypes = {};
 
   render() {
-    return (
-      <Icon 
-        path={mdiChevronLeft}
-        size={1}
-        color={this.props.color}
-      />
-    );
+    return <Icon path={mdiChevronLeft} {...this.props} />;
   }
 }

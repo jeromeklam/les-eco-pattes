@@ -1,22 +1,11 @@
 import React, { Component } from 'react';
-import Icon from '@mdi/react';
-import {
-  mdiSort
-} from '@mdi/js';
+import { mdiSort } from '@mdi/js';
+import { Icon } from './';
 
 export default class Sort extends Component {
-  static propTypes = {
-
-  };
+  static propTypes = {};
 
   render() {
-    return (
-      <Icon 
-        path={mdiSort}
-        size={1}
-        color={this.props.color}
-        className={this.props.className || ''}
-      />
-    );
+    return <Icon path={mdiSort} {...this.props} />;
   }
 }

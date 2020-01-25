@@ -15,11 +15,10 @@ export class SimpleLabel extends Component {
     this.props.data.models.forEach(item => {
       if (item.data_code === this.props.code) {
         const datas = JSON.parse(item.data_content);
-        datas.map(item => {
-          console.log(item.value, this.props.value);
+        datas.forEach(item => {
           if (item.value === this.props.value) {
             string = item.label;
-            return false;
+            return true;
           }
         });
       }

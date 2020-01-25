@@ -1,19 +1,11 @@
 import React, { Component } from 'react';
-import Icon from '@mdi/react';
-import {
-  mdiMagnify
-} from '@mdi/js';
+import { mdiMagnify } from '@mdi/js';
+import { Icon } from './';
 
 export default class Filter extends Component {
   static propTypes = {};
 
   render() {
-    return (
-      <Icon 
-        path={mdiMagnify}
-        size={1}
-        color={this.props.color}
-      />
-    );
+    return <Icon path={mdiMagnify} {...this.props} />;
   }
 }

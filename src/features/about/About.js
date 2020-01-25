@@ -20,7 +20,7 @@ export default class About extends Component {
           </div>
         </div>
         <div className="row mb-2">
-          <div className="col-md-18"><img src={logo} /></div>
+          <div className="col-md-18"><img src={logo} alt="" /></div>
           <div className="col-md-18">
             <div className="card flex-md-row mb-4 box-shadow h-md-250">
               <div className="card-body d-flex flex-column align-items-start">

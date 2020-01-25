@@ -1,22 +1,11 @@
 import React, { Component } from 'react';
-import Icon from '@mdi/react';
-import {
-  mdiSortDescending
-} from '@mdi/js';
+import { mdiSortDescending } from '@mdi/js';
+import { Icon } from './';
 
 export default class SortDown extends Component {
-  static propTypes = {
-
-  };
+  static propTypes = {};
 
   render() {
-    return (
-      <Icon 
-        path={mdiSortDescending}
-        size={1}
-        color={this.props.color}
-        className={this.props.className || ''}
-      />
-    );
+    return <Icon path={mdiSortDescending} {...this.props} />;
   }
 }

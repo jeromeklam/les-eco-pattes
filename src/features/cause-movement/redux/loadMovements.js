@@ -1,5 +1,5 @@
 import { freeAssoApi } from '../../../common';
-import { jsonApiNormalizer, objectToQueryString, buildModel } from 'freejsonapi';
+import { jsonApiNormalizer, objectToQueryString } from 'freejsonapi';
 import {
   CAUSE_MOVEMENT_LOAD_MOVEMENTS_BEGIN,
   CAUSE_MOVEMENT_LOAD_MOVEMENTS_SUCCESS,
@@ -15,7 +15,7 @@ export function loadMovements(args = {}) {
     const promise = new Promise((resolve, reject) => {
       const filter = {
         filter: {
-          cau_id: args,
+          cau_id: args.id,
         },
         sort: '-camv_ts'
       }
@@ -26,7 +26,7 @@ export function loadMovements(args = {}) {
           dispatch({
             type: CAUSE_MOVEMENT_LOAD_MOVEMENTS_SUCCESS,
             data: res,
-            ...args,
+            cause: args,
           });
           resolve(res);
         },
@@ -57,6 +57,7 @@ export function reducer(state, action) {
         ...state,
         loadMovementsPending: true,
         loadMovementsError: null,
+        cause: null,
       };
 
     case CAUSE_MOVEMENT_LOAD_MOVEMENTS_SUCCESS:
@@ -81,6 +82,7 @@ export function reducer(state, action) {
         loadMovementsError: null,
         loadMovementssFinish: true,
         movements: list,
+        cause: action.cause,
       };
 
     case CAUSE_MOVEMENT_LOAD_MOVEMENTS_FAILURE:

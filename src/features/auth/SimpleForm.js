@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as actions from './redux/actions';
-import { InputText, InputPassword, ButtonSubmit } from 'freeassofront';
+import { InputText, InputPassword } from 'freeassofront';
 import Avatar from 'react-avatar';
 
 export class SimpleForm extends Component {

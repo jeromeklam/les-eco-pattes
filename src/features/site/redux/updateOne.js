@@ -1,4 +1,4 @@
-import { jsonApiNormalizer, buildModel, jsonApiUpdate } from 'freejsonapi';
+import { jsonApiNormalizer, jsonApiUpdate } from 'freejsonapi';
 import {
   SITE_UPDATE_ONE_BEGIN,
   SITE_UPDATE_ONE_SUCCESS,

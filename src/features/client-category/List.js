@@ -19,7 +19,6 @@ import {
   Sort as SortNoneIcon,
   Search as SearchIcon,
 } from '../icons';
-import { deleteSuccess, deleteError } from '../ui';
 
 export class List extends Component {
   static propTypes = {

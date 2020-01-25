@@ -1,21 +1,11 @@
 import React, { Component } from 'react';
-import Icon from '@mdi/react';
-import {
-  mdiHome
-} from '@mdi/js';
+import { mdiHome } from '@mdi/js';
+import { Icon } from './';
 
 export default class Home extends Component {
-  static propTypes = {
-
-  };
+  static propTypes = {};
 
   render() {
-    return (
-      <Icon 
-        path={mdiHome}
-        size={1}
-        {...this.props}
-      />
-    );
+    return <Icon path={mdiHome} {...this.props} />;
   }
 }

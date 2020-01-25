@@ -2,14 +2,11 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
-import reactLogo from '../../images/react-logo.svg';
-import rekitLogo from '../../images/rekit-logo.svg';
 import * as actions from './redux/actions';
-import { Desktop, Tablet, Mobile, Default } from '../common'
+import { Responsive } from 'freeassofront';
 import fond from '../../images/fond2.jpg';
 import logo from '../../images/logo-les-eco-pattes.jpg';
-import {Stats} from '../dashboard';
+import { Stats } from '../dashboard';
 
 export class Home extends Component {
   static propTypes = {
@@ -20,30 +17,30 @@ export class Home extends Component {
   render() {
     return (
       <div className="container-fluid">
-        <Mobile>
+        <Responsive displayIn={['Mobile']}>
           {this.props.auth.authenticated ? (
             <Stats />
           ) : (
-          <div className="text-center">
-            <br />
-            <h5>Pensez à l'éco-pâturage pour entretenir vos espaces verts et naturels</h5>
-            <br />
-            <img src={logo} />
-            <br />
-            <br />
-            <h6>les moutons seront bien gardés !</h6>
-          </div>
-          )}
-        </Mobile>
-        <Desktop>
             <div className="text-center">
-              <img className="fond-site" src={fond} />
+              <br />
+              <h5>Pensez à l'éco-pâturage pour entretenir vos espaces verts et naturels</h5>
+              <br />
+              <img src={logo} alt="" />
               <br />
               <br />
-              <br />
-              <Stats />
+              <h6>les moutons seront bien gardés !</h6>
             </div>
-        </Desktop>
+          )}
+        </Responsive>
+        <Responsive displayIn={['Laptop', 'Tablet']}>
+          <div className="text-center">
+            <img className="fond-site" src={fond} alt="" />
+            <br />
+            <br />
+            <br />
+            <Stats />
+          </div>
+        </Responsive>
       </div>
     );
   }

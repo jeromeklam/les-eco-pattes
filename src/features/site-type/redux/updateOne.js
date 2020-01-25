@@ -1,8 +1,8 @@
 import {
-  freeAssoApi,
-  jsonApiNormalizer,
+  freeAssoApi } from '../../../common';
+import { jsonApiNormalizer,
   jsonApiUpdate
-} from '../../../common';
+} from 'freejsonapi';
 import {
   SITE_TYPE_UPDATE_ONE_BEGIN,
   SITE_TYPE_UPDATE_ONE_SUCCESS,

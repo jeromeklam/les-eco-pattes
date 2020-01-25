@@ -45,3 +45,4 @@ export { default as Upload } from './Upload';
 export { default as Document } from './Document';
 export { default as Move } from './Move';
 export { default as Movement } from './Movement';
+export { default as Icon } from './Icon';

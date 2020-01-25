@@ -1,21 +1,11 @@
 import React, { Component } from 'react';
-import Icon from '@mdi/react';
-import {
-  mdiReload
-} from '@mdi/js';
+import { mdiReload } from '@mdi/js';
+import { Icon } from './';
 
 export default class Reload extends Component {
-  static propTypes = {
-
-  };
+  static propTypes = {};
 
   render() {
-    return (
-      <Icon 
-        path={mdiReload}
-        size={1}
-        color={this.props.color}
-      />
-    );
+    return <Icon path={mdiReload} {...this.props} />;
   }
 }

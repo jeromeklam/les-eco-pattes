@@ -8,3 +8,4 @@ export { default as Search } from './Search';
 export { default as InlineCauses } from './InlineCauses';
 export { default as InlinePhotos } from './InlinePhotos';
 export { default as InlineDocuments } from './InlineDocuments';
+export { default as InlineMapPhotos } from './InlineMapPhotos';

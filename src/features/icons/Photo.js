@@ -1,21 +1,11 @@
 import React, { Component } from 'react';
-import Icon from '@mdi/react';
-import {
-  mdiImageFilter as myIcon
-} from '@mdi/js';
+import { mdiImageFilter as myIcon } from '@mdi/js';
+import { Icon } from './';
 
 export default class Photo extends Component {
-  static propTypes = {
-
-  };
+  static propTypes = {};
 
   render() {
-    return (
-      <Icon 
-        path={myIcon}
-        size={1}
-        {...this.props}
-      />
-    );
+    return <Icon path={myIcon} {...this.props} />;
   }
 }

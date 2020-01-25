@@ -1,19 +1,11 @@
 import React, { Component } from 'react';
-import Icon from '@mdi/react';
-import {
-  mdiDotsHorizontal
-} from '@mdi/js';
+import { mdiDotsHorizontal } from '@mdi/js';
+import { Icon } from './';
 
 export default class Plus extends Component {
   static propTypes = {};
 
   render() {
-    return (
-      <Icon 
-        path={mdiDotsHorizontal}
-        size={1}
-        color={this.props.color}
-      />
-    );
+    return <Icon path={mdiDotsHorizontal} {...this.props} />;
   }
 }

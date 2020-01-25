@@ -1,8 +1,8 @@
 import {
-  freeAssoApi,
-  jsonApiNormalizer,
+  freeAssoApi } from '../../../common';
+import { jsonApiNormalizer,
   buildModel
-} from '../../../common';
+} from 'freejsonapi';
 import {
   DATA_LOAD_ONE_BEGIN,
   DATA_LOAD_ONE_SUCCESS,

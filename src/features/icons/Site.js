@@ -1,21 +1,11 @@
 import React, { Component } from 'react';
-import Icon from '@mdi/react';
-import {
-  mdiMapMarkerMultiple
-} from '@mdi/js';
+import { mdiMapMarkerMultiple } from '@mdi/js';
+import { Icon } from './';
 
 export default class Site extends Component {
-  static propTypes = {
-
-  };
+  static propTypes = {};
 
   render() {
-    return (
-      <Icon 
-        path={mdiMapMarkerMultiple}
-        size={1}
-        {...this.props}
-      />
-    );
+    return <Icon path={mdiMapMarkerMultiple} {...this.props} />;
   }
 }

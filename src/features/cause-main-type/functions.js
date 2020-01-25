@@ -1,4 +1,4 @@
-import { buildModel } from '../../common';
+import { buildModel } from 'freejsonapi';
 
 export function causeMainTypeAsOptions(object) {
   let arr   = [];
