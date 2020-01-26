@@ -1,6 +1,6 @@
 import React from 'react';
-import { InputHidden, InputText, InputSelect, InputTextArea, FormResponsive } from '../layout';
-import useForm from '../layout/useForm';
+import { InputHidden, InputText, InputSelect, InputTextarea, ResponsiveForm } from 'freeassofront';
+import { useForm } from '../ui';
 
 export default function Form(props) {
   const { values, handleChange, handleSubmit, handleCancel } = useForm(
@@ -10,7 +10,7 @@ export default function Form(props) {
     props.onCancel,
   );
   return (
-    <FormResponsive title="Email" onSubmit={handleSubmit} onCancel={handleCancel}>
+    <ResponsiveForm title="Email" onSubmit={handleSubmit} onCancel={handleCancel}>
       <div className="card-body">
         <InputHidden name="id" id="id" value={values.id} />
         <InputText
@@ -57,7 +57,7 @@ export default function Form(props) {
           value={values.email_reply_to}
           onChange={handleChange}
         />
-        <InputTextArea
+        <InputTextarea
           label="Corps"
           name="email_body"
           id="email_body"
@@ -65,6 +65,6 @@ export default function Form(props) {
           onChange={handleChange}
         />
       </div>
-    </FormResponsive>
+    </ResponsiveForm>
   );
 }

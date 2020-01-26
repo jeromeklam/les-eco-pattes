@@ -190,15 +190,15 @@ export class App extends Component {
     }
   }
 
-  componentWillReceiveProps(nextProps) {
+  componentDidUpdate(prevProps, prevState) {
     if (
-      nextProps.auth.authenticated &&
-      !nextProps.home.loadAllFinish &&
-      !nextProps.home.loadAllError &&
-      !nextProps.home.loadAllPending
+      prevProps.auth.authenticated &&
+      !prevProps.home.loadAllFinish &&
+      !prevProps.home.loadAllError &&
+      !prevProps.home.loadAllPending
     ) {
-      initAxios(nextProps.auth.token);
-      nextProps.actions.loadAll();
+      initAxios(prevProps.auth.token);
+      prevProps.actions.loadAll();
     }
   }
 

@@ -3,9 +3,9 @@ import {
   InputHidden,
   InputText,
   InputSelect,
-  InputStringArray,
-  FormResponsive,
-} from '../layout';
+  InputStringarray,
+  ResponsiveForm,
+} from 'freeassofront';
 import { dataTypes } from './functions';
 import useForm from '../layout/useForm';
 
@@ -21,7 +21,7 @@ export default function Form(props) {
   );
   const optionsType = dataTypes();
   return (
-    <FormResponsive title="Variable" onSubmit={handleSubmit} onCancel={handleCancel}>
+    <ResponsiveForm title="Variable" onSubmit={handleSubmit} onCancel={handleCancel}>
       <div className="card-body">
         <InputHidden name="id" id="id" value={values.id} />
         <InputText
@@ -41,7 +41,7 @@ export default function Form(props) {
           options={optionsType}
         />
         {values.data_type === 'LIST' && (
-          <InputStringArray
+          <InputStringarray
             label="Valeurs"
             name="data_content"
             value={values.data_content}
@@ -50,6 +50,6 @@ export default function Form(props) {
           />
         )}
       </div>
-    </FormResponsive>
+    </ResponsiveForm>
   );
 }

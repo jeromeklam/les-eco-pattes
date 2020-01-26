@@ -1,4 +1,5 @@
 export * from './functions.js';
+export { default as useForm } from './useForm';
 export { default as Copyright } from './Copyright';
 export { default as InputData } from './InputData';
 export { default as InputDate } from './InputDate';
