@@ -147,7 +147,7 @@ export class PigeonMap extends Component {
   }
 
   onMarkerClick({ event, anchor, payload }) {
-    this.setState({ selected: payload, center: anchor, moved: false });
+    this.setState({ selected: parseInt(payload, 10), center: anchor, moved: false });
   }
 
   onSiteClick(id, anchorCoord) {

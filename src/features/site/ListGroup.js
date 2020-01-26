@@ -21,7 +21,7 @@ export class ListGroup extends Component {
   static propTypes = {
     site: PropTypes.object.isRequired,
     actions: PropTypes.object.isRequired,
-    selected: PropTypes.string.isRequired,
+    selected: PropTypes.number.isRequired,
     onSiteClick: PropTypes.func,
     onSiteMove: PropTypes.func,
   };
@@ -85,9 +85,6 @@ export class ListGroup extends Component {
       };
     }
     return null;
-  }
-
-  componentWillUpdate(nextProps, nextState) {
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -210,7 +207,7 @@ export class ListGroup extends Component {
                             </li>
                           </ul>
                         </div>
-                        <div className="card-body">
+                        <div className="card-body p-2">
                           <p>{item.site_address1}</p>
                           <p>
                             {item.site_cp} {item.site_town}

@@ -1,5 +1,17 @@
 @import '../../styles/mixins';
 
-.icons-icon {
+.icon-sm svg {
+  width: 1rem !important;
+  height: 1rem !important;
+  fill: theme-color('secondary') !important;
+  path {
+    fill: theme-color('secondary') !important;
+  }
+}
 
+.icon-sm:hover svg {
+  fill: theme-color('primary') !important;
+  path {
+    fill: theme-color('primary') !important;
+  }
 }

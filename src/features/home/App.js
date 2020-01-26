@@ -191,14 +191,16 @@ export class App extends Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if (
-      prevProps.auth.authenticated &&
-      !prevProps.home.loadAllFinish &&
-      !prevProps.home.loadAllError &&
-      !prevProps.home.loadAllPending
-    ) {
-      initAxios(prevProps.auth.token);
-      prevProps.actions.loadAll();
+    if (prevProps.auth.authenticated !== this.props.auth.authenticated) {
+      if (
+        this.props.auth.authenticated &&
+        !this.props.home.loadAllFinish &&
+        !this.props.home.loadAllError &&
+        !this.props.home.loadAllPending
+      ) {
+        initAxios(prevProps.auth.token);
+        this.props.actions.loadAll();
+      }
     }
   }
 
@@ -213,6 +215,7 @@ export class App extends Component {
   }
 
   render() {
+    console.log(this.props.auth.authenticated, this.props.home.loadAllFinish);
     if (this.props.home.loadAllError) {
       return (
         <div className="text-danger">
@@ -239,7 +242,7 @@ export class App extends Component {
         return (
           <div className="main-loader">
             <p>... Chargement ...</p>
-            <Loading9x9 />
+            <Loading9x9 className="text-primary"/>
           </div>
         );
       }

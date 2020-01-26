@@ -40,8 +40,8 @@ export default class InlineListDetail extends Component {
             ))}
           </div>
         ) : (
-          <div className="text-center">
-            <span>Aucun animal</span>
+          <div className="text-center p-3">
+            <span className="text-secondary">Aucun animal</span>
           </div>
         )}
       </div>

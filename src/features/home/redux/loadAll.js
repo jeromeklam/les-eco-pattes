@@ -40,7 +40,6 @@ export function loadAll(args = {}) {
           data: res,
         });
       },
-      // Use rejectHandler as the second argument so that render errors won't be caught.
       err => {
         console.log(err);
         dispatch({

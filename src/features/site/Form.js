@@ -4,6 +4,19 @@ import { InputData } from '../ui';
 import useForm from '../ui/useForm';
 import { siteTypeAsOptions } from '../site-type/functions.js';
 import { InputPicker as ClientInputPicker } from '../client';
+import { Location as LocationIcon, Settings as SettingsIcon, Other as OtherIcon } from '../icons';
+
+const tabs = [
+  {
+    key: '1',
+    name: 'identification',
+    label: 'Identification',
+    shortcut: 'L',
+    icon: <LocationIcon />,
+  },
+  { key: '2', name: 'equipement', label: 'Equipement', shortcut: 'E', icon: <SettingsIcon /> },
+  { key: '3', name: 'divers', label: 'Divers', shortcut: 'D', icon: <OtherIcon /> },
+];
 
 export default function Form(props) {
   const {
@@ -20,7 +33,7 @@ export default function Form(props) {
       className=""
       title="Sites"
       tab={values.currentTab}
-      tabs={props.tabs}
+      tabs={tabs}
       onSubmit={handleSubmit}
       onCancel={handleCancel}
       onNavTab={handleNavTab}
