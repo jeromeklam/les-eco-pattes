@@ -39,11 +39,10 @@ export class Signin extends Component {
       props.history.push('/');
     } else {
       if (props.auth.signInError) {
-        const errors = {
+        return {
           username_error: getFieldErrorMessage(props.auth.signInError, 'login'),
           password_error: getFieldErrorMessage(props.auth.signInError, 'password'),
         };
-        return errors;
       }
     }
     return null;
@@ -74,12 +73,6 @@ export class Signin extends Component {
     let username_error = '';
     let password_error = '';
     let error = false;
-    if (this.state.username === '') {
-      username_error = "L'email est obligatoire";
-    }
-    if (this.state.password === '') {
-      password_error = 'Le mot de passe est obligatoire';
-    }
     this.setState({ username_error: username_error, password_error: password_error });
     if (!error) {
       const datas = {
@@ -96,6 +89,7 @@ export class Signin extends Component {
   }
 
   render() {
+    console.log(this.state);
     return (
       <div className="auth-signin">
         <form className="form-signin text-center" onSubmit={this.onSubmit}>
