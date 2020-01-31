@@ -8,6 +8,7 @@ import { HoverObserver } from 'freeassofront';
 import { buildModel } from 'freejsonapi';
 import { isInViewPort } from '../../common';
 import { InlineList as InlineListCause } from '../cause';
+import { CenteredLoading3Dots } from '../ui';
 import {
   MapCenter as MapCenterIcon,
   MapMove as MapMoveIcon,
@@ -102,6 +103,13 @@ export class ListGroup extends Component {
     let items = false;
     if (this.props.site.items.FreeAsso_Site) {
       items = buildModel(this.props.site.items, 'FreeAsso_Site');
+    }
+    if (this.props.site.loadMorePending) {
+      return (
+        <div className="site-list-group">
+          <CenteredLoading3Dots />
+        </div>
+      );
     }
     return (
       <div className="site-list-group">

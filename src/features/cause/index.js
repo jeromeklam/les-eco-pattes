@@ -1,3 +1,4 @@
+export * from './functions';
 export { default as List } from './List';
 export { default as Modify } from './Modify';
 export { default as Form } from './Form';
@@ -7,3 +8,4 @@ export { default as Search } from './Search';
 export { default as InlineList } from './InlineList';
 export { default as InlineListGroup } from './InlineListGroup';
 export { default as InlineListDetail } from './InlineListDetail';
+export { default as InlineDocuments } from './InlineDocuments';

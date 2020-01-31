@@ -21,9 +21,11 @@ import {
   SortUp as SortUpIcon,
   Sort as SortNoneIcon,
   Search as SearchIcon,
+  Document as DocumentIcon,
 } from '../icons';
 import { deleteSuccess, deleteError } from '../ui';
 import { InlineMovements } from '../cause-movement';
+import { InlineDocuments } from './';
 
 export class List extends Component {
   static propTypes = {
@@ -36,6 +38,7 @@ export class List extends Component {
     this.state = {
       timer: null,
       movementsCause: 0,
+      documentsCause: 0,
     };
     this.onCreate = this.onCreate.bind(this);
     this.onGetOne = this.onGetOne.bind(this);
@@ -47,6 +50,7 @@ export class List extends Component {
     this.onSetFiltersAndSort = this.onSetFiltersAndSort.bind(this);
     this.onUpdateSort = this.onUpdateSort.bind(this);
     this.onOpenPhoto = this.onOpenPhoto.bind(this);
+    this.onListDocument = this.onListDocument.bind(this);
     this.onListMovement = this.onListMovement.bind(this);
   }
 
@@ -82,14 +86,25 @@ export class List extends Component {
       });
   }
 
+  onListDocument(obj) {
+    const { id } = obj;
+    const { documentsCause } = this.state;
+    if (documentsCause === id) {
+      this.setState({movementsCause: 0, documentsCause: 0});
+    } else {
+      this.props.actions.loadDocuments(id, true).then(result => {});
+      this.setState({movementsCause: 0, documentsCause: id});
+    }
+  }
+
   onListMovement(obj) {
     const { id } = obj;
     const { movementsCause } = this.state;
     if (movementsCause === id) {
-      this.setState({movementsCause: 0});
+      this.setState({movementsCause: 0, documentsCause: 0});
     } else {
       this.props.actions.loadMovements(obj, true).then(result => {});
-      this.setState({movementsCause: id});
+      this.setState({movementsCause: id, documentsCause: 0});
     }
   }
 
@@ -187,6 +202,15 @@ export class List extends Component {
         theme: 'secondary',
         icon: <MovementIcon color="white" />,
         role: 'OTHER',
+      },
+      {
+        name: 'documents',
+        label: 'Documents',
+        onClick: this.onListDocument,
+        param: 'object',
+        theme: 'secondary',
+        icon: <DocumentIcon color="white" />,
+        role: 'DETAIL',
       },
       {
         name: 'modify',
@@ -289,9 +313,18 @@ export class List extends Component {
     ) : (
       <FilterFullIcon className="text-light" />
     );
-    const id = this.state.movementsCause;
-    const current = buildModel(this.props.cause.items, 'FreeAsso_Cause', id);
-    const inlineComponent = <InlineMovements cause={current} />
+    let inlineComponent = null;
+    let id = null;
+    if (this.state.movementsCause > 0) {
+      inlineComponent = <InlineMovements cause={current} />
+      id = this.state.movementsCause;
+    } else {
+      if (this.state.documentsCause > 0 ) {
+        inlineComponent = <InlineDocuments />
+        id = this.state.documentsCause;
+      }
+    }  
+    const current = buildModel(this.props.cause.items, 'FreeAsso_Cause', id);  
     return (
       <ResponsiveList
         title="Animaux"

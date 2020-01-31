@@ -19,6 +19,9 @@ import { reducer as setFiltersReducer } from './setFilters';
 import { reducer as setSortReducer } from './setSort';
 import { reducer as updateQuickSearchReducer } from './updateQuickSearch';
 import { reducer as updateSortReducer } from './updateSort';
+import { reducer as loadDocumentsReducer } from './loadDocuments';
+import { reducer as uploadCauseMediaReducer } from './uploadCauseMedia';
+import { reducer as delCauseMediaReducer } from './delCauseMedia';
 
 const reducers = [
   loadMoreReducer,
@@ -33,6 +36,9 @@ const reducers = [
   setSortReducer,
   updateQuickSearchReducer,
   updateSortReducer,
+  loadDocumentsReducer,
+  uploadCauseMediaReducer,
+  delCauseMediaReducer,
 ];
 
 export default function reducer(state = initialState, action) {

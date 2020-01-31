@@ -3,6 +3,7 @@ import { Filter } from 'freeassofront';
 const initialState = {
   items: [],
   movements: [],
+  documents: [],
   currentItem: null,
   page_number: 1,
   page_size: process.env.REACT_APP_PAGE_SIZE,
@@ -27,6 +28,12 @@ const initialState = {
   updateOneError: null,
   delOnePending: false,
   delOneError: null,
+  loadDocumentsPending: false,
+  loadDocumentsError: null,
+  uploadCauseMediaPending: false,
+  uploadCauseMediaError: null,
+  delCauseMediaPending: false,
+  delCauseMediaError: null,
 };
 
 export default initialState;

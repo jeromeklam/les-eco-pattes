@@ -1,3 +1,25 @@
+import { freeAssoApi } from '../../common';
+
+/**
+ *
+ */
+export const downloadCauseMediaBlob = sitm_id => {
+  const promise = new Promise((resolve, reject) => {
+    const doRequest = freeAssoApi.get('/v1/asso/cause_media_blob/download/' + sitm_id, {
+      responseType: 'arraybuffer',
+    });
+    doRequest.then(
+      res => {
+        resolve(res);
+      },
+      err => {
+        reject(err);
+      },
+    );
+  });
+  return promise;
+};
+
 /**
  * Export all cause group
  * 

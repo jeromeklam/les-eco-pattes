@@ -7,3 +7,4 @@ export { default as InputStringarray } from './InputStringarray';
 export { default as SearchModal } from './SearchModal';
 export { default as CenteredLoading9X9 } from './CenteredLoading9X9';
 export { default as CenteredLoading3Dots } from './CenteredLoading3Dots';
+export { default as ImageModal } from './ImageModal';
