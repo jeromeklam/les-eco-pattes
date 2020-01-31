@@ -89,7 +89,6 @@ export class Signin extends Component {
   }
 
   render() {
-    console.log(this.state);
     return (
       <div className="auth-signin">
         <form className="form-signin text-center" onSubmit={this.onSubmit}>

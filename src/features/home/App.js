@@ -215,7 +215,6 @@ export class App extends Component {
   }
 
   render() {
-    console.log(this.props.auth.authenticated, this.props.home.loadAllFinish);
     if (this.props.home.loadAllError) {
       return (
         <div className="text-danger">

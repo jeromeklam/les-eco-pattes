@@ -8,3 +8,25 @@ svg.inline-action:hover {
     fill: theme-color('light') !important;
   }
 }
+
+.cause-inline-movements {
+  .inline-list {
+    .row-title span {
+      font-weight: bold;
+    }
+    .row {
+      height: 30px;
+      line-height: 30px;
+    }
+    .row:nth-child(even) {
+      background: lighten(theme-color('secondary-light'), 5%);
+    }
+    .row:nth-child(odd) {
+      background: lighten(theme-color('secondary-light'), 10%);
+    }
+  }
+  .row-new {
+    background: theme-color('secondary-light');
+  }
+}
+

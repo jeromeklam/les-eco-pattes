@@ -83,6 +83,10 @@ export class Modify extends Component {
                 client_types={this.props.clientType.items}
                 client_categories={this.props.clientCategory.items}
                 errors={this.props.client.updateOneError}
+                countries={this.props.country.items}
+                languages={this.props.lang.items}
+                tab={this.props.client.tab}
+                tabs={this.props.client.tabs}
                 onSubmit={this.onSubmit}
                 onCancel={this.onCancel}
               />
@@ -99,6 +103,8 @@ function mapStateToProps(state) {
     client: state.client,
     clientType: state.clientType,
     clientCategory: state.clientCategory,
+    country: state.country,
+    lang: state.lang,
   };
 }
 

@@ -43,7 +43,7 @@ export default class SearchModal extends Component {
 
   onClear(event) {
     let filters = this.state.fields;
-    filters.forEaach(item => {
+    filters.forEach(item => {
       item.value = '';
     });
     this.setState({ fields: filters });

@@ -59,3 +59,15 @@ export function getPreviousNext(items, id) {
   }
   return ret;
 }
+
+export function intlDate(date) {
+  if (date) {
+    try {
+      const laDate = new Date(date);
+      return new Intl.DateTimeFormat('fr-FR').format(laDate);
+    } catch (ex) {
+      console.log(ex);
+    }
+  }
+  return '';
+}

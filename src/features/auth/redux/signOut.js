@@ -7,22 +7,12 @@ import {
 import cookie from 'react-cookies';
 import { initAxios } from '../../../common';
 
-// Rekit uses redux-thunk for async actions by default: https://github.com/gaearon/redux-thunk
-// If you prefer redux-saga, you can use rekit-plugin-redux-saga: https://github.com/supnate/rekit-plugin-redux-saga
 export function signOut(args = {}) {
-  return (dispatch) => { // optionally you can have getState as the second argument
+  return (dispatch) => {
     dispatch({
       type: AUTH_SIGN_OUT_BEGIN,
     });
-
-    // Return a promise so that you could control UI flow without states in the store.
-    // For example: after submit a form, you need to redirect the page to another when succeeds or show some errors message if fails.
-    // It's hard to use state to manage it, but returning a promise allows you to easily achieve it.
-    // e.g.: handleSubmit() { this.props.actions.submitForm(data).then(()=> {}).catch(() => {}); }
     const promise = new Promise((resolve, reject) => {
-      // doRequest is a placeholder Promise. You should replace it with your own logic.
-      // See the real-word example at:  https://github.com/supnate/rekit/blob/master/src/features/home/redux/fetchRedditReactjsList.js
-      // args.error here is only for test coverage purpose.
       const doRequest = args.error ? Promise.reject(new Error()) : Promise.resolve();
       doRequest.then(
         (res) => {
@@ -33,7 +23,6 @@ export function signOut(args = {}) {
           });
           resolve(res);
         },
-        // Use rejectHandler as the second argument so that render errors won't be caught.
         (err) => {
           dispatch({
             type: AUTH_SIGN_OUT_FAILURE,
@@ -43,13 +32,10 @@ export function signOut(args = {}) {
         },
       );
     });
-
     return promise;
   };
 }
 
-// Async action saves request error by default, this method is used to dismiss the error info.
-// If you don't want errors to be saved in Redux store, just ignore this method.
 export function dismissSignOutError() {
   return {
     type: AUTH_SIGN_OUT_DISMISS_ERROR,

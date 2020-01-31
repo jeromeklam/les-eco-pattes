@@ -1,5 +1,6 @@
 const initialState = {
   emptyItem: null,
+  items: [],
   cause: null,
   movements: [],
   loadOneItem: null,
@@ -9,6 +10,10 @@ const initialState = {
   loadMovementsError: null,
   createOnePending: false,
   createOneError: null,
+  updateOnePending: false,
+  updateOneError: null,
+  delOnePending: false,
+  delOneError: null,
 };
 
 export default initialState;

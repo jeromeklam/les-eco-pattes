@@ -7,20 +7,10 @@
 // https://medium.com/@nate_wang/a-new-approach-for-managing-redux-actions-91c26ce8b5da.
 
 import initialState from './initialState';
-import { reducer as loadOneReducer } from './loadOne';
-import { reducer as loadMovementsReducer } from './loadMovements';
-import { reducer as createOneReducer } from './createOne';
-import { reducer as updateModelReducer } from './updateModel';
-import { reducer as updateOneReducer } from './updateOne';
-import { reducer as delOneReducer } from './delOne';
+import { reducer as loadMoreReducer } from './loadMore';
 
 const reducers = [
-  loadOneReducer,
-  loadMovementsReducer,
-  createOneReducer,
-  updateModelReducer,
-  updateOneReducer,
-  delOneReducer,
+  loadMoreReducer,
 ];
 
 export default function reducer(state = initialState, action) {

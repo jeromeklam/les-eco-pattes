@@ -1,24 +1,50 @@
 import React from 'react';
-import { InputHidden, InputText, InputSelect, ResponsiveForm } from 'freeassofront';
+import {
+  InputHidden,
+  InputText,
+  InputSelect,
+  ResponsiveForm,
+  InputCheckbox,
+  InputTextarea,
+} from 'freeassofront';
 import useForm from '../ui/useForm';
 import { clientTypeAsOptions } from '../client-type/functions.js';
 import { clientCategoryAsOptions } from '../client-category/functions.js';
+import { countryAsOptions } from '../country/functions.js';
 
 export default function Form(props) {
-  const { values, handleChange, handleSubmit, handleCancel, getErrorMessage } = useForm(
-    props.item,
-    '',
-    props.onSubmit,
-    props.onCancel,
-    null,
-    props.errors,
-  );
+  const {
+    values,
+    handleChange,
+    handleSubmit,
+    handleCancel,
+    handleNavTab,
+    getErrorMessage,
+  } = useForm(props.item, props.tab, props.onSubmit, props.onCancel, props.onNavTab, props.errors);
   return (
-    <ResponsiveForm title="Personne" onSubmit={handleSubmit} onCancel={handleCancel}>
+    <ResponsiveForm
+      title="Personne"
+      tab={values.currentTab}
+      tabs={props.tabs}
+      onSubmit={handleSubmit}
+      onCancel={handleCancel}
+      onNavTab={handleNavTab}
+    >
       <div className="card-body">
         <InputHidden name="id" id="id" value={values.id} />
         <div className="row">
-          <div className="col-sm-18">
+          <div className="col-sm-5">
+            <InputText
+              label="Civilité"
+              name="cli_gender"
+              id="cli_gender"
+              required={false}
+              value={values.cli_gender}
+              onChange={handleChange}
+              error={getErrorMessage('cli_gender')}
+            />
+          </div>
+          <div className="col-sm-9">
             <InputText
               label="Nom"
               name="cli_lastname"
@@ -29,7 +55,7 @@ export default function Form(props) {
               error={getErrorMessage('cli_lastname')}
             />
           </div>
-          <div className="col-sm-18">
+          <div className="col-sm-9">
             <InputText
               label="Prénom"
               name="cli_firstname"
@@ -39,9 +65,7 @@ export default function Form(props) {
               error={getErrorMessage('cli_firstname')}
             />
           </div>
-        </div>
-        <div className="row">
-          <div className="col-md-18">
+          <div className="col-md-9">
             <InputSelect
               label="Type"
               name="client_type.id"
@@ -51,48 +75,127 @@ export default function Form(props) {
               error={getErrorMessage('client_type')}
             />
           </div>
-          <div className="col-md-18">
-            <InputSelect
-              label="Catégorie"
-              name="client_category.id"
-              value={values.client_category ? values.client_category.id : null}
+          <div className="col-sm-4">
+            <InputCheckbox
+              label="Actif"
+              name="cli_active"
+              labelTop={true}
+              checked={values.cli_active === true}
               onChange={handleChange}
-              options={clientCategoryAsOptions(props.client_categories)}
-              error={getErrorMessage('client_category')}
             />
           </div>
         </div>
-        <div className="row">
-          <div className="col-md-36">
-            <InputText
-              label="Adresse"
-              name="cli_address1"
-              value={values.cli_address1}
-              onChange={handleChange}
-              error={getErrorMessage('cli_address1')}
-            />
+        <hr />
+        {values.currentTab === '1' && (
+          <div>
+            <div className="row">
+              <div className="col-sm-16">
+                <InputText
+                  label="Email"
+                  name="cli_email"
+                  labelTop={true}
+                  value={values.cli_email}
+                  onChange={handleChange}
+                />
+              </div>
+              <div className="col-sm-8">
+                <InputText
+                  label="Portable"
+                  name="cli_phone_gsm"
+                  labelTop={true}
+                  value={values.cli_phone_gsm}
+                  onChange={handleChange}
+                />
+              </div>
+              <div className="col-md-12">
+                <InputSelect
+                  label="Catégorie"
+                  name="client_category.id"
+                  value={values.client_category ? values.client_category.id : null}
+                  onChange={handleChange}
+                  options={clientCategoryAsOptions(props.client_categories)}
+                  error={getErrorMessage('client_category')}
+                />
+              </div>
+            </div>
+            <div className="row">
+              <div className="col-md-36">
+                <InputText
+                  label="Adresse"
+                  name="cli_address1"
+                  value={values.cli_address1}
+                  onChange={handleChange}
+                  error={getErrorMessage('cli_address1')}
+                />
+              </div>
+              <div className="col-md-36">
+                <InputText
+                  label=""
+                  name="cli_address2"
+                  value={values.cli_address2}
+                  onChange={handleChange}
+                  error={getErrorMessage('cli_address2')}
+                />
+              </div>
+            </div>
+            <div className="row">
+              <div className="col-sm-8">
+                <InputText
+                  label="CP"
+                  name="cli_cp"
+                  value={values.cli_cp}
+                  onChange={handleChange}
+                  error={getErrorMessage('cli_cp')}
+                />
+              </div>
+              <div className="col-sm-17">
+                <InputText
+                  label="Commune"
+                  name="cli_town"
+                  value={values.cli_town}
+                  onChange={handleChange}
+                  error={getErrorMessage('cli_town')}
+                />
+              </div>
+              <div className="col-sm-11">
+                <InputSelect
+                  label="Pays"
+                  name="country.id"
+                  labelTop={true}
+                  value={values.country ? values.country.id : null}
+                  onChange={handleChange}
+                  options={countryAsOptions(props.countries)}
+                />
+              </div>
+            </div>
           </div>
-        </div>
-        <div className="row">
-          <div className="col-sm-9">
-            <InputText
-              label="CP"
-              name="cli_cp"
-              value={values.cli_cp}
-              onChange={handleChange}
-              error={getErrorMessage('cli_cp')}
-            />
+        )}
+        {values.currentTab === '2' && (
+          <div>
+            <div className="row">
+              <div className="col-md-8">
+                <InputText
+                  label="Téléphone"
+                  name="cli_phone_home"
+                  value={values.cli_phone_home}
+                  onChange={handleChange}
+                  error={getErrorMessage('cli_phone_home')}
+                />
+              </div>
+            </div>
+            <div className="row">
+              <div className="col-md-36">
+                <InputTextarea
+                  label="Commentaires"
+                  name="cli_desc"
+                  value={values.cli_desc}
+                  onChange={handleChange}
+                  error={getErrorMessage('cli_desc')}
+                />
+              </div>
+            </div>
           </div>
-          <div className="col-sm-27">
-            <InputText
-              label="Commune"
-              name="cli_town"
-              value={values.cli_town}
-              onChange={handleChange}
-              error={getErrorMessage('cli_town')}
-            />
-          </div>
-        </div>
+        )}
       </div>
     </ResponsiveForm>
   );

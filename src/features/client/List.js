@@ -6,6 +6,7 @@ import * as actions from './redux/actions';
 import { buildModel } from 'freejsonapi';
 import { ResponsiveList, ResponsiveQuickSearch } from 'freeassofront';
 import { clientCategoryAsOptions } from '../client-category';
+import { clientTypeAsOptions } from '../client-type';
 import {
   AddOne as AddOneIcon,
   GetOne as GetOneIcon,
@@ -216,6 +217,20 @@ export class List extends Component {
         title: false,
       },
       {
+        name: 'type',
+        label: 'Type',
+        col: 'clit_id',
+        size: '0',
+        mob_size: '0',
+        sortable: false,
+        filterable: {
+          type: 'select',
+          options: clientTypeAsOptions(this.props.clientType.items),
+        },
+        title: false,
+        hidden: true,
+      },
+      {
         name: 'category',
         label: 'Category',
         col: 'clic_id',
@@ -286,6 +301,7 @@ function mapStateToProps(state) {
   return {
     client: state.client,
     clientCategory: state.clientCategory,
+    clientType: state.clientType,
   };
 }
 

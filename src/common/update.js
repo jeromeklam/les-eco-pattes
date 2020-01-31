@@ -7,6 +7,7 @@ import { EMAIL_UPDATE_ONE_UPDATE } from '../features/email/redux/constants';
 import { CAUSE_UPDATE_ONE_UPDATE } from '../features/cause/redux/constants';
 import { CLIENT_TYPE_UPDATE_ONE_UPDATE } from '../features/client-type/redux/constants';
 import { CLIENT_CATEGORY_UPDATE_ONE_UPDATE } from '../features/client-category/redux/constants';
+import { CAUSE_MOVEMENT_UPDATE_MODEL } from '../features/cause-movement/redux/constants';
 
 export function propagateModel(type, model) {
   return dispatch => {
@@ -44,6 +45,16 @@ export function propagateModel(type, model) {
       case 'FreeAsso_CauseMainType':
         dispatch({
           type: CAUSE_MAIN_TYPE_UPDATE_ONE_UPDATE,
+          data: model,
+        });
+        break;
+      case 'FreeAsso_CauseMovement':
+        dispatch({
+          type: CAUSE_MOVEMENT_UPDATE_MODEL,
+          data: model,
+        });
+        dispatch({
+          type: CAUSE_UPDATE_ONE_UPDATE,
           data: model,
         });
         break;

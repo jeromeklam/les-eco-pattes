@@ -112,8 +112,10 @@ export default class InputPicker extends Component {
           onClear={this.onClear}
           onMore={this.onMore}
           onSelect={this.onSelect}
+          error={this.props.error}
           pickerId="site_id"
           pickerDisplay="site_name"
+          required={this.props.required || false}
           size={this.props.size || 'md'}
           labelSize={this.props.labelSize || 6}
           inputSize={this.props.inputSize || 30}

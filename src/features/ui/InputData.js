@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { buildModel } from 'freejsonapi';
-import { InputText, InputTextArea, InputSelect, InputCheckbox } from 'freeassofront';
+import { InputText, InputTextarea, InputSelect, InputCheckbox } from 'freeassofront';
 
 function getFieldData(field_name, tab_config, tab_data) {
   const myDatas = buildModel(tab_data, 'FreeAsso_Data');
@@ -75,7 +75,7 @@ export default class InputData extends Component {
           />
         )}
         {this.state.data.data_type === 'TEXT' && (
-          <InputTextArea
+          <InputTextarea
             label={this.state.data.data_name}
             labelTop={this.props.labelTop || true}
             name={this.state.field}

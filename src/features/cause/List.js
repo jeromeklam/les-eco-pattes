@@ -289,11 +289,12 @@ export class List extends Component {
     ) : (
       <FilterFullIcon className="text-light" />
     );
-    let inlineComponent = <InlineMovements />
-    let id = this.state.movementsCause;
+    const id = this.state.movementsCause;
+    const current = buildModel(this.props.cause.items, 'FreeAsso_Cause', id);
+    const inlineComponent = <InlineMovements cause={current} />
     return (
       <ResponsiveList
-        title="Causes"
+        title="Animaux"
         cols={cols}
         items={items}
         quickSearch={quickSearch}

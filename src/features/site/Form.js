@@ -27,7 +27,6 @@ export default function Form(props) {
     handleNavTab,
     getErrorMessage,
   } = useForm(props.item, props.tab, props.onSubmit, props.onCancel, props.onNavTab, props.errors);
-  console.log(getErrorMessage('site_name'));
   return (
     <ResponsiveForm
       className=""
@@ -146,7 +145,7 @@ export default function Form(props) {
           {props.properties.map(oneProp => {
             let nameProp = 'site_' + oneProp;
             return (
-              <div className="col-sm-12">
+              <div className="col-sm-12" key={nameProp}>
                 <InputData
                   key={nameProp}
                   name={nameProp}

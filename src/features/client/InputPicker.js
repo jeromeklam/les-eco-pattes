@@ -112,6 +112,8 @@ export default class InputPicker extends Component {
           onClear={this.onClear}
           onMore={this.onMore}
           onSelect={this.onSelect}
+          required={this.props.required || false}
+          error={this.props.error}
           pickerId="cli_id"
           pickerDisplay="cli_lastname"
           clearIcon={<DelOne size={this.props.size === 'sm' ? 0.7 : 0.9} className="text-warning" />}
