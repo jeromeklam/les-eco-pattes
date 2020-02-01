@@ -1,4 +1,6 @@
 const initialState = {
+  geoOn: false,
+  geoCoord: {},
   loadAllFinish : false,
   loadAllPending: false,
   loadAllError: null,

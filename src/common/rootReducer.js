@@ -1,14 +1,12 @@
 import { combineReducers } from 'redux';
 import { routerReducer } from 'react-router-redux';
 import homeReducer from '../features/home/redux/reducer';
-import commonReducer from '../features/common/redux/reducer';
 import siteReducer from '../features/site/redux/reducer';
 import authReducer from '../features/auth/redux/reducer';
 import iconsReducer from '../features/icons/redux/reducer';
 import causeReducer from '../features/cause/redux/reducer';
 import dataReducer from '../features/data/redux/reducer';
 import aboutReducer from '../features/about/redux/reducer';
-import layoutReducer from '../features/layout/redux/reducer';
 import siteTypeReducer from '../features/site-type/redux/reducer';
 import causeTypeReducer from '../features/cause-type/redux/reducer';
 import configReducer from '../features/config/redux/reducer';
@@ -32,14 +30,12 @@ import countryReducer from '../features/country/redux/reducer';
 const reducerMap = {
   router: routerReducer,
   home: homeReducer,
-  common: commonReducer,
   site: siteReducer,
   auth: authReducer,
   icons: iconsReducer,
   cause: causeReducer,
   data: dataReducer,
   about: aboutReducer,
-  layout: layoutReducer,
   siteType: siteTypeReducer,
   causeType: causeTypeReducer,
   config: configReducer,

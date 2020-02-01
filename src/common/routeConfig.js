@@ -1,15 +1,13 @@
-import { App } from '../features/home';
-import { PageNotFound } from '../features/common';
 import _ from 'lodash';
+import { App } from '../features/home';
+import { PageNotFound } from '../features/ui';
 import homeRoute from '../features/home/route';
-import commonRoute from '../features/common/route';
 import siteRoute from '../features/site/route';
 import authRoute from '../features/auth/route';
 import iconsRoute from '../features/icons/route';
 import causeRoute from '../features/cause/route';
 import dataRoute from '../features/data/route';
 import aboutRoute from '../features/about/route';
-import layoutRoute from '../features/layout/route';
 import siteTypeRoute from '../features/site-type/route';
 import causeTypeRoute from '../features/cause-type/route';
 import configRoute from '../features/config/route';
@@ -29,14 +27,12 @@ import countryRoute from '../features/country/route';
 // This is used for Rekit cmds to register routes config for new features, and remove config when remove features, etc.
 const childRoutes = [
   homeRoute,
-  commonRoute,
   siteRoute,
   authRoute,
   iconsRoute,
   causeRoute,
   dataRoute,
   aboutRoute,
-  layoutRoute,
   siteTypeRoute,
   causeTypeRoute,
   configRoute,

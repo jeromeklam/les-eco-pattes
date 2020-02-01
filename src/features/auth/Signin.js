@@ -7,7 +7,7 @@ import logo from '../../images/logo-les-eco-pattes.jpg';
 import { InputEmail, InputPassword, InputCheckbox } from 'freeassofront';
 import { getJsonApi, getFieldErrorMessage } from 'freejsonapi';
 import { withRouter } from 'react-router-dom';
-import { Copyright } from '../common';
+import { Copyright } from '../ui';
 
 export class Signin extends Component {
   static propTypes = {

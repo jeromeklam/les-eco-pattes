@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import * as actions from './redux/actions';
 import { getJsonApi } from 'freejsonapi';
 import { withRouter } from 'react-router-dom';
-import { LoadingData } from '../layout';
+import { CenteredLoading9X9 } from '../ui';
 import Form from './Form';
 
 /**
@@ -72,7 +72,7 @@ export class Create extends Component {
     return (
       <div className="data-create global-card">
         {this.props.data.loadOnePending ? (
-          <LoadingData />
+          <CenteredLoading9X9 />
         ) : (
           <div>
             {item && <Form item={item} onSubmit={this.onSubmit} onCancel={this.onCancel} />}

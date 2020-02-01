@@ -5,7 +5,6 @@ import { SocialIcon } from 'react-social-icons';
 import { connect } from 'react-redux';
 import * as actions from './redux/actions';
 import * as authActions from '../auth/redux/actions';
-import * as commonActions from '../common/redux/actions';
 import { ResponsivePage, Loading9x9 } from 'freeassofront';
 import {
   Home as HomeIcon,
@@ -253,13 +252,12 @@ function mapStateToProps(state) {
   return {
     home: state.home,
     auth: state.auth,
-    common: state.common,
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
-    actions: bindActionCreators({ ...actions, ...authActions, ...commonActions }, dispatch),
+    actions: bindActionCreators({ ...actions, ...authActions }, dispatch),
   };
 }
 

@@ -1,8 +1,10 @@
 import initialState from './initialState';
 import { reducer as loadAllReducer } from './loadAll';
+import { reducer as setCoordsReducer } from './setCoords';
 
 const reducers = [
   loadAllReducer,
+  setCoordsReducer,
 ];
 
 export default function reducer(state = initialState, action) {

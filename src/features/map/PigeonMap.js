@@ -11,7 +11,7 @@ import { propagateModel } from '../../common';
 import { loadMore as loadMoreSite, updateOne as updateOneSite } from '../site/redux/actions';
 import Draggable from 'pigeon-draggable';
 import Icon from '@mdi/react';
-import { Mobile, Desktop } from '../common';
+import { Responsive } from 'freeassofront';
 import { mdiMagnifyMinus, mdiMagnifyPlus } from '@mdi/js';
 import mapselect from '../../images/mapselect.png';
 import { ListGroup } from '../site';
@@ -47,13 +47,13 @@ export class PigeonMap extends Component {
   constructor(props) {
     super(props);
     let center = [49.096306, 6.160053];
-    if (this.props.common.geoOn) {
-      if (this.props.common.geoCoord) {
-        center = [this.props.common.geoCoord.lat, this.props.common.geoCoord.lon];
+    if (this.props.home.geoOn) {
+      if (this.props.home.geoCoord) {
+        center = [this.props.home.geoCoord.lat, this.props.home.geoCoord.lon];
       }
     }
     this.state = {
-      geoCoord: this.props.common.geoCoord,
+      geoCoord: this.props.home.geoCoord,
       center: center,
       zoom: 12,
       provider: 'osm',
@@ -86,13 +86,13 @@ export class PigeonMap extends Component {
   }
 
   static getDerivedStateFromProps(props, state) {
-    if (props.common.geoCoord !== state.geoCoord) {
+    if (props.home.geoCoord !== state.geoCoord) {
       let center = [49.096306, 6.160053];
-      if (props.common.geoOn) {
-        if (props.common.geoCoord) {
-          center = [props.common.geoCoord.lat, props.common.geoCoord.lon];
+      if (props.home.geoOn) {
+        if (props.home.geoCoord) {
+          center = [props.home.geoCoord.lat, props.home.geoCoord.lon];
           return {
-            geoCoord: props.common.geoCoord,
+            geoCoord: props.home.geoCoord,
             center: center,
           };
         }
@@ -175,7 +175,7 @@ export class PigeonMap extends Component {
     }
     return (
       <div className="map-pigeon-map">
-        <Desktop>
+        <Responsive displayIn={['Laptop', 'Tablet']}>
           <div className={classnames('map-content')}>
             <Map
               provider={providers[this.state.provider]}
@@ -236,8 +236,8 @@ export class PigeonMap extends Component {
               onSiteMove={this.onSiteMove}
             />
           </div>
-        </Desktop>
-        <Mobile>
+        </Responsive>
+        <Responsive displayIn={['Mobile']}>
           <div className={classnames('map-content-mobile')}>
             <Map
               provider={providers[this.state.provider]}
@@ -304,7 +304,7 @@ export class PigeonMap extends Component {
               onSiteMove={this.onSiteMove}
             />
           </div>
-        </Mobile>
+        </Responsive>
       </div>
     );
   }
@@ -313,7 +313,7 @@ export class PigeonMap extends Component {
 /* istanbul ignore next */
 function mapStateToProps(state) {
   return {
-    common: state.common,
+    home: state.home,
     map: state.map,
     site: state.site,
   };

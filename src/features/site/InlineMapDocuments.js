@@ -39,7 +39,7 @@ export class InlineMapDocuments extends Component {
     }
     return (
       <div className="site-inline-map-documents">
-        {this.props.site.loadPhotosPending ? (
+        {this.props.site.loadDocumentsPending ? (
           <CenteredLoading3Dots />
         ) : (
           <div className="text-center">

@@ -7,7 +7,7 @@ import {
   ResponsiveForm,
 } from 'freeassofront';
 import { dataTypes } from './functions';
-import useForm from '../layout/useForm';
+import { useForm } from '../ui';
 
 /**
  * Functionnal Component
