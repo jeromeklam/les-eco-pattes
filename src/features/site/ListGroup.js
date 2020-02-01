@@ -16,7 +16,7 @@ import {
   Photo as PhotoIcon,
   Document as DocumentIcon,
 } from '../icons';
-import { InlineMapPhotos } from './';
+import { InlineMapPhotos, InlineMapDocuments } from './';
 
 export class ListGroup extends Component {
   static propTypes = {
@@ -225,6 +225,7 @@ export class ListGroup extends Component {
                           this.state.selected === this.state.documents && (
                             <div className="card-footer bg-transparent">
                               <p>Documents :</p>
+                              <InlineMapDocuments />
                             </div>
                           )
                         }

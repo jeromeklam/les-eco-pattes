@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as actions from './redux/actions';
-import { StatCard } from '../layout';
+import { StatCard } from '../ui';
 import { 
   Site as SiteIcon, 
   Cause as CauseIcon,
@@ -19,7 +19,7 @@ export class Stats extends Component {
 
   render() {
     return (
-      <div className="dashboard-stats ">
+      <div className="dashboard-stats">
         {(this.props.auth.authenticated  && this.props.dashboard.stats) ? (
           <div className="row">
             <StatCard

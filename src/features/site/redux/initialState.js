@@ -4,6 +4,7 @@ const initialState = {
   items: [],
   causes: [],
   photos: [],
+  documents: [],
   currentItem: null,
   page_number: 1,
   page_size: 999999,

@@ -3,6 +3,7 @@ const initialState = {
   items: [],
   cause: null,
   movements: [],
+  pendings: [],
   loadOneItem: null,
   loadOnePending: false,
   loadOneError: null,
@@ -14,6 +15,10 @@ const initialState = {
   updateOneError: null,
   delOnePending: false,
   delOneError: null,
+  validateOnePending: false,
+  validateOneError: null,
+  loadPendingsPending: false,
+  loadPendingsError: null,
 };
 
 export default initialState;

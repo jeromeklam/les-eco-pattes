@@ -233,7 +233,6 @@ export class PigeonMap extends Component {
             <ListGroup
               selected={this.state.selected}
               onSiteClick={this.onSiteClick}
-              onSiteGallery={this.onSiteGallery}
               onSiteMove={this.onSiteMove}
             />
           </div>
@@ -302,7 +301,6 @@ export class PigeonMap extends Component {
             <ListGroup
               selected={this.state.selected}
               onSiteClick={this.onSiteClick}
-              onSiteGallery={this.onSiteGallery}
               onSiteMove={this.onSiteMove}
             />
           </div>

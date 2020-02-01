@@ -21,7 +21,7 @@ export default class ImageModal extends Component {
           buttons={[]}
         >
           <div className="container-fluid text-center">
-            <img src={this.props.image} class="img-fluid" alt="Responsive image" />
+            <img src={this.props.image} class="img-fluid" alt="Responsive" />
           </div>
         </ResponsiveModal>
       );

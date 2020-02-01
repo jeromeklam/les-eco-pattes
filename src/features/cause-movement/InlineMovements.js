@@ -2,28 +2,14 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { buildModel } from 'freejsonapi';
+import { buildModel, getJsonApi } from 'freejsonapi';
 import * as actions from './redux/actions';
-import { getJsonApi } from 'freejsonapi';
 import { ResponsiveConfirm } from 'freeassofront';
 import { CenteredLoading3Dots, createSuccess, createError } from '../ui';
 import { InlineMovementForm } from '../cause-movement';
 import { propagateModel, intlDate } from '../../common';
-import { DelOne as DelOneIcon } from '../icons';
-
-const statusLabel = (code) => {
-  switch (code) {
-    case 'OK': {
-      return 'Effectué';
-    }
-    case 'WAIT': {
-      return 'A valider';
-    }
-    default: {
-      return 'Autre';
-    }
-  }
-};
+import { DelOne as DelOneIcon, SimpleValid as SimpleValidIcon } from '../icons';
+import { statusLabel } from './';
 
 export class InlineMovements extends Component {
   static propTypes = {
@@ -42,13 +28,16 @@ export class InlineMovements extends Component {
     super(props);
     this.state = {
       confirm: false,
+      valid: false,
       camv_id: 0,
       cause: props.cause,
     };
     this.onSubmit = this.onSubmit.bind(this);
     this.onConfirm = this.onConfirm.bind(this);
     this.onConfirmMovement = this.onConfirmMovement.bind(this);
+    this.onConfirmValidation = this.onConfirmValidation.bind(this);
     this.onConfirmClose = this.onConfirmClose.bind(this);
+    this.onValid = this.onValid.bind(this);
   }
 
   componentDidMount() {
@@ -78,6 +67,19 @@ export class InlineMovements extends Component {
     this.setState({ confirm: !this.state.confirm, camv_id: id });
   }
 
+  onConfirmValidation(id) {
+    this.setState({ valid: !this.state.valid, camv_id: id });
+  }
+
+  onValid() {
+    const { camv_id, cause } = this.state;
+    this.setState({ valid: false, camv_id: null });
+    this.props.actions.validateOne(camv_id).then(result => {
+      this.props.actions.propagateModel('FreeAsso_CauseMovement', result);
+      this.props.actions.loadMovements(cause);
+    });
+  }
+
   onConfirm() {
     const { camv_id, cause } = this.state;
     this.setState({ confirm: false, camv_id: 0 });
@@ -87,11 +89,11 @@ export class InlineMovements extends Component {
   }
 
   onConfirmClose() {
-    this.setState({ confirm: false, camv_id: 0 });
+    this.setState({ valid: false, confirm: false, camv_id: 0, cause_movement: null });
   }
 
   render() {
-    const { confirm } = this.state;
+    const { confirm, valid } = this.state;
     let movements = [];
     if (this.props.causeMovement.movements.FreeAsso_CauseMovement) {
       movements = buildModel(this.props.causeMovement.movements, 'FreeAsso_CauseMovement');
@@ -109,24 +111,40 @@ export class InlineMovements extends Component {
           <div className="cause-inline-movements">
             <div className="inline-list">
               <div className="row row-title" key="cause-inline-movements">
-                <div className="col-5"><span>Date</span></div>
-                <div className="col-8"><span>Depuis</span></div>
-                <div className="col-8"><span>Vers</span></div>
-                <div className="col-8"><span>Notes</span></div>
-                <div className="col-7"><span>Status</span></div>
+                <div className="col-5">
+                  <span>Date</span>
+                </div>
+                <div className="col-7">
+                  <span>Depuis</span>
+                </div>
+                <div className="col-7">
+                  <span>Vers</span>
+                </div>
+                <div className="col-7">
+                  <span>Notes</span>
+                </div>
+                <div className="col-10">
+                  <span>Status</span>
+                </div>
               </div>
               {movements.map(movement => {
                 return (
                   <div className="row" key={movement.id}>
                     <div className="col-5">{intlDate(movement.camv_to)}</div>
-                    <div className="col-8">{movement.from_site.site_name}</div>
-                    <div className="col-8">{movement.to_site.site_name}</div>
-                    <div className="col-8">{movement.camv_comment}</div>
+                    <div className="col-7">{movement.from_site.site_name}</div>
+                    <div className="col-7">{movement.to_site.site_name}</div>
+                    <div className="col-7">{movement.camv_comment}</div>
                     <div className="col-5">{statusLabel(movement.camv_status)}</div>
-                    <div className="col-2 text-right">
+                    <div className="col-5 text-right">
                       <div className="btn-group btn-group-sm" role="group" aria-label="...">
                         <div className="btn-group" role="group" aria-label="First group">
                           <div className="ml-2">
+                            {movement.camv_status === 'WAIT' && (
+                              <SimpleValidIcon
+                                onClick={() => this.onConfirmValidation(movement.id)}
+                                className="text-secondary inline-action"
+                              />
+                            )}
                             <DelOneIcon
                               onClick={() => this.onConfirmMovement(movement.id)}
                               className="text-secondary inline-action"
@@ -136,7 +154,7 @@ export class InlineMovements extends Component {
                       </div>
                     </div>
                   </div>
-                 );
+                );
               })}
               <ResponsiveConfirm
                 show={confirm}
@@ -145,11 +163,21 @@ export class InlineMovements extends Component {
                   this.onConfirm();
                 }}
               />
+              <ResponsiveConfirm
+                show={valid}
+                onClose={this.onConfirmClose}
+                onConfirm={() => {
+                  this.onValid();
+                }}
+              >
+                <p>Confirmez-vous la validation du mouvement ?</p>
+              </ResponsiveConfirm>
             </div>
             <div className="row row-new">
               <div className="col-36 pt-2">
                 <span>Ajouter un mouvement :</span>
-                <br /><br />
+                <br />
+                <br />
                 {emptyItem && (
                   <InlineMovementForm
                     cause={this.state.cause}
@@ -168,7 +196,8 @@ export class InlineMovements extends Component {
             <div className="row row-new">
               <div className="col-36 pt-2">
                 <span>Ajouter un mouvement :</span>
-                <br /><br />
+                <br />
+                <br />
                 {emptyItem && (
                   <InlineMovementForm
                     cause={this.props.causeMovement.cause}

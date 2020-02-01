@@ -13,6 +13,8 @@ import { reducer as createOneReducer } from './createOne';
 import { reducer as updateModelReducer } from './updateModel';
 import { reducer as updateOneReducer } from './updateOne';
 import { reducer as delOneReducer } from './delOne';
+import { reducer as validateOneReducer } from './validateOne';
+import { reducer as loadPendingsReducer } from './loadPendings';
 
 const reducers = [
   loadOneReducer,
@@ -21,6 +23,8 @@ const reducers = [
   updateModelReducer,
   updateOneReducer,
   delOneReducer,
+  validateOneReducer,
+  loadPendingsReducer,
 ];
 
 export default function reducer(state = initialState, action) {

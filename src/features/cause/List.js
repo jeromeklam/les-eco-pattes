@@ -315,16 +315,20 @@ export class List extends Component {
     );
     let inlineComponent = null;
     let id = null;
+    let current = null;
     if (this.state.movementsCause > 0) {
-      inlineComponent = <InlineMovements cause={current} />
       id = this.state.movementsCause;
+      current = buildModel(this.props.cause.items, 'FreeAsso_Cause', id);
+      inlineComponent = <InlineMovements cause={current} />
+      
     } else {
       if (this.state.documentsCause > 0 ) {
-        inlineComponent = <InlineDocuments />
         id = this.state.documentsCause;
+        current = buildModel(this.props.cause.items, 'FreeAsso_Cause', id);
+        inlineComponent = <InlineDocuments cause={current} />
       }
     }  
-    const current = buildModel(this.props.cause.items, 'FreeAsso_Cause', id);  
+     
     return (
       <ResponsiveList
         title="Animaux"

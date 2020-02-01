@@ -7,6 +7,7 @@ import { Responsive } from 'freeassofront';
 import fond from '../../images/fond2.jpg';
 import logo from '../../images/logo-les-eco-pattes.jpg';
 import { Stats } from '../dashboard';
+import { PendingMovements } from '../cause-movement';
 
 export class Home extends Component {
   static propTypes = {
@@ -38,7 +39,15 @@ export class Home extends Component {
             <br />
             <br />
             <br />
-            <Stats />
+            {this.props.auth.authenticated ? (
+              <div>
+                <Stats />
+                <br />
+                <PendingMovements />
+              </div>
+            ) : (
+              <div />
+            )}
           </div>
         </Responsive>
       </div>
