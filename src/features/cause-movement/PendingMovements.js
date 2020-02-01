@@ -70,92 +70,89 @@ export class PendingMovements extends Component {
 
   render() {
     const { confirm, valid } = this.state;
-    if (this.props.causeMovement.loadPendingsPending) {
-      return <CenteredLoading3Dots />;
-    }
     let movements = [];
     if (this.props.causeMovement.pendings.FreeAsso_CauseMovement) {
       movements = buildModel(this.props.causeMovement.pendings, 'FreeAsso_CauseMovement');
     }
-    if (movements && movements.length > 0) {
-      return (
-        <div className="row">
-          <StatCard title="Mouvements en attente" icon={<MovementIcon />} size="lg">
-            <div className="cause-movement-pendings text-secondary bg-secondary-light">
-              <div className="inline-list">
-                <div className="row row-title">
-                  <div className="col-4">
-                    <span>Pour le</span>
-                  </div>
-                  <div className="col-6">
-                    <span>Animal</span>
-                  </div>
-                  <div className="col-6">
-                    <span>Depuis</span>
-                  </div>
-                  <div className="col-6">
-                    <span>Vers</span>
-                  </div>
-                  <div className="col-6">
-                    <span>Notes</span>
-                  </div>
-                  <div className="col-8">
-                    <span>Status</span>
-                  </div>
+    return (
+      <StatCard title="Mouvements en attente" icon={<MovementIcon />} size="md">
+        <div className="cause-movement-pendings text-secondary bg-secondary-light">
+          {movements && movements.length > 0 ? (
+            <div className="inline-list">
+              <div className="row row-title">
+                <div className="col-lg-12">
+                  <span>Pour le</span>
                 </div>
-                {movements.map(movement => {
-                  return (
-                    <div className="row" key={`pending-${movement.id}`}>
-                      <div className="col-4">{intlDate(movement.camv_to)}</div>
-                      <div className="col-6">{movement.cause.cau_name}</div>
-                      <div className="col-6">{movement.from_site.site_name}</div>
-                      <div className="col-6">{movement.to_site.site_name}</div>
-                      <div className="col-6">{movement.camv_comment}</div>
-                      <div className="col-4">{statusLabel(movement.camv_status)}</div>
-                      <div className="col-4 text-right">
-                        <div className="btn-group btn-group-sm" role="group" aria-label="...">
-                          <div className="btn-group" role="group" aria-label="First group">
-                            <div className="ml-2">
-                              {movement.camv_status === 'WAIT' && (
-                                <SimpleValidIcon
-                                  onClick={() => this.onConfirmValidation(movement.id)}
-                                  className="text-secondary inline-action"
-                                />
-                              )}
-                              <DelOneIcon
-                                onClick={() => this.onConfirmMovement(movement.id)}
+                <div className="col-lg-12">
+                  <span>Animal</span>
+                </div>
+                <div className="col-lg-12">
+                  <span>Status</span>
+                </div>
+                <div className="col-lg-12">
+                  <span>Depuis</span>
+                </div>
+                <div className="col-lg-12">
+                  <span>Vers</span>
+                </div>
+                <div className="col-lg-12">
+                  <span>Notes</span>
+                </div>
+              </div>
+              {movements.map(movement => {
+                return (
+                  <div className="row" key={`pending-${movement.id}`}>
+                    <div className="col-12">{intlDate(movement.camv_to)}</div>
+                    <div className="col-12">{movement.cause.cau_name}</div>
+                    <div className="col-12">{statusLabel(movement.camv_status)}</div>
+                    <div className="col-12">{movement.from_site.site_name}</div>
+                    <div className="col-12">{movement.to_site.site_name}</div>
+                    <div className="col-12">{movement.camv_comment}</div>
+                    <div className="col-36 text-right">
+                      <div className="btn-group btn-group-sm" role="group" aria-label="...">
+                        <div className="btn-group" role="group" aria-label="First group">
+                          <div className="ml-2">
+                            {movement.camv_status === 'WAIT' && (
+                              <SimpleValidIcon
+                                onClick={() => this.onConfirmValidation(movement.id)}
                                 className="text-secondary inline-action"
                               />
-                            </div>
+                            )}
+                            <DelOneIcon
+                              onClick={() => this.onConfirmMovement(movement.id)}
+                              className="text-secondary inline-action"
+                            />
                           </div>
                         </div>
                       </div>
                     </div>
-                  );
-                })}
-              </div>
+                  </div>
+                );
+              })}
             </div>
-            <ResponsiveConfirm
-              show={confirm}
-              onClose={this.onConfirmClose}
-              onConfirm={() => {
-                this.onConfirm();
-              }}
-            />
-            <ResponsiveConfirm
-              show={valid}
-              onClose={this.onConfirmClose}
-              onConfirm={() => {
-                this.onValid();
-              }}
-            >
-              <p>Confirmez-vous la validation du mouvement ?</p>
-            </ResponsiveConfirm>
-          </StatCard>
+          ) : (
+            <div><span className="p-3">Aucun mouvement en attente</span></div>
+          )}
+          {this.props.causeMovement.loadPendingsPending && <CenteredLoading3Dots />}
         </div>
-      );
-    }
-    return null;
+        <ResponsiveConfirm
+          show={confirm}
+          onClose={this.onConfirmClose}
+          onConfirm={() => {
+            this.onConfirm();
+          }}
+        />
+        <ResponsiveConfirm
+          show={valid}
+          onClose={this.onConfirmClose}
+          onConfirm={() => {
+            this.onValid();
+          }}
+        >
+          <p>Confirmez-vous la validation du mouvement ?</p>
+        </ResponsiveConfirm>
+      </StatCard>
+    );
   }
 }
 

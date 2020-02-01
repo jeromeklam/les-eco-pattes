@@ -33,9 +33,26 @@ export function loadMore(args = {}, reload = false) {
         // doRequest is a placeholder Promise. You should replace it with your own logic.
         // See the real-word example at:  https://github.com/supnate/rekit/blob/master/src/features/home/redux/fetchRedditReactjsList.js
         // args.error here is only for test coverage purpose.
-        const params = {
+        let filters = getState().data.filters.asJsonApiObject();
+        let params = {
           page: { number: getState().data.page_number, size: getState().data.page_size },
+          ...filters,
         };
+        let sort = '';
+        getState().data.sort.forEach(elt => {
+          let add = elt.col;
+          if (elt.way === 'down') {
+            add = '-' + add;
+          }
+          if (sort === '') {
+            sort = add;
+          } else {
+            sort = sort + ',' + add;
+          }
+        });
+        if (sort !== '') {
+          params.sort = sort;
+        }
         const addUrl = objectToQueryString(params);
         const doRequest = freeAssoApi.get('/v1/asso/data' + addUrl, {});
         doRequest.then(
@@ -81,7 +98,6 @@ export function reducer(state, action) {
         items: [],
         page_number: 1,
         page_size: process.env.REACT_APP_PAGE_SIZE,
-        filters: [],
       };
 
     case DATA_LOAD_MORE_BEGIN:
@@ -112,7 +128,6 @@ export function reducer(state, action) {
       } else {
         list = state.items;
       }
-
       return {
         ...state,
         loadMorePending: false,

@@ -3,11 +3,8 @@ import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as actions from './redux/actions';
-import { Responsive } from 'freeassofront';
 import fond from '../../images/fond2.jpg';
 import logo from '../../images/logo-les-eco-pattes.jpg';
-import { Stats } from '../dashboard';
-import { PendingMovements } from '../cause-movement';
 
 export class Home extends Component {
   static propTypes = {
@@ -18,38 +15,16 @@ export class Home extends Component {
   render() {
     return (
       <div className="container-fluid">
-        <Responsive displayIn={['Mobile']}>
-          {this.props.auth.authenticated ? (
-            <Stats />
-          ) : (
-            <div className="text-center">
-              <br />
-              <h5>Pensez à l'éco-pâturage pour entretenir vos espaces verts et naturels</h5>
-              <br />
-              <img src={logo} alt="" />
-              <br />
-              <br />
-              <h6>les moutons seront bien gardés !</h6>
-            </div>
-          )}
-        </Responsive>
-        <Responsive displayIn={['Laptop', 'Tablet']}>
-          <div className="text-center">
-            <img className="fond-site" src={fond} alt="" />
-            <br />
-            <br />
-            <br />
-            {this.props.auth.authenticated ? (
-              <div>
-                <Stats />
-                <br />
-                <PendingMovements />
-              </div>
-            ) : (
-              <div />
-            )}
-          </div>
-        </Responsive>
+        <div className="text-center">
+          <img className="fond-site d-none d-sm-block" src={fond} alt="" />
+          <br />
+          <h5 className="home-title">Pensez à l'éco-pâturage pour entretenir vos espaces verts et naturels</h5>
+          <br />
+          <img className="logo-ecopattes" src={logo} alt="" />
+          <br />
+          <br />
+          <h6 className="home-title2">les moutons seront bien gardés !</h6>
+        </div>
       </div>
     );
   }

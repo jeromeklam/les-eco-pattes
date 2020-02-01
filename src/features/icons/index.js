@@ -49,3 +49,5 @@ export { default as Icon } from './Icon';
 export { default as Location } from './Location';
 export { default as Settings } from './Settings';
 export { default as Other } from './Other';
+export { default as Dashboard } from './Dashboard';
+export { default as Alert } from './Alert';

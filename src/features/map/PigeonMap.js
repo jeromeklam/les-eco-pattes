@@ -15,6 +15,7 @@ import { Responsive } from 'freeassofront';
 import { mdiMagnifyMinus, mdiMagnifyPlus } from '@mdi/js';
 import mapselect from '../../images/mapselect.png';
 import { ListGroup } from '../site';
+import { SiteMarker } from './';
 
 const providers = {
   osm: (x, y, z) => {
@@ -190,8 +191,9 @@ export class PigeonMap extends Component {
                   if (json) {
                     const coord = [json.lat, json.lon];
                     return (
-                      <Marker
+                      <SiteMarker
                         key={item.id}
+                        title={item.site_name}
                         anchor={coord}
                         payload={item.id}
                         onClick={this.onMarkerClick}
@@ -252,8 +254,9 @@ export class PigeonMap extends Component {
                   if (json) {
                     const coord = [json.lat, json.lon];
                     return (
-                      <Marker
+                      <SiteMarker
                         key={item.id}
+                        title={item.site_name}
                         anchor={coord}
                         payload={item.id}
                         onClick={this.onMarkerClick}

@@ -8,12 +8,10 @@
   opacity: 0.5;
 }
 .logo-ecopattes {
-  right: 2.0px;
-  top: 60px;
-  width: 200px;
-  position: fixed;
+  position: relative;
 }
-.home-title {
-  margin-top: 100px;
-  margin-bottom: 100px;
+.home-title, .home-title2 {
+  position: relative;
+  font-weight: bold;
+  color: theme-color('dark');
 }

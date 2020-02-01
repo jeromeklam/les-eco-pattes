@@ -1,8 +1,5 @@
-import {
-  freeAssoApi } from '../../../common';
-import { jsonApiNormalizer,
-  buildModel
-} from 'freejsonapi';
+import { freeAssoApi } from '../../../common';
+import { jsonApiNormalizer, buildModel } from 'freejsonapi';
 import {
   DATA_LOAD_ONE_BEGIN,
   DATA_LOAD_ONE_SUCCESS,
@@ -13,7 +10,8 @@ import {
 // Rekit uses redux-thunk for async actions by default: https://github.com/gaearon/redux-thunk
 // If you prefer redux-saga, you can use rekit-plugin-redux-saga: https://github.com/supnate/rekit-plugin-redux-saga
 export function loadOne(args = {}) {
-  return (dispatch) => { // optionally you can have getState as the second argument
+  return dispatch => {
+    // optionally you can have getState as the second argument
     dispatch({
       type: DATA_LOAD_ONE_BEGIN,
     });
@@ -28,16 +26,16 @@ export function loadOne(args = {}) {
       // args.error here is only for test coverage purpose.
       const doRequest = freeAssoApi.get('/v1/asso/data/' + args, {});
       doRequest.then(
-        (res) => {
+        res => {
           dispatch({
             type: DATA_LOAD_ONE_SUCCESS,
             data: res,
-            id: args
+            id: args,
           });
           resolve(res);
         },
         // Use rejectHandler as the second argument so that render errors won't be caught.
-        (err) => {
+        err => {
           dispatch({
             type: DATA_LOAD_ONE_FAILURE,
             data: { error: err },
@@ -64,7 +62,6 @@ export function reducer(state, action) {
     case DATA_LOAD_ONE_BEGIN:
       // Just after a request is sent
       return {
-
         ...state,
         loadOnePending: true,
         loadOneError: null,
@@ -72,13 +69,9 @@ export function reducer(state, action) {
 
     case DATA_LOAD_ONE_SUCCESS:
       // The request is success
-      let item = null;      
+      let item = null;
       let object = jsonApiNormalizer(action.data.data);
-      item = buildModel(
-        object,
-        'FreeAsso_Data',
-        action.id
-      );
+      item = buildModel(object, 'FreeAsso_Data', action.id);
       return {
         ...state,
         loadOnePending: false,

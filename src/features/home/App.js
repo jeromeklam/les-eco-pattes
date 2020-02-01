@@ -9,6 +9,7 @@ import { ResponsivePage, Loading9x9 } from 'freeassofront';
 import {
   Home as HomeIcon,
   About as AboutIcon,
+  Dashboard as DashboardIcon,
   Login as LoginIcon,
   Logout as LogoutIcon,
   Cause as CauseIcon,
@@ -51,11 +52,19 @@ const options = [
     public: true,
   },
   {
+    icon: <DashboardIcon />,
+    label: 'Tableau de bord',
+    url: '/dashboard',
+    role: 'NAV',
+    position: 2,
+    public: false,
+  },
+  {
     icon: <MapIcon />,
     label: 'Carte',
     url: '/pigeon-map',
     role: 'NAV',
-    position: 2,
+    position: 3,
     public: false,
   },
   {
@@ -63,7 +72,7 @@ const options = [
     label: 'Sites',
     url: '/site',
     role: 'NAV',
-    position: 3,
+    position: 4,
     public: false,
   },
   {
@@ -71,7 +80,7 @@ const options = [
     label: 'Animaux',
     url: '/cause',
     role: 'NAV',
-    position: 4,
+    position: 5,
     public: false,
   },
   {
@@ -79,7 +88,7 @@ const options = [
     label: 'Personnes',
     url: '/client',
     role: 'NAV',
-    position: 5,
+    position: 6,
     public: false,
   },
   {
@@ -87,9 +96,16 @@ const options = [
     label: 'Répertoires',
     url: null,
     role: 'MENU',
-    position: 3,
+    position: 7,
     public: false,
     options: [
+      {
+        icon: null,
+        label: 'Variables',
+        url: '/data',
+        role: 'NAV',
+        position: 1,
+      },
       {
         icon: null,
         label: 'Types de site',
@@ -132,7 +148,7 @@ const options = [
     label: 'Paramétrage',
     url: null,
     role: 'MENU',
-    position: 4,
+    position: 8,
     public: false,
     options: [
       {
@@ -217,7 +233,7 @@ export class App extends Component {
     if (this.props.home.loadAllError) {
       return (
         <div className="text-danger">
-          <span>Erreur d'accès au service</span>
+          <h4>Erreur d'accès au service</h4>
         </div>
       );
     } else {
@@ -238,8 +254,8 @@ export class App extends Component {
         );
       } else {
         return (
-          <div className="main-loader">
-            <p>... Chargement ...</p>
+          <div className="main-loader bg-secondary-light">
+            <h4 className="text-secondary p-3">... Chargement des données ...</h4>
             <Loading9x9 className="text-primary"/>
           </div>
         );

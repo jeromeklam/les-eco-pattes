@@ -125,10 +125,14 @@ export function reducer(state, action) {
 
     case CAUSE_LOAD_MORE_FAILURE:
       // The request is failed
+      let error = null;
+      if (action.data.error && action.data.error.response) {
+        error = jsonApiNormalizer(action.data.error.response);
+      }
       return {
         ...state,
         loadMorePending: false,
-        loadMoreError: action.data.error,
+        loadMoreError: error,
       };
 
     case CAUSE_LOAD_MORE_DISMISS_ERROR:
