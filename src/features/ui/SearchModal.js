@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { ResponsiveModal, Loading3Dots } from 'freeassofront';
+import { ResponsiveModal } from 'freeassofront';
+import { CenteredLoading3Dots } from './';
 
 export default class SearchModal extends Component {
   static propTypes = {
@@ -20,11 +21,11 @@ export default class SearchModal extends Component {
     super(props);
     let filters = this.props.filters;
     filters.forEach(item => {
-      item.value = '';
+      item.value = item.value || '';
     });
     this.state = {
       fields: filters,
-      condition: 'or',
+      condition: 'and',
     };
     this.onChange = this.onChange.bind(this);
     this.onClear = this.onClear.bind(this);
@@ -65,10 +66,11 @@ export default class SearchModal extends Component {
   }
 
   render() {
+    const fields = this.props.pickerDisplay.split(',');
     const buttons = [
       {name: "Filtrer", function: this.onSearch, theme: "primary", icon: "filter" },
       {name: "Effacer", function: this.onClear, theme: "warning" , icon: "delete"},
-      {name: "Annuler", function: this.props.onClose, theme: "dark", icon: "close"},
+      {name: "Annuler", function: this.props.onClose, theme: "secondary", icon: "close"},
     ];
     return (
       <ResponsiveModal
@@ -79,43 +81,72 @@ export default class SearchModal extends Component {
         buttons={buttons}
       >
         <div>
-          <div className="search-filters">
+          <h6 className="text-secondary">Critères de recherche :</h6>
+          <div className="search-filters row">
             {this.state.fields &&
               this.state.fields.map(item => {
-                return (
-                  <input
-                    key={item.name}
-                    className="form-control"
-                    value={item.value}
-                    name={item.name}
-                    placeholder={item.label}
-                    type="text"
-                    onChange={this.onChange}
-                  />
-                );
+                if (item.type === 'select') {
+                  return (
+                    <div className="col-sm-18" key={item.name}>
+                      <select
+                        className="form-control"
+                        value={item.value}
+                        name={item.name}
+                        placeholder={item.label}
+                        onChange={this.onChange}
+                      >
+                        <option value="">{item.label}</option>
+                        {item.options.map(option => (
+                          <option key={option.value} value={option.value}>{option.label}</option>
+                        ))}
+                      </select>
+                    </div>
+                  );
+                } else {
+                  return (
+                    <div className="col-sm-18" key={item.name}>
+                      <input
+                        className="form-control"
+                        value={item.value}
+                        name={item.name}
+                        placeholder={item.label}
+                        type="text"
+                        onChange={this.onChange}
+                      />
+                    </div>
+                  );
+                }
               })
             }
           </div>
+          <hr />
           <div className="search-results">
             {this.props.loading ? (
-              <Loading3Dots />
+              <CenteredLoading3Dots />
             ) : (
-              <ul className="list-group">
-                {this.props.list &&
-                  this.props.list.map(item => {
-                    return (
-                      <li
-                        key={item.id}
-                        className="list-group-item list-group-item-action"
-                        onClick={() => {
-                          this.props.onSelect(item);
-                        }}
-                      >
-                        <p>{item[this.props.pickerDisplay]}</p>
-                      </li>
-                    );
-                  })}
-              </ul>
+              <div>
+                <h6 className="text-secondary">Résultats :</h6>
+                <ul className="list-group">
+                  {this.props.list &&
+                    this.props.list.map(item => {
+                      return (
+                        <li
+                          key={item.id}
+                          className="list-group-item list-group-item-action"
+                          onClick={() => {
+                            this.props.onSelect(item);
+                          }}
+                        >
+                          <p>
+                            {fields.map(elem => (
+                              <span className="mr-2">{item[elem]}</span>
+                            ))}
+                          </p>
+                        </li>
+                      );
+                    })}
+                </ul>
+              </div>
             )}
           </div>
         </div>

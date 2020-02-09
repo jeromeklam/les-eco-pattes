@@ -142,12 +142,12 @@ export class InlineMovements extends Component {
                             {movement.camv_status === 'WAIT' && (
                               <SimpleValidIcon
                                 onClick={() => this.onConfirmValidation(movement.id)}
-                                className="text-secondary inline-action"
+                                className="text-primary inline-action"
                               />
                             )}
                             <DelOneIcon
                               onClick={() => this.onConfirmMovement(movement.id)}
-                              className="text-secondary inline-action"
+                              className="text-warning inline-action"
                             />
                           </div>
                         </div>

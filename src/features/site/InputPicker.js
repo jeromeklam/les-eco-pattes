@@ -41,7 +41,7 @@ export default class InputPicker extends Component {
       let value = null;
       let display = '';
       if (props.item) {
-        value = props.item.id;
+        value = props.item.id || '';
         display = props.item.site_name;
       }
       return { item: props.item, value: value, display: display };
@@ -114,13 +114,13 @@ export default class InputPicker extends Component {
           onSelect={this.onSelect}
           error={this.props.error}
           pickerId="site_id"
-          pickerDisplay="site_name"
+          pickerDisplay="site_name,site_code"
           required={this.props.required || false}
           size={this.props.size || 'md'}
           labelSize={this.props.labelSize || 6}
           inputSize={this.props.inputSize || 30}
           clearIcon={<DelOne className="text-warning" size={0.9} />}
-          moreIcon={<More className="text-primary" size={0.9} />}
+          moreIcon={<More className="text-secondary" size={0.9} />}
         />
         <Search
           title={this.props.label}

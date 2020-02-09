@@ -28,6 +28,16 @@ const _loadClient = id => {
   return freeAssoApi.get('/v1/asso/client/' + id, {});
 };
 
+const _validateRegex = (value, regex) => {
+  if (regex !== '') {
+    try {
+      const myRegex = new RegExp(regex, 'i');
+      return myRegex.test(value);
+    } catch (ex) {}
+  }
+  return true;
+}
+
 const useForm = (initialState, initialTab, onSubmit, onCancel, onNavTab, errors) => {
   const [values, setValues] = useState({
     ...initialState,
@@ -48,6 +58,7 @@ const useForm = (initialState, initialTab, onSubmit, onCancel, onNavTab, errors)
       event.persist();
     }
     const tType = event.target.type || 'text';
+    const regex = event.target.pattern || '';
     const tName = event.target.name;
     const elems = tName.split('.');
     const first = elems.shift();
@@ -122,6 +133,7 @@ const useForm = (initialState, initialTab, onSubmit, onCancel, onNavTab, errors)
           }
           break;
         default:
+          console.log(_validateRegex(event.target.value, regex));
           datas = event.target.value;
           values[first] = datas;
           break;
@@ -198,6 +210,7 @@ const useForm = (initialState, initialTab, onSubmit, onCancel, onNavTab, errors)
           }
           break;
         default:
+          console.log(_validateRegex(event.target.value, regex));
           datas[second] = event.target.value;
           values[first] = datas;
           break;

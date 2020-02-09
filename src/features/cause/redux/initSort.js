@@ -11,7 +11,7 @@ export function reducer(state, action) {
     case CAUSE_INIT_SORT:
       return {
         ...state,
-        sort: [{ col: 'cau_name', way: 'up' }],
+        sort: [{ col: 'cau_code', way: 'up' }],
       };
 
     default:

@@ -14,7 +14,7 @@ export function reducer(state, action) {
       let filters = state.filters;
       filters.init(FILTER_MODE_OR, FILTER_OPER_LIKE);
       filters.setSearch(FILTER_SEARCH_QUICK);
-      filters.addFilter('cau_name', action.value);
+      filters.addFilter('cau_code', action.value);
       return {
         ...state,
         filters: filters,

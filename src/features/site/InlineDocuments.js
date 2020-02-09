@@ -4,7 +4,6 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import Dropzone from 'react-dropzone';
 import * as actions from './redux/actions';
-import { buildModel } from 'freejsonapi';
 import { Loading3Dots, ResponsiveConfirm } from 'freeassofront';
 import FileIcon, { defaultStyles } from 'react-file-icon';
 import {
@@ -87,10 +86,6 @@ export class InlineDocuments extends Component {
   }
 
   render() {
-    let documents = [];
-    if (this.props.site.documents.FreeAsso_SiteMedia) {
-      documents = buildModel(this.props.site.documents, 'FreeAsso_SiteMedia');
-    }
     return (
       <div>
         <div className="site-inline-documents">
@@ -100,7 +95,7 @@ export class InlineDocuments extends Component {
             </div>
           ) : (
             <div className="row p-2 row-cols-1 row-cols-sm-2 row-cols-md-2 row-cols-lg-3">
-              {documents.map(document => {
+              {this.props.site.documentsModels && this.props.site.documentsModels.map(document => {
                 let content = <FileIcon type="document" size={80} {...defaultStyles.docx} />;
                 try {
                   const ext = document.sitm_title.split('.').pop();
@@ -130,7 +125,7 @@ export class InlineDocuments extends Component {
                                 <div className="ml-2">
                                   <DelOneIcon
                                     onClick={() => this.onConfirmDocument(document.id)}
-                                    className="text-secondary inline-action"
+                                    className="text-warning inline-action"
                                   />
                                 </div>
                               </div>
@@ -176,7 +171,7 @@ export class InlineDocuments extends Component {
                           <section>
                             <div {...getRootProps()}>
                               <input {...getInputProps()} />
-                              <UploadIcon className="text-secondary inline-action" size={4} />
+                              <UploadIcon className="text-primary inline-action" size={4} />
                             </div>
                           </section>
                         )}

@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { jsonApiNormalizer, buildModel, objectToQueryString } from 'freejsonapi';
 import { SearchModal } from '../ui';
 import { freeAssoApi } from '../../common';
+import { sexSelect } from './';
 
 export default class Search extends Component {
   static propTypes = {
@@ -49,7 +50,16 @@ export default class Search extends Component {
   }
 
   render() {
-    const filters = [{ name: 'cau_name', label: 'Nom', type: 'text' }];
+    const filters = [
+      { name: 'cau_code', label: 'Nom', type: 'text', value: this.props.filters.cau_code || '' },
+      {
+        name: 'cau_sex',
+        label: 'Sexe',
+        type: 'select',
+        value: this.props.filters.cau_sex || '',
+        options: sexSelect,
+      },
+    ];
     return (
       <SearchModal
         title={this.props.title}
@@ -60,7 +70,7 @@ export default class Search extends Component {
         onSearch={this.onSearch}
         onSelect={this.props.onSelect}
         list={this.state.list}
-        pickerDisplay="cau_name"
+        pickerDisplay="cau_code"
         filters={filters}
       />
     );

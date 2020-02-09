@@ -17,7 +17,7 @@ export default class InputPicker extends Component {
     let value = '';
     let display = '';
     if (this.props.item) {
-      value = this.props.item.id;
+      value = this.props.item.id || '';
       display = this.props.item.cli_lastname || '';
     }
     this.state = {
@@ -41,7 +41,7 @@ export default class InputPicker extends Component {
       let value = null;
       let display = '';
       if (props.item) {
-        value = props.item.id;
+        value = props.item.id || '';
         display = props.item.cli_lastname;
       }
       return { item: props.item, value: value, display: display };
@@ -117,7 +117,7 @@ export default class InputPicker extends Component {
           pickerId="cli_id"
           pickerDisplay="cli_lastname"
           clearIcon={<DelOne size={this.props.size === 'sm' ? 0.7 : 0.9} className="text-warning" />}
-          moreIcon={<More size={this.props.size === 'sm' ? 0.7 : 0.9} className="text-primary" />}
+          moreIcon={<More size={this.props.size === 'sm' ? 0.7 : 0.9} className="text-secondary" />}
         />
         <Search
           title={this.props.label}

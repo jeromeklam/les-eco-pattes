@@ -5,7 +5,6 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as actions from './redux/actions';
 import Map from 'pigeon-maps';
-import Marker from 'pigeon-marker';
 import { buildModel, getJsonApi } from 'freejsonapi';
 import { propagateModel } from '../../common';
 import { loadMore as loadMoreSite, updateOne as updateOneSite } from '../site/redux/actions';

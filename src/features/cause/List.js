@@ -6,26 +6,20 @@ import * as actions from './redux/actions';
 import * as causeMovementActions from '../cause-movement/redux/actions';
 import { buildModel } from 'freejsonapi';
 import { ResponsiveList, ResponsiveQuickSearch } from 'freeassofront';
-import { causeTypeAsOptions } from '../cause-type/functions';
 import {
-  AddOne as AddOneIcon,
-  GetOne as GetOneIcon,
-  DelOne as DelOneIcon,
   Filter as FilterIcon,
   FilterFull as FilterFullIcon,
-  FilterClear as FilterClearIcon,
-  Movement as MovementIcon,
   SimpleCancel as CancelPanelIcon,
   SimpleValid as ValidPanelIcon,
   SortDown as SortDownIcon,
   SortUp as SortUpIcon,
   Sort as SortNoneIcon,
   Search as SearchIcon,
-  Document as DocumentIcon,
 } from '../icons';
 import { deleteSuccess, deleteError } from '../ui';
 import { InlineMovements } from '../cause-movement';
 import { InlineDocuments } from './';
+import { getGlobalActions, getInlineActions, getCols } from './';
 
 export class List extends Component {
   static propTypes = {
@@ -175,133 +169,19 @@ export class List extends Component {
     if (this.props.cause.items.FreeAsso_Cause) {
       items = buildModel(this.props.cause.items, 'FreeAsso_Cause');
     }
-    const globalActions = [
-      {
-        name: 'clear',
-        label: 'Effacer',
-        onClick: this.onClearFilters,
-        theme: 'secondary',
-        icon: <FilterClearIcon color="white" />,
-        role: 'OTHER',
-      },
-      {
-        name: 'create',
-        label: 'Ajouter',
-        onClick: this.onCreate,
-        theme: 'primary',
-        icon: <AddOneIcon color="white" />,
-        role: 'CREATE',
-      },
-    ];
-    const inlineActions = [
-      {
-        name: 'move',
-        label: 'Mouvements',
-        onClick: this.onListMovement,
-        param: 'object',
-        theme: 'secondary',
-        icon: <MovementIcon color="white" />,
-        role: 'OTHER',
-      },
-      {
-        name: 'documents',
-        label: 'Documents',
-        onClick: this.onListDocument,
-        param: 'object',
-        theme: 'secondary',
-        icon: <DocumentIcon color="white" />,
-        role: 'DETAIL',
-      },
-      {
-        name: 'modify',
-        label: 'Modifier',
-        onClick: this.onGetOne,
-        theme: 'secondary',
-        icon: <GetOneIcon color="white" />,
-        role: 'MODIFY',
-      },
-      {
-        name: 'delete',
-        label: 'Supprimer',
-        onClick: this.onDelOne,
-        theme: 'warning',
-        icon: <DelOneIcon color="white" />,
-        role: 'DELETE',
-      },
-    ];
-    const cols = [
-      {
-        name: 'id',
-        label: 'Identifiant',
-        col: 'id',
-        size: '6',
-        mob_size: '10',
-        title: true,
-        sortable: true,
-        filterable: { type: 'text' },
-      },
-      {
-        name: 'name',
-        label: 'Nom',
-        col: 'cau_name',
-        size: '6',
-        mob_size: '26',
-        title: true,
-        sortable: true,
-        filterable: { type: 'text' },
-      },
-      {
-        name: 'type',
-        label: 'Type',
-        col: 'cause_type.caut_name',
-        size: '12',
-        mob_size: '36',
-        title: false,
-        sortable: true,
-      },
-      {
-        name: 'site',
-        label: 'Site',
-        col: 'site.site_name',
-        size: '10',
-        mob_size: '36',
-        title: false,
-        sortable: true,
-      },
-      {
-        name: 'type',
-        label: 'Type',
-        col: 'cause_type.caut_id',
-        size: '0',
-        mob_size: '0',
-        hidden: true,
-        filterable: {
-          type: 'select',
-          options: causeTypeAsOptions(this.props.causeType.items),
-        },
-      },
-      {
-        name: 'site',
-        label: 'Site',
-        col: 'site.site_name',
-        size: '0',
-        mob_size: '0',
-        hidden: true,
-        filterable: {
-          type: 'text',
-        },
-      },
-    ];
+    const globalActions = getGlobalActions(this);
+    const inlineActions = getInlineActions(this);
+    const cols = getCols(this);
     // L'affichage, items, loading, loadMoreError
     let search = '';
-    const crit = this.props.cause.filters.findFirst('cau_name');
+    const crit = this.props.cause.filters.findFirst('cau_code');
     if (crit) {
       search = crit.getFilterCrit();
     }
     const quickSearch = (
       <ResponsiveQuickSearch
         name="quickSearch"
-        label="Recherche nom"
+        label="Recherche n° boucle"
         quickSearch={search}
         onSubmit={this.onQuickSearch}
         onChange={this.onSearchChange}
@@ -335,7 +215,7 @@ export class List extends Component {
         cols={cols}
         items={items}
         quickSearch={quickSearch}
-        mainCol="cau_name"
+        mainCol="cau_code"
         filterIcon={filterIcon}
         cancelPanelIcon={<CancelPanelIcon />}
         validPanelIcon={<ValidPanelIcon />}

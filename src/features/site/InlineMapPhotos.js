@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { Loading3Dots } from 'freeassofront';
 import { buildModel } from 'freejsonapi';
 import * as actions from './redux/actions';
 import { View as ViewIcon, Download as DownloadIcon } from '../icons';

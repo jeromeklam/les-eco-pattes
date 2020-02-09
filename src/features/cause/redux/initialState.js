@@ -13,7 +13,7 @@ const initialState = {
     { key: '2', name: 'divers', label: 'Divers', shortcut: 'D', icon: 'misc' },
   ],
   filters: new Filter(),
-  sort: [{ col: 'cau_name', way: 'up' }],
+  sort: [{ col: 'cau_code', way: 'up' }],
   loadMorePending: false,
   loadMoreFinish: false,
   loadMoreError: null,

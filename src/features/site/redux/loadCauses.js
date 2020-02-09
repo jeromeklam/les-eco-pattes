@@ -1,4 +1,4 @@
-import { jsonApiNormalizer, objectToQueryString } from 'freejsonapi';
+import { jsonApiNormalizer, objectToQueryString, buildModel } from 'freejsonapi';
 import {
   SITE_LOAD_CAUSES_BEGIN,
   SITE_LOAD_CAUSES_SUCCESS,
@@ -58,6 +58,7 @@ export function reducer(state, action) {
         loadCausesPending: true,
         loadCausesError: null,
         causes: [],
+        causesModels: [],
       };
 
     case SITE_LOAD_CAUSES_SUCCESS:
@@ -76,12 +77,14 @@ export function reducer(state, action) {
       } else {
         list = [];
       }
+      const causes = buildModel(list, 'FreeAsso_Cause');
       return {
         ...state,
         loadCausesPending: false,
         loadCausesError: null,
         loadCausesFinish: true,
         causes: list,
+        causesModels: causes,
       };
 
     case SITE_LOAD_CAUSES_FAILURE:

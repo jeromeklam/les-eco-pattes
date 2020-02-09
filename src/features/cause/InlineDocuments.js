@@ -130,7 +130,7 @@ export class InlineDocuments extends Component {
                                 <div className="ml-2">
                                   <DelOneIcon
                                     onClick={() => this.onConfirmDocument(document.id)}
-                                    className="text-secondary inline-action"
+                                    className="text-warning inline-action"
                                   />
                                 </div>
                               </div>
@@ -176,7 +176,7 @@ export class InlineDocuments extends Component {
                           <section>
                             <div {...getRootProps()}>
                               <input {...getInputProps()} />
-                              <UploadIcon className="text-secondary inline-action" size={4} />
+                              <UploadIcon className="text-primary inline-action" size={4} />
                             </div>
                           </section>
                         )}

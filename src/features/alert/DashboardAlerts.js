@@ -2,9 +2,10 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { buildModel } from 'freejsonapi';
+import { Loading3Dots } from 'freeassofront';
 import { connect } from 'react-redux';
 import * as actions from './redux/actions';
-import { StatCard, CenteredLoading3Dots } from '../ui';
+import { StatCard } from '../ui';
 import { Alert as AlertIcon } from '../icons';
 
 export class DashboardAlerts extends Component {
@@ -25,15 +26,24 @@ export class DashboardAlerts extends Component {
     return (
       <StatCard title="Alertes" icon={<AlertIcon />} size="md">
         <div className="alerts text-secondary bg-secondary-light">
-          {(alerts && alerts.length > 0) ? (
+          {alerts && alerts.length > 0 ? (
             <div className="inline-list">
-              <div className="row row-title">
-              </div>
+              <div className="row row-title"></div>
             </div>
           ) : (
-            <div><span className="p-3">Aucune alerte en attente</span></div>
+            <div>
+              <span className="p-3">Aucune alerte en attente</span>
+            </div>
           )}
-          {this.props.alert.loadMorePending && <CenteredLoading3Dots />}
+          {this.props.alert.loadMorePending && (
+            <div className="inline-list">
+              <div className="row row-line">
+                <div className="col-36 text-center">
+                  <Loading3Dots />
+                </div>
+              </div>
+            </div>
+          )}
         </div>
       </StatCard>
     );
@@ -50,11 +60,8 @@ function mapStateToProps(state) {
 /* istanbul ignore next */
 function mapDispatchToProps(dispatch) {
   return {
-    actions: bindActionCreators({ ...actions }, dispatch)
+    actions: bindActionCreators({ ...actions }, dispatch),
   };
 }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(DashboardAlerts);
+export default connect(mapStateToProps, mapDispatchToProps)(DashboardAlerts);

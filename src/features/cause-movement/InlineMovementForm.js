@@ -64,7 +64,7 @@ export default function InlineMovementForm(props) {
           />
         </div>
         <div className="col-3" onClick={handleSubmit}>
-          <SimpleValidIcon className="text-secondary inline-action" />
+          <SimpleValidIcon className="text-primary inline-action" />
         </div>
         <div className="col-10">
           <InputPickerSite

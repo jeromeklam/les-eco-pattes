@@ -7,7 +7,7 @@ export default class InputDate extends Component {
     return (
       <FAInputDate
         {...this.props}
-        calIcon={<CalendarIcon className="text-primary" size={0.9} />}
+        calIcon={<CalendarIcon className="text-secondary" size={0.9} />}
         delIcon={<DelOneIcon className="text-warning" size={0.9} />}
       />
     );

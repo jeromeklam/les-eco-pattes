@@ -1,11 +1,11 @@
 import React from 'react';
 import { InputHidden, InputText, InputSelect, InputTextarea, ResponsiveForm } from 'freeassofront';
-import { InputData, InputDate } from '../ui';
+import { InputDate } from '../ui';
 import useForm from '../ui/useForm';
 import { causeTypeAsOptions } from '../cause-type/functions.js';
 import { InputPicker as ClientInputPicker } from '../client';
 import { InputPicker as SiteInputPicker } from '../site';
-import { InputPicker as CauseInputPicker } from './';
+import { InputPicker as CauseInputPicker, sexSelect } from './';
 
 export default function Form(props) {
   const {
@@ -16,6 +16,7 @@ export default function Form(props) {
     handleNavTab,
     getErrorMessage,
   } = useForm(props.item, props.tab, props.onSubmit, props.onCancel, props.onNavTab, props.errors);
+  const regexp = values.cause_type.caut_pattern || '';
   return (
     <ResponsiveForm
       title="Animaux"
@@ -32,12 +33,13 @@ export default function Form(props) {
         <div className="col-8">
           <InputText
             label="N° boucle"
-            name="cau_name"
-            id="cau_name"
-            value={values.cau_name}
+            name="cau_code"
+            id="cau_code"
+            value={values.cau_code}
             onChange={handleChange}
             labelTop={true}
-            error={getErrorMessage('cau_name')}
+            pattern={regexp}
+            error={getErrorMessage('cau_code')}
           />
         </div>
         <div className="col-10">
@@ -69,14 +71,14 @@ export default function Form(props) {
         <div>
           <div className="row">
             <div className="col-18">
-              <InputData
-                key="cau_string_1"
-                name="cau_string_1"
-                value={values.cau_string_1}
-                datas={props.tab_datas}
-                config={props.tab_configs}
+              <InputText
+                label="Nom"
+                key="cau_name"
+                name="cau_name"
+                value={values.cau_name}
                 onChange={handleChange}
                 labelTop={true}
+                error={getErrorMessage('cau_name')}
               />
             </div>
             <div className="col-18">
@@ -86,11 +88,7 @@ export default function Form(props) {
                 id="cau_sex"
                 value={values.cau_sex}
                 onChange={handleChange}
-                options={[
-                  { label: 'Femelle', value: 'F' },
-                  { label: 'Mâle', value: 'M' },
-                  { label: 'Indéfini', value: 'OTHER' },
-                ]}
+                options={sexSelect}
                 labelTop={true}
                 error={getErrorMessage('cau_sex')}
               />
@@ -98,14 +96,14 @@ export default function Form(props) {
           </div>
           <div className="row">
             <div className="col-6">
-              <InputData
-                key="cau_number_1"
-                name="cau_number_1"
-                value={values.cau_number_1}
-                datas={props.tab_datas}
-                config={props.tab_configs}
+              <InputText
+                label="Année de naissance"
+                name="cau_year"
+                id="cau_year"
+                value={values.cau_year}
                 onChange={handleChange}
                 labelTop={true}
+                error={getErrorMessage('cau_year')}
               />
             </div>
             <div className="col-15">
@@ -117,6 +115,7 @@ export default function Form(props) {
                 onChange={handleChange}
                 labelTop={true}
                 error={getErrorMessage('parent1')}
+                filters={{cau_sex: 'M'}}
               />
             </div>
             <div className="col-15">
@@ -128,6 +127,7 @@ export default function Form(props) {
                 onChange={handleChange}
                 labelTop={true}
                 error={getErrorMessage('parent2')}
+                filters={{cau_sex: 'F'}}
               />
             </div>
           </div>
@@ -153,13 +153,13 @@ export default function Form(props) {
               />
             </div>
             <div className="col-16">
-              <InputData
-                key="cau_string_2"
-                name="cau_string_2"
-                value={values.cau_string_2}
-                datas={props.tab_datas}
-                config={props.tab_configs}
+              <ClientInputPicker
+                label="Eleveur"
+                key="raiser"
+                name="raiser"
+                item={values.raiser || null}
                 onChange={handleChange}
+                error={getErrorMessage('raiser')}
               />
             </div>
           </div>
@@ -168,12 +168,12 @@ export default function Form(props) {
       {values.currentTab === '2' && (
         <div>
           <ClientInputPicker
-            label="Eleveur"
-            key="proprietary"
-            name="proprietary"
-            item={values.proprietary || null}
+            label="Provenance"
+            key="origin"
+            name="origin"
+            item={values.origin || null}
             onChange={handleChange}
-            error={getErrorMessage('proprietary')}
+            error={getErrorMessage('origin')}
           />
           <InputTextarea
             label="Observations"

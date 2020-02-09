@@ -56,7 +56,7 @@ export function reducer(state, action) {
       // The request is success
       let item = null;
       let itemPrevNext = null;
-      let object = jsonApiNormalizer(action.data.data);
+      const object = jsonApiNormalizer(action.data.data);
       item = buildModel(object, 'FreeAsso_Cause', action.id, { eager: true });
       itemPrevNext = getPreviousNext(state.items, action.id);
       return {

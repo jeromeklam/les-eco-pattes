@@ -58,6 +58,7 @@ export function reducer(state, action) {
         loadDocumentsPending: true,
         loadDocumentsError: null,
         documents: [],
+        documentsModels: [],
         currentItem: null,
       };
 
@@ -78,12 +79,14 @@ export function reducer(state, action) {
         list = [];
       }
       let currentItem = buildModel(state.items, 'FreeAsso_Site', action.site_id);
+      const documents = buildModel(list, 'FreeAsso_SiteMedia');
       return {
         ...state,
         loadDocumentsPending: false,
         loadDocumentsError: null,
         loadDocumentsFinish: true,
         documents: list,
+        documentsModels: documents,
         currentItem: currentItem,
       };
 

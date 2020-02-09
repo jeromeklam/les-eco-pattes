@@ -5,7 +5,7 @@ import { SocialIcon } from 'react-social-icons';
 import { connect } from 'react-redux';
 import * as actions from './redux/actions';
 import * as authActions from '../auth/redux/actions';
-import { ResponsivePage, Loading9x9 } from 'freeassofront';
+import { ResponsivePage } from 'freeassofront';
 import {
   Home as HomeIcon,
   About as AboutIcon,
@@ -17,7 +17,9 @@ import {
   Menu as MenuIcon,
   Site as SiteIcon,
   Map as MapIcon,
+  Version as VersionIcon,
 } from '../icons';
+import { CenteredLoading9X9 } from '../ui';
 import { SimpleForm } from '../auth';
 import { initAxios } from '../../common';
 
@@ -161,10 +163,19 @@ const options = [
     ],
   },
   {
+    icon: <VersionIcon />,
+    label: 'Fiche version',
+    url: '/version',
+    role: 'NAV',
+    position: 11,
+    public: true,
+  },
+  {
     icon: <AboutIcon />,
     label: 'Qui sommes nous ?',
     url: '/about',
     role: 'ABOUT',
+    position: 99,
     public: true,
   },
 ];
@@ -237,29 +248,27 @@ export class App extends Component {
         </div>
       );
     } else {
-      if (!this.props.auth.authenticated || this.props.home.loadAllFinish) {
-        return (
-          <ResponsivePage
-            menuIcon={<MenuIcon className="light" />}
-            title={process.env.REACT_APP_APP_NAME}
-            options={options}
-            authenticated={this.props.auth.authenticated}
-            location={this.props.location}
-            onNavigate={this.onNavigate}
-            userForm={<SimpleForm />}
-            userTitle={this.props.auth.user.user_first_name || this.props.auth.user.user_first_name}
-          >
-            {this.props.children}
-          </ResponsivePage>
-        );
-      } else {
-        return (
-          <div className="main-loader bg-secondary-light">
-            <h4 className="text-secondary p-3">... Chargement des données ...</h4>
-            <Loading9x9 className="text-primary"/>
-          </div>
-        );
-      }
+      return (
+        <ResponsivePage
+          menuIcon={<MenuIcon className="light" />}
+          title={process.env.REACT_APP_APP_NAME}
+          options={options}
+          authenticated={this.props.auth.authenticated}
+          location={this.props.location}
+          onNavigate={this.onNavigate}
+          userForm={<SimpleForm />}
+          userTitle={this.props.auth.user.user_first_name || this.props.auth.user.user_first_name}
+        >
+          {!this.props.auth.authenticated || this.props.home.loadAllFinish ? (
+            <div>{this.props.children}</div>
+          ) : (
+            <div className="text-center mt-5 text-secondary">
+              <h4>... Chargement ...</h4>
+              <CenteredLoading9X9 />
+            </div>
+          )}
+        </ResponsivePage>
+      );
     }
   }
 }

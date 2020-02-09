@@ -15,15 +15,15 @@ export class Home extends Component {
   render() {
     return (
       <div className="container-fluid">
-        <div className="text-center">
+        <div className="text-right">
+          <br />
           <img className="fond-site d-none d-sm-block" src={fond} alt="" />
-          <br />
-          <h5 className="home-title">Pensez à l'éco-pâturage pour entretenir vos espaces verts et naturels</h5>
-          <br />
           <img className="logo-ecopattes" src={logo} alt="" />
           <br />
           <br />
-          <h6 className="home-title2">les moutons seront bien gardés !</h6>
+          <h5 className="home-title">Pensez à l'éco-pâturage</h5>
+          <h5 className="home-title">pour entretenir vos espaces verts et naturels</h5>
+          <h5 className="home-title2">les moutons seront bien gardés !</h5>
         </div>
       </div>
     );

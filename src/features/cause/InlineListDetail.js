@@ -6,7 +6,7 @@ export default class InlineListDetail extends Component {
   render() {
     return (
       <div className="cause-inline-list-detail">
-        {this.props.causes.length > 0 ? (
+        {this.props.causes && this.props.causes.length > 0 ? (
           <div className="inline-list">
             <div className="row row-title" key="cause-inline-list-detail">
               <div className="col-sm-5">
@@ -28,7 +28,7 @@ export default class InlineListDetail extends Component {
                   <span className="pl-2">{cause.id}</span>
                 </div>
                 <div className="col-sm-10">
-                  <span>{cause.cau_name}</span>
+                  <span>{cause.cau_code}</span>
                 </div>
                 <div className="col-sm-10">
                   <span>{cause.cause_type.caut_name}</span>

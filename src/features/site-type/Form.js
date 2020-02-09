@@ -20,14 +20,30 @@ export default function Form(props) {
     >
       <div className="card-body">
         <InputHidden name="id" id="id" value={values.id} />
-        <InputText
-          label="Nom"
-          name="sitt_name"
-          id="sitt_name"
-          value={values.sitt_name}
-          onChange={handleChange}
-          error={getErrorMessage("sitt_name")}
-        />
+        <div className="row">
+          <div className="col-12">
+            <InputText
+              label="Nom"
+              name="sitt_name"
+              id="sitt_name"
+              value={values.sitt_name}
+              onChange={handleChange}
+              error={getErrorMessage("sitt_name")}
+            />
+          </div>
+        </div>
+        <div className="row">
+          <div className="col-36">
+            <InputText
+              label="Expression de saisie du n° d'élevage EDE"
+              name="sitt_pattern"
+              id="sitt_pattern"
+              value={values.sitt_pattern}
+              onChange={handleChange}
+              error={getErrorMessage("sitt_pattern")}
+            />
+          </div>
+        </div>
       </div>
     </ResponsiveForm>
   );

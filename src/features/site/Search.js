@@ -49,7 +49,10 @@ export default class Search extends Component {
   }
 
   render() {
-    const filters = [{ name: 'site_name', label: 'Site', type: 'text' }];
+    const filters = [
+      { name: 'site_name', label: 'Site', type: 'text' },
+      { name: 'site_code', label: 'N° EDE', type: 'text' },
+    ];
     return (
       <SearchModal
         title={this.props.title}
@@ -60,7 +63,7 @@ export default class Search extends Component {
         onSearch={this.onSearch}
         onSelect={this.props.onSelect}
         list={this.state.list}
-        pickerDisplay="site_name"
+        pickerDisplay="site_name,site_code"
         filters={filters}
       />
     );

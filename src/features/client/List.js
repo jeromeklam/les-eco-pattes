@@ -268,7 +268,7 @@ export class List extends Component {
     );
     return (
       <ResponsiveList
-        title="Membres"
+        title="Personnes"
         cols={cols}
         items={items}
         quickSearch={quickSearch}

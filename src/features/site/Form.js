@@ -1,9 +1,17 @@
 import React from 'react';
-import { InputHidden, InputText, InputSelect, InputTextarea, ResponsiveForm } from 'freeassofront';
+import {
+  InputHidden,
+  InputText,
+  InputSelect,
+  InputTextarea,
+  ResponsiveForm,
+  InputCheckbox,
+} from 'freeassofront';
 import { InputData } from '../ui';
 import useForm from '../ui/useForm';
 import { siteTypeAsOptions } from '../site-type/functions.js';
 import { InputPicker as ClientInputPicker } from '../client';
+import { InputPicker as SiteInputPicker } from '../site';
 import { Location as LocationIcon, Settings as SettingsIcon, Other as OtherIcon } from '../icons';
 
 const tabs = [
@@ -14,8 +22,14 @@ const tabs = [
     shortcut: 'L',
     icon: <LocationIcon />,
   },
-  { key: '2', name: 'equipement', label: 'Equipement', shortcut: 'E', icon: <SettingsIcon /> },
-  { key: '3', name: 'divers', label: 'Divers', shortcut: 'D', icon: <OtherIcon /> },
+  {
+    key: '2',
+    name: 'identification2',
+    label: 'Identification (suite)',
+    shortcut: 'D',
+    icon: <OtherIcon />,
+  },
+  { key: '3', name: 'equipement', label: 'Equipement', shortcut: 'E', icon: <SettingsIcon /> },
 ];
 
 export default function Form(props) {
@@ -65,11 +79,33 @@ export default function Form(props) {
         </div>
         <div className="col-sm-8">
           <InputText
-            label="N° Elevage DE"
-            name="site_code_ex"
-            value={values.site_code_ex}
+            label="N° Elevage EDE"
+            name="site_code"
+            value={values.site_code}
             onChange={handleChange}
-            error={getErrorMessage('site_code_ex')}
+            error={getErrorMessage('site_code')}
+          />
+        </div>
+      </div>
+      <div className="row">
+        <div className="col-18">
+          <SiteInputPicker
+            label="Site principal"
+            key="parent_site"
+            name="parent_site"
+            item={values.parent_site || null}
+            onChange={handleChange}
+            labelTop={true}
+            error={getErrorMessage('parent_site')}
+          />
+        </div>
+        <div className="col-sm-4">
+          <InputCheckbox
+            label="Conforme"
+            name="site_conform"
+            labelTop={true}
+            checked={values.site_conform === true}
+            onChange={handleChange}
           />
         </div>
       </div>
@@ -141,6 +177,44 @@ export default function Form(props) {
         </div>
       )}
       {values.currentTab === '2' && (
+        <div>
+          <div className="row">
+            <div className="col-sm-36">
+              <InputTextarea
+                label="Complément de conformité"
+                name="site_conform_text"
+                value={values.site_conform_text}
+                onChange={handleChange}
+                error={getErrorMessage('site_conform_text')}
+              />
+            </div>
+          </div>
+          <div className="row">
+            <div className="col-sm-36">
+              <ClientInputPicker
+                label="Vétérinaire"
+                key="sanitary"
+                name="sanitary"
+                item={values.sanitary || null}
+                onChange={handleChange}
+                error={getErrorMessage('sanitary')}
+              />
+            </div>
+          </div>
+          <div className="row">
+            <div className="col-sm-36">
+              <InputTextarea
+                label="Observations"
+                name="site_desc"
+                value={values.site_desc}
+                onChange={handleChange}
+                error={getErrorMessage('site_desc')}
+              />
+            </div>
+          </div>
+        </div>
+      )}
+      {values.currentTab === '3' && (
         <div className="row">
           {props.properties.map(oneProp => {
             let nameProp = 'site_' + oneProp;
@@ -158,32 +232,6 @@ export default function Form(props) {
               </div>
             );
           })}
-        </div>
-      )}
-      {values.currentTab === '3' && (
-        <div>
-          <InputText
-            label="Code"
-            name="site_code"
-            value={values.site_code}
-            onChange={handleChange}
-            error={getErrorMessage('site_code')}
-          />
-          <ClientInputPicker
-            label="Vétérinaire"
-            key="sanitary"
-            name="sanitary"
-            item={values.sanitary || null}
-            onChange={handleChange}
-            error={getErrorMessage('sanitary')}
-          />
-          <InputTextarea
-            label="Observations"
-            name="site_desc"
-            value={values.site_desc}
-            onChange={handleChange}
-            error={getErrorMessage('site_desc')}
-          />
         </div>
       )}
     </ResponsiveForm>

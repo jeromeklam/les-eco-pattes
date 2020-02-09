@@ -23,6 +23,7 @@ import uiRoute from '../features/ui/route';
 import causeMovementRoute from '../features/cause-movement/route';
 import countryRoute from '../features/country/route';
 import alertRoute from '../features/alert/route';
+import helpRoute from '../features/help/route';
 
 // NOTE: DO NOT CHANGE the 'childRoutes' name and the declaration pattern.
 // This is used for Rekit cmds to register routes config for new features, and remove config when remove features, etc.
@@ -49,6 +50,7 @@ const childRoutes = [
   causeMovementRoute,
   countryRoute,
   alertRoute,
+  helpRoute,
 ];
 
 const routes = [{

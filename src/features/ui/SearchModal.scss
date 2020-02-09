@@ -1,5 +1,6 @@
 @import '../../styles/mixins';
 
-.ui-search-modal {
-
+.list-group-item-action:hover {
+  cursor: pointer;
+  background-color: theme-color('primary-light');
 }

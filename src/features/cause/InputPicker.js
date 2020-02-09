@@ -17,8 +17,8 @@ export default class InputPicker extends Component {
     let value = '';
     let display = '';
     if (this.props.item) {
-      value = this.props.item.id;
-      display = this.props.item.cau_name || '';
+      value = this.props.item.id || '';
+      display = this.props.item.cau_code || '';
     }
     this.state = {
       search: false,
@@ -41,8 +41,8 @@ export default class InputPicker extends Component {
       let value = null;
       let display = '';
       if (props.item) {
-        value = props.item.id;
-        display = props.item.cau_name;
+        value = props.item.id || '';
+        display = props.item.cau_code;
       }
       return { item: props.item, value: value, display: display };
     }
@@ -112,13 +112,15 @@ export default class InputPicker extends Component {
           onSelect={this.onSelect}
           required={this.props.required || false}
           pickerId="cau_id"
-          pickerDisplay="cau_name"
+          pickerDisplay="cau_code"
+          filters={this.props.filters || {}}
           clearIcon={<DelOne className="text-warning" size={0.9 } />}
-          moreIcon={<More className="text-primary" size={0.9 } />}
+          moreIcon={<More className="text-secondary" size={0.9 } />}
         />
         <Search
           title={this.props.label}
           show={this.state.search}
+          filters={this.props.filters || {}}
           onClose={this.onCloseMore}
           onSelect={this.onSelect}
         />
