@@ -45,6 +45,7 @@ export default class InputData extends Component {
         console.log(this.state.data.data_content);
       }
     }
+    console.log(this.state);
     return (
       <div>
         {this.state.data.data_type === 'BOOLEAN' && (

@@ -1,7 +1,7 @@
 import React from 'react';
 import { InputHidden, InputText, InputSelect, InputTextarea, ResponsiveForm } from 'freeassofront';
 import RegexpParser from 'reregexp';
-import { InputDate } from '../ui';
+import { InputDate, InputData } from '../ui';
 import useForm from '../ui/useForm';
 import { causeTypeAsOptions } from '../cause-type/functions.js';
 import { InputPicker as ClientInputPicker } from '../client';
@@ -130,10 +130,19 @@ export default function Form(props) {
                 error={getErrorMessage('cau_year')}
               />
             </div>
-            <div className="col-15">
+            <div className="col-6">
+              <InputData
+                name="cau_string_1"
+                value={values.cau_string_1}
+                datas={props.tab_datas}
+                config={props.tab_configs}
+                onChange={handleChange}
+                labelTop={true}
+              />
+            </div>
+            <div className="col-12">
               <CauseInputPicker
                 label="Père"
-                key="parent1"
                 name="parent1"
                 item={values.parent1 || null}
                 onChange={handleChange}
@@ -142,10 +151,9 @@ export default function Form(props) {
                 filters={{cau_sex: 'M'}}
               />
             </div>
-            <div className="col-15">
+            <div className="col-12">
               <CauseInputPicker
                 label="Mère"
-                key="parent2"
                 name="parent2"
                 item={values.parent2 || null}
                 onChange={handleChange}
