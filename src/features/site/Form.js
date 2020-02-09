@@ -7,12 +7,17 @@ import {
   ResponsiveForm,
   InputCheckbox,
 } from 'freeassofront';
+import RegexpParser from 'reregexp';
 import { InputData } from '../ui';
 import useForm from '../ui/useForm';
 import { siteTypeAsOptions } from '../site-type/functions.js';
 import { InputPicker as ClientInputPicker } from '../client';
 import { InputPicker as SiteInputPicker } from '../site';
 import { Location as LocationIcon, Settings as SettingsIcon, Other as OtherIcon } from '../icons';
+import { validateRegex } from '../../common';
+
+let regPlaceholder = '';
+let sitt_id = 0;
 
 const tabs = [
   {
@@ -41,6 +46,21 @@ export default function Form(props) {
     handleNavTab,
     getErrorMessage,
   } = useForm(props.item, props.tab, props.onSubmit, props.onCancel, props.onNavTab, props.errors);
+  const regexp = values.site_type.sitt_pattern || '';
+  let validated = true;
+  if (regexp !== '') {
+    validated = false;
+    if (regPlaceholder === '' || sitt_id !== values.site_type.id) {
+      const parser = new RegexpParser('/' + regexp + '/',{namedGroupConf:{
+        pays: ['FR']
+      }});
+      regPlaceholder = parser.build();
+    }
+    if (values.site_code !== '' && validateRegex(values.site_code, regexp)) {
+      validated = true;
+    }
+    sitt_id = values.site_type.id;
+  }
   return (
     <ResponsiveForm
       className=""
@@ -83,7 +103,9 @@ export default function Form(props) {
             name="site_code"
             value={values.site_code}
             onChange={handleChange}
+            required={true}
             error={getErrorMessage('site_code')}
+            warning={validated ? false : 'Format : ' + regPlaceholder}
           />
         </div>
       </div>

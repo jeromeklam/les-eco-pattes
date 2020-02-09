@@ -1,11 +1,16 @@
 import React from 'react';
 import { InputHidden, InputText, InputSelect, InputTextarea, ResponsiveForm } from 'freeassofront';
+import RegexpParser from 'reregexp';
 import { InputDate } from '../ui';
 import useForm from '../ui/useForm';
 import { causeTypeAsOptions } from '../cause-type/functions.js';
 import { InputPicker as ClientInputPicker } from '../client';
 import { InputPicker as SiteInputPicker } from '../site';
 import { InputPicker as CauseInputPicker, sexSelect } from './';
+import { validateRegex } from '../../common';
+
+let regPlaceholder = '';
+let caut_id = 0;
 
 export default function Form(props) {
   const {
@@ -17,6 +22,21 @@ export default function Form(props) {
     getErrorMessage,
   } = useForm(props.item, props.tab, props.onSubmit, props.onCancel, props.onNavTab, props.errors);
   const regexp = values.cause_type.caut_pattern || '';
+  let validated = true;
+  if (regexp !== '') {
+    validated = false;
+    if (regPlaceholder === '' || caut_id !== values.cause_type.id) {
+      const parser = new RegexpParser('/' + regexp + '/',{namedGroupConf:{
+        pays: ['FR'],
+        cpays: ['250']
+      }});
+      regPlaceholder = parser.build();
+    }
+    if (values.cau_code !== '' && validateRegex(values.cau_code, regexp)) {
+      validated = true;
+    }
+    caut_id = values.cause_type.id;
+  }
   return (
     <ResponsiveForm
       title="Animaux"
@@ -39,7 +59,9 @@ export default function Form(props) {
             onChange={handleChange}
             labelTop={true}
             pattern={regexp}
+            required={true}
             error={getErrorMessage('cau_code')}
+            warning={validated ? false : 'Format : ' + regPlaceholder}
           />
         </div>
         <div className="col-10">
@@ -51,6 +73,7 @@ export default function Form(props) {
             onChange={handleChange}
             options={causeTypeAsOptions(props.cause_types)}
             labelTop={true}
+            required={true}
             error={getErrorMessage('cause_type')}
           />
         </div>
@@ -62,6 +85,7 @@ export default function Form(props) {
             item={values.site || null}
             onChange={handleChange}
             labelTop={true}
+            required={true}
             error={getErrorMessage('site')}
           />
         </div>

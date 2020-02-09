@@ -4,6 +4,16 @@ export { initAxios } from './init';
 /**/
 export { propagateModel } from './update';
 
+export const validateRegex = (value, regex) => {
+  if (regex !== '') {
+    try {
+      const myRegex = new RegExp(regex, 'i');
+      return myRegex.test(value);
+    } catch (ex) {}
+  }
+  return true;
+}
+
 export function isInViewPort(el, threshold) {
   threshold = threshold || 0;
 

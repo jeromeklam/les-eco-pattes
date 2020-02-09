@@ -7,6 +7,20 @@ const explodeReduxModel = obj => {
   return ret;
 };
 
+const _loadCauseType = id => {
+  if (!id) {
+    id = '0';
+  }
+  return freeAssoApi.get('/v1/asso/cause_type/' + id, {});
+};
+
+const _loadSiteType = id => {
+  if (!id) {
+    id = '0';
+  }
+  return freeAssoApi.get('/v1/asso/site_type/' + id, {});
+};
+
 const _loadSite = id => {
   if (!id) {
     id = '0';
@@ -28,20 +42,12 @@ const _loadClient = id => {
   return freeAssoApi.get('/v1/asso/client/' + id, {});
 };
 
-const _validateRegex = (value, regex) => {
-  if (regex !== '') {
-    try {
-      const myRegex = new RegExp(regex, 'i');
-      return myRegex.test(value);
-    } catch (ex) {}
-  }
-  return true;
-}
-
 const useForm = (initialState, initialTab, onSubmit, onCancel, onNavTab, errors) => {
   const [values, setValues] = useState({
     ...initialState,
     currentTab: initialTab,
+    loadCauseType: false,
+    loadSiteType: false,
     loadClient: false,
     loadCause: false,
     loadSite: false,
@@ -57,7 +63,7 @@ const useForm = (initialState, initialTab, onSubmit, onCancel, onNavTab, errors)
     if (event && event.persist) {
       event.persist();
     }
-    const tType = event.target.type || 'text';
+    let tType = event.target.type || 'text';
     const regex = event.target.pattern || '';
     const tName = event.target.name;
     const elems = tName.split('.');
@@ -133,18 +139,62 @@ const useForm = (initialState, initialTab, onSubmit, onCancel, onNavTab, errors)
           }
           break;
         default:
-          console.log(_validateRegex(event.target.value, regex));
           datas = event.target.value;
           values[first] = datas;
           break;
       }
     } else {
       datas = values[first];
+      if (datas.id !== undefined && datas.type) {
+        tType = datas.type;
+      }
       const second = elems.shift();
       switch (tType) {
         case 'checkbox':
           datas[second] = event.target.checked || false;
           values[first] = datas;
+          break;
+        case 'FreeAsso_CauseType':
+          if (!values.loadCauseType) {
+            const id = event.target.value || '0';
+            values.loadCauseType = true;
+            setValues(explodeReduxModel(values));
+            _loadCauseType(id)
+              .then(result => {
+                values.loadCauseType = false;
+                if (result && result.data) {
+                  const lines = jsonApiNormalizer(result.data);
+                  const item = buildModel(lines, 'FreeAsso_CauseType', id, { eager: true });
+                  values[first] = item;
+                  setValues(explodeReduxModel(values));
+                }
+              })
+              .catch(err => {
+                values.loadCauseType = false;
+                setValues(explodeReduxModel(values));
+              });
+          }
+          break;
+        case 'FreeAsso_SiteType':
+          if (!values.loadSiteType) {
+            const id = event.target.value || '0';
+            values.loadSiteType = true;
+            setValues(explodeReduxModel(values));
+            _loadSiteType(id)
+              .then(result => {
+                values.loadSiteType = false;
+                if (result && result.data) {
+                  const lines = jsonApiNormalizer(result.data);
+                  const item = buildModel(lines, 'FreeAsso_SiteType', id, { eager: true });
+                  values[first] = item;
+                  setValues(explodeReduxModel(values));
+                }
+              })
+              .catch(err => {
+                values.loadSiteType = false;
+                setValues(explodeReduxModel(values));
+              });
+          }
           break;
         case 'FreeAsso_Cause':
           if (!values.loadCause) {
@@ -210,7 +260,6 @@ const useForm = (initialState, initialTab, onSubmit, onCancel, onNavTab, errors)
           }
           break;
         default:
-          console.log(_validateRegex(event.target.value, regex));
           datas[second] = event.target.value;
           values[first] = datas;
           break;
