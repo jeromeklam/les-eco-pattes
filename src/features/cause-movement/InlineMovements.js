@@ -6,7 +6,7 @@ import { buildModel, getJsonApi } from 'freejsonapi';
 import * as actions from './redux/actions';
 import { ResponsiveConfirm } from 'freeassofront';
 import { CenteredLoading3Dots, createSuccess, createError } from '../ui';
-import { InlineMovementForm } from '../cause-movement';
+import { InlineMovementForm } from './';
 import { propagateModel, intlDate } from '../../common';
 import { DelOne as DelOneIcon, SimpleValid as SimpleValidIcon } from '../icons';
 import { statusLabel } from './';

@@ -117,3 +117,39 @@ svg.text-primary {
     fill: theme-color('primary') !important;
   }
 }
+
+.btn-sm {
+  &.btn {
+    padding-top: 0px;
+    padding-bottom: 0px;
+    padding-left: 4px;
+    padding-right: 4px;
+  }
+  svg {
+    height: 1.2rem !important;
+    width: 1.2rem !important;
+  }
+}
+
+.btn-left {
+  &.btn {
+    padding: 1rem;
+  }
+  svg {
+    height: 1.5rem !important;
+    width: 1.5rem !important;
+  }
+}
+
+.btn-inline {
+  &.btn {
+    padding-top: 0px;
+    padding-bottom: 0px;
+    padding-left: 4px;
+    padding-right: 4px;
+  }
+  svg {
+    height: 1rem !important;
+    width: 1rem !important;
+  }
+}

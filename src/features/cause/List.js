@@ -3,7 +3,8 @@ import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as actions from './redux/actions';
-import * as causeMovementActions from '../cause-movement/redux/actions';
+import { loadMovements } from '../cause-movement/redux/actions';
+import { loadGrowths } from '../cause-growth/redux/actions';
 import { buildModel } from 'freejsonapi';
 import { ResponsiveList, ResponsiveQuickSearch } from 'freeassofront';
 import {
@@ -18,6 +19,7 @@ import {
 } from '../icons';
 import { deleteSuccess, deleteError } from '../ui';
 import { InlineMovements } from '../cause-movement';
+import { InlineGrowths } from '../cause-growth';
 import { InlineDocuments } from './';
 import { getGlobalActions, getInlineActions, getCols } from './';
 
@@ -31,6 +33,7 @@ export class List extends Component {
     super(props);
     this.state = {
       timer: null,
+      growthsCause: 0,
       movementsCause: 0,
       documentsCause: 0,
     };
@@ -46,6 +49,7 @@ export class List extends Component {
     this.onOpenPhoto = this.onOpenPhoto.bind(this);
     this.onListDocument = this.onListDocument.bind(this);
     this.onListMovement = this.onListMovement.bind(this);
+    this.onListGrowth = this.onListGrowth.bind(this);
   }
 
   componentDidMount() {
@@ -84,10 +88,10 @@ export class List extends Component {
     const { id } = obj;
     const { documentsCause } = this.state;
     if (documentsCause === id) {
-      this.setState({movementsCause: 0, documentsCause: 0});
+      this.setState({growthsCause: 0, movementsCause: 0, documentsCause: 0});
     } else {
       this.props.actions.loadDocuments(id, true).then(result => {});
-      this.setState({movementsCause: 0, documentsCause: id});
+      this.setState({growthsCause: 0, movementsCause: 0, documentsCause: id});
     }
   }
 
@@ -95,10 +99,21 @@ export class List extends Component {
     const { id } = obj;
     const { movementsCause } = this.state;
     if (movementsCause === id) {
-      this.setState({movementsCause: 0, documentsCause: 0});
+      this.setState({growthsCause: 0, movementsCause: 0, documentsCause: 0});
     } else {
       this.props.actions.loadMovements(obj, true).then(result => {});
-      this.setState({movementsCause: id, documentsCause: 0});
+      this.setState({growthsCause: 0, movementsCause: id, documentsCause: 0});
+    }
+  }
+
+  onListGrowth(obj) {
+    const { id } = obj;
+    const { growthsCause } = this.state;
+    if (growthsCause === id) {
+      this.setState({growthsCause: 0, movementsCause: 0, documentsCause: 0});
+    } else {
+      this.props.actions.loadGrowths(obj, true).then(result => {});
+      this.setState({growthsCause: id, movementsCause: 0, documentsCause: 0});
     }
   }
 
@@ -206,6 +221,12 @@ export class List extends Component {
         id = this.state.documentsCause;
         current = buildModel(this.props.cause.items, 'FreeAsso_Cause', id);
         inlineComponent = <InlineDocuments cause={current} />
+      } else {
+        if (this.state.growthsCause > 0 ) {
+          id = this.state.growthsCause;
+          current = buildModel(this.props.cause.items, 'FreeAsso_Cause', id);
+          inlineComponent = <InlineGrowths cause={current} />
+        }
       }
     }  
      
@@ -252,7 +273,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    actions: bindActionCreators({ ...actions, ...causeMovementActions }, dispatch),
+    actions: bindActionCreators({ ...actions, loadMovements, loadGrowths }, dispatch),
   };
 }
 

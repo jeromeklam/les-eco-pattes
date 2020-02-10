@@ -35,6 +35,7 @@ export const getInlineActions = ({
   onListPhoto,
   onGetOne,
   onDelOne,
+  state,
 }) => {
   return [
     {
@@ -45,6 +46,7 @@ export const getInlineActions = ({
       theme: 'secondary',
       icon: <CauseIcon color="white" />,
       role: 'DETAIL',
+      active: state.animalsSite > 0,
     },
     {
       name: 'documents',
@@ -54,6 +56,7 @@ export const getInlineActions = ({
       theme: 'secondary',
       icon: <DocumentIcon color="white" />,
       role: 'DETAIL',
+      active: state.documentsSite > 0,
     },
     {
       name: 'photos',
@@ -63,6 +66,7 @@ export const getInlineActions = ({
       theme: 'secondary',
       icon: <PhotoIcon color="white" />,
       role: 'DETAIL',
+      active: state.photosSite > 0,
     },
     {
       name: 'modify',

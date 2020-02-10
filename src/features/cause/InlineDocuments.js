@@ -5,7 +5,8 @@ import { connect } from 'react-redux';
 import Dropzone from 'react-dropzone';
 import * as actions from './redux/actions';
 import { buildModel } from 'freejsonapi';
-import { Loading3Dots, ResponsiveConfirm } from 'freeassofront';
+import { ResponsiveConfirm } from 'freeassofront';
+import { CenteredLoading3Dots } from '../ui';
 import FileIcon, { defaultStyles } from 'react-file-icon';
 import {
   DelOne as DelOneIcon,
@@ -95,9 +96,7 @@ export class InlineDocuments extends Component {
       <div>
         <div className="cause-inline-documents">
           {this.props.cause.loadDocumentsPending ? (
-            <div className="text-center">
-              <Loading3Dots className="text-light" />
-            </div>
+            <CenteredLoading3Dots />
           ) : (
             <div className="row p-2 row-cols-1 row-cols-sm-2 row-cols-md-2 row-cols-lg-3">
               {documents.map(document => {
@@ -163,9 +162,7 @@ export class InlineDocuments extends Component {
                   </div>
                   <div className="card-body text-center">
                     {this.props.cause.uploadDocumentPending ? (
-                      <div className="text-center">
-                        <Loading3Dots />
-                      </div>
+                      <CenteredLoading3Dots />
                     ) : (
                       <Dropzone
                         onDrop={acceptedFiles => {

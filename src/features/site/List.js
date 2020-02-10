@@ -184,6 +184,24 @@ export class List extends Component {
     if (this.props.site.items.FreeAsso_Site) {
       items = buildModel(this.props.site.items, 'FreeAsso_Site');
     }
+    // Inline Element
+    let inlineComponent = null;
+    let id = null;
+    if (this.state.photosSite > 0) {
+      inlineComponent = <InlinePhotos />
+      id = this.state.photosSite;
+    } else {
+      if (this.state.animalsSite > 0 ) {
+        inlineComponent = <InlineCauses />
+        id = this.state.animalsSite;
+      } else {
+        if (this.state.documentsSite > 0 ) {
+          inlineComponent = <InlineDocuments />
+          id = this.state.documentsSite;
+        }
+      }
+    }
+    // Toolsbars and lists
     const globalActions = getGlobalActions(this);
     const inlineActions = getInlineActions(this);
     const cols = getCols(this);
@@ -208,22 +226,6 @@ export class List extends Component {
     ) : (
       <FilterFullIcon className="text-light" />
     );
-    let inlineComponent = null;
-    let id = null;
-    if (this.state.photosSite > 0) {
-      inlineComponent = <InlinePhotos />
-      id = this.state.photosSite;
-    } else {
-      if (this.state.animalsSite > 0 ) {
-        inlineComponent = <InlineCauses />
-        id = this.state.animalsSite;
-      } else {
-        if (this.state.documentsSite > 0 ) {
-          inlineComponent = <InlineDocuments />
-          id = this.state.documentsSite;
-        }
-      }
-    }
     return (
       <ResponsiveList
         title="Sites"

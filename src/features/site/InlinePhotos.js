@@ -4,7 +4,8 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import Dropzone from 'react-dropzone';
 import { buildModel } from 'freejsonapi';
-import { Loading3Dots, ResponsiveConfirm } from 'freeassofront';
+import { ResponsiveConfirm } from 'freeassofront';
+import { CenteredLoading3Dots } from '../ui';
 import * as actions from './redux/actions';
 import {
   DelOne as DelOneIcon,
@@ -113,9 +114,7 @@ export class InlinePhotos extends Component {
       <div>
         <div className="site-inline-photos">
           {this.props.site.loadPhotosPending ? (
-            <div className="text-center">
-              <Loading3Dots className="text-light" />
-            </div>
+            <CenteredLoading3Dots />
           ) : (
             <div className="row p-2 row-cols-1 row-cols-sm-2 row-cols-md-2 row-cols-lg-3">
               {photos.map(photo => {
@@ -188,7 +187,7 @@ export class InlinePhotos extends Component {
                   <div className="card-body text-center">
                     {this.props.site.uploadPhotoPending ? (
                       <div className="text-center">
-                        <Loading3Dots />
+                        <CenteredLoading3Dots />
                       </div>
                     ) : (
                       <Dropzone

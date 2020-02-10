@@ -9,7 +9,7 @@ svg.inline-action:hover {
   }
 }
 
-.cause-inline-movements {
+.cause-inline-growths {
   .inline-list {
     .row-title span {
       font-weight: bold;
@@ -18,10 +18,15 @@ svg.inline-action:hover {
       height: 30px;
       line-height: 30px;
     }
-    .row:nth-child(even) {
+    .row.row-new {
+      height: 36px;
+      line-height: 36px;
+      padding-top: 3px;
+    }
+    .row.row-line:nth-child(even) {
       background: lighten(theme-color('secondary-light'), 5%);
     }
-    .row:nth-child(odd) {
+    .row.row-line:nth-child(odd) {
       background: lighten(theme-color('secondary-light'), 10%);
     }
   }

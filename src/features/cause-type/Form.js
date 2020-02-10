@@ -51,6 +51,38 @@ export default function Form(props) {
             />
           </div>
         </div>
+        <div className="row">
+          <div className="col-sm-12">
+            <InputText
+              label="Poids maximum (kg)"
+              name="caut_max_weight"
+              id="caut_max_weight"
+              value={values.caut_max_weight}
+              onChange={handleChange}
+              error={getErrorMessage('caut_max_weight')}
+            />
+          </div>
+          <div className="col-sm-12">
+            <InputText
+              label="Taille maximum (cm)"
+              name="caut_max_height"
+              id="caut_max_height"
+              value={values.caut_max_height}
+              onChange={handleChange}
+              error={getErrorMessage('caut_max_height')}
+            />
+          </div>
+          <div className="col-sm-12">
+            <InputText
+              label="Fréquence de contrôle (mois)"
+              name="caut_growth_freq"
+              id="caut_growth_freq"
+              value={values.caut_growth_freq}
+              onChange={handleChange}
+              error={getErrorMessage('caut_growth_freq')}
+            />
+          </div>
+        </div>
       </div>
     </ResponsiveForm>
   );

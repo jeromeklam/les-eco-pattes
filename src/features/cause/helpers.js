@@ -6,6 +6,7 @@ import {
   FilterClear as FilterClearIcon,
   Movement as MovementIcon,
   Document as DocumentIcon,
+  Growth as GrowthIcon,
 } from '../icons';
 import { causeTypeAsOptions } from '../cause-type/functions';
 
@@ -36,8 +37,25 @@ export const getGlobalActions = ({ onClearFilters, onCreate }) => {
   ];
 };
 
-export const getInlineActions = ({ onListMovement, onListDocument, onGetOne, onDelOne }) => {
+export const getInlineActions = ({
+  onListMovement,
+  onListDocument,
+  onListGrowth,
+  onGetOne,
+  onDelOne,
+  state,
+}) => {
   return [
+    {
+      name: 'growth',
+      label: 'Croissances',
+      onClick: onListGrowth,
+      param: 'object',
+      theme: 'secondary',
+      icon: <GrowthIcon color="white" />,
+      role: 'OTHER',
+      active: state.growthsCause > 0,
+    },
     {
       name: 'move',
       label: 'Mouvements',
@@ -46,6 +64,7 @@ export const getInlineActions = ({ onListMovement, onListDocument, onGetOne, onD
       theme: 'secondary',
       icon: <MovementIcon color="white" />,
       role: 'OTHER',
+      active: state.movementsCause > 0,
     },
     {
       name: 'documents',
@@ -55,6 +74,7 @@ export const getInlineActions = ({ onListMovement, onListDocument, onGetOne, onD
       theme: 'secondary',
       icon: <DocumentIcon color="white" />,
       role: 'DETAIL',
+      active: state.documentsCause > 0,
     },
     {
       name: 'modify',
@@ -149,24 +169,24 @@ export const getCols = ({ props }) => {
       filterable: false,
     },
     {
-      name: 'sexe',
-      label: '',
-      col: 'cau_sex',
-      size: '2',
-      mob_size: '36',
-      title: true,
-      sortable: true,
-      filterable: { type: 'text' },
-    },
-    {
       name: 'color',
       label: '',
       col: 'cau_string_1',
       size: '6',
       mob_size: '18',
-      title: true,
-      sortable: true,
-      filterable: { type: 'text' },
+      title: false,
+      sortable: false,
+      filterable: false,
+    },
+    {
+      name: 'sexe',
+      label: '',
+      col: 'cau_sex',
+      size: '2',
+      mob_size: '36',
+      title: false,
+      sortable: false,
+      filterable: false,
     },
     {
       name: 'year',
@@ -174,9 +194,9 @@ export const getCols = ({ props }) => {
       col: 'cau_year',
       size: '4',
       mob_size: '18',
-      title: true,
-      sortable: true,
-      filterable: { type: 'text' },
+      title: false,
+      sortable: false,
+      filterable: false,
     },
     {
       name: 'desc',
@@ -184,9 +204,9 @@ export const getCols = ({ props }) => {
       col: 'cau_desc',
       size: '10',
       mob_size: '18',
-      title: true,
-      sortable: true,
-      filterable: { type: 'text' },
+      title: false,
+      sortable: false,
+      filterable: false,
     },
   ];
 };
