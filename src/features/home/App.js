@@ -18,6 +18,7 @@ import {
   Site as SiteIcon,
   Map as MapIcon,
   Version as VersionIcon,
+  Settings as SettingsIcon,
 } from '../icons';
 import { CenteredLoading9X9 } from '../ui';
 import { SimpleForm } from '../auth';
@@ -94,20 +95,13 @@ const options = [
     public: false,
   },
   {
-    icon: null,
+    icon: <SettingsIcon />,
     label: 'Répertoires',
     url: null,
     role: 'MENU',
     position: 7,
     public: false,
     options: [
-      {
-        icon: null,
-        label: 'Variables',
-        url: '/data',
-        role: 'NAV',
-        position: 1,
-      },
       {
         icon: null,
         label: 'Types de site',
@@ -143,22 +137,19 @@ const options = [
         role: 'NAV',
         position: 6,
       },
-    ],
-  },
-  {
-    icon: null,
-    label: 'Paramétrage',
-    url: null,
-    role: 'MENU',
-    position: 8,
-    public: false,
-    options: [
       {
         icon: null,
-        label: 'Emails',
-        url: '/email',
+        label: 'Maladies',
+        url: '/sickness',
         role: 'NAV',
-        position: 1,
+        position: 7,
+      },
+      {
+        icon: null,
+        label: 'Variables',
+        url: '/data',
+        role: 'NAV',
+        position: 99,
       },
     ],
   },

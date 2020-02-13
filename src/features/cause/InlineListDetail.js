@@ -1,41 +1,67 @@
 import React, { Component } from 'react';
+import { getSexlabel } from './';
 
 export default class InlineListDetail extends Component {
   static propTypes = {};
 
   render() {
+    console.log(this.props.cause);
     return (
       <div className="cause-inline-list-detail">
         {this.props.causes && this.props.causes.length > 0 ? (
           <div className="inline-list">
             <div className="row row-title" key="cause-inline-list-detail">
-              <div className="col-sm-5">
+              <div className="col-sm-3">
                 <span className="pl-2">Id.</span>
               </div>
-              <div className="col-sm-10">
+              <div className="col-sm-6">
                 <span>N° boucle</span>
               </div>
-              <div className="col-sm-10">
+              <div className="col-sm-6">
                 <span>Race</span>
+              </div>
+              <div className="col-sm-4">
+                <span>Année</span>
               </div>
               <div className="col-sm-5">
                 <span className="pr-2">Sexe</span>
               </div>
+              {this.props.cause && (
+                <div className="col-sm-8">
+                  {this.props.cause.cau_sex === 'M' ? (
+                    <span className="pr-2">Mère</span>
+                  ) : (
+                    <span className="pr-2">Père</span>
+                  )}
+                </div>
+              )}
             </div>
             {this.props.causes.map(cause => (
               <div className="row" key={cause.id}>
-                <div className="col-sm-5">
+                <div className="col-sm-3">
                   <span className="pl-2">{cause.id}</span>
                 </div>
-                <div className="col-sm-10">
+                <div className="col-sm-6">
                   <span>{cause.cau_code}</span>
                 </div>
-                <div className="col-sm-10">
+                <div className="col-sm-6">
                   <span>{cause.cause_type.caut_name}</span>
                 </div>
-                <div className="col-sm-5">
-                  <span className="pr-2">{cause.cau_sex}</span>
+                <div className="col-sm-4">
+                  <span>{cause.caut_year}</span>
                 </div>
+                <div className="col-sm-5">
+                  <span className="pr-2">{getSexlabel(cause.cau_sex)}</span>
+                </div>
+                {this.props.cause && (
+                  <div className="col-sm-8">
+                    {this.props.cause.cau_sex === 'M' ? (
+                      <span className="pr-2">{cause.parent2 && cause.parent2.cau_code}</span>
+                    ) : (
+                      <span className="pr-2">{cause.parent1 && cause.parent1.cau_code}</span>
+                    )}
+                  </div>
+                )}
               </div>
             ))}
           </div>

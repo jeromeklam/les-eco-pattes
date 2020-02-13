@@ -20,6 +20,7 @@ import {
 import { deleteSuccess, deleteError } from '../ui';
 import { InlineMovements } from '../cause-movement';
 import { InlineGrowths } from '../cause-growth';
+import { InlineDescendants } from './';
 import { InlineDocuments } from './';
 import { getGlobalActions, getInlineActions, getCols } from './';
 
@@ -36,6 +37,7 @@ export class List extends Component {
       growthsCause: 0,
       movementsCause: 0,
       documentsCause: 0,
+      descendantsCause: 0,
     };
     this.onCreate = this.onCreate.bind(this);
     this.onGetOne = this.onGetOne.bind(this);
@@ -50,6 +52,7 @@ export class List extends Component {
     this.onListDocument = this.onListDocument.bind(this);
     this.onListMovement = this.onListMovement.bind(this);
     this.onListGrowth = this.onListGrowth.bind(this);
+    this.onListDescendant = this.onListDescendant.bind(this);
   }
 
   componentDidMount() {
@@ -88,10 +91,10 @@ export class List extends Component {
     const { id } = obj;
     const { documentsCause } = this.state;
     if (documentsCause === id) {
-      this.setState({growthsCause: 0, movementsCause: 0, documentsCause: 0});
+      this.setState({growthsCause: 0, movementsCause: 0, documentsCause: 0, descendantsCause: 0});
     } else {
       this.props.actions.loadDocuments(id, true).then(result => {});
-      this.setState({growthsCause: 0, movementsCause: 0, documentsCause: id});
+      this.setState({growthsCause: 0, movementsCause: 0, documentsCause: id, descendantsCause: 0});
     }
   }
 
@@ -99,10 +102,10 @@ export class List extends Component {
     const { id } = obj;
     const { movementsCause } = this.state;
     if (movementsCause === id) {
-      this.setState({growthsCause: 0, movementsCause: 0, documentsCause: 0});
+      this.setState({growthsCause: 0, movementsCause: 0, documentsCause: 0, descendantsCause: 0});
     } else {
       this.props.actions.loadMovements(obj, true).then(result => {});
-      this.setState({growthsCause: 0, movementsCause: id, documentsCause: 0});
+      this.setState({growthsCause: 0, movementsCause: id, documentsCause: 0, descendantsCause: 0});
     }
   }
 
@@ -110,10 +113,21 @@ export class List extends Component {
     const { id } = obj;
     const { growthsCause } = this.state;
     if (growthsCause === id) {
-      this.setState({growthsCause: 0, movementsCause: 0, documentsCause: 0});
+      this.setState({growthsCause: 0, movementsCause: 0, documentsCause: 0, descendantsCause: 0});
     } else {
       this.props.actions.loadGrowths(obj, true).then(result => {});
-      this.setState({growthsCause: id, movementsCause: 0, documentsCause: 0});
+      this.setState({growthsCause: id, movementsCause: 0, documentsCause: 0, descendantsCause: 0});
+    }
+  }
+
+  onListDescendant(obj) {
+    const { id } = obj;
+    const { descendantsCause } = this.state;
+    if (descendantsCause === id) {
+      this.setState({growthsCause: 0, movementsCause: 0, documentsCause: 0, descendantsCause: 0});
+    } else {
+      this.props.actions.loadDescendants(obj, true).then(result => {});
+      this.setState({growthsCause: 0, movementsCause: 0, documentsCause: 0, descendantsCause: id});
     }
   }
 
@@ -226,6 +240,12 @@ export class List extends Component {
           id = this.state.growthsCause;
           current = buildModel(this.props.cause.items, 'FreeAsso_Cause', id);
           inlineComponent = <InlineGrowths cause={current} />
+        } else {
+          if (this.state.descendantsCause > 0 ) {
+            id = this.state.descendantsCause;
+            current = buildModel(this.props.cause.items, 'FreeAsso_Cause', id);
+            inlineComponent = <InlineDescendants current={current} />
+          }
         }
       }
     }  

@@ -7,14 +7,28 @@ import {
   Movement as MovementIcon,
   Document as DocumentIcon,
   Growth as GrowthIcon,
+  Descendant as DescendantIcon,
+  Male as MaleIcon,
+  Female as FemaleIcon,
 } from '../icons';
 import { causeTypeAsOptions } from '../cause-type/functions';
 
 export const sexSelect = [
-  { label: 'Femelle', value: 'F' },
-  { label: 'Mâle', value: 'M' },
+  { label: 'Femelle', value: 'F', icon: <FemaleIcon /> },
+  { label: 'Mâle', value: 'M', icon: <MaleIcon /> },
   { label: 'Indéfini', value: 'OTHER' },
 ];
+
+export const getSexlabel = (p_code, p_icon = true) => {
+  const found = sexSelect.find(elem => elem.value === p_code);
+  if (found) {
+    if (found.icon && p_icon) {
+      return found.icon;
+    }
+    return found.label;
+  }
+  return '';
+}
 
 export const getGlobalActions = ({ onClearFilters, onCreate }) => {
   return [
@@ -41,6 +55,7 @@ export const getInlineActions = ({
   onListMovement,
   onListDocument,
   onListGrowth,
+  onListDescendant,
   onGetOne,
   onDelOne,
   state,
@@ -75,6 +90,16 @@ export const getInlineActions = ({
       icon: <DocumentIcon color="white" />,
       role: 'DETAIL',
       active: state.documentsCause > 0,
+    },
+    {
+      name: 'descendant',
+      label: 'Descendance',
+      onClick: onListDescendant,
+      param: 'object',
+      theme: 'secondary',
+      icon: <DescendantIcon color="white" />,
+      role: 'OTHER',
+      active: state.descendantsCause > 0,
     },
     {
       name: 'modify',
@@ -185,6 +210,8 @@ export const getCols = ({ props }) => {
       size: '2',
       mob_size: '36',
       title: false,
+      type: 'switch',
+      values: sexSelect,
       sortable: false,
       filterable: false,
     },

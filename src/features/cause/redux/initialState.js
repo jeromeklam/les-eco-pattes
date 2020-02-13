@@ -5,6 +5,8 @@ const initialState = {
   movements: [],
   documents: [],
   currentItem: null,
+  causes: [],
+  causesModels: [],
   page_number: 1,
   page_size: process.env.REACT_APP_PAGE_SIZE,
   tab: '1',
@@ -34,6 +36,8 @@ const initialState = {
   uploadCauseMediaError: null,
   delCauseMediaPending: false,
   delCauseMediaError: null,
+  loadDescendantsPending: false,
+  loadDescendantsError: null,
 };
 
 export default initialState;

@@ -10,3 +10,4 @@ export { default as InlineList } from './InlineList';
 export { default as InlineListGroup } from './InlineListGroup';
 export { default as InlineListDetail } from './InlineListDetail';
 export { default as InlineDocuments } from './InlineDocuments';
+export { default as InlineDescendants } from './InlineDescendants';

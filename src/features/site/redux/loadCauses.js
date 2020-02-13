@@ -13,13 +13,13 @@ export function loadCauses(args = {}) {
       type: SITE_LOAD_CAUSES_BEGIN,
     });
     const promise = new Promise((resolve, reject) => {
-        const filter = {
-          filter: {
-            site_id: args,
-          }
+      const filter = {
+        filter: {
+          site_id: args,
         }
-        const addUrl = objectToQueryString(filter);
-        const doRequest = freeAssoApi.get('/v1/asso/cause' + addUrl, {});
+      }
+      const addUrl = objectToQueryString(filter);
+      const doRequest = freeAssoApi.get('/v1/asso/cause' + addUrl, {});
       doRequest.then(
         (res) => {
           dispatch({
@@ -41,8 +41,6 @@ export function loadCauses(args = {}) {
   };
 }
 
-// Async action saves request error by default, this method is used to dismiss the error info.
-// If you don't want errors to be saved in Redux store, just ignore this method.
 export function dismissLoadCausesError() {
   return {
     type: SITE_LOAD_CAUSES_DISMISS_ERROR,

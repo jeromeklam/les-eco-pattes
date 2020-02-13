@@ -53,3 +53,6 @@ export { default as Dashboard } from './Dashboard';
 export { default as Alert } from './Alert';
 export { default as Version } from './Version';
 export { default as Growth } from './Growth';
+export { default as Descendant } from './Descendant';
+export { default as Male } from './Male';
+export { default as Female } from './Female';

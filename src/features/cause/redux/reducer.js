@@ -22,6 +22,7 @@ import { reducer as updateSortReducer } from './updateSort';
 import { reducer as loadDocumentsReducer } from './loadDocuments';
 import { reducer as uploadCauseMediaReducer } from './uploadCauseMedia';
 import { reducer as delCauseMediaReducer } from './delCauseMedia';
+import { reducer as loadDescendantsReducer } from './loadDescendants';
 
 const reducers = [
   loadMoreReducer,
@@ -39,6 +40,7 @@ const reducers = [
   loadDocumentsReducer,
   uploadCauseMediaReducer,
   delCauseMediaReducer,
+  loadDescendantsReducer,
 ];
 
 export default function reducer(state = initialState, action) {

@@ -1,4 +1,8 @@
 import React, { Component } from 'react';
+import {
+  Male as MaleIcon,
+  Female as FemaleIcon,
+} from '../icons';
 
 export default class InlineListGroup extends Component {
   static propTypes = {};
@@ -14,7 +18,7 @@ export default class InlineListGroup extends Component {
                 <p key={group.id} title={group.typ}>
                   {group.nb}
                   &nbsp; {group.typ}
-                  &nbsp;( {group.sex} )
+                  &nbsp;( {group.sex === 'F' ? <FemaleIcon /> : <MaleIcon />} )
                 </p>
               );
             
