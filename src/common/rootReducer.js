@@ -25,6 +25,8 @@ import alertReducer from '../features/alert/redux/reducer';
 import helpReducer from '../features/help/redux/reducer';
 import causeGrowthReducer from '../features/cause-growth/redux/reducer';
 import sicknessReducer from '../features/sickness/redux/reducer';
+import stockReducer from '../features/stock/redux/reducer';
+import familyReducer from '../features/family/redux/reducer';
 
 // NOTE 1: DO NOT CHANGE the 'reducerMap' name and the declaration pattern.
 // This is used for Rekit cmds to register new features, remove features, etc.
@@ -58,6 +60,8 @@ const reducerMap = {
   help: helpReducer,
   causeGrowth: causeGrowthReducer,
   sickness: sicknessReducer,
+  stock: stockReducer,
+  family: familyReducer,
 };
 
 export default combineReducers(reducerMap);

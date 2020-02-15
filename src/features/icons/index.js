@@ -56,3 +56,4 @@ export { default as Growth } from './Growth';
 export { default as Descendant } from './Descendant';
 export { default as Male } from './Male';
 export { default as Female } from './Female';
+export { default as Stock } from './Stock';

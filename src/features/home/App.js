@@ -16,6 +16,7 @@ import {
   Person as PersonIcon,
   Menu as MenuIcon,
   Site as SiteIcon,
+  Stock as StockIcon,
   Map as MapIcon,
   Version as VersionIcon,
   Settings as SettingsIcon,
@@ -95,11 +96,19 @@ const options = [
     public: false,
   },
   {
+    icon: <StockIcon />,
+    label: 'Stock',
+    url: '/stock',
+    role: 'NAV',
+    position: 7,
+    public: false,
+  },
+  {
     icon: <SettingsIcon />,
     label: 'Répertoires',
     url: null,
     role: 'MENU',
-    position: 7,
+    position: 20,
     public: false,
     options: [
       {

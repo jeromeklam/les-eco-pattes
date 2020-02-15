@@ -1,44 +1,46 @@
 import { freeAssoApi } from '../../../common';
-import { jsonApiNormalizer, objectToQueryString } from 'freejsonapi';
+import { jsonApiNormalizer, buildModel } from 'freejsonapi';
 import {
-  EMAIL_LOAD_MORE_INIT,
-  EMAIL_LOAD_MORE_BEGIN,
-  EMAIL_LOAD_MORE_SUCCESS,
-  EMAIL_LOAD_MORE_FAILURE,
-  EMAIL_LOAD_MORE_DISMISS_ERROR,
+  FAMILY_LOAD_CHILDREN_INIT,
+  FAMILY_LOAD_CHILDREN_BEGIN,
+  FAMILY_LOAD_CHILDREN_SUCCESS,
+  FAMILY_LOAD_CHILDREN_FAILURE,
+  FAMILY_LOAD_CHILDREN_DISMISS_ERROR,
 } from './constants';
 
-export function loadMore(args = {}, reload = false) {
+export function loadChildren(args = {}, reload = false) {
   return (dispatch, getState) => {
     const loaded =  getState().email.loadMoreFinish;
     const loading =  getState().email.loadMorePending;
     if (!loading && (!loaded || reload)) {
       if (reload) {
         dispatch({
-          type: EMAIL_LOAD_MORE_INIT,
+          type: FAMILY_LOAD_CHILDREN_INIT,
         });
       } else {
         dispatch({
-          type: EMAIL_LOAD_MORE_BEGIN,
+          type: FAMILY_LOAD_CHILDREN_BEGIN,
+          ...args,
         });
       }
       const promise = new Promise((resolve, reject) => {
-        const params = {
-          page: { number: getState().email.page_number, size: getState().email.page_size },
-        };
-        const addUrl = objectToQueryString(params);
-        const doRequest = freeAssoApi.get('/v1/core/email' + addUrl, {});
+        let id = 0;
+        if (args && args.parent_id) {
+          id = args.parent_id;
+        }
+        const doRequest = freeAssoApi.get('/v1/asso/family/children/' + id, {});
         doRequest.then(
           (res) => {
             dispatch({
-              type: EMAIL_LOAD_MORE_SUCCESS,
+              type: FAMILY_LOAD_CHILDREN_SUCCESS,
               data: res,
+              ...args,
             });
             resolve(res);
           },
           (err) => {
             dispatch({
-              type: EMAIL_LOAD_MORE_FAILURE,
+              type: FAMILY_LOAD_CHILDREN_FAILURE,
               data: { error: err },
             });
             reject(err);
@@ -50,39 +52,44 @@ export function loadMore(args = {}, reload = false) {
   };
 }
 
-// Async action saves request error by default, this method is used to dismiss the error info.
-// If you don't want errors to be saved in Redux store, just ignore this method.
-export function dismissLoadMoreError() {
+export function dismissLoadChildrenError() {
   return {
-    type: EMAIL_LOAD_MORE_DISMISS_ERROR,
+    type: FAMILY_LOAD_CHILDREN_DISMISS_ERROR,
   };
 }
 
 export function reducer(state, action) {
   switch (action.type) {
-    case EMAIL_LOAD_MORE_INIT:
+    case FAMILY_LOAD_CHILDREN_INIT:
       // Just after a request is sent
       return {
         ...state,
-        loadMorePending: true,
-        loadMoreError: null,
-        loadMoreFinish: false,
+        loadChildrenPending: false,
+        loadChildrenError: null,
         items: [],
-        page_number: 1,
-        page_size: process.env.REACT_APP_PAGE_SIZE,
-        filters: [],
       };
 
-    case EMAIL_LOAD_MORE_BEGIN:
+    case FAMILY_LOAD_CHILDREN_BEGIN:
       // Just after a request is sent
+      let id = 0;
+      if (action.parent_id) {
+        id = action.parent_id;
+      }
+      let treeB = state.tree;
+      treeB.addLoading(id);
       return {
         ...state,
-        loadMorePending: true,
-        loadMoreError: null,
+        loadChildrenPending: true,
+        loadChildrenError: null,
+        tree: treeB,
       };
 
-    case EMAIL_LOAD_MORE_SUCCESS:
+    case FAMILY_LOAD_CHILDREN_SUCCESS:
       // The request is success
+      let id2 = 0;
+      if (action.parent_id) {
+        id2 = action.parent_id;
+      }
       let list = {};
       let nbre = 0;
       let result = false;
@@ -101,28 +108,31 @@ export function reducer(state, action) {
       } else {
         list = state.items;
       }
+      const models = buildModel(list, 'FreeAsso_Family');
+      let tree = state.tree;
+      tree.setData(models);
+      tree.addLoaded(id2);
       return {
         ...state,
-        loadMorePending: false,
-        loadMoreError: null,
-        loadMoreFinish: (nbre < state.page_size),
+        loadChildrenPending: false,
+        loadChildrenError: null,
         items: list,
-        page_number: state.page_number+1
+        tree: tree,
       };
 
-    case EMAIL_LOAD_MORE_FAILURE:
+    case FAMILY_LOAD_CHILDREN_FAILURE:
       // The request is failed
       return {
         ...state,
-        loadMorePending: false,
-        loadMoreError: action.data.error,
+        loadChildrenPending: false,
+        loadChildrenError: action.data.error,
       };
 
-    case EMAIL_LOAD_MORE_DISMISS_ERROR:
+    case FAMILY_LOAD_CHILDREN_DISMISS_ERROR:
       // Dismiss the request failure error
       return {
         ...state,
-        loadMoreError: null,
+        loadChildrenError: null,
       };
 
     default:

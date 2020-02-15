@@ -10,8 +10,8 @@ import {
 
 export function loadMore(args = {}, reload = false) {
   return (dispatch, getState) => {
-    const loaded = getState().site.loadMoreFinish;
-    const loading = getState().site.loadMorePending;
+    const loaded = getState().sickness.loadMoreFinish;
+    const loading = getState().sickness.loadMorePending;
     if (!loading && (!loaded || reload)) {
       if (reload) {
         dispatch({
