@@ -4,7 +4,6 @@ import {
   InputText,
   InputSelect,
   InputTextarea,
-  ResponsiveForm,
   InputCheckbox,
 } from 'freeassofront';
 import RegexpParser from 'reregexp';
@@ -14,6 +13,7 @@ import { siteTypeAsOptions } from '../site-type/functions.js';
 import { InputPicker as ClientInputPicker } from '../client';
 import { InputPicker as SiteInputPicker } from '../site';
 import { Location as LocationIcon, Settings as SettingsIcon, Other as OtherIcon } from '../icons';
+import { ResponsiveModalOrForm } from '../ui';
 import { validateRegex } from '../../common';
 
 let regPlaceholder = '';
@@ -62,7 +62,7 @@ export default function Form(props) {
     sitt_id = values.site_type.id;
   }
   return (
-    <ResponsiveForm
+    <ResponsiveModalOrForm
       className=""
       title="Sites"
       tab={values.currentTab}
@@ -70,6 +70,8 @@ export default function Form(props) {
       onSubmit={handleSubmit}
       onCancel={handleCancel}
       onNavTab={handleNavTab}
+      onClose={props.onClose}
+      modal={props.modal || false}
     >
       <InputHidden name="id" id="id" value={values.id} />
       <div className="row">
@@ -256,6 +258,6 @@ export default function Form(props) {
           })}
         </div>
       )}
-    </ResponsiveForm>
+    </ResponsiveModalOrForm>
   );
 }

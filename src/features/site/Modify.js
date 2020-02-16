@@ -24,8 +24,9 @@ export class Modify extends Component {
      * On récupère l'id et l'élément à afficher
      */
     this.state = {
-      siteId: this.props.match.params.siteId || false,
+      siteId: this.props.siteId || this.props.match.params.siteId || false,
       item: false,
+      modal: this.props.modal || false,
     };
     /**
      * Bind des méthodes locales au contexte courant
@@ -61,7 +62,13 @@ export class Modify extends Component {
    * Sur annulation, on retourne à la liste
    */
   onCancel() {
-    this.props.history.push('/site');
+    if (!this.props.modal) {
+      this.props.history.push('/site');
+    } else {
+      if (this.props.onClose) {
+        this.props.onClose();
+      }
+    }
   }
 
   /**
@@ -78,7 +85,13 @@ export class Modify extends Component {
         // propagateModel est ajouté aux actions en bas de document
         modifySuccess();
         this.props.actions.propagateModel('FreeAsso_Site', result);
-        this.props.history.push('/site');
+        if (!this.props.modal) {
+          this.props.history.push('/site');
+        } else {
+          if (this.props.onClose) {
+            this.props.onClose();
+          }
+        }
       })
       .catch(errors => {
         // @todo display errors to fields
@@ -97,6 +110,7 @@ export class Modify extends Component {
             {item && (
               <Form
                 item={item}
+                modal={this.state.modal}
                 datas={this.props.data.items}
                 config={this.props.config.items}
                 site_types={this.props.siteType.items}
@@ -106,6 +120,7 @@ export class Modify extends Component {
                 tabs={this.props.site.tabs}
                 onSubmit={this.onSubmit}
                 onCancel={this.onCancel}
+                onClose={this.props.onClose}
               />
             )}
           </div>

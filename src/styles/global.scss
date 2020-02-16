@@ -131,6 +131,21 @@ svg.text-primary {
   }
 }
 
+.sidebar-navigation li:hover a {
+  color: theme-color('primary-light') !important;
+}
+.sidebar-navigation li:hover i {
+  border: solid theme-color('primary-light') !important;
+  border-width: 0 3px 3px 0 !important;
+}
+.sidebar-navigation li:hover a > svg {
+  
+  fill: theme-color('primary-light') !important;
+  path {
+    fill: theme-color('primary-light') !important;
+  }
+}
+
 .btn-left {
   &.btn {
     padding: 1rem;
@@ -170,4 +185,8 @@ svg.text-primary {
     min-height: 500px;
     max-height: 600px;
   }
+}
+
+.nav-item:hover {
+  cursor: pointer;
 }

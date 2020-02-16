@@ -16,8 +16,16 @@ import {
   Search as SearchIcon,
 } from '../icons';
 import { deleteSuccess, deleteError } from '../ui';
-import { InlineCauses, InlinePhotos, InlineDocuments } from './';
-import { getGlobalActions, getInlineActions, getCols } from './';
+import {
+  InlineCauses,
+  InlinePhotos,
+  InlineDocuments,
+  getGlobalActions,
+  getInlineActions,
+  getCols,
+  Create,
+  Modify,
+} from './';
 
 /**
  * Liste des sites
@@ -38,11 +46,13 @@ export class List extends Component {
       animalsSite: 0,
       photosSite: 0,
       documentsSite: 0,
+      siteId: -1,
     };
     this.onCreate = this.onCreate.bind(this);
     this.onGetOne = this.onGetOne.bind(this);
     this.onDelOne = this.onDelOne.bind(this);
     this.onReload = this.onReload.bind(this);
+    this.onClose = this.onClose.bind(this);
     this.onLoadMore = this.onLoadMore.bind(this);
     this.onQuickSearch = this.onQuickSearch.bind(this);
     this.onClearFilters = this.onClearFilters.bind(this);
@@ -58,14 +68,15 @@ export class List extends Component {
   }
 
   onCreate(event) {
-    if (event) {
-      event.preventDefault();
-    }
-    this.props.history.push('/site/create');
+    this.setState({ siteId: 0 });
   }
 
   onGetOne(id) {
-    this.props.history.push('/site/modify/' + id);
+    this.setState({ siteId: id });
+  }
+
+  onClose() {
+    this.setState({ siteId: -1 });
   }
 
   onDelOne(id) {
@@ -85,10 +96,10 @@ export class List extends Component {
     const { id } = obj;
     const { animalsSite } = this.state;
     if (animalsSite === id) {
-      this.setState({animalsSite: 0, photosSite: 0, documentsSite: 0});
+      this.setState({ animalsSite: 0, photosSite: 0, documentsSite: 0 });
     } else {
       this.props.actions.loadCauses(id, true).then(result => {});
-      this.setState({animalsSite: id, photosSite: 0, documentsSite: 0});
+      this.setState({ animalsSite: id, photosSite: 0, documentsSite: 0 });
     }
   }
 
@@ -96,10 +107,10 @@ export class List extends Component {
     const { id } = obj;
     const { photosSite } = this.state;
     if (photosSite === id) {
-      this.setState({animalsSite: 0, photosSite: 0, documentsSite: 0});
+      this.setState({ animalsSite: 0, photosSite: 0, documentsSite: 0 });
     } else {
       this.props.actions.loadPhotos(id, true).then(result => {});
-      this.setState({animalsSite: 0, photosSite: id, documentsSite: 0});
+      this.setState({ animalsSite: 0, photosSite: id, documentsSite: 0 });
     }
   }
 
@@ -107,10 +118,10 @@ export class List extends Component {
     const { id } = obj;
     const { documentsSite } = this.state;
     if (documentsSite === id) {
-      this.setState({animalsSite: 0, photosSite: 0, documentsSite: 0});
+      this.setState({ animalsSite: 0, photosSite: 0, documentsSite: 0 });
     } else {
       this.props.actions.loadDocuments(id, true).then(result => {});
-      this.setState({animalsSite: 0, photosSite: 0, documentsSite: id});
+      this.setState({ animalsSite: 0, photosSite: 0, documentsSite: id });
     }
   }
 
@@ -188,15 +199,15 @@ export class List extends Component {
     let inlineComponent = null;
     let id = null;
     if (this.state.photosSite > 0) {
-      inlineComponent = <InlinePhotos />
+      inlineComponent = <InlinePhotos />;
       id = this.state.photosSite;
     } else {
-      if (this.state.animalsSite > 0 ) {
-        inlineComponent = <InlineCauses />
+      if (this.state.animalsSite > 0) {
+        inlineComponent = <InlineCauses />;
         id = this.state.animalsSite;
       } else {
-        if (this.state.documentsSite > 0 ) {
-          inlineComponent = <InlineDocuments />
+        if (this.state.documentsSite > 0) {
+          inlineComponent = <InlineDocuments />;
           id = this.state.documentsSite;
         }
       }
@@ -227,33 +238,41 @@ export class List extends Component {
       <FilterFullIcon className="text-light" />
     );
     return (
-      <ResponsiveList
-        title="Sites"
-        cols={cols}
-        items={items || []}
-        quickSearch={quickSearch}
-        mainCol="site_name"
-        filterIcon={filterIcon}
-        cancelPanelIcon={<CancelPanelIcon />}
-        validPanelIcon={<ValidPanelIcon />}
-        sortDownIcon={<SortDownIcon color="secondary" />}
-        sortUpIcon={<SortUpIcon color="secondary" />}
-        sortNoneIcon={<SortNoneIcon color="secondary" />}
-        inlineActions={inlineActions}
-        inlineOpenedId={id}
-        inlineComponent={inlineComponent}
-        globalActions={globalActions}
-        sort={this.props.site.sort}
-        filters={this.props.site.filters}
-        onSearch={this.onQuickSearch}
-        onClearFilters={this.onClearFilters}
-        onSort={this.onUpdateSort}
-        onSetFiltersAndSort={this.onSetFiltersAndSort}
-        onLoadMore={this.onLoadMore}
-        loadMorePending={this.props.site.loadMorePending}
-        loadMoreFinish={this.props.site.loadMoreFinish}
-        loadMoreError={this.props.site.loadMoreError}
-      />
+      <div>
+        <ResponsiveList
+          title="Sites"
+          cols={cols}
+          items={items || []}
+          quickSearch={quickSearch}
+          mainCol="site_name"
+          filterIcon={filterIcon}
+          cancelPanelIcon={<CancelPanelIcon />}
+          validPanelIcon={<ValidPanelIcon />}
+          sortDownIcon={<SortDownIcon color="secondary" />}
+          sortUpIcon={<SortUpIcon color="secondary" />}
+          sortNoneIcon={<SortNoneIcon color="secondary" />}
+          inlineActions={inlineActions}
+          inlineOpenedId={id}
+          inlineComponent={inlineComponent}
+          globalActions={globalActions}
+          sort={this.props.site.sort}
+          filters={this.props.site.filters}
+          onSearch={this.onQuickSearch}
+          onClearFilters={this.onClearFilters}
+          onSort={this.onUpdateSort}
+          onSetFiltersAndSort={this.onSetFiltersAndSort}
+          onLoadMore={this.onLoadMore}
+          loadMorePending={this.props.site.loadMorePending}
+          loadMoreFinish={this.props.site.loadMoreFinish}
+          loadMoreError={this.props.site.loadMoreError}
+        />
+        {this.state.siteId > 0 && (
+          <Modify modal={true} siteId={this.state.siteId} onClose={this.onClose} />
+        )}
+        {this.state.siteId === 0 && (
+          <Create modal={true} onClose={this.onClose} />
+        )}
+      </div>
     );
   }
 }

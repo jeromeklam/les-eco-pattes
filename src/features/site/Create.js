@@ -19,6 +19,7 @@ export class Create extends Component {
     this.state = {
       siteId: 0,
       item: false,
+      modal: this.props.modal || false,
     };
     /**
      * Bind des méthodes locales au contexte courant
@@ -45,7 +46,13 @@ export class Create extends Component {
     if (event) {
       event.preventDefault();
     }
-    this.props.history.push('/site');
+    if (!this.props.modal) {
+      this.props.history.push('/site');
+    } else {
+      if (this.props.onClose) {
+        this.props.onClose();
+      }
+    }
   }
 
   /**
@@ -60,7 +67,13 @@ export class Create extends Component {
       .then(result => {
         createSuccess();
         this.props.actions.clearItems();
-        this.props.history.push('/site');
+        if (!this.props.modal) {
+          this.props.history.push('/site');
+        } else {
+          if (this.props.onClose) {
+            this.props.onClose();
+          }
+        }
       })
       .catch(errors => {
         // @todo display errors to fields
@@ -79,6 +92,7 @@ export class Create extends Component {
             {item && (
               <Form
                 item={item}
+                modal={this.state.modal}
                 datas={this.props.data.items}
                 config={this.props.config.items}
                 site_types={this.props.siteType.items}
@@ -88,6 +102,7 @@ export class Create extends Component {
                 tabs={this.props.site.tabs}
                 onSubmit={this.onSubmit}
                 onCancel={this.onCancel}
+                onClose={this.props.onClose}
               />
             )}
           </div>
