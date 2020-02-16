@@ -9,7 +9,7 @@ const initialState = {
     right: 'fam_right',
     level: 'fam_level',
     label: 'fam_name',
-    root: 'Familles',
+    root: 'Stock',
   }),
   loadChildrenPending: false,
   loadChildrenError: null,

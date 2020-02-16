@@ -1,19 +1,19 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import { Treeview } from '../../../src/features/family/Treeview';
+import { Create } from '../../../src/features/item/Create';
 
-describe('family/Treeview', () => {
+describe('item/Create', () => {
   it('renders node with correct class name', () => {
     const props = {
-      family: {},
+      item: {},
       actions: {},
     };
     const renderedComponent = shallow(
-      <Treeview {...props} />
+      <Create {...props} />
     );
 
     expect(
-      renderedComponent.find('.family-treeview').length
+      renderedComponent.find('.item-create').length
     ).toBe(1);
   });
 });

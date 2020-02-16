@@ -28,6 +28,8 @@ import causeGrowthRoute from '../features/cause-growth/route';
 import sicknessRoute from '../features/sickness/route';
 import stockRoute from '../features/stock/route';
 import familyRoute from '../features/family/route';
+import unitRoute from '../features/unit/route';
+import itemRoute from '../features/item/route';
 
 // NOTE: DO NOT CHANGE the 'childRoutes' name and the declaration pattern.
 // This is used for Rekit cmds to register routes config for new features, and remove config when remove features, etc.
@@ -59,6 +61,8 @@ const childRoutes = [
   sicknessRoute,
   stockRoute,
   familyRoute,
+  unitRoute,
+  itemRoute,
 ];
 
 const routes = [{

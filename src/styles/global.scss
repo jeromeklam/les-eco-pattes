@@ -153,3 +153,21 @@ svg.text-primary {
     width: 1rem !important;
   }
 }
+
+.modal-dialog {
+  .modal-body {
+    min-height: 300px;
+    max-height: 500px;
+  }
+}
+
+.modal-fullscreen {
+  width: 90%;
+  max-width: 90%;
+  margin: 1rem auto;
+
+  .modal-body {
+    min-height: 500px;
+    max-height: 600px;
+  }
+}

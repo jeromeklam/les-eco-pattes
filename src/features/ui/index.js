@@ -10,3 +10,4 @@ export { default as CenteredLoading3Dots } from './CenteredLoading3Dots';
 export { default as ImageModal } from './ImageModal';
 export { default as StatCard } from './StatCard';
 export { default as PageNotFound } from './PageNotFound';
+export { default as ResponsiveModalOrForm } from './ResponsiveModalOrForm';
