@@ -21,6 +21,13 @@ const _loadSiteType = id => {
   return freeAssoApi.get('/v1/asso/site_type/' + id, {});
 };
 
+const _loadSickness = id => {
+  if (!id) {
+    id = '0';
+  }
+  return freeAssoApi.get('/v1/asso/sickness/' + id, {});
+};
+
 const _loadSite = id => {
   if (!id) {
     id = '0';
@@ -51,6 +58,7 @@ const useForm = (initialState, initialTab, onSubmit, onCancel, onNavTab, errors)
     loadClient: false,
     loadCause: false,
     loadSite: false,
+    loadSickness: false,
     errors: errors,
   });
 
@@ -134,6 +142,27 @@ const useForm = (initialState, initialTab, onSubmit, onCancel, onNavTab, errors)
               })
               .catch(err => {
                 values.loadSite = false;
+                setValues(explodeReduxModel(values));
+              });
+          }
+          break;
+        case 'FreeAsso_Sickness':
+          if (!values.loadSickness) {
+            const id = event.target.value || '0';
+            values.loadSickness = true;
+            setValues(explodeReduxModel(values));
+            _loadSickness(id)
+              .then(result => {
+                values.loadSickness = false;
+                if (result && result.data) {
+                  const lines = jsonApiNormalizer(result.data);
+                  const item = buildModel(lines, 'FreeAsso_Sickness', id, { eager: true });
+                  values[first] = item;
+                  setValues(explodeReduxModel(values));
+                }
+              })
+              .catch(err => {
+                values.loadSickness = false;
                 setValues(explodeReduxModel(values));
               });
           }
@@ -255,6 +284,27 @@ const useForm = (initialState, initialTab, onSubmit, onCancel, onNavTab, errors)
               })
               .catch(err => {
                 values.loadSite = false;
+                setValues(explodeReduxModel(values));
+              });
+          }
+          break;
+        case 'FreeAsso_Sickness':
+          if (!values.loadSickness) {
+            const id = event.target.value || '0';
+            values.loadSickness = true;
+            setValues(explodeReduxModel(values));
+            _loadSickness(id)
+              .then(result => {
+                values.loadSickness = false;
+                if (result && result.data) {
+                  const lines = jsonApiNormalizer(result.data);
+                  const item = buildModel(lines, 'FreeAsso_Sickness', id, { eager: true });
+                  values[first] = item;
+                  setValues(explodeReduxModel(values));
+                }
+              })
+              .catch(err => {
+                values.loadSickness = false;
                 setValues(explodeReduxModel(values));
               });
           }

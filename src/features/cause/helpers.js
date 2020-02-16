@@ -10,6 +10,7 @@ import {
   Descendant as DescendantIcon,
   Male as MaleIcon,
   Female as FemaleIcon,
+  Medical as MedicalIcon,
 } from '../icons';
 import { causeTypeAsOptions } from '../cause-type/functions';
 
@@ -56,6 +57,7 @@ export const getInlineActions = ({
   onListDocument,
   onListGrowth,
   onListDescendant,
+  onListSickness,
   onGetOne,
   onDelOne,
   state,
@@ -100,6 +102,16 @@ export const getInlineActions = ({
       icon: <DescendantIcon color="white" />,
       role: 'OTHER',
       active: state.descendantsCause > 0,
+    },
+    {
+      name: 'medical',
+      label: 'Maladies',
+      onClick: onListSickness,
+      param: 'object',
+      theme: 'secondary',
+      icon: <MedicalIcon color="white" />,
+      role: 'OTHER',
+      active: state.sicknessesCause > 0,
     },
     {
       name: 'modify',

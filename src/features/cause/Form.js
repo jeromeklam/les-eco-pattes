@@ -1,5 +1,5 @@
 import React from 'react';
-import { InputHidden, InputText, InputSelect, InputTextarea, ResponsiveForm } from 'freeassofront';
+import { InputHidden, InputText, InputSelect, InputTextarea } from 'freeassofront';
 import RegexpParser from 'reregexp';
 import { InputDate, InputData } from '../ui';
 import useForm from '../ui/useForm';
@@ -8,6 +8,7 @@ import { InputPicker as ClientInputPicker } from '../client';
 import { InputPicker as SiteInputPicker } from '../site';
 import { InputPicker as CauseInputPicker, sexSelect } from './';
 import { validateRegex } from '../../common';
+import { ResponsiveModalOrForm } from '../ui';
 
 let regPlaceholder = '';
 let caut_id = 0;
@@ -38,7 +39,7 @@ export default function Form(props) {
     caut_id = values.cause_type.id;
   }
   return (
-    <ResponsiveForm
+    <ResponsiveModalOrForm
       title="Animaux"
       tab={values.currentTab}
       tabs={props.tabs}
@@ -47,6 +48,8 @@ export default function Form(props) {
       onNavTab={handleNavTab}
       itemPrev={props.prev}
       itemNext={props.next}
+      onClose={props.onClose}
+      modal={props.modal || false}
     >
       <InputHidden name="id" id="id" value={values.id} />
       <div className="row">
@@ -217,6 +220,6 @@ export default function Form(props) {
           />
         </div>
       )}
-    </ResponsiveForm>
+    </ResponsiveModalOrForm>
   );
 }

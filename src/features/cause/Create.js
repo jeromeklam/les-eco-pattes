@@ -18,6 +18,7 @@ export class Create extends Component {
     super(props);
     this.state = {
       causeId: 0,
+      modal: this.props.modal || false,
       item: false,
     };
     /**
@@ -45,7 +46,13 @@ export class Create extends Component {
     if (event) {
       event.preventDefault();
     }
-    this.props.history.push('/cause');
+    if (!this.state.modal) {
+      this.props.history.push('/cause');
+    } else {
+      if (this.props.onClose) {
+        this.props.onClose();
+      }
+    }
   }
 
   /**
@@ -60,7 +67,13 @@ export class Create extends Component {
       .then(result => {
         createSuccess();
         this.props.actions.clearItems();
-        this.props.history.push('/cause');
+        if (!this.state.modal) {
+          this.props.history.push('/cause');
+        } else {
+          if (this.props.onClose) {
+            this.props.onClose();
+          }
+        }
       })
       .catch(errors => {
         // @todo display errors to fields
@@ -80,6 +93,7 @@ export class Create extends Component {
             {item && (
               <Form
                 item={item}
+                modal={this.state.modal}
                 cause_types={this.props.causeType.items}
                 cause_main_types={this.props.causeMainType.items}
                 tab_datas={this.props.data.items}
@@ -89,6 +103,7 @@ export class Create extends Component {
                 errors={this.props.cause.createOneError}
                 onSubmit={this.onSubmit}
                 onCancel={this.onCancel}
+                onClose={this.props.onClose}
               />
             )}
           </div>

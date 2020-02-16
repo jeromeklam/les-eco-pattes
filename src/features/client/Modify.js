@@ -20,7 +20,8 @@ export class Modify extends Component {
      * On récupère l'id et l'élément à afficher
      */
     this.state = {
-      clientId: this.props.match.params.clientId || false,
+      clientId: this.props.cliId || this.props.match.params.clientId || false,
+      modal: this.props.modal || false,
       item: false,
     };
     /**
@@ -35,7 +36,7 @@ export class Modify extends Component {
      *  En async on va demander le chargement des données
      *  Lorsque fini le store sera modifié
      */
-    
+
     this.props.actions.loadOne(this.state.clientId).then(result => {
       const item = this.props.client.loadOneItem;
       this.setState({ item: item });
@@ -46,7 +47,13 @@ export class Modify extends Component {
    * Sur annulation, on retourne à la liste
    */
   onCancel() {
-    this.props.history.push('/client');
+    if (!this.state.modal) {
+      this.props.history.push('/client');
+    } else {
+      if (this.props.onClose) {
+        this.props.onClose();
+      }
+    }
   }
 
   /**
@@ -61,7 +68,13 @@ export class Modify extends Component {
         // @Todo propagate result to store
         // propagateModel est ajouté aux actions en bas de document
         this.props.actions.propagateModel('FreeAsso_Client', result);
-        this.props.history.push('/client');
+        if (!this.state.modal) {
+          this.props.history.push('/client');
+        } else {
+          if (this.props.onClose) {
+            this.props.onClose();
+          }
+        }
       })
       .catch(errors => {
         // @todo display errors to fields
@@ -80,6 +93,7 @@ export class Modify extends Component {
             {item && (
               <Form
                 item={item}
+                modal={this.state.modal}
                 client_types={this.props.clientType.items}
                 client_categories={this.props.clientCategory.items}
                 errors={this.props.client.updateOneError}
@@ -89,6 +103,7 @@ export class Modify extends Component {
                 tabs={this.props.client.tabs}
                 onSubmit={this.onSubmit}
                 onCancel={this.onCancel}
+                onClose={this.props.onClose}
               />
             )}
           </div>
@@ -110,11 +125,8 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    actions: bindActionCreators({ ...actions, propagateModel }, dispatch)
+    actions: bindActionCreators({ ...actions, propagateModel }, dispatch),
   };
 }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Modify);
+export default connect(mapStateToProps, mapDispatchToProps)(Modify);

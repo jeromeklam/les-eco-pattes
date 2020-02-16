@@ -18,6 +18,7 @@ export class Create extends Component {
     this.state = {
       id: 0,
       item: false,
+      modal: this.props.modal || false,
     };
     /**
      * Bind des méthodes locales au contexte courant
@@ -44,7 +45,13 @@ export class Create extends Component {
     if (event) {
       event.preventDefault();
     }
-    this.props.history.push('/client');
+    if (!this.state.modal) {
+      this.props.history.push('/client');
+    } else {
+      if (this.props.onClose) {
+        this.props.onClose();
+      }
+    }
   }
 
   /**
@@ -58,7 +65,13 @@ export class Create extends Component {
       .createOne(obj)
       .then(result => {
         this.props.actions.clearItems();
-        this.props.history.push('/client');
+        if (!this.state.modal) {
+          this.props.history.push('/client');
+        } else {
+          if (this.props.onClose) {
+            this.props.onClose();
+          }
+        }
       })
       .catch(errors => {
         // @todo display errors to fields
@@ -74,9 +87,10 @@ export class Create extends Component {
           <CenteredLoading9X9 />
         ) : (
           <div>
-            {item && 
-              <Form 
-                item={item} 
+            {item && (
+              <Form
+                item={item}
+                modal={this.state.modal}
                 client_types={this.props.clientType.items}
                 client_categories={this.props.clientCategory.items}
                 errors={this.props.client.createOneError}
@@ -84,10 +98,11 @@ export class Create extends Component {
                 languages={this.props.lang.items}
                 tab={this.props.client.tab}
                 tabs={this.props.client.tabs}
-                onSubmit={this.onSubmit} 
-                onCancel={this.onCancel} 
+                onSubmit={this.onSubmit}
+                onCancel={this.onCancel}
+                onClose={this.props.onClose}
               />
-            }
+            )}
           </div>
         )}
       </div>
@@ -107,11 +122,8 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    actions: bindActionCreators({ ...actions }, dispatch)
+    actions: bindActionCreators({ ...actions }, dispatch),
   };
 }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Create);
+export default connect(mapStateToProps, mapDispatchToProps)(Create);

@@ -15,8 +15,10 @@ import {
   Cause as CauseIcon,
   Photo as PhotoIcon,
   Document as DocumentIcon,
+  GetOne as GetOneIcon,
 } from '../icons';
 import { InlineMapPhotos, InlineMapDocuments } from './';
+import { Modify as ModifySite } from '../site';
 
 export class ListGroup extends Component {
   static propTypes = {
@@ -34,6 +36,7 @@ export class ListGroup extends Component {
       documents: 0,
       causes: 0,
       photos: 0,
+      modify: -1,
       selected: this.props.selected || 0,
     };
     this.scrollMouseEnter = this.scrollMouseEnter.bind(this);
@@ -41,6 +44,7 @@ export class ListGroup extends Component {
     this.onSiteDocuments = this.onSiteDocuments.bind(this);
     this.onSitePhotos = this.onSitePhotos.bind(this);
     this.onSiteCauses = this.onSiteCauses.bind(this);
+    this.onClose = this.onClose.bind(this);
   }
 
   componentDidMount() {
@@ -56,17 +60,25 @@ export class ListGroup extends Component {
   }
 
   onSiteDocuments(id) {
-    this.setState({ photos: 0, documents: id, causes: 0 });
+    this.setState({ photos: 0, documents: id, causes: 0, modify: 0 });
     this.props.actions.loadDocuments(id, true).then(result => {});
   }
 
   onSitePhotos(id) {
-    this.setState({ photos: id, documents: 0, causes: 0 });
+    this.setState({ photos: id, documents: 0, causes: 0, modify: 0 });
     this.props.actions.loadPhotos(id, true).then(result => {});
   }
 
   onSiteCauses(id) {
-    this.setState({ photos: 0, causes: id, documents: 0 });
+    this.setState({ photos: 0, causes: id, documents: 0, modify: 0 });
+  }
+
+  onSiteModify(id) {
+    this.setState({ modify: id });
+  }
+
+  onClose() {
+    this.setState({ modify: -1 });
   }
 
   static getDerivedStateFromProps(props, state) {
@@ -213,6 +225,20 @@ export class ListGroup extends Component {
                                 <CauseIcon size={0.8} className="text-secondary inline-action" />
                               </div>
                             </li>
+                            <li>
+                              <div
+                                data-toggle="tooltip" 
+                                title="Modifier"
+                                className="ml-2"
+                                onClick={() => {
+                                  this.props.onSiteClick &&
+                                    this.props.onSiteClick(item.id, item.site_coord);
+                                  this.onSiteModify(item.id);
+                                }}
+                              >
+                                <GetOneIcon size={0.8} className="text-secondary inline-action" />
+                              </div>
+                            </li>
                           </ul>
                         </div>
                         <div className="card-body p-2">
@@ -243,6 +269,9 @@ export class ListGroup extends Component {
                               <InlineListCause site_id={item.id} />
                             </div>
                           )
+                        }
+                        {this.state.selected === item.id && this.state.selected === this.state.modify &&
+                          <ModifySite modal={true} siteId={this.state.modify} onClose={this.onClose} />
                         }
                       </div>
                     </div>

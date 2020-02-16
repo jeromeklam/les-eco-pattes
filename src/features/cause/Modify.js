@@ -21,7 +21,8 @@ export class Modify extends Component {
      * On récupère l'id et l'élément à afficher
      */
     this.state = {
-      causeId: this.props.match.params.causeId || false,
+      causeId: this.props.cauId || this.props.match.params.causeId || false,
+      modal: this.props.modal || false,
       item: false,
     };
     /**
@@ -61,7 +62,13 @@ export class Modify extends Component {
     if (event) {
       event.preventDefault();
     }
-    this.props.history.push('/cause');
+    if (!this.state.modal) {
+      this.props.history.push('/cause');
+    } else {
+      if (this.props.onClose) {
+        this.props.onClose();
+      }
+    }
   }
 
   /**
@@ -77,7 +84,13 @@ export class Modify extends Component {
         // propagateModel est ajouté aux actions en bas de document
         modifySuccess();
         this.props.actions.propagateModel('FreeAsso_Cause', result);
-        this.props.history.push('/cause');
+        if (!this.state.modal) {
+          this.props.history.push('/cause');
+        } else {
+          if (this.props.onClose) {
+            this.props.onClose();
+          }
+        }
       })
       .catch(errors => {
         // @todo display errors to fields
@@ -101,6 +114,7 @@ export class Modify extends Component {
                 item={item}
                 prev={prev}
                 next={next}
+                modal={this.state.modal}
                 cause_types={this.props.causeType.items}
                 cause_main_types={this.props.causeMainType.items}
                 tab_datas={this.props.data.items}
@@ -110,6 +124,7 @@ export class Modify extends Component {
                 errors={this.props.cause.updateOneError}
                 onSubmit={this.onSubmit}
                 onCancel={this.onCancel}
+                onClose={this.props.onClose}
               />
             )}
           </div>

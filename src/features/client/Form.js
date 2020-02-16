@@ -3,7 +3,6 @@ import {
   InputHidden,
   InputText,
   InputSelect,
-  ResponsiveForm,
   InputCheckbox,
   InputTextarea,
 } from 'freeassofront';
@@ -11,6 +10,7 @@ import useForm from '../ui/useForm';
 import { clientTypeAsOptions } from '../client-type/functions.js';
 import { clientCategoryAsOptions } from '../client-category/functions.js';
 import { countryAsOptions } from '../country/functions.js';
+import { ResponsiveModalOrForm } from '../ui';
 
 export default function Form(props) {
   const {
@@ -22,13 +22,15 @@ export default function Form(props) {
     getErrorMessage,
   } = useForm(props.item, props.tab, props.onSubmit, props.onCancel, props.onNavTab, props.errors);
   return (
-    <ResponsiveForm
+    <ResponsiveModalOrForm
       title="Personne"
       tab={values.currentTab}
       tabs={props.tabs}
       onSubmit={handleSubmit}
       onCancel={handleCancel}
       onNavTab={handleNavTab}
+      onClose={props.onClose}
+      modal={props.modal || false}
     >
       <div className="card-body">
         <InputHidden name="id" id="id" value={values.id} />
@@ -197,6 +199,6 @@ export default function Form(props) {
           </div>
         )}
       </div>
-    </ResponsiveForm>
+    </ResponsiveModalOrForm>
   );
 }

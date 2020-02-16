@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import * as actions from './redux/actions';
 import { loadMovements } from '../cause-movement/redux/actions';
 import { loadGrowths } from '../cause-growth/redux/actions';
+import { loadSicknesses } from '../cause-sickness/redux/actions';
 import { buildModel } from 'freejsonapi';
 import { ResponsiveList, ResponsiveQuickSearch } from 'freeassofront';
 import {
@@ -19,10 +20,17 @@ import {
 } from '../icons';
 import { deleteSuccess, deleteError } from '../ui';
 import { InlineMovements } from '../cause-movement';
+import { InlineSicknesses } from '../cause-sickness';
 import { InlineGrowths } from '../cause-growth';
-import { InlineDescendants } from './';
-import { InlineDocuments } from './';
-import { getGlobalActions, getInlineActions, getCols } from './';
+import {
+  InlineDescendants,
+  Create,
+  Modify,
+  InlineDocuments,
+  getGlobalActions,
+  getInlineActions,
+  getCols,
+} from './';
 
 export class List extends Component {
   static propTypes = {
@@ -38,6 +46,8 @@ export class List extends Component {
       movementsCause: 0,
       documentsCause: 0,
       descendantsCause: 0,
+      sicknessesCause: 0,
+      cauId: -1,
     };
     this.onCreate = this.onCreate.bind(this);
     this.onGetOne = this.onGetOne.bind(this);
@@ -52,7 +62,9 @@ export class List extends Component {
     this.onListDocument = this.onListDocument.bind(this);
     this.onListMovement = this.onListMovement.bind(this);
     this.onListGrowth = this.onListGrowth.bind(this);
+    this.onListSickness = this.onListSickness.bind(this);
     this.onListDescendant = this.onListDescendant.bind(this);
+    this.onClose = this.onClose.bind(this);
   }
 
   componentDidMount() {
@@ -60,14 +72,15 @@ export class List extends Component {
   }
 
   onCreate(event) {
-    if (event) {
-      event.preventDefault();
-    }
-    this.props.history.push('/cause/create');
+    this.setState({ cauId: 0 });
   }
 
   onGetOne(id) {
-    this.props.history.push('/cause/modify/' + id);
+    this.setState({ cauId: id });
+  }
+
+  onClose() {
+    this.setState({ cauId: -1 });
   }
 
   onOpenPhoto(id) {
@@ -91,10 +104,22 @@ export class List extends Component {
     const { id } = obj;
     const { documentsCause } = this.state;
     if (documentsCause === id) {
-      this.setState({growthsCause: 0, movementsCause: 0, documentsCause: 0, descendantsCause: 0});
+      this.setState({
+        growthsCause: 0,
+        movementsCause: 0,
+        documentsCause: 0,
+        descendantsCause: 0,
+        sicknessesCause: 0,
+      });
     } else {
       this.props.actions.loadDocuments(id, true).then(result => {});
-      this.setState({growthsCause: 0, movementsCause: 0, documentsCause: id, descendantsCause: 0});
+      this.setState({
+        growthsCause: 0,
+        movementsCause: 0,
+        documentsCause: id,
+        descendantsCause: 0,
+        sicknessesCause: 0,
+      });
     }
   }
 
@@ -102,10 +127,22 @@ export class List extends Component {
     const { id } = obj;
     const { movementsCause } = this.state;
     if (movementsCause === id) {
-      this.setState({growthsCause: 0, movementsCause: 0, documentsCause: 0, descendantsCause: 0});
+      this.setState({
+        growthsCause: 0,
+        movementsCause: 0,
+        documentsCause: 0,
+        descendantsCause: 0,
+        sicknessesCause: 0,
+      });
     } else {
       this.props.actions.loadMovements(obj, true).then(result => {});
-      this.setState({growthsCause: 0, movementsCause: id, documentsCause: 0, descendantsCause: 0});
+      this.setState({
+        growthsCause: 0,
+        movementsCause: id,
+        documentsCause: 0,
+        descendantsCause: 0,
+        sicknessesCause: 0,
+      });
     }
   }
 
@@ -113,10 +150,22 @@ export class List extends Component {
     const { id } = obj;
     const { growthsCause } = this.state;
     if (growthsCause === id) {
-      this.setState({growthsCause: 0, movementsCause: 0, documentsCause: 0, descendantsCause: 0});
+      this.setState({
+        growthsCause: 0,
+        movementsCause: 0,
+        documentsCause: 0,
+        descendantsCause: 0,
+        sicknessesCause: 0,
+      });
     } else {
       this.props.actions.loadGrowths(obj, true).then(result => {});
-      this.setState({growthsCause: id, movementsCause: 0, documentsCause: 0, descendantsCause: 0});
+      this.setState({
+        growthsCause: id,
+        movementsCause: 0,
+        documentsCause: 0,
+        descendantsCause: 0,
+        sicknessesCause: 0,
+      });
     }
   }
 
@@ -124,10 +173,45 @@ export class List extends Component {
     const { id } = obj;
     const { descendantsCause } = this.state;
     if (descendantsCause === id) {
-      this.setState({growthsCause: 0, movementsCause: 0, documentsCause: 0, descendantsCause: 0});
+      this.setState({
+        growthsCause: 0,
+        movementsCause: 0,
+        documentsCause: 0,
+        descendantsCause: 0,
+        sicknessesCause: 0,
+      });
     } else {
       this.props.actions.loadDescendants(obj, true).then(result => {});
-      this.setState({growthsCause: 0, movementsCause: 0, documentsCause: 0, descendantsCause: id});
+      this.setState({
+        growthsCause: 0,
+        movementsCause: 0,
+        documentsCause: 0,
+        descendantsCause: id,
+        sicknessesCause: 0,
+      });
+    }
+  }
+
+  onListSickness(obj) {
+    const { id } = obj;
+    const { sicknessesCause } = this.state;
+    if (sicknessesCause === id) {
+      this.setState({
+        growthsCause: 0,
+        movementsCause: 0,
+        documentsCause: 0,
+        descendantsCause: 0,
+        sicknessesCause: 0,
+      });
+    } else {
+      this.props.actions.loadSicknesses(obj, true).then(result => {});
+      this.setState({
+        growthsCause: 0,
+        movementsCause: 0,
+        documentsCause: 0,
+        descendantsCause: 0,
+        sicknessesCause: id,
+      });
     }
   }
 
@@ -214,7 +298,7 @@ export class List extends Component {
         quickSearch={search}
         onSubmit={this.onQuickSearch}
         onChange={this.onSearchChange}
-        icon={<SearchIcon className="text-secondary"/>}
+        icon={<SearchIcon className="text-secondary" />}
       />
     );
     const filterIcon = this.props.cause.filters.isEmpty() ? (
@@ -228,56 +312,67 @@ export class List extends Component {
     if (this.state.movementsCause > 0) {
       id = this.state.movementsCause;
       current = buildModel(this.props.cause.items, 'FreeAsso_Cause', id);
-      inlineComponent = <InlineMovements cause={current} />
-      
+      inlineComponent = <InlineMovements cause={current} />;
     } else {
-      if (this.state.documentsCause > 0 ) {
+      if (this.state.documentsCause > 0) {
         id = this.state.documentsCause;
         current = buildModel(this.props.cause.items, 'FreeAsso_Cause', id);
-        inlineComponent = <InlineDocuments cause={current} />
+        inlineComponent = <InlineDocuments cause={current} />;
       } else {
-        if (this.state.growthsCause > 0 ) {
+        if (this.state.growthsCause > 0) {
           id = this.state.growthsCause;
           current = buildModel(this.props.cause.items, 'FreeAsso_Cause', id);
-          inlineComponent = <InlineGrowths cause={current} />
+          inlineComponent = <InlineGrowths cause={current} />;
         } else {
-          if (this.state.descendantsCause > 0 ) {
+          if (this.state.descendantsCause > 0) {
             id = this.state.descendantsCause;
             current = buildModel(this.props.cause.items, 'FreeAsso_Cause', id);
-            inlineComponent = <InlineDescendants current={current} />
+            inlineComponent = <InlineDescendants current={current} />;
+          } else {
+            if (this.state.sicknessesCause > 0) {
+              id = this.state.sicknessesCause;
+              current = buildModel(this.props.cause.items, 'FreeAsso_Cause', id);
+              inlineComponent = <InlineSicknesses cause={current} />;
+            }
           }
         }
       }
-    }  
-     
+    }
+
     return (
-      <ResponsiveList
-        title="Animaux"
-        cols={cols}
-        items={items}
-        quickSearch={quickSearch}
-        mainCol="cau_code"
-        filterIcon={filterIcon}
-        cancelPanelIcon={<CancelPanelIcon />}
-        validPanelIcon={<ValidPanelIcon />}
-        sortDownIcon={<SortDownIcon color="secondary" />}
-        sortUpIcon={<SortUpIcon color="secondary" />}
-        sortNoneIcon={<SortNoneIcon color="secondary" />}
-        inlineActions={inlineActions}
-        inlineOpenedId={id}
-        inlineComponent={inlineComponent}
-        globalActions={globalActions}
-        sort={this.props.cause.sort}
-        filters={this.props.cause.filters}
-        onSearch={this.onQuickSearch}
-        onSort={this.onUpdateSort}
-        onSetFiltersAndSort={this.onSetFiltersAndSort}
-        onClearFilters={this.onClearFilters}
-        onLoadMore={this.onLoadMore}
-        loadMorePending={this.props.cause.loadMorePending}
-        loadMoreFinish={this.props.cause.loadMoreFinish}
-        loadMoreError={this.props.cause.loadMoreError}
-      />
+      <div>
+        <ResponsiveList
+          title="Animaux"
+          cols={cols}
+          items={items}
+          quickSearch={quickSearch}
+          mainCol="cau_code"
+          filterIcon={filterIcon}
+          cancelPanelIcon={<CancelPanelIcon />}
+          validPanelIcon={<ValidPanelIcon />}
+          sortDownIcon={<SortDownIcon color="secondary" />}
+          sortUpIcon={<SortUpIcon color="secondary" />}
+          sortNoneIcon={<SortNoneIcon color="secondary" />}
+          inlineActions={inlineActions}
+          inlineOpenedId={id}
+          inlineComponent={inlineComponent}
+          globalActions={globalActions}
+          sort={this.props.cause.sort}
+          filters={this.props.cause.filters}
+          onSearch={this.onQuickSearch}
+          onSort={this.onUpdateSort}
+          onSetFiltersAndSort={this.onSetFiltersAndSort}
+          onClearFilters={this.onClearFilters}
+          onLoadMore={this.onLoadMore}
+          loadMorePending={this.props.cause.loadMorePending}
+          loadMoreFinish={this.props.cause.loadMoreFinish}
+          loadMoreError={this.props.cause.loadMoreError}
+        />
+        {this.state.cauId > 0 && (
+          <Modify modal={true} cauId={this.state.cauId} onClose={this.onClose} />
+        )}
+        {this.state.cauId === 0 && <Create modal={true} onClose={this.onClose} />}
+      </div>
     );
   }
 }
@@ -293,7 +388,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    actions: bindActionCreators({ ...actions, loadMovements, loadGrowths }, dispatch),
+    actions: bindActionCreators({ ...actions, loadMovements, loadGrowths, loadSicknesses }, dispatch),
   };
 }
 

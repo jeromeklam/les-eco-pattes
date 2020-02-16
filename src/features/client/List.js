@@ -21,6 +21,7 @@ import {
   Sort as SortNoneIcon,
   Search as SearchIcon,
 } from '../icons';
+import { Create, Modify } from './';
 
 export class List extends Component {
   static propTypes = {
@@ -32,11 +33,13 @@ export class List extends Component {
     super(props);
     this.state = {
       timer: null,
+      cliId : -1,
     };
     this.onCreate = this.onCreate.bind(this);
     this.onGetOne = this.onGetOne.bind(this);
     this.onDelOne = this.onDelOne.bind(this);
     this.onReload = this.onReload.bind(this);
+    this.onClose = this.onClose.bind(this);
     this.onLoadMore = this.onLoadMore.bind(this);
     this.onClearFilters = this.onClearFilters.bind(this);
     this.onQuickSearch = this.onQuickSearch.bind(this);
@@ -49,14 +52,15 @@ export class List extends Component {
   }
 
   onCreate(event) {
-    if (event) {
-      event.preventDefault();
-    }
-    this.props.history.push('/client/create');
+    this.setState({ cliId: 0 });
   }
 
   onGetOne(id) {
-    this.props.history.push('/client/modify/' + id);
+    this.setState({ cliId: id });
+  }
+
+  onClose() {
+    this.setState({ cliId: -1 });
   }
 
   onDelOne(id) {
@@ -267,31 +271,39 @@ export class List extends Component {
       <FilterFullIcon color="white" />
     );
     return (
-      <ResponsiveList
-        title="Personnes"
-        cols={cols}
-        items={items}
-        quickSearch={quickSearch}
-        mainCol="cli_firstname"
-        filterIcon={filterIcon}
-        cancelPanelIcon={<CancelPanelIcon />}
-        validPanelIcon={<ValidPanelIcon />}
-        sortDownIcon={<SortDownIcon color="secondary" />}
-        sortUpIcon={<SortUpIcon color="secondary" />}
-        sortNoneIcon={<SortNoneIcon color="secondary" />}
-        inlineActions={inlineActions}
-        globalActions={globalActions}
-        sort={this.props.client.sort}
-        filters={this.props.client.filters}
-        onSearch={this.onQuickSearch}
-        onSort={this.onUpdateSort}
-        onSetFiltersAndSort={this.onSetFiltersAndSort}
-        onClearFilters={this.onClearFilters}
-        onLoadMore={this.onLoadMore}
-        loadMorePending={this.props.client.loadMorePending}
-        loadMoreFinish={this.props.client.loadMoreFinish}
-        loadMoreError={this.props.client.loadMoreError}
-      />
+      <div>
+        <ResponsiveList
+          title="Personnes"
+          cols={cols}
+          items={items}
+          quickSearch={quickSearch}
+          mainCol="cli_firstname"
+          filterIcon={filterIcon}
+          cancelPanelIcon={<CancelPanelIcon />}
+          validPanelIcon={<ValidPanelIcon />}
+          sortDownIcon={<SortDownIcon color="secondary" />}
+          sortUpIcon={<SortUpIcon color="secondary" />}
+          sortNoneIcon={<SortNoneIcon color="secondary" />}
+          inlineActions={inlineActions}
+          globalActions={globalActions}
+          sort={this.props.client.sort}
+          filters={this.props.client.filters}
+          onSearch={this.onQuickSearch}
+          onSort={this.onUpdateSort}
+          onSetFiltersAndSort={this.onSetFiltersAndSort}
+          onClearFilters={this.onClearFilters}
+          onLoadMore={this.onLoadMore}
+          loadMorePending={this.props.client.loadMorePending}
+          loadMoreFinish={this.props.client.loadMoreFinish}
+          loadMoreError={this.props.client.loadMoreError}
+        />
+        {this.state.cliId > 0 && (
+          <Modify modal={true} cliId={this.state.cliId} onClose={this.onClose} />
+        )}
+        {this.state.cliId === 0 && (
+          <Create modal={true} onClose={this.onClose} />
+        )}
+      </div>
     );
   }
 }

@@ -32,6 +32,7 @@ export class InlineGrowths extends Component {
     };
     this.onSubmit = this.onSubmit.bind(this);
     this.onConfirm = this.onConfirm.bind(this);
+    this.onConfirmOpen = this.onConfirmOpen.bind(this);
     this.onConfirmClose = this.onConfirmClose.bind(this);
   }
 
@@ -59,9 +60,13 @@ export class InlineGrowths extends Component {
       });
   }
 
+  onConfirmOpen(id) {
+    this.setState({ confirm: true, grow_id: id });
+  }
+
   onConfirm(id) {
     const { grow_id, cause } = this.state;
-    this.setState({ confirm: true, grow_id: id });
+    this.setState({ confirm: false, grow_id: 0 });
     this.props.actions.delOne(grow_id).then(result => {
       this.props.actions.loadGrowths(cause);
     });
@@ -120,7 +125,7 @@ export class InlineGrowths extends Component {
                           <div className="btn-group" role="group" aria-label="First group">
                             <div className="ml-2">
                               <DelOneIcon
-                                onClick={() => this.onConfirm(growth.id)}
+                                onClick={() => this.onConfirmOpen(growth.id)}
                                 className="text-warning inline-action"
                               />
                             </div>
