@@ -31,6 +31,7 @@ const options = [
     label: 'Accueil',
     url: '/',
     role: 'HOME',
+    help: "Accueil : Permet de revenir à l'écran principal",
     public: true,
   },
   {
@@ -38,6 +39,7 @@ const options = [
     label: 'Connexion',
     url: '/auth/signin',
     role: 'SIGNIN',
+    help: "Pour accéder à la page d'authentification",
     public: true,
   },
   {
@@ -45,6 +47,7 @@ const options = [
     label: 'Déconnexion',
     url: '/auth/signout',
     role: 'SIGNOUT',
+    help: "Pour se déconnecter",
     public: false,
   },
   {
@@ -53,6 +56,7 @@ const options = [
     url: null,
     role: 'SOCIAL',
     position: 1,
+    help: "Accéder au site Facebook",
     public: true,
   },
   {
@@ -61,6 +65,7 @@ const options = [
     url: '/dashboard',
     role: 'NAV',
     position: 2,
+    help: "Tableau de bord : pour consulter les éléments en attente, tâches à effectuer, ...",
     public: false,
   },
   {
@@ -69,6 +74,7 @@ const options = [
     url: '/pigeon-map',
     role: 'NAV',
     position: 3,
+    help: "Carte : Pour visualiser l'emplacement des sites sur une carte, les positionner, une vue rapide",
     public: false,
   },
   {
@@ -77,6 +83,7 @@ const options = [
     url: '/site',
     role: 'NAV',
     position: 4,
+    help: "Sites : La gestion des sites",
     public: false,
   },
   {
@@ -85,6 +92,7 @@ const options = [
     url: '/cause',
     role: 'NAV',
     position: 5,
+    help: "Animaux : La gestion des animaux",
     public: false,
   },
   {
@@ -93,6 +101,7 @@ const options = [
     url: '/client',
     role: 'NAV',
     position: 6,
+    help: "Personnes : La gestion des vétérinaires, contacts, ...",
     public: false,
   },
   {
@@ -101,6 +110,7 @@ const options = [
     url: '/stock',
     role: 'NAV',
     position: 7,
+    help: "Stock : La gestion des médicaments, du stock en général",
     public: false,
   },
   {
@@ -110,6 +120,7 @@ const options = [
     role: 'MENU',
     position: 20,
     public: false,
+    help: "Répertoires : Les éléments configurables",
     options: [
       {
         icon: null,
@@ -168,6 +179,7 @@ const options = [
     url: '/version',
     role: 'NAV',
     position: 11,
+    help: "Fiche version : Les modifications par version",
     public: true,
   },
   {
@@ -176,6 +188,7 @@ const options = [
     url: '/about',
     role: 'ABOUT',
     position: 99,
+    help: "Qui sommes nous : Présentation générale",
     public: true,
   },
 ];

@@ -187,6 +187,9 @@ svg.text-primary {
   }
 }
 
-.nav-item:hover {
+.nav-item .nav-link:hover {
   cursor: pointer;
+}
+.nav-item .nav-link.disabled:hover {
+  cursor: not-allowed;
 }

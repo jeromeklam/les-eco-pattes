@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as actions from './redux/actions';
 import logo from '../../images/logo-les-eco-pattes.jpg';
-import { InputEmail, InputPassword, InputCheckbox } from 'freeassofront';
+import { InputEmail, InputPassword, InputCheckbox, Highlight } from 'freeassofront';
 import { getJsonApi, getFieldErrorMessage } from 'freejsonapi';
 import { withRouter } from 'react-router-dom';
 import { Copyright } from '../ui';
@@ -123,9 +123,11 @@ export class Signin extends Component {
               onChange={this.onChange}
             />
           </div>
-          <button className="btn btn-lg btn-primary btn-block" type="submit">
-            Connexion
-          </button>
+          <Highlight title="Pour se connecter à l'application" position="bottom">
+            <button className="btn btn-lg btn-primary btn-block" type="submit">
+              Connexion
+            </button>
+          </Highlight>
           <Copyright />
         </form>
       </div>
