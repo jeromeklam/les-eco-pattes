@@ -8,11 +8,7 @@ import { buildModel } from 'freejsonapi';
 import { ResponsiveConfirm } from 'freeassofront';
 import { CenteredLoading3Dots } from '../ui';
 import FileIcon, { defaultStyles } from 'react-file-icon';
-import {
-  DelOne as DelOneIcon,
-  Download as DownloadIcon,
-  Upload as UploadIcon,
-} from '../icons';
+import { DelOne as DelOneIcon, Download as DownloadIcon, Upload as UploadIcon } from '../icons';
 import { downloadCauseMediaBlob } from './';
 import { downloadBlob } from '../ui';
 
@@ -116,23 +112,18 @@ export class InlineDocuments extends Component {
                           <div className="col-16"></div>
                           <div className="col-20 text-right">
                             <div className="btn-group btn-group-sm" role="group" aria-label="...">
-                              <div className="btn-group" role="group" aria-label="First group">
-                                <div className="ml-2">
-                                  <DownloadIcon
-                                    onClick={() => this.onDownload(document)}
-                                    className="text-secondary inline-action"
-                                  />
-                                </div>
-                                <div className="ml-2">
-                                  <UploadIcon className="text-secondary inline-action" />
-                                </div>
-                                <div className="ml-2">
-                                  <DelOneIcon
-                                    onClick={() => this.onConfirmDocument(document.id)}
-                                    className="text-warning inline-action"
-                                  />
-                                </div>
-                              </div>
+                              <button type="button" className="btn btn-inline btn-secondary">
+                                <DownloadIcon
+                                  onClick={() => this.onDownload(document)}
+                                  className="text-light inline-action"
+                                />
+                              </button>
+                              <button type="button" className="btn btn-inline btn-warning">
+                                <DelOneIcon
+                                  onClick={() => this.onConfirmDocument(document.id)}
+                                  className="text-light inline-action"
+                                />
+                              </button>
                             </div>
                           </div>
                         </div>

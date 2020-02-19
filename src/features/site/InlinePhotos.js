@@ -85,15 +85,15 @@ export class InlinePhotos extends Component {
   onView(item) {
     downloadSiteMediaBlob(item.id, true).then(result => {
       const type = result.headers['content-type'] || 'application/octet-stream';
-      const bytes = new Uint8Array(result.data); 
-      const blob = new Blob([bytes], {type: type});
+      const bytes = new Uint8Array(result.data);
+      const blob = new Blob([bytes], { type: type });
       const url = window.URL.createObjectURL(blob);
-      this.setState({blob: url, view: true, item: item});
+      this.setState({ blob: url, view: true, item: item });
     });
   }
 
   onCloseView() {
-    this.setState({blob: null, view: false, item: null});
+    this.setState({ blob: null, view: false, item: null });
   }
 
   onConfirm() {
@@ -134,29 +134,24 @@ export class InlinePhotos extends Component {
                           <div className="col-16"></div>
                           <div className="col-20 text-right">
                             <div className="btn-group btn-group-sm" role="group" aria-label="...">
-                              <div className="btn-group" role="group" aria-label="First group">
-                                <div className="ml-2">
-                                  <ViewIcon 
-                                    className="text-secondary inline-action" 
-                                    onClick={() => this.onView(photo)}
-                                  />
-                                </div>
-                                <div className="ml-2">
-                                  <DownloadIcon
-                                    className="text-secondary inline-action"
-                                    onClick={() => this.onDownload(photo)}
-                                  />
-                                </div>
-                                <div className="ml-2">
-                                  <UploadIcon className="text-secondary inline-action" />
-                                </div>
-                                <div className="ml-2">
-                                  <DelOneIcon
-                                    onClick={() => this.onConfirmPhoto(photo.id)}
-                                    className="text-warning inline-action"
-                                  />
-                                </div>
-                              </div>
+                              <button type="button" className="btn btn-inline btn-secondary">
+                                <ViewIcon
+                                  className="text-light inline-action"
+                                  onClick={() => this.onView(photo)}
+                                />
+                              </button>
+                              <button type="button" className="btn btn-inline btn-secondary">
+                                <DownloadIcon
+                                  className="text-light inline-action"
+                                  onClick={() => this.onDownload(photo)}
+                                />
+                              </button>
+                              <button type="button" className="btn btn-inline btn-warning">
+                                <DelOneIcon
+                                  onClick={() => this.onConfirmPhoto(photo.id)}
+                                  className="text-light inline-action"
+                                />
+                              </button>
                             </div>
                           </div>
                         </div>

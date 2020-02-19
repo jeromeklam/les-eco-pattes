@@ -3,12 +3,11 @@ import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { ResponsiveConfirm } from 'freeassofront';
-import { getJsonApi } from 'freejsonapi';
 import * as actions from './redux/actions';
-import { propagateModel, intlDate } from '../../common';
-import { DelOne as DelOneIcon } from '../icons';
-import { CenteredLoading3Dots, createSuccess, createError } from '../ui';
-import { InlineSicknessForm, getWhereLabel, getCareLabel } from './';
+import { intlDate } from '../../common';
+import { GetOne as GetOneIcon, DelOne as DelOneIcon, AddOne as AddOneIcon } from '../icons';
+import { CenteredLoading3Dots } from '../ui';
+import { Create, Modify, getWhereLabel, getCareLabel } from './';
 
 export class InlineSicknesses extends Component {
   static propTypes = {
@@ -18,7 +17,7 @@ export class InlineSicknesses extends Component {
 
   static getDerivedStateFromProps(props, state) {
     if (props.cause !== state.cause) {
-      return { cause: props.cause, caus_id: 0, confirm: false };
+      return { cause: props.cause, caus_id: -1, confirm: false };
     }
     return null;
   }
@@ -27,13 +26,15 @@ export class InlineSicknesses extends Component {
     super(props);
     this.state = {
       confirm: false,
-      caus_id: 0,
+      caus_id: -1,
       cause: props.cause,
     };
-    this.onSubmit = this.onSubmit.bind(this);
     this.onConfirm = this.onConfirm.bind(this);
+    this.onAddOne = this.onAddOne.bind(this);
     this.onConfirmOpen = this.onConfirmOpen.bind(this);
     this.onConfirmClose = this.onConfirmClose.bind(this);
+    this.onClose = this.onClose.bind(this);
+    this.onGetOne = this.onGetOne.bind(this);
   }
 
   componentDidMount() {
@@ -42,23 +43,16 @@ export class InlineSicknesses extends Component {
     }
   }
 
-  onSubmit(datas = {}) {
-    // Conversion des données en objet pour le service web
-    const { cause } = this.state;
-    datas.cause = cause;
-    console.log(datas, cause);
-    const obj = getJsonApi(datas, 'FreeAsso_CauseSickness');
-    this.props.actions
-      .createOne(obj)
-      .then(result => {
-        createSuccess();
-        this.props.actions.propagateModel('FreeAsso_CauseSickness', result);
-        this.props.actions.loadSicknesses(cause);
-      })
-      .catch(errors => {
-        // @todo display errors to fields
-        createError();
-      });
+  onAddOne() {
+    this.setState({ caus_id: 0 });
+  }
+
+  onGetOne(id) {
+    this.setState({ caus_id: id });
+  }
+
+  onClose() {
+    this.setState({ caus_id: -1 });
   }
 
   onConfirmOpen(id) {
@@ -67,14 +61,14 @@ export class InlineSicknesses extends Component {
 
   onConfirm(id) {
     const { caus_id, cause } = this.state;
-    this.setState({ confirm: false, caus_id: 0 });
+    this.setState({ confirm: false, caus_id: -1 });
     this.props.actions.delOne(caus_id).then(result => {
       this.props.actions.loadSicknesses(cause);
     });
   }
 
   onConfirmClose() {
-    this.setState({ confirm: false, caus_id: 0 });
+    this.setState({ confirm: false, caus_id: -1 });
   }
 
   render() {
@@ -106,18 +100,18 @@ export class InlineSicknesses extends Component {
               <div className="col-8">
                 <span>Maladie</span>
               </div>
-              <div className="col-4">
-                <span></span>
+              <div className="col-4 text-right">
+                <div className="btn-group btn-group-xs" role="group" aria-label="...">
+                  <button
+                    type="button"
+                    className="btn btn-inline btn-primary"
+                    onClick={this.onAddOne}
+                  >
+                    <AddOneIcon className="inline-action text-light" />
+                  </button>
+                </div>
               </div>
             </div>
-            {emptyItem && (
-              <InlineSicknessForm
-                cause={this.state.cause}
-                item={emptyItem}
-                errors={this.props.causeSickness.createOneError}
-                onSubmit={this.onSubmit}
-              />
-            )}
             {sicknesses &&
               sicknesses.length > 0 &&
               sicknesses.map(sickness => (
@@ -127,16 +121,22 @@ export class InlineSicknesses extends Component {
                   <div className="col-6">{getWhereLabel(sickness.caus_where)}</div>
                   <div className="col-6">{getCareLabel(sickness.caus_care)}</div>
                   <div className="col-8">{sickness.sickness && sickness.sickness.sick_name}</div>
-                  <div className="col-4">
-                    <div className="btn-group btn-group-sm" role="group" aria-label="...">
-                      <div className="btn-group" role="group" aria-label="First group">
-                        <div className="ml-2">
-                          <DelOneIcon
-                            onClick={() => this.onConfirmOpen(sickness.id)}
-                            className="text-warning inline-action"
-                          />
-                        </div>
-                      </div>
+                  <div className="col-4 text-right">
+                    <div className="btn-group btn-group-xs" role="group" aria-label="...">
+                      <button
+                        type="button"
+                        className="btn btn-inline btn-secondary"
+                        onClick={() => {this.onGetOne(sickness.id)}}
+                      >
+                        <GetOneIcon className="inline-action text-light" />
+                      </button>
+                      <button
+                        type="button"
+                        className="btn btn-inline btn-warning"
+                        onClick={() => this.onConfirmOpen(sickness.id)}
+                      >
+                        <DelOneIcon className="inline-action text-light" />
+                      </button>
                     </div>
                   </div>
                 </div>
@@ -149,6 +149,10 @@ export class InlineSicknesses extends Component {
               }}
             />
           </div>
+          {!this.state.confirm && this.state.caus_id === 0 && <Create onClose={this.onClose} cause={this.state.cause} />}
+          {!this.state.confirm && this.state.caus_id > 0 && (
+            <Modify onClose={this.onClose} caus_id={this.state.caus_id} cause={this.state.cause} />
+          )}
         </div>
       );
     }

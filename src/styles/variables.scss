@@ -2,10 +2,13 @@
 $theme-colors: (
   "primary": #7ab255,
   "primary-light": lighten(#7ab255, 36%),
+  "primary-dark": darken(#7ab255, 20%),
   "secondary": #5a4e4e,
   "secondary-light": lighten(#5a4e4e, 48%),
+  "secondary-dark": darken(#5a4e4e, 20%),
   "danger": #ff4136,
   "warning": #ef8c1d,
+  "warning-dark": darken(#ef8c1d, 10%),
   "light": lighten(#5a4e4e, 60%),
   "success": #7ab255,
 );

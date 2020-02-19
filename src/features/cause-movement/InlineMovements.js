@@ -137,19 +137,19 @@ export class InlineMovements extends Component {
                     <div className="col-5">{statusLabel(movement.camv_status)}</div>
                     <div className="col-5 text-right">
                       <div className="btn-group btn-group-sm" role="group" aria-label="...">
-                        <div className="btn-group" role="group" aria-label="First group">
-                          <div className="ml-2">
-                            {movement.camv_status === 'WAIT' && (
-                              <SimpleValidIcon
-                                onClick={() => this.onConfirmValidation(movement.id)}
-                                className="text-primary inline-action"
-                              />
-                            )}
-                            <DelOneIcon
-                              onClick={() => this.onConfirmMovement(movement.id)}
-                              className="text-warning inline-action"
+                        {movement.camv_status === 'WAIT' && (
+                          <div className="btn btn-inline btn-primary">
+                            <SimpleValidIcon
+                              onClick={() => this.onConfirmValidation(movement.id)}
+                              className="text-light inline-action"
                             />
                           </div>
+                        )}
+                        <div className="btn btn-inline btn-warning">
+                          <DelOneIcon
+                            onClick={() => this.onConfirmMovement(movement.id)}
+                            className="text-light inline-action"
+                          />
                         </div>
                       </div>
                     </div>
@@ -175,9 +175,6 @@ export class InlineMovements extends Component {
             </div>
             <div className="row row-new">
               <div className="col-36 pt-2">
-                <span>Ajouter un mouvement :</span>
-                <br />
-                <br />
                 {emptyItem && (
                   <InlineMovementForm
                     cause={this.state.cause}
@@ -195,9 +192,6 @@ export class InlineMovements extends Component {
           <div className="cause-inline-movements">
             <div className="row row-new">
               <div className="col-36 pt-2">
-                <span>Ajouter un mouvement :</span>
-                <br />
-                <br />
                 {emptyItem && (
                   <InlineMovementForm
                     cause={this.props.causeMovement.cause}

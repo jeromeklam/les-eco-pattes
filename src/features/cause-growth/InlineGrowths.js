@@ -120,15 +120,15 @@ export class InlineGrowths extends Component {
                       <div className="col-16">{intlDate(growth.grow_ts)}</div>
                       <div className="col-8">{growth.grow_weight}</div>
                       <div className="col-8">{growth.grow_height}</div>
-                      <div className="col-4">
+                      <div className="col-4 text-right">
                         <div className="btn-group btn-group-sm" role="group" aria-label="...">
                           <div className="btn-group" role="group" aria-label="First group">
-                            <div className="ml-2">
+                            <button className="btn btn-inline btn-warning">
                               <DelOneIcon
                                 onClick={() => this.onConfirmOpen(growth.id)}
-                                className="text-warning inline-action"
+                                className="text-light inline-action"
                               />
-                            </div>
+                            </button>
                           </div>
                         </div>
                       </div>

@@ -7,11 +7,7 @@ import * as actions from './redux/actions';
 import { ResponsiveConfirm } from 'freeassofront';
 import { CenteredLoading3Dots } from '../ui';
 import FileIcon, { defaultStyles } from 'react-file-icon';
-import {
-  DelOne as DelOneIcon,
-  Download as DownloadIcon,
-  Upload as UploadIcon,
-} from '../icons';
+import { DelOne as DelOneIcon, Download as DownloadIcon, Upload as UploadIcon } from '../icons';
 import { downloadSiteMediaBlob } from './';
 import { downloadBlob } from '../ui';
 
@@ -94,58 +90,54 @@ export class InlineDocuments extends Component {
             <CenteredLoading3Dots />
           ) : (
             <div className="row p-2 row-cols-1 row-cols-sm-2 row-cols-md-2 row-cols-lg-3">
-              {this.props.site.documentsModels && this.props.site.documentsModels.map(document => {
-                let content = <FileIcon type="document" size={80} {...defaultStyles.docx} />;
-                try {
-                  const ext = document.sitm_title.split('.').pop();
-                  let style = defaultStyles[ext];
-                  content = <FileIcon size={80} extension={ext} {...style} />;
-                } catch (ex) {
-                  console.log(ex);
-                }
-                return (
-                  <div className="col" key={document.id}>
-                    <div className="card mt-2">
-                      <div className="card-header bg-light">
-                        <div className="row">
-                          <div className="col-16"></div>
-                          <div className="col-20 text-right">
-                            <div className="btn-group btn-group-sm" role="group" aria-label="...">
-                              <div className="btn-group" role="group" aria-label="First group">
-                                <div className="ml-2">
+              {this.props.site.documentsModels &&
+                this.props.site.documentsModels.map(document => {
+                  let content = <FileIcon type="document" size={80} {...defaultStyles.docx} />;
+                  try {
+                    const ext = document.sitm_title.split('.').pop();
+                    let style = defaultStyles[ext];
+                    content = <FileIcon size={80} extension={ext} {...style} />;
+                  } catch (ex) {
+                    console.log(ex);
+                  }
+                  return (
+                    <div className="col" key={document.id}>
+                      <div className="card mt-2">
+                        <div className="card-header bg-light">
+                          <div className="row">
+                            <div className="col-16"></div>
+                            <div className="col-20 text-right">
+                              <div className="btn-group btn-group-sm" role="group" aria-label="...">
+                                <button type="button" className="btn btn-inline btn-secondary">
                                   <DownloadIcon
                                     onClick={() => this.onDownload(document)}
-                                    className="text-secondary inline-action"
+                                    className="text-light inline-action"
                                   />
-                                </div>
-                                <div className="ml-2">
-                                  <UploadIcon className="text-secondary inline-action" />
-                                </div>
-                                <div className="ml-2">
+                                </button>
+                                <button type="button" className="btn btn-inline btn-warning">
                                   <DelOneIcon
                                     onClick={() => this.onConfirmDocument(document.id)}
-                                    className="text-warning inline-action"
+                                    className="text-light inline-action"
                                   />
-                                </div>
+                                </button>
                               </div>
                             </div>
                           </div>
                         </div>
-                      </div>
-                      <div className="card-body text-center">
-                        <div className="row">
-                          <div className="col-36">{content}</div>
-                          <div className="col-36">
-                            <small className="text-center text-secondary">
-                              {document.sitm_title}
-                            </small>
+                        <div className="card-body text-center">
+                          <div className="row">
+                            <div className="col-36">{content}</div>
+                            <div className="col-36">
+                              <small className="text-center text-secondary">
+                                {document.sitm_title}
+                              </small>
+                            </div>
                           </div>
                         </div>
                       </div>
                     </div>
-                  </div>
-                );
-              })}
+                  );
+                })}
               <div className="col" key={'000'}>
                 <div className="card mt-2">
                   <div className="card-header bg-light text-secondary">

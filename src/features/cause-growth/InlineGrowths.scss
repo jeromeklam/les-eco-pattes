@@ -14,14 +14,13 @@ svg.inline-action:hover {
     .row-title span {
       font-weight: bold;
     }
-    .row {
-      height: 30px;
-      line-height: 30px;
-    }
-    .row.row-new {
+    .row-line {
       height: 36px;
       line-height: 36px;
-      padding-top: 3px;
+    }
+    .row-line.row-new {
+      height: 50px;
+      line-height: 50px;
     }
     .row.row-line:nth-child(even) {
       background: lighten(theme-color('secondary-light'), 5%);

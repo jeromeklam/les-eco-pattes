@@ -16,7 +16,7 @@ export default function InlineMovementForm(props) {
     props.onSubmit,
     props.onCancel,
     props.onNavTab,
-    props.errors
+    props.errors,
   );
   return (
     <form className="inline-form">
@@ -63,8 +63,10 @@ export default function InlineMovementForm(props) {
             onChange={handleChange}
           />
         </div>
-        <div className="col-3" onClick={handleSubmit}>
-          <SimpleValidIcon className="text-primary inline-action" />
+        <div className="col-3 my-auto text-right">
+          <button type="button" className="btn btn-inline btn-primary" onClick={handleSubmit}>
+            <SimpleValidIcon className="inline-action text-light" />
+          </button>
         </div>
         <div className="col-10">
           <InputPickerSite

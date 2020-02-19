@@ -19,7 +19,7 @@ export default function InlineGrowthForm(props) {
   );
   return (
     <div className="row row-line row-new">
-      <div className="col-16">
+      <div className="col-16 my-auto">
         <InputDate
           label=""
           name="grow_ts"
@@ -33,7 +33,7 @@ export default function InlineGrowthForm(props) {
           error={getErrorMessage('grow_ts')}
         />
       </div>
-      <div className="col-8">
+      <div className="col-8 my-auto">
         <InputText
           label=""
           name="grow_weight"
@@ -46,7 +46,7 @@ export default function InlineGrowthForm(props) {
           onChange={handleChange}
         />
       </div>
-      <div className="col-8">
+      <div className="col-8 my-auto">
         <InputText
           label=""
           name="grow_height"
@@ -59,8 +59,10 @@ export default function InlineGrowthForm(props) {
           onChange={handleChange}
         />
       </div>
-      <div className="col-4" onClick={handleSubmit}>
-        <SimpleValidIcon className="text-primary inline-action" />
+       <div className="col-4 my-auto text-right" >
+        <button type="button" className="btn btn-inline btn-primary" onClick={handleSubmit}>
+          <SimpleValidIcon className="inline-action text-light" />
+        </button>
       </div>
     </div>
   );

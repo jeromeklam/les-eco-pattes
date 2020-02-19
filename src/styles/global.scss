@@ -22,7 +22,7 @@ body {
 }
 
 .form-group-sm {
-  margin-bottom: 0.3rem;
+  margin-bottom: 0rem;
 }
 
 .noselect {
@@ -117,6 +117,30 @@ svg.text-primary {
     fill: theme-color('primary') !important;
   }
 }
+svg.text-primary.inline-action:hover {
+  cursor: pointer;
+  color: theme-color('primary-dark');
+  fill: theme-color('primary-dark');
+  path {
+    fill: theme-color('primary-dark') !important;
+  }
+}
+svg.text-secondary.inline-action:hover {
+  cursor: pointer;
+  color: theme-color('secondary-dark');
+  fill: theme-color('secondary-dark');
+  path {
+    fill: theme-color('secondary-dark') !important;
+  }
+}
+svg.text-warning.inline-action:hover {
+  cursor: pointer;
+  color: theme-color('warning-dark');
+  fill: theme-color('warning-dark');
+  path {
+    fill: theme-color('warning-dark') !important;
+  }
+}
 
 .btn-sm {
   &.btn {
@@ -192,4 +216,11 @@ svg.text-primary {
 }
 .nav-item .nav-link.disabled:hover {
   cursor: not-allowed;
+}
+
+.btn-group-xs > .btn, .btn-xs {
+  padding  : .2rem .3rem;
+  font-size  : .8rem;
+  line-height  : .4;
+  border-radius : .2rem;
 }
