@@ -10,6 +10,7 @@ import { CLIENT_CATEGORY_UPDATE_ONE_UPDATE } from '../features/client-category/r
 import { CAUSE_MOVEMENT_UPDATE_MODEL } from '../features/cause-movement/redux/constants';
 import { SICKNESS_UPDATE_ONE_UPDATE } from '../features/sickness/redux/constants';
 import { ITEM_UPDATE_ONE_UPDATE } from '../features/item/redux/constants';
+import { MOVEMENT_UPDATE_ONE_UPDATE } from '../features/movement/redux/constants';
 
 export function propagateModel(type, model) {
   return dispatch => {
@@ -47,6 +48,12 @@ export function propagateModel(type, model) {
       case 'FreeAsso_CauseMainType':
         dispatch({
           type: CAUSE_MAIN_TYPE_UPDATE_ONE_UPDATE,
+          data: model,
+        });
+        break;
+      case 'FreeAsso_Movement':
+        dispatch({
+          type: MOVEMENT_UPDATE_ONE_UPDATE,
           data: model,
         });
         break;

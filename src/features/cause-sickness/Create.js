@@ -69,7 +69,6 @@ export class Create extends Component {
       .catch(errors => {
         // @todo display errors to fields
         createError();
-        console.log(errors);
       });
   }
 

@@ -15,6 +15,7 @@ export function reducer(state, action) {
         loadMoreError: null,
         loadMoreFinish: false,
         items: [],
+        selected: [],
         page_number: 1,
         page_size: process.env.REACT_APP_PAGE_SIZE,
       };

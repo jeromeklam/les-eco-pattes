@@ -1,10 +1,9 @@
 import React from 'react';
-import { InputText, InputTextarea, InputSelect } from 'freeassofront';
+import { InputTextarea, InputSelect } from 'freeassofront';
 import { InputDate, ResponsiveModalOrForm } from '../ui';
 import useForm from '../ui/useForm';
 import { InputPicker as SicknessInputPicker } from '../sickness';
 import { InputPicker as ClientInputPicker } from '../client';
-import { SimpleValid as SimpleValidIcon } from '../icons';
 import { careSelect, whereSelect } from './';
 
 export default function Form(props) {

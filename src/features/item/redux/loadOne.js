@@ -1,5 +1,5 @@
 import { jsonApiNormalizer, buildModel } from 'freejsonapi';
-import { freeAssoApi, getPreviousNext } from '../../../common';
+import { freeAssoApi } from '../../../common';
 import {
   ITEM_LOAD_ONE_BEGIN,
   ITEM_LOAD_ONE_SUCCESS,

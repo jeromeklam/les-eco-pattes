@@ -5,7 +5,6 @@ export default class InlineListDetail extends Component {
   static propTypes = {};
 
   render() {
-    console.log(this.props.cause);
     return (
       <div className="cause-inline-list-detail">
         {this.props.causes && this.props.causes.length > 0 ? (

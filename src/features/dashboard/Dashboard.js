@@ -5,6 +5,7 @@ import logo from '../../images/logo-les-eco-pattes.jpg';
 import { Stats } from '../dashboard';
 import { DashboardAlerts } from '../alert';
 import { PendingMovements } from '../cause-movement';
+import { PendingSicknesses } from '../cause-sickness';
 
 export default class Dashboard extends Component {
   static propTypes = {};
@@ -31,6 +32,9 @@ export default class Dashboard extends Component {
               <Stats />
               <div className="row">
                 <PendingMovements />
+                <PendingSicknesses />
+              </div>
+              <div className="row">
                 <DashboardAlerts />
               </div>
             </div>

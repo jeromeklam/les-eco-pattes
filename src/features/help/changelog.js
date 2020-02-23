@@ -1,4 +1,24 @@
 export default `
+# Version 1.0.2 : 23/02/2020
+
+* Général
+    * Sites, animaux et clients disponibles sous forme de pop-up
+    * Sexe des animaux géré sous forme d'icône dans les listes
+    * Début d'uniformisation des icônes
+    * Icône de gestion d'aide pour explication des fonctions
+* Animaux
+    * Gestion des croissances
+    * Gestion des maladies
+    * Mouvements
+    * Descendance
+    * Formatage du numéro de boucle en fonction de la race
+* SIte
+    * Gestion du formatage en fonction du type
+* Maladies
+    * Gestion de la description des maladies
+    * Début de gestion des médicaments (stock)
+    * Maladies des animaux
+
 # Version 1.0.1 : 09/02/2020
 
 * Reprise de données

@@ -17,12 +17,12 @@ export default class InputPicker extends Component {
     let value = '';
     let display = '';
     if (this.props.item) {
-      value = this.props.item.id || '';
-      display = this.props.item.cau_code || '';
+      value = props.item.id || '';
+      display = (props.item.type !== '' && props.item.cau_code) || props.item.id;
     }
     this.state = {
       search: false,
-      item: this.props.item || null,
+      item: props.item || null,
       list: [],
       value: value,
       display: display,
@@ -42,7 +42,7 @@ export default class InputPicker extends Component {
       let display = '';
       if (props.item) {
         value = props.item.id || '';
-        display = props.item.cau_code;
+        display = (props.item.type !== '' && props.item.cau_code) || props.item.id;
       }
       return { item: props.item, value: value, display: display };
     }
@@ -99,13 +99,14 @@ export default class InputPicker extends Component {
     return (
       <div className="cause-input-picker">
         <DefaultInputPicker 
+          {...this.props}
           name={this.props.name}
           label={this.props.label}
           labelTop={this.props.labelTop || false}
-          value={this.state.value}
-          list={this.state.list}
+          value={this.state.value || ''}
+          list={this.props.list || this.state.list}
           display={this.state.display}
-          onChange={this.onChange}
+          onChange={this.props.onFineChange || this.onChange}
           onClear={this.onClear}
           onMore={this.onMore}
           error={this.props.error}

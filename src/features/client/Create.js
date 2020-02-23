@@ -6,6 +6,7 @@ import * as actions from './redux/actions';
 import { getJsonApi } from 'freejsonapi';
 import { CenteredLoading9X9 } from '../ui';
 import Form from './Form';
+import { propagateModel } from '../../common';
 
 export class Create extends Component {
   static propTypes = {
@@ -64,7 +65,7 @@ export class Create extends Component {
     this.props.actions
       .createOne(obj)
       .then(result => {
-        this.props.actions.clearItems();
+        this.props.actions.propagateModel('FreeAsso_Client', result);
         if (!this.state.modal) {
           this.props.history.push('/client');
         } else {
@@ -75,7 +76,6 @@ export class Create extends Component {
       })
       .catch(errors => {
         // @todo display errors to fields
-        console.log(errors);
       });
   }
 
@@ -122,7 +122,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    actions: bindActionCreators({ ...actions }, dispatch),
+    actions: bindActionCreators({ ...actions, propagateModel }, dispatch),
   };
 }
 

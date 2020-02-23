@@ -95,7 +95,6 @@ export class Modify extends Component {
       .catch(errors => {
         // @todo display errors to fields
         modifyError();
-        console.log(errors);
       });
   }
 

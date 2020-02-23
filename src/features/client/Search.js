@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import { SearchModal } from '../ui';
 import { jsonApiNormalizer, buildModel, objectToQueryString } from 'freejsonapi';
 import { freeAssoApi } from '../../common';
+import { clientTypeAsOptions } from '../client-type/functions.js';
+import { clientCategoryAsOptions } from '../client-category/functions.js';
 
 export default class Search extends Component {
   static propTypes = {
@@ -50,11 +52,23 @@ export default class Search extends Component {
 
   render() {
     const filters = [
-      {name: 'cli_firstname', label:"Prénom", type:'text'},
-      {name: 'cli_lastname', label:"Nom", type:'text'}
-    ]
+      { name: 'cli_firstname', label: 'Prénom', type: 'text' },
+      { name: 'cli_lastname', label: 'Nom', type: 'text' },
+      {
+        name: 'clit_id',
+        label: 'Catégorie',
+        type: 'select',
+        options: clientTypeAsOptions(this.props.types),
+      },
+      {
+        name: 'clic_id',
+        label: 'Type',
+        type: 'select',
+        options: clientCategoryAsOptions(this.props.categories),
+      },
+    ];
     return (
-      <SearchModal 
+      <SearchModal
         title={this.props.title}
         show={this.props.show}
         loading={this.state.loading}

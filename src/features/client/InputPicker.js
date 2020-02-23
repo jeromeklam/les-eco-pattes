@@ -1,11 +1,14 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { InputPicker as DefaultInputPicker } from 'freeassofront';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
 import axios from 'axios';
+import * as actions from './redux/actions';
 import { Search } from './';
 import { More, DelOne } from '../icons';
 
-export default class InputPicker extends Component {
+export class InputPicker extends Component {
   static propTypes = {
     name: PropTypes.string.isRequired,
     item: PropTypes.object,
@@ -124,8 +127,26 @@ export default class InputPicker extends Component {
           show={this.state.search}
           onClose={this.onCloseMore}
           onSelect={this.onSelect}
+          types={this.props.clientType.items}
+          categories={this.props.clientCategory.items}
         />
       </div>
     );
   }
 }
+
+function mapStateToProps(state) {
+  return {
+    client: state.client,
+    clientType: state.clientType,
+    clientCategory: state.clientCategory,
+  };
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    actions: bindActionCreators({ ...actions }, dispatch),
+  };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(InputPicker);

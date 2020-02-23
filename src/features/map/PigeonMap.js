@@ -143,7 +143,7 @@ export class PigeonMap extends Component {
   }
 
   onClick({ event, latLng, pixel }) {
-    console.log('Map clicked!', latLng, pixel);
+    // @todo
   }
 
   onMarkerClick({ event, anchor, payload }) {

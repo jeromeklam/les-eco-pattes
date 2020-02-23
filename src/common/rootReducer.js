@@ -31,6 +31,7 @@ import unitReducer from '../features/unit/redux/reducer';
 import itemReducer from '../features/item/redux/reducer';
 import causeSicknessReducer from '../features/cause-sickness/redux/reducer';
 import { highlightReducer } from 'freeassofront';
+import movementReducer from '../features/movement/redux/reducer';
 
 // NOTE 1: DO NOT CHANGE the 'reducerMap' name and the declaration pattern.
 // This is used for Rekit cmds to register new features, remove features, etc.
@@ -70,6 +71,7 @@ const reducerMap = {
   item: itemReducer,
   causeSickness: causeSicknessReducer,
   tour: highlightReducer,
+  movement: movementReducer,
 };
 
 export default combineReducers(reducerMap);

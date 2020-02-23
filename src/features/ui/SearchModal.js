@@ -84,10 +84,10 @@ export default class SearchModal extends Component {
           <h6 className="text-secondary">Critères de recherche :</h6>
           <div className="search-filters row">
             {this.state.fields &&
-              this.state.fields.map(item => {
+              this.state.fields.map((item, i) => {
                 if (item.type === 'select') {
                   return (
-                    <div className="col-sm-18" key={item.name}>
+                    <div className="col-sm-18" key={`${item.value}-${i}`}>
                       <select
                         className="form-control"
                         value={item.value}
@@ -104,7 +104,7 @@ export default class SearchModal extends Component {
                   );
                 } else {
                   return (
-                    <div className="col-sm-18" key={item.name}>
+                    <div className="col-sm-18" key={item.value}>
                       <input
                         className="form-control"
                         value={item.value}
@@ -138,8 +138,8 @@ export default class SearchModal extends Component {
                           }}
                         >
                           <p>
-                            {fields.map(elem => (
-                              <span className="mr-2">{item[elem]}</span>
+                            {fields.map((elem, i) => (
+                              <span className="mr-2" key={`key-${i}`}>{item[elem]}</span>
                             ))}
                           </p>
                         </li>

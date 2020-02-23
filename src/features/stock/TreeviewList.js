@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { buildModel } from 'freejsonapi';
-import { ResponsiveTreeviewList, ResponsiveModal } from 'freeassofront';
+import { ResponsiveTreeviewList } from 'freeassofront';
 import * as actions from './redux/actions';
 import { loadChildren, select, toggle } from '../family/redux/actions';
 import { loadMore as loadItems } from '../item/redux/actions';
@@ -22,7 +22,6 @@ import {
   SortDown as SortDownIcon,
   SortUp as SortUpIcon,
   Sort as SortNoneIcon,
-  Search as SearchIcon,
 } from '../icons';
 
 export class TreeviewList extends Component {

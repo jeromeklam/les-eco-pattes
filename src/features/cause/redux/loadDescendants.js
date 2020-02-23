@@ -21,7 +21,6 @@ export function loadDescendants(args = {}) {
           }
         }
       }
-      console.log(filter);
       const addUrl = objectToQueryString(filter);
       const doRequest = freeAssoApi.get('/v1/asso/cause' + addUrl, {});
       doRequest.then(

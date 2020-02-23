@@ -11,3 +11,5 @@ export { default as ImageModal } from './ImageModal';
 export { default as StatCard } from './StatCard';
 export { default as PageNotFound } from './PageNotFound';
 export { default as ResponsiveModalOrForm } from './ResponsiveModalOrForm';
+export { default as InputDatetime } from './InputDatetime';
+export { default as InputYear } from './InputYear';

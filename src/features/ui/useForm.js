@@ -72,7 +72,6 @@ const useForm = (initialState, initialTab, onSubmit, onCancel, onNavTab, errors)
       event.persist();
     }
     let tType = event.target.type || 'text';
-    const regex = event.target.pattern || '';
     const tName = event.target.name;
     const elems = tName.split('.');
     const first = elems.shift();

@@ -53,6 +53,7 @@ export class List extends Component {
     this.onGetOne = this.onGetOne.bind(this);
     this.onDelOne = this.onDelOne.bind(this);
     this.onReload = this.onReload.bind(this);
+    this.onSelect = this.onSelect.bind(this);
     this.onLoadMore = this.onLoadMore.bind(this);
     this.onClearFilters = this.onClearFilters.bind(this);
     this.onQuickSearch = this.onQuickSearch.bind(this);
@@ -98,6 +99,10 @@ export class List extends Component {
         // @todo display errors to fields
         deleteError();
       });
+  }
+
+  onSelect(id) {
+    this.props.actions.onSelect(id);
   }
 
   onListDocument(obj) {
@@ -338,13 +343,14 @@ export class List extends Component {
         }
       }
     }
-
+    const { selected } = this.props.cause;
     return (
       <div>
         <ResponsiveList
           title="Animaux"
           cols={cols}
           items={items}
+          selected={selected}
           quickSearch={quickSearch}
           mainCol="cau_code"
           filterIcon={filterIcon}
@@ -364,6 +370,7 @@ export class List extends Component {
           onSetFiltersAndSort={this.onSetFiltersAndSort}
           onClearFilters={this.onClearFilters}
           onLoadMore={this.onLoadMore}
+          onSelect={this.onSelect}
           loadMorePending={this.props.cause.loadMorePending}
           loadMoreFinish={this.props.cause.loadMoreFinish}
           loadMoreError={this.props.cause.loadMoreError}

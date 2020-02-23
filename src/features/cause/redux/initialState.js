@@ -2,6 +2,7 @@ import { Filter } from 'freeassofront';
 
 const initialState = {
   items: [],
+  selected: [],
   movements: [],
   documents: [],
   currentItem: null,

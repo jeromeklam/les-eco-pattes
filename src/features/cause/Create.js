@@ -7,6 +7,7 @@ import { withRouter } from 'react-router-dom';
 import { getJsonApi } from 'freejsonapi';
 import { CenteredLoading9X9, createSuccess, createError } from '../ui';
 import Form from './Form';
+import { propagateModel } from '../../common';
 
 export class Create extends Component {
   static propTypes = {
@@ -66,7 +67,7 @@ export class Create extends Component {
       .createOne(obj)
       .then(result => {
         createSuccess();
-        this.props.actions.clearItems();
+        this.props.actions.propagateModel('FreeAsso_Cause', result);
         if (!this.state.modal) {
           this.props.history.push('/cause');
         } else {
@@ -78,7 +79,6 @@ export class Create extends Component {
       .catch(errors => {
         // @todo display errors to fields
         createError();
-        console.log(errors);
       });
   }
 
@@ -125,7 +125,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    actions: bindActionCreators({ ...actions }, dispatch),
+    actions: bindActionCreators({ ...actions, propagateModel }, dispatch),
   };
 }
 

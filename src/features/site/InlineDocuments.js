@@ -68,7 +68,6 @@ export class InlineDocuments extends Component {
     downloadSiteMediaBlob(item.id, true).then(result => {
       const type = result.headers['content-type'] || 'application/octet-stream';
       const blob = result.data;
-      console.log(type, blob);
       downloadBlob(blob, type, item.sitm_title);
     });
   }

@@ -42,10 +42,9 @@ export default class InputData extends Component {
       try {
       list = JSON.parse(this.state.data.data_content);
       } catch (ex) {
-        console.log(this.state.data.data_content);
+        // @todo
       }
     }
-    console.log(this.state);
     return (
       <div>
         {this.state.data.data_type === 'BOOLEAN' && (

@@ -78,7 +78,6 @@ export class Modify extends Component {
       })
       .catch(errors => {
         // @todo display errors to fields
-        console.log(errors);
       });
   }
 

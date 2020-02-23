@@ -76,7 +76,7 @@ export function intlDate(date) {
       const laDate = new Date(date);
       return new Intl.DateTimeFormat('fr-FR').format(laDate);
     } catch (ex) {
-      console.log(ex);
+      // @TODO
     }
   }
   return '';

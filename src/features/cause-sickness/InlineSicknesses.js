@@ -73,7 +73,6 @@ export class InlineSicknesses extends Component {
 
   render() {
     const sicknesses = this.props.causeSickness.sicknessesModels;
-    const emptyItem = this.props.causeSickness.emptyItem;
     if (this.props.causeSickness.loadSicknessesPending) {
       return (
         <div className="cause-inline-sicknesses">

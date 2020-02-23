@@ -23,6 +23,7 @@ import { reducer as loadDocumentsReducer } from './loadDocuments';
 import { reducer as uploadCauseMediaReducer } from './uploadCauseMedia';
 import { reducer as delCauseMediaReducer } from './delCauseMedia';
 import { reducer as loadDescendantsReducer } from './loadDescendants';
+import { reducer as onSelectReducer } from './onSelect';
 
 const reducers = [
   loadMoreReducer,
@@ -41,6 +42,7 @@ const reducers = [
   uploadCauseMediaReducer,
   delCauseMediaReducer,
   loadDescendantsReducer,
+  onSelectReducer,
 ];
 
 export default function reducer(state = initialState, action) {

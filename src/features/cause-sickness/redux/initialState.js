@@ -4,6 +4,7 @@ const initialState = {
   cause: null,
   sicknesses: [],
   sicknessesModels: [],
+  pendings: [],
   loadOnePending: false,
   loadOneError: null,
   createOnePending: false,
@@ -12,6 +13,8 @@ const initialState = {
   updateOneError: null,
   delOnePending: false,
   delOneError: null,
+  loadPendingsPending: false,
+  loadPendingsError: null,
 };
 
 export default initialState;

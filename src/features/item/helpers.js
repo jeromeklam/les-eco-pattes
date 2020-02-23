@@ -1,11 +1,8 @@
 import React from 'react';
 import {
   AddOne as AddOneIcon,
-  Cause as CauseIcon,
   GetOne as GetOneIcon,
   DelOne as DelOneIcon,
-  Photo as PhotoIcon,
-  Document as DocumentIcon,
   FilterClear as FilterClearIcon,
 } from '../icons';
 

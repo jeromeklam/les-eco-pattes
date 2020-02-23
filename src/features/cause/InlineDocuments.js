@@ -69,7 +69,6 @@ export class InlineDocuments extends Component {
     downloadCauseMediaBlob(item.id, true).then(result => {
       const type = result.headers['content-type'] || 'application/octet-stream';
       const blob = result.data;
-      console.log(type, blob);
       downloadBlob(blob, type, item.caum_title);
     });
   }
@@ -102,7 +101,7 @@ export class InlineDocuments extends Component {
                   let style = defaultStyles[ext];
                   content = <FileIcon size={80} extension={ext} {...style} />;
                 } catch (ex) {
-                  console.log(ex);
+                  // @TODO
                 }
                 return (
                   <div className="col" key={document.id}>

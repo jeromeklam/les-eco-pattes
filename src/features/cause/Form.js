@@ -8,7 +8,7 @@ import { InputPicker as ClientInputPicker } from '../client';
 import { InputPicker as SiteInputPicker } from '../site';
 import { InputPicker as CauseInputPicker, sexSelect } from './';
 import { validateRegex } from '../../common';
-import { ResponsiveModalOrForm } from '../ui';
+import { ResponsiveModalOrForm, InputYear } from '../ui';
 
 let regPlaceholder = '';
 let caut_id = 0;
@@ -123,7 +123,7 @@ export default function Form(props) {
           </div>
           <div className="row">
             <div className="col-6">
-              <InputText
+              <InputYear
                 label="Année de naissance"
                 name="cau_year"
                 id="cau_year"
