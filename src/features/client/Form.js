@@ -4,13 +4,12 @@ import {
   InputText,
   InputSelect,
   InputCheckbox,
-  InputTextarea,
 } from 'freeassofront';
 import useForm from '../ui/useForm';
 import { clientTypeAsOptions } from '../client-type/functions.js';
 import { clientCategoryAsOptions } from '../client-category/functions.js';
 import { countryAsOptions } from '../country/functions.js';
-import { ResponsiveModalOrForm } from '../ui';
+import { ResponsiveModalOrForm, InputTextarea } from '../ui';
 
 export default function Form(props) {
   const {

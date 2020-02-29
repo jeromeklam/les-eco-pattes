@@ -24,7 +24,7 @@ export class Modify extends Component {
      * On récupère l'id et l'élément à afficher
      */
     this.state = {
-      sickId: this.props.match.params.sickId || false,
+      sickId: this.props.sickId || this.props.match.params.sickId || false,
       item: false,
     };
     /**
@@ -61,7 +61,7 @@ export class Modify extends Component {
    * Sur annulation, on retourne à la liste
    */
   onCancel() {
-    this.props.history.push('/sickness');
+    this.props.onClose();
   }
 
   /**
@@ -78,7 +78,7 @@ export class Modify extends Component {
         // propagateModel est ajouté aux actions en bas de document
         modifySuccess();
         this.props.actions.propagateModel('FreeAsso_Sickness', result);
-        this.props.history.push('/sickness');
+        this.props.onClose();
       })
       .catch(errors => {
         // @todo display errors to fields
@@ -105,6 +105,8 @@ export class Modify extends Component {
                 tabs={this.props.sickness.tabs}
                 onSubmit={this.onSubmit}
                 onCancel={this.onCancel}
+                onClose={this.props.onClose}
+                modal
               />
             )}
           </div>

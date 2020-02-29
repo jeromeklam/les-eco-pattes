@@ -80,6 +80,7 @@ export class InlineMapPhotos extends Component {
                           <ViewIcon
                             className="text-secondary inline-action"
                             onClick={() => this.onView(photo)}
+                            title={photo.sitm_title}
                           />
                         </div>
                         <div className="ml-2">

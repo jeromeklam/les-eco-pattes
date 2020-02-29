@@ -123,6 +123,7 @@ export default class MultiInputPicker extends Component {
                 labelTop={false}
                 labelSize={0}
                 inputSize={36}
+                multi
                 list={this.state.list[i] || false}
                 onFineChange={e => {
                   this.onFineChange(e, i);

@@ -1,8 +1,8 @@
 import React from 'react';
-import { InputHidden, InputText, InputTextarea, InputSelect } from 'freeassofront';
+import { InputHidden, InputText, InputSelect, InputCheckbox } from 'freeassofront';
 import { InputPicker as ClientInputPicker } from '../client';
-import { ResponsiveModalOrForm, useForm, InputDate } from '../ui';
-import { stockSelect } from './';
+import { ResponsiveModalOrForm, useForm, InputDate, InputTextarea } from '../ui';
+import { stockSelect, typeSelect } from './';
 
 export default function Form(props) {
   const { values, handleChange, handleSubmit, handleCancel, getErrorMessage } = useForm(
@@ -25,7 +25,7 @@ export default function Form(props) {
       <InputHidden name="id" id="id" value={values.id} />
       <div className="card-body">
         <div className="row">
-          <div className="col-sm-16">
+          <div className="col-sm-14">
             <InputText
               label="Nom"
               name="item_name"
@@ -33,6 +33,28 @@ export default function Form(props) {
               value={values.item_name}
               onChange={handleChange}
               error={getErrorMessage('item_name')}
+            />
+          </div>
+          <div className="col-sm-8">
+            <InputSelect
+              label="Type"
+              name="item_stock"
+              id="item_stock"
+              value={values.item_stock}
+              onChange={handleChange}
+              options={stockSelect}
+              error={getErrorMessage('item_stock')}
+            />
+          </div>
+          <div className="col-sm-8">
+            <InputSelect
+              label="Type"
+              name="item_type"
+              id="item_type"
+              value={values.item_type}
+              onChange={handleChange}
+              options={typeSelect}
+              error={getErrorMessage('item_type')}
             />
           </div>
           <div className="col-sm-6">
@@ -45,20 +67,9 @@ export default function Form(props) {
               error={getErrorMessage('item_code')}
             />
           </div>
-          <div className="col-sm-10">
-            <InputSelect
-              label="Type"
-              name="item_stock"
-              id="item_stock"
-              value={values.item_stock}
-              onChange={handleChange}
-              options={stockSelect}
-              error={getErrorMessage('item_stock')}
-            />
-          </div>
         </div>
         <div className="row">
-          <div className="col-16">
+          <div className="col-14">
             <ClientInputPicker
               label="Fournisseur par défaut"
               key="default_provider"
@@ -68,7 +79,7 @@ export default function Form(props) {
               error={getErrorMessage('default_provider')}
             />
           </div>
-          <div className="col-10">
+          <div className="col-8">
             <InputDate
               label="Entrée"
               name="item_from"
@@ -78,12 +89,22 @@ export default function Form(props) {
               error={getErrorMessage('item_from')}
             />
           </div>
-          <div className="col-10">
+          <div className="col-8">
             <InputDate
               label="Sortie"
               name="item_to"
               id="item_to"
               value={values.item_to}
+              onChange={handleChange}
+              labelTop={true}
+            />
+          </div>
+          <div className="col-6">
+            <InputCheckbox
+              label="Dangereux"
+              name="item_dangerous"
+              id="item_dangerous"
+              checked={values.item_dangerous}
               onChange={handleChange}
               labelTop={true}
             />

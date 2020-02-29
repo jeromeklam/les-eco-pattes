@@ -6,7 +6,7 @@ import { buildModel } from 'freejsonapi';
 import { ResponsiveTreeviewList } from 'freeassofront';
 import * as actions from './redux/actions';
 import { loadChildren, select, toggle } from '../family/redux/actions';
-import { loadMore as loadItems } from '../item/redux/actions';
+import { loadMore as loadItems, delOne as delOneItem } from '../item/redux/actions';
 import {
   getGlobalActions,
   getInlineActions,
@@ -23,6 +23,7 @@ import {
   SortUp as SortUpIcon,
   Sort as SortNoneIcon,
 } from '../icons';
+import { deleteSuccess, deleteError } from '../ui';
 
 export class TreeviewList extends Component {
   static propTypes = {
@@ -34,11 +35,13 @@ export class TreeviewList extends Component {
     super(props);
     this.state = {
       item_id: -1,
+      family: null,
     };
     this.onSelect = this.onSelect.bind(this);
     this.onToggle = this.onToggle.bind(this);
     this.onCreateOneItem = this.onCreateOneItem.bind(this);
     this.onGetOneItem = this.onGetOneItem.bind(this);
+    this.onDelOneItem = this.onDelOneItem.bind(this);
     this.onCloseModal = this.onCloseModal.bind(this);
   }
 
@@ -46,9 +49,15 @@ export class TreeviewList extends Component {
     this.props.actions.loadChildren();
   }
 
-  onSelect(id) {
-    this.props.actions.select(id);
-    this.props.actions.loadItems({ fam_id: id }, true);
+  onSelect(family) {
+    this.setState({ family: family });
+    if (family) {
+      this.props.actions.select(family.id);
+      this.props.actions.loadItems({ family: family, fam_id: family.id }, true);
+    } else {
+      this.props.actions.select(0);
+      this.props.actions.loadItems({ family: null, fam_id: 0 }, true);
+    }
   }
 
   onToggle(id) {
@@ -66,6 +75,20 @@ export class TreeviewList extends Component {
 
   onGetOneItem(id) {
     this.setState({ item_id: id });
+  }
+
+  onDelOneItem(id) {
+    const { family } = this.state;
+    this.props.actions
+      .delOneItem(id)
+      .then(result => {
+        this.props.actions.loadItems({ family: family, fam_id: family.id }, true);
+        deleteSuccess();
+      })
+      .catch(errors => {
+        // @todo display errors to fields
+        deleteError();
+      });
   }
 
   onCloseModal() {
@@ -116,10 +139,10 @@ export class TreeviewList extends Component {
           loadMoreError={this.props.item.loadMoreError}
         />
         {this.state.item_id > 0 && (
-          <ModifyItem modal={true} itemId={this.state.item_id} onClose={this.onCloseModal} />
+          <ModifyItem modal={true} family={this.state.family} itemId={this.state.item_id} onClose={this.onCloseModal} />
         )}
         {this.state.item_id === 0 && (
-          <CreateItem modal={true} onClose={this.onCloseModal} />
+          <CreateItem modal={true} family={this.state.family} onClose={this.onCloseModal} />
         )}
       </div>
     );
@@ -138,7 +161,7 @@ function mapStateToProps(state) {
 /* istanbul ignore next */
 function mapDispatchToProps(dispatch) {
   return {
-    actions: bindActionCreators({ ...actions, loadChildren, select, toggle, loadItems }, dispatch),
+    actions: bindActionCreators({ ...actions, loadChildren, select, toggle, loadItems, delOneItem }, dispatch),
   };
 }
 

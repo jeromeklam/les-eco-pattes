@@ -11,12 +11,14 @@ import { reducer as loadMoreReducer } from './loadMore';
 import { reducer as loadOneReducer } from './loadOne';
 import { reducer as updateOneReducer } from './updateOne';
 import { reducer as createOneReducer } from './createOne';
+import { reducer as delOneReducer } from './delOne';
 
 const reducers = [
   loadMoreReducer,
   loadOneReducer,
   updateOneReducer,
   createOneReducer,
+  delOneReducer,
 ];
 
 export default function reducer(state = initialState, action) {

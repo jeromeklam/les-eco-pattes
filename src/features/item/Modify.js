@@ -18,6 +18,7 @@ export class Modify extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      family: this.props.family || null,
       itemId: this.props.itemId || this.props.match.params.id || false,
       modal: this.props.modal || false,
       item: false,

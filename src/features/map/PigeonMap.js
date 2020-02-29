@@ -11,7 +11,7 @@ import { loadMore as loadMoreSite, updateOne as updateOneSite } from '../site/re
 import Draggable from 'pigeon-draggable';
 import Icon from '@mdi/react';
 import { Responsive } from 'freeassofront';
-import { mdiMagnifyMinus, mdiMagnifyPlus } from '@mdi/js';
+import { mdiMagnifyMinus, mdiMagnifyPlus, mdiCrosshairsGps } from '@mdi/js';
 import mapselect from '../../images/mapselect.png';
 import { ListGroup } from '../site';
 import { SiteMarker } from './';
@@ -79,9 +79,14 @@ export class PigeonMap extends Component {
     this.onMarkerClick = this.onMarkerClick.bind(this);
     this.onSiteClick = this.onSiteClick.bind(this);
     this.onSiteMove = this.onSiteMove.bind(this);
+    this.localize = this.localize.bind(this);
   }
 
   componentDidMount() {
+    this.props.actions.loadMoreSite();
+  }
+
+  localize() {
     this.props.actions.loadMoreSite();
   }
 
@@ -222,6 +227,9 @@ export class PigeonMap extends Component {
             </button>
             <button className="btn btn-primary btn-sm" onClick={this.zoomOut}>
               <Icon path={mdiMagnifyMinus} size={1} color="white" />
+            </button>
+            <button className="btn btn-primary btn-sm" onClick={this.localize}>
+              <Icon path={mdiCrosshairsGps} size={1} color="white" />
             </button>
             <br />
             <p>

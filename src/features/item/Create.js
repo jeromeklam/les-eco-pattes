@@ -18,6 +18,7 @@ export class Modify extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      family: this.props.family || null,
       itemId: 0,
       modal: this.props.modal || false,
       item: false,
@@ -34,13 +35,7 @@ export class Modify extends Component {
   }
 
   onCancel() {
-    if (!this.props.modal) {
-      this.props.history.push('/item');
-    } else {
-      if (this.props.onClose) {
-        this.props.onClose();
-      }
-    }
+    this.props.onClose();
   }
 
   /**
@@ -48,18 +43,14 @@ export class Modify extends Component {
    */
   onSubmit(datas = {}) {
     // Conversion des données en objet pour le service web
+    datas.family = this.state.family;
     let obj = getJsonApi(datas, 'FreeAsso_Item', this.state.itemId);
     this.props.actions
       .createOne(obj)
       .then(result => {
+        this.props.actions.propagateModel('FreeAsso_Item', result);
         createSuccess();
-        if (!this.props.modal) {
-          this.props.history.push('/item');
-        } else {
-          if (this.props.onClose) {
-            this.props.onClose();
-          }
-        }
+        this.props.onClose();
       })
       .catch(errors => {
         createError();

@@ -1,5 +1,5 @@
 import React from 'react';
-import { InputHidden, InputText, InputSelect, InputTextarea } from 'freeassofront';
+import { InputHidden, InputText, InputSelect } from 'freeassofront';
 import RegexpParser from 'reregexp';
 import { InputDate, InputData } from '../ui';
 import useForm from '../ui/useForm';
@@ -8,7 +8,7 @@ import { InputPicker as ClientInputPicker } from '../client';
 import { InputPicker as SiteInputPicker } from '../site';
 import { InputPicker as CauseInputPicker, sexSelect } from './';
 import { validateRegex } from '../../common';
-import { ResponsiveModalOrForm, InputYear } from '../ui';
+import { ResponsiveModalOrForm, InputYear, InputTextarea } from '../ui';
 
 let regPlaceholder = '';
 let caut_id = 0;

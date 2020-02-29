@@ -3,7 +3,6 @@ import {
   InputHidden,
   InputText,
   InputSelect,
-  InputTextarea,
   InputCheckbox,
 } from 'freeassofront';
 import RegexpParser from 'reregexp';
@@ -13,7 +12,7 @@ import { siteTypeAsOptions } from '../site-type/functions.js';
 import { InputPicker as ClientInputPicker } from '../client';
 import { InputPicker as SiteInputPicker } from '../site';
 import { Location as LocationIcon, Settings as SettingsIcon, Other as OtherIcon } from '../icons';
-import { ResponsiveModalOrForm } from '../ui';
+import { ResponsiveModalOrForm, InputTextarea } from '../ui';
 import { validateRegex } from '../../common';
 
 let regPlaceholder = '';

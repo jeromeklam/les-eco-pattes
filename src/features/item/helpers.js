@@ -11,6 +11,11 @@ export const stockSelect = [
   { label: 'Non stocké', value: 'NONE' },
 ];
 
+export const typeSelect = [
+  { label: 'Médicament', value: 'DRUG' },
+  { label: 'Autre', value: 'OTHER' },
+];
+
 export const getGlobalActions = ({ onClearFilters, onCreate, onCreateOneItem }) => {
   return [
     {
@@ -32,13 +37,10 @@ export const getGlobalActions = ({ onClearFilters, onCreate, onCreateOneItem }) 
 };
 
 export const getInlineActions = ({
-  onListCause,
-  onListDocument,
-  onListPhoto,
-  onGetOne,
   onGetOneItem,
+  onGetOne,
+  onDelOneItem,
   onDelOne,
-  state,
 }) => {
   return [
     {
@@ -52,7 +54,7 @@ export const getInlineActions = ({
     {
       name: 'delete',
       label: 'Supprimer',
-      onClick: onDelOne,
+      onClick: onDelOneItem || onDelOne,
       theme: 'warning',
       icon: <DelOneIcon color="white" />,
       role: 'DELETE',

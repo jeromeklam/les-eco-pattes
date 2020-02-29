@@ -210,7 +210,7 @@ export class InlinePhotos extends Component {
           <ImageModal
             show={this.state.view}
             onClose={this.onCloseView}
-            title={Image}
+            title=""
             image={this.state.blob}
           />
         )}

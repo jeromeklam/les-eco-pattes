@@ -1,13 +1,6 @@
 import React from 'react';
-import {
-  InputHidden,
-  InputText,
-  InputTextarea,
-  InputSelect,
-  InputCheckbox,
-  ResponsiveForm,
-} from 'freeassofront';
-import useForm from '../ui/useForm';
+import { InputHidden, InputText, InputSelect, InputCheckbox } from 'freeassofront';
+import { ResponsiveModalOrForm, InputTextarea, useForm } from '../ui';
 import { sicknessTypeSelect } from './';
 
 export default function Form(props) {
@@ -20,7 +13,14 @@ export default function Form(props) {
     props.errors,
   );
   return (
-    <ResponsiveForm className="" title="Maladies" onSubmit={handleSubmit} onCancel={handleCancel}>
+    <ResponsiveModalOrForm
+      className=""
+      title="Maladies"
+      onSubmit={handleSubmit}
+      onCancel={handleCancel}
+      onClose={props.onClose}
+      modal={props.modal || false}
+    >
       <div className="card-body">
         <InputHidden name="id" id="id" value={values.id} />
         <div className="row">
@@ -51,9 +51,9 @@ export default function Form(props) {
           <div className="col-sm-4">
             <InputCheckbox
               label="Contagieux"
-              name="sick_spead"
+              name="sick_spread"
               labelTop={true}
-              checked={values.sick_spead === true}
+              checked={values.sick_spread === true}
               onChange={handleChange}
             />
           </div>
@@ -93,6 +93,6 @@ export default function Form(props) {
           </div>
         </div>
       </div>
-    </ResponsiveForm>
+    </ResponsiveModalOrForm>
   );
 }

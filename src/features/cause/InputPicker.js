@@ -10,6 +10,11 @@ export default class InputPicker extends Component {
     name: PropTypes.string.isRequired,
     item: PropTypes.object,
     onChange: PropTypes.func.isRequired,
+    multi: PropTypes.bool,
+  };
+
+  static defaultProps = {
+    multi: false,
   };
 
   constructor(props) {
@@ -18,7 +23,7 @@ export default class InputPicker extends Component {
     let display = '';
     if (this.props.item) {
       value = props.item.id || '';
-      display = (props.item.type !== '' && props.item.cau_code) || props.item.id;
+      display = (props.item.type !== '' && props.item.cau_code) || (props.multi && props.item.id);
     }
     this.state = {
       search: false,
@@ -42,7 +47,7 @@ export default class InputPicker extends Component {
       let display = '';
       if (props.item) {
         value = props.item.id || '';
-        display = (props.item.type !== '' && props.item.cau_code) || props.item.id;
+        display = (props.item.type !== '' && props.item.cau_code) || (props.multi && props.item.id);
       }
       return { item: props.item, value: value, display: display };
     }

@@ -16,7 +16,7 @@ import {
   Search as SearchIcon,
 } from '../icons';
 import { deleteSuccess, deleteError } from '../ui';
-import { getGlobalActions, getInlineActions, getCols } from './';
+import { getGlobalActions, getInlineActions, getCols, Create, Modify } from './';
 
 /**
  * Liste des maladies
@@ -34,11 +34,13 @@ export class List extends Component {
     super(props);
     this.state = {
       timer: null,
+      sickId: -1,
     };
     this.onCreate = this.onCreate.bind(this);
     this.onGetOne = this.onGetOne.bind(this);
     this.onDelOne = this.onDelOne.bind(this);
     this.onReload = this.onReload.bind(this);
+    this.onClose = this.onClose.bind(this);
     this.onLoadMore = this.onLoadMore.bind(this);
     this.onQuickSearch = this.onQuickSearch.bind(this);
     this.onClearFilters = this.onClearFilters.bind(this);
@@ -51,14 +53,15 @@ export class List extends Component {
   }
 
   onCreate(event) {
-    if (event) {
-      event.preventDefault();
-    }
-    this.props.history.push('/sickness/create');
+    this.setState({ sickId: 0 });
   }
 
   onGetOne(id) {
-    this.props.history.push('/sickness/modify/' + id);
+    this.setState({ sickId: id });
+  }
+
+  onClose() {
+    this.setState({ sickId: -1 });
   }
 
   onDelOne(id) {
@@ -170,31 +173,39 @@ export class List extends Component {
       <FilterFullIcon className="text-light" />
     );
     return (
-      <ResponsiveList
-        title="Maladies"
-        cols={cols}
-        items={items || []}
-        quickSearch={quickSearch}
-        mainCol="sick_name"
-        filterIcon={filterIcon}
-        cancelPanelIcon={<CancelPanelIcon />}
-        validPanelIcon={<ValidPanelIcon />}
-        sortDownIcon={<SortDownIcon color="secondary" />}
-        sortUpIcon={<SortUpIcon color="secondary" />}
-        sortNoneIcon={<SortNoneIcon color="secondary" />}
-        inlineActions={inlineActions}
-        globalActions={globalActions}
-        sort={this.props.sickness.sort}
-        filters={this.props.sickness.filters}
-        onSearch={this.onQuickSearch}
-        onClearFilters={this.onClearFilters}
-        onSort={this.onUpdateSort}
-        onSetFiltersAndSort={this.onSetFiltersAndSort}
-        onLoadMore={this.onLoadMore}
-        loadMorePending={this.props.sickness.loadMorePending}
-        loadMoreFinish={this.props.sickness.loadMoreFinish}
-        loadMoreError={this.props.sickness.loadMoreError}
-      />
+      <div>
+        <ResponsiveList
+          title="Maladies"
+          cols={cols}
+          items={items || []}
+          quickSearch={quickSearch}
+          mainCol="sick_name"
+          filterIcon={filterIcon}
+          cancelPanelIcon={<CancelPanelIcon />}
+          validPanelIcon={<ValidPanelIcon />}
+          sortDownIcon={<SortDownIcon color="secondary" />}
+          sortUpIcon={<SortUpIcon color="secondary" />}
+          sortNoneIcon={<SortNoneIcon color="secondary" />}
+          inlineActions={inlineActions}
+          globalActions={globalActions}
+          sort={this.props.sickness.sort}
+          filters={this.props.sickness.filters}
+          onSearch={this.onQuickSearch}
+          onClearFilters={this.onClearFilters}
+          onSort={this.onUpdateSort}
+          onSetFiltersAndSort={this.onSetFiltersAndSort}
+          onLoadMore={this.onLoadMore}
+          loadMorePending={this.props.sickness.loadMorePending}
+          loadMoreFinish={this.props.sickness.loadMoreFinish}
+          loadMoreError={this.props.sickness.loadMoreError}
+        />
+        {this.state.sickId > 0 && (
+          <Modify modal={true} sickId={this.state.sickId} onClose={this.onClose} />
+        )}
+        {this.state.sickId === 0 && (
+          <Create modal={true} onClose={this.onClose} />
+        )}
+      </div>
     );
   }
 }

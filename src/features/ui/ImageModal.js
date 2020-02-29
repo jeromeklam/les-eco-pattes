@@ -4,10 +4,14 @@ import { ResponsiveModal } from 'freeassofront'
 
 export default class ImageModal extends Component {
   static propTypes = {
-    title: PropTypes.string.isRequired,
+    title: PropTypes.string,
     show: PropTypes.bool.isRequired,
-    image: PropTypes.element.isRequired,
+    image: PropTypes.oneOfType([PropTypes.element,PropTypes.string]),
     onClose: PropTypes.func.isRequired,
+  };
+
+  static defaultProps = {
+    title: '',
   };
 
   render() {
@@ -21,7 +25,7 @@ export default class ImageModal extends Component {
           buttons={[]}
         >
           <div className="container-fluid text-center">
-            <img src={this.props.image} class="img-fluid" alt="Responsive" />
+            <img src={this.props.image} className="img-fluid" alt="Responsive" />
           </div>
         </ResponsiveModal>
       );
