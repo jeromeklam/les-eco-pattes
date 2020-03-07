@@ -1,6 +1,6 @@
 import React from 'react';
-import { InputTextarea, InputSelect } from 'freeassofront';
-import { InputDate, ResponsiveModalOrForm } from '../ui';
+import { InputSelect } from 'freeassofront';
+import { InputTextarea, InputDate, ResponsiveModalOrForm } from '../ui';
 import useForm from '../ui/useForm';
 import { InputPicker as SicknessInputPicker } from '../sickness';
 import { InputPicker as ClientInputPicker } from '../client';

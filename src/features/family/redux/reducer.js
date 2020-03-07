@@ -10,11 +10,15 @@ import initialState from './initialState';
 import { reducer as loadChildrenReducer } from './loadChildren';
 import { reducer as toggleReducer } from './toggle';
 import { reducer as selectReducer } from './select';
+import { reducer as loadOneReducer } from './loadOne';
+import { reducer as createOneReducer } from './createOne';
 
 const reducers = [
   loadChildrenReducer,
   toggleReducer,
   selectReducer,
+  loadOneReducer,
+  createOneReducer,
 ];
 
 export default function reducer(state = initialState, action) {

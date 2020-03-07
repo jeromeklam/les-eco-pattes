@@ -14,6 +14,11 @@ const initialState = {
   loadChildrenPending: false,
   loadChildrenError: null,
   loadChildrenFinished: false,
+  loadOnePending: false,
+  loadOneError: null,
+  loadOneItem: null,
+  createOnePending: false,
+  createOneError: null,
 };
 
 export default initialState;

@@ -15,6 +15,10 @@ import {
   Modify as ModifyItem,
 } from '../item';
 import {
+  Create as CreateFamily,
+  Modify as ModifyFamily,
+} from '../family';
+import {
   Filter as FilterIcon,
   FilterFull as FilterFullIcon,
   SimpleCancel as CancelPanelIcon,
@@ -22,6 +26,9 @@ import {
   SortDown as SortDownIcon,
   SortUp as SortUpIcon,
   Sort as SortNoneIcon,
+  AddOne as AddOneIcon,
+  DelOne as DelOneIcon,
+  GetOne as GetOneIcon,
 } from '../icons';
 import { deleteSuccess, deleteError } from '../ui';
 
@@ -34,8 +41,10 @@ export class TreeviewList extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      currentFamily: null,
       item_id: -1,
       family: null,
+      fam_id: -1,
     };
     this.onSelect = this.onSelect.bind(this);
     this.onToggle = this.onToggle.bind(this);
@@ -43,6 +52,8 @@ export class TreeviewList extends Component {
     this.onGetOneItem = this.onGetOneItem.bind(this);
     this.onDelOneItem = this.onDelOneItem.bind(this);
     this.onCloseModal = this.onCloseModal.bind(this);
+    this.onCreateOneFamily = this.onCreateOneFamily.bind(this);
+    this.onGetOneFamily = this.onGetOneFamily.bind(this);
   }
 
   componentDidMount() {
@@ -77,6 +88,14 @@ export class TreeviewList extends Component {
     this.setState({ item_id: id });
   }
 
+  onCreateOneFamily(family) {
+    this.setState({ currentFamily: family, fam_id: 0 });
+  }
+
+  onGetOneFamily(family) {
+    this.setState({ currentFamily: family, fam_id: family.id });
+  }
+
   onDelOneItem(id) {
     const { family } = this.state;
     this.props.actions
@@ -92,7 +111,7 @@ export class TreeviewList extends Component {
   }
 
   onCloseModal() {
-    this.setState({ item_id: -1 });
+    this.setState({ item_id: -1, fam_id: -1 });
   }
 
   render() {
@@ -134,15 +153,26 @@ export class TreeviewList extends Component {
           sortDownIcon={<SortDownIcon color="secondary" />}
           sortUpIcon={<SortUpIcon color="secondary" />}
           sortNoneIcon={<SortNoneIcon color="secondary" />}
+          TreeCreateOneIcon={<AddOneIcon className="text-light inline-action" />}
+          TreeGetOneIcon={<GetOneIcon className="text-light inline-action" />}
+          TreeDelOneIcon={<DelOneIcon className="text-light inline-action" />}
+          onTreeCreateOne={this.onCreateOneFamily}
+          onTreeGetOne={this.onGetOneFamily}
           loadMorePending={this.props.item.loadMorePending}
           loadMoreFinish={this.props.item.loadMoreFinish}
           loadMoreError={this.props.item.loadMoreError}
         />
         {this.state.item_id > 0 && (
-          <ModifyItem modal={true} family={this.state.family} itemId={this.state.item_id} onClose={this.onCloseModal} />
+          <ModifyItem modal={true} parentFamily={this.state.family} itemId={this.state.item_id} onClose={this.onCloseModal} />
         )}
         {this.state.item_id === 0 && (
-          <CreateItem modal={true} family={this.state.family} onClose={this.onCloseModal} />
+          <CreateItem modal={true} parentFamily={this.state.family} onClose={this.onCloseModal} />
+        )}
+        {this.state.fam_id > 0 && (
+          <ModifyFamily modal={true} parentFamily={this.state.currentFamily} famId={this.state.fam_id} onClose={this.onCloseModal} />
+        )}
+        {this.state.fam_id === 0 && (
+          <CreateFamily modal={true} parentFamily={this.state.currentFamily} onClose={this.onCloseModal} />
         )}
       </div>
     );

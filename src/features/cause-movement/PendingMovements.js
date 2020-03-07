@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import * as actions from './redux/actions';
 import { buildModel } from 'freejsonapi';
 import { ResponsiveConfirm, Loading3Dots } from 'freeassofront';
+import { DashboardCard } from '../dashboard';
 import { propagateModel, intlDate } from '../../common';
 import {
   DelOne as DelOneIcon,
@@ -12,7 +13,6 @@ import {
   Movement as MovementIcon,
 } from '../icons';
 import { statusLabel } from './';
-import { StatCard } from '../ui';
 
 export class PendingMovements extends Component {
   static propTypes = {
@@ -74,7 +74,7 @@ export class PendingMovements extends Component {
       movements = buildModel(this.props.causeMovement.pendings, 'FreeAsso_CauseMovement');
     }
     return (
-      <StatCard title="Mouvements en attente" icon={<MovementIcon />} size="md">
+      <DashboardCard title="Mouvements en attente" icon={<MovementIcon />} size="md">
         <div>
           <div className="cause-movement-pendings text-secondary bg-secondary-light">
             {movements && movements.length > 0 ? (
@@ -160,7 +160,7 @@ export class PendingMovements extends Component {
             <p>Confirmez-vous la validation du mouvement ?</p>
           </ResponsiveConfirm>
         </div>
-      </StatCard>
+      </DashboardCard>
     );
   }
 }

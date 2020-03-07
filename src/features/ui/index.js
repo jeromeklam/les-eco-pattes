@@ -14,3 +14,5 @@ export { default as ResponsiveModalOrForm } from './ResponsiveModalOrForm';
 export { default as InputDatetime } from './InputDatetime';
 export { default as InputYear } from './InputYear';
 export { default as InputTextarea } from './InputTextarea';
+export { default as ResponsiveGridCard } from './ResponsiveGridCard';
+export { default as Col } from './Col';

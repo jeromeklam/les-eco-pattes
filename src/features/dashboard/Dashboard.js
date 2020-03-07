@@ -5,7 +5,8 @@ import logo from '../../images/logo-les-eco-pattes.jpg';
 import { Stats } from '../dashboard';
 import { DashboardAlerts } from '../alert';
 import { PendingMovements } from '../cause-movement';
-import { PendingSicknesses } from '../cause-sickness';
+import { PendingSicknesses } from '../cause-sickness'
+import { DashboardGrid } from './';
 
 export default class Dashboard extends Component {
   static propTypes = {};
@@ -28,16 +29,7 @@ export default class Dashboard extends Component {
           <div className="text-center">
             <img className="fond-site" src={fond} alt="" />
             <br />
-            <div>
-              <Stats />
-              <div className="row">
-                <PendingMovements />
-                <PendingSicknesses />
-              </div>
-              <div className="row">
-                <DashboardAlerts />
-              </div>
-            </div>
+            <DashboardGrid />
           </div>
         </Responsive>
       </div>
