@@ -15,7 +15,6 @@ export default class Col extends Component {
         add = `-${this.props['col']}`;
       }
     }
-    console.log(this.props.layoutSize, this.props.md);
     return (
       <div className={classnames("col" + add)}>
         {this.props.children}

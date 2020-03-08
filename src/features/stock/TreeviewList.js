@@ -99,7 +99,6 @@ export class TreeviewList extends Component {
 
   onDelOneFamily(family) {
     this.setState({ currentFamily: null, fam_id: -1 });
-    console.log(family);
     this.props.actions
       .delOneFamily(family.id)
       .then(result => {
