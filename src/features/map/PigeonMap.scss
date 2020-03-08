@@ -21,6 +21,7 @@ $map-list-width: 350px;
     width: $map-list-width;
     height: 80px;
     padding: 10px;
+    background-color: theme-color('light');
   }
 
   .map-list-scroll {
@@ -30,6 +31,7 @@ $map-list-width: 350px;
     bottom: 0px;
     width: $map-list-width;
     overflow-y: auto;
+    background-color: theme-color('light');
   }
 
   .map-content-mobile {
@@ -49,6 +51,9 @@ $map-list-width: 350px;
     right: 0px;
     bottom: $mobile-footer-height;
     overflow: auto;
+  }
+  .list-group-item {
+    background-color: transparent;
   }
 }
 

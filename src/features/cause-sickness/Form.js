@@ -29,108 +29,106 @@ export default function Form(props) {
       onClose={props.onClose}
       modal={props.modal || false}
     >
-      <div className="card-body">
-        <div className="row row-line row-new">
-          <div className="col-10">
-            <InputDate
-              label="Du"
-              name="caus_from"
-              labelTop={true}
-              required={true}
-              labelSize={0}
-              inputSize={36}
-              value={values.caus_from || ''}
-              onChange={handleChange}
-              error={getErrorMessage('caus_from')}
-            />
-          </div>
-          <div className="col-10">
-            <InputDate
-              label="Au"
-              name="caus_to"
-              labelTop={true}
-              required={true}
-              labelSize={0}
-              inputSize={36}
-              value={values.caus_to || ''}
-              onChange={handleChange}
-              error={getErrorMessage('caus_to')}
-            />
-          </div>
-          <div className="col-16">
-            <SicknessInputPicker
-              label="Maladie"
-              name="sickness"
-              item={values.sickness || null}
-              onChange={handleChange}
-              labelTop={true}
-              labelSize={0}
-              inputSize={36}
-              error={getErrorMessage('sickness')}
-            />
-          </div>
+      <div className="row">
+        <div className="col-10">
+          <InputDate
+            label="Du"
+            name="caus_from"
+            labelTop={true}
+            required={true}
+            labelSize={0}
+            inputSize={36}
+            value={values.caus_from || ''}
+            onChange={handleChange}
+            error={getErrorMessage('caus_from')}
+          />
         </div>
-        <div className="row">
-          <div className="col-10">
-            <InputSelect
-              label="Lieu"
-              name="caus_where"
-              labelTop={true}
-              required={true}
-              labelSize={0}
-              inputSize={36}
-              value={values.caus_where || ''}
-              onChange={handleChange}
-              options={whereSelect}
-            />
-          </div>
-          <div className="col-10">
-            <InputSelect
-              label="Soins"
-              name="caus_care"
-              labelTop={true}
-              required={true}
-              labelSize={0}
-              inputSize={36}
-              value={values.caus_care || ''}
-              onChange={handleChange}
-              options={careSelect}
-            />
-          </div>
-          <div className="col-16">
-            <ClientInputPicker
-              label="Vétérinaire"
-              name="sanitary"
-              item={values.sanitary || null}
-              onChange={handleChange}
-              labelTop={true}
-              labelSize={0}
-              inputSize={36}
-              error={getErrorMessage('sanitary')}
-            />
-          </div>
+        <div className="col-10">
+          <InputDate
+            label="Au"
+            name="caus_to"
+            labelTop={true}
+            required={true}
+            labelSize={0}
+            inputSize={36}
+            value={values.caus_to || ''}
+            onChange={handleChange}
+            error={getErrorMessage('caus_to')}
+          />
         </div>
-        <div className="row">
-          <div className="col-36">
-            <InputTextarea
-              label="Description des soins"
-              name="caus_care_desc"
-              value={values.caus_care_desc}
-              onChange={handleChange}
-              error={getErrorMessage('caus_care_desc')}
-            />
-          </div>
+        <div className="col-16">
+          <SicknessInputPicker
+            label="Maladie"
+            name="sickness"
+            item={values.sickness || null}
+            onChange={handleChange}
+            labelTop={true}
+            labelSize={0}
+            inputSize={36}
+            error={getErrorMessage('sickness')}
+          />
         </div>
-        <div className="row">
-          <div className="col-36">
-            <InputTextarea
-              label="Commentaires"
-              name="caus_desc"
-              value={values.caus_desc}
-              onChange={handleChange}
-              error={getErrorMessage('caus_desc')}
-            />
-          </div>
+      </div>
+      <div className="row">
+        <div className="col-10">
+          <InputSelect
+            label="Lieu"
+            name="caus_where"
+            labelTop={true}
+            required={true}
+            labelSize={0}
+            inputSize={36}
+            value={values.caus_where || ''}
+            onChange={handleChange}
+            options={whereSelect}
+          />
+        </div>
+        <div className="col-10">
+          <InputSelect
+            label="Soins"
+            name="caus_care"
+            labelTop={true}
+            required={true}
+            labelSize={0}
+            inputSize={36}
+            value={values.caus_care || ''}
+            onChange={handleChange}
+            options={careSelect}
+          />
+        </div>
+        <div className="col-16">
+          <ClientInputPicker
+            label="Vétérinaire"
+            name="sanitary"
+            item={values.sanitary || null}
+            onChange={handleChange}
+            labelTop={true}
+            labelSize={0}
+            inputSize={36}
+            error={getErrorMessage('sanitary')}
+          />
+        </div>
+      </div>
+      <div className="row">
+        <div className="col-36">
+          <InputTextarea
+            label="Description des soins"
+            name="caus_care_desc"
+            value={values.caus_care_desc}
+            onChange={handleChange}
+            error={getErrorMessage('caus_care_desc')}
+          />
+        </div>
+      </div>
+      <div className="row">
+        <div className="col-36">
+          <InputTextarea
+            label="Commentaires"
+            name="caus_desc"
+            value={values.caus_desc}
+            onChange={handleChange}
+            error={getErrorMessage('caus_desc')}
+          />
         </div>
       </div>
     </ResponsiveModalOrForm>

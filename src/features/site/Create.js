@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import * as actions from './redux/actions';
 import { withRouter } from 'react-router-dom';
 import { getJsonApi } from 'freejsonapi';
-import { CenteredLoading9X9, createSuccess, createError } from '../ui';
+import { CenteredLoading3Dots, createSuccess, createError } from '../ui';
 import Form from './Form';
 import { propagateModel } from '../../common';
 
@@ -87,7 +87,7 @@ export class Create extends Component {
     return (
       <div className="site-modify global-card">
         {this.props.site.loadOnePending ? (
-          <CenteredLoading9X9 />
+          <CenteredLoading3Dots />
         ) : (
           <div>
             {item && (

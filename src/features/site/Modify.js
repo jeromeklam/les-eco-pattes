@@ -7,7 +7,7 @@ import { withRouter } from 'react-router-dom';
 import Form from './Form';
 import { getJsonApi } from 'freejsonapi';
 import { propagateModel } from '../../common';
-import { CenteredLoading9X9, modifySuccess, modifyError } from '../ui';
+import { CenteredLoading3Dots, modifySuccess, modifyError } from '../ui';
 
 /**
  * Modification d'un site
@@ -104,7 +104,7 @@ export class Modify extends Component {
     return (
       <div className="site-modify global-card">
         {this.props.site.loadOnePending ? (
-          <CenteredLoading9X9 />
+          <CenteredLoading3Dots />
         ) : (
           <div>
             {item && (

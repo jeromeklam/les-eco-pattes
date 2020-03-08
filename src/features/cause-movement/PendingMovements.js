@@ -13,6 +13,7 @@ import {
   Movement as MovementIcon,
 } from '../icons';
 import { statusLabel } from './';
+import { InlineList, Line, Col } from '../ui';
 
 export class PendingMovements extends Component {
   static propTypes = {
@@ -68,6 +69,7 @@ export class PendingMovements extends Component {
   }
 
   render() {
+    let counter = 0;
     const { confirm, valid } = this.state;
     let movements = [];
     if (this.props.causeMovement.pendings.FreeAsso_CauseMovement) {
@@ -78,70 +80,128 @@ export class PendingMovements extends Component {
         <div>
           <div className="cause-movement-pendings text-secondary bg-secondary-light">
             {movements && movements.length > 0 ? (
-              <div className="inline-list">
-                <div className="row row-title">
-                  <div className="col-lg-12">
+              <InlineList>
+                <Line header oddEven={counter}>
+                  <Col layoutSize={this.props.layoutSize || 'md'} md={12} lg={5} xl={5} col={12}>
                     <span>Pour le</span>
-                  </div>
-                  <div className="col-lg-12">
+                  </Col>
+                  <Col layoutSize={this.props.layoutSize || 'md'} md={12} lg={6} xl={6} col={12}>
                     <span>Animal</span>
-                  </div>
-                  <div className="col-lg-12">
+                  </Col>
+                  <Col layoutSize={this.props.layoutSize || 'md'} md={12} lg={6} xl={6} col={12}>
                     <span>Status</span>
-                  </div>
-                  <div className="col-lg-12">
+                  </Col>
+                  <Col layoutSize={this.props.layoutSize || 'md'} md={12} lg={5} xl={5} col={12}>
                     <span>Depuis</span>
-                  </div>
-                  <div className="col-lg-12">
+                  </Col>
+                  <Col layoutSize={this.props.layoutSize || 'md'} md={12} lg={5} xl={5} col={12}>
                     <span>Vers</span>
-                  </div>
-                  <div className="col-lg-12">
+                  </Col>
+                  <Col layoutSize={this.props.layoutSize || 'md'} md={12} lg={6} xl={6} col={12}>
                     <span>Notes</span>
-                  </div>
-                </div>
+                  </Col>
+                </Line>
                 {movements.map(movement => {
                   return (
-                    <div className="row row-line" key={`pending-${movement.id}`}>
-                      <div className="col-12">{intlDate(movement.camv_to)}</div>
-                      <div className="col-12">{movement.cause.cau_code}</div>
-                      <div className="col-12">{statusLabel(movement.camv_status)}</div>
-                      <div className="col-12">{movement.from_site.site_name}</div>
-                      <div className="col-12">{movement.to_site.site_name}</div>
-                      <div className="col-12">{movement.camv_comment}</div>
-                      <div className="col-36 text-right">
+                    <Line oddEven={counter} key={`pending-${movement.id}`}>
+                      <Col
+                        layoutSize={this.props.layoutSize || 'md'}
+                        md={12}
+                        lg={5}
+                        xl={5}
+                        col={12}
+                      >
+                        {intlDate(movement.camv_to)}
+                      </Col>
+                      <Col
+                        layoutSize={this.props.layoutSize || 'md'}
+                        md={12}
+                        lg={6}
+                        xl={6}
+                        col={12}
+                      >
+                        {movement.cause.cau_code}
+                      </Col>
+                      <Col
+                        layoutSize={this.props.layoutSize || 'md'}
+                        md={12}
+                        lg={6}
+                        xl={6}
+                        col={12}
+                      >
+                        {statusLabel(movement.camv_status)}
+                      </Col>
+                      <Col
+                        layoutSize={this.props.layoutSize || 'md'}
+                        md={12}
+                        lg={5}
+                        xl={5}
+                        col={12}
+                      >
+                        {movement.from_site.site_name}
+                      </Col>
+                      <Col
+                        layoutSize={this.props.layoutSize || 'md'}
+                        md={12}
+                        lg={5}
+                        xl={5}
+                        col={12}
+                      >
+                        {movement.to_site.site_name}
+                      </Col>
+                      <Col
+                        layoutSize={this.props.layoutSize || 'md'}
+                        md={12}
+                        lg={6}
+                        xl={6}
+                        col={12}
+                      >
+                        {movement.camv_comment}
+                      </Col>
+                      <Col
+                        layoutSize={this.props.layoutSize || 'md'}
+                        md={36}
+                        lg={3}
+                        xl={3}
+                        col={36}
+                      >
                         <div className="btn-group btn-group-sm" role="group" aria-label="...">
-                          <div className="btn-group" role="group" aria-label="First group">
-                            <div className="ml-2">
-                              {movement.camv_status === 'WAIT' && (
-                                <SimpleValidIcon
-                                  onClick={() => this.onConfirmValidation(movement.id)}
-                                  className="text-primary inline-action"
-                                />
-                              )}
-                              <DelOneIcon
-                                onClick={() => this.onConfirmMovement(movement.id)}
-                                className="text-warning inline-action"
-                              />
-                            </div>
-                          </div>
+                          {movement.camv_status === 'WAIT' && (
+                            <button
+                              type="button"
+                              className="btn btn-inline btn-primary"
+                              onClick={() => this.onConfirmValidation(movement.id)}
+                            >
+                              <SimpleValidIcon className="text-light inline-action" />
+                            </button>
+                          )}
+                          <button
+                            type="button"
+                            className="btn btn-inline btn-warning"
+                            onClick={() => this.onConfirmMovement(movement.id)}
+                          >
+                            <DelOneIcon className="text-light inline-action" />
+                          </button>
                         </div>
-                      </div>
-                    </div>
+                      </Col>
+                    </Line>
                   );
                 })}
-              </div>
+              </InlineList>
             ) : (
-              <div><span className="p-3">Aucun mouvement en attente</span></div>
+              <div>
+                <span className="p-3">Aucun mouvement en attente</span>
+              </div>
             )}
-            {this.props.causeMovement.loadPendingsPending && 
-            <div className="inline-list">
-              <div className="row row-line">
-                <div className="col-36 text-center">
-                  <Loading3Dots />
+            {this.props.causeMovement.loadPendingsPending && (
+              <div className="inline-list">
+                <div className="row row-line">
+                  <div className="col-36 text-center">
+                    <Loading3Dots />
+                  </div>
                 </div>
               </div>
-            </div>
-            }
+            )}
           </div>
           <ResponsiveConfirm
             show={confirm}

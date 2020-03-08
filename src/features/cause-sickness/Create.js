@@ -6,7 +6,7 @@ import * as actions from './redux/actions';
 import { withRouter } from 'react-router-dom';
 import { getJsonApi } from 'freejsonapi';
 import { propagateModel } from '../../common';
-import { CenteredLoading9X9, createSuccess, createError } from '../ui';
+import { CenteredLoading3Dots, createSuccess, createError } from '../ui';
 import Form from './Form';
 
 export class Create extends Component {
@@ -77,7 +77,7 @@ export class Create extends Component {
     return (
       <div className="cause-sickness-create global-card">
         {this.props.causeSickness.loadOnePending ? (
-          <CenteredLoading9X9 />
+          <CenteredLoading3Dots />
         ) : (
           <div>
             {item && (

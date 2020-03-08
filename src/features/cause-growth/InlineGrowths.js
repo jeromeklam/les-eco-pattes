@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import classnames from 'classnames';
 import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
@@ -77,6 +78,7 @@ export class InlineGrowths extends Component {
   }
 
   render() {
+    let counter = 0;
     const growths = this.props.causeGrowth.growthsModels;
     const emptyItem = this.props.causeGrowth.emptyItem;
     if (this.props.causeGrowth.loadGrowthsPending) {
@@ -91,7 +93,13 @@ export class InlineGrowths extends Component {
           <div className="row">
             <div className="col-sm-18">
               <div className="inline-list text-center">
-                <div className="row row-line row-title" key="cause-inline-growths">
+                <div
+                  className={classnames(
+                    'row row-title row-line',
+                    counter++ % 2 !== 1 ? 'row-odd' : 'row-even',
+                  )}
+                  key="cause-inline-growths"
+                >
                   <div className="col-16">
                     <span>Date</span>
                   </div>
@@ -107,6 +115,7 @@ export class InlineGrowths extends Component {
                 </div>
                 {emptyItem && (
                   <InlineGrowthForm
+                    oddEven={counter++}
                     cause={this.state.cause}
                     item={emptyItem}
                     errors={this.props.causeGrowth.createOneError}
@@ -116,7 +125,13 @@ export class InlineGrowths extends Component {
                 {growths &&
                   growths.length > 0 &&
                   growths.map(growth => (
-                    <div className="row row-line" key={growth.id}>
+                    <div
+                      className={classnames(
+                        'row row-line',
+                        counter++ % 2 !== 1 ? 'row-odd' : 'row-even',
+                      )}
+                      key={growth.id}
+                    >
                       <div className="col-16">{intlDate(growth.grow_ts)}</div>
                       <div className="col-8">{growth.grow_weight}</div>
                       <div className="col-8">{growth.grow_height}</div>
@@ -143,9 +158,6 @@ export class InlineGrowths extends Component {
                 this.onConfirm();
               }}
             />
-            <div className="col-sm-18">
-              <div />
-            </div>
           </div>
         </div>
       );

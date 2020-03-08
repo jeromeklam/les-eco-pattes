@@ -25,6 +25,7 @@ import {
 import { CenteredLoading9X9 } from '../ui';
 import { SimpleForm } from '../auth';
 import { initAxios } from '../../common';
+import fond from '../../images/fond2.jpg';
 
 const options = [
   {
@@ -48,7 +49,7 @@ const options = [
     label: 'Déconnexion',
     url: '/auth/signout',
     role: 'SIGNOUT',
-    help: "Pour se déconnecter",
+    help: 'Pour se déconnecter',
     public: false,
   },
   {
@@ -57,7 +58,7 @@ const options = [
     url: null,
     role: 'SOCIAL',
     position: 1,
-    help: "Accéder au site Facebook",
+    help: 'Accéder au site Facebook',
     public: true,
   },
   {
@@ -66,7 +67,7 @@ const options = [
     url: '/dashboard',
     role: 'NAV',
     position: 2,
-    help: "Tableau de bord : pour consulter les éléments en attente, tâches à effectuer, ...",
+    help: 'Tableau de bord : pour consulter les éléments en attente, tâches à effectuer, ...',
     public: false,
   },
   {
@@ -75,7 +76,8 @@ const options = [
     url: '/pigeon-map',
     role: 'NAV',
     position: 3,
-    help: "Carte : Pour visualiser l'emplacement des sites sur une carte, les positionner, une vue rapide",
+    help:
+      "Carte : Pour visualiser l'emplacement des sites sur une carte, les positionner, une vue rapide",
     public: false,
   },
   {
@@ -84,7 +86,7 @@ const options = [
     url: '/site',
     role: 'NAV',
     position: 4,
-    help: "Sites : La gestion des sites",
+    help: 'Sites : La gestion des sites',
     public: false,
   },
   {
@@ -93,7 +95,7 @@ const options = [
     url: '/cause',
     role: 'NAV',
     position: 5,
-    help: "Animaux : La gestion des animaux",
+    help: 'Animaux : La gestion des animaux',
     public: false,
   },
   {
@@ -102,7 +104,7 @@ const options = [
     url: '/client',
     role: 'NAV',
     position: 6,
-    help: "Personnes : La gestion des vétérinaires, contacts, ...",
+    help: 'Personnes : La gestion des vétérinaires, contacts, ...',
     public: false,
   },
   {
@@ -120,7 +122,7 @@ const options = [
     url: '/stock',
     role: 'NAV',
     position: 8,
-    help: "Stock : La gestion des médicaments, du stock en général",
+    help: 'Stock : La gestion des médicaments, du stock en général',
     public: false,
   },
   {
@@ -130,7 +132,7 @@ const options = [
     role: 'MENU',
     position: 20,
     public: false,
-    help: "Répertoires : Les éléments configurables",
+    help: 'Répertoires : Les éléments configurables',
     options: [
       {
         icon: null,
@@ -189,7 +191,7 @@ const options = [
     url: '/version',
     role: 'NAV',
     position: 11,
-    help: "Fiche version : Les modifications par version",
+    help: 'Fiche version : Les modifications par version',
     public: true,
   },
   {
@@ -198,7 +200,7 @@ const options = [
     url: '/about',
     role: 'ABOUT',
     position: 99,
-    help: "Qui sommes nous : Présentation générale",
+    help: 'Qui sommes nous : Présentation générale',
     public: true,
   },
 ];
@@ -255,7 +257,10 @@ export class App extends Component {
 
   onGeo(position) {
     if (position && position.coords) {
-      this.props.actions.setCoords({ lat: position.coords.latitude, lon: position.coords.longitude})
+      this.props.actions.setCoords({
+        lat: position.coords.latitude,
+        lon: position.coords.longitude,
+      });
     }
   }
 
@@ -272,25 +277,30 @@ export class App extends Component {
       );
     } else {
       return (
-        <ResponsivePage
-          menuIcon={<MenuIcon className="light" />}
-          title={process.env.REACT_APP_APP_NAME}
-          options={options}
-          authenticated={this.props.auth.authenticated}
-          location={this.props.location}
-          onNavigate={this.onNavigate}
-          userForm={<SimpleForm />}
-          userTitle={this.props.auth.user.user_first_name || this.props.auth.user.user_first_name}
-        >
-          {!this.props.auth.authenticated || this.props.home.loadAllFinish ? (
-            <div>{this.props.children}</div>
-          ) : (
-            <div className="text-center mt-5 text-secondary">
-              <h4>... Chargement ...</h4>
-              <CenteredLoading9X9 />
-            </div>
-          )}
-        </ResponsivePage>
+        <div>
+          <img className="fond-site2 d-none d-sm-block" src={fond} alt="" />
+          <ResponsivePage
+            menuIcon={<MenuIcon className="light" />}
+            title={process.env.REACT_APP_APP_NAME}
+            options={options}
+            authenticated={this.props.auth.authenticated}
+            location={this.props.location}
+            onNavigate={this.onNavigate}
+            userForm={<SimpleForm />}
+            userTitle={this.props.auth.user.user_first_name || this.props.auth.user.user_first_name}
+          >
+            {!this.props.auth.authenticated || this.props.home.loadAllFinish ? (
+              <div>
+                {this.props.children}
+              </div>
+            ) : (
+              <div className="text-center mt-5 text-secondary">
+                <h4>... Chargement ...</h4>
+                <CenteredLoading9X9 />
+              </div>
+            )}
+          </ResponsivePage>
+        </div>
       );
     }
   }

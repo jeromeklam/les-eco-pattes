@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import classnames from 'classnames';
 import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
@@ -72,6 +73,7 @@ export class InlineSicknesses extends Component {
   }
 
   render() {
+    let counter = 0;
     const sicknesses = this.props.causeSickness.sicknessesModels;
     if (this.props.causeSickness.loadSicknessesPending) {
       return (
@@ -83,7 +85,7 @@ export class InlineSicknesses extends Component {
       return (
         <div className="cause-inline-sicknesses">
           <div className="inline-list">
-            <div className="row row-line row-title" key="cause-inline-sicknesses">
+            <div className={classnames('row row-title row-line', (counter++ % 2 !== 1) ? 'row-odd' : 'row-even')} key="cause-inline-sicknesses">
               <div className="col-6">
                 <span>Du</span>
               </div>
@@ -114,7 +116,7 @@ export class InlineSicknesses extends Component {
             {sicknesses &&
               sicknesses.length > 0 &&
               sicknesses.map(sickness => (
-                <div className="row row-line" key={sickness.id}>
+                <div className={classnames('row row-line', (counter++ % 2 !== 1) ? 'row-odd' : 'row-even')} key={sickness.id}>
                   <div className="col-6">{intlDate(sickness.caus_from)}</div>
                   <div className="col-6">{intlDate(sickness.caus_to)}</div>
                   <div className="col-6">{getWhereLabel(sickness.caus_where)}</div>

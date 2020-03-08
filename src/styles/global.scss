@@ -222,3 +222,44 @@ svg.text-warning.inline-action:hover {
   line-height  : .4;
   border-radius : .2rem;
 }
+
+.inline-list {
+  svg.inline-action:hover {
+    cursor: pointer;
+    color: theme-color('secondary-light');
+    fill: theme-color('secondary-light');
+    path {
+      fill: theme-color('secondary-light') !important;
+    }
+  }
+  .row-title span {
+    font-weight: bold;
+  }
+  .row-line {
+    min-height: 30px;
+    line-height: 30px;
+  }
+  .row-line.row-even {
+    background: lighten(theme-color('secondary-light'), 6%);
+  }
+  .row-line.row-even:not(.row-title):hover {
+    background: lighten(theme-color('secondary-light'), 8%);
+  }
+  .row-line.row-odd {
+    background: lighten(theme-color('secondary-light'), 10%);
+  }
+  .row-line.row-odd:not(.row-title):hover {
+    background: lighten(theme-color('secondary-light'), 12%);
+  }
+  svg.inline-action:hover {
+    cursor: pointer;
+    color: theme-color('light');
+    fill: theme-color('light');
+    path {
+      fill: theme-color('light') !important;
+    }
+  }
+}
+.list-group-item {
+  background-color: transparent;
+}

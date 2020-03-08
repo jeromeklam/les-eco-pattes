@@ -1,4 +1,5 @@
 import React from 'react';
+import classnames from 'classnames';
 import { InputText } from 'freeassofront';
 import { InputDate } from '../ui';
 import useForm from '../ui/useForm';
@@ -18,7 +19,7 @@ export default function InlineGrowthForm(props) {
     props.errors,
   );
   return (
-    <div className="row row-line row-new">
+    <div className={classnames('row row-line row-new', props.oddEven % 2 !== 1 ? 'row-odd' : 'row-even')}>
       <div className="col-16 my-auto">
         <InputDate
           label=""
@@ -59,7 +60,7 @@ export default function InlineGrowthForm(props) {
           onChange={handleChange}
         />
       </div>
-       <div className="col-4 my-auto text-right" >
+      <div className="col-4 my-auto text-right">
         <button type="button" className="btn btn-inline btn-primary" onClick={handleSubmit}>
           <SimpleValidIcon className="inline-action text-light" />
         </button>

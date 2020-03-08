@@ -1,15 +1,17 @@
 import React, { Component } from 'react';
+import classnames from 'classnames';
 import { getSexlabel } from './';
 
 export default class InlineListDetail extends Component {
   static propTypes = {};
 
   render() {
+    let counter = 0;
     return (
       <div className="cause-inline-list-detail">
         {this.props.causes && this.props.causes.length > 0 ? (
           <div className="inline-list">
-            <div className="row row-title" key="cause-inline-list-detail">
+            <div className={classnames('row row-title row-line', (counter++ % 2 !== 1) ? 'row-odd' : 'row-even')} key="cause-inline-list-detail">
               <div className="col-sm-3">
                 <span className="pl-2">Id.</span>
               </div>
@@ -36,7 +38,7 @@ export default class InlineListDetail extends Component {
               )}
             </div>
             {this.props.causes.map(cause => (
-              <div className="row" key={cause.id}>
+              <div className={classnames('row row-line', (counter++ % 2 !== 1) ? 'row-odd' : 'row-even')} key={cause.id}>
                 <div className="col-sm-3">
                   <span className="pl-2">{cause.id}</span>
                 </div>

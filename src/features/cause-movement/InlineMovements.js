@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import classnames from 'classnames';
 import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
@@ -93,6 +94,7 @@ export class InlineMovements extends Component {
   }
 
   render() {
+    let counter = 0;
     const { confirm, valid } = this.state;
     let movements = [];
     if (this.props.causeMovement.movements.FreeAsso_CauseMovement) {
@@ -110,7 +112,7 @@ export class InlineMovements extends Component {
         return (
           <div className="cause-inline-movements">
             <div className="inline-list">
-              <div className="row row-title" key="cause-inline-movements">
+              <div className={classnames('row row-title row-line', (counter++ % 2 !== 1) ? 'row-odd' : 'row-even')} key="cause-inline-movements">
                 <div className="col-5">
                   <span>Date</span>
                 </div>
@@ -129,7 +131,7 @@ export class InlineMovements extends Component {
               </div>
               {movements.map(movement => {
                 return (
-                  <div className="row" key={movement.id}>
+                  <div className={classnames('row row-line', (counter++ % 2 !== 1) ? 'row-odd' : 'row-even')} key={movement.id}>
                     <div className="col-5">{intlDate(movement.camv_to)}</div>
                     <div className="col-7">{movement.from_site.site_name}</div>
                     <div className="col-7">{movement.to_site.site_name}</div>

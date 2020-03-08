@@ -1,19 +1,1 @@
 @import '../../styles/mixins';
-
-.cause-inline-list-detail {
-  .inline-list {
-    .row-title span {
-      font-weight: bold;
-    }
-    .row {
-      height: 30px;
-      line-height: 30px;
-    }
-    .row:nth-child(even) {
-      background: lighten(theme-color('secondary-light'), 5%);
-    }
-    .row:nth-child(odd) {
-      background: lighten(theme-color('secondary-light'), 10%);
-    }
-  }
-}

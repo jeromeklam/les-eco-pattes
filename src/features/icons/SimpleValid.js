@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { mdiContentSaveOutline as myIcon } from '@mdi/js';
+import { mdiCheckBold as myIcon } from '@mdi/js';
 import { Icon } from './';
 
 export default class SimpleValid extends Component {

@@ -8,6 +8,7 @@ import { CAUSE_UPDATE_ONE_UPDATE } from '../features/cause/redux/constants';
 import { CLIENT_TYPE_UPDATE_ONE_UPDATE } from '../features/client-type/redux/constants';
 import { CLIENT_CATEGORY_UPDATE_ONE_UPDATE } from '../features/client-category/redux/constants';
 import { CAUSE_MOVEMENT_UPDATE_MODEL } from '../features/cause-movement/redux/constants';
+import { CAUSE_SICKNESS_UPDATE_ONE_UPDATE } from '../features/cause-sickness/redux/constants';
 import { SICKNESS_UPDATE_ONE_UPDATE } from '../features/sickness/redux/constants';
 import { ITEM_UPDATE_ONE_UPDATE } from '../features/item/redux/constants';
 import { MOVEMENT_UPDATE_ONE_UPDATE } from '../features/movement/redux/constants';
@@ -60,6 +61,16 @@ export function propagateModel(type, model) {
       case 'FreeAsso_CauseMovement':
         dispatch({
           type: CAUSE_MOVEMENT_UPDATE_MODEL,
+          data: model,
+        });
+        dispatch({
+          type: CAUSE_UPDATE_ONE_UPDATE,
+          data: model,
+        });
+        break;
+      case 'FreeAsso_CauseSickness':
+        dispatch({
+          type: CAUSE_SICKNESS_UPDATE_ONE_UPDATE,
           data: model,
         });
         dispatch({

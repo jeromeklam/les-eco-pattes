@@ -1,10 +1,11 @@
-import { jsonApiNormalizer } from 'freejsonapi';
+import { jsonApiNormalizer, jsonApiUpdate } from 'freejsonapi';
 import { freeAssoApi } from '../../../common';
 import {
   CAUSE_SICKNESS_UPDATE_ONE_BEGIN,
   CAUSE_SICKNESS_UPDATE_ONE_SUCCESS,
   CAUSE_SICKNESS_UPDATE_ONE_FAILURE,
   CAUSE_SICKNESS_UPDATE_ONE_DISMISS_ERROR,
+  CAUSE_SICKNESS_UPDATE_ONE_UPDATE,
 } from './constants';
 
 export function updateOne(args = {}) {
@@ -77,6 +78,19 @@ export function reducer(state, action) {
       return {
         ...state,
         updateOneError: null,
+      };
+
+    case CAUSE_SICKNESS_UPDATE_ONE_UPDATE:
+      let object = jsonApiNormalizer(action.data.data);
+      let oldSicknesses = state.sicknesses;
+      let newSicknesses = jsonApiUpdate(oldSicknesses, 'FreeAsso_CauseSickness', object);
+      let oldPendings = state.pendings;
+      let newPendings = jsonApiUpdate(oldPendings, 'FreeAsso_CauseSickness', object);
+      return {
+        ...state,
+        updateOneError: null,
+        sicknesses: newSicknesses,
+        pendings: newPendings,
       };
 
     default:

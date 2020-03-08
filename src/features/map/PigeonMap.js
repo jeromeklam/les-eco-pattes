@@ -179,7 +179,7 @@ export class PigeonMap extends Component {
       items = buildModel(this.props.site.items, 'FreeAsso_Site');
     }
     return (
-      <div className="map-pigeon-map">
+      <div className="map-pigeon-map bg-light">
         <Responsive displayIn={['Laptop', 'Tablet']}>
           <div className={classnames('map-content')}>
             <Map
