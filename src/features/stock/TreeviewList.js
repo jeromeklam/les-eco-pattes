@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { buildModel } from 'freejsonapi';
 import { ResponsiveTreeviewList } from 'freeassofront';
 import * as actions from './redux/actions';
-import { loadChildren, select, toggle } from '../family/redux/actions';
+import { loadChildren, select, toggle, delOne as delOneFamily } from '../family/redux/actions';
 import { loadMore as loadItems, delOne as delOneItem } from '../item/redux/actions';
 import {
   getGlobalActions,
@@ -54,6 +54,7 @@ export class TreeviewList extends Component {
     this.onCloseModal = this.onCloseModal.bind(this);
     this.onCreateOneFamily = this.onCreateOneFamily.bind(this);
     this.onGetOneFamily = this.onGetOneFamily.bind(this);
+    this.onDelOneFamily = this.onDelOneFamily.bind(this);
   }
 
   componentDidMount() {
@@ -94,6 +95,21 @@ export class TreeviewList extends Component {
 
   onGetOneFamily(family) {
     this.setState({ currentFamily: family, fam_id: family.id });
+  }
+
+  onDelOneFamily(family) {
+    this.setState({ currentFamily: null, fam_id: -1 });
+    console.log(family);
+    this.props.actions
+      .delOneFamily(family.id)
+      .then(result => {
+        this.props.actions.loadItems({ family: null, fam_id: 0 }, true);
+        deleteSuccess();
+      })
+      .catch(errors => {
+        // @todo display errors to fields
+        deleteError();
+      });
   }
 
   onDelOneItem(id) {
@@ -158,6 +174,7 @@ export class TreeviewList extends Component {
           TreeDelOneIcon={<DelOneIcon className="text-light inline-action" />}
           onTreeCreateOne={this.onCreateOneFamily}
           onTreeGetOne={this.onGetOneFamily}
+          onTreeDelOne={this.onDelOneFamily}
           loadMorePending={this.props.item.loadMorePending}
           loadMoreFinish={this.props.item.loadMoreFinish}
           loadMoreError={this.props.item.loadMoreError}
@@ -191,7 +208,7 @@ function mapStateToProps(state) {
 /* istanbul ignore next */
 function mapDispatchToProps(dispatch) {
   return {
-    actions: bindActionCreators({ ...actions, loadChildren, select, toggle, loadItems, delOneItem }, dispatch),
+    actions: bindActionCreators({ ...actions, loadChildren, select, toggle, loadItems, delOneItem, delOneFamily }, dispatch),
   };
 }
 
