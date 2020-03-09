@@ -126,7 +126,11 @@ export class TreeviewList extends Component {
   }
 
   onCloseModal() {
+    const { family } = this.state
     this.setState({ item_id: -1, fam_id: -1 });
+    if (family && family.id) {
+      this.props.actions.loadChildren({ parent_id: family.id });
+    }
   }
 
   render() {

@@ -21,6 +21,8 @@ const initialState = {
   createOneError: null,
   delOnePending: false,
   delOneError: null,
+  updateOnePending: false,
+  updateOneError: null,
 };
 
 export default initialState;

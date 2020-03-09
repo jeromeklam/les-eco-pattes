@@ -1,60 +1,52 @@
 import { freeAssoApi } from '../../../common';
 import { jsonApiNormalizer, jsonApiUpdate } from 'freejsonapi';
 import {
-  EMAIL_UPDATE_ONE_BEGIN,
-  EMAIL_UPDATE_ONE_SUCCESS,
-  EMAIL_UPDATE_ONE_FAILURE,
-  EMAIL_UPDATE_ONE_DISMISS_ERROR,
-  EMAIL_UPDATE_ONE_UPDATE,
+  FAMILY_UPDATE_ONE_UPDATE,
+  FAMILY_UPDATE_ONE_BEGIN,
+  FAMILY_UPDATE_ONE_SUCCESS,
+  FAMILY_UPDATE_ONE_FAILURE,
+  FAMILY_UPDATE_ONE_DISMISS_ERROR,
 } from './constants';
 
 export function updateOne(args = {}) {
   return dispatch => {
     // optionally you can have getState as the second argument
     dispatch({
-      type: EMAIL_UPDATE_ONE_BEGIN,
+      type: FAMILY_UPDATE_ONE_BEGIN,
     });
     const promise = new Promise((resolve, reject) => {
-      // doRequest is a placeholder Promise. You should replace it with your own logic.
-      // See the real-word example at:  https://github.com/supnate/rekit/blob/master/src/features/home/redux/fetchRedditReactjsList.js
-      // args.error here is only for test coverage purpose.
       const id = args.data.id;
-      const doRequest = freeAssoApi.put('/v1/core/email/' + id, args);
+      const doRequest = freeAssoApi.put('/v1/asso/family/' + id, args);
       doRequest.then(
         res => {
           dispatch({
-            type: EMAIL_UPDATE_ONE_SUCCESS,
+            type: FAMILY_UPDATE_ONE_SUCCESS,
             data: res,
-            id: args,
           });
           resolve(res);
         },
-        // Use rejectHandler as the second argument so that render errors won't be caught.
         err => {
           dispatch({
-            type: EMAIL_UPDATE_ONE_FAILURE,
+            type: FAMILY_UPDATE_ONE_FAILURE,
             data: { error: err },
           });
           reject(err);
         },
       );
     });
-
     return promise;
   };
 }
 
-// Async action saves request error by default, this method is used to dismiss the error info.
-// If you don't want errors to be saved in Redux store, just ignore this method.
 export function dismissUpdateOneError() {
   return {
-    type: EMAIL_UPDATE_ONE_DISMISS_ERROR,
+    type: FAMILY_UPDATE_ONE_DISMISS_ERROR,
   };
 }
 
 export function reducer(state, action) {
   switch (action.type) {
-    case EMAIL_UPDATE_ONE_BEGIN:
+    case FAMILY_UPDATE_ONE_BEGIN:
       // Just after a request is sent
       return {
         ...state,
@@ -62,7 +54,7 @@ export function reducer(state, action) {
         updateOneError: null,
       };
 
-    case EMAIL_UPDATE_ONE_SUCCESS:
+    case FAMILY_UPDATE_ONE_SUCCESS:
       // The request is success
       return {
         ...state,
@@ -70,7 +62,7 @@ export function reducer(state, action) {
         updateOneError: null,
       };
 
-    case EMAIL_UPDATE_ONE_FAILURE:
+    case FAMILY_UPDATE_ONE_FAILURE:
       // The request is failed
       return {
         ...state,
@@ -78,17 +70,17 @@ export function reducer(state, action) {
         updateOneError: action.data.error,
       };
 
-    case EMAIL_UPDATE_ONE_DISMISS_ERROR:
+    case FAMILY_UPDATE_ONE_DISMISS_ERROR:
       // Dismiss the request failure error
       return {
         ...state,
         updateOneError: null,
       };
-
-    case EMAIL_UPDATE_ONE_UPDATE:
+  
+    case FAMILY_UPDATE_ONE_UPDATE:
       let object = jsonApiNormalizer(action.data.data);
       let myItems = state.items;
-      let news = jsonApiUpdate(myItems, 'FreeFW_Email', object);
+      let news = jsonApiUpdate(myItems, 'FreeAsso_Family', object);
       return {
         ...state,
         updateOneError: null,
