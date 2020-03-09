@@ -1,4 +1,23 @@
 export default `
+
+# Version 1.0.3 : 09/03/2020
+
+* Général
+    * Encore quelques petites adaptations de look
+    * Correction de bugs mineurs d'affichage
+    * Test sur les listes principales d'une barre de défilement "custom"
+* Saisie
+    * Nouveau champ date permettant de gérér data / heure / date + heure
+    * Nouveau champ de saisie texte
+* tableau de bord
+    * Possibilité de déplacer les éléments
+    * Possibilité de redimensionner les éléments
+    * Stockage pour l'instant en session des positions des blocs
+    * Ajout d'actions sur les différents éléments
+* Stock
+    * Début de gestion des familles
+    * Correction de bugs d'affichage 
+
 # Version 1.0.2 : 23/02/2020
 
 * Général

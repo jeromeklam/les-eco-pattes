@@ -263,3 +263,7 @@ svg.text-warning.inline-action:hover {
 .list-group-item {
   background-color: transparent;
 }
+
+.scrollarea .scrollbar-container.vertical .scrollbar {
+  background-color: theme-color('primary') !important;
+}
