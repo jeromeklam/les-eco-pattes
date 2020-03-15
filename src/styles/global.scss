@@ -223,6 +223,13 @@ svg.text-warning.inline-action:hover {
   border-radius : .2rem;
 }
 
+.row .col-first {
+  padding-left: 15px;
+}
+.row .col-last {
+  padding-right: 15px;
+}
+
 .inline-list {
   svg.inline-action:hover {
     cursor: pointer;

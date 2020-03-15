@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { InputPicker as DefaultInputPicker } from 'freeassofront';
 import { Search } from './';
 import axios from 'axios';
-import { More, DelOne } from '../icons';
+import { More, DelOne, Zoom } from '../icons';
 
 export default class InputPicker extends Component {
   static propTypes = {
@@ -31,6 +31,7 @@ export default class InputPicker extends Component {
     };
     this.onMore = this.onMore.bind(this);
     this.onClear = this.onClear.bind(this);
+    this.onZoom = this.onZoom.bind(this);
     this.onChange = this.onChange.bind(this);
     this.onSelect = this.onSelect.bind(this);
     this.onCloseMore = this.onCloseMore.bind(this);
@@ -80,6 +81,10 @@ export default class InputPicker extends Component {
     this.setState({ search: true, autocomplete: false });
   }
 
+  onZoom() {
+    
+  }
+
   onClear() {
     this.setState({ autocomplete: false });
     this.props.onChange({
@@ -111,6 +116,7 @@ export default class InputPicker extends Component {
           onChange={this.onChange}
           onClear={this.onClear}
           onMore={this.onMore}
+          onZoom={this.onZoom}
           onSelect={this.onSelect}
           error={this.props.error}
           pickerId="site_id"
@@ -121,6 +127,7 @@ export default class InputPicker extends Component {
           inputSize={this.props.inputSize || 30}
           clearIcon={<DelOne className="text-warning" size={0.9} />}
           moreIcon={<More className="text-secondary" size={0.9} />}
+          zoomIcon={<Zoom className="text-secondary" size={0.9} />}
         />
         <Search
           title={this.props.label}

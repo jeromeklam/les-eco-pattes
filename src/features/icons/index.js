@@ -59,3 +59,4 @@ export { default as Female } from './Female';
 export { default as Stock } from './Stock';
 export { default as Medical } from './Medical';
 export { default as Toolbar } from './Toolbar';
+export { default as Zoom } from './Zoom';

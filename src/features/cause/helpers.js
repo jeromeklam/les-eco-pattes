@@ -144,6 +144,7 @@ export const getCols = ({ props }) => {
       selectable: true,
       sortable: true,
       filterable: { type: 'text' },
+      first: true,
     },
     {
       name: 'name',
@@ -249,6 +250,7 @@ export const getCols = ({ props }) => {
       type: 'text',
       sortable: false,
       filterable: false,
+      last: false,
     },
   ];
 };

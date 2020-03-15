@@ -179,6 +179,7 @@ export class List extends Component {
         sortable: true,
         filterable: { type: 'text' },
         title: true,
+        first: true,
       },
       {
         name: 'lastname',
@@ -219,6 +220,7 @@ export class List extends Component {
         sortable: true,
         filterable: { type: 'text' },
         title: false,
+        last: true,
       },
       {
         name: 'type',

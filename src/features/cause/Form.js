@@ -43,6 +43,7 @@ export default function Form(props) {
       title="Animaux"
       tab={values.currentTab}
       tabs={props.tabs}
+      size="xl"
       onSubmit={handleSubmit}
       onCancel={handleCancel}
       onNavTab={handleNavTab}
@@ -175,6 +176,7 @@ export default function Form(props) {
                 value={values.cau_from}
                 onChange={handleChange}
                 error={getErrorMessage('cau_from')}
+                position="top-start"
               />
             </div>
             <div className="col-10">
@@ -185,6 +187,7 @@ export default function Form(props) {
                 value={values.cau_to}
                 onChange={handleChange}
                 labelTop={true}
+                position="top-start"
               />
             </div>
             <div className="col-16">

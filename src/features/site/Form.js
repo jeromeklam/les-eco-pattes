@@ -33,7 +33,14 @@ const tabs = [
     shortcut: 'D',
     icon: <OtherIcon />,
   },
-  { key: '3', name: 'equipement', label: 'Equipement', shortcut: 'E', icon: <SettingsIcon /> },
+  {
+    key: '3',
+    name: 'observztion',
+    label: 'Observations',
+    shortcut: 'O',
+    icon: <OtherIcon />,
+  },
+  { key: '4', name: 'equipement', label: 'Equipement', shortcut: 'E', icon: <SettingsIcon /> },
 ];
 
 export default function Form(props) {
@@ -66,6 +73,7 @@ export default function Form(props) {
       title="Sites"
       tab={values.currentTab}
       tabs={tabs}
+      size="xl"
       onSubmit={handleSubmit}
       onCancel={handleCancel}
       onNavTab={handleNavTab}
@@ -224,20 +232,22 @@ export default function Form(props) {
               />
             </div>
           </div>
-          <div className="row">
-            <div className="col-sm-36">
-              <InputTextarea
-                label="Observations"
-                name="site_desc"
-                value={values.site_desc}
-                onChange={handleChange}
-                error={getErrorMessage('site_desc')}
-              />
-            </div>
-          </div>
         </div>
       )}
       {values.currentTab === '3' && (
+        <div className="row">
+          <div className="col-sm-36">
+            <InputTextarea
+              label="Observations"
+              name="site_desc"
+              value={values.site_desc}
+              onChange={handleChange}
+              error={getErrorMessage('site_desc')}
+            />
+          </div>
+        </div>
+      )}
+      {values.currentTab === '4' && (
         <div className="row">
           {props.properties.map(oneProp => {
             let nameProp = 'site_' + oneProp;
