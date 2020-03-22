@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { Responsive, WidthProvider } from 'react-grid-layout';
-import { ResponsiveGridCard } from '../ui';
 import { PendingMovements } from '../cause-movement';
 import { PendingSicknesses } from '../cause-sickness';
 import * as actions from './redux/actions';
@@ -13,7 +12,8 @@ import {
   Area as AreaIcon,
   Fence as FenceIcon,
 } from '../icons';
-import { DashboardCard } from './';
+import { DashboardCard, DashboardToolbar } from './';
+import { getFromLS, saveToLS } from '../ui';
 
 const getLayoutSize = (layouts, breakpoint, key) => {
   let size = 'sm';
@@ -39,29 +39,6 @@ const getLayoutSize = (layouts, breakpoint, key) => {
   return size;
 };
 
-const getFromLS = key => {
-  let ls = {};
-  if (global.localStorage) {
-    try {
-      ls = JSON.parse(global.localStorage.getItem('rgl-8')) || {};
-    } catch (e) {
-      /*Ignore*/
-    }
-  }
-  return ls[key];
-};
-
-const saveToLS = (key, value) => {
-  if (global.localStorage) {
-    global.localStorage.setItem(
-      'rgl-8',
-      JSON.stringify({
-        [key]: value,
-      }),
-    );
-  }
-};
-
 const ResponsiveReactGridLayout = WidthProvider(Responsive, { measureBeforeMount: true });
 
 export class DashboardGrid extends Component {
@@ -72,7 +49,7 @@ export class DashboardGrid extends Component {
 
   constructor(props) {
     super(props);
-    const originalLayouts = getFromLS('layouts') || {};
+    const originalLayouts = props.auth.cache || getFromLS('layouts') || {};
     this.state = {
       breakpoint: 'lg',
       layouts: JSON.parse(JSON.stringify(originalLayouts)),
@@ -94,59 +71,62 @@ export class DashboardGrid extends Component {
     const { layouts, breakpoint } = this.state;
     if (this.props.auth.authenticated && this.props.dashboard.stats) {
       return (
-        <ResponsiveReactGridLayout
-          className="layout"
-          cols={{ lg: 36, md: 36, sm: 36, xs: 36, xxs: 36 }}
-          rowHeight={30}
-          verticalCompact={true}
-          onResize={this.onResize}
-          onLayoutChange={this.onLayoutChange}
-          onBreakpointChange={this.onBreakpointChange}
-          layouts={layouts}
-        >
-          <div key="cause" data-grid={{ w: 6, h: 5, x: 1, y: 1, minW: 6, maxW: 18, minH: 4 }}>
-            <DashboardCard
-              title="Animaux"
-              count={this.props.dashboard.stats.total_cause}
-              icon={<CauseIcon />}
-              url="/cause"
-              size={getLayoutSize(layouts, breakpoint, 'cause')}
-            />
-          </div>
-          <div key="site" data-grid={{ w: 6, h: 5, x: 8, y: 1, minW: 6, maxW: 18, minH: 4 }}>
-            <DashboardCard
-              title="Sites"
-              count={this.props.dashboard.stats.total_site}
-              icon={<SiteIcon />}
-              url="/site"
-              size={getLayoutSize(layouts, breakpoint, 'site')}
-            />
-          </div>
-          <div key="m2" data-grid={{ w: 6, h: 5, x: 15, y: 1, minW: 6, maxW: 18, minH: 4 }}>
-            <DashboardCard
-              title="Surface"
-              count={this.props.dashboard.stats.area_site}
-              unit="m2"
-              icon={<AreaIcon />}
-              size={getLayoutSize(layouts, breakpoint, 'm2')}
-            />
-          </div>
-          <div key="m" data-grid={{ w: 6, h: 5, x: 22, y: 1, minW: 6, maxW: 18, minH: 4 }}>
-            <DashboardCard
-              title="Clôtures"
-              count={this.props.dashboard.stats.clot_site}
-              unit="m"
-              icon={<FenceIcon />}
-              size={getLayoutSize(layouts, breakpoint, 'm')}
-            />
-          </div>
-          <div key="movements" data-grid={{ w: 36, h: 6, x: 1, y: 10, minW: 12, minH: 4 }}>
-            <PendingMovements layoutSize={getLayoutSize(layouts, breakpoint, 'movements')} />
-          </div>
-          <div key="sicknesses" data-grid={{ w: 36, h: 6, x: 1, y: 20, minW: 12, minH: 4 }}>
-            <PendingSicknesses layoutSize={getLayoutSize(layouts, breakpoint, 'sicknesses')} />
-          </div>
-        </ResponsiveReactGridLayout>
+        <div>
+          <DashboardToolbar />
+          <ResponsiveReactGridLayout
+            className="layout"
+            cols={{ lg: 36, md: 36, sm: 36, xs: 36, xxs: 36 }}
+            rowHeight={30}
+            verticalCompact={true}
+            onResize={this.onResize}
+            onLayoutChange={this.onLayoutChange}
+            onBreakpointChange={this.onBreakpointChange}
+            layouts={layouts}
+          >
+            <div key="cause" data-grid={{ w: 6, h: 5, x: 1, y: 1, minW: 6, maxW: 18, minH: 4 }}>
+              <DashboardCard
+                title="Animaux"
+                count={this.props.dashboard.stats.total_cause}
+                icon={<CauseIcon />}
+                url="/cause"
+                size={getLayoutSize(layouts, breakpoint, 'cause')}
+              />
+            </div>
+            <div key="site" data-grid={{ w: 6, h: 5, x: 8, y: 1, minW: 6, maxW: 18, minH: 4 }}>
+              <DashboardCard
+                title="Sites"
+                count={this.props.dashboard.stats.total_site}
+                icon={<SiteIcon />}
+                url="/site"
+                size={getLayoutSize(layouts, breakpoint, 'site')}
+              />
+            </div>
+            <div key="m2" data-grid={{ w: 6, h: 5, x: 15, y: 1, minW: 6, maxW: 18, minH: 4 }}>
+              <DashboardCard
+                title="Surface"
+                count={this.props.dashboard.stats.area_site}
+                unit="m2"
+                icon={<AreaIcon />}
+                size={getLayoutSize(layouts, breakpoint, 'm2')}
+              />
+            </div>
+            <div key="m" data-grid={{ w: 6, h: 5, x: 22, y: 1, minW: 6, maxW: 18, minH: 4 }}>
+              <DashboardCard
+                title="Clôtures"
+                count={this.props.dashboard.stats.clot_site}
+                unit="m"
+                icon={<FenceIcon />}
+                size={getLayoutSize(layouts, breakpoint, 'm')}
+              />
+            </div>
+            <div key="movements" data-grid={{ w: 36, h: 6, x: 1, y: 10, minW: 12, minH: 4 }}>
+              <PendingMovements layoutSize={getLayoutSize(layouts, breakpoint, 'movements')} />
+            </div>
+            <div key="sicknesses" data-grid={{ w: 36, h: 6, x: 1, y: 20, minW: 12, minH: 4 }}>
+              <PendingSicknesses layoutSize={getLayoutSize(layouts, breakpoint, 'sicknesses')} />
+            </div>
+          </ResponsiveReactGridLayout>
+        </div>
       );
     }
     return null;

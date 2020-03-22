@@ -1,0 +1,22 @@
+@import '../../styles/mixins';
+
+.ui-input-json {
+  div.jsoneditor-tree {
+    background-color: white;
+  }
+  .jsoneditor {
+    border: thin solid;
+    border-color: theme-color('secondary');
+  }
+  .jsoneditor-menu {
+    background-color: theme-color('secondary');
+    color: theme-color('light');
+    border-bottom: 1px solid;
+    border-color: theme-color('secondary');
+  }
+  .jsoneditor-contextmenu .jsoneditor-menu {
+    background-color: theme-color('secondary-light');
+    border-bottom: 1px solid;
+    border-color: theme-color('secondary');
+  }
+}

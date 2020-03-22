@@ -10,11 +10,23 @@ import initialState from './initialState';
 import { reducer as checkIsAuthenticatedReducer } from './checkIsAuthenticated';
 import { reducer as signInReducer } from './signIn';
 import { reducer as signOutReducer } from './signOut';
+import { reducer as askPasswordReducer } from './askPassword';
+import { reducer as changePasswordReducer } from './changePassword';
+import { reducer as updateOneReducer } from './updateOne';
+import { reducer as updatePasswordReducer } from './updatePassword';
+import { reducer as updateConfigReducer } from './updateConfig';
+import { reducer as changeSettingReducer } from './changeSetting';
 
 const reducers = [
   checkIsAuthenticatedReducer,
   signInReducer,
   signOutReducer,
+  askPasswordReducer,
+  changePasswordReducer,
+  updateOneReducer,
+  updatePasswordReducer,
+  updateConfigReducer,
+  changeSettingReducer,
 ];
 
 export default function reducer(state = initialState, action) {

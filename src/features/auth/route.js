@@ -1,10 +1,4 @@
-// This is the JSON way to define React Router rules in a Rekit app.
-// Learn more from: http://rekit.js.org/docs/routing.html
-
-import {
-  Signin,
-  Signout,
-} from './';
+import { Signin, Signout, AskPassword } from './';
 
 export default {
   path: 'auth',
@@ -12,5 +6,6 @@ export default {
   childRoutes: [
     { path: 'signin', name: 'Connexion', component: Signin, isIndex: true },
     { path: 'signout', name: 'Deconnexion', component: Signout, isIndex: true },
+    { path: 'ask-password', name: 'Ask password', component: AskPassword },
   ],
 };

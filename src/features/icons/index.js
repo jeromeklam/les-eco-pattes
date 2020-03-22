@@ -60,3 +60,6 @@ export { default as Stock } from './Stock';
 export { default as Medical } from './Medical';
 export { default as Toolbar } from './Toolbar';
 export { default as Zoom } from './Zoom';
+export { default as AccountDetail } from './AccountDetail';
+export { default as AccountClose } from './AccountClose';
+export { default as Save } from './Save';

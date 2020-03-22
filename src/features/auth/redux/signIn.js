@@ -7,6 +7,9 @@ import {
   AUTH_SIGN_IN_DISMISS_ERROR,
 } from './constants';
 import cookie from 'react-cookies';
+import { schema, defaultConfig } from '../';
+import { saveToLS } from '../../ui';
+import Ajv from 'ajv';
 
 export function signIn(args = {}) {
   return dispatch => {
@@ -58,6 +61,7 @@ export function reducer(state, action) {
       let user = false;
       let token = false;
       let authenticated = false;
+      let more = {};
       if (datas && datas.headers && datas.headers.authorization) {
         token = datas.headers.authorization;
       }
@@ -67,7 +71,7 @@ export function reducer(state, action) {
       }
       if (datas.data) {
         let object = jsonApiNormalizer(datas.data);
-        user = buildModel(object, 'FreeSSO_User', object.SORTEDELEMS[0]);
+        user = buildModel(object, 'FreeSSO_User', object.SORTEDELEMS[0], {eager: true});
       }
       if (user) {
         authenticated = true;
@@ -80,9 +84,24 @@ export function reducer(state, action) {
           aYearFromNow.setFullYear(aYearFromNow.getFullYear() + 1);
           cookie.save('AutoLogin', autologin, { path: '/', expires: aYearFromNow });
         }
+        if (user.config && user.config.ubrk_config) {
+          more.settings = JSON.parse(user.config.ubrk_config) || defaultConfig;
+        } else {
+          more.settings = defaultConfig;
+        }
+        if (user.config && user.config.ubrk_cache) {
+          more.cache = JSON.parse(user.config.ubrk_cache) || {};
+          saveToLS('layouts', more.cache);
+        } else {
+          more.cache = {};
+        }
+        const ajv = new Ajv({ allErrors: true, verbose: true, useDefaults: true });
+        const validate = ajv.compile(schema);
+        validate(more.settings);
       }
       return {
         ...state,
+        ...more,
         token: token,
         user: user,
         authenticated: authenticated,

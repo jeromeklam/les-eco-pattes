@@ -4,6 +4,28 @@ export { initAxios } from './init';
 /**/
 export { propagateModel } from './update';
 
+export const setModelValue = (model, key, value) => {
+  const parts = key.split('.');
+  switch (parts.length) {
+    case 4: {
+      model[parts[0]][parts[1]][parts[2]][parts[3]] = value;
+      break;
+    }
+    case 3: {
+      model[parts[0]][parts[1]][parts[2]] = value;
+      break;
+    }
+    case 2: {
+      model[parts[0]][parts[1]] = value;
+      break;
+    }
+    default: {
+      model[key] = value;
+      break;
+    }
+  }
+}
+
 export const validateRegex = (value, regex) => {
   if (regex !== '') {
     try {

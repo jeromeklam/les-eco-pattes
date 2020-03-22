@@ -2,10 +2,6 @@ import React, { Component } from 'react';
 import { Responsive } from 'freeassofront';
 import fond from '../../images/fond2.jpg';
 import logo from '../../images/logo-les-eco-pattes.jpg';
-import { Stats } from '../dashboard';
-import { DashboardAlerts } from '../alert';
-import { PendingMovements } from '../cause-movement';
-import { PendingSicknesses } from '../cause-sickness'
 import { DashboardGrid } from './';
 
 export default class Dashboard extends Component {
@@ -28,7 +24,6 @@ export default class Dashboard extends Component {
         <Responsive displayIn={['Laptop', 'Tablet']}>
           <div className="text-center">
             <img className="fond-site" src={fond} alt="" />
-            <br />
             <DashboardGrid />
           </div>
         </Responsive>

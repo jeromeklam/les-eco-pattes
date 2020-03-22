@@ -22,7 +22,7 @@ export class Signout extends Component {
   }
 
   render() {
-    return <div className="auth-signout">Page Content: auth/Signout</div>;
+    return <div className="auth-signout"></div>;
   }
 }
 

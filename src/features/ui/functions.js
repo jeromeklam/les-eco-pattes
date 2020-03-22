@@ -1,5 +1,51 @@
 import cogoToast from 'cogo-toast';
 
+export const getFromLS = key => {
+  let ls = {};
+  if (global.localStorage) {
+    try {
+      ls = JSON.parse(global.localStorage.getItem('rgl-8')) || {};
+    } catch (e) {
+      /*Ignore*/
+    }
+  }
+  return ls[key];
+};
+
+export const saveToLS = (key, value) => {
+  if (global.localStorage) {
+    global.localStorage.setItem(
+      'rgl-8',
+      JSON.stringify({
+        [key]: value,
+      }),
+    );
+  }
+};
+
+export const showErrors = (intl, error) => {
+  if (error && error.errors) {
+    error.errors.forEach((oneError) => {
+      if (oneError.code) {
+        const code = `app.errors.code.${oneError.code}`;
+        const message = intl.formatMessage({
+          id: code,
+          defaultMessage: oneError.title,
+        });
+        cogoToast.error(message);
+      }
+    });
+  }
+};
+
+export const messageError = (message = 'Unknown error') => {
+  cogoToast.error(message);
+};
+
+export const messageSuccess = (message = 'Ok') => {
+  cogoToast.success(message);
+};
+
 export const createSuccess = (message = null) => {
   cogoToast.success(message ? message : 'Création effectuée');
 };

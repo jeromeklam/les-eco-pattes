@@ -1,3 +1,9 @@
 export { checkIsAuthenticated, dismissCheckIsAuthenticatedError } from './checkIsAuthenticated';
 export { signIn, dismissSignInError } from './signIn';
 export { signOut, dismissSignOutError } from './signOut';
+export { askPassword, dismissAskPasswordError } from './askPassword';
+export { changePassword, dismissChangePasswordError } from './changePassword';
+export { updateOne, dismissUpdateOneError } from './updateOne';
+export { updatePassword, dismissUpdatePasswordError } from './updatePassword';
+export { updateConfig, dismissUpdateConfigError } from './updateConfig';
+export { changeSetting, dismissChangeSettingError } from './changeSetting';
