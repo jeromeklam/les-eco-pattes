@@ -13,6 +13,10 @@ export class Modify extends Component {
   static propTypes = {
     cause: PropTypes.object.isRequired,
     actions: PropTypes.object.isRequired,
+    loader: PropTypes.bool,
+  };
+  static defaultProps = {
+    loader: true,
   };
 
   constructor(props) {
@@ -105,7 +109,7 @@ export class Modify extends Component {
     return (
       <div className="cause-modify global-card">
         {this.props.cause.loadOnePending ? (
-          <CenteredLoading3Dots />
+          <CenteredLoading3Dots show={this.props.loader} />
         ) : (
           <div>
             {item && (

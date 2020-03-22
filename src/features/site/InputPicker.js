@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { InputPicker as DefaultInputPicker } from 'freeassofront';
-import { Search } from './';
+import { Search, Modify } from './';
 import axios from 'axios';
 import { More, DelOne, Zoom } from '../icons';
 
@@ -28,6 +28,7 @@ export default class InputPicker extends Component {
       display: display,
       autocomplete: false,
       source: false,
+      zoom: false,
     };
     this.onMore = this.onMore.bind(this);
     this.onClear = this.onClear.bind(this);
@@ -82,7 +83,7 @@ export default class InputPicker extends Component {
   }
 
   onZoom() {
-    
+    this.setState({ zoom: true });
   }
 
   onClear() {
@@ -100,7 +101,7 @@ export default class InputPicker extends Component {
   }
 
   onCloseMore() {
-    this.setState({ search: false });
+    this.setState({ search: false, zoom: false });
   }
 
   render() {
@@ -135,6 +136,9 @@ export default class InputPicker extends Component {
           onClose={this.onCloseMore}
           onSelect={this.onSelect}
         />
+        {this.state.zoom && (
+          <Modify loader={false} modal={true} siteId={this.state.item.id} onClose={this.onCloseMore} />
+        )}
       </div>
     );
   }

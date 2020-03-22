@@ -5,8 +5,8 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import axios from 'axios';
 import * as actions from './redux/actions';
-import { Search } from './';
-import { More, DelOne } from '../icons';
+import { Search, Modify } from './';
+import { More, DelOne, Zoom } from '../icons';
 
 export class InputPicker extends Component {
   static propTypes = {
@@ -31,8 +31,10 @@ export class InputPicker extends Component {
       display: display,
       autocomplete: false,
       source: false,
+      zoom: false,
     };
     this.onMore = this.onMore.bind(this);
+    this.onZoom = this.onZoom.bind(this);
     this.onClear = this.onClear.bind(this);
     this.onChange = this.onChange.bind(this);
     this.onSelect = this.onSelect.bind(this);
@@ -80,6 +82,10 @@ export class InputPicker extends Component {
     this.setState({ search: true, autocomplete: false });
   }
 
+  onZoom() {
+    this.setState({ zoom: true });
+  }
+
   onClear() {
     this.setState({ autocomplete: false });
     this.props.onChange({
@@ -95,7 +101,7 @@ export class InputPicker extends Component {
   }
 
   onCloseMore() {
-    this.setState({ search: false });
+    this.setState({ search: false, zoom: false });
   }
 
   render() {
@@ -114,6 +120,7 @@ export class InputPicker extends Component {
           onChange={this.onChange}
           onClear={this.onClear}
           onMore={this.onMore}
+          onZoom={this.onZoom}
           onSelect={this.onSelect}
           required={this.props.required || false}
           error={this.props.error}
@@ -121,6 +128,7 @@ export class InputPicker extends Component {
           pickerDisplay="cli_lastname"
           clearIcon={<DelOne size={this.props.size === 'sm' ? 0.7 : 0.9} className="text-warning" />}
           moreIcon={<More size={this.props.size === 'sm' ? 0.7 : 0.9} className="text-secondary" />}
+          zoomIcon={<Zoom className="text-secondary" size={0.9} />}
         />
         <Search
           title={this.props.label}
@@ -130,6 +138,9 @@ export class InputPicker extends Component {
           types={this.props.clientType.items}
           categories={this.props.clientCategory.items}
         />
+        {this.state.zoom && (
+          <Modify loader={false} modal={true} cliId={this.state.item.id} onClose={this.onCloseMore} />
+        )}
       </div>
     );
   }

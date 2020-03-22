@@ -5,13 +5,17 @@ import { connect } from 'react-redux';
 import * as actions from './redux/actions';
 import { getJsonApi } from 'freejsonapi';
 import { propagateModel } from '../../common';
-import { CenteredLoading9X9 } from '../ui';
+import { CenteredLoading3Dots } from '../ui';
 import Form from './Form';
 
 export class Modify extends Component {
   static propTypes = {
     client: PropTypes.object.isRequired,
     actions: PropTypes.object.isRequired,
+    loader: PropTypes.bool,
+  };
+  static defaultProps = {
+    loader: true,
   };
 
   constructor(props) {
@@ -86,7 +90,7 @@ export class Modify extends Component {
     return (
       <div className="client-modify global-card">
         {this.props.client.loadOnePending ? (
-          <CenteredLoading9X9 />
+          <CenteredLoading3Dots show={this.props.loader} />
         ) : (
           <div>
             {item && (
