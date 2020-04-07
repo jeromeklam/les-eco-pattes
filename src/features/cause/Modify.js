@@ -104,32 +104,30 @@ export class Modify extends Component {
 
   render() {
     const item = this.state.item;
-    const prev = "/cause/modify/" + this.props.cause.loadItemPrev;
-    const next = "/cause/modify/" + this.props.cause.loadItemNext;
+    const prev = '/cause/modify/' + this.props.cause.loadItemPrev;
+    const next = '/cause/modify/' + this.props.cause.loadItemNext;
     return (
       <div className="cause-modify global-card">
-        {this.props.cause.loadOnePending ? (
+        {!item ? (
           <CenteredLoading3Dots show={this.props.loader} />
         ) : (
           <div>
-            {item && (
-              <Form
-                item={item}
-                prev={prev}
-                next={next}
-                modal={this.state.modal}
-                cause_types={this.props.causeType.items}
-                cause_main_types={this.props.causeMainType.items}
-                tab_datas={this.props.data.items}
-                tab_configs={this.props.config.items}
-                tab={this.props.cause.tab}
-                tabs={this.props.cause.tabs}
-                errors={this.props.cause.updateOneError}
-                onSubmit={this.onSubmit}
-                onCancel={this.onCancel}
-                onClose={this.props.onClose}
-              />
-            )}
+            <Form
+              item={item}
+              prev={prev}
+              next={next}
+              modal={this.state.modal}
+              cause_types={this.props.causeType.items}
+              cause_main_types={this.props.causeMainType.items}
+              tab_datas={this.props.data.items}
+              tab_configs={this.props.config.items}
+              tab={this.props.cause.tab}
+              tabs={this.props.cause.tabs}
+              errors={this.props.cause.updateOneError}
+              onSubmit={this.onSubmit}
+              onCancel={this.onCancel}
+              onClose={this.props.onClose}
+            />
           </div>
         )}
       </div>

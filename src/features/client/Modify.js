@@ -40,7 +40,6 @@ export class Modify extends Component {
      *  En async on va demander le chargement des données
      *  Lorsque fini le store sera modifié
      */
-
     this.props.actions.loadOne(this.state.clientId).then(result => {
       const item = this.props.client.loadOneItem;
       this.setState({ item: item });
@@ -89,26 +88,24 @@ export class Modify extends Component {
     const item = this.state.item;
     return (
       <div className="client-modify global-card">
-        {this.props.client.loadOnePending ? (
+        {!item ? (
           <CenteredLoading3Dots show={this.props.loader} />
         ) : (
           <div>
-            {item && (
-              <Form
-                item={item}
-                modal={this.state.modal}
-                client_types={this.props.clientType.items}
-                client_categories={this.props.clientCategory.items}
-                errors={this.props.client.updateOneError}
-                countries={this.props.country.items}
-                languages={this.props.lang.items}
-                tab={this.props.client.tab}
-                tabs={this.props.client.tabs}
-                onSubmit={this.onSubmit}
-                onCancel={this.onCancel}
-                onClose={this.props.onClose}
-              />
-            )}
+            <Form
+              item={item}
+              modal={this.state.modal}
+              client_types={this.props.clientType.items}
+              client_categories={this.props.clientCategory.items}
+              errors={this.props.client.updateOneError}
+              countries={this.props.country.items}
+              languages={this.props.lang.items}
+              tab={this.props.client.tab}
+              tabs={this.props.client.tabs}
+              onSubmit={this.onSubmit}
+              onCancel={this.onCancel}
+              onClose={this.props.onClose}
+            />
           </div>
         )}
       </div>

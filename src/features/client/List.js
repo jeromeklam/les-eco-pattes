@@ -281,8 +281,8 @@ export class List extends Component {
           quickSearch={quickSearch}
           mainCol="cli_firstname"
           filterIcon={filterIcon}
-          cancelPanelIcon={<CancelPanelIcon />}
-          validPanelIcon={<ValidPanelIcon />}
+          cancelPanelIcon={<CancelPanelIcon color="light" />}
+          validPanelIcon={<ValidPanelIcon color="light" />}
           sortDownIcon={<SortDownIcon color="secondary" />}
           sortUpIcon={<SortUpIcon color="secondary" />}
           sortNoneIcon={<SortNoneIcon color="secondary" />}

@@ -1,10 +1,5 @@
 import React from 'react';
-import {
-  InputHidden,
-  InputText,
-  InputSelect,
-  InputCheckbox,
-} from 'freeassofront';
+import { InputHidden, InputText, InputSelect, InputCheckbox } from 'freeassofront';
 import RegexpParser from 'reregexp';
 import { InputData } from '../ui';
 import useForm from '../ui/useForm';
@@ -57,9 +52,11 @@ export default function Form(props) {
   if (regexp !== '') {
     validated = false;
     if (regPlaceholder === '' || sitt_id !== values.site_type.id) {
-      const parser = new RegexpParser('/' + regexp + '/',{namedGroupConf:{
-        pays: ['FR']
-      }});
+      const parser = new RegexpParser('/' + regexp + '/', {
+        namedGroupConf: {
+          pays: ['FR'],
+        },
+      });
       regPlaceholder = parser.build();
     }
     if (values.site_code !== '' && validateRegex(values.site_code, regexp)) {
@@ -82,7 +79,7 @@ export default function Form(props) {
     >
       <InputHidden name="id" id="id" value={values.id} />
       <div className="row">
-        <div className="col-sm-18">
+        <div className="col-sm-14">
           <InputText
             label="Nom"
             required={true}
@@ -115,19 +112,6 @@ export default function Form(props) {
             required={true}
             error={getErrorMessage('site_code')}
             warning={validated ? false : 'Format : ' + regPlaceholder}
-          />
-        </div>
-      </div>
-      <div className="row">
-        <div className="col-18">
-          <SiteInputPicker
-            label="Site principal"
-            key="parent_site"
-            name="parent_site"
-            item={values.parent_site || null}
-            onChange={handleChange}
-            labelTop={true}
-            error={getErrorMessage('parent_site')}
           />
         </div>
         <div className="col-sm-4">
@@ -190,6 +174,19 @@ export default function Form(props) {
                 value={values.site_plots}
                 onChange={handleChange}
                 error={getErrorMessage('site_plots')}
+              />
+            </div>
+          </div>
+          <div className="row">
+            <div className="col-18">
+              <SiteInputPicker
+                label="Site principal"
+                key="parent_site"
+                name="parent_site"
+                item={values.parent_site || null}
+                onChange={handleChange}
+                labelTop={true}
+                error={getErrorMessage('parent_site')}
               />
             </div>
           </div>

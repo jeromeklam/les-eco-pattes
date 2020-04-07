@@ -108,26 +108,24 @@ export class Modify extends Component {
     const item = this.state.item;
     return (
       <div className="site-modify global-card">
-        {this.props.site.loadOnePending ? (
-          <CenteredLoading3Dots show={this.props.loader}/>
+        {!item ? (
+          <CenteredLoading3Dots show={this.props.loader} />
         ) : (
           <div>
-            {item && (
-              <Form
-                item={item}
-                modal={this.state.modal}
-                datas={this.props.data.items}
-                config={this.props.config.items}
-                site_types={this.props.siteType.items}
-                properties={this.props.site.properties}
-                errors={this.props.site.updateOneError}
-                tab={this.props.site.tab}
-                tabs={this.props.site.tabs}
-                onSubmit={this.onSubmit}
-                onCancel={this.onCancel}
-                onClose={this.props.onClose}
-              />
-            )}
+            <Form
+              item={item}
+              modal={this.state.modal}
+              datas={this.props.data.items}
+              config={this.props.config.items}
+              site_types={this.props.siteType.items}
+              properties={this.props.site.properties}
+              errors={this.props.site.updateOneError}
+              tab={this.props.site.tab}
+              tabs={this.props.site.tabs}
+              onSubmit={this.onSubmit}
+              onCancel={this.onCancel}
+              onClose={this.props.onClose}
+            />
           </div>
         )}
       </div>

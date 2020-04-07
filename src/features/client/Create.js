@@ -83,26 +83,24 @@ export class Create extends Component {
     const item = this.state.item;
     return (
       <div className="client-create global-card">
-        {this.props.client.loadOnePending ? (
+        {!item ? (
           <CenteredLoading9X9 />
         ) : (
           <div>
-            {item && (
-              <Form
-                item={item}
-                modal={this.state.modal}
-                client_types={this.props.clientType.items}
-                client_categories={this.props.clientCategory.items}
-                errors={this.props.client.createOneError}
-                countries={this.props.country.items}
-                languages={this.props.lang.items}
-                tab={this.props.client.tab}
-                tabs={this.props.client.tabs}
-                onSubmit={this.onSubmit}
-                onCancel={this.onCancel}
-                onClose={this.props.onClose}
-              />
-            )}
+            <Form
+              item={item}
+              modal={this.state.modal}
+              client_types={this.props.clientType.items}
+              client_categories={this.props.clientCategory.items}
+              errors={this.props.client.createOneError}
+              countries={this.props.country.items}
+              languages={this.props.lang.items}
+              tab={this.props.client.tab}
+              tabs={this.props.client.tabs}
+              onSubmit={this.onSubmit}
+              onCancel={this.onCancel}
+              onClose={this.props.onClose}
+            />
           </div>
         )}
       </div>

@@ -86,26 +86,24 @@ export class Create extends Component {
     const item = this.state.item;
     return (
       <div className="cause-create global-card">
-        {this.props.cause.loadOnePending ? (
+        {!item ? (
           <CenteredLoading3Dots />
         ) : (
           <div>
-            {item && (
-              <Form
-                item={item}
-                modal={this.state.modal}
-                cause_types={this.props.causeType.items}
-                cause_main_types={this.props.causeMainType.items}
-                tab_datas={this.props.data.items}
-                tab_configs={this.props.config.items}
-                tab={this.props.cause.tab}
-                tabs={this.props.cause.tabs}
-                errors={this.props.cause.createOneError}
-                onSubmit={this.onSubmit}
-                onCancel={this.onCancel}
-                onClose={this.props.onClose}
-              />
-            )}
+            <Form
+              item={item}
+              modal={this.state.modal}
+              cause_types={this.props.causeType.items}
+              cause_main_types={this.props.causeMainType.items}
+              tab_datas={this.props.data.items}
+              tab_configs={this.props.config.items}
+              tab={this.props.cause.tab}
+              tabs={this.props.cause.tabs}
+              errors={this.props.cause.createOneError}
+              onSubmit={this.onSubmit}
+              onCancel={this.onCancel}
+              onClose={this.props.onClose}
+            />
           </div>
         )}
       </div>

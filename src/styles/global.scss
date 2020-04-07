@@ -32,43 +32,43 @@ body {
   user-select: none; /* Standard syntax */
 }
 
-.text-danger svg {
+.text-danger > svg {
   fill: theme-color('danger');
   path {
     fill: theme-color('danger');
   }
 }
-.text-warning svg {
+.text-warning > svg {
   fill: theme-color('warning');
   path {
     fill: theme-color('warning');
   }
 }
-.text-success svg {
+.text-success > svg {
   fill: theme-color('success');
   path {
     fill: theme-color('success');
   }
 }
-.text-dark svg {
+.text-dark > svg {
   fill: theme-color('dark');
   path {
     fill: theme-color('dark');
   }
 }
-.text-light svg {
+.text-light > svg {
   fill: theme-color('light');
   path {
     fill: theme-color('light');
   }
 }
-.text-secondary svg {
+.text-secondary > svg {
   fill: theme-color('secondary');
   path {
     fill: theme-color('secondary');
   }
 }
-.text-primary svg {
+.text-primary > svg {
   fill: theme-color('primary');
   path {
     fill: theme-color('primary');
