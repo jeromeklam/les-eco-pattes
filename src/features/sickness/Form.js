@@ -16,6 +16,7 @@ export default function Form(props) {
     <ResponsiveModalOrForm
       className=""
       title="Maladies"
+      size="lg"
       onSubmit={handleSubmit}
       onCancel={handleCancel}
       onClose={props.onClose}

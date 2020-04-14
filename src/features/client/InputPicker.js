@@ -95,9 +95,11 @@ export class InputPicker extends Component {
 
   onSelect(item) {
     this.setState({ search: false, autocomplete: false, list: [] });
-    this.props.onChange({
-      target: { name: this.props.name, value: item.id, type: 'FreeAsso_Client' },
-    });
+    if (item) {
+      this.props.onChange({
+        target: { name: this.props.name, value: item.id, type: 'FreeAsso_Client' },
+      });
+    }
   }
 
   onCloseMore() {

@@ -1,5 +1,8 @@
 @import '../../styles/mixins';
 
+.search-modal {
+  min-height: 300px;
+}
 .list-group-item-action:hover {
   cursor: pointer;
   background-color: theme-color('primary-light');

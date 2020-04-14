@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import classnames from 'classnames';
 import { ResponsiveModal } from 'freeassofront';
 import { CenteredLoading3Dots } from './';
 
@@ -80,14 +81,14 @@ export default class SearchModal extends Component {
         onClose={this.props.onClose}
         buttons={buttons}
       >
-        <div>
+        <div className="search-modal">
           <h6 className="text-secondary">Critères de recherche :</h6>
           <div className="search-filters row">
             {this.state.fields &&
               this.state.fields.map((item, i) => {
                 if (item.type === 'select') {
                   return (
-                    <div className="col-sm-18" key={`${item.value}-${i}`}>
+                    <div className={classnames('col-sm-' + (item.size || '18'))} key={`${item.value}-${i}`}>
                       <select
                         className="form-control"
                         value={item.value}
@@ -139,7 +140,9 @@ export default class SearchModal extends Component {
                         >
                           <p>
                             {fields.map((elem, i) => (
-                              <span className="mr-2" key={`key-${i}`}>{item[elem]}</span>
+                              <span className="mr-2" key={`key-${i}`}>
+                                {item[elem] ? item[elem] : elem}
+                              </span>
                             ))}
                           </p>
                         </li>
