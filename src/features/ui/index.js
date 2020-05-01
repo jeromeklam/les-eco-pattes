@@ -19,3 +19,4 @@ export { default as Col } from './Col';
 export { default as Line } from './Line';
 export { default as InlineList } from './InlineList';
 export { default as InputJson } from './InputJson';
+export { default as InputSpin } from './InputSpin';
