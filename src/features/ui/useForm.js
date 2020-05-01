@@ -49,7 +49,7 @@ const _loadClient = id => {
   return freeAssoApi.get('/v1/asso/client/' + id, {});
 };
 
-const useForm = (initialState, initialTab, onSubmit, onCancel, onNavTab, errors) => {
+const useForm = (initialState, initialTab, onSubmit, onCancel, onNavTab, errors, afterChange = null) => {
   const [values, setValues] = useState({
     ...initialState,
     currentTab: initialTab,
@@ -93,8 +93,11 @@ const useForm = (initialState, initialTab, onSubmit, onCancel, onNavTab, errors)
                 if (result && result.data) {
                   const lines = jsonApiNormalizer(result.data);
                   const item = buildModel(lines, 'FreeAsso_Cause', id, { eager: true });
-                  values[first] = item;
+                  values[first] = item;         
                   setValues(explodeReduxModel(values));
+                  if (afterChange) {
+                    afterChange(event.target.name, values);
+                  }
                 }
               })
               .catch(err => {
@@ -115,6 +118,9 @@ const useForm = (initialState, initialTab, onSubmit, onCancel, onNavTab, errors)
                   const lines = jsonApiNormalizer(result.data);
                   const item = buildModel(lines, 'FreeAsso_Client', id, { eager: true });
                   values[first] = item;
+                  if (afterChange) {
+                    afterChange(event.target.name, values);
+                  }
                   setValues(explodeReduxModel(values));
                 }
               })
@@ -136,6 +142,9 @@ const useForm = (initialState, initialTab, onSubmit, onCancel, onNavTab, errors)
                   const lines = jsonApiNormalizer(result.data);
                   const item = buildModel(lines, 'FreeAsso_Site', id, { eager: true });
                   values[first] = item;
+                  if (afterChange) {
+                    afterChange(event.target.name, values);
+                  }
                   setValues(explodeReduxModel(values));
                 }
               })
@@ -157,6 +166,9 @@ const useForm = (initialState, initialTab, onSubmit, onCancel, onNavTab, errors)
                   const lines = jsonApiNormalizer(result.data);
                   const item = buildModel(lines, 'FreeAsso_Sickness', id, { eager: true });
                   values[first] = item;
+                  if (afterChange) {
+                    afterChange(event.target.name, values);
+                  }
                   setValues(explodeReduxModel(values));
                 }
               })
@@ -194,6 +206,9 @@ const useForm = (initialState, initialTab, onSubmit, onCancel, onNavTab, errors)
                   const lines = jsonApiNormalizer(result.data);
                   const item = buildModel(lines, 'FreeAsso_CauseType', id, { eager: true });
                   values[first] = item;
+                  if (afterChange) {
+                    afterChange(event.target.name, values);
+                  }
                   setValues(explodeReduxModel(values));
                 }
               })
@@ -215,6 +230,9 @@ const useForm = (initialState, initialTab, onSubmit, onCancel, onNavTab, errors)
                   const lines = jsonApiNormalizer(result.data);
                   const item = buildModel(lines, 'FreeAsso_SiteType', id, { eager: true });
                   values[first] = item;
+                  if (afterChange) {
+                    afterChange(event.target.name, values);
+                  }
                   setValues(explodeReduxModel(values));
                 }
               })
@@ -236,6 +254,9 @@ const useForm = (initialState, initialTab, onSubmit, onCancel, onNavTab, errors)
                   const lines = jsonApiNormalizer(result.data);
                   const item = buildModel(lines, 'FreeAsso_Cause', id, { eager: true });
                   values[first] = item;
+                  if (afterChange) {
+                    afterChange(event.target.name, values);
+                  }
                   setValues(explodeReduxModel(values));
                 }
               })
@@ -257,6 +278,9 @@ const useForm = (initialState, initialTab, onSubmit, onCancel, onNavTab, errors)
                   const lines = jsonApiNormalizer(result.data);
                   const item = buildModel(lines, 'FreeAsso_Client', id, { eager: true });
                   values[first] = item;
+                  if (afterChange) {
+                    afterChange(event.target.name, values);
+                  }
                   setValues(explodeReduxModel(values));
                 }
               })
@@ -278,6 +302,9 @@ const useForm = (initialState, initialTab, onSubmit, onCancel, onNavTab, errors)
                   const lines = jsonApiNormalizer(result.data);
                   const item = buildModel(lines, 'FreeAsso_Site', id, { eager: true });
                   values[first] = item;
+                  if (afterChange) {
+                    afterChange(event.target.name, values);
+                  }
                   setValues(explodeReduxModel(values));
                 }
               })
@@ -299,6 +326,9 @@ const useForm = (initialState, initialTab, onSubmit, onCancel, onNavTab, errors)
                   const lines = jsonApiNormalizer(result.data);
                   const item = buildModel(lines, 'FreeAsso_Sickness', id, { eager: true });
                   values[first] = item;
+                  if (afterChange) {
+                    afterChange(event.target.name, values);
+                  }
                   setValues(explodeReduxModel(values));
                 }
               })
