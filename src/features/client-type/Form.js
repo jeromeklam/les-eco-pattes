@@ -1,6 +1,6 @@
 import React from 'react';
-import { InputHidden, InputText, ResponsiveForm } from 'freeassofront';
-import useForm from '../ui/useForm';
+import { InputHidden, InputText } from 'freeassofront';
+import { useForm, ResponsiveModalOrForm } from '../ui';
 
 export default function Form(props) {
   const { values, handleChange, handleSubmit, handleCancel, getErrorMessage } = useForm(
@@ -8,27 +8,29 @@ export default function Form(props) {
     '',
     props.onSubmit,
     props.onCancel,
-    null,
+    '',
     props.errors,
   );
   return (
-    <ResponsiveForm
-      className=""
+    <ResponsiveModalOrForm 
+      className="m-5"
+      size="md"
+      modal={true} 
       title="Type de client" 
-      onSubmit={handleSubmit}
+      onSubmit={handleSubmit} 
       onCancel={handleCancel}
+      onClose={props.onClose}
     >
       <InputHidden name="id" id="id" value={values.id} />
-      <div className="card-body">
-        <InputText
-          label="Nom"
-          name="clit_name"
-          id="clit_name"
-          value={values.clit_name}
-          onChange={handleChange}
-          error={getErrorMessage("clit_name")}
-        />
-      </div>
-    </ResponsiveForm>
+      <InputText
+        label="Nom"
+        name="clit_name"
+        id="clit_name"
+        required={true}
+        value={values.clit_name}
+        onChange={handleChange}
+        error={getErrorMessage('clit_name')}
+      />
+    </ResponsiveModalOrForm>
   );
 }

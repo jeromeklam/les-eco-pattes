@@ -1,4 +1,6 @@
-import { CLIENT_CATEGORY_INIT_SORT } from './constants';
+import {
+  CLIENT_CATEGORY_INIT_SORT,
+} from './constants';
 
 export function initSort() {
   return {
@@ -11,7 +13,7 @@ export function reducer(state, action) {
     case CLIENT_CATEGORY_INIT_SORT:
       return {
         ...state,
-        sort: [{ col: 'clic_name', way: 'up' }],
+        sort: [{col:"clic_name",way:"up"}],
       };
 
     default:

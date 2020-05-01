@@ -115,7 +115,7 @@ export class App extends Component {
             accountOpened={<AccountClose />}
             accountClosed={<AccountDetail className="text-primary" />}
           >
-            {!this.props.auth.authenticated || this.props.home.loadAllFinish ? (
+            {this.props.auth.firstCheck && (!this.props.auth.authenticated || this.props.home.loadAllFinish) ? (
               <div>{this.props.children}</div>
             ) : (
               <div className="text-center mt-5 text-secondary">

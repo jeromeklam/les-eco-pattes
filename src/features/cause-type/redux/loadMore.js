@@ -9,9 +9,9 @@ import {
 } from './constants';
 
 export function loadMore(args = {}, reload = false) {
-  return (dispatch, getState) => { 
-    const loaded =  getState().causeType.loadMoreFinish;
-    const loading =  getState().causeType.loadMorePending;
+  return (dispatch, getState) => {
+    const loaded = getState().causeType.loadMoreFinish;
+    const loading = getState().causeType.loadMorePending;
     if (!loading && (!loaded || reload)) {
       if (reload) {
         dispatch({
@@ -23,10 +23,13 @@ export function loadMore(args = {}, reload = false) {
         });
       }
       const promise = new Promise((resolve, reject) => {
-        let filters = getState().causeType.filters.asJsonApiObject()
-        const params = {
-          page: { number: getState().causeType.page_number, size: getState().causeType.page_size },
-          ...filters
+        let filters = getState().causeType.filters.asJsonApiObject();
+        let params = {
+          page: {
+            number: getState().causeType.page_number,
+            size: getState().causeType.page_size,
+          },
+          ...filters,
         };
         let sort = '';
         getState().causeType.sort.forEach(elt => {
@@ -46,14 +49,14 @@ export function loadMore(args = {}, reload = false) {
         const addUrl = objectToQueryString(params);
         const doRequest = freeAssoApi.get('/v1/asso/cause_type' + addUrl, {});
         doRequest.then(
-          (res) => {
+          res => {
             dispatch({
               type: CAUSE_TYPE_LOAD_MORE_SUCCESS,
               data: res,
             });
             resolve(res);
           },
-          (err) => {
+          err => {
             dispatch({
               type: CAUSE_TYPE_LOAD_MORE_FAILURE,
               data: { error: err },
@@ -119,9 +122,9 @@ export function reducer(state, action) {
         ...state,
         loadMorePending: false,
         loadMoreError: null,
-        loadMoreFinish: (nbre < state.page_size),
+        loadMoreFinish: nbre < state.page_size,
         items: list,
-        page_number: state.page_number+1
+        page_number: state.page_number + 1,
       };
 
     case CAUSE_TYPE_LOAD_MORE_FAILURE:

@@ -1,5 +1,5 @@
+import { freeAssoApi } from '../../../common';
 import { jsonApiNormalizer, buildModel } from 'freejsonapi';
-import { freeAssoApi, getPreviousNext } from '../../../common';
 import {
   CAUSE_TYPE_LOAD_ONE_BEGIN,
   CAUSE_TYPE_LOAD_ONE_SUCCESS,
@@ -8,7 +8,7 @@ import {
 } from './constants';
 
 export function loadOne(args = {}) {
-  return (dispatch) => {
+  return dispatch => {
     dispatch({
       type: CAUSE_TYPE_LOAD_ONE_BEGIN,
     });
@@ -16,15 +16,15 @@ export function loadOne(args = {}) {
     const promise = new Promise((resolve, reject) => {
       const doRequest = freeAssoApi.get('/v1/asso/cause_type/' + args);
       doRequest.then(
-        (res) => {
+        res => {
           dispatch({
             type: CAUSE_TYPE_LOAD_ONE_SUCCESS,
             data: res,
-            id: args
+            id: args,
           });
           resolve(res);
         },
-        (err) => {
+        err => {
           dispatch({
             type: CAUSE_TYPE_LOAD_ONE_FAILURE,
             data: { error: err },
@@ -52,27 +52,20 @@ export function reducer(state, action) {
         ...state,
         loadOnePending: true,
         loadOneError: null,
+        createOneError: null,
+        updateOneError: null,
       };
 
     case CAUSE_TYPE_LOAD_ONE_SUCCESS:
       // The request is success
-      let item = null;      
-      let raw = null;
-      let itemPrevNext = null;
+      let item = null;
       let object = jsonApiNormalizer(action.data.data);
-      raw = buildModel(object, 'FreeAsso_CauseType', action.id);
-      item = buildModel(object, 'FreeAsso_CauseType', action.id, {eager: true});
-      itemPrevNext = getPreviousNext(state.items, action.id);
+      item = buildModel(object, 'FreeAsso_CauseType', action.id, { eager: true });
       return {
         ...state,
         loadOnePending: false,
-        loadItemPrev: itemPrevNext.prev || null,
         loadOneItem: item,
-        loadOneRaw: raw,
-        loadItemNext: itemPrevNext.next || null,        
         loadOneError: null,
-        createOneError: null,
-        updateOneError: null,
       };
 
     case CAUSE_TYPE_LOAD_ONE_FAILURE:
@@ -80,8 +73,6 @@ export function reducer(state, action) {
       return {
         ...state,
         loadOnePending: false,
-        loadOneItem: null,        
-        loadOneRaw: null,
         loadOneError: action.data.error,
       };
 

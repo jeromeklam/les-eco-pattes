@@ -104,6 +104,7 @@ export function reducer(state, action) {
         ...more,
         token: token,
         user: user,
+        firstCheck: true,
         authenticated: authenticated,
         signInPending: false,
         signInError: null,
@@ -117,6 +118,7 @@ export function reducer(state, action) {
       }
       return {
         ...state,
+        firstCheck: true,
         signInPending: false,
         signInError: error,
       };

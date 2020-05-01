@@ -1,4 +1,6 @@
-import { CLIENT_TYPE_CLEAR_ITEMS } from './constants';
+import {
+  CLIENT_TYPE_CLEAR_ITEMS,
+} from './constants';
 
 export function clearItems() {
   return {

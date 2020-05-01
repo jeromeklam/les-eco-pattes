@@ -5,20 +5,24 @@ import { connect } from 'react-redux';
 import * as actions from './redux/actions';
 import { withRouter } from 'react-router-dom';
 import { getJsonApi } from 'freejsonapi';
-import { propagateModel } from '../../common';
-import { CenteredLoading9X9, modifySuccess, modifyError } from '../ui';
+import { propagateModel, modelsToSelect } from '../../common';
+import { CenteredLoading3Dots, modifyError, modifySuccess } from '../ui';
 import Form from './Form';
 
 export class Modify extends Component {
   static propTypes = {
     causeType: PropTypes.object.isRequired,
     actions: PropTypes.object.isRequired,
+    loader: PropTypes.bool,
+  };
+  static defaultProps = {
+    loader: true,
   };
 
   constructor(props) {
     super(props);
     this.state = {
-      causeTypeId: this.props.match.params.id || false,
+      id: this.props.cautId || this.props.match.params.id || false,
       item: false,
     };
     this.onSubmit = this.onSubmit.bind(this);
@@ -26,69 +30,51 @@ export class Modify extends Component {
   }
 
   componentDidMount() {
-    this.props.actions.loadOne(this.state.causeTypeId).then(result => {
+    this.props.actions.loadOne(this.state.id).then(result => {
       const item = this.props.causeType.loadOneItem;
       this.setState({ item: item });
-    });
-  }
-
-  componentDidUpdate(prevProps, prevState) {
-    if (prevProps.match.params.cautId && this.props.match.params.cautId) {
-      if (prevProps.match.params.cautId !== this.props.match.params.cautId) {
-        this.setState({ cautId: this.props.match.params.cautId });
-        this.props.actions.loadOne(this.props.match.params.cautId).then(result => {
-          const item = this.props.causeType.loadOneItem;
-          this.setState({ item: item });
-        });
-      }
-    }
+    }); 
   }
 
   onCancel() {
-    this.props.history.push('/cause-type');
+    this.props.onClose();
   }
 
-  /**
-   * Sur enregistrement, sauvegarde, update store et retour à la liste
-   */
-  onSubmit(datas) {
-    // Conversion des données en objet pour le service web
-    let obj = getJsonApi(datas);
+  onSubmit(datas = {}) {
+    let obj = getJsonApi(datas, 'FreeAsso_CauseType', this.state.id);
     this.props.actions
-      .updateOne(obj)
+      .updateOne(this.state.id, obj)
       .then(result => {
         modifySuccess();
-        // propagateModel est ajouté aux actions en bas de document
         this.props.actions.propagateModel('FreeAsso_CauseType', result);
-        this.props.history.push('/cause-type');
+        this.props.onClose();
       })
       .catch(errors => {
         modifyError();
-      });
+     });
   }
 
   render() {
     const item = this.state.item;
+    const options = modelsToSelect(this.props.causeMainType.items, 'id', 'camt_name');
     return (
       <div className="cause-type-modify global-card">
-        {this.props.causeType.loadOnePending ? (
-          <CenteredLoading9X9 />
+        {!item ? (
+          <CenteredLoading3Dots show={this.props.loader} />
         ) : (
           <div>
-            {item && (
-              <Form
-                item={item}
-                datas={this.props.data.items}
-                config={this.props.config.items}
-                causeMainTypes={this.props.causeMainType.items}
-                properties={this.props.causeType.properties}
+            {item && 
+              <Form 
+                item={item} 
+                causeMainType={options} 
                 errors={this.props.causeType.updateOneError}
-                onSubmit={this.onSubmit}
-                onCancel={this.onCancel}
+                onSubmit={this.onSubmit} 
+                onCancel={this.onCancel} 
+                onClose={this.props.onClose}
               />
-            )}
+            }
           </div>
-        )}  
+        )}
       </div>
     );
   }
@@ -97,8 +83,6 @@ export class Modify extends Component {
 function mapStateToProps(state) {
   return {
     causeType: state.causeType,
-    data: state.data,
-    config: state.config,
     causeMainType: state.causeMainType,
   };
 }

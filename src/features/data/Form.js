@@ -1,8 +1,7 @@
 import React from 'react';
-import { InputHidden, InputText, InputSelect, ResponsiveForm } from 'freeassofront';
-import { InputStringarray } from '../ui';
+import { InputHidden, InputText, InputSelect } from 'freeassofront';
 import { dataTypes } from './functions';
-import useForm from '../ui/useForm';
+import { useForm, InputStringarray, ResponsiveModalOrForm } from '../ui';
 
 /**
  * Functionnal Component
@@ -16,7 +15,15 @@ export default function Form(props) {
   );
   const optionsType = dataTypes();
   return (
-    <ResponsiveForm className="m-5" title="Variable" onSubmit={handleSubmit} onCancel={handleCancel}>
+    <ResponsiveModalOrForm
+      size="md"
+      modal={true}
+      className="m-5"
+      title="Variable"
+      onSubmit={handleSubmit}
+      onCancel={handleCancel}
+      onClose={props.onClose}
+    >
       <InputHidden name="id" id="id" value={values.id} />
       <InputText
         label="Nom"
@@ -43,6 +50,6 @@ export default function Form(props) {
           options={optionsType}
         />
       )}
-    </ResponsiveForm>
+    </ResponsiveModalOrForm>
   );
 }

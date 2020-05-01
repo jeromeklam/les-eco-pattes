@@ -1,8 +1,5 @@
-import {
-  freeAssoApi } from '../../../common';
-import { jsonApiNormalizer,
-  jsonApiUpdate
-} from 'freejsonapi';
+import { freeAssoApi } from '../../../common';
+import { jsonApiNormalizer, jsonApiUpdate } from 'freejsonapi';
 import {
   SITE_TYPE_UPDATE_ONE_BEGIN,
   SITE_TYPE_UPDATE_ONE_SUCCESS,
@@ -11,23 +8,23 @@ import {
   SITE_TYPE_UPDATE_ONE_UPDATE,
 } from './constants';
 
-export function updateOne(args = {}) {
-    return (dispatch) => {
+export function updateOne(id, args = {}) {
+  return dispatch => {
     dispatch({
       type: SITE_TYPE_UPDATE_ONE_BEGIN,
     });
+
     const promise = new Promise((resolve, reject) => {
-      const id = args.data.id;
       const doRequest = freeAssoApi.put('/v1/asso/site_type/' + id, args);
       doRequest.then(
-        (res) => {
+        res => {
           dispatch({
             type: SITE_TYPE_UPDATE_ONE_SUCCESS,
             data: res,
           });
           resolve(res);
         },
-        (err) => {
+        err => {
           dispatch({
             type: SITE_TYPE_UPDATE_ONE_FAILURE,
             data: { error: err },
@@ -85,13 +82,13 @@ export function reducer(state, action) {
       };
 
     case SITE_TYPE_UPDATE_ONE_UPDATE:
-      let object  = jsonApiNormalizer(action.data.data);
+      let object = jsonApiNormalizer(action.data.data);
       let myItems = state.items;
       let news = jsonApiUpdate(myItems, 'FreeAsso_SiteType', object);
       return {
         ...state,
         updateOneError: null,
-        items: news
+        items: news,
       };
 
     default:

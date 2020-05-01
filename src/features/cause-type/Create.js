@@ -5,19 +5,24 @@ import { connect } from 'react-redux';
 import * as actions from './redux/actions';
 import { withRouter } from 'react-router-dom';
 import { getJsonApi } from 'freejsonapi';
-import { CenteredLoading9X9, createSuccess, createError } from '../ui';
+import { propagateModel, modelsToSelect } from '../../common';
+import { CenteredLoading3Dots, createError, createSuccess } from '../ui';
 import Form from './Form';
 
 export class Create extends Component {
   static propTypes = {
     causeType: PropTypes.object.isRequired,
     actions: PropTypes.object.isRequired,
+    loader: PropTypes.bool,
+  };
+  static defaultProps = {
+    loader: true,
   };
 
   constructor(props) {
     super(props);
     this.state = {
-      causeTypeId: 0,
+      id: 0,
       item: false,
     };
     /**
@@ -32,7 +37,7 @@ export class Create extends Component {
      *  En async on va demander le chargement des données
      *  Lorsque fini le store sera modifié
      */
-    this.props.actions.loadOne(this.state.causeTypeId).then(result => {
+    this.props.actions.loadOne(this.state.id).then(result => {
       const item = this.props.causeType.loadOneItem;
       this.setState({ item: item });
     });
@@ -41,11 +46,8 @@ export class Create extends Component {
   /**
    * Sur annulation, on retourne à la liste
    */
-  onCancel(event) {
-    if (event) {
-      event.preventDefault();
-    }
-    this.props.history.push('/cause-type');
+  onCancel() {
+    this.props.onClose();
   }
 
   /**
@@ -54,13 +56,13 @@ export class Create extends Component {
    */
   onSubmit(datas = {}) {
     // Conversion des données en objet pour le service web
-    let obj = getJsonApi(datas, 'FreeAsso_CauseType', this.state.causeTypeId);
+    let obj = getJsonApi(datas, 'FreeAsso_CauseType', this.state.id);
     this.props.actions
       .createOne(obj)
       .then(result => {
         createSuccess();
-        this.props.actions.clearItems();
-        this.props.history.push('/cause-type');
+        this.props.actions.propagateModel('FreeAsso_CauseType', result);
+        this.props.onClose();
       })
       .catch(errors => {
         createError();
@@ -69,24 +71,23 @@ export class Create extends Component {
 
   render() {
     const item = this.state.item;
+    const options = modelsToSelect(this.props.causeMainType.items, 'id', 'camt_name');
     return (
       <div className="cause-type-create global-card">
-        {this.props.causeType.loadOnePending ? (
-          <CenteredLoading9X9 />
+        {!item ? (
+          <CenteredLoading3Dots show={this.props.loader} />
         ) : (
           <div>
-            {item && (
+            {item && 
               <Form 
                 item={item} 
-                datas={this.props.data.items}
-                config={this.props.config.items}
-                causeMainTypes={this.props.causeMainType.items}
-                properties={this.props.causeType.properties}
+                causeMainType={options} 
                 errors={this.props.causeType.createOneError}
                 onSubmit={this.onSubmit} 
                 onCancel={this.onCancel} 
+                onClose={this.props.onClose}
               />
-            )}
+            }
           </div>
         )}
       </div>
@@ -97,15 +98,13 @@ export class Create extends Component {
 function mapStateToProps(state) {
   return {
     causeType: state.causeType,
-    data: state.data,
-    config: state.config,
     causeMainType: state.causeMainType,
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
-    actions: bindActionCreators({ ...actions }, dispatch),
+    actions: bindActionCreators({ ...actions, propagateModel }, dispatch),
   };
 }
 

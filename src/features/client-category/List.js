@@ -6,12 +6,8 @@ import * as actions from './redux/actions';
 import { buildModel } from 'freejsonapi';
 import { ResponsiveList, ResponsiveQuickSearch } from 'freeassofront';
 import {
-  AddOne as AddOneIcon,
-  GetOne as GetOneIcon,
-  DelOne as DelOneIcon,
   Filter as FilterIcon,
   FilterFull as FilterFullIcon,
-  FilterClear as FilterClearIcon,
   SimpleCancel as CancelPanelIcon,
   SimpleValid as ValidPanelIcon,
   SortDown as SortDownIcon,
@@ -19,6 +15,9 @@ import {
   Sort as SortNoneIcon,
   Search as SearchIcon,
 } from '../icons';
+import { deleteError, deleteSuccess } from '../ui';
+import { getGlobalActions, getInlineActions, getCols } from './';
+import { Create, Modify } from './';
 
 export class List extends Component {
   static propTypes = {
@@ -30,35 +29,46 @@ export class List extends Component {
     super(props);
     this.state = {
       timer: null,
+      clicId: null,
     };
     this.onCreate = this.onCreate.bind(this);
     this.onGetOne = this.onGetOne.bind(this);
     this.onDelOne = this.onDelOne.bind(this);
+    this.onClose = this.onClose.bind(this);
     this.onReload = this.onReload.bind(this);
     this.onLoadMore = this.onLoadMore.bind(this);
-    this.onClearFilters = this.onClearFilters.bind(this);
     this.onQuickSearch = this.onQuickSearch.bind(this);
-    this.onSetFiltersAndSort = this.onSetFiltersAndSort.bind(this);
+    this.onClearFilters = this.onClearFilters.bind(this);
     this.onUpdateSort = this.onUpdateSort.bind(this);
+    this.onSetFiltersAndSort = this.onSetFiltersAndSort.bind(this);
   }
 
   componentDidMount() {
     this.props.actions.loadMore();
   }
 
-  onCreate(event) {
-    if (event) {
-      event.preventDefault();
-    }
-    this.props.history.push('/client-category/create');
+  onCreate() {
+    this.setState({ clicId: 0 });
   }
 
   onGetOne(id) {
-    this.props.history.push('/client-category/modify/' + id);
+    this.setState({ clicId: id });
   }
 
   onDelOne(id) {
-    this.props.actions.delOne(id).then(result => this.props.actions.loadMore({}, true));
+    this.props.actions
+      .delOne(id)
+      .then(result => {
+        deleteSuccess();
+        this.props.actions.loadMore({}, true)
+      })
+      .catch(errors => {
+        deleteError();
+      });
+  }
+
+  onClose() {
+    this.setState({ clicId: null });
   }
 
   onReload(event) {
@@ -66,10 +76,6 @@ export class List extends Component {
       event.preventDefault();
     }
     this.props.actions.loadMore({}, true);
-  }
-
-  onLoadMore(event) {
-    this.props.actions.loadMore();
   }
 
   onQuickSearch(quickSearch) {
@@ -122,56 +128,19 @@ export class List extends Component {
     this.setState({ timer: timer });
   }
 
+  onLoadMore(event) {
+    this.props.actions.loadMore();
+  }
+
   render() {
     let items = [];
     if (this.props.clientCategory.items.FreeAsso_ClientCategory) {
       items = buildModel(this.props.clientCategory.items, 'FreeAsso_ClientCategory');
     }
-    const globalActions = [
-      {
-        name: 'clear',
-        label: 'Effacer',
-        onClick: this.onClearFilters,
-        theme: 'secondary',
-        icon: <FilterClearIcon color="white" />,
-      },
-      {
-        name: 'create',
-        label: 'Ajouter',
-        onClick: this.onCreate,
-        theme: 'primary',
-        icon: <AddOneIcon color="white" />,
-        role: 'CREATE',
-      },
-    ];
-    const inlineActions = [
-      {
-        name: 'modify',
-        label: 'Modifier',
-        onClick: this.onGetOne,
-        theme: 'secondary',
-        icon: <GetOneIcon color="white" />,
-        role: 'MODIFY',
-      },
-      {
-        name: 'delete',
-        label: 'Supprimer',
-        onClick: this.onDelOne,
-        theme: 'warning',
-        icon: <DelOneIcon color="white" />,
-        role: 'DELETE',
-      },
-    ];
-    const cols = [
-      {
-        name: 'clic_name',
-        label: 'Nom',
-        col: 'clic_name',
-        size: '30',
-        mob_size: '36',
-        title: false,
-      }
-    ];
+    const globalActions = getGlobalActions(this);
+    const inlineActions = getInlineActions(this);
+    const cols = getCols(this);
+    // L'affichage, items, loading, loadMoreError
     let search = '';
     const crit = this.props.clientCategory.filters.findFirst('clic_name');
     if (crit) {
@@ -180,7 +149,7 @@ export class List extends Component {
     const quickSearch = (
       <ResponsiveQuickSearch
         name="quickSearch"
-        label="Recherche nom, prénom"
+        label="Recherche nom"
         quickSearch={search}
         onSubmit={this.onQuickSearch}
         onChange={this.onSearchChange}
@@ -192,33 +161,38 @@ export class List extends Component {
     ) : (
       <FilterFullIcon color="white" />
     );
-    // L'affichage, items, loading, loadMoreError
     return (
-      <ResponsiveList
-        title="Catégories de client"
-        cols={cols}
-        items={items}
-        quickSearch={quickSearch}
-        mainCol="clic_name"
-        filterIcon={filterIcon}
-        cancelPanelIcon={<CancelPanelIcon />}
-        validPanelIcon={<ValidPanelIcon />}
-        sortDownIcon={<SortDownIcon color="secondary" />}
-        sortUpIcon={<SortUpIcon color="secondary" />}
-        sortNoneIcon={<SortNoneIcon color="secondary" />}
-        inlineActions={inlineActions}
-        globalActions={globalActions}
-        sort={this.props.clientCategory.sort}
-        filters={this.props.clientCategory.filters}
-        onSearch={this.onQuickSearch}
-        onSort={this.onUpdateSort}
-        onSetFiltersAndSort={this.onSetFiltersAndSort}
-        onClearFilters={this.onClearFilters}
-        onLoadMore={this.onLoadMore}
-        loadMorePending={this.props.clientCategory.loadMorePending}
-        loadMoreFinish={this.props.clientCategory.loadMoreFinish}
-        loadMoreError={this.props.clientCategory.loadMoreError}
-      />
+      <div>
+        <ResponsiveList
+          title="Catégories de client"
+          cols={cols}
+          items={items}
+          quickSearch={quickSearch}
+          mainCol="clic_name"
+          filterIcon={filterIcon}
+          cancelPanelIcon={<CancelPanelIcon />}
+          validPanelIcon={<ValidPanelIcon />}
+          sortDownIcon={<SortDownIcon color="secondary" />}
+          sortUpIcon={<SortUpIcon color="secondary" />}
+          sortNoneIcon={<SortNoneIcon color="secondary" />}
+          inlineActions={inlineActions}
+          globalActions={globalActions}
+          sort={this.props.clientCategory.sort}
+          filters={this.props.clientCategory.filters}
+          onSearch={this.onQuickSearch}
+          onClearFilters={this.onClearFilters}
+          onSort={this.onUpdateSort}
+          onSetFiltersAndSort={this.onSetFiltersAndSort}
+          onLoadMore={this.onLoadMore}
+          loadMorePending={this.props.clientCategory.loadMorePending}
+          loadMoreFinish={this.props.clientCategory.loadMoreFinish}
+          loadMoreError={this.props.clientCategory.loadMoreError}
+        />
+        {this.state.clicId > 0 && (
+          <Modify modal={true} clicId={this.state.clicId} onClose={this.onClose} />
+        )}
+        {this.state.clicId === 0 && <Create modal={true} onClose={this.onClose} />}
+      </div>
     );
   }
 }
@@ -231,11 +205,8 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    actions: bindActionCreators({ ...actions }, dispatch)
+    actions: bindActionCreators({ ...actions }, dispatch),
   };
 }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(List);
+export default connect(mapStateToProps, mapDispatchToProps)(List);

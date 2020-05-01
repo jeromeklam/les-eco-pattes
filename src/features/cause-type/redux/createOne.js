@@ -8,11 +8,15 @@ import {
 } from './constants';
 
 export function createOne(args = {}) {
-  return (dispatch) => { 
+  return (dispatch) => { // optionally you can have getState as the second argument
     dispatch({
       type: CAUSE_TYPE_CREATE_ONE_BEGIN,
     });
+
     const promise = new Promise((resolve, reject) => {
+      if (args.data.attributes.caut_mnt_type == null ) {
+        args.data.attributes.caut_mnt_type = 'OTHER';
+      }
       const doRequest = freeAssoApi.post('/v1/asso/cause_type', args);
       doRequest.then(
         (res) => {

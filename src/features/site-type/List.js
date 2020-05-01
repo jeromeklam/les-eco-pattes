@@ -2,24 +2,19 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import * as actions from './redux/actions';
 import { buildModel } from 'freejsonapi';
-import { ResponsiveList, ResponsiveQuickSearch } from 'freeassofront';
+import { ResponsiveList } from 'freeassofront';
+import * as actions from './redux/actions';
 import {
-  AddOne as AddOneIcon,
-  GetOne as GetOneIcon,
-  DelOne as DelOneIcon,
-  Filter as FilterIcon,
-  FilterFull as FilterFullIcon,
-  FilterClear as FilterClearIcon,
   SimpleCancel as CancelPanelIcon,
   SimpleValid as ValidPanelIcon,
   SortDown as SortDownIcon,
   SortUp as SortUpIcon,
   Sort as SortNoneIcon,
-  Search as SearchIcon,
 } from '../icons';
-import { deleteSuccess, deleteError } from '../ui';
+import { deleteError, deleteSuccess } from '../ui';
+import { getGlobalActions, getInlineActions, getCols } from './';
+import { Create, Modify } from './';
 
 export class List extends Component {
   static propTypes = {
@@ -31,14 +26,14 @@ export class List extends Component {
     super(props);
     this.state = {
       timer: null,
+      sittId: null,
     };
     this.onCreate = this.onCreate.bind(this);
     this.onGetOne = this.onGetOne.bind(this);
     this.onDelOne = this.onDelOne.bind(this);
+    this.onClose = this.onClose.bind(this);
     this.onReload = this.onReload.bind(this);
     this.onLoadMore = this.onLoadMore.bind(this);
-    this.onQuickSearch = this.onQuickSearch.bind(this);
-    this.onClearFilters = this.onClearFilters.bind(this);
     this.onSetFiltersAndSort = this.onSetFiltersAndSort.bind(this);
     this.onUpdateSort = this.onUpdateSort.bind(this);
   }
@@ -47,27 +42,28 @@ export class List extends Component {
     this.props.actions.loadMore();
   }
 
-  onCreate(event) {
-    if (event) {
-      event.preventDefault();
-    }
-    this.props.history.push('/site-type/create');
+  onCreate() {
+    this.setState({ sittId: 0 });
   }
 
   onGetOne(id) {
-    this.props.history.push('/site-type/modify/' + id);
+    this.setState({ sittId: id });
   }
 
   onDelOne(id) {
     this.props.actions
       .delOne(id)
       .then(result => {
-        this.props.actions.loadMore({}, true);
         deleteSuccess();
+        this.props.actions.loadMore({}, true)
       })
       .catch(errors => {
         deleteError();
       });
+  }
+
+  onClose() {
+    this.setState({ sittId: null });
   }
 
   onReload(event) {
@@ -77,16 +73,8 @@ export class List extends Component {
     this.props.actions.loadMore({}, true);
   }
 
-    onQuickSearch(quickSearch) {
-    this.props.actions.updateQuickSearch(quickSearch);
-    let timer = this.state.timer;
-    if (timer) {
-      clearTimeout(timer);
-    }
-    timer = setTimeout(() => {
-      this.props.actions.loadMore({}, true);
-    }, 2000);
-    this.setState({ timer: timer });
+  onLoadMore(event) {
+    this.props.actions.loadMore();
   }
 
   onUpdateSort(col, way, pos = 99) {
@@ -114,112 +102,44 @@ export class List extends Component {
     this.setState({ timer: timer });
   }
 
-  onClearFilters() {
-    this.props.actions.initFilters();
-    this.props.actions.initSort();
-    let timer = this.state.timer;
-    if (timer) {
-      clearTimeout(timer);
-    }
-    timer = setTimeout(() => {
-      this.props.actions.loadMore({}, true);
-    }, 2000);
-    this.setState({ timer: timer });
-  }
-
-  onLoadMore(event) {
-    this.props.actions.loadMore();
-  }
-
   render() {
     let items = [];
     if (this.props.siteType.items.FreeAsso_SiteType) {
       items = buildModel(this.props.siteType.items, 'FreeAsso_SiteType');
     }
-    const globalActions = [
-      {
-        name: 'clear',
-        label: 'Effacer',
-        onClick: this.onClearFilters,
-        theme: 'secondary',
-        icon: <FilterClearIcon color="white" />,
-      },
-      {
-        name: 'create',
-        label: 'Ajouter',
-        onClick: this.onCreate,
-        theme: 'primary',
-        icon: <AddOneIcon color="white" />,
-        role: 'CREATE',
-      },
-    ];
-       const inlineActions = [
-      {
-        name: 'modify',
-        label: 'Modifier',
-        onClick: this.onGetOne,
-        theme: 'secondary',
-        icon: <GetOneIcon color="white" />,
-        role: 'MODIFY',
-      },
-      {
-        name: 'delete',
-        label: 'Supprimer',
-        onClick: this.onDelOne,
-        theme: 'warning',
-        icon: <DelOneIcon color="white" />,
-        role: 'DELETE',
-      },
-    ];
-    const cols = [
-      { name: 'name', label: 'Nom', col: 'sitt_name', size: '30', mob_size: '', title: true },
-    ];
-    let search = '';
-    const crit = this.props.siteType.filters.findFirst('sitt_name');
-    if (crit) {
-      search = crit.getFilterCrit();
-    }
-    const quickSearch = (
-      <ResponsiveQuickSearch
-        name="quickSearch"
-        label="Recherche nom"
-        quickSearch={search}
-        onSubmit={this.onQuickSearch}
-        onChange={this.onSearchChange}
-        icon={<SearchIcon className="text-secondary" />}
-      />
-    );
-    const filterIcon = this.props.siteType.filters.isEmpty() ? (
-      <FilterIcon color="white" />
-    ) : (
-      <FilterFullIcon color="white" />
-    );
+    const globalActions = getGlobalActions(this);
+    const inlineActions = getInlineActions(this);
+    const cols = getCols(this);
+    // L'affichage, items, loading, loadMoreError
     return (
-      <ResponsiveList
-        title="Types de site"
-        cols={cols}
-        items={items || []}
-        quickSearch={quickSearch}
-        mainCol="sitt_name"
-        filterIcon={filterIcon}
-        cancelPanelIcon={<CancelPanelIcon />}
-        validPanelIcon={<ValidPanelIcon />}
-        sortDownIcon={<SortDownIcon color="secondary" />}
-        sortUpIcon={<SortUpIcon color="secondary" />}
-        sortNoneIcon={<SortNoneIcon color="secondary" />}
-        inlineActions={inlineActions}
-        globalActions={globalActions}
-        sort={this.props.siteType.sort}
-        filters={this.props.siteType.filters}
-        onSearch={this.onQuickSearch}
-        onClearFilters={this.onClearFilters}
-        onSort={this.onUpdateSort}
-        onSetFiltersAndSort={this.onSetFiltersAndSort}
-        onLoadMore={this.onLoadMore}
-        loadMorePending={this.props.siteType.loadMorePending}
-        loadMoreFinish={this.props.siteType.loadMoreFinish}
-        loadMoreError={this.props.siteType.loadMoreError}
-      />
+      <div>
+        <ResponsiveList
+          title="Types de site"
+          cols={cols}
+          items={items}
+          mainCol="sitt_name"
+          filterIcon={null}
+          cancelPanelIcon={<CancelPanelIcon />}
+          validPanelIcon={<ValidPanelIcon />}
+          sortDownIcon={<SortDownIcon color="secondary" />}
+          sortUpIcon={<SortUpIcon color="secondary" />}
+          sortNoneIcon={<SortNoneIcon color="secondary" />}
+          inlineActions={inlineActions}
+          globalActions={globalActions}
+          sort={this.props.siteType.sort}
+          filters={this.props.siteType.filters}
+          onSort={this.onUpdateSort}
+          onSetFiltersAndSort={this.onSetFiltersAndSort}
+          onLoadMore={this.onLoadMore}
+          loadMorePending={this.props.siteType.loadMorePending}
+          loadMoreFinish={this.props.siteType.loadMoreFinish}
+          loadMoreError={this.props.siteType.loadMoreError}
+        />
+        {this.state.sittId > 0 && (
+          <Modify modal={true} sittId={this.state.sittId} onClose={this.onClose} />
+        )}
+        {this.state.sittId === 0 && <Create modal={true} onClose={this.onClose} />}
+      </div>
     );
   }
 }

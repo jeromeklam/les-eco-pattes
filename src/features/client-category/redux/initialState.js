@@ -1,41 +1,22 @@
-import { Filter } from 'freeassofront';
+import {Filter} from 'freeassofront';
 
 const initialState = {
   items: [],
   page_number: 1,
-  page_size: 999999,
+  page_size: process.env.REACT_APP_PAGE_SIZE,
   filters: new Filter(),
   sort: [{col:"clic_name",way:"up"}],
-  properties: [
-    'number_1',
-    'string_1',
-    'string_2',
-    'number_3',
-    'string_3',
-    'number_4',
-    'string_4',
-    'bool_1',
-    'number_5',
-    'string_5',
-    'string_6',
-  ],
-  quickSearch: '',
-  mobileQuickSearch: false,
   loadMorePending: false,
-  loadMoreFinish: false,
   loadMoreError: null,
+  loadMoreFinish: false,
   loadOnePending: false,
-  loadOneItem: null,
-  loadOneRaw: null,
   loadOneError: null,
   createOnePending: false,
   createOneError: null,
-  updateOnePending: false,
-  updateOneError: null,
-  filterPending: false,
-  filterError: null,
   delOnePending: false,
   delOneError: null,
+  updateOnePending: false,
+  updateOneError: null,
 };
 
 export default initialState;

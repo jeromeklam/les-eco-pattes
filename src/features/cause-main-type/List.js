@@ -4,29 +4,21 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as actions from './redux/actions';
 import { buildModel } from 'freejsonapi';
+import { ResponsiveList } from 'freeassofront';
 import {
-  ResponsiveList,
-  ResponsiveQuickSearch
-} from 'freeassofront';
-import {
-  AddOne as AddOneIcon,
-  GetOne as GetOneIcon,
-  DelOne as DelOneIcon,
-  Filter as FilterIcon,
-  FilterFull as FilterFullIcon,
-  FilterClear as FilterClearIcon,
   SimpleCancel as CancelPanelIcon,
   SimpleValid as ValidPanelIcon,
   SortDown as SortDownIcon,
   SortUp as SortUpIcon,
   Sort as SortNoneIcon,
-  Search as SearchIcon,
 } from '../icons';
-import { deleteSuccess, deleteError } from '../ui';
+import { deleteError, deleteSuccess } from '../ui';
+import { getGlobalActions, getInlineActions, getCols } from './';
+import { Create, Modify } from './';
 
 export class List extends Component {
   static propTypes = {
-    causeMainType: PropTypes.object.isRequired,
+    causeType: PropTypes.object.isRequired,
     actions: PropTypes.object.isRequired,
   };
 
@@ -34,31 +26,30 @@ export class List extends Component {
     super(props);
     this.state = {
       timer: null,
+      camtId: null,
     };
     this.onCreate = this.onCreate.bind(this);
     this.onGetOne = this.onGetOne.bind(this);
     this.onDelOne = this.onDelOne.bind(this);
+    this.onClose = this.onClose.bind(this);
     this.onReload = this.onReload.bind(this);
     this.onLoadMore = this.onLoadMore.bind(this);
     this.onQuickSearch = this.onQuickSearch.bind(this);
     this.onClearFilters = this.onClearFilters.bind(this);
-    this.onSetFiltersAndSort = this.onSetFiltersAndSort.bind(this);
     this.onUpdateSort = this.onUpdateSort.bind(this);
+    this.onSetFiltersAndSort = this.onSetFiltersAndSort.bind(this);
   }
 
   componentDidMount() {
     this.props.actions.loadMore();
   }
 
-  onCreate(event) {
-    if (event) {
-      event.preventDefault();
-    }
-    this.props.history.push('/cause-main-type/create');
+  onCreate() {
+    this.setState({ camtId: 0 });
   }
 
   onGetOne(id) {
-    this.props.history.push('/cause-main-type/modify/' + id);
+    this.setState({ camtId: id });
   }
 
   onDelOne(id) {
@@ -66,11 +57,15 @@ export class List extends Component {
       .delOne(id)
       .then(result => {
         deleteSuccess();
-        this.props.actions.loadMore({}, true);
+        this.props.actions.loadMore({}, true)
       })
       .catch(errors => {
         deleteError();
       });
+  }
+
+  onClose() {
+    this.setState({ camtId: null });
   }
 
   onReload(event) {
@@ -139,90 +134,40 @@ export class List extends Component {
     if (this.props.causeMainType.items.FreeAsso_CauseMainType) {
       items = buildModel(this.props.causeMainType.items, 'FreeAsso_CauseMainType');
     }
-    const globalActions = [
-      {
-        name: 'clear',
-        label: 'Effacer',
-        onClick: this.onClearFilters,
-        theme: 'secondary',
-        icon: <FilterClearIcon color="white" />,
-      },
-      {
-        name: 'create',
-        label: 'Ajouter',
-        onClick: this.onCreate,
-        theme: 'primary',
-        icon: <AddOneIcon color="white" />,
-        role: 'CREATE',
-      },
-    ];
-    const inlineActions = [
-      {
-        name: 'modify',
-        label: 'Modifier',
-        onClick: this.onGetOne,
-        theme: 'secondary',
-        icon: <GetOneIcon color="white" />,
-        role: 'MODIFY',
-      },
-      {
-        name: 'delete',
-        label: 'Supprimer',
-        onClick: this.onDelOne,
-        theme: 'warning',
-        icon: <DelOneIcon color="white" />,
-        role: 'DELETE',
-      },
-    ];
-    const cols = [
-      { name: "name", label: "Nom", col: "camt_name", size:"30", mob_size:"", title: true}
-    ];
-    let search = '';
-    const crit = this.props.causeMainType.filters.findFirst('camt_name');
-    if (crit) {
-      search = crit.getFilterCrit();
-    }
-    const quickSearch = (
-      <ResponsiveQuickSearch
-        name="quickSearch"
-        label="Recherche nom"
-        quickSearch={search}
-        onSubmit={this.onQuickSearch}
-        onChange={this.onSearchChange}
-        icon={<SearchIcon className="text-secondary" />}
-      />
-    );
-    const filterIcon = this.props.causeMainType.filters.isEmpty() ? (
-      <FilterIcon color="white" />
-    ) : (
-      <FilterFullIcon color="white" />
-    );
+    const globalActions = getGlobalActions(this);
+    const inlineActions = getInlineActions(this);
+    const cols = getCols(this);
     return (
-      <ResponsiveList
-        title="Espèces"
-        cols={cols}
-        items={items || []}
-        quickSearch={quickSearch}
-        mainCol="camt_name"
-        filterIcon={filterIcon}
-        cancelPanelIcon={<CancelPanelIcon />}
-        validPanelIcon={<ValidPanelIcon />}
-        sortDownIcon={<SortDownIcon color="secondary" />}
-        sortUpIcon={<SortUpIcon color="secondary" />}
-        sortNoneIcon={<SortNoneIcon color="secondary" />}
-        inlineActions={inlineActions}
-        globalActions={globalActions}
-        sort={this.props.causeMainType.sort}
-        filters={this.props.causeMainType.filters}
-        onSearch={this.onQuickSearch}
-        onClearFilters={this.onClearFilters}
-        onSort={this.onUpdateSort}
-        onSetFiltersAndSort={this.onSetFiltersAndSort}
-        onLoadMore={this.onLoadMore}
-        loadMorePending={this.props.causeMainType.loadMorePending}
-        loadMoreFinish={this.props.causeMainType.loadMoreFinish}
-        loadMoreError={this.props.causeMainType.loadMoreError}
-      />
+      <div>
+        <ResponsiveList
+          title="Grandes cause"
+          cols={cols}
+          items={items}
+          quickSearch={null}
+          mainCol="camt_name"
+          cancelPanelIcon={<CancelPanelIcon />}
+          validPanelIcon={<ValidPanelIcon />}
+          sortDownIcon={<SortDownIcon color="secondary" />}
+          sortUpIcon={<SortUpIcon color="secondary" />}
+          sortNoneIcon={<SortNoneIcon color="secondary" />}
+          inlineActions={inlineActions}
+          globalActions={globalActions}
+          sort={this.props.causeMainType.sort}
+          filters={this.props.causeMainType.filters}
+          onSearch={null}
+          onClearFilters={null}
+          onSort={this.onUpdateSort}
+          onSetFiltersAndSort={this.onSetFiltersAndSort}
+          onLoadMore={this.onLoadMore}
+          loadMorePending={this.props.causeMainType.loadMorePending}
+          loadMoreFinish={this.props.causeMainType.loadMoreFinish}
+          loadMoreError={this.props.causeMainType.loadMoreError}
+        />
+        {this.state.camtId > 0 && (
+          <Modify modal={true} camtId={this.state.camtId} onClose={this.onClose} />
+        )}
+        {this.state.camtId === 0 && <Create modal={true} onClose={this.onClose} />}
+      </div>
     );
   }
 }

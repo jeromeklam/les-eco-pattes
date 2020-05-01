@@ -1,4 +1,6 @@
-import { CLIENT_CATEGORY_SET_FILTERS } from './constants';
+import {
+  CLIENT_CATEGORY_SET_FILTERS,
+} from './constants';
 
 export function setFilters(filters) {
   return {

@@ -1,6 +1,7 @@
 import { defaultConfig } from '../';
 
 const initialState = {
+  firstCheck: false,
   authenticated: false,
   user: false,
   settings: defaultConfig,

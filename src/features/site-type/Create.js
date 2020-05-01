@@ -5,7 +5,8 @@ import { connect } from 'react-redux';
 import * as actions from './redux/actions';
 import { withRouter } from 'react-router-dom';
 import { getJsonApi } from 'freejsonapi';
-import { CenteredLoading9X9, createSuccess, createError } from '../ui';
+import { propagateModel } from '../../common';
+import { CenteredLoading3Dots, createError, createSuccess } from '../ui';
 import Form from './Form';
 
 /**
@@ -15,12 +16,16 @@ export class Create extends Component {
   static propTypes = {
     siteType: PropTypes.object.isRequired,
     actions: PropTypes.object.isRequired,
+    loader: PropTypes.bool,
   };
+  static defaultProps = {
+    loader: true,
+  }
 
   constructor(props) {
     super(props);
     this.state = {
-      siteTypeId: 0,
+      id: 0,
       item: false,
     };
     /**
@@ -35,7 +40,7 @@ export class Create extends Component {
      *  En async on va demander le chargement des données
      *  Lorsque fini le store sera modifié
      */
-    this.props.actions.loadOne(this.state.siteTypeId).then(result => {
+    this.props.actions.loadOne(this.state.id).then(result => {
       const item = this.props.siteType.loadOneItem;
       this.setState({ item: item });
     });
@@ -44,11 +49,8 @@ export class Create extends Component {
   /**
    * Sur annulation, on retourne à la liste
    */
-  onCancel(event) {
-    if (event) {
-      event.preventDefault();
-    }
-    this.props.history.push('/site-type');
+  onCancel() {
+    this.props.onClose();
   }
 
   /**
@@ -62,8 +64,8 @@ export class Create extends Component {
       .createOne(obj)
       .then(result => {
         createSuccess();
-        this.props.actions.clearItems();
-        this.props.history.push('/site-type');
+        this.props.actions.propagateModel('FreeAsso_SiteType', result);
+        this.props.onClose();
       })
       .catch(errors => {
         createError();
@@ -72,21 +74,20 @@ export class Create extends Component {
 
   render() {
     const item = this.state.item;
+
     return (
       <div className="site-type-create global-card">
-        {this.props.siteType.loadOnePending ? (
-          <CenteredLoading9X9 />
+        {!item ? (
+          <CenteredLoading3Dots show={this.props.loader} />
         ) : (
           <div>
             {item && 
               <Form 
                 item={item} 
-                datas={this.props.data.items}
-                config={this.props.config.items}
-                properties={this.props.siteType.properties}
                 errors={this.props.siteType.createOneError}
                 onSubmit={this.onSubmit} 
                 onCancel={this.onCancel} 
+                onClose={this.props.onClose} 
               />
             }
           </div>
@@ -99,14 +100,12 @@ export class Create extends Component {
 function mapStateToProps(state) {
   return {
     siteType: state.siteType,
-    data: state.data,
-    config: state.config,
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
-    actions: bindActionCreators({ ...actions }, dispatch),
+    actions: bindActionCreators({ ...actions, propagateModel }, dispatch),
   };
 }
 

@@ -3,16 +3,20 @@ import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as actions from './redux/actions';
-import { withRouter } from 'react-router-dom';
 import { getJsonApi } from 'freejsonapi';
+import { withRouter } from 'react-router-dom';
 import { propagateModel } from '../../common';
-import { CenteredLoading9X9, modifySuccess, modifyError } from '../ui';
+import { CenteredLoading3Dots, modifySuccess, modifyError } from '../ui';
 import Form from './Form';
 
 export class Modify extends Component {
   static propTypes = {
     causeMainType: PropTypes.object.isRequired,
     actions: PropTypes.object.isRequired,
+    loader: PropTypes.bool,
+  };
+  static defaultProps = {
+    loader: true,
   };
 
   constructor(props) {
@@ -21,7 +25,7 @@ export class Modify extends Component {
      * On récupère l'id et l'élément à afficher
      */
     this.state = {
-      causeMainTypeId: this.props.match.params.id || false,
+      id: this.props.camtId || this.props.match.params.id || false,
       item: false,
     };
     /**
@@ -36,29 +40,20 @@ export class Modify extends Component {
      *  En async on va demander le chargement des données
      *  Lorsque fini le store sera modifié
      */
-    this.props.actions.loadOne(this.state.causeMainTypeId).then(result => {
+    this.props.actions.loadOne(this.state.id).then(result => {
       const item = this.props.causeMainType.loadOneItem;
       this.setState({ item: item });
     });
   }
 
-  componentDidUpdate(prevProps, prevState) {
-    if (prevProps.match.params.camtId && this.props.match.params.camtId) {
-      if (prevProps.match.params.camtId !== this.props.match.params.camtId) {
-        this.setState({ camtId: this.props.match.params.camtId });
-        this.props.actions.loadOne(this.props.match.params.camtId).then(result => {
-          const item = this.props.causeMainType.loadOneItem;
-          this.setState({ item: item });
-        });
-      }
-    }
-  }
-
   /**
    * Sur annulation, on retourne à la liste
    */
-  onCancel() {
-    this.props.history.push('/cause-main-type');
+  onCancel(event) {
+    if (event) {
+      event.preventDefault();
+    }
+    this.props.onClose();
   }
 
   /**
@@ -66,13 +61,13 @@ export class Modify extends Component {
    */
   onSubmit(datas = {}) {
     // Conversion des données en objet pour le service web
-    let obj = getJsonApi(datas, 'FreeAsso_CauseMainType', this.state.causeMainTypeId);
+    let obj = getJsonApi(datas, 'FreeAsso_CauseMainType', this.state.id);
     this.props.actions
-      .updateOne(obj)
+      .updateOne(this.state.id, obj)
       .then(result => {
         modifySuccess();
         this.props.actions.propagateModel('FreeAsso_CauseMainType', result);
-        this.props.history.push('/cause-main-type');
+        this.props.onClose();
       })
       .catch(errors => {
         modifyError();
@@ -83,21 +78,19 @@ export class Modify extends Component {
     const item = this.state.item;
     return (
       <div className="cause-main-type-modify global-card">
-        {this.props.causeMainType.loadOnePending ? (
-          <CenteredLoading9X9 />
+        {!item ? (
+          <CenteredLoading3Dots show={this.props.loader} />
         ) : (
           <div>
-            {item && (
+            {item && 
               <Form 
                 item={item} 
-                datas={this.props.data.items}
-                config={this.props.config.items}
-                properties={this.props.causeMainType.properties}
                 errors={this.props.causeMainType.updateOneError}
                 onSubmit={this.onSubmit} 
                 onCancel={this.onCancel} 
+                onClose={this.props.onClose}
               />
-            )}
+            }
           </div>
         )}
       </div>
@@ -108,8 +101,6 @@ export class Modify extends Component {
 function mapStateToProps(state) {
   return {
     causeMainType: state.causeMainType,
-    data: state.data,
-    config: state.config,
   };
 }
 

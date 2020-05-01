@@ -3,15 +3,20 @@ import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as actions from './redux/actions';
-import { withRouter } from 'react-router-dom';
 import { getJsonApi } from 'freejsonapi';
-import { CenteredLoading9X9, createSuccess, createError } from '../ui';
+import { withRouter } from 'react-router-dom';
+import { propagateModel } from '../../common';
+import { CenteredLoading3Dots, createError, createSuccess } from '../ui';
 import Form from './Form';
 
 export class Create extends Component {
   static propTypes = {
     causeMainType: PropTypes.object.isRequired,
     actions: PropTypes.object.isRequired,
+    loader: PropTypes.bool,
+  };
+  static defaultProps = {
+    loader: true,
   };
 
   constructor(props) {
@@ -20,7 +25,7 @@ export class Create extends Component {
      * On récupère l'id et l'élément à afficher
      */
     this.state = {
-      causeMainTypeId: 0,
+      id: 0,
       item: false,
     };
     /**
@@ -35,7 +40,7 @@ export class Create extends Component {
      *  En async on va demander le chargement des données
      *  Lorsque fini le store sera modifié
      */
-    this.props.actions.loadOne(this.state.causeMainTypeId).then(result => {
+    this.props.actions.loadOne(this.state.id).then(result => {
       const item = this.props.causeMainType.loadOneItem;
       this.setState({ item: item });
     });
@@ -44,8 +49,11 @@ export class Create extends Component {
   /**
    * Sur annulation, on retourne à la liste
    */
-  onCancel() {
-    this.props.history.push('/cause-main-type');
+  onCancel(event) {
+    if (event) {
+      event.preventDefault();
+    }
+    this.props.onClose();
   }
 
   /**
@@ -53,13 +61,13 @@ export class Create extends Component {
    */
   onSubmit(datas = {}) {
     // Conversion des données en objet pour le service web
-    let obj = getJsonApi(datas, 'FreeAsso_CauseMainType', this.state.causeMainTypeId);
+    let obj = getJsonApi(datas, 'FreeAsso_CauseMainType', this.state.id);
     this.props.actions
       .createOne(obj)
       .then(result => {
         createSuccess();
-        this.props.actions.clearItems();
-        this.props.history.push('/cause-main-type');
+        this.props.actions.propagateModel('FreeAsso_CauseMainType', result);
+        this.props.onClose();
       })
       .catch(errors => {
         createError();
@@ -70,21 +78,19 @@ export class Create extends Component {
     const item = this.state.item;
     return (
       <div className="cause-main-type-modify global-card">
-        {this.props.causeMainType.loadOnePending ? (
-          <CenteredLoading9X9 />
+        {!item ? (
+          <CenteredLoading3Dots show={this.props.loader} />
         ) : (
           <div>
-            {item && (
+            {item && 
               <Form 
                 item={item} 
-                datas={this.props.data.items}
-                config={this.props.config.items}
-                properties={this.props.causeMainType.properties}
                 errors={this.props.causeMainType.createOneError}
                 onSubmit={this.onSubmit} 
-                onCancel={this.onCancel}
+                onCancel={this.onCancel} 
+                onClose={this.props.onClose}
               />
-            )}
+            }
           </div>
         )}
       </div>
@@ -95,14 +101,12 @@ export class Create extends Component {
 function mapStateToProps(state) {
   return {
     causeMainType: state.causeMainType,
-    data: state.data,
-    config: state.config,
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
-    actions: bindActionCreators({ ...actions }, dispatch),
+    actions: bindActionCreators({ ...actions, propagateModel }, dispatch),
   };
 }
 

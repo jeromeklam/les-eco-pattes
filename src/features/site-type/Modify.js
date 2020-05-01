@@ -6,7 +6,7 @@ import * as actions from './redux/actions';
 import { withRouter } from 'react-router-dom';
 import { getJsonApi } from 'freejsonapi';
 import { propagateModel } from '../../common';
-import { CenteredLoading9X9, modifySuccess, modifyError } from '../ui';
+import { CenteredLoading3Dots, modifyError, modifySuccess } from '../ui';
 import Form from './Form';
 
 /**
@@ -16,12 +16,16 @@ export class Modify extends Component {
   static propTypes = {
     siteType: PropTypes.object.isRequired,
     actions: PropTypes.object.isRequired,
+    loader: PropTypes.bool,
+  };
+  static defaultProps = {
+    loader: true,
   };
 
   constructor(props) {
     super(props);
     this.state = {
-      siteTypeId: this.props.match.params.id || false,
+      id: this.props.sittId || this.props.match.params.id || false,
       item: false,
     };
     this.onSubmit = this.onSubmit.bind(this);
@@ -29,36 +33,24 @@ export class Modify extends Component {
   }
 
   componentDidMount() {
-    this.props.actions.loadOne(this.state.siteTypeId).then(result => {
+    this.props.actions.loadOne(this.state.id).then(result => {
       const item = this.props.siteType.loadOneItem;
       this.setState({ item: item });
     });
   }
 
-  componentDidUpdate(prevProps, prevState) {
-    if (prevProps.match.params.siteTypeId && this.props.match.params.siteTypeId) {
-      if (prevProps.match.params.siteTypeId !== this.props.match.params.siteTypeId) {
-        this.setState({ siteTypeId: this.props.match.params.siteTypeId });
-        this.props.actions.loadOne(this.props.match.params.siteTypeId).then(result => {
-          const item = this.props.siteType.loadOneItem;
-          this.setState({ item: item });
-        });
-      }
-    }
-  }
-
   onCancel() {
-    this.props.history.push('/site-type');
+    this.props.onClose();
   }
 
   onSubmit(datas = {}) {
-    let obj = getJsonApi(datas);
+    let obj = getJsonApi(datas, 'FreeAsso_SiteType', this.state.id);
     this.props.actions
-      .updateOne(obj)
+      .updateOne(this.state.id, obj)
       .then(result => {
         modifySuccess();
         this.props.actions.propagateModel('FreeAsso_SiteType', result);
-        this.props.history.push('/site-type');
+        this.props.onClose();
       })
       .catch(errors => {
         modifyError();
@@ -69,19 +61,17 @@ export class Modify extends Component {
     const item = this.state.item;
     return (
       <div className="site-type-modify global-card">
-        {this.props.siteType.loadOnePending ? (
-          <CenteredLoading9X9 />
+        {!item ? (
+          <CenteredLoading3Dots show={this.props.loader} />
         ) : (
           <div>
             {item && 
               <Form 
                 item={item} 
-                datas={this.props.data.items}
-                config={this.props.config.items}
-                properties={this.props.siteType.properties}
                 errors={this.props.siteType.updateOneError}
-                onSubmit={this.onSubmit}
-                onCancel={this.onCancel}
+                onSubmit={this.onSubmit} 
+                onCancel={this.onCancel} 
+                onClose={this.props.onClose}
               />
             }
           </div>
@@ -94,8 +84,6 @@ export class Modify extends Component {
 function mapStateToProps(state) {
   return {
     siteType: state.siteType,
-    data: state.data,
-    config: state.config,
   };
 }
 
