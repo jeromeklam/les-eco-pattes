@@ -15,8 +15,8 @@ import {
 import { causeTypeAsOptions } from '../cause-type/functions';
 
 export const sexSelect = [
-  { label: 'Femelle', value: 'F', icon: <FemaleIcon /> },
-  { label: 'Mâle', value: 'M', icon: <MaleIcon /> },
+  { label: 'Femelle', value: 'F', icon: <FemaleIcon className="col-icon" /> },
+  { label: 'Mâle', value: 'M', icon: <MaleIcon className="col-icon" /> },
   { label: 'Indéfini', value: 'OTHER' },
 ];
 
