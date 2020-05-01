@@ -4,9 +4,9 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as actions from './redux/actions';
 import { getJsonApi } from 'freejsonapi';
-import { CenteredLoading9X9 } from '../ui';
-import Form from './Form';
 import { propagateModel } from '../../common';
+import { CenteredLoading3Dots, createError, createSuccess } from '../ui';
+import Form from './Form';
 
 export class Create extends Component {
   static propTypes = {
@@ -65,6 +65,7 @@ export class Create extends Component {
     this.props.actions
       .createOne(obj)
       .then(result => {
+        createSuccess();
         this.props.actions.propagateModel('FreeAsso_Client', result);
         if (!this.state.modal) {
           this.props.history.push('/client');
@@ -75,7 +76,7 @@ export class Create extends Component {
         }
       })
       .catch(errors => {
-        // @todo display errors to fields
+        createError();
       });
   }
 
@@ -84,7 +85,7 @@ export class Create extends Component {
     return (
       <div className="client-create global-card">
         {!item ? (
-          <CenteredLoading9X9 />
+          <CenteredLoading3Dots show={this.props.loader} />
         ) : (
           <div>
             <Form
