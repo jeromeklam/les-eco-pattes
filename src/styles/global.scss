@@ -74,49 +74,6 @@ body {
     fill: theme-color('primary');
   }
 }
-
-svg.text-danger {
-  fill: theme-color('danger');
-  path {
-    fill: theme-color('danger') !important;
-  }
-}
-svg.text-warning {
-  fill: theme-color('warning');
-  path {
-    fill: theme-color('warning') !important;
-  }
-}
-svg.text-success {
-  fill: theme-color('success');
-  path {
-    fill: theme-color('success') !important;
-  }
-}
-svg.text-dark {
-  fill: theme-color('dark');
-  path {
-    fill: theme-color('dark') !important;
-  }
-}
-svg.text-light {
-  fill: theme-color('light');
-  path {
-    fill: theme-color('light') !important;
-  }
-}
-svg.text-secondary {
-  fill: theme-color('secondary');
-  path {
-    fill: theme-color('secondary') !important;
-  }
-}
-svg.text-primary {
-  fill: theme-color('primary');
-  path {
-    fill: theme-color('primary') !important;
-  }
-}
 svg.text-primary.inline-action:hover {
   cursor: pointer;
   color: theme-color('primary-dark');
@@ -193,12 +150,6 @@ svg.text-warning.inline-action:hover {
   }
 }
 
-.modal-dialog {
-  .modal-body {
-    max-height: 500px;
-  }
-}
-
 .modal-fullscreen {
   width: 90%;
   max-width: 90%;
@@ -228,6 +179,38 @@ svg.text-warning.inline-action:hover {
 }
 .row .col-last {
   padding-right: 15px;
+}
+@include media-breakpoint-up(sm) {
+  .row .col-sm-first {
+    padding-left: 15px;
+  }
+  .row .col-sm-last {
+    padding-right: 15px;
+  }
+}
+@include media-breakpoint-up(md) {
+  .row .col-md-first {
+    padding-left: 15px;
+  }
+  .row .col-md-last {
+    padding-right: 15px;
+  }
+}
+@include media-breakpoint-up(lg) {
+  .row .col-lg-first {
+    padding-left: 15px;
+  }
+  .row .col-lg-last {
+    padding-right: 15px;
+  }
+}
+@include media-breakpoint-up(xl) {
+  .row .col-xl-first {
+    padding-left: 15px;
+  }
+  .row .col-xl-last {
+    padding-right: 15px;
+  }
 }
 
 .inline-list {
@@ -273,4 +256,39 @@ svg.text-warning.inline-action:hover {
 
 .scrollarea .scrollbar-container.vertical .scrollbar {
   background-color: theme-color('primary') !important;
+}
+
+.text-line-through {
+  text-decoration: line-through;
+  font-style: italic;
+}
+
+/* Hover des lignes des listes */
+.row-line-hover {
+  background-color: theme-color('primary-light');
+  color: theme-color('secondary');
+}
+
+/* Couleur de fond spécifique des lignes des listes */
+.row-line-warning {
+  background-color: theme-color('warning-light');
+}
+.row-line-warning.row-line-hover {
+  background-color: darken(theme-color('warning-light'), 5%);
+  color: theme-color('secondary');
+}
+
+/* On force la couleur des icones dans les colonnes des listes */
+.text-secondary svg.col-icon {
+  fill: theme-color('secondary');
+  path {
+    fill: theme-color('secondary');
+  }
+}
+
+.text-light svg.col-icon {
+  fill: theme-color('light');
+  path {
+    fill: theme-color('light');
+  }
 }
