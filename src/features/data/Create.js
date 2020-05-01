@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import * as actions from './redux/actions';
 import { getJsonApi } from 'freejsonapi';
 import { withRouter } from 'react-router-dom';
-import { Loading9x9 } from 'freeassofront';
+import { CenteredLoading3Dots } from '../ui';
 import Form from './Form';
 
 /**
@@ -45,7 +45,7 @@ export class Create extends Component {
    * Sur annulation, on retourne à la liste
    */
   onCancel() {
-    this.props.history.push('/data');
+    this.props.onClose();
   }
 
   /**
@@ -59,7 +59,7 @@ export class Create extends Component {
       .createOne(obj)
       .then(result => {
         this.props.actions.clearItems();
-        this.props.history.push('/data');
+        this.props.onClose();
       })
       .catch(errors => {
         // @todo display errors to fields
@@ -70,13 +70,19 @@ export class Create extends Component {
     const item = this.state.item;
     return (
       <div className="data-create global-card">
-        {this.props.data.loadOnePending ? (
-          <div className="text-center mt-2">
-            <Loading9x9 />
-          </div>
+        {!item ? (
+          <CenteredLoading3Dots show={this.props.loader} />
         ) : (
           <div>
-            {item && <Form item={item} onSubmit={this.onSubmit} onCancel={this.onCancel} />}
+            {item && 
+              <Form 
+                item={item} 
+                errors={this.props.data.createOneError}
+                onSubmit={this.onSubmit} 
+                onCancel={this.onCancel} 
+                onClose={this.props.onClose}
+              />
+            }
           </div>
         )}
       </div>

@@ -1,4 +1,6 @@
-import { CAUSE_TYPE_SET_SORT } from './constants';
+import {
+  CAUSE_TYPE_SET_SORT,
+} from './constants';
 
 export function setSort(sort) {
   return {

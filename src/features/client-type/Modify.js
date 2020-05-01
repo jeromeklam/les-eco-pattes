@@ -6,19 +6,23 @@ import * as actions from './redux/actions';
 import { withRouter } from 'react-router-dom';
 import { getJsonApi } from 'freejsonapi';
 import { propagateModel } from '../../common';
-import { CenteredLoading9X9, modifySuccess, modifyError } from '../ui';
+import { CenteredLoading3Dots, modifySuccess, modifyError } from '../ui';
 import Form from './Form';
 
 export class Modify extends Component {
   static propTypes = {
     clientType: PropTypes.object.isRequired,
     actions: PropTypes.object.isRequired,
+    loader: PropTypes.bool,
+  };
+  static defaultProps = {
+    loader: true,
   };
 
   constructor(props) {
     super(props);
     this.state = {
-      clientTypeId: this.props.match.params.id || false,
+      id: this.props.clitId || this.props.match.params.id || false,
       item: false,
     };
     this.onSubmit = this.onSubmit.bind(this);
@@ -26,26 +30,17 @@ export class Modify extends Component {
   }
 
   componentDidMount() {
-    this.props.actions.loadOne(this.state.clientTypeId).then(result => {
+    this.props.actions.loadOne(this.state.id).then(result => {
       const item = this.props.clientType.loadOneItem;
       this.setState({ item: item });
     });
   }
 
-  componentDidUpdate(prevProps, prevState) {
-    if (prevProps.match.params.clientTypeId && this.props.match.params.clientTypeId) {
-      if (prevProps.match.params.clientTypeId !== this.props.match.params.clientTypeId) {
-        this.setState({ clientTypeId: this.props.match.params.clientTypeId });
-        this.props.actions.loadOne(this.props.match.params.clientTypeId).then(result => {
-          const item = this.props.clientType.loadOneItem;
-          this.setState({ item: item });
-        });
-      }
+  onCancel(event) {
+    if (event) {
+      event.preventDefault();
     }
-  }
-
-  onCancel() {
-    this.props.history.push('/client-type');
+    this.props.onClose();
   }
 
   /**
@@ -53,13 +48,13 @@ export class Modify extends Component {
    */
   onSubmit(datas = {}) {
     // Conversion des données en objet pour le service web
-    let obj = getJsonApi(datas, 'FreeAsso_ClientType', this.state.clientTypeId);
+    let obj = getJsonApi(datas, 'FreeAsso_ClientType', this.state.id);
     this.props.actions
-      .updateOne(obj)
+      .updateOne(this.state.id, obj)
       .then(result => {
         modifySuccess();
         this.props.actions.propagateModel('FreeAsso_ClientType', result);
-        this.props.history.push('/client-type');
+        this.props.onClose();
       })
       .catch(errors => {
         modifyError();
@@ -70,21 +65,19 @@ export class Modify extends Component {
     const item = this.state.item;
     return (
       <div className="client-type-modify global-card">
-        {this.props.clientType.loadOnePending ? (
-          <CenteredLoading9X9 />
+        {!item ? (
+          <CenteredLoading3Dots show={this.props.loader} />
         ) : (
           <div>
-            {item && (
+            {item && 
               <Form 
                 item={item} 
-                datas={this.props.data.items}
-                config={this.props.config.items}
-                properties={this.props.clientType.properties}
                 errors={this.props.clientType.updateOneError}
                 onSubmit={this.onSubmit} 
                 onCancel={this.onCancel} 
+                onClose={this.props.onClose}
               />
-            )}
+            }
           </div>
         )}
       </div>
@@ -95,8 +88,6 @@ export class Modify extends Component {
 function mapStateToProps(state) {
   return {
     clientType: state.clientType,
-    data: state.data,
-    config: state.config,
   };
 }
 

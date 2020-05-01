@@ -1,4 +1,6 @@
-import { CAUSE_TYPE_SET_FILTERS } from './constants';
+import {
+  CAUSE_TYPE_SET_FILTERS,
+} from './constants';
 
 export function setFilters(filters) {
   return {

@@ -4,17 +4,10 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as actions from './redux/actions';
 import { buildModel } from 'freejsonapi';
+import { ResponsiveList, ResponsiveQuickSearch } from 'freeassofront';
 import {
-  ResponsiveList,
-  ResponsiveQuickSearch
-} from 'freeassofront';
-import {
-  AddOne as AddOneIcon,
-  GetOne as GetOneIcon,
-  DelOne as DelOneIcon,
   Filter as FilterIcon,
   FilterFull as FilterFullIcon,
-  FilterClear as FilterClearIcon,
   SimpleCancel as CancelPanelIcon,
   SimpleValid as ValidPanelIcon,
   SortDown as SortDownIcon,
@@ -22,7 +15,9 @@ import {
   Sort as SortNoneIcon,
   Search as SearchIcon,
 } from '../icons';
-import { deleteSuccess, deleteError } from '../ui';
+import { deleteError, deleteSuccess } from '../ui';
+import { getGlobalActions, getInlineActions, getCols } from './';
+import { Create, Modify } from './';
 
 export class List extends Component {
   static propTypes = {
@@ -34,43 +29,46 @@ export class List extends Component {
     super(props);
     this.state = {
       timer: null,
+      cautId: null,
     };
     this.onCreate = this.onCreate.bind(this);
     this.onGetOne = this.onGetOne.bind(this);
     this.onDelOne = this.onDelOne.bind(this);
+    this.onClose = this.onClose.bind(this);
     this.onReload = this.onReload.bind(this);
     this.onLoadMore = this.onLoadMore.bind(this);
     this.onQuickSearch = this.onQuickSearch.bind(this);
     this.onClearFilters = this.onClearFilters.bind(this);
-    this.onSetFiltersAndSort = this.onSetFiltersAndSort.bind(this);
     this.onUpdateSort = this.onUpdateSort.bind(this);
+    this.onSetFiltersAndSort = this.onSetFiltersAndSort.bind(this);
   }
-  
+
   componentDidMount() {
     this.props.actions.loadMore();
   }
 
-  onCreate(event) {
-    if (event) {
-      event.preventDefault();
-    }
-    this.props.history.push('/cause-type/create');
+  onCreate() {
+    this.setState({ cautId: 0 });
   }
 
   onGetOne(id) {
-    this.props.history.push('/cause-type/modify/' + id);
+    this.setState({ cautId: id });
   }
 
   onDelOne(id) {
     this.props.actions
       .delOne(id)
       .then(result => {
-        this.props.actions.loadMore({}, true);
         deleteSuccess();
+        this.props.actions.loadMore({}, true)
       })
       .catch(errors => {
         deleteError();
       });
+  }
+
+  onClose() {
+    this.setState({ cautId: null });
   }
 
   onReload(event) {
@@ -140,46 +138,9 @@ export class List extends Component {
     if (this.props.causeType.items.FreeAsso_CauseType) {
       items = buildModel(this.props.causeType.items, 'FreeAsso_CauseType');
     }
-    const globalActions = [
-      {
-        name: 'clear',
-        label: 'Effacer',
-        onClick: this.onClearFilters,
-        theme: 'secondary',
-        icon: <FilterClearIcon color="white" />,
-      },
-      {
-        name: 'create',
-        label: 'Ajouter',
-        onClick: this.onCreate,
-        theme: 'primary',
-        icon: <AddOneIcon color="white" />,
-        role: 'CREATE',
-      },
-    ];
-    const inlineActions = [
-      {
-        name: 'modify',
-        label: 'Modifier',
-        onClick: this.onGetOne,
-        theme: 'secondary',
-        icon: <GetOneIcon color="white" />,
-        role: 'MODIFY',
-      },
-      {
-        name: 'delete',
-        label: 'Supprimer',
-        onClick: this.onDelOne,
-        theme: 'warning',
-        icon: <DelOneIcon color="white" />,
-        role: 'DELETE',
-      },
-    ];
-    const cols = [
-      { name: "name", label: "Nom", col: "caut_name", size:"20", mob_size:"", title: true},
-      { name: "espece", label: "Espèce", col: "cause_main_type.camt_name", size:"10", mob_size:""}
-    ];
-    // L'affichage, items, loading, loadMoreError
+    const globalActions = getGlobalActions(this);
+    const inlineActions = getInlineActions(this);
+    const cols = getCols(this);
     let search = '';
     const crit = this.props.causeType.filters.findFirst('caut_name');
     if (crit) {
@@ -201,31 +162,37 @@ export class List extends Component {
       <FilterFullIcon color="white" />
     );
     return (
-      <ResponsiveList
-        title="Races"
-        cols={cols}
-        items={items || []}
-        quickSearch={quickSearch}
-        mainCol="caut_name"
-        filterIcon={filterIcon}
-        cancelPanelIcon={<CancelPanelIcon />}
-        validPanelIcon={<ValidPanelIcon />}
-        sortDownIcon={<SortDownIcon color="secondary" />}
-        sortUpIcon={<SortUpIcon color="secondary" />}
-        sortNoneIcon={<SortNoneIcon color="secondary" />}
-        inlineActions={inlineActions}
-        globalActions={globalActions}
-        sort={this.props.causeType.sort}
-        filters={this.props.causeType.filters}
-        onSearch={this.onQuickSearch}
-        onClearFilters={this.onClearFilters}
-        onSort={this.onUpdateSort}
-        onSetFiltersAndSort={this.onSetFiltersAndSort}
-        onLoadMore={this.onLoadMore}
-        loadMorePending={this.props.causeType.loadMorePending}
-        loadMoreFinish={this.props.causeType.loadMoreFinish}
-        loadMoreError={this.props.causeType.loadMoreError}
-      />
+      <div>
+        <ResponsiveList
+          title="Races"
+          cols={cols}
+          items={items}
+          quickSearch={quickSearch}
+          mainCol="caut_name"
+          filterIcon={filterIcon}
+          cancelPanelIcon={<CancelPanelIcon />}
+          validPanelIcon={<ValidPanelIcon />}
+          sortDownIcon={<SortDownIcon />}
+          sortUpIcon={<SortUpIcon />}
+          sortNoneIcon={<SortNoneIcon />}
+          inlineActions={inlineActions}
+          globalActions={globalActions}
+          sort={this.props.causeType.sort}
+          filters={this.props.causeType.filters}
+          onSearch={this.onQuickSearch}
+          onClearFilters={this.onClearFilters}
+          onSort={this.onUpdateSort}
+          onSetFiltersAndSort={this.onSetFiltersAndSort}
+          onLoadMore={this.onLoadMore}
+          loadMorePending={this.props.causeType.loadMorePending}
+          loadMoreFinish={this.props.causeType.loadMoreFinish}
+          loadMoreError={this.props.causeType.loadMoreError}
+        />
+        {this.state.cautId > 0 && (
+          <Modify modal={true} cautId={this.state.cautId} onClose={this.onClose} />
+        )}
+        {this.state.cautId === 0 && <Create modal={true} onClose={this.onClose} />}
+      </div>
     );
   }
 }

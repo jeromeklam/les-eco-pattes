@@ -23,6 +23,7 @@ export function createOne(args = {}) {
           });
           resolve(res);
         },
+        // Use rejectHandler as the second argument so that render errors won't be caught.
         (err) => {
           dispatch({
             type: CLIENT_CATEGORY_CREATE_ONE_FAILURE,
@@ -37,8 +38,6 @@ export function createOne(args = {}) {
   };
 }
 
-// Async action saves request error by default, this method is used to dismiss the error info.
-// If you don't want errors to be saved in Redux store, just ignore this method.
 export function dismissCreateOneError() {
   return {
     type: CLIENT_CATEGORY_CREATE_ONE_DISMISS_ERROR,

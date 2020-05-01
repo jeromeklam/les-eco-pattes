@@ -6,7 +6,7 @@ import * as actions from './redux/actions';
 import { getJsonApi } from 'freejsonapi';
 import { propagateModel } from '../../common';
 import { withRouter } from 'react-router-dom';
-import { Loading9x9 } from 'freeassofront';
+import { CenteredLoading3Dots } from '../ui';
 import Form from './Form';
 
 /**
@@ -24,7 +24,7 @@ export class Modify extends Component {
      * On récupère l'id et l'élément à afficher
      */
     this.state = {
-      id: this.props.match.params.id || false,
+      id: this.props.dataId || this.props.match.params.id || false,
       item: false,
     };
     /**
@@ -49,7 +49,7 @@ export class Modify extends Component {
    * Sur annulation, on retourne à la liste
    */
   onCancel() {
-    this.props.history.push('/data');
+    this.props.onClose();
   }
 
   /**
@@ -59,12 +59,12 @@ export class Modify extends Component {
     // Conversion des données en objet pour le service web
     let obj = getJsonApi(datas, 'FreeAsso_Data', this.state.id);
     this.props.actions
-      .updateOne(obj)
+      .updateOne(this.state.id, obj)
       .then(result => {
         // @Todo propagate result to store
         // propagateModel est ajouté aux actions en bas de document
         this.props.actions.propagateModel('FreeAsso_Data', result);
-        this.props.history.push('/data');
+        this.props.onClose();
       })
       .catch(errors => {
         // @todo display errors to fields
@@ -75,13 +75,19 @@ export class Modify extends Component {
     const item = this.state.item;
     return (
       <div className="data-modify global-card">
-        {this.props.data.loadOnePending ? (
-          <div className="text-center mt-2">
-            <Loading9x9 />
-          </div>
+        {!item ? (
+          <CenteredLoading3Dots show={this.props.loader} />
         ) : (
           <div>
-            {item && <Form item={item} onSubmit={this.onSubmit} onCancel={this.onCancel} />}
+            {item && 
+              <Form 
+                item={item} 
+                errors={this.props.data.updateOneError}
+                onSubmit={this.onSubmit} 
+                onCancel={this.onCancel} 
+                onClose={this.props.onClose}
+              />
+            }
           </div>
         )}
       </div>

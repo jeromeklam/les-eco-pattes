@@ -63,5 +63,6 @@ export { default as Zoom } from './Zoom';
 export { default as AccountDetail } from './AccountDetail';
 export { default as AccountClose } from './AccountClose';
 export { default as Save } from './Save';
+export { default as ColCheck } from './ColCheck';
 export { default as Up } from './Up';
 export { default as Down } from './Down';

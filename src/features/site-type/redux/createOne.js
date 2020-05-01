@@ -8,10 +8,11 @@ import {
 } from './constants';
 
 export function createOne(args = {}) {
-  return (dispatch) => {
+  return (dispatch) => { // optionally you can have getState as the second argument
     dispatch({
       type: SITE_TYPE_CREATE_ONE_BEGIN,
     });
+
     const promise = new Promise((resolve, reject) => {
       const doRequest = freeAssoApi.post('/v1/asso/site_type', args);
       doRequest.then(

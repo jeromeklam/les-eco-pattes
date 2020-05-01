@@ -1,6 +1,6 @@
 import { CAUSE_TYPE_UPDATE_SORT } from './constants';
 
-export function updateSort(col, way, pos = 9) {
+export function updateSort(col, way, pos = 99) {
   return {
     type: CAUSE_TYPE_UPDATE_SORT,
     col: col,

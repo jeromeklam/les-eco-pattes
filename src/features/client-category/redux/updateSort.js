@@ -1,6 +1,6 @@
 import { CLIENT_CATEGORY_UPDATE_SORT } from './constants';
 
-export function updateSort(col, way, pos = 9) {
+export function updateSort(col, way, pos = 99) {
   return {
     type: CLIENT_CATEGORY_UPDATE_SORT,
     col: col,

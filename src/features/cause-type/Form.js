@@ -1,7 +1,7 @@
 import React from 'react';
-import { InputHidden, InputText, InputSelect, ResponsiveForm } from 'freeassofront';
-import useForm from '../ui/useForm';
-import { causeMainTypeAsOptions } from '../cause-main-type/functions.js';
+import { InputHidden, InputText, InputSelect, InputCheckbox, InputMonetary } from 'freeassofront';
+import { useForm, ResponsiveModalOrForm } from '../ui';
+import { causeTypeMntType, causeTypeFamily } from './';
 
 export default function Form(props) {
   const { values, handleChange, handleSubmit, handleCancel, getErrorMessage } = useForm(
@@ -9,11 +9,30 @@ export default function Form(props) {
     '',
     props.onSubmit,
     props.onCancel,
-    null,
+    '',
     props.errors,
   );
+  let minDate = true;
+  let maxDate = true;
+  let maxLabel = 'Maximum';
+  if (values.caut_mnt_type === 'OTHER') {
+    minDate = false;
+    maxDate = false;
+  }
+  if (values.caut_mnt_type === 'ANNUAL') {
+    minDate = false;
+    maxLabel = 'Montant annuel';
+  }
   return (
-    <ResponsiveForm className="" title="Race" onSubmit={handleSubmit} onCancel={handleCancel}>
+    <ResponsiveModalOrForm
+      className="m-5"
+      size="lg"
+      modal={true}
+      title="Type de cause"
+      onSubmit={handleSubmit}
+      onCancel={handleCancel}
+      onClose={props.onClose}
+    >
       <div className="card-body">
         <InputHidden name="id" id="id" value={values.id} />
         <div className="row">
@@ -32,10 +51,9 @@ export default function Form(props) {
               label="Espèce"
               name="cause_main_type.id"
               id="cause_main_type.id"
-              value={values.cause_main_type ? values.cause_main_type.id : null}
+              value={values.cause_main_type.id}
               onChange={handleChange}
-              options={causeMainTypeAsOptions(props.causeMainTypes)}
-              error={getErrorMessage('cause_main_type')}
+              options={props.causeMainType}
             />
           </div>
         </div>
@@ -84,6 +102,6 @@ export default function Form(props) {
           </div>
         </div>
       </div>
-    </ResponsiveForm>
+    </ResponsiveModalOrForm>
   );
 }

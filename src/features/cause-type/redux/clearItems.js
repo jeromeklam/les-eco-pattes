@@ -1,4 +1,6 @@
-import { CAUSE_TYPE_CLEAR_ITEMS } from './constants';
+import {
+  CAUSE_TYPE_CLEAR_ITEMS,
+} from './constants';
 
 export function clearItems() {
   return {

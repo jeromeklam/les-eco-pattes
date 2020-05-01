@@ -1,3 +1,4 @@
+import { jsonApiNormalizer } from 'freejsonapi';
 import { freeAssoApi } from '../../../common';
 import {
   SITE_TYPE_DEL_ONE_BEGIN,
@@ -7,7 +8,7 @@ import {
 } from './constants';
 
 export function delOne(args = {}) {
-  return (dispatch) => { 
+  return (dispatch) => { // optionally you can have getState as the second argument
     dispatch({
       type: SITE_TYPE_DEL_ONE_BEGIN,
     });
@@ -63,10 +64,14 @@ export function reducer(state, action) {
 
     case SITE_TYPE_DEL_ONE_FAILURE:
       // The request is failed
+      let error = null;
+      if (action.data.error && action.data.error.response) {
+        error = jsonApiNormalizer(action.data.error.response);
+      }
       return {
         ...state,
         delOnePending: false,
-        delOneError: action.data.error,
+        delOneError: error,
       };
 
     case SITE_TYPE_DEL_ONE_DISMISS_ERROR:

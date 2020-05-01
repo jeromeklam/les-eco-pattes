@@ -1,4 +1,6 @@
-import { CLIENT_TYPE_SET_FILTERS } from './constants';
+import {
+  CLIENT_TYPE_SET_FILTERS,
+} from './constants';
 
 export function setFilters(filters) {
   return {

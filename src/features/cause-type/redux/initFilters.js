@@ -1,5 +1,7 @@
-import { Filter } from 'freeassofront';
-import { CAUSE_TYPE_INIT_FILTERS } from './constants';
+import {Filter} from 'freeassofront';
+import {
+  CAUSE_TYPE_INIT_FILTERS,
+} from './constants';
 
 export function initFilters() {
   return {

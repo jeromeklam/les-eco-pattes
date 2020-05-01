@@ -15,6 +15,23 @@ export class InputPicker extends Component {
     onChange: PropTypes.func.isRequired,
   };
 
+  static getDerivedStateFromProps(props, state) {
+    if (props.item !== state.item) {
+      let value = null;
+      let display = '';
+      if (props.item) {
+        value = props.item.id || '';
+        display = props.item.cli_lastname || '';
+        if (props.item.cli_firstname) {
+          display = display + ' ' + props.item.cli_firstname;
+          display.trim();
+        }
+      }
+      return { item: props.item, value: value, display: display };
+    }
+    return null;
+  }
+
   constructor(props) {
     super(props);
     let value = '';
@@ -22,6 +39,10 @@ export class InputPicker extends Component {
     if (this.props.item) {
       value = this.props.item.id || '';
       display = this.props.item.cli_lastname || '';
+      if (this.props.item.cli_firstname) {
+        display = display + ' ' + this.props.item.cli_firstname;
+        display.trim();
+      }
     }
     this.state = {
       search: false,
@@ -39,19 +60,6 @@ export class InputPicker extends Component {
     this.onChange = this.onChange.bind(this);
     this.onSelect = this.onSelect.bind(this);
     this.onCloseMore = this.onCloseMore.bind(this);
-  }
-
-  static getDerivedStateFromProps(props, state) {
-    if (props.item !== state.item) {
-      let value = null;
-      let display = '';
-      if (props.item) {
-        value = props.item.id || '';
-        display = props.item.cli_lastname;
-      }
-      return { item: props.item, value: value, display: display };
-    }
-    return null;
   }
 
   onChange(event) {
@@ -127,7 +135,7 @@ export class InputPicker extends Component {
           required={this.props.required || false}
           error={this.props.error}
           pickerId="cli_id"
-          pickerDisplay="cli_lastname"
+          pickerDisplay="cli_lastname,cli_firstname"
           clearIcon={<DelOne size={this.props.size === 'sm' ? 0.7 : 0.9} className="text-warning" />}
           moreIcon={<More size={this.props.size === 'sm' ? 0.7 : 0.9} className="text-secondary" />}
           zoomIcon={<Zoom className="text-secondary" size={0.9} />}

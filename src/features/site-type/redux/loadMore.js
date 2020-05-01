@@ -9,9 +9,9 @@ import {
 } from './constants';
 
 export function loadMore(args = {}, reload = false) {
-  return (dispatch, getState) => { 
-    const loaded =  getState().siteType.loadMoreFinish;
-    const loading =  getState().siteType.loadMorePending;
+  return (dispatch, getState) => {
+    const loaded = getState().siteType.loadMoreFinish;
+    const loading = getState().siteType.loadMorePending;
     if (!loading && (!loaded || reload)) {
       if (reload) {
         dispatch({
@@ -22,11 +22,12 @@ export function loadMore(args = {}, reload = false) {
           type: SITE_TYPE_LOAD_MORE_BEGIN,
         });
       }
+
       const promise = new Promise((resolve, reject) => {
-        let filters = getState().siteType.filters.asJsonApiObject()
-        const params = {
+        let filters = getState().siteType.filters.asJsonApiObject();
+        let params = {
           page: { number: getState().siteType.page_number, size: getState().siteType.page_size },
-          ...filters
+          ...filters,
         };
         let sort = '';
         getState().siteType.sort.forEach(elt => {
@@ -64,7 +65,7 @@ export function loadMore(args = {}, reload = false) {
       });
 
       return promise;
-    }      
+    }
   };
 }
 
@@ -120,9 +121,9 @@ export function reducer(state, action) {
         ...state,
         loadMorePending: false,
         loadMoreError: null,
-        loadMoreFinish: (nbre < state.page_size),
+        loadMoreFinish: nbre < state.page_size,
         items: list,
-        page_number: state.page_number+1
+        page_number: state.page_number + 1,
       };
 
     case SITE_TYPE_LOAD_MORE_FAILURE:

@@ -1,5 +1,5 @@
-import { jsonApiNormalizer, jsonApiUpdate } from 'freejsonapi';
 import { freeAssoApi } from '../../../common';
+import { jsonApiNormalizer, jsonApiUpdate } from 'freejsonapi';
 import {
   CAUSE_MAIN_TYPE_UPDATE_ONE_BEGIN,
   CAUSE_MAIN_TYPE_UPDATE_ONE_SUCCESS,
@@ -8,13 +8,12 @@ import {
   CAUSE_MAIN_TYPE_UPDATE_ONE_UPDATE,
 } from './constants';
 
-export function updateOne(args = {}) {
+export function updateOne(id, args = {}) {
   return dispatch => {
     dispatch({
       type: CAUSE_MAIN_TYPE_UPDATE_ONE_BEGIN,
     });
     const promise = new Promise((resolve, reject) => {
-      const id = args.data.id;
       const doRequest = freeAssoApi.put('/v1/asso/cause_main_type/' + id, args);
       doRequest.then(
         res => {

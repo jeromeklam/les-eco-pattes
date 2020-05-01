@@ -1,4 +1,6 @@
-import { CLIENT_CATEGORY_CLEAR_ITEMS } from './constants';
+import {
+  CLIENT_CATEGORY_CLEAR_ITEMS,
+} from './constants';
 
 export function clearItems() {
   return {

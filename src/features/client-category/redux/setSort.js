@@ -1,9 +1,11 @@
-import { CLIENT_CATEGORY_SET_SORT } from './constants';
+import {
+  CLIENT_CATEGORY_SET_SORT,
+} from './constants';
 
 export function setSort(sort) {
   return {
     type: CLIENT_CATEGORY_SET_SORT,
-    sort: sort,
+    sort: sort
   };
 }
 

@@ -1,5 +1,5 @@
-import { jsonApiNormalizer, jsonApiUpdate } from 'freejsonapi';
 import { freeAssoApi } from '../../../common';
+import { jsonApiNormalizer, jsonApiUpdate } from 'freejsonapi';
 import {
   CLIENT_TYPE_UPDATE_ONE_BEGIN,
   CLIENT_TYPE_UPDATE_ONE_SUCCESS,
@@ -8,23 +8,23 @@ import {
   CLIENT_TYPE_UPDATE_ONE_UPDATE,
 } from './constants';
 
-export function updateOne(args = {}) {
-  return (dispatch) => {
+export function updateOne(id, args = {}) {
+  return dispatch => {
     dispatch({
       type: CLIENT_TYPE_UPDATE_ONE_BEGIN,
     });
+
     const promise = new Promise((resolve, reject) => {
-      const id = args.data.id;
       const doRequest = freeAssoApi.put('/v1/asso/client_type/' + id, args);
       doRequest.then(
-        (res) => {
+        res => {
           dispatch({
             type: CLIENT_TYPE_UPDATE_ONE_SUCCESS,
             data: res,
           });
           resolve(res);
         },
-        (err) => {
+        err => {
           dispatch({
             type: CLIENT_TYPE_UPDATE_ONE_FAILURE,
             data: { error: err },
@@ -82,13 +82,13 @@ export function reducer(state, action) {
       };
 
     case CLIENT_TYPE_UPDATE_ONE_UPDATE:
-      let object  = jsonApiNormalizer(action.data.data);
+      let object = jsonApiNormalizer(action.data.data);
       let myItems = state.items;
       let news = jsonApiUpdate(myItems, 'FreeAsso_ClientType', object);
       return {
         ...state,
         updateOneError: null,
-        items: news
+        items: news,
       };
 
     default:

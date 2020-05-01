@@ -100,6 +100,7 @@ export function reducer(state, action) {
         ...more,
         token: token,
         user: user,
+        firstCheck: true,
         authenticated: authenticated,
         checkIsAuthenticatedPending: false,
         checkIsAuthenticatedError: null,
@@ -109,6 +110,7 @@ export function reducer(state, action) {
       // The request is failed
       return {
         ...state,
+        firstCheck: true,
         checkIsAuthenticatedPending: false,
         checkIsAuthenticatedError: action.data.error || null,
       };

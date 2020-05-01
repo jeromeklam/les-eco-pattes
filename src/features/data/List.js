@@ -5,17 +5,15 @@ import { connect } from 'react-redux';
 import * as actions from './redux/actions';
 import { buildModel } from 'freejsonapi';
 import { ResponsiveList } from 'freeassofront';
-import { dataTypes } from './functions';
 import {
-  AddOne as AddOneIcon,
-  GetOne as GetOneIcon,
-  DelOne as DelOneIcon,
   SimpleCancel as CancelPanelIcon,
   SimpleValid as ValidPanelIcon,
   SortDown as SortDownIcon,
   SortUp as SortUpIcon,
   Sort as SortNoneIcon,
 } from '../icons';
+import { getGlobalActions, getInlineActions, getCols } from './';
+import { Create, Modify } from './';
 
 /**
  * Liste des données
@@ -29,12 +27,14 @@ export class List extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      dataId: -1,
       timer: null,
     };
     this.onCreate = this.onCreate.bind(this);
     this.onReload = this.onReload.bind(this);
     this.onGetOne = this.onGetOne.bind(this);
     this.onDelOne = this.onDelOne.bind(this);
+    this.onClose  = this.onClose.bind(this);
     this.onLoadMore = this.onLoadMore.bind(this);
     this.onQuickSearch = this.onQuickSearch.bind(this);
     this.onClearFilters = this.onClearFilters.bind(this);
@@ -43,22 +43,19 @@ export class List extends Component {
   }
 
   componentDidMount() {
-    /**
-     *  En async on va demander le chargement des données
-     *  Lorsque fini le store sera modifié
-     */
     this.props.actions.loadMore();
   }
 
-  onCreate(event) {
-    if (event) {
-      event.preventDefault();
-    }
-    this.props.history.push('/data/create');
+  onCreate() {
+    this.setState({ dataId: 0 });
   }
 
   onGetOne(id) {
-    this.props.history.push('/data/modify/' + id);
+    this.setState({ dataId: id });
+  }
+
+  onClose() {
+    this.setState({ dataId: -1 });
   }
 
   onDelOne(id) {
@@ -132,78 +129,43 @@ export class List extends Component {
     if (this.props.data.items.FreeAsso_Data) {
       items = buildModel(this.props.data.items, 'FreeAsso_Data');
     }
-    const globalActions = [
-      {
-        name: 'create',
-        label: 'Ajouter',
-        onClick: this.onCreate,
-        theme: 'primary',
-        icon: <AddOneIcon color="white" />,
-      },
-    ];
-    const inlineActions = [
-      {
-        name: 'modify',
-        label: 'Modifier',
-        onClick: this.onGetOne,
-        theme: 'secondary',
-        icon: <GetOneIcon color="white" />,
-      },
-      {
-        name: 'delete',
-        label: 'Supprimer',
-        onClick: this.onDelOne,
-        theme: 'warning',
-        icon: <DelOneIcon color="white" />,
-      },
-    ];
-    const cols = [
-      {
-        name: 'name',
-        label: 'Nom',
-        size: '20',
-        col: 'data_name',
-        title: true,
-        sortable: true,
-        filterable: { type: 'text' },
-      },
-      {
-        name: 'type',
-        label: 'Type',
-        size: '10',
-        col: 'data_type',
-        type: 'switch',
-        values: dataTypes(),
-      },
-    ];
+    const globalActions = getGlobalActions(this);
+    const inlineActions = getInlineActions(this);
+    const cols = getCols(this);
     // L'affichage, items, loading, loadMoreError
     return (
-      <ResponsiveList
-        title="Variables"
-        cols={cols}
-        items={items}
-        quickSearch={null}
-        mainCol="data_name"
-        filterIcon={null}
-        cancelPanelIcon={<CancelPanelIcon />}
-        validPanelIcon={<ValidPanelIcon />}
-        sortDownIcon={<SortDownIcon color="secondary" />}
-        sortUpIcon={<SortUpIcon color="secondary" />}
-        sortNoneIcon={<SortNoneIcon color="secondary" />}
-        inlineActions={inlineActions}
-        globalActions={globalActions}
-        sort={this.props.data.sort}
-        filters={this.props.data.filters}
-        onSearch={this.onQuickSearch}
-        onSort={this.onUpdateSort}
-        onSetFiltersAndSort={this.onSetFiltersAndSort}
-        onClearFilters={this.onClearFilters}
-        onReload={this.onReload}
-        onLoadMore={this.onLoadMore}
-        loadMorePending={this.props.data.loadMorePending}
-        loadMoreFinish={this.props.data.loadMoreFinish}
-        loadMoreError={this.props.data.loadMoreError}
-      />
+      <div>
+        <ResponsiveList
+          title="Variables"
+          cols={cols}
+          items={items}
+          quickSearch={null}
+          mainCol="data_name"
+          filterIcon={null}
+          cancelPanelIcon={<CancelPanelIcon />}
+          validPanelIcon={<ValidPanelIcon />}
+          sortDownIcon={<SortDownIcon />}
+          sortUpIcon={<SortUpIcon />}
+          sortNoneIcon={<SortNoneIcon />}
+          inlineActions={inlineActions}
+          globalActions={globalActions}
+          sort={this.props.data.sort}
+          filters={this.props.data.filters}
+          onSearch={this.onQuickSearch}
+          onSort={this.onUpdateSort}
+          onSetFiltersAndSort={this.onSetFiltersAndSort}
+          onClearFilters={this.onClearFilters}
+          onReload={this.onReload}
+          onLoadMore={this.onLoadMore}
+          loadMorePending={this.props.data.loadMorePending}
+          loadMoreFinish={this.props.data.loadMoreFinish}
+          loadMoreError={this.props.data.loadMoreError}
+        />
+        {this.state.dataId > 0 && (
+          <Modify modal={true} dataId={this.state.dataId} onClose={this.onClose} />
+        )}
+        {this.state.dataId === 0 && <Create modal={true} onClose={this.onClose} />}
+      </div>
     );
   }
 }

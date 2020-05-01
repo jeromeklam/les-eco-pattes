@@ -8,7 +8,7 @@ import {
 } from './constants';
 
 export function createOne(args = {}) {
-  return (dispatch) => {
+  return (dispatch) => { 
     dispatch({
       type: CLIENT_TYPE_CREATE_ONE_BEGIN,
     });
@@ -23,6 +23,7 @@ export function createOne(args = {}) {
           });
           resolve(res);
         },
+        // Use rejectHandler as the second argument so that render errors won't be caught.
         (err) => {
           dispatch({
             type: CLIENT_TYPE_CREATE_ONE_FAILURE,

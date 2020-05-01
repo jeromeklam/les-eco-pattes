@@ -10,6 +10,7 @@ import {
 
 export function loadMore(args = {}, reload = false) {
   return (dispatch, getState) => {
+    // optionally you can have getState as the second argument
     const loaded = getState().clientCategory.loadMoreFinish;
     const loading = getState().clientCategory.loadMorePending;
     if (!loading && (!loaded || reload)) {
@@ -23,11 +24,13 @@ export function loadMore(args = {}, reload = false) {
         });
       }
       const promise = new Promise((resolve, reject) => {
+        let filters = getState().clientCategory.filters.asJsonApiObject();
         let params = {
           page: {
             number: getState().clientCategory.page_number,
             size: getState().clientCategory.page_size,
           },
+          ...filters,
         };
         let sort = '';
         getState().clientCategory.sort.forEach(elt => {
@@ -120,9 +123,9 @@ export function reducer(state, action) {
         ...state,
         loadMorePending: false,
         loadMoreError: null,
-        loadMoreFinish: (nbre < state.page_size),
+        loadMoreFinish: nbre < state.page_size,
         items: list,
-        page_number: state.page_number+1
+        page_number: state.page_number + 1,
       };
 
     case CLIENT_CATEGORY_LOAD_MORE_FAILURE:
