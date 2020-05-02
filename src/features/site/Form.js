@@ -7,7 +7,7 @@ import { siteTypeAsOptions } from '../site-type/functions.js';
 import { InputPicker as ClientInputPicker } from '../client';
 import { InputPicker as SiteInputPicker } from '../site';
 import { Location as LocationIcon, Settings as SettingsIcon, Other as OtherIcon } from '../icons';
-import { ResponsiveModalOrForm, InputTextarea } from '../ui';
+import { ResponsiveModalOrForm, InputTextarea, InputDate } from '../ui';
 import { validateRegex } from '../../common';
 
 let regPlaceholder = '';
@@ -28,15 +28,31 @@ const tabs = [
     shortcut: 'D',
     icon: <OtherIcon />,
   },
+  { key: '3', name: 'equipement', label: 'Equipement', shortcut: 'E', icon: <SettingsIcon /> },
   {
-    key: '3',
-    name: 'observztion',
+    key: '4',
+    name: 'observation',
     label: 'Observations',
     shortcut: 'O',
     icon: <OtherIcon />,
-  },
-  { key: '4', name: 'equipement', label: 'Equipement', shortcut: 'E', icon: <SettingsIcon /> },
+  }
 ];
+
+const afterChange = (name, item) => {
+  switch (name) {
+    case 'parent_site': {
+      if (item.parent_site) {
+        if (item.parent_site.site_code) {
+          item.site_code = item.parent_site.site_code;
+        } 
+      }
+      break;
+    }
+    default : {
+      break;
+    }
+  }
+}
 
 export default function Form(props) {
   const {
@@ -46,7 +62,7 @@ export default function Form(props) {
     handleCancel,
     handleNavTab,
     getErrorMessage,
-  } = useForm(props.item, props.tab, props.onSubmit, props.onCancel, props.onNavTab, props.errors);
+  } = useForm(props.item, props.tab, props.onSubmit, props.onCancel, props.onNavTab, props.errors, afterChange);
   const regexp = values.site_type.sitt_pattern || '';
   let validated = true;
   if (regexp !== '') {
@@ -79,7 +95,7 @@ export default function Form(props) {
     >
       <InputHidden name="id" id="id" value={values.id} />
       <div className="row">
-        <div className="col-sm-14">
+        <div className="col-sm-12">
           <InputText
             label="Nom"
             required={true}
@@ -90,20 +106,7 @@ export default function Form(props) {
             error={getErrorMessage('site_name')}
           />
         </div>
-        <div className="col-sm-10">
-          <InputSelect
-            label="Type"
-            id="site_type.id"
-            name="site_type.id"
-            required={true}
-            value={values.site_type ? values.site_type.id : null}
-            onChange={handleChange}
-            options={siteTypeAsOptions(props.site_types)}
-            addempty={true}
-            error={getErrorMessage('site_type')}
-          />
-        </div>
-        <div className="col-sm-8">
+        <div className="col-sm-9">
           <InputText
             label="N° Elevage EDE"
             name="site_code"
@@ -114,29 +117,48 @@ export default function Form(props) {
             warning={validated ? false : 'Format : ' + regPlaceholder}
           />
         </div>
-        <div className="col-sm-4">
-          <InputCheckbox
-            label="Conforme"
-            name="site_conform"
-            labelTop={true}
-            checked={values.site_conform === true}
+        <div className="col-15">
+          <SiteInputPicker
+            label="Site principal"
+            key="parent_site"
+            name="parent_site"
+            item={values.parent_site || null}
             onChange={handleChange}
+            labelTop={true}
+            error={getErrorMessage('parent_site')}
           />
         </div>
       </div>
       <hr />
       {values.currentTab === '1' && (
         <div>
-          <InputText
-            label="Adresse"
-            name="site_address1"
-            value={values.site_address1}
-            onChange={handleChange}
-            labtop={true}
-            error={getErrorMessage('site_address1')}
-          />
           <div className="row">
-            <div className="col-sm-8">
+            <div className="col-sm-24">
+              <InputText
+                label="Adresse"
+                name="site_address1"
+                value={values.site_address1}
+                onChange={handleChange}
+                labtop={true}
+                error={getErrorMessage('site_address1')}
+              />
+            </div>
+            <div className="col-sm-12">
+              <InputSelect
+                label="Type"
+                id="site_type.id"
+                name="site_type.id"
+                required={true}
+                value={values.site_type ? values.site_type.id : null}
+                onChange={handleChange}
+                options={siteTypeAsOptions(props.site_types)}
+                addempty={true}
+                error={getErrorMessage('site_type')}
+              />
+            </div>
+          </div>
+          <div className="row">
+            <div className="col-sm-6">
               <InputText
                 label="CP"
                 name="site_cp"
@@ -146,7 +168,7 @@ export default function Form(props) {
                 error={getErrorMessage('site_cp')}
               />
             </div>
-            <div className="col-sm-28">
+            <div className="col-sm-18">
               <InputText
                 label="Commune"
                 name="site_town"
@@ -156,9 +178,18 @@ export default function Form(props) {
                 error={getErrorMessage('site_town')}
               />
             </div>
+            <div className="col-sm-4">
+              <InputCheckbox
+                label="Conforme"
+                name="site_conform"
+                labelTop={true}
+                checked={values.site_conform === true}
+                onChange={handleChange}
+              />
+            </div>
           </div>
           <div className="row">
-            <div className="col-sm-8">
+            <div className="col-sm-6">
               <InputText
                 label="Surface"
                 name="site_area"
@@ -167,7 +198,7 @@ export default function Form(props) {
                 error={getErrorMessage('site_area')}
               />
             </div>
-            <div className="col-sm-28">
+            <div className="col-sm-18">
               <InputText
                 label="Parcelles"
                 name="site_plots"
@@ -176,19 +207,7 @@ export default function Form(props) {
                 error={getErrorMessage('site_plots')}
               />
             </div>
-          </div>
-          <div className="row">
-            <div className="col-18">
-              <SiteInputPicker
-                label="Site principal"
-                key="parent_site"
-                name="parent_site"
-                item={values.parent_site || null}
-                onChange={handleChange}
-                labelTop={true}
-                error={getErrorMessage('parent_site')}
-              />
-            </div>
+            
           </div>
           <div className="row">
             <div className="col-sm-36">
@@ -206,6 +225,30 @@ export default function Form(props) {
       )}
       {values.currentTab === '2' && (
         <div>
+          <div className="row">
+            <div className="col-sm-18">
+              <InputDate
+                label="Début"
+                name="site_from"
+                id="site_from"
+                value={values.site_from}
+                onChange={handleChange}
+                error={getErrorMessage('site_from')}
+                position="top-start"
+              />
+            </div>
+            <div className="col-sm-18">
+              <InputDate
+                label="Fin"
+                name="site_to"
+                id="site_to"
+                value={values.site_to}
+                onChange={handleChange}
+                error={getErrorMessage('site_to')}
+                position="top-start"
+              />
+            </div>
+          </div>
           <div className="row">
             <div className="col-sm-36">
               <InputTextarea
@@ -233,19 +276,6 @@ export default function Form(props) {
       )}
       {values.currentTab === '3' && (
         <div className="row">
-          <div className="col-sm-36">
-            <InputTextarea
-              label="Observations"
-              name="site_desc"
-              value={values.site_desc}
-              onChange={handleChange}
-              error={getErrorMessage('site_desc')}
-            />
-          </div>
-        </div>
-      )}
-      {values.currentTab === '4' && (
-        <div className="row">
           {props.properties.map(oneProp => {
             let nameProp = 'site_' + oneProp;
             return (
@@ -262,6 +292,19 @@ export default function Form(props) {
               </div>
             );
           })}
+        </div>
+      )}
+      {values.currentTab === '4' && (
+        <div className="row">
+          <div className="col-sm-36">
+            <InputTextarea
+              label="Observations"
+              name="site_desc"
+              value={values.site_desc}
+              onChange={handleChange}
+              error={getErrorMessage('site_desc')}
+            />
+          </div>
         </div>
       )}
     </ResponsiveModalOrForm>
