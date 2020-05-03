@@ -62,6 +62,7 @@ export class List extends Component {
     this.onListCause = this.onListCause.bind(this);
     this.onListPhoto = this.onListPhoto.bind(this);
     this.onListDocument = this.onListDocument.bind(this);
+    this.onZoomMap = this.onZoomMap.bind(this);
   }
 
   componentDidMount() {
@@ -124,6 +125,10 @@ export class List extends Component {
       this.props.actions.loadDocuments(id, true).then(result => {});
       this.setState({ animalsSite: 0, photosSite: 0, documentsSite: id });
     }
+  }
+
+  onZoomMap(obj) {
+    console.log("FK Zoom ",obj);
   }
 
   onReload(event) {

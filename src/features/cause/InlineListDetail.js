@@ -52,7 +52,7 @@ export default class InlineListDetail extends Component {
                   <span>{cause.caut_year}</span>
                 </div>
                 <div className="col-sm-5">
-                  <span className="pr-2">{getSexlabel(cause.cau_sex)}</span>
+                  <span className="pr-2">{getSexlabel(cause.cau_sex, true, "text-secondary" )}</span>
                 </div>
                 {this.props.cause && (
                   <div className="col-sm-8">
