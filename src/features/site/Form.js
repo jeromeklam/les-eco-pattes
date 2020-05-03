@@ -215,6 +215,7 @@ export default function Form(props) {
                 label="Propriétaire"
                 key="owner"
                 name="owner"
+                pickerUp={true}
                 item={values.owner || null}
                 onChange={handleChange}
                 error={getErrorMessage('owner')}
@@ -266,6 +267,7 @@ export default function Form(props) {
                 label="Vétérinaire"
                 key="sanitary"
                 name="sanitary"
+                pickerUp={true}
                 item={values.sanitary || null}
                 onChange={handleChange}
                 error={getErrorMessage('sanitary')}

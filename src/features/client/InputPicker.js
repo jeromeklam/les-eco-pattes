@@ -121,6 +121,7 @@ export class InputPicker extends Component {
           name={this.props.name}
           label={this.props.label}
           value={this.state.value}
+          pickerUp={this.props.pickerUp || false}
           labelTop={this.props.labelTop || true}
           size={this.props.size}
           labelSize={this.props.labelSize || 6}
