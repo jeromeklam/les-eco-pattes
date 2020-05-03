@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import { injectIntl } from 'react-intl';
 import * as actions from './redux/actions';
 import { buildModel } from 'freejsonapi';
 import { ResponsiveList, ResponsiveQuickSearch } from 'freeassofront';
@@ -15,7 +16,7 @@ import {
   Sort as SortNoneIcon,
   Search as SearchIcon,
 } from '../icons';
-import { deleteSuccess, deleteError } from '../ui';
+import { deleteSuccess, showErrors } from '../ui';
 import {
   InlineCauses,
   InlinePhotos,
@@ -88,7 +89,7 @@ export class List extends Component {
       })
       .catch(errors => {
         // @todo display errors to fields
-        deleteError();
+        showErrors(this.props.intl, this.props.site.delOneError);
       });
   }
 
@@ -289,4 +290,4 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(List);
+export default injectIntl(connect(mapStateToProps, mapDispatchToProps)(List));

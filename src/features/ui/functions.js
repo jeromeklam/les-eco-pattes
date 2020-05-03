@@ -30,7 +30,7 @@ export const showErrors = (intl, error) => {
         const code = `app.errors.code.${oneError.code}`;
         const message = intl.formatMessage({
           id: code,
-          defaultMessage: oneError.title,
+          defaultMessage: oneError.title + ' (' + code + ')',
         });
         cogoToast.error(message);
       }

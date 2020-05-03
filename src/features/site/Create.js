@@ -5,7 +5,8 @@ import { connect } from 'react-redux';
 import * as actions from './redux/actions';
 import { withRouter } from 'react-router-dom';
 import { getJsonApi } from 'freejsonapi';
-import { CenteredLoading3Dots, createSuccess, createError } from '../ui';
+import { injectIntl } from 'react-intl';
+import { CenteredLoading3Dots, createSuccess, showErrors } from '../ui';
 import Form from './Form';
 import { propagateModel } from '../../common';
 
@@ -78,7 +79,8 @@ export class Create extends Component {
       })
       .catch(errors => {
         // @todo display errors to fields
-        createError();
+        const { intl } = this.props;
+        showErrors(intl, this.props.site.createOneError);
       });
   }
 
@@ -126,4 +128,4 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Create));
+export default withRouter(injectIntl(connect(mapStateToProps, mapDispatchToProps)(Create)));
