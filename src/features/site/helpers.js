@@ -6,6 +6,7 @@ import {
   DelOne as DelOneIcon,
   Photo as PhotoIcon,
   Document as DocumentIcon,
+  ZoomMap as ZoomMapIcon,
   FilterClear as FilterClearIcon,
 } from '../icons';
 
@@ -33,6 +34,7 @@ export const getInlineActions = ({
   onListCause,
   onListDocument,
   onListPhoto,
+  onZoomMap,
   onGetOne,
   onDelOne,
   state,
@@ -65,6 +67,16 @@ export const getInlineActions = ({
       param: 'object',
       theme: 'secondary',
       icon: <PhotoIcon color="white" />,
+      role: 'DETAIL',
+      active: state.photosSite > 0,
+    },
+    {
+      name: 'map',
+      label: 'Carte',
+      onClick: onZoomMap,
+      param: 'object',
+      theme: 'secondary',
+      icon: <ZoomMapIcon color="white" />,
       role: 'DETAIL',
       active: state.photosSite > 0,
     },
