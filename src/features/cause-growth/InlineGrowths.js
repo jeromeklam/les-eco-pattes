@@ -165,14 +165,12 @@ export class InlineGrowths extends Component {
   }
 }
 
-/* istanbul ignore next */
 function mapStateToProps(state) {
   return {
     causeGrowth: state.causeGrowth,
   };
 }
 
-/* istanbul ignore next */
 function mapDispatchToProps(dispatch) {
   return {
     actions: bindActionCreators({ ...actions, propagateModel }, dispatch),

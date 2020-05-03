@@ -96,7 +96,6 @@ export class List extends Component {
         deleteSuccess();
       })
       .catch(errors => {
-        // @todo display errors to fields
         deleteError();
       });
   }

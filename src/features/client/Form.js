@@ -36,14 +36,19 @@ export default function Form(props) {
         <InputHidden name="id" id="id" value={values.id} />
         <div className="row">
           <div className="col-sm-5">
-            <InputText
+            <InputSelect
               label="Civilité"
               name="cli_gender"
               id="cli_gender"
-              required={false}
               value={values.cli_gender}
+              required={false}
               onChange={handleChange}
-              error={getErrorMessage('cli_gender')}
+              options={[
+                { label: '', value: 'OTHER' },
+                { label: 'M.', value: 'MISTER' },
+                { label: 'Mme', value: 'MADAM' },
+                
+              ]}
             />
           </div>
           <div className="col-sm-9">
@@ -77,7 +82,8 @@ export default function Form(props) {
               error={getErrorMessage('client_type')}
             />
           </div>
-          <div className="col-sm-4">
+          <div className="col-sm-1"></div>
+          <div className="col-sm-3">
             <InputCheckbox
               label="Actif"
               name="cli_active"
@@ -91,15 +97,6 @@ export default function Form(props) {
         {values.currentTab === '1' && (
           <div>
             <div className="row">
-              <div className="col-sm-16">
-                <InputText
-                  label="Email"
-                  name="cli_email"
-                  labelTop={true}
-                  value={values.cli_email}
-                  onChange={handleChange}
-                />
-              </div>
               <div className="col-sm-8">
                 <InputText
                   label="Portable"
@@ -109,7 +106,16 @@ export default function Form(props) {
                   onChange={handleChange}
                 />
               </div>
-              <div className="col-md-12">
+              <div className="col-sm-15">
+                <InputText
+                  label="Email"
+                  name="cli_email"
+                  labelTop={true}
+                  value={values.cli_email}
+                  onChange={handleChange}
+                />
+              </div>
+              <div className="col-md-9">
                 <InputSelect
                   label="Catégorie"
                   name="client_category.id"
@@ -182,6 +188,35 @@ export default function Form(props) {
                   value={values.cli_phone_home}
                   onChange={handleChange}
                   error={getErrorMessage('cli_phone_home')}
+                />
+              </div>
+              <div className="col-sm-15">
+                <InputText
+                  label="Email 2"
+                  name="cli_email_2"
+                  labelTop={true}
+                  value={values.cli_email}
+                  onChange={handleChange}
+                />
+              </div>
+            </div>
+            <div className="row">
+              <div className="col-md-18">
+                <InputText
+                  label="SIRET"
+                  name="cli_siret"
+                  labelTop={true}
+                  value={values.cli_siret}
+                  onChange={handleChange}
+                />
+              </div>
+              <div className="col-md-18">
+                <InputText
+                  label="SIREN"
+                  name="cli_siren"
+                  labelTop={true}
+                  value={values.cli_siren}
+                  onChange={handleChange}
                 />
               </div>
             </div>

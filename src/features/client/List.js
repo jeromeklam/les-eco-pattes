@@ -5,15 +5,9 @@ import { connect } from 'react-redux';
 import * as actions from './redux/actions';
 import { buildModel } from 'freejsonapi';
 import { ResponsiveList, ResponsiveQuickSearch } from 'freeassofront';
-import { clientCategoryAsOptions } from '../client-category';
-import { clientTypeAsOptions } from '../client-type';
 import {
-  AddOne as AddOneIcon,
-  GetOne as GetOneIcon,
-  DelOne as DelOneIcon,
   Filter as FilterIcon,
   FilterFull as FilterFullIcon,
-  FilterClear as FilterClearIcon,
   SimpleCancel as CancelPanelIcon,
   SimpleValid as ValidPanelIcon,
   SortDown as SortDownIcon,
@@ -21,6 +15,7 @@ import {
   Sort as SortNoneIcon,
   Search as SearchIcon,
 } from '../icons';
+import { getGlobalActions, getInlineActions, getCols } from './';
 import { Create, Modify } from './';
 
 export class List extends Component {
@@ -134,123 +129,9 @@ export class List extends Component {
     if (this.props.client.items.FreeAsso_Client) {
       items = buildModel(this.props.client.items, 'FreeAsso_Client');
     }
-    const globalActions = [
-      {
-        name: 'clear',
-        label: 'Effacer',
-        onClick: this.onClearFilters,
-        theme: 'secondary',
-        icon: <FilterClearIcon color="white" />,
-      },
-      {
-        name: 'create',
-        label: 'Ajouter',
-        onClick: this.onCreate,
-        theme: 'primary',
-        icon: <AddOneIcon color="white" />,
-        role: 'CREATE',
-      },
-    ];
-    const inlineActions = [
-      {
-        name: 'modify',
-        label: 'Modifier',
-        onClick: this.onGetOne,
-        theme: 'secondary',
-        icon: <GetOneIcon color="white" />,
-        role: 'MODIFY',
-      },
-      {
-        name: 'delete',
-        label: 'Supprimer',
-        onClick: this.onDelOne,
-        theme: 'warning',
-        icon: <DelOneIcon color="white" />,
-        role: 'DELETE',
-      },
-    ];
-    const cols = [
-      {
-        name: 'id',
-        label: 'Identifiant',
-        col: 'id',
-        size: '4',
-        mob_size: '36',
-        sortable: true,
-        filterable: { type: 'text' },
-        title: true,
-        first: true,
-      },
-      {
-        name: 'lastname',
-        label: 'Nom',
-        col: 'cli_lastname',
-        size: '6',
-        mob_size: '18',
-        sortable: true,
-        filterable: { type: 'text' },
-        title: true,
-      },
-      {
-        name: 'firstname',
-        label: 'Prénom',
-        col: 'cli_firstname',
-        size: '7',
-        mob_size: '18',
-        sortable: true,
-        filterable: { type: 'text' },
-        title: true,
-      },
-      {
-        name: 'town',
-        label: 'Ville',
-        col: 'cli_town',
-        size: '7',
-        mob_size: '36',
-        sortable: true,
-        filterable: { type: 'text' },
-        title: false,
-      },
-      {
-        name: 'email',
-        label: 'Email',
-        col: 'cli_email',
-        size: '10',
-        mob_size: '36',
-        sortable: true,
-        filterable: { type: 'text' },
-        title: false,
-        last: true,
-      },
-      {
-        name: 'type',
-        label: 'Type',
-        col: 'clit_id',
-        size: '0',
-        mob_size: '0',
-        sortable: false,
-        filterable: {
-          type: 'select',
-          options: clientTypeAsOptions(this.props.clientType.items),
-        },
-        title: false,
-        hidden: true,
-      },
-      {
-        name: 'category',
-        label: 'Category',
-        col: 'clic_id',
-        size: '0',
-        mob_size: '0',
-        sortable: false,
-        filterable: {
-          type: 'select',
-          options: clientCategoryAsOptions(this.props.clientCategory.items),
-        },
-        title: false,
-        hidden: true,
-      },
-    ];
+    const globalActions = getGlobalActions(this);
+    const inlineActions = getInlineActions(this);
+    const cols = getCols(this);
     // L'affichage, items, loading, loadMoreError
     let search = '';
     const crit = this.props.client.filters.findFirst('cli_firstname');
@@ -310,7 +191,6 @@ export class List extends Component {
   }
 }
 
-/* istanbul ignore next */
 function mapStateToProps(state) {
   return {
     client: state.client,
@@ -319,7 +199,6 @@ function mapStateToProps(state) {
   };
 }
 
-/* istanbul ignore next */
 function mapDispatchToProps(dispatch) {
   return {
     actions: bindActionCreators({ ...actions }, dispatch),

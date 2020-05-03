@@ -175,7 +175,7 @@ export class InlineMovements extends Component {
                 <p>Confirmez-vous la validation du mouvement ?</p>
               </ResponsiveConfirm>
             </div>
-            <div className="row row-new">
+            <div className="row row-new-movement">
               <div className="col-36 pt-2">
                 {emptyItem && (
                   <InlineMovementForm
@@ -192,7 +192,7 @@ export class InlineMovements extends Component {
       } else {
         return (
           <div className="cause-inline-movements">
-            <div className="row row-new">
+            <div className="row row-new-movement">
               <div className="col-36 pt-2">
                 {emptyItem && (
                   <InlineMovementForm

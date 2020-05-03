@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import * as actions from './redux/actions';
 import { getJsonApi } from 'freejsonapi';
 import { propagateModel } from '../../common';
-import { CenteredLoading3Dots } from '../ui';
+import { CenteredLoading3Dots, modifySuccess, modifyError } from '../ui';
 import Form from './Form';
 
 export class Modify extends Component {
@@ -68,8 +68,7 @@ export class Modify extends Component {
     this.props.actions
       .updateOne(this.state.clientId, obj)
       .then(result => {
-        // @Todo propagate result to store
-        // propagateModel est ajouté aux actions en bas de document
+        modifySuccess();
         this.props.actions.propagateModel('FreeAsso_Client', result);
         if (!this.state.modal) {
           this.props.history.push('/client');
@@ -80,7 +79,7 @@ export class Modify extends Component {
         }
       })
       .catch(errors => {
-        // @todo display errors to fields
+        modifyError();
       });
   }
 
