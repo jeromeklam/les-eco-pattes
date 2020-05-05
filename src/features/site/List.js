@@ -128,7 +128,10 @@ export class List extends Component {
   }
 
   onZoomMap(obj) {
-    console.log("FK Zoom ",obj);
+    const coord = JSON.parse(obj.site_coord);
+    if (coord) {
+      this.props.history.push('/pigeon-map/' + coord.lat + "/" + coord.lon);
+    }
   }
 
   onReload(event) {
