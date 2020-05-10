@@ -70,6 +70,18 @@ export default function Form(props) {
           </div>
         </div>
         <div className="row">
+          <div className="col-sm-36">
+            <InputText
+              label="Masque de saisie du n° de boucle"
+              name="caut_mask"
+              id="caut_mask"
+              value={values.caut_mask}
+              onChange={handleChange}
+              error={getErrorMessage('caut_mask')}
+            />
+          </div>
+        </div>
+        <div className="row">
           <div className="col-sm-12">
             <InputText
               label="Poids maximum (kg)"

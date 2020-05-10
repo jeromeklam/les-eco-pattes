@@ -38,8 +38,15 @@ export class InlineGrowths extends Component {
   }
 
   componentDidMount() {
+    this.props.actions.loadGrowths(this.state.cause, true).then(result => {});
     if (!this.props.causeGrowth.emptyItem) {
       this.props.actions.loadOne(0);
+    }
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.cause !== this.state.cause) {
+      this.props.actions.loadGrowths(this.state.cause, true).then(result => {});
     }
   }
 

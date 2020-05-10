@@ -22,9 +22,17 @@ export class InlinePhotos extends Component {
     actions: PropTypes.object.isRequired,
   };
 
+  static getDerivedStateFromProps(props, state) {
+    if (props.siteId !== state.site_id) {
+      return({site_id: props.siteId});
+    }
+    return null;
+  }
+
   constructor(props) {
     super(props);
     this.state = {
+      site_id: props.siteId || null,
       confirm: false,
       sitm_id: 0,
       view: false,
@@ -38,6 +46,16 @@ export class InlinePhotos extends Component {
     this.onDownload = this.onDownload.bind(this);
     this.onView = this.onView.bind(this);
     this.onCloseView = this.onCloseView.bind(this);
+  }
+
+  componentDidMount() {
+    this.props.actions.loadPhotos(this.state.site_id, true).then(result => {});
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.site_id !== this.state.site_id) {
+      this.props.actions.loadPhotos(this.state.site_id, true).then(result => {});
+    }
   }
 
   onDropFiles(item, acceptedFiles) {

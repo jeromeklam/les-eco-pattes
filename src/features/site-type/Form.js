@@ -30,7 +30,7 @@ export default function Form(props) {
             id="sitt_name"
             required={true}
             value={values.sitt_name}
-            onChange={handleChange}          
+            onChange={handleChange}
             error={getErrorMessage('sitt_name')}
           />
         </div>
@@ -42,8 +42,20 @@ export default function Form(props) {
             name="sitt_pattern"
             id="sitt_pattern"
             value={values.sitt_pattern}
-            onChange={handleChange}          
+            onChange={handleChange}
             error={getErrorMessage('sitt_pattern')}
+          />
+        </div>
+      </div>
+      <div className="row">
+        <div className="col-sm-36">
+          <InputText
+            label="Masque de saisie"
+            name="sitt_mask"
+            id="sitt_mask"
+            value={values.sitt_mask}
+            onChange={handleChange}
+            error={getErrorMessage('sitt_mask')}
           />
         </div>
       </div>

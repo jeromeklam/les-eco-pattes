@@ -1,5 +1,5 @@
 import React from 'react';
-import { InputHidden, InputText, InputSelect } from 'freeassofront';
+import { InputHidden, InputText, InputSelect, InputMask } from 'freeassofront';
 import RegexpParser from 'reregexp';
 import { validateRegex } from '../../common';
 import { 
@@ -14,9 +14,20 @@ import { InputPicker as ClientInputPicker } from '../client';
 import { InputPicker as SiteInputPicker } from '../site';
 import { causeTypeAsOptions } from '../cause-type/functions.js';
 import { InputPicker as CauseInputPicker, sexSelect } from './';
+import { InlineDocuments } from '../cause';
+import { InlineGrowths } from '../cause-growth';
 
 let regPlaceholder = '';
 let caut_id = 0;
+
+const tabs = [
+  { key: '1', name: 'identification', label: 'Identification', shortcut: 'A', icon: 'cause' },
+  { key: '2', name: 'divers', label: 'Divers', shortcut: 'D', icon: 'misc' },
+];
+const modifyTabs = [
+  { key: '3', name: 'documents', label: 'Documents', shortcut: 'E', icon: 'documents' },
+  { key: '4', name: 'croissance', label: 'Croissance', shortcut: 'E', icon: 'croissance' },
+]
 
 export default function Form(props) {
   const {
@@ -47,7 +58,7 @@ export default function Form(props) {
     <ResponsiveModalOrForm
       title="Animaux"
       tab={values.currentTab}
-      tabs={props.tabs}
+      tabs={props.modify ? tabs.concat(modifyTabs) : tabs}
       size="xl"
       onSubmit={handleSubmit}
       onCancel={handleCancel}
@@ -60,13 +71,14 @@ export default function Form(props) {
       <InputHidden name="id" id="id" value={values.id} />
       <div className="row">
         <div className="col-8">
-          <InputText
+          <InputMask
             label="N° boucle"
             name="cau_code"
             id="cau_code"
             value={values.cau_code}
             onChange={handleChange}
             labelTop={true}
+            mask={values.cause_type && values.cause_type.caut_mask || '[*]'}
             pattern={regexp}
             required={true}
             error={getErrorMessage('cau_code')}
@@ -229,6 +241,12 @@ export default function Form(props) {
             error={getErrorMessage('cau_desc')}
           />
         </div>
+      )}
+      {values.currentTab === '3' && (
+        <InlineDocuments cauId={values.id} />
+      )}
+      {values.currentTab === '4' && (
+        <InlineGrowths cause={values} />
       )}
     </ResponsiveModalOrForm>
   );

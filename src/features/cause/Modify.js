@@ -113,6 +113,7 @@ export class Modify extends Component {
               item={item}
               prev={prev}
               next={next}
+              modify
               modal={this.state.modal}
               cause_types={this.props.causeType.items}
               cause_main_types={this.props.causeMainType.items}

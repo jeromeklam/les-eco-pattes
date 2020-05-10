@@ -160,6 +160,24 @@ svg.text-warning.inline-action:hover {
   }
 }
 
+.modal-xl {
+  .modal-body {
+    min-height: 550px;
+  }
+}
+
+.modal-lg {
+  .modal-body {
+    min-height: 450px;
+  }
+}
+
+.modal-md {
+  .modal-body {
+    min-height: 350px;
+  }
+}
+
 .nav-item .nav-link:hover {
   cursor: pointer;
 }

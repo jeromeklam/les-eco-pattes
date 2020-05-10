@@ -115,6 +115,7 @@ export class Modify extends Component {
           <div>
             <Form
               item={item}
+              modify
               modal={this.state.modal}
               datas={this.props.data.items}
               config={this.props.config.items}

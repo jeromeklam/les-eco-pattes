@@ -111,7 +111,6 @@ export class List extends Component {
     if (photosSite === id) {
       this.setState({ animalsSite: 0, photosSite: 0, documentsSite: 0 });
     } else {
-      this.props.actions.loadPhotos(id, true).then(result => {});
       this.setState({ animalsSite: 0, photosSite: id, documentsSite: 0 });
     }
   }
@@ -122,7 +121,6 @@ export class List extends Component {
     if (documentsSite === id) {
       this.setState({ animalsSite: 0, photosSite: 0, documentsSite: 0 });
     } else {
-      this.props.actions.loadDocuments(id, true).then(result => {});
       this.setState({ animalsSite: 0, photosSite: 0, documentsSite: id });
     }
   }
@@ -208,7 +206,7 @@ export class List extends Component {
     let inlineComponent = null;
     let id = null;
     if (this.state.photosSite > 0) {
-      inlineComponent = <InlinePhotos />;
+      inlineComponent = <InlinePhotos siteId={this.state.photosSite}/>;
       id = this.state.photosSite;
     } else {
       if (this.state.animalsSite > 0) {
@@ -216,7 +214,7 @@ export class List extends Component {
         id = this.state.animalsSite;
       } else {
         if (this.state.documentsSite > 0) {
-          inlineComponent = <InlineDocuments />;
+          inlineComponent = <InlineDocuments siteId={this.state.documentsSite}/>;
           id = this.state.documentsSite;
         }
       }

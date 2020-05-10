@@ -1,5 +1,5 @@
 import React from 'react';
-import { InputHidden, InputText, InputSelect, InputCheckbox } from 'freeassofront';
+import { InputHidden, InputText, InputSelect, InputCheckbox, InputMask } from 'freeassofront';
 import RegexpParser from 'reregexp';
 import classnames from 'classnames';
 import { validateRegex } from '../../common';
@@ -8,7 +8,7 @@ import { ResponsiveModalOrForm, InputTextarea, InputDate, InputData } from '../u
 import useForm from '../ui/useForm';
 import { siteTypeAsOptions } from '../site-type/functions.js';
 import { InputPicker as ClientInputPicker } from '../client';
-import { InputPicker as SiteInputPicker } from '../site';
+import { InputPicker as SiteInputPicker, InlinePhotos, InlineDocuments } from '../site';
 
 
 
@@ -39,6 +39,10 @@ const tabs = [
     icon: <OtherIcon />,
   }
 ];
+const modifyTabs = [
+  { key: '5', name: 'photos', label: 'Photos', shortcut: 'E', icon: <SettingsIcon /> },
+  { key: '6', name: 'documents', label: 'Documents', shortcut: 'E', icon: <SettingsIcon /> },
+]
 
 const afterChange = (name, item) => {
   switch (name) {
@@ -87,7 +91,7 @@ export default function Form(props) {
       className=""
       title="Sites"
       tab={values.currentTab}
-      tabs={tabs}
+      tabs={props.modify ? tabs.concat(modifyTabs) : tabs}
       size="xl"
       onSubmit={handleSubmit}
       onCancel={handleCancel}
@@ -109,7 +113,8 @@ export default function Form(props) {
           />
         </div>
         <div className="col-sm-9">
-          <InputText
+          <InputMask
+            mask={values.site_type && values.site_type.sitt_mask || '[*]'}
             label="N° Elevage EDE"
             name="site_code"
             value={values.site_code}
@@ -314,6 +319,12 @@ export default function Form(props) {
             />
           </div>
         </div>
+      )}
+      {values.currentTab === '5' && (
+        <InlinePhotos siteId={values.id} />
+      )}
+      {values.currentTab === '6' && (
+        <InlineDocuments siteId={values.id} />
       )}
     </ResponsiveModalOrForm>
   );

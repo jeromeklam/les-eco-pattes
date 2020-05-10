@@ -116,7 +116,6 @@ export class List extends Component {
         sicknessesCause: 0,
       });
     } else {
-      this.props.actions.loadDocuments(id, true).then(result => {});
       this.setState({
         growthsCause: 0,
         movementsCause: 0,
@@ -162,7 +161,6 @@ export class List extends Component {
         sicknessesCause: 0,
       });
     } else {
-      this.props.actions.loadGrowths(obj, true).then(result => {});
       this.setState({
         growthsCause: id,
         movementsCause: 0,
@@ -321,7 +319,7 @@ export class List extends Component {
       if (this.state.documentsCause > 0) {
         id = this.state.documentsCause;
         current = buildModel(this.props.cause.items, 'FreeAsso_Cause', id);
-        inlineComponent = <InlineDocuments cause={current} />;
+        inlineComponent = <InlineDocuments cauId={id} cause={current} />;
       } else {
         if (this.state.growthsCause > 0) {
           id = this.state.growthsCause;

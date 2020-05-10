@@ -18,9 +18,17 @@ export class InlineDocuments extends Component {
     actions: PropTypes.object.isRequired,
   };
 
+  static getDerivedStateFromProps(props, state) {
+    if (props.cauId !== state.cau_id) {
+      return({cau_id: props.cauId});
+    }
+    return null;
+  }
+
   constructor(props) {
     super(props);
     this.state = {
+      cau_id: props.cauId || null,
       confirm: false,
       caum_id: 0,
     };
@@ -29,6 +37,16 @@ export class InlineDocuments extends Component {
     this.onConfirmDocument = this.onConfirmDocument.bind(this);
     this.onConfirm = this.onConfirm.bind(this);
     this.onDownload = this.onDownload.bind(this);
+  }
+
+  componentDidMount() {
+    this.props.actions.loadDocuments(this.state.cau_id, true).then(result => {});
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.cau_id !== this.state.cau_id) {
+      this.props.actions.loadDocuments(this.state.cau_id, true).then(result => {});
+    }
   }
 
   onDropFiles(item, acceptedFiles) {
