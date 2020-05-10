@@ -81,6 +81,7 @@ export class Modify extends Component {
           <div>
             {item && 
               <Form 
+                modify
                 item={item} 
                 errors={this.props.data.updateOneError}
                 onSubmit={this.onSubmit} 

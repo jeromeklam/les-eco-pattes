@@ -7,11 +7,13 @@ import { useForm, InputStringarray, ResponsiveModalOrForm } from '../ui';
  * Functionnal Component
  */
 export default function Form(props) {
-  const { values, handleChange, handleSubmit, handleCancel } = useForm(
+  const { values, handleChange, handleSubmit, handleCancel, getErrorMessage } = useForm(
     props.item,
     '',
     props.onSubmit,
     props.onCancel,
+    null,
+    props.errors
   );
   const optionsType = dataTypes();
   return (
@@ -31,6 +33,7 @@ export default function Form(props) {
         required={true}
         value={values.data_name}
         onChange={handleChange}
+        error={getErrorMessage('data_name')}
       />
       <InputSelect
         label="Type"
@@ -39,7 +42,9 @@ export default function Form(props) {
         required={true}
         addempty={true}
         onChange={handleChange}
+        disabled={props.modify || false}
         options={optionsType}
+        error={getErrorMessage('data_type')}
       />
       {values.data_type === 'LIST' && (
         <InputStringarray

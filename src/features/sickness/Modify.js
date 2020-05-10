@@ -97,6 +97,7 @@ export class Modify extends Component {
             {item && (
               <Form
                 item={item}
+                modify
                 datas={this.props.data.items}
                 config={this.props.config.items}
                 properties={this.props.sickness.properties}

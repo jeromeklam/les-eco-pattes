@@ -51,7 +51,9 @@ export function reducer(state, action) {
         loadOnePending: true,
         loadOneError: null,
         loadOneItem: null,
-        loadOneRaw: null,    
+        loadOneRaw: null,
+        createOneError: null,
+        updateOneError: null,
       };
 
     case SICKNESS_LOAD_ONE_SUCCESS:

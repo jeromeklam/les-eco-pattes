@@ -8,6 +8,9 @@ import {
 
 export const sicknessTypeSelect = [
   { label: 'Autre', value: 'OTHER' },
+  { label: 'Déclaration Obligatoire', value: 'MDO' },
+  { label: 'Réputée Contagieuse', value: 'MRC' },
+  { label: 'Blessure', value: 'B' },
 ];
 
 export const getGlobalActions = ({ onClearFilters, onCreate }) => {
@@ -59,10 +62,10 @@ export const getInlineActions = ({
 export const getCols = ({ props }) => {
   return [
     {
-      name: 'id',
-      label: 'Identifiant',
-      col: 'id',
-      size: '4',
+      name: 'sick_name',
+      label: 'Nom',
+      col: 'sick_name',
+      size: '12',
       mob_size: '36',
       title: true,
       first: true,
@@ -70,20 +73,10 @@ export const getCols = ({ props }) => {
       filterable: { type: 'text' },
     },
     {
-      name: 'sick_name',
-      label: 'Nom',
-      col: 'sick_name',
-      size: '7',
-      mob_size: '36',
-      title: true,
-      sortable: true,
-      filterable: { type: 'text' },
-    },
-    {
       name: 'sick_type',
       label: 'Type',
       col: 'sick_type',
-      size: '7',
+      size: '10',
       mob_size: '36',
       title: true,
       sortable: true,
@@ -95,7 +88,7 @@ export const getCols = ({ props }) => {
       name: 'sick_spread',
       label: 'Contagieux',
       col: 'sick_spread',
-      size: '7',
+      size: '4',
       mob_size: '36',
       title: true,
       last: true,

@@ -1,10 +1,11 @@
-import { freeAssoApi } from '../../../common';
+import { jsonApiNormalizer } from 'freejsonapi';
 import {
   DATA_CREATE_ONE_BEGIN,
   DATA_CREATE_ONE_SUCCESS,
   DATA_CREATE_ONE_FAILURE,
   DATA_CREATE_ONE_DISMISS_ERROR,
 } from './constants';
+import { freeAssoApi } from '../../../common';
 
 export function createOne(args = {}) {
   return dispatch => {
@@ -30,13 +31,10 @@ export function createOne(args = {}) {
         },
       );
     });
-
     return promise;
   };
 }
 
-// Async action saves request error by default, this method is used to dismiss the error info.
-// If you don't want errors to be saved in Redux store, just ignore this method.
 export function dismissCreateOneError() {
   return {
     type: DATA_CREATE_ONE_DISMISS_ERROR,
@@ -63,10 +61,14 @@ export function reducer(state, action) {
 
     case DATA_CREATE_ONE_FAILURE:
       // The request is failed
+      let error = null;
+      if (action.data.error && action.data.error.response) {
+        error = jsonApiNormalizer(action.data.error.response);
+      }
       return {
         ...state,
         createOnePending: false,
-        createOneError: action.data.error,
+        createOneError: error,
       };
 
     case DATA_CREATE_ONE_DISMISS_ERROR:

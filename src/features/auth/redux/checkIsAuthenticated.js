@@ -72,6 +72,12 @@ export function reducer(state, action) {
       if (datas && datas.headers && datas.headers.authorization) {
         token = datas.headers.authorization;
       }
+      if (datas && datas.headers && datas.headers['app-id']) {
+        cookie.save('APP_ID', datas.headers['app-id'], { path: '/' });
+      }
+      if (datas && datas.headers && datas.headers['sso-id']) {
+        cookie.save('SSO_ID', datas.headers['sso-id'], { path: '/' });
+      }
       if (datas.data) {
         let object = jsonApiNormalizer(datas.data);
         user = buildModel(object, 'FreeSSO_User', object.SORTEDELEMS[0], { eager: true });
