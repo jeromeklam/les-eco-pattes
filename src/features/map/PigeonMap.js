@@ -53,7 +53,6 @@ export class PigeonMap extends Component {
       }
     }
     this.state = {
-      geoCoord: this.props.home.geoCoord,
       center: center,
       zoom: 12,
       provider: 'osm',
@@ -80,6 +79,7 @@ export class PigeonMap extends Component {
     this.onSiteClick = this.onSiteClick.bind(this);
     this.onSiteMove = this.onSiteMove.bind(this);
     this.localize = this.localize.bind(this);
+
   }
 
   componentDidMount() {
@@ -91,15 +91,25 @@ export class PigeonMap extends Component {
   }
 
   static getDerivedStateFromProps(props, state) {
-    if (props.home.geoCoord !== state.geoCoord) {
-      let center = [49.096306, 6.160053];
-      if (props.home.geoOn) {
-        if (props.home.geoCoord) {
-          center = [props.home.geoCoord.lat, props.home.geoCoord.lon];
-          return {
-            geoCoord: props.home.geoCoord,
-            center: center,
-          };
+    let center = [49.096306, 6.160053];
+    if ((props.match.params.lat) && (props.match.params.lon)) {
+      const lat = parseFloat(props.match.params.lat);
+      const lon = parseFloat(props.match.params.lon);
+      if ((lat !== state.center.lat) && (lon !== state.center.lon)) {
+          center = [lat, lon];
+        return {            
+          center: center,
+        };
+      }
+    } else {                
+      if (props.home.geoCoord.lat !== state.center.lat && props.home.geoCoord.lon !== state.center.lon) {
+        if (props.home.geoOn) {
+          if (props.home.geoCoord) {
+            center = [props.home.geoCoord.lat, props.home.geoCoord.lon];
+            return {            
+              center: center,
+            };
+          }
         }
       }
     }
@@ -178,6 +188,7 @@ export class PigeonMap extends Component {
     if (this.props.site.items.FreeAsso_Site) {
       items = buildModel(this.props.site.items, 'FreeAsso_Site');
     }
+    console.log('FK render map',this.state.center);
     return (
       <div className="map-pigeon-map bg-light">
         <Responsive displayIn={['Laptop', 'Tablet']}>

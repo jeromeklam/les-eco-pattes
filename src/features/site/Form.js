@@ -1,14 +1,16 @@
 import React from 'react';
 import { InputHidden, InputText, InputSelect, InputCheckbox } from 'freeassofront';
 import RegexpParser from 'reregexp';
-import { InputData } from '../ui';
+import classnames from 'classnames';
+import { validateRegex } from '../../common';
+import { Location as LocationIcon, Settings as SettingsIcon, Other as OtherIcon } from '../icons';
+import { ResponsiveModalOrForm, InputTextarea, InputDate, InputData } from '../ui';
 import useForm from '../ui/useForm';
 import { siteTypeAsOptions } from '../site-type/functions.js';
 import { InputPicker as ClientInputPicker } from '../client';
 import { InputPicker as SiteInputPicker } from '../site';
-import { Location as LocationIcon, Settings as SettingsIcon, Other as OtherIcon } from '../icons';
-import { ResponsiveModalOrForm, InputTextarea, InputDate } from '../ui';
-import { validateRegex } from '../../common';
+
+
 
 let regPlaceholder = '';
 let sitt_id = 0;
@@ -280,8 +282,12 @@ export default function Form(props) {
         <div className="row">
           {props.properties.map(oneProp => {
             let nameProp = 'site_' + oneProp;
+            let className = "col-sm-10";
+            if (oneProp.indexOf("bool") >= 0) {
+              className = "col-sm-3";
+            }
             return (
-              <div className="col-sm-12" key={nameProp}>
+              <div className={classnames(className)} key={nameProp}>
                 <InputData
                   key={nameProp}
                   name={nameProp}

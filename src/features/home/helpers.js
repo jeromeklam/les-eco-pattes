@@ -43,7 +43,7 @@ export const appMenu = [
     public: false,
   },
   {
-    icon: <SocialIcon url="https://facebook.com/KalaweitFrance/" />,
+    icon: <SocialIcon url="https://facebook.com/Les-éco-pattes-140387953308320/" />,
     label: <FormattedMessage id="app.features.home.app.menu.facebook" defaultMessage="Facebook" />,
     url: null,
     role: 'SOCIAL',

@@ -18,7 +18,7 @@ export default class InlineListGroup extends Component {
                 <p key={group.id} title={group.typ}>
                   {group.nb}
                   &nbsp; {group.typ}
-                  &nbsp;( {group.sex === 'F' ? <FemaleIcon /> : <MaleIcon />} )
+                  &nbsp;( {group.sex === 'F' ? <FemaleIcon  className="text-secondary"/> : <MaleIcon  className="text-secondary"/>} )
                 </p>
               );
             

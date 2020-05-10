@@ -1,26 +1,10 @@
 import React from 'react';
-import { displayMonetary } from 'freeassofront';
 import {
   AddOne as AddOneIcon,
   GetOne as GetOneIcon,
   DelOne as DelOneIcon,
   FilterClear as FilterClearIcon,
-  ColCheck as ColCheckIcon,
-  Minus as MinusIcon,
 } from '../icons';
-import { causeTypeMntType } from './';
-
-export const validSelect = [
-  { label: 'Actif', value: true, icon: <ColCheckIcon className="col-icon" /> },
-  { label: 'Inactif', value: false, icon: <MinusIcon className="col-icon" /> },
-];
-
-const mntCol = (item) => {
-  if (item.caut_family !== 'ANIMAL') {
-    return '';
-  }
-  return displayMonetary(item.caut_max_mnt);
-}
 
 export const getGlobalActions = ({ onClearFilters, onCreate }) => {
   return [

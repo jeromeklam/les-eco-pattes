@@ -1,4 +1,5 @@
 import React from 'react';
+import classnames from 'classnames';
 import {
   AddOne as AddOneIcon,
   GetOne as GetOneIcon,
@@ -16,16 +17,24 @@ import { causeTypeAsOptions } from '../cause-type/functions';
 
 export const sexSelect = [
   { label: 'Femelle', value: 'F', icon: <FemaleIcon className="col-icon" /> },
-  { label: 'Mâle', value: 'M', icon: <MaleIcon className="col-icon" /> },
+  { label: 'Mâle', value: 'M', icon: <MaleIcon className="col-icon" />  },
   { label: 'Indéfini', value: 'OTHER' },
 ];
 
-export const getSexlabel = (p_code, p_icon = true) => {
+export const getSexlabel = (p_code, p_icon = true, p_className = "" ) => {
   const found = sexSelect.find(elem => elem.value === p_code);
   if (found) {
-    if (found.icon && p_icon) {
-      return found.icon;
-    }
+    if (p_icon) {
+      if (p_className) {
+        if (found.value === "F") {
+          return <FemaleIcon className={classnames(p_className)} /> 
+        } else if (found.value === "M") {
+          return <MaleIcon className={classnames(p_className)} /> 
+        }
+      } else if (found.icon) {
+         return found.icon;
+      }
+    }  
     return found.label;
   }
   return '';

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { freeAssoApi } from '../../common';
 import { jsonApiNormalizer, objectToQueryString, buildModel } from 'freejsonapi';
-import { Loading3Dots } from 'freeassofront';
+import {CenteredLoading3Dots } from '../ui';
 import { InlineListGroup } from '.';
 import { causeGroup } from './functions.js';
 
@@ -42,7 +42,7 @@ export default class InlineList extends Component {
     return (
       <div className="cause-inline-list">
         {this.state.loading ? (
-          <Loading3Dots />
+          <CenteredLoading3Dots />
         ) : (
           <InlineListGroup list={causeGroup(this.state.list)}/>
         )}
