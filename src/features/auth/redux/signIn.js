@@ -75,6 +75,12 @@ export function reducer(state, action) {
       }
       if (user) {
         authenticated = true;
+        if (datas && datas.headers && datas.headers['app-id']) {
+          cookie.save('APP_ID', datas.headers['app-id'], { path: '/' });
+        }
+        if (datas && datas.headers && datas.headers['sso-id']) {
+          cookie.save('SSO_ID', datas.headers['sso-id'], { path: '/' });
+        }
         if (token) {
           cookie.save('Authorization', token, { path: '/' });
           initAxios(token);
