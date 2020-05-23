@@ -79,7 +79,7 @@ export class InlineMovements extends Component {
       .then(result => {
         createSuccess();
         this.props.actions.propagateModel('FreeAsso_CauseMovement', result);
-        this.props.actions.loadMovements(cause);
+        this.localLoadMovements();
       })
       .catch(errors => {
         // @todo display errors to fields
@@ -114,7 +114,6 @@ export class InlineMovements extends Component {
 
   onConfirmClose() {
     this.setState({ valid: false, confirm: false, camv_id: 0, cause_movement: null });
-    this.localLoadMovements();
   }
 
   mouseLeave() {
