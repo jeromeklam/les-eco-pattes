@@ -225,14 +225,12 @@ export class PendingMovements extends Component {
   }
 }
 
-/* istanbul ignore next */
 function mapStateToProps(state) {
   return {
     causeMovement: state.causeMovement,
   };
 }
 
-/* istanbul ignore next */
 function mapDispatchToProps(dispatch) {
   return {
     actions: bindActionCreators({ ...actions, propagateModel }, dispatch),

@@ -6,9 +6,20 @@ import {
   DelOne as DelOneIcon,
   Photo as PhotoIcon,
   Document as DocumentIcon,
-  ZoomMap as ZoomMapIcon,
+  MapPose as ZoomMapIcon,
   FilterClear as FilterClearIcon,
 } from '../icons';
+
+const townCol = (item) => {
+  let cpTown = '';
+  if (item.site_cp) {
+    cpTown = item.site_cp + " "
+  }
+  if (item.site_town) {
+    cpTown = cpTown + item.site_town
+  }
+  return cpTown;
+}
 
 export const getGlobalActions = ({ onClearFilters, onCreate }) => {
   return [
@@ -78,7 +89,6 @@ export const getInlineActions = ({
       theme: 'secondary',
       icon: <ZoomMapIcon color="white" />,
       role: 'DETAIL',
-      active: state.photosSite > 0,
     },
     {
       name: 'modify',
@@ -182,6 +192,7 @@ export const getCols = ({ props }) => {
       sortable: false,
       filterable: false,
       last: true,
+      fDisplay: townCol,
     },
   ];
 };

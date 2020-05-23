@@ -48,7 +48,7 @@ export class InlinePhotos extends Component {
     this.onCloseView = this.onCloseView.bind(this);
   }
 
-  componentDidMount() {
+  componentDidMount() { 
     this.props.actions.loadPhotos(this.state.site_id, true).then(result => {});
   }
 
@@ -244,14 +244,12 @@ export class InlinePhotos extends Component {
   }
 }
 
-/* istanbul ignore next */
 function mapStateToProps(state) {
   return {
     site: state.site,
   };
 }
 
-/* istanbul ignore next */
 function mapDispatchToProps(dispatch) {
   return {
     actions: bindActionCreators({ ...actions }, dispatch),

@@ -126,9 +126,12 @@ export class List extends Component {
   }
 
   onZoomMap(obj) {
+    const { id } = obj;
     const coord = JSON.parse(obj.site_coord);
     if (coord) {
-      this.props.history.push('/pigeon-map/' + coord.lat + "/" + coord.lon);
+      this.props.history.push('/pigeon-map/' + id  + "/" + coord.lat + "/" + coord.lon);
+    } else {
+      this.props.history.push('/pigeon-map/' + id) ; 
     }
   }
 

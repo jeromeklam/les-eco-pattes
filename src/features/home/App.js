@@ -6,7 +6,13 @@ import { IntlProvider, FormattedMessage } from 'react-intl';
 import * as actions from './redux/actions';
 import * as authActions from '../auth/redux/actions';
 import { ResponsivePage } from 'freeassofront';
-import { Menu as MenuIcon, AccountDetail, AccountClose } from '../icons';
+import { 
+  Menu as MenuIcon, 
+  AccountDetail, 
+  AccountClose,
+  MenuOpened as MenuOpenedIcon,
+  MenuClosed as MenuClosedIcon,
+} from '../icons';
 import { CenteredLoading9X9 } from '../ui';
 import { SimpleForm } from '../auth';
 import { initAxios } from '../../common';
@@ -114,6 +120,8 @@ export class App extends Component {
             userTitle={this.props.auth.user.user_first_name || this.props.auth.user.user_first_name}
             accountOpened={<AccountClose />}
             accountClosed={<AccountDetail className="text-primary" />}
+            menuOpened={<MenuOpenedIcon />}
+            menuClosed={<MenuClosedIcon />}
           >
             {this.props.auth.firstCheck && (!this.props.auth.authenticated || this.props.home.loadAllFinish) ? (
               <div>{this.props.children}</div>

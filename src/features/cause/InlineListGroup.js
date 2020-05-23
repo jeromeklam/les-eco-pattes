@@ -8,6 +8,7 @@ export default class InlineListGroup extends Component {
   static propTypes = {};
 
   render() {
+    //console.log("FK inline liste cause",this.props.list);
     return (
       <div className="cause-inline-list-group">
         { ( this.props.list && this.props.list.length > 0 ) ? (

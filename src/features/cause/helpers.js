@@ -12,6 +12,7 @@ import {
   Male as MaleIcon,
   Female as FemaleIcon,
   Medical as MedicalIcon,
+  Photo as PhotoIcon,
 } from '../icons';
 import { causeTypeAsOptions } from '../cause-type/functions';
 
@@ -67,6 +68,7 @@ export const getInlineActions = ({
   onListGrowth,
   onListDescendant,
   onListSickness,
+  onListPhoto,
   onGetOne,
   onDelOne,
   state,
@@ -121,6 +123,16 @@ export const getInlineActions = ({
       icon: <MedicalIcon color="white" />,
       role: 'OTHER',
       active: state.sicknessesCause > 0,
+    },
+    {
+      name: 'photos',
+      label: 'Photos',
+      onClick: onListPhoto,
+      param: 'object',
+      theme: 'secondary',
+      icon: <PhotoIcon color="white" />,
+      role: 'DETAIL',
+      active: state.photosCause > 0,
     },
     {
       name: 'modify',
