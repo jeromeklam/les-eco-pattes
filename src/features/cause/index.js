@@ -12,3 +12,4 @@ export { default as InlineListDetail } from './InlineListDetail';
 export { default as InlineDocuments } from './InlineDocuments';
 export { default as InlineDescendants } from './InlineDescendants';
 export { default as MultiInputPicker } from './MultiInputPicker';
+export { default as InlinePhotos } from './InlinePhotos';

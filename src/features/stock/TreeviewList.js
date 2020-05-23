@@ -199,7 +199,6 @@ export class TreeviewList extends Component {
   }
 }
 
-/* istanbul ignore next */
 function mapStateToProps(state) {
   return {
     stock: state.stock,
@@ -208,7 +207,6 @@ function mapStateToProps(state) {
   };
 }
 
-/* istanbul ignore next */
 function mapDispatchToProps(dispatch) {
   return {
     actions: bindActionCreators({ ...actions, loadChildren, select, toggle, loadItems, delOneItem, delOneFamily }, dispatch),

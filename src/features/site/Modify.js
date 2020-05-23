@@ -87,7 +87,6 @@ export class Modify extends Component {
     this.props.actions
       .updateOne(obj)
       .then(result => {
-        // @Todo propagate result to store
         // propagateModel est ajouté aux actions en bas de document
         modifySuccess();
         this.props.actions.propagateModel('FreeAsso_Site', result);
@@ -100,7 +99,6 @@ export class Modify extends Component {
         }
       })
       .catch(errors => {
-        // @todo display errors to fields
         showErrors(this.props.intl, this.props.site.updateOneError);
       });
   }

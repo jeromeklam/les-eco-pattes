@@ -24,6 +24,7 @@ import { InlineSicknesses } from '../cause-sickness';
 import { InlineGrowths } from '../cause-growth';
 import {
   InlineDescendants,
+  InlinePhotos,
   Create,
   Modify,
   InlineDocuments,
@@ -47,6 +48,7 @@ export class List extends Component {
       documentsCause: 0,
       descendantsCause: 0,
       sicknessesCause: 0,
+      photosCause: 0,
       cauId: -1,
     };
     this.onCreate = this.onCreate.bind(this);
@@ -65,6 +67,7 @@ export class List extends Component {
     this.onListGrowth = this.onListGrowth.bind(this);
     this.onListSickness = this.onListSickness.bind(this);
     this.onListDescendant = this.onListDescendant.bind(this);
+    this.onListPhoto = this.onListPhoto.bind(this);
     this.onClose = this.onClose.bind(this);
   }
 
@@ -114,6 +117,7 @@ export class List extends Component {
         documentsCause: 0,
         descendantsCause: 0,
         sicknessesCause: 0,
+        photosCause: 0,
       });
     } else {
       this.setState({
@@ -122,6 +126,7 @@ export class List extends Component {
         documentsCause: id,
         descendantsCause: 0,
         sicknessesCause: 0,
+        photosCause: 0,
       });
     }
   }
@@ -136,6 +141,7 @@ export class List extends Component {
         documentsCause: 0,
         descendantsCause: 0,
         sicknessesCause: 0,
+        photosCause: 0,
       });
     } else {
       this.props.actions.loadMovements(obj, true).then(result => {});
@@ -145,6 +151,7 @@ export class List extends Component {
         documentsCause: 0,
         descendantsCause: 0,
         sicknessesCause: 0,
+        photosCause: 0,
       });
     }
   }
@@ -159,6 +166,7 @@ export class List extends Component {
         documentsCause: 0,
         descendantsCause: 0,
         sicknessesCause: 0,
+        photosCause:0 ,
       });
     } else {
       this.setState({
@@ -167,6 +175,7 @@ export class List extends Component {
         documentsCause: 0,
         descendantsCause: 0,
         sicknessesCause: 0,
+        photosCause: 0,
       });
     }
   }
@@ -181,6 +190,7 @@ export class List extends Component {
         documentsCause: 0,
         descendantsCause: 0,
         sicknessesCause: 0,
+        photosCause: 0,
       });
     } else {
       this.props.actions.loadDescendants(obj, true).then(result => {});
@@ -190,6 +200,7 @@ export class List extends Component {
         documentsCause: 0,
         descendantsCause: id,
         sicknessesCause: 0,
+        photosCause: 0,
       });
     }
   }
@@ -204,6 +215,7 @@ export class List extends Component {
         documentsCause: 0,
         descendantsCause: 0,
         sicknessesCause: 0,
+        photosCause: 0,
       });
     } else {
       this.props.actions.loadSicknesses(obj, true).then(result => {});
@@ -213,6 +225,31 @@ export class List extends Component {
         documentsCause: 0,
         descendantsCause: 0,
         sicknessesCause: id,
+        photosCause: 0,
+      });
+    }
+  }
+
+  onListPhoto(obj) {    
+    const { id } = obj;
+    const { photosCause } = this.state;
+    if (photosCause === id) {
+      this.setState({ 
+        growthsCause: 0,
+        movementsCause: 0,
+        documentsCause: 0,
+        descendantsCause: 0,
+        sicknessesCause: 0,
+        photosCause: 0,
+      });
+    } else {
+      this.setState({ 
+        growthsCause: 0,
+        movementsCause: 0,
+        documentsCause: 0,
+        descendantsCause: 0,
+        sicknessesCause: 0,
+        photosCause: id,
       });
     }
   }
@@ -335,6 +372,12 @@ export class List extends Component {
               id = this.state.sicknessesCause;
               current = buildModel(this.props.cause.items, 'FreeAsso_Cause', id);
               inlineComponent = <InlineSicknesses cause={current} />;
+            } else {
+              if (this.state.photosCause > 0) {
+                id = this.state.photosCause;
+                current = buildModel(this.props.cause.items, 'FreeAsso_Cause', id);
+                inlineComponent = <InlinePhotos cauId={id} cause={current} />;
+              }
             }
           }
         }

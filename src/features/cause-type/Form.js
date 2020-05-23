@@ -28,7 +28,7 @@ export default function Form(props) {
       className="m-5"
       size="lg"
       modal={true}
-      title="Type de cause"
+      title="Race"
       onSubmit={handleSubmit}
       onCancel={handleCancel}
       onClose={props.onClose}
@@ -41,6 +41,7 @@ export default function Form(props) {
               label="Nom"
               name="caut_name"
               id="caut_name"
+              required={true}
               value={values.caut_name}
               onChange={handleChange}
               error={getErrorMessage('caut_name')}

@@ -5,6 +5,7 @@ const initialState = {
   selected: [],
   movements: [],
   documents: [],
+  photos: [],
   currentItem: null,
   causes: [],
   causesModels: [],
@@ -35,6 +36,8 @@ const initialState = {
   delCauseMediaError: null,
   loadDescendantsPending: false,
   loadDescendantsError: null,
+  loadPhotosPending: false,
+  loadPhotosError: null,
 };
 
 export default initialState;

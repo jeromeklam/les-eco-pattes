@@ -107,8 +107,8 @@
     "test": "node scripts/test.js --env=jsdom"
   },
   "rekit": {
-    "devPort": 6075,
-    "studioPort": 6076,
+    "devPort": 6275,
+    "studioPort": 6276,
     "plugins": [],
     "css": "sass"
   },

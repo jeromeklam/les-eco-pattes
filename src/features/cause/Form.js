@@ -80,7 +80,6 @@ export default function Form(props) {
             labelTop={true}
             mask={values.cause_type && values.cause_type.caut_mask || '[*]'}
             pattern={regexp}
-            required={true}
             error={getErrorMessage('cau_code')}
             warning={validated ? false : 'Format : ' + regPlaceholder}
           />
@@ -120,9 +119,10 @@ export default function Form(props) {
                 label="Nom"
                 key="cau_name"
                 name="cau_name"
-                value={values.cau_name}
-                onChange={handleChange}
                 labelTop={true}
+                value={values.cau_name}
+                required={true}
+                onChange={handleChange}
                 error={getErrorMessage('cau_name')}
               />
             </div>

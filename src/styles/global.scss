@@ -120,7 +120,12 @@ svg.text-warning.inline-action:hover {
   border-width: 0 3px 3px 0 !important;
 }
 .sidebar-navigation li:hover a > svg {
-  
+  fill: theme-color('primary-light') !important;
+  path {
+    fill: theme-color('primary-light') !important;
+  }
+}
+.sidebar-navigation li:hover a > .sidebar-menu-arrow > svg {
   fill: theme-color('primary-light') !important;
   path {
     fill: theme-color('primary-light') !important;

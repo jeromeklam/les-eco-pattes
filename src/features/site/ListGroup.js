@@ -16,6 +16,7 @@ import {
   Photo as PhotoIcon,
   Document as DocumentIcon,
   GetOne as GetOneIcon,
+  MapPose as MapPoseIcon,
 } from '../icons';
 import { InlineMapPhotos, InlineMapDocuments } from './';
 import { Modify as ModifySite } from '../site';
@@ -25,8 +26,10 @@ export class ListGroup extends Component {
     site: PropTypes.object.isRequired,
     actions: PropTypes.object.isRequired,
     selected: PropTypes.number.isRequired,
+    unlocated: PropTypes.number,
     onSiteClick: PropTypes.func,
     onSiteMove: PropTypes.func,
+    onSitePose: PropTypes.func,
   };
 
   constructor(props) {
@@ -38,6 +41,7 @@ export class ListGroup extends Component {
       photos: 0,
       modify: -1,
       selected: this.props.selected || 0,
+      unlocated: this.props.unlocated || 0,
     };
     this.scrollMouseEnter = this.scrollMouseEnter.bind(this);
     this.scrollMouseLeave = this.scrollMouseLeave.bind(this);
@@ -48,7 +52,29 @@ export class ListGroup extends Component {
   }
 
   componentDidMount() {
+    //console.log("FK CDM",this.refs);
+    if (this.refs) {
+      const elem = this.refs['site-selector-' + this.state.selected];
+      if (elem && !isInViewPort(elem)) {
+        //console.log("FK CDM22",this.refs);
+        elem.scrollIntoView({ behavior: 'smooth' });
+      } else {
+        //console.log("FK CDM33",this.refs);
+      }
+    }
     this.props.actions.loadMore();
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    //console.log("FK CDU",this.state.selected,prevState.selected);
+    if (this.state.selected !== prevState.selected) {
+      if (this.refs) {
+        const elem = this.refs['site-selector-' + this.state.selected];
+        if (elem && !isInViewPort(elem)) {
+          elem.scrollIntoView({ behavior: 'smooth' });
+        }
+      }
+    }
   }
 
   scrollMouseEnter(id) {
@@ -82,6 +108,8 @@ export class ListGroup extends Component {
   }
 
   static getDerivedStateFromProps(props, state) {
+    //console.log("FK GDSFP",props.selected,state.selected);
+    console.log("FK GDSFP",props.selected, state.selected,state.causes);
     if (props.selected !== state.selected) {
       let documents = 0;
       if (props.selected === state.documents) {
@@ -100,17 +128,6 @@ export class ListGroup extends Component {
     return null;
   }
 
-  componentDidUpdate(prevProps, prevState) {
-    if (this.state.selected !== prevState.selected) {
-      if (this.refs) {
-        const elem = this.refs['site-selector-' + this.state.selected];
-        if (elem && !isInViewPort(elem)) {
-          elem.scrollIntoView({ behavior: 'smooth' });
-        }
-      }
-    }
-  }
-
   render() {
     let items = false;
     if (this.props.site.items.FreeAsso_Site) {
@@ -123,11 +140,13 @@ export class ListGroup extends Component {
         </div>
       );
     }
+    console.log("FK render liste ",this.state.selected,this.state.causes);
     return (
       <div className="site-list-group">
         <ul className="list-group">
           {items &&
             items.map(item => {
+              //console.log("FK render liste ",parseInt(item.id,10),this.state.selected,parseInt(this.state.causes,10),this.state.modify);
               return (
                 <li className="list-group-item" key={'listgroup-' + item.id}>
                   <HoverObserver
@@ -155,7 +174,7 @@ export class ListGroup extends Component {
                                 : 'scroll-invisible',
                             )}
                           >
-                            {this.props.onSiteClick && (
+                            {( this.props.onSiteClick && item.site_coord ) && (
                               <li>
                                 <div
                                   data-toggle="tooltip" 
@@ -169,7 +188,7 @@ export class ListGroup extends Component {
                                 </div>
                               </li>
                             )}
-                            {this.props.onSiteMove && (
+                            {( this.props.onSiteMove && item.site_coord ) && (
                               <li>
                                 <div
                                   data-toggle="tooltip" 
@@ -180,6 +199,20 @@ export class ListGroup extends Component {
                                   }}
                                 >
                                   <MapMoveIcon size={0.8} className="text-secondary inline-action" />
+                                </div>
+                              </li>
+                            )}
+                            {( this.props.onSitePose && !item.site_coord)  && (
+                              <li>
+                                <div
+                                  data-toggle="tooltip" 
+                                  title="Positionnement du site"
+                                  className="ml-2"
+                                  onClick={() => {
+                                    this.props.onSitePose(item.id, item);
+                                  }}
+                                >
+                                  <MapPoseIcon size={0.8} className="text-secondary inline-action" />
                                 </div>
                               </li>
                             )}
@@ -245,34 +278,37 @@ export class ListGroup extends Component {
                           <p>{item.site_address1}</p>
                           <p>
                             {item.site_cp} {item.site_town}
-                          </p>
+                          </p> 
+                          {this.state.selected === parseInt(item.id,10) && this.state.unlocated && (
+                            <p>- Site non localisé -</p>
+                          )}  
                         </div>
-                        {this.state.selected === item.id &&
-                          this.state.selected === this.state.documents && (
+                        {this.state.selected === parseInt(item.id,10) &&
+                          this.state.selected === parseInt(this.state.documents,10) && (
                             <div className="card-footer bg-transparent">
                               <p>Documents :</p>
                               <InlineMapDocuments />
                             </div>
                           )
                         }
-                        {this.state.selected === item.id &&
-                          this.state.selected === this.state.photos && (
+                        {this.state.selected === parseInt(item.id,10) &&
+                          this.state.selected === parseInt(this.state.photos,10) && (
                             <div className="card-footer bg-transparent">
                               <p>Photos :</p>
                               <InlineMapPhotos />
                             </div>
                           )
                         }
-                        {this.state.selected === item.id &&
-                          this.state.selected === this.state.causes && (
+                        {this.state.selected === parseInt(item.id,10) &&
+                          this.state.selected === parseInt(this.state.causes,10) && (
                             <div className="card-footer bg-transparent">
                               <InlineListCause site_id={item.id} />
                             </div>
                           )
-                        }
-                        {this.state.selected === item.id && this.state.selected === this.state.modify &&
+                        }  
+                        {this.state.selected === parseInt(item.id, 10) && this.state.selected === parseInt(this.state.modify,10) &&
                           <ModifySite modal={true} siteId={this.state.modify} onClose={this.onClose} />
-                        }
+                        }                   
                       </div>
                     </div>
                   </HoverObserver>
@@ -285,14 +321,12 @@ export class ListGroup extends Component {
   }
 }
 
-/* istanbul ignore next */
 function mapStateToProps(state) {
   return {
     site: state.site,
   };
 }
 
-/* istanbul ignore next */
 function mapDispatchToProps(dispatch) {
   return {
     actions: bindActionCreators({ ...actions }, dispatch),

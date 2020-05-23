@@ -5,16 +5,17 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as actions from './redux/actions';
 import Map from 'pigeon-maps';
+import Draggable from 'pigeon-draggable';
 import { buildModel, getJsonApi } from 'freejsonapi';
 import { propagateModel } from '../../common';
 import { loadMore as loadMoreSite, updateOne as updateOneSite } from '../site/redux/actions';
-import Draggable from 'pigeon-draggable';
 import Icon from '@mdi/react';
 import { Responsive } from 'freeassofront';
 import { mdiMagnifyMinus, mdiMagnifyPlus, mdiCrosshairsGps } from '@mdi/js';
 import mapselect from '../../images/mapselect.png';
 import { ListGroup } from '../site';
 import { SiteMarker } from './';
+import { modifySuccess, showErrors } from '../ui';
 
 const providers = {
   osm: (x, y, z) => {
@@ -69,6 +70,7 @@ export class PigeonMap extends Component {
       selected: 0,
       moved: false,
       scrollHover: 0,
+      location: false,
     };
     this.zoomIn = this.zoomIn.bind(this);
     this.zoomOut = this.zoomOut.bind(this);
@@ -78,8 +80,8 @@ export class PigeonMap extends Component {
     this.onMarkerClick = this.onMarkerClick.bind(this);
     this.onSiteClick = this.onSiteClick.bind(this);
     this.onSiteMove = this.onSiteMove.bind(this);
+    this.onSitePose = this.onSitePose.bind(this);
     this.localize = this.localize.bind(this);
-
   }
 
   componentDidMount() {
@@ -92,16 +94,30 @@ export class PigeonMap extends Component {
 
   static getDerivedStateFromProps(props, state) {
     let center = [49.096306, 6.160053];
-    if ((props.match.params.lat) && (props.match.params.lon)) {
-      const lat = parseFloat(props.match.params.lat);
-      const lon = parseFloat(props.match.params.lon);
-      if ((lat !== state.center.lat) && (lon !== state.center.lon)) {
-          center = [lat, lon];
+    let id = 0
+    let lat = center[0];
+    let lon = center[1];
+    let loc = false;
+    console.log("FK gDSFP",id,lat,lon);
+    if ((props.match.params.id) || ((props.match.params.lat) && (props.match.params.lon))) {
+      if (props.match.params.id) {
+        id = parseInt(props.match.params.id,10);
+      }
+      if ((props.match.params.lat) && (props.match.params.lon)) {
+        lat = parseFloat(props.match.params.lat);
+        lon = parseFloat(props.match.params.lon);
+      } else {
+        loc = true;
+      }
+      if ((id !== state.selected) || (lat !== state.center.lat) || (lon !== state.center.lon)) {
+        center = [lat, lon];
         return {            
           center: center,
+          selected: id,
+          unlocated: loc,
         };
       }
-    } else {                
+    } else {          
       if (props.home.geoCoord.lat !== state.center.lat && props.home.geoCoord.lon !== state.center.lon) {
         if (props.home.geoOn) {
           if (props.home.geoCoord) {
@@ -135,6 +151,7 @@ export class PigeonMap extends Component {
   }
 
   onDragEnd(anchor, item) {
+    console.log("DragEnd");
     item.site_coord = JSON.stringify({
       lat: anchor[0],
       lon: anchor[1],
@@ -147,40 +164,65 @@ export class PigeonMap extends Component {
     this.props.actions
       .updateOneSite(obj)
       .then(result => {
-        // @Todo propagate result to store
-        // propagateModel est ajouté aux actions en bas de document
+        modifySuccess();
         this.props.actions.propagateModel('FreeAsso_Site', result);
       })
       .catch(errors => {
-        // @todo display errors to fields
-        console.log(errors);
+         showErrors(this.props.intl, this.props.site.updateOneError);
       });
   }
 
   onClick({ event, latLng, pixel }) {
-    // @todo
+     console.log("onClick")
+    //console.log("FK click",latLng,pixel)
+    this.props.history.push('/pigeon-map/' + this.state.selected  + "/" + latLng[0] + "/" + latLng[1]);
   }
 
-  onMarkerClick({ event, anchor, payload }) {
-    this.setState({ selected: parseInt(payload, 10), center: anchor, moved: false });
+  onMarkerClick({ event, anchor, payload }) { 
+     console.log("onMarkerClick")
+    if (Array.isArray(anchor) && anchor.length >= 2) {
+      this.props.history.push('/pigeon-map/' + parseInt(payload, 10)  + "/" + anchor[0] + "/" + anchor[1]);
+    }
+    //this.setState({ selected: parseInt(payload, 10), center: anchor, moved: false });
   }
 
   onSiteClick(id, anchorCoord) {
+    console.log("onSiteClick")
     let coord = this.state.center || [49.096306, 6.160053];
     const json = JSON.parse(anchorCoord);
     if (json) {
       coord = [json.lat, json.lon];
     }
-    this.setState({ selected: id, center: coord, moved: false });
+    this.props.history.push('/pigeon-map/' + id  + "/" + coord[0] + "/" + coord[1]);
+    //this.setState({ selected: id, center: coord, moved: false });
   }
 
   onSiteMove(id, item) {
+    //console.log("onSiteMove")
     let coord = this.state.center || [49.096306, 6.160053];
     const json = JSON.parse(item.site_coord);
     if (json) {
       coord = [json.lat, json.lon];
     }
-    this.setState({ selected: id, center: coord, moved: item });
+    if (this.state.moved === item) {
+      this.setState({ moved: false });
+    } else {
+      this.setState({ moved: item });
+    }
+    this.props.history.push('/pigeon-map/' + id  + "/" + coord[0] + "/" + coord[1]);
+    
+    //this.setState({ selected: id, center: coord, moved: item });
+  }
+
+  onSitePose(id, item) {
+    //console.log("FK SitePOse",id,item.id);
+    let coord = this.state.center || [49.096306, 6.160053];
+    this.setState({
+      dragging: true,
+      selected: id,
+      moved: item,
+    });
+    this.props.history.push('/pigeon-map/' + id + "/" + coord[0] + "/" + coord[1]) ; 
   }
 
   render() {
@@ -188,7 +230,8 @@ export class PigeonMap extends Component {
     if (this.props.site.items.FreeAsso_Site) {
       items = buildModel(this.props.site.items, 'FreeAsso_Site');
     }
-    console.log('FK render map',this.state.center);
+    //console.log("FK render", parseInt(this.state.moved.id, 10)  === this.state.selected, this.state.moved.id ,this.state.selected, this.state.center  )
+    console.log("FK render", this.state.moved.id, this.state.selected);
     return (
       <div className="map-pigeon-map bg-light">
         <Responsive displayIn={['Laptop', 'Tablet']}>
@@ -218,7 +261,7 @@ export class PigeonMap extends Component {
                   }
                   return null;
                 })}
-              {this.state.moved && this.state.moved.id === this.state.selected && (
+              {this.state.moved && parseInt(this.state.moved.id, 10) === this.state.selected && (
                 <Draggable
                   anchor={this.state.center}
                   offset={[14, 30]}
@@ -252,8 +295,10 @@ export class PigeonMap extends Component {
           <div className="map-list-scroll">
             <ListGroup
               selected={this.state.selected}
+              unlocated={this.state.unlocated}
               onSiteClick={this.onSiteClick}
               onSiteMove={this.onSiteMove}
+              onSitePose={this.onSitePose}
             />
           </div>
         </Responsive>
@@ -321,8 +366,10 @@ export class PigeonMap extends Component {
           <div className="map-list-scroll-mobile">
             <ListGroup
               selected={this.state.selected}
+              unlocated={this.state.unlocated}
               onSiteClick={this.onSiteClick}
               onSiteMove={this.onSiteMove}
+              onSitePose={this.onSitePose}
             />
           </div>
         </Responsive>
@@ -331,7 +378,6 @@ export class PigeonMap extends Component {
   }
 }
 
-/* istanbul ignore next */
 function mapStateToProps(state) {
   return {
     home: state.home,
@@ -340,7 +386,6 @@ function mapStateToProps(state) {
   };
 }
 
-/* istanbul ignore next */
 function mapDispatchToProps(dispatch) {
   return {
     actions: bindActionCreators(

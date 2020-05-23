@@ -67,3 +67,6 @@ export { default as ColCheck } from './ColCheck';
 export { default as Up } from './Up';
 export { default as Down } from './Down';
 export { default as ZoomMap } from './ZoomMap';
+export { default as MenuClosed } from './MenuClosed';
+export { default as MenuOpened } from './MenuOpened';
+export { default as MapPose } from './MapPose';

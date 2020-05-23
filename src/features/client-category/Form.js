@@ -16,7 +16,7 @@ export default function Form(props) {
       className="m-5" 
       size="md"
       modal={true} 
-      title="Catégorie de client" 
+      title="Catégorie de personne" 
       onSubmit={handleSubmit} 
       onCancel={handleCancel}
       onClose={props.onClose}
