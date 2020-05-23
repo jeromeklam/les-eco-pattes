@@ -14,8 +14,10 @@ import { InputPicker as ClientInputPicker } from '../client';
 import { InputPicker as SiteInputPicker } from '../site';
 import { causeTypeAsOptions } from '../cause-type/functions.js';
 import { InputPicker as CauseInputPicker, sexSelect } from './';
-import { InlineDocuments } from '../cause';
+import { InlineDocuments, InlinePhotos, InlineCauses } from '../cause';
 import { InlineGrowths } from '../cause-growth';
+import { InlineMovements } from '../cause-movement';
+import { InlineSicknesses } from '../cause-sickness';
 
 let regPlaceholder = '';
 let caut_id = 0;
@@ -25,8 +27,12 @@ const tabs = [
   { key: '2', name: 'divers', label: 'Divers', shortcut: 'D', icon: 'misc' },
 ];
 const modifyTabs = [
-  { key: '3', name: 'documents', label: 'Documents', shortcut: 'E', icon: 'documents' },
-  { key: '4', name: 'croissance', label: 'Croissance', shortcut: 'E', icon: 'croissance' },
+  { key: '3', name: 'movements', label: 'Mouvements', shortcut: 'E', icon: 'movements' },
+  { key: '4', name: 'sicknesses', label: 'Maladies', shortcut: 'E', icon: 'sicknesses' },
+  { key: '5', name: 'croissance', label: 'Croissance', shortcut: 'E', icon: 'croissance' },
+  { key: '6', name: 'descendant', label: 'Déscendance', shortcut: 'E', icon: 'descendant' },
+  { key: '7', name: 'documents', label: 'Documents', shortcut: 'E', icon: 'documents' },
+  { key: '8', name: 'photos', label: 'Photos', shortcut: 'E', icon: 'photos' },
 ]
 
 export default function Form(props) {
@@ -243,10 +249,34 @@ export default function Form(props) {
         </div>
       )}
       {values.currentTab === '3' && (
-        <InlineDocuments cauId={values.id} />
+        <div className="border border-secondary rounded overflow-x-hidden">
+          <InlineMovements cause={values} />
+        </div>
       )}
       {values.currentTab === '4' && (
-        <InlineGrowths cause={values} />
+        <div className="border border-secondary rounded overflow-x-hidden">
+          <InlineSicknesses cause={values} />
+        </div>
+      )}
+      {values.currentTab === '5' && (
+        <div className="border border-secondary rounded overflow-x-hidden">
+          <InlineGrowths cause={values} />
+        </div>
+      )}
+      {values.currentTab === '6' && (
+        <div className="border border-secondary rounded overflow-x-hidden">
+          <InlineCauses mode="cause" cause={values} />
+        </div>
+      )}
+      {values.currentTab === '7' && (
+        <div className="border border-secondary rounded overflow-x-hidden">
+          <InlineDocuments cauId={values.id} />
+        </div>
+      )}
+      {values.currentTab === '8' && (
+        <div className="border border-secondary rounded overflow-x-hidden">
+          <InlinePhotos cauId={values.id} />
+        </div>
       )}
     </ResponsiveModalOrForm>
   );

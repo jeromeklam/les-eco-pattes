@@ -9,7 +9,7 @@ import { ResponsiveConfirm } from 'freeassofront';
 import { CenteredLoading3Dots } from '../ui';
 import FileIcon, { defaultStyles } from 'react-file-icon';
 import { DelOne as DelOneIcon, Download as DownloadIcon, Upload as UploadIcon } from '../icons';
-import { downloadCauseMediaBlob } from './';
+import { downloadCauseMediaBlob, getMedias } from './';
 import { downloadBlob } from '../ui';
 
 export class InlineDocuments extends Component {
@@ -31,25 +31,37 @@ export class InlineDocuments extends Component {
       cau_id: props.cauId || null,
       confirm: false,
       caum_id: 0,
+      items: [],
+      loading: true,
     };
     this.onDropFiles = this.onDropFiles.bind(this);
     this.onConfirmClose = this.onConfirmClose.bind(this);
     this.onConfirmDocument = this.onConfirmDocument.bind(this);
     this.onConfirm = this.onConfirm.bind(this);
     this.onDownload = this.onDownload.bind(this);
+    this.localLoadDocuments = this.localLoadDocuments.bind(this);
+  }
+
+  localLoadDocuments() {
+    this.setState({loading: true});
+    getMedias(this.state.cau_id, 'OTHER')
+      .then(result => {
+        this.setState({items: result, loading: false});
+      })
+    ;
   }
 
   componentDidMount() {
-    this.props.actions.loadDocuments(this.state.cau_id, true).then(result => {});
+    this.localLoadDocuments();
   }
 
   componentDidUpdate(prevProps, prevState) {
     if (prevState.cau_id !== this.state.cau_id) {
-      this.props.actions.loadDocuments(this.state.cau_id, true).then(result => {});
+      this.localLoadDocuments();
     }
   }
 
-  onDropFiles(item, acceptedFiles) {
+  onDropFiles(id, acceptedFiles) {
     const promises = acceptedFiles.map(file => {
       return new Promise((resolve, reject) => {
         const reader = new FileReader();
@@ -63,7 +75,7 @@ export class InlineDocuments extends Component {
           // Do whatever you want with the file contents
           const binaryStr = reader.result;
           this.props.actions
-            .uploadCauseMedia(0, item.id, binaryStr, file.name)
+            .uploadCauseMedia(0, id, binaryStr, file.name)
             .then(result => resolve(true));
         };
         reader.readAsDataURL(file);
@@ -71,7 +83,7 @@ export class InlineDocuments extends Component {
     });
     const reload = Promise.all(promises);
     reload.then(result => {
-      this.props.actions.loadDocuments(item.id, true);
+      this.localLoadDocuments();
     });
   }
 
@@ -95,16 +107,12 @@ export class InlineDocuments extends Component {
     const caum_id = this.state.caum_id;
     this.setState({ confirm: false, caum_id: 0 });
     this.props.actions.delCauseMedia(caum_id).then(result => {
-      const id = this.props.cause.currentItem.id;
-      this.props.actions.loadDocuments(id, true);
+      this.localLoadDocuments();
     });
   }
 
   render() {
-    let documents = [];
-    if (this.props.cause.documents.FreeAsso_CauseMedia) {
-      documents = buildModel(this.props.cause.documents, 'FreeAsso_CauseMedia');
-    }
+    let documents = this.state.items;
     return (
       <div>
         <div className="cause-inline-documents">
@@ -112,7 +120,7 @@ export class InlineDocuments extends Component {
             <CenteredLoading3Dots />
           ) : (
             <div className="row p-2 row-cols-1 row-cols-sm-2 row-cols-md-2 row-cols-lg-3">
-              {documents.map(document => {
+              {documents && documents.map(document => {
                 let content = <FileIcon type="document" size={80} {...defaultStyles.docx} />;
                 try {
                   const ext = document.caum_title.split('.').pop();
@@ -174,7 +182,7 @@ export class InlineDocuments extends Component {
                     ) : (
                       <Dropzone
                         onDrop={acceptedFiles => {
-                          this.onDropFiles(this.props.cause.currentItem, acceptedFiles);
+                          this.onDropFiles(this.state.cau_id, acceptedFiles);
                         }}
                       >
                         {({ getRootProps, getInputProps }) => (
@@ -197,7 +205,7 @@ export class InlineDocuments extends Component {
           show={this.state.confirm}
           onClose={this.onConfirmClose}
           onConfirm={() => {
-            this.onConfirm(this.props.cause.currentItem);
+            this.onConfirm(this.state.cau_id);
           }}
         />
       </div>

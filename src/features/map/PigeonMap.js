@@ -70,7 +70,6 @@ export class PigeonMap extends Component {
       selected: 0,
       moved: false,
       scrollHover: 0,
-      location: false,
     };
     this.zoomIn = this.zoomIn.bind(this);
     this.zoomOut = this.zoomOut.bind(this);
@@ -97,7 +96,6 @@ export class PigeonMap extends Component {
     let id = 0
     let lat = center[0];
     let lon = center[1];
-    let loc = false;
     console.log("FK gDSFP",id,lat,lon);
     if ((props.match.params.id) || ((props.match.params.lat) && (props.match.params.lon))) {
       if (props.match.params.id) {
@@ -106,15 +104,12 @@ export class PigeonMap extends Component {
       if ((props.match.params.lat) && (props.match.params.lon)) {
         lat = parseFloat(props.match.params.lat);
         lon = parseFloat(props.match.params.lon);
-      } else {
-        loc = true;
       }
       if ((id !== state.selected) || (lat !== state.center.lat) || (lon !== state.center.lon)) {
         center = [lat, lon];
         return {            
           center: center,
           selected: id,
-          unlocated: loc,
         };
       }
     } else {          
@@ -295,7 +290,6 @@ export class PigeonMap extends Component {
           <div className="map-list-scroll">
             <ListGroup
               selected={this.state.selected}
-              unlocated={this.state.unlocated}
               onSiteClick={this.onSiteClick}
               onSiteMove={this.onSiteMove}
               onSitePose={this.onSitePose}
@@ -366,7 +360,6 @@ export class PigeonMap extends Component {
           <div className="map-list-scroll-mobile">
             <ListGroup
               selected={this.state.selected}
-              unlocated={this.state.unlocated}
               onSiteClick={this.onSiteClick}
               onSiteMove={this.onSiteMove}
               onSitePose={this.onSitePose}

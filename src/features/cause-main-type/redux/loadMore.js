@@ -24,9 +24,26 @@ export function loadMore(args = {}, reload = false) {
       }
 
       const promise = new Promise((resolve, reject) => {
-        const params = {
+        let filters = getState().causeMainType.filters.asJsonApiObject()
+        let params = {
           page: { number: getState().causeMainType.page_number, size: getState().causeMainType.page_size },
+          ...filters
         };
+        let sort = '';
+        getState().causeMainType.sort.forEach(elt => {
+          let add = elt.col;
+          if (elt.way === 'down') {
+            add = '-' + add;
+          }
+          if (sort === '') {
+            sort = add;
+          } else {
+            sort = sort + ',' + add;
+          }
+        });
+        if (sort !== '') {
+          params.sort = sort;
+        }
         const addUrl = objectToQueryString(params);
         const doRequest = freeAssoApi.get('/v1/asso/cause_main_type' + addUrl, {});
         doRequest.then(

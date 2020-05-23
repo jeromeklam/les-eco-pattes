@@ -4,12 +4,12 @@ import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { getJsonApi } from 'freejsonapi';
-import { ResponsiveConfirm } from 'freeassofront';
+import { ResponsiveConfirm, HoverObserver } from 'freeassofront';
 import * as actions from './redux/actions';
 import { CenteredLoading3Dots, createSuccess, createError } from '../ui';
 import { propagateModel, intlDate } from '../../common';
 import { DelOne as DelOneIcon } from '../icons';
-import { InlineGrowthForm } from './';
+import { InlineGrowthForm, getGrowths } from './';
 
 export class InlineGrowths extends Component {
   static propTypes = {
@@ -30,23 +30,39 @@ export class InlineGrowths extends Component {
       confirm: false,
       grow_id: 0,
       cause: props.cause,
+      items: [],
+      loading: [],
+      emptyItem: null,
+      flipped: false,
     };
     this.onSubmit = this.onSubmit.bind(this);
     this.onConfirm = this.onConfirm.bind(this);
     this.onConfirmOpen = this.onConfirmOpen.bind(this);
     this.onConfirmClose = this.onConfirmClose.bind(this);
+    this.localLoadGrowths = this.localLoadGrowths.bind(this);
+    this.mouseLeave = this.mouseLeave.bind(this);
+    this.mouseEnter = this.mouseEnter.bind(this);
+  }
+
+  localLoadGrowths() {
+    this.setState({ loading: true });
+    getGrowths(this.state.cause.id).then(result => {
+      this.setState({ loading: false, items: result });
+    });
   }
 
   componentDidMount() {
-    this.props.actions.loadGrowths(this.state.cause, true).then(result => {});
-    if (!this.props.causeGrowth.emptyItem) {
-      this.props.actions.loadOne(0);
+    this.localLoadGrowths();
+    if (!this.state.emptyItem) {
+      this.props.actions.loadOne(0).then(result => {
+         this.setState({emptyItem: this.props.causeGrowth.emptyItem});
+      });
     }
   }
 
   componentDidUpdate(prevProps, prevState) {
     if (prevState.cause !== this.state.cause) {
-      this.props.actions.loadGrowths(this.state.cause, true).then(result => {});
+      this.localLoadGrowths();
     }
   }
 
@@ -60,7 +76,7 @@ export class InlineGrowths extends Component {
       .then(result => {
         createSuccess();
         this.props.actions.propagateModel('FreeAsso_CauseGrowth', result);
-        this.props.actions.loadGrowths(cause);
+        this.localLoadGrowths();
       })
       .catch(errors => {
         // @todo display errors to fields
@@ -73,10 +89,10 @@ export class InlineGrowths extends Component {
   }
 
   onConfirm(id) {
-    const { grow_id, cause } = this.state;
+    const { grow_id } = this.state;
     this.setState({ confirm: false, grow_id: 0 });
     this.props.actions.delOne(grow_id).then(result => {
-      this.props.actions.loadGrowths(cause);
+      this.localLoadGrowths();
     });
   }
 
@@ -84,14 +100,21 @@ export class InlineGrowths extends Component {
     this.setState({ confirm: false, grow_id: 0 });
   }
 
+  mouseLeave() {
+    this.setState({ flipped: false });
+  }
+
+  mouseEnter(id) {
+    this.setState({ flipped: id });
+  }
+
   render() {
     let counter = 0;
-    const growths = this.props.causeGrowth.growthsModels;
-    const emptyItem = this.props.causeGrowth.emptyItem;
-    if (this.props.causeGrowth.loadGrowthsPending) {
+    const growths = this.state.items;
+    if (this.state.loading) {
       return (
         <div className="cause-inline-mevements">
-          <CenteredLoading3Dots className="text-light" />
+          <CenteredLoading3Dots />
         </div>
       );
     } else {
@@ -107,7 +130,7 @@ export class InlineGrowths extends Component {
                   )}
                   key="cause-inline-growths"
                 >
-                  <div className="col-16">
+                  <div className="col-16 col-first">
                     <span>Date</span>
                   </div>
                   <div className="col-8">
@@ -120,41 +143,49 @@ export class InlineGrowths extends Component {
                     <span></span>
                   </div>
                 </div>
-                {emptyItem && (
-                  <InlineGrowthForm
-                    oddEven={counter++}
-                    cause={this.state.cause}
-                    item={emptyItem}
-                    errors={this.props.causeGrowth.createOneError}
-                    onSubmit={this.onSubmit}
-                  />
+                {this.state.emptyItem && (
+                  <div classname="row">
+                    <div classname="col-sm-36">
+                      <InlineGrowthForm
+                        oddEven={counter++}
+                        cause={this.state.cause}
+                        item={this.state.emptyItem}
+                        errors={this.props.causeGrowth.createOneError}
+                        onSubmit={this.onSubmit}
+                      />
+                    </div>
+                  </div>
                 )}
                 {growths &&
                   growths.length > 0 &&
                   growths.map(growth => (
-                    <div
-                      className={classnames(
-                        'row row-line',
-                        counter++ % 2 !== 1 ? 'row-odd' : 'row-even',
-                      )}
-                      key={growth.id}
-                    >
-                      <div className="col-16">{intlDate(growth.grow_ts)}</div>
-                      <div className="col-8">{growth.grow_weight}</div>
-                      <div className="col-8">{growth.grow_height}</div>
-                      <div className="col-4 text-right">
-                        <div className="btn-group btn-group-sm" role="group" aria-label="...">
-                          <div className="btn-group" role="group" aria-label="First group">
-                            <button className="btn btn-inline btn-warning">
-                              <DelOneIcon
-                                onClick={() => this.onConfirmOpen(growth.id)}
-                                className="text-light inline-action"
-                              />
-                            </button>
+                    <HoverObserver onMouseEnter={() => {this.mouseEnter(growth.id)}} onMouseLeave={this.mouseLeave}>
+                      <div
+                        className={classnames(
+                          'row row-line',
+                          counter++ % 2 !== 1 ? 'row-odd' : 'row-even',
+                        )}
+                        key={growth.id}
+                      >
+                        <div className="col-16 col-first">{intlDate(growth.grow_ts)}</div>
+                        <div className="col-8">{growth.grow_weight}</div>
+                        <div className="col-8">{growth.grow_height}</div>
+                        <div className="col-4 text-right">
+                        {this.state.flipped && this.state.flipped === growth.id && 
+                          <div className="btn-group btn-group-sm" role="group" aria-label="...">
+                            <div className="btn-group" role="group" aria-label="First group">
+                              <button className="btn btn-inline btn-warning">
+                                <DelOneIcon
+                                  onClick={() => this.onConfirmOpen(growth.id)}
+                                  className="text-light inline-action"
+                                />
+                              </button>
+                            </div>
                           </div>
+                        }
                         </div>
                       </div>
-                    </div>
+                    </HoverObserver>
                   ))}
               </div>
             </div>

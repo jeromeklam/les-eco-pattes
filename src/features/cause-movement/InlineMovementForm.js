@@ -21,7 +21,7 @@ export default function InlineMovementForm(props) {
   return (
     <form className="inline-form">
       <div className="row">
-        <div className="col-10">
+        <div className="col-10 col-first">
           <InputPickerSite
             label="De"
             key="from_site"

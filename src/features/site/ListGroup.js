@@ -26,7 +26,6 @@ export class ListGroup extends Component {
     site: PropTypes.object.isRequired,
     actions: PropTypes.object.isRequired,
     selected: PropTypes.number.isRequired,
-    unlocated: PropTypes.number,
     onSiteClick: PropTypes.func,
     onSiteMove: PropTypes.func,
     onSitePose: PropTypes.func,
@@ -41,7 +40,6 @@ export class ListGroup extends Component {
       photos: 0,
       modify: -1,
       selected: this.props.selected || 0,
-      unlocated: this.props.unlocated || 0,
     };
     this.scrollMouseEnter = this.scrollMouseEnter.bind(this);
     this.scrollMouseLeave = this.scrollMouseLeave.bind(this);
@@ -100,7 +98,7 @@ export class ListGroup extends Component {
   }
 
   onSiteModify(id) {
-    this.setState({ modify: id });
+    this.setState({ photos: 0, causes: 0, documents: 0, modify: id });
   }
 
   onClose() {
@@ -222,8 +220,7 @@ export class ListGroup extends Component {
                                 title="Documents"
                                 className="ml-2"
                                 onClick={() => {
-                                  this.props.onSiteClick &&
-                                    this.props.onSiteClick(item.id, item.site_coord);
+                                  //this.props.onSiteClick && this.props.onSiteClick(item.id, item.site_coord);
                                   this.onSiteDocuments(item.id);
                                 }}
                               >
@@ -236,8 +233,7 @@ export class ListGroup extends Component {
                                 title="Photos"
                                 className="ml-2"
                                 onClick={() => {
-                                  this.props.onSiteClick &&
-                                    this.props.onSiteClick(item.id, item.site_coord);
+                                  //this.props.onSiteClick && this.props.onSiteClick(item.id, item.site_coord);
                                   this.onSitePhotos(item.id);
                                 }}
                               >
@@ -250,8 +246,7 @@ export class ListGroup extends Component {
                                 title="Animaux"
                                 className="ml-2"
                                 onClick={() => {
-                                  this.props.onSiteClick &&
-                                    this.props.onSiteClick(item.id, item.site_coord);
+                                  // this.props.onSiteClick && this.props.onSiteClick(item.id, item.site_coord);
                                   this.onSiteCauses(item.id);
                                 }}
                               >
@@ -264,8 +259,7 @@ export class ListGroup extends Component {
                                 title="Modifier"
                                 className="ml-2"
                                 onClick={() => {
-                                  this.props.onSiteClick &&
-                                    this.props.onSiteClick(item.id, item.site_coord);
+                                  //this.props.onSiteClick && this.props.onSiteClick(item.id, item.site_coord);
                                   this.onSiteModify(item.id);
                                 }}
                               >
@@ -279,9 +273,9 @@ export class ListGroup extends Component {
                           <p>
                             {item.site_cp} {item.site_town}
                           </p> 
-                          {this.state.selected === parseInt(item.id,10) && this.state.unlocated && (
-                            <p>- Site non localisé -</p>
-                          )}  
+                          {!item.site_coord && (
+                            <p className="text-warning">{'- '}Site non localisé{' -'}</p>
+                          )}
                         </div>
                         {this.state.selected === parseInt(item.id,10) &&
                           this.state.selected === parseInt(this.state.documents,10) && (
@@ -291,14 +285,12 @@ export class ListGroup extends Component {
                             </div>
                           )
                         }
-                        {this.state.selected === parseInt(item.id,10) &&
-                          this.state.selected === parseInt(this.state.photos,10) && (
-                            <div className="card-footer bg-transparent">
-                              <p>Photos :</p>
-                              <InlineMapPhotos />
-                            </div>
-                          )
-                        }
+                        {parseInt(this.state.photos,10) === parseInt(item.id,10) && (
+                          <div className="card-footer bg-transparent">
+                            <p>Photos :</p>
+                            <InlineMapPhotos site_id={item.id}/>
+                          </div>
+                        )}
                         {this.state.selected === parseInt(item.id,10) &&
                           this.state.selected === parseInt(this.state.causes,10) && (
                             <div className="card-footer bg-transparent">

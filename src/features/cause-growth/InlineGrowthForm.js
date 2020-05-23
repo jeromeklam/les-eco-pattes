@@ -20,7 +20,7 @@ export default function InlineGrowthForm(props) {
   );
   return (
     <div className={classnames('row row-line row-new', props.oddEven % 2 !== 1 ? 'row-odd' : 'row-even')}>
-      <div className="col-16 my-auto">
+      <div className="col-16 my-auto col-first">
         <InputDate
           label=""
           name="grow_ts"

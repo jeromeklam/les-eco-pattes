@@ -9,8 +9,7 @@ import useForm from '../ui/useForm';
 import { siteTypeAsOptions } from '../site-type/functions.js';
 import { InputPicker as ClientInputPicker } from '../client';
 import { InputPicker as SiteInputPicker, InlinePhotos, InlineDocuments } from '../site';
-
-
+import { InlineCauses } from '../cause';
 
 let regPlaceholder = '';
 let sitt_id = 0;
@@ -40,8 +39,9 @@ const tabs = [
   }
 ];
 const modifyTabs = [
-  { key: '5', name: 'photos', label: 'Photos', shortcut: 'E', icon: <SettingsIcon /> },
+  { key: '5', name: 'causes', label: 'Animaux', shortcut: 'E', icon: <SettingsIcon /> },
   { key: '6', name: 'documents', label: 'Documents', shortcut: 'E', icon: <SettingsIcon /> },
+  { key: '7', name: 'photos', label: 'Photos', shortcut: 'E', icon: <SettingsIcon /> },
 ]
 
 const afterChange = (name, item) => {
@@ -321,10 +321,19 @@ export default function Form(props) {
         </div>
       )}
       {values.currentTab === '5' && (
-        <InlinePhotos siteId={values.id} />
+        <div className="border border-secondary rounded overflow-x-hidden">
+          <InlineCauses mode="site" siteId={values.id} />
+        </div>
       )}
       {values.currentTab === '6' && (
-        <InlineDocuments siteId={values.id} />
+        <div className="border border-secondary rounded overflow-x-hidden">
+          <InlineDocuments siteId={values.id} />
+        </div>
+      )}
+      {values.currentTab === '7' && (
+        <div className="border border-secondary rounded overflow-x-hidden">
+          <InlinePhotos siteId={values.id} />
+        </div>
       )}
     </ResponsiveModalOrForm>
   );

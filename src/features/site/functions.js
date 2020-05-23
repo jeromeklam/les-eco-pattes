@@ -1,5 +1,36 @@
-import { buildModel } from 'freejsonapi';
+import { buildModel, objectToQueryString, jsonApiNormalizer } from 'freejsonapi';
 import { freeAssoApi } from '../../common';
+
+/**
+ *
+ */
+export const getMedias = (site_id, sitm_type) => {
+  const promise = new Promise((resolve, reject) => {
+    const filter = {
+      filter: {
+        site_id: site_id,
+        sitm_type: sitm_type,
+      }
+    }
+    const addUrl = objectToQueryString(filter);
+    const doRequest = freeAssoApi.get('/v1/asso/site_media' + addUrl, {});
+    doRequest.then(
+      res => {
+        if (res.data && res.data.data) {
+          const list = jsonApiNormalizer(res.data);
+          const models = buildModel(list, 'FreeAsso_SiteMedia');
+          resolve(models);
+        } else {
+          resolve([]);
+        }
+      },
+      err => {
+        reject(err);
+      },
+    );
+  });
+  return promise;
+};
 
 /**
  *

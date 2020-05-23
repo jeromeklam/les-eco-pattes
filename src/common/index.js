@@ -74,6 +74,16 @@ export function modelsToSelect(models, value, label) {
       const oneElem = elems[oneKey];
       arr.push({ value: oneElem.id, label: oneElem.attributes[label] });
     });
+    arr.sort(function(a, b) {
+      if (a.label.toUpperCase() > b.label.toUpperCase()) {
+        return 1;
+      } else {
+        if (a.label.toUpperCase() < b.label.toUpperCase()) {
+          return -1;
+        }
+      }
+      return 0;
+    });
   }
   return arr;
 }

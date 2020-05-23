@@ -23,7 +23,7 @@ import { InlineMovements } from '../cause-movement';
 import { InlineSicknesses } from '../cause-sickness';
 import { InlineGrowths } from '../cause-growth';
 import {
-  InlineDescendants,
+  InlineCauses,
   InlinePhotos,
   Create,
   Modify,
@@ -43,12 +43,8 @@ export class List extends Component {
     super(props);
     this.state = {
       timer: null,
-      growthsCause: 0,
-      movementsCause: 0,
-      documentsCause: 0,
-      descendantsCause: 0,
-      sicknessesCause: 0,
-      photosCause: 0,
+      item: null,
+      mode: false,
       cauId: -1,
     };
     this.onCreate = this.onCreate.bind(this);
@@ -61,13 +57,7 @@ export class List extends Component {
     this.onQuickSearch = this.onQuickSearch.bind(this);
     this.onSetFiltersAndSort = this.onSetFiltersAndSort.bind(this);
     this.onUpdateSort = this.onUpdateSort.bind(this);
-    this.onOpenPhoto = this.onOpenPhoto.bind(this);
-    this.onListDocument = this.onListDocument.bind(this);
-    this.onListMovement = this.onListMovement.bind(this);
-    this.onListGrowth = this.onListGrowth.bind(this);
-    this.onListSickness = this.onListSickness.bind(this);
-    this.onListDescendant = this.onListDescendant.bind(this);
-    this.onListPhoto = this.onListPhoto.bind(this);
+    this.onSelectList = this.onSelectList.bind(this);
     this.onClose = this.onClose.bind(this);
   }
 
@@ -80,15 +70,11 @@ export class List extends Component {
   }
 
   onGetOne(id) {
-    this.setState({ cauId: id });
+    this.setState({ cauId: id, mode: false, item: null });
   }
 
   onClose() {
     this.setState({ cauId: -1 });
-  }
-
-  onOpenPhoto(id) {
-    this.props.history.push('/cause/modify/' + id);
   }
 
   onDelOne(id) {
@@ -107,150 +93,12 @@ export class List extends Component {
     this.props.actions.onSelect(id);
   }
 
-  onListDocument(obj) {
-    const { id } = obj;
-    const { documentsCause } = this.state;
-    if (documentsCause === id) {
-      this.setState({
-        growthsCause: 0,
-        movementsCause: 0,
-        documentsCause: 0,
-        descendantsCause: 0,
-        sicknessesCause: 0,
-        photosCause: 0,
-      });
+  onSelectList(obj, list) {
+    const { item, mode } = this.state;
+    if (item && item.id === obj.id && mode === list) {
+      this.setState({ mode: false, item: null });
     } else {
-      this.setState({
-        growthsCause: 0,
-        movementsCause: 0,
-        documentsCause: id,
-        descendantsCause: 0,
-        sicknessesCause: 0,
-        photosCause: 0,
-      });
-    }
-  }
-
-  onListMovement(obj) {
-    const { id } = obj;
-    const { movementsCause } = this.state;
-    if (movementsCause === id) {
-      this.setState({
-        growthsCause: 0,
-        movementsCause: 0,
-        documentsCause: 0,
-        descendantsCause: 0,
-        sicknessesCause: 0,
-        photosCause: 0,
-      });
-    } else {
-      this.props.actions.loadMovements(obj, true).then(result => {});
-      this.setState({
-        growthsCause: 0,
-        movementsCause: id,
-        documentsCause: 0,
-        descendantsCause: 0,
-        sicknessesCause: 0,
-        photosCause: 0,
-      });
-    }
-  }
-
-  onListGrowth(obj) {
-    const { id } = obj;
-    const { growthsCause } = this.state;
-    if (growthsCause === id) {
-      this.setState({
-        growthsCause: 0,
-        movementsCause: 0,
-        documentsCause: 0,
-        descendantsCause: 0,
-        sicknessesCause: 0,
-        photosCause:0 ,
-      });
-    } else {
-      this.setState({
-        growthsCause: id,
-        movementsCause: 0,
-        documentsCause: 0,
-        descendantsCause: 0,
-        sicknessesCause: 0,
-        photosCause: 0,
-      });
-    }
-  }
-
-  onListDescendant(obj) {
-    const { id } = obj;
-    const { descendantsCause } = this.state;
-    if (descendantsCause === id) {
-      this.setState({
-        growthsCause: 0,
-        movementsCause: 0,
-        documentsCause: 0,
-        descendantsCause: 0,
-        sicknessesCause: 0,
-        photosCause: 0,
-      });
-    } else {
-      this.props.actions.loadDescendants(obj, true).then(result => {});
-      this.setState({
-        growthsCause: 0,
-        movementsCause: 0,
-        documentsCause: 0,
-        descendantsCause: id,
-        sicknessesCause: 0,
-        photosCause: 0,
-      });
-    }
-  }
-
-  onListSickness(obj) {
-    const { id } = obj;
-    const { sicknessesCause } = this.state;
-    if (sicknessesCause === id) {
-      this.setState({
-        growthsCause: 0,
-        movementsCause: 0,
-        documentsCause: 0,
-        descendantsCause: 0,
-        sicknessesCause: 0,
-        photosCause: 0,
-      });
-    } else {
-      this.props.actions.loadSicknesses(obj, true).then(result => {});
-      this.setState({
-        growthsCause: 0,
-        movementsCause: 0,
-        documentsCause: 0,
-        descendantsCause: 0,
-        sicknessesCause: id,
-        photosCause: 0,
-      });
-    }
-  }
-
-  onListPhoto(obj) {    
-    const { id } = obj;
-    const { photosCause } = this.state;
-    if (photosCause === id) {
-      this.setState({ 
-        growthsCause: 0,
-        movementsCause: 0,
-        documentsCause: 0,
-        descendantsCause: 0,
-        sicknessesCause: 0,
-        photosCause: 0,
-      });
-    } else {
-      this.setState({ 
-        growthsCause: 0,
-        movementsCause: 0,
-        documentsCause: 0,
-        descendantsCause: 0,
-        sicknessesCause: 0,
-        photosCause: id,
-      });
+      this.setState({ mode: list, item: obj });
     }
   }
 
@@ -348,40 +196,34 @@ export class List extends Component {
     let inlineComponent = null;
     let id = null;
     let current = null;
-    if (this.state.movementsCause > 0) {
-      id = this.state.movementsCause;
-      current = buildModel(this.props.cause.items, 'FreeAsso_Cause', id);
-      inlineComponent = <InlineMovements cause={current} />;
-    } else {
-      if (this.state.documentsCause > 0) {
-        id = this.state.documentsCause;
-        current = buildModel(this.props.cause.items, 'FreeAsso_Cause', id);
-        inlineComponent = <InlineDocuments cauId={id} cause={current} />;
-      } else {
-        if (this.state.growthsCause > 0) {
-          id = this.state.growthsCause;
-          current = buildModel(this.props.cause.items, 'FreeAsso_Cause', id);
-          inlineComponent = <InlineGrowths cause={current} />;
-        } else {
-          if (this.state.descendantsCause > 0) {
-            id = this.state.descendantsCause;
-            current = buildModel(this.props.cause.items, 'FreeAsso_Cause', id);
-            inlineComponent = <InlineDescendants current={current} />;
-          } else {
-            if (this.state.sicknessesCause > 0) {
-              id = this.state.sicknessesCause;
-              current = buildModel(this.props.cause.items, 'FreeAsso_Cause', id);
-              inlineComponent = <InlineSicknesses cause={current} />;
-            } else {
-              if (this.state.photosCause > 0) {
-                id = this.state.photosCause;
-                current = buildModel(this.props.cause.items, 'FreeAsso_Cause', id);
-                inlineComponent = <InlinePhotos cauId={id} cause={current} />;
-              }
-            }
-          }
-        }
-      }
+    switch (this.state.mode) {
+      case 'document':
+        id = this.state.item.id;
+        inlineComponent = <InlineDocuments cauId={this.state.item.id} />;
+        break;
+      case 'photo':
+        id = this.state.item.id;
+        inlineComponent = <InlinePhotos cauId={this.state.item.id} />;
+        break;
+      case 'movement':
+        id = this.state.item.id;
+        inlineComponent = <InlineMovements cause={this.state.item} />;
+        break;
+      case 'growth':
+        id = this.state.item.id;
+        inlineComponent = <InlineGrowths cause={this.state.item} />;
+        break;
+      case 'descendant':
+        id = this.state.item.id;
+        inlineComponent = <InlineCauses mode="cause" cause={this.state.item} />;
+        break;
+      case 'sickness':
+        id = this.state.item.id;
+        inlineComponent = <InlineSicknesses cause={this.state.item} />;
+        break;
+      default:
+        id = 0;
+        break;
     }
     const { selected } = this.props.cause;
     return (
