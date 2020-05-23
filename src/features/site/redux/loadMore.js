@@ -84,7 +84,7 @@ export function reducer(state, action) {
         loadMoreFinish: false,
         items: [],
         page_number: 1,
-        page_size: process.env.REACT_APP_PAGE_SIZE,
+        page_size: 999999,
       };
 
     case SITE_LOAD_MORE_BEGIN:

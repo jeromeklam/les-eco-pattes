@@ -13,7 +13,7 @@ import {
   View as ViewIcon,
   Upload as UploadIcon,
 } from '../icons';
-import { downloadCauseMediaBlob } from './';
+import { downloadCauseMediaBlob, getMedias } from './';
 import { downloadBlob, ImageModal } from '../ui';
 
 export class InlinePhotos extends Component {
@@ -23,8 +23,8 @@ export class InlinePhotos extends Component {
   };
 
   static getDerivedStateFromProps(props, state) {
-    if (props.causeId !== state.cause_id) {
-      return({cause_id: props.causeId});
+    if (props.cauId !== state.cause_id) {
+      return({cause_id: props.cauId});
     }
     return null;
   }
@@ -38,6 +38,8 @@ export class InlinePhotos extends Component {
       view: false,
       blob: false,
       item: null,
+      items: [],
+      loading: true,
     };
     this.onDropFiles = this.onDropFiles.bind(this);
     this.onConfirmClose = this.onConfirmClose.bind(this);
@@ -46,20 +48,29 @@ export class InlinePhotos extends Component {
     this.onDownload = this.onDownload.bind(this);
     this.onView = this.onView.bind(this);
     this.onCloseView = this.onCloseView.bind(this);
+    this.localLoadPhotos = this.localLoadPhotos.bind(this);
+  }
+
+  localLoadPhotos() {
+    this.setState({loading: true});
+    getMedias(this.state.cause_id, 'PHOTO')
+      .then(result => {
+        this.setState({items: result, loading: false});
+      })
+    ;
   }
 
   componentDidMount() {
-    console.log("FK CDM", this.state);
-    this.props.actions.loadPhotos(this.state.cause_id, true).then(result => {});
+    this.localLoadPhotos();
   }
 
   componentDidUpdate(prevProps, prevState) {
     if (prevState.cause_id !== this.state.cause_id) {
-      this.props.actions.loadPhotos(this.state.cause_id, true).then(result => {});
+      this.localLoadPhotos();
     }
   }
 
-  onDropFiles(item, acceptedFiles) {
+  onDropFiles(id, acceptedFiles) {
     const promises = acceptedFiles.map(file => {
       return new Promise((resolve, reject) => {
         const reader = new FileReader();
@@ -73,7 +84,7 @@ export class InlinePhotos extends Component {
           // Do whatever you want with the file contents
           const binaryStr = reader.result;
           this.props.actions
-            .uploadCauseMedia(0, item.id, binaryStr, file.name)
+            .uploadCauseMedia(0, id, binaryStr, file.name)
             .then(result => resolve(true));
         };
         reader.readAsDataURL(file);
@@ -81,7 +92,7 @@ export class InlinePhotos extends Component {
     });
     const reload = Promise.all(promises);
     reload.then(result => {
-      this.props.actions.loadPhotos(item.id, true);
+      this.localLoadPhotos();
     });
   }
 
@@ -119,24 +130,20 @@ export class InlinePhotos extends Component {
     const caum_id = this.state.caum_id;
     this.setState({ confirm: false, caum_id: 0 });
     this.props.actions.delCauseMedia(caum_id).then(result => {
-      const id = this.props.cause.currentItem.id;
-      this.props.actions.loadPhotos(id, true);
+      this.localLoadPhotos();
     });
   }
 
   render() {
-    let photos = [];
-    if (this.props.cause.photos.FreeAsso_CauseMedia) {
-      photos = buildModel(this.props.cause.photos, 'FreeAsso_CauseMedia');
-    }
+    const photos = this.state.items;
     return (
       <div>
         <div className="cause-inline-photos">
-          {this.props.cause.loadPhotosPending ? (
+          {this.state.loading ? (
             <CenteredLoading3Dots />
           ) : (
             <div className="row p-2 row-cols-1 row-cols-sm-2 row-cols-md-2 row-cols-lg-3">
-              {photos.map(photo => {
+              {photos && photos.map(photo => {
                 let img = '';
                 try {
                   if (photo.caum_short_blob) {
@@ -206,7 +213,7 @@ export class InlinePhotos extends Component {
                     ) : (
                       <Dropzone
                         onDrop={acceptedFiles => {
-                          this.onDropFiles(this.props.cause.currentItem, acceptedFiles);
+                          this.onDropFiles(this.state.cause_id, acceptedFiles);
                         }}
                       >
                         {({ getRootProps, getInputProps }) => (

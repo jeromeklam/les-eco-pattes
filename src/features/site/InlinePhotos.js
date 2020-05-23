@@ -13,7 +13,7 @@ import {
   View as ViewIcon,
   Upload as UploadIcon,
 } from '../icons';
-import { downloadSiteMediaBlob } from './';
+import { downloadSiteMediaBlob, getMedias } from './';
 import { downloadBlob, ImageModal } from '../ui';
 
 export class InlinePhotos extends Component {
@@ -38,6 +38,8 @@ export class InlinePhotos extends Component {
       view: false,
       blob: false,
       item: null,
+      items: [],
+      loading: true,
     };
     this.onDropFiles = this.onDropFiles.bind(this);
     this.onConfirmClose = this.onConfirmClose.bind(this);
@@ -46,19 +48,29 @@ export class InlinePhotos extends Component {
     this.onDownload = this.onDownload.bind(this);
     this.onView = this.onView.bind(this);
     this.onCloseView = this.onCloseView.bind(this);
+    this.localLoadPhotos = this.localLoadPhotos.bind(this);
   }
 
-  componentDidMount() { 
-    this.props.actions.loadPhotos(this.state.site_id, true).then(result => {});
+  localLoadPhotos() {
+    this.setState({loading: true});
+    getMedias(this.state.site_id, 'PHOTO')
+      .then(result => {
+        this.setState({items: result, loading: false});
+      })
+    ;
+  }
+
+  componentDidMount() {
+    this.localLoadPhotos();
   }
 
   componentDidUpdate(prevProps, prevState) {
     if (prevState.site_id !== this.state.site_id) {
-      this.props.actions.loadPhotos(this.state.site_id, true).then(result => {});
+      this.localLoadPhotos();
     }
   }
 
-  onDropFiles(item, acceptedFiles) {
+  onDropFiles(id, acceptedFiles) {
     const promises = acceptedFiles.map(file => {
       return new Promise((resolve, reject) => {
         const reader = new FileReader();
@@ -72,7 +84,7 @@ export class InlinePhotos extends Component {
           // Do whatever you want with the file contents
           const binaryStr = reader.result;
           this.props.actions
-            .uploadSiteMedia(0, item.id, binaryStr, file.name)
+            .uploadSiteMedia(0, id, binaryStr, file.name)
             .then(result => resolve(true));
         };
         reader.readAsDataURL(file);
@@ -80,7 +92,7 @@ export class InlinePhotos extends Component {
     });
     const reload = Promise.all(promises);
     reload.then(result => {
-      this.props.actions.loadPhotos(item.id, true);
+      this.localLoadPhotos();
     });
   }
 
@@ -118,20 +130,16 @@ export class InlinePhotos extends Component {
     const sitm_id = this.state.sitm_id;
     this.setState({ confirm: false, sitm_id: 0 });
     this.props.actions.delSiteMedia(sitm_id).then(result => {
-      const id = this.props.site.currentItem.id;
-      this.props.actions.loadPhotos(id, true);
+      this.localLoadPhotos();
     });
   }
 
   render() {
-    let photos = [];
-    if (this.props.site.photos.FreeAsso_SiteMedia) {
-      photos = buildModel(this.props.site.photos, 'FreeAsso_SiteMedia');
-    }
+    let photos = this.state.items;
     return (
       <div>
         <div className="site-inline-photos">
-          {this.props.site.loadPhotosPending ? (
+          {this.state.loading ? (
             <CenteredLoading3Dots />
           ) : (
             <div className="row p-2 row-cols-1 row-cols-sm-2 row-cols-md-2 row-cols-lg-3">
@@ -205,7 +213,7 @@ export class InlinePhotos extends Component {
                     ) : (
                       <Dropzone
                         onDrop={acceptedFiles => {
-                          this.onDropFiles(this.props.site.currentItem, acceptedFiles);
+                          this.onDropFiles(this.state.site_id, acceptedFiles);
                         }}
                       >
                         {({ getRootProps, getInputProps }) => (

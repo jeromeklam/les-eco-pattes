@@ -17,8 +17,8 @@ import {
   Search as SearchIcon,
 } from '../icons';
 import { deleteSuccess, showErrors } from '../ui';
+import { InlineCauses } from '../cause';
 import {
-  InlineCauses,
   InlinePhotos,
   InlineDocuments,
   getGlobalActions,
@@ -70,11 +70,11 @@ export class List extends Component {
   }
 
   onCreate(event) {
-    this.setState({ siteId: 0 });
+    this.setState({ animalsSite: 0, photosSite: 0, documentsSite: 0, siteId: 0 });
   }
 
   onGetOne(id) {
-    this.setState({ siteId: id });
+    this.setState({ animalsSite: 0, photosSite: 0, documentsSite: 0, siteId: id });
   }
 
   onClose() {
@@ -100,7 +100,6 @@ export class List extends Component {
     if (animalsSite === id) {
       this.setState({ animalsSite: 0, photosSite: 0, documentsSite: 0 });
     } else {
-      this.props.actions.loadCauses(id, true).then(result => {});
       this.setState({ animalsSite: id, photosSite: 0, documentsSite: 0 });
     }
   }
@@ -202,6 +201,7 @@ export class List extends Component {
   render() {
     // Les des items à afficher avec remplissage progressif
     let items = [];
+        console.log(this.props.site.items);
     if (this.props.site.items.FreeAsso_Site) {
       items = buildModel(this.props.site.items, 'FreeAsso_Site');
     }
@@ -209,15 +209,15 @@ export class List extends Component {
     let inlineComponent = null;
     let id = null;
     if (this.state.photosSite > 0) {
-      inlineComponent = <InlinePhotos siteId={this.state.photosSite}/>;
+      inlineComponent = <InlinePhotos siteId={this.state.photosSite} />;
       id = this.state.photosSite;
     } else {
       if (this.state.animalsSite > 0) {
-        inlineComponent = <InlineCauses />;
+        inlineComponent = <InlineCauses mode="site" siteId={this.state.animalsSite} />;
         id = this.state.animalsSite;
       } else {
         if (this.state.documentsSite > 0) {
-          inlineComponent = <InlineDocuments siteId={this.state.documentsSite}/>;
+          inlineComponent = <InlineDocuments siteId={this.state.documentsSite} />;
           id = this.state.documentsSite;
         }
       }

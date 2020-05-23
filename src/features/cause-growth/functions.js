@@ -4,21 +4,21 @@ import { freeAssoApi } from '../../common';
 /**
  *
  */
-export const getMovements = (cau_id) => {
+export const getGrowths = (cau_id) => {
   const promise = new Promise((resolve, reject) => {
     const filter = {
       filter: {
         cau_id: cau_id,
       },
-      sort: '-camv_ts'
+      sort: '-grow_ts'
     }
     const addUrl = objectToQueryString(filter);
-    const doRequest = freeAssoApi.get('/v1/asso/cause_movement' + addUrl, {});
+    const doRequest = freeAssoApi.get('/v1/asso/cause_growth' + addUrl, {});
     doRequest.then(
       res => {
         if (res.data && res.data.data) {
           const list = jsonApiNormalizer(res.data);
-          const models = buildModel(list, 'FreeAsso_CauseMovement');
+          const models = buildModel(list, 'FreeAsso_CauseGrowth');
           resolve(models);
         } else {
           resolve([]);
@@ -30,21 +30,4 @@ export const getMovements = (cau_id) => {
     );
   });
   return promise;
-};
-
-/**
- * 
- */
-export const statusLabel = (code) => {
-  switch (code) {
-    case 'OK': {
-      return 'Effectué';
-    }
-    case 'WAIT': {
-      return 'A valider';
-    }
-    default: {
-      return 'Autre';
-    }
-  }
 };

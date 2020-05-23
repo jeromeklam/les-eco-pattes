@@ -1,4 +1,73 @@
+import { buildModel, objectToQueryString, jsonApiNormalizer } from 'freejsonapi';
 import { freeAssoApi } from '../../common';
+
+/**
+ *
+ */
+export const getMedias = (cause_id, caum_type) => {
+  const promise = new Promise((resolve, reject) => {
+    const filter = {
+      filter: {
+        cau_id: cause_id,
+        caum_type: caum_type,
+      }
+    }
+    const addUrl = objectToQueryString(filter);
+    const doRequest = freeAssoApi.get('/v1/asso/cause_media' + addUrl, {});
+    doRequest.then(
+      res => {
+        if (res.data && res.data.data) {
+          const list = jsonApiNormalizer(res.data);
+          const models = buildModel(list, 'FreeAsso_CauseMedia');
+          resolve(models);
+        } else {
+          resolve([]);
+        }
+      },
+      err => {
+        reject(err);
+      },
+    );
+  });
+  return promise;
+};
+
+/**
+ *
+ */
+export const getCauses = (mode, site_id, cause) => {
+  const promise = new Promise((resolve, reject) => {
+    const filter = {
+      filter: {}
+    };
+    if (mode === 'site') {
+      filter.filter.site_id = site_id;
+    } else {
+      if (cause.cau_sex === 'M') {
+        filter.filter['parent1.cau_id'] = cause.id;
+      } else {
+        filter.filter['parent2.cau_id'] = cause.id;
+      }
+    }
+    const addUrl = objectToQueryString(filter);
+    const doRequest = freeAssoApi.get('/v1/asso/cause' + addUrl, {});
+    doRequest.then(
+      res => {
+        if (res.data && res.data.data) {
+          const list = jsonApiNormalizer(res.data);
+          const models = buildModel(list, 'FreeAsso_Cause');
+          resolve(models);
+        } else {
+          resolve([]);
+        }
+      },
+      err => {
+        reject(err);
+      },
+    );
+  });
+  return promise;
+};
 
 /**
  *

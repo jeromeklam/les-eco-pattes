@@ -3,14 +3,14 @@ import classnames from 'classnames';
 import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { buildModel, getJsonApi } from 'freejsonapi';
+import { getJsonApi } from 'freejsonapi';
 import * as actions from './redux/actions';
-import { ResponsiveConfirm } from 'freeassofront';
+import { ResponsiveConfirm, HoverObserver } from 'freeassofront';
 import { CenteredLoading3Dots, createSuccess, createError } from '../ui';
 import { InlineMovementForm } from './';
 import { propagateModel, intlDate } from '../../common';
 import { DelOne as DelOneIcon, SimpleValid as SimpleValidIcon } from '../icons';
-import { statusLabel } from './';
+import { statusLabel, getMovements } from './';
 
 export class InlineMovements extends Component {
   static propTypes = {
@@ -32,18 +32,41 @@ export class InlineMovements extends Component {
       valid: false,
       camv_id: 0,
       cause: props.cause,
+      emptyItem: null,
+      items: [],
+      loading: true,
+      flipped: false,
     };
     this.onSubmit = this.onSubmit.bind(this);
     this.onConfirm = this.onConfirm.bind(this);
     this.onConfirmMovement = this.onConfirmMovement.bind(this);
     this.onConfirmValidation = this.onConfirmValidation.bind(this);
     this.onConfirmClose = this.onConfirmClose.bind(this);
+    this.localLoadMovements = this.localLoadMovements.bind(this);
     this.onValid = this.onValid.bind(this);
+    this.mouseLeave = this.mouseLeave.bind(this);
+    this.mouseEnter = this.mouseEnter.bind(this);
+  }
+
+  localLoadMovements() {
+    this.setState({ loading: true });
+    getMovements(this.state.cause.id).then(result => {
+      this.setState({ loading: false, items: result });
+    });
   }
 
   componentDidMount() {
-    if (!this.props.causeMovement.emptyItem) {
-      this.props.actions.loadOne(0);
+    this.localLoadMovements();
+    if (!this.state.emptyItem) {
+      this.props.actions.loadOne(0).then(result => {
+         this.setState({emptyItem: this.props.causeMovement.emptyItem});
+      });
+    }
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.cause !== this.state.cause) {
+      this.localLoadMovements();
     }
   }
 
@@ -77,7 +100,7 @@ export class InlineMovements extends Component {
     this.setState({ valid: false, camv_id: null });
     this.props.actions.validateOne(camv_id).then(result => {
       this.props.actions.propagateModel('FreeAsso_CauseMovement', result);
-      this.props.actions.loadMovements(cause);
+      this.localLoadMovements();
     });
   }
 
@@ -85,23 +108,29 @@ export class InlineMovements extends Component {
     const { camv_id, cause } = this.state;
     this.setState({ confirm: false, camv_id: 0 });
     this.props.actions.delOne(camv_id).then(result => {
-      this.props.actions.loadMovements(cause);
+      this.localLoadMovements();
     });
   }
 
   onConfirmClose() {
     this.setState({ valid: false, confirm: false, camv_id: 0, cause_movement: null });
+    this.localLoadMovements();
+  }
+
+  mouseLeave() {
+    this.setState({ flipped: false });
+  }
+
+  mouseEnter(id) {
+    this.setState({ flipped: id });
   }
 
   render() {
     let counter = 0;
     const { confirm, valid } = this.state;
-    let movements = [];
-    if (this.props.causeMovement.movements.FreeAsso_CauseMovement) {
-      movements = buildModel(this.props.causeMovement.movements, 'FreeAsso_CauseMovement');
-    }
-    const { emptyItem } = this.props.causeMovement;
-    if (this.props.causeMovement.loadMovementsPending) {
+    let movements = this.state.items;
+    const { emptyItem } = this.state;
+    if (this.state.loading) {
       return (
         <div className="cause-inline-mevements">
           <CenteredLoading3Dots className="text-light" />
@@ -113,49 +142,53 @@ export class InlineMovements extends Component {
           <div className="cause-inline-movements">
             <div className="inline-list">
               <div className={classnames('row row-title row-line', (counter++ % 2 !== 1) ? 'row-odd' : 'row-even')} key="cause-inline-movements">
-                <div className="col-5">
+                <div className="col-sm-5 col-first">
                   <span>Date</span>
                 </div>
-                <div className="col-7">
+                <div className="col-sm-7">
                   <span>Depuis</span>
                 </div>
-                <div className="col-7">
+                <div className="col-sm-7">
                   <span>Vers</span>
                 </div>
-                <div className="col-7">
+                <div className="col-sm-7">
                   <span>Notes</span>
                 </div>
-                <div className="col-10">
+                <div className="col-sm-10">
                   <span>Status</span>
                 </div>
               </div>
               {movements.map(movement => {
                 return (
-                  <div className={classnames('row row-line', (counter++ % 2 !== 1) ? 'row-odd' : 'row-even')} key={movement.id}>
-                    <div className="col-5">{intlDate(movement.camv_to)}</div>
-                    <div className="col-7">{movement.from_site.site_name}</div>
-                    <div className="col-7">{movement.to_site.site_name}</div>
-                    <div className="col-7">{movement.camv_comment}</div>
-                    <div className="col-5">{statusLabel(movement.camv_status)}</div>
-                    <div className="col-5 text-right">
-                      <div className="btn-group btn-group-sm" role="group" aria-label="...">
-                        {movement.camv_status === 'WAIT' && (
-                          <div className="btn btn-inline btn-primary">
-                            <SimpleValidIcon
-                              onClick={() => this.onConfirmValidation(movement.id)}
+                  <HoverObserver onMouseEnter={() => {this.mouseEnter(movement.id)}} onMouseLeave={this.mouseLeave}>
+                    <div className={classnames('row row-line', (counter++ % 2 !== 1) ? 'row-odd' : 'row-even')} key={movement.id}>
+                      <div className="col-sm-5 col-first">{intlDate(movement.camv_to)}</div>
+                      <div className="col-sm-7">{movement.from_site.site_name}</div>
+                      <div className="col-sm-7">{movement.to_site.site_name}</div>
+                      <div className="col-sm-7">{movement.camv_comment}</div>
+                      <div className="col-sm-5">{statusLabel(movement.camv_status)}</div>
+                      <div className="col-sm-5 text-right col-last">
+                      {this.state.flipped && this.state.flipped === movement.id && 
+                        <div className="btn-group btn-group-sm" role="group" aria-label="...">
+                          {movement.camv_status === 'WAIT' && (
+                            <div className="btn btn-inline btn-primary">
+                              <SimpleValidIcon
+                                onClick={() => this.onConfirmValidation(movement.id)}
+                                className="text-light inline-action"
+                              />
+                            </div>
+                          )}
+                          <div className="btn btn-inline btn-warning">
+                            <DelOneIcon
+                              onClick={() => this.onConfirmMovement(movement.id)}
                               className="text-light inline-action"
                             />
                           </div>
-                        )}
-                        <div className="btn btn-inline btn-warning">
-                          <DelOneIcon
-                            onClick={() => this.onConfirmMovement(movement.id)}
-                            className="text-light inline-action"
-                          />
                         </div>
+                      }
                       </div>
                     </div>
-                  </div>
+                  </HoverObserver>
                 );
               })}
               <ResponsiveConfirm
@@ -176,7 +209,7 @@ export class InlineMovements extends Component {
               </ResponsiveConfirm>
             </div>
             <div className="row row-new-movement">
-              <div className="col-36 pt-2">
+              <div className="col-36 p-3">
                 {emptyItem && (
                   <InlineMovementForm
                     cause={this.state.cause}
