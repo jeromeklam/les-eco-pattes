@@ -18,7 +18,7 @@ import {
   GetOne as GetOneIcon,
   MapPose as MapPoseIcon,
 } from '../icons';
-import { InlineMapPhotos, InlineMapDocuments } from './';
+import { InlinePhotos, InlineDocuments } from './';
 import { Modify as ModifySite } from '../site';
 
 export class ListGroup extends Component {
@@ -275,25 +275,23 @@ export class ListGroup extends Component {
                           this.state.selected === parseInt(this.state.documents,10) && (
                             <div className="card-footer bg-transparent">
                               <p>Documents :</p>
-                              <InlineMapDocuments />
+                              <InlineDocuments siteId={item.id} inline={true} />
                             </div>
                           )
                         }
                         {parseInt(this.state.photos,10) === parseInt(item.id,10) && (
                           <div className="card-footer bg-transparent">
                             <p>Photos :</p>
-                            <InlineMapPhotos site_id={item.id}/>
+                            <InlinePhotos siteId={item.id} inline={true} />
                           </div>
                         )}
-                        {this.state.selected === parseInt(item.id,10) &&
-                          this.state.selected === parseInt(this.state.causes,10) && (
-                            <div className="card-footer bg-transparent">
-                              <InlineListCause site_id={item.id} />
-                            </div>
-                          )
-                        }  
-                        {this.state.selected === parseInt(item.id, 10) && this.state.selected === parseInt(this.state.modify,10) &&
-                          <ModifySite modal={true} siteId={this.state.modify} onClose={this.onClose} />
+                        {parseInt(this.state.causes,10) === parseInt(item.id,10) && (
+                          <div className="card-footer bg-transparent">
+                            <InlineListCause site_id={item.id} />
+                          </div>
+                        )}  
+                        {parseInt(item.id, 10) === parseInt(this.state.modify,10) &&
+                          <ModifySite loader={false} modal={true} siteId={this.state.modify} onClose={this.onClose} />
                         }                   
                       </div>
                     </div>

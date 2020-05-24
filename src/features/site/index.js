@@ -8,5 +8,3 @@ export { default as InputPicker } from './InputPicker';
 export { default as Search } from './Search';
 export { default as InlinePhotos } from './InlinePhotos';
 export { default as InlineDocuments } from './InlineDocuments';
-export { default as InlineMapPhotos } from './InlineMapPhotos';
-export { default as InlineMapDocuments } from './InlineMapDocuments';

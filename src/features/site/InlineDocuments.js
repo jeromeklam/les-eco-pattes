@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import classnames from 'classnames';
 import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
@@ -116,7 +117,7 @@ export class InlineDocuments extends Component {
           {this.state.loading ? (
             <CenteredLoading3Dots />
           ) : (
-            <div className="row p-2 row-cols-1 row-cols-sm-2 row-cols-md-2 row-cols-lg-3">
+            <div className={classnames('row p-2', this.props.inline ? 'row-cols-1' : 'row-cols-1 row-cols-sm-2 row-cols-md-2 row-cols-lg-3')}>
               {documents &&
                 documents.map(document => {
                   let content = <FileIcon type="document" size={80} {...defaultStyles.docx} />;

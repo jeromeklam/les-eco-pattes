@@ -1,5 +1,57 @@
 export default `
 
+# Version 1.1.0 : 24/05/2020
+
+* Général
+    * Léger ajustement du menu de gauche au niveau des couleurs et sous-menu visible avec fond blanc.
+    * Champ date modifié avec masque de saisie, contrôle et nouveau sélecteur
+* Listes
+    * Meilleur ajustement des colonnes et contenu mois serré
+    * Police réduite pour afficher plus d'informations
+    * Ajustement sur les filtres : couleurs, nouveaux opérateurs, filtres par défaut
+    * Passage en modification au double-clic
+    * Fermerture des éléments périphériques avant modification pour éviter les soucis de rafraichissement
+    * Ouverture des éléments en "inline" avec icônes de navigation à droite et élément sélectionné plus visible + couleur
+    * Messages lors des anomalies de suppression (il est en effet impossible, par exemple, de supprimer un site avec des animaux liés à ce dernier)
+    * Correction d'un bug d'affichage des accents, ... pour les colonnes contenant des commentaires
+* Saisie
+    * Les saisies modales sont le comportement par défaut pour tous les éléments
+    * Les fenêtres de saisie ont été retaillées.
+    * Ajout des éléments annexes en saisie directe dans les modales (enregistrement direct de ces éléments)
+    * Les sélecteurs d'élément (site, personne, ...), permettent maintenant de zoomer sur un élément sélectionné
+    * Meilleure gestion des champs obligatoires avec message en dessous du champ, au pîre en notification.
+    * Champ sélecteur d'année avec possibilité d'utiliser un + / -
+* Races
+    * Ajout en plus de l'expression de contrôle, d'un masque de saisie (documentation en préparation)
+* Maladies
+    * Gestion possible sous forme de sélecteur
+* Variables
+    * Blocage de la suppresion le temps de mieux gérer celà.
+* Tableau de bord
+    * Bouton permettant de sauvegarder la position des blocs pour l'utilisateur connecté
+* Carte
+    * Utilisation des filtres sur sites (à venir un accès aux filtres depuis la carte, en attendant il faut passer par les sites pour modifier les filtres)
+    * Indication des sites sans coordonnées pour pouvoir les géolocaliser (point de départ à Montigny-les-Metz)
+    * Accès en modification au site et aux données périphériques
+* Sites
+    * Gestion du numéro en fonction du site principal, masque de saisie, contrôle
+    * Ajout de dates de validité
+    * Linéaire clôture posé / existant
+    * Par défaut la liste est réduite aux sites encore valides (filtre par défaut)
+    * Ajout sur la liste d'un bouton permettant l'accès direct à la carte avec positionnement si les coordonnées sont renseignées
+    * Ajout sous forme d'onglet des éléments périphériques : poids, documents, ... (!! : enregistrés directement)
+* Animaux
+    * Ajout du nom dans la liste
+    * Ajout d'un champ raison de sortie si la date de fin est renseignée (à venir : le côté obligatoire)
+    * Ajout d'un masque de saisie et contrôle du n° de boucle (en fonction de la race)
+    * Par défaut la liste est réduite aux animaux non sortis (filtre par défaut)
+    * Possibilité d'ajouter des photos
+    * Ajout sous forme d'onglet des éléments périphériques : poids, documents, ... (!! : enregistrés directement)
+    * Gestion d'un type de maladie
+    * Correction d'affichage de la liste des mouvements
+* Personnes
+    * Ajout en colonne de l'addrese type et catégorie (également dans les filtres)
+
 # Version 1.0.3 : 09/03/2020
 
 * Général

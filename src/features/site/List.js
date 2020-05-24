@@ -63,6 +63,7 @@ export class List extends Component {
     this.onListPhoto = this.onListPhoto.bind(this);
     this.onListDocument = this.onListDocument.bind(this);
     this.onZoomMap = this.onZoomMap.bind(this);
+    this.itemClassName = this.itemClassName.bind(this);
   }
 
   componentDidMount() {
@@ -195,13 +196,19 @@ export class List extends Component {
     this.props.actions.loadMore();
   }
 
+  itemClassName(item) {
+    if (item && item.site_to !== null && item.site_to !== '') {
+      return 'row-line-warning';
+    }
+    return '';
+  }
+
   /**
    * Génération du contenu
    */
   render() {
     // Les des items à afficher avec remplissage progressif
     let items = [];
-        console.log(this.props.site.items);
     if (this.props.site.items.FreeAsso_Site) {
       items = buildModel(this.props.site.items, 'FreeAsso_Site');
     }
@@ -275,6 +282,7 @@ export class List extends Component {
           loadMorePending={this.props.site.loadMorePending}
           loadMoreFinish={this.props.site.loadMoreFinish}
           loadMoreError={this.props.site.loadMoreError}
+          fClassName={this.itemClassName}
         />
         {this.state.siteId > 0 && (
           <Modify modal={true} siteId={this.state.siteId} onClose={this.onClose} />

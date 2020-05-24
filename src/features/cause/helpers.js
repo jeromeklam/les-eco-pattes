@@ -268,5 +268,15 @@ export const getCols = ({ props }) => {
       filterable: false,
       last: false,
     },
+    {
+      name: 'cau_to',
+      label: 'Date de sortie',
+      col: 'cau_to',
+      size: '10',
+      mob_size: '36',
+      hidden: true,
+      sortable: false,
+      filterable: { type: 'date' },
+    },
   ];
 };

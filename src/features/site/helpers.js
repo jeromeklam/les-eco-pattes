@@ -194,5 +194,15 @@ export const getCols = ({ props }) => {
       last: true,
       fDisplay: townCol,
     },
+    {
+      name: 'site_to',
+      label: 'Fin de validité',
+      col: 'site_to',
+      size: '10',
+      mob_size: '36',
+      hidden: true,
+      sortable: false,
+      filterable: { type: 'date' },
+    },
   ];
 };

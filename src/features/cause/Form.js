@@ -36,6 +36,7 @@ const modifyTabs = [
 ];
 
 export default function Form(props) {
+  const maxYear = new Date().getFullYear() + 1;
   const {
     values,
     handleChange,
@@ -162,8 +163,8 @@ export default function Form(props) {
                 name="cau_year"
                 id="cau_year"
                 value={values.cau_year}
-                maxValue="2020"
-                minValue="1990"
+                maxValue={maxYear}
+                minValue={1990}
                 onChange={handleChange}
                 labelTop={true}
                 error={getErrorMessage('cau_year')}
