@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { injectIntl } from 'react-intl';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as actions from './redux/actions';
@@ -18,7 +19,7 @@ import {
   Sort as SortNoneIcon,
   Search as SearchIcon,
 } from '../icons';
-import { deleteSuccess, deleteError } from '../ui';
+import { deleteSuccess, showErrors } from '../ui';
 import { InlineMovements } from '../cause-movement';
 import { InlineSicknesses } from '../cause-sickness';
 import { InlineGrowths } from '../cause-growth';
@@ -85,7 +86,7 @@ export class List extends Component {
         deleteSuccess();
       })
       .catch(errors => {
-        deleteError();
+        showErrors(this.props.intl, errors);
       });
   }
 
@@ -281,4 +282,4 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(List);
+export default injectIntl(connect(mapStateToProps, mapDispatchToProps)(List));

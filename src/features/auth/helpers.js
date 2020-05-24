@@ -28,7 +28,22 @@ export const schema = {
         },
         "required": [ "savemenu", "menuposition" ],
         "default" : {"savemenu": true, "menuposition" : true}
-      }
+      },
+      "client": {
+        "title": "Paramètres personnes",
+        "description": "Paramètres personnes",
+        "type": "object",
+        "properties": {
+          "category": {
+            "title": "Catégorie par défaut",
+            "type": "integer",
+          },
+          "type": {
+            "title": "Type par défaut",
+            "type": "integer",
+          },
+        },
+      },
     },
     "required": [ "layout" ]
   }

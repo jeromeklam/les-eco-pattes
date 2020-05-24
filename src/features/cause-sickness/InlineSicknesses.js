@@ -133,7 +133,7 @@ export class InlineSicknesses extends Component {
               <div className="col-8">
                 <span>Maladie</span>
               </div>
-              <div className="col-4 text-right">
+              <div className="col-4 text-right col-last">
                 <div className="btn-group btn-group-xs" role="group" aria-label="...">
                   <button
                     type="button"
@@ -155,7 +155,7 @@ export class InlineSicknesses extends Component {
                     <div className="col-6">{getWhereLabel(sickness.caus_where)}</div>
                     <div className="col-6">{getCareLabel(sickness.caus_care)}</div>
                     <div className="col-8">{sickness.sickness && sickness.sickness.sick_name}</div>
-                    <div className="col-4 text-right">
+                    <div className="col-4 text-right col-last">
                     {this.state.flipped && this.state.flipped === sickness.id && 
                       <div className="btn-group btn-group-xs" role="group" aria-label="...">
                         <button
