@@ -18,6 +18,10 @@ export function changeSetting(main, setting, value) {
     const promise = new Promise((resolve, reject) => {
       const settings = getState().auth.settings;
       let config = JSON.parse(JSON.stringify(settings));
+      console.log(config);
+      if (!config[main]) {
+        config[main] = {};
+      }
       config[main][setting] = value;
       const datas = {
         type: 'FreeSSO_ConfigRequest',
@@ -60,6 +64,9 @@ export function reducer(state, action) {
     case AUTH_CHANGE_SETTING_BEGIN:
       // Just after a request is sent
       let settings = state.settings;
+      if (!settings[action.main]) {
+        settings[action.main] = {};
+      }
       settings[action.main][action.setting] = action.value;
       return {
         ...state,

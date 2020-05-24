@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
+import { injectIntl } from 'react-intl';
 import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as actions from './redux/actions';
+import { changeSetting } from '../auth/redux/actions'
 import { getJsonApi } from 'freejsonapi';
 import { propagateModel } from '../../common';
-import { CenteredLoading3Dots, modifySuccess, modifyError } from '../ui';
+import { CenteredLoading3Dots, modifySuccess, showErrors } from '../ui';
 import Form from './Form';
 
 export class Modify extends Component {
@@ -77,9 +79,21 @@ export class Modify extends Component {
             this.props.onClose();
           }
         }
+        try {
+          this.props.actions.changeSetting(
+            'client',
+            'default',
+            {
+              category: datas.client_category && datas.client_category.id || null,
+              type: datas.client_type && datas.client_type.id || null
+            }
+          );
+        } catch (ex) {
+          console.log(ex);
+        }
       })
       .catch(errors => {
-        modifyError();
+        showErrors(this.props.intl, errors);
       });
   }
 
@@ -124,8 +138,8 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    actions: bindActionCreators({ ...actions, propagateModel }, dispatch),
+    actions: bindActionCreators({ ...actions, propagateModel, changeSetting }, dispatch),
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Modify);
+export default injectIntl(connect(mapStateToProps, mapDispatchToProps)(Modify));

@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { InputPicker as DefaultInputPicker } from 'freeassofront';
 import axios from 'axios';
-import { Search } from './';
-import { More, DelOne } from '../icons';
+import { Search, Modify } from './';
+import { More, DelOne, Zoom } from '../icons';
 
 export default class InputPicker extends Component {
   static propTypes = {
@@ -28,9 +28,11 @@ export default class InputPicker extends Component {
       display: display,
       autocomplete: false,
       source: false,
+      zoom: false,
     };
     this.onMore = this.onMore.bind(this);
     this.onClear = this.onClear.bind(this);
+    this.onZoom = this.onZoom.bind(this);
     this.onChange = this.onChange.bind(this);
     this.onSelect = this.onSelect.bind(this);
     this.onCloseMore = this.onCloseMore.bind(this);
@@ -77,6 +79,10 @@ export default class InputPicker extends Component {
     this.setState({ search: true, autocomplete: false });
   }
 
+  onZoom() {
+    this.setState({ zoom: true });
+  }
+
   onClear() {
     this.setState({ autocomplete: false });
     this.props.onChange({
@@ -86,13 +92,15 @@ export default class InputPicker extends Component {
 
   onSelect(item) {
     this.setState({ search: false, autocomplete: false, list: [] });
-    this.props.onChange({
-      target: { name: this.props.name, value: item.id, type: 'FreeAsso_Sickness' },
-    });
+    if (item) {
+      this.props.onChange({
+        target: { name: this.props.name, value: item.id, type: 'FreeAsso_Sickness' },
+      });
+    }
   }
 
   onCloseMore() {
-    this.setState({ search: false });
+    this.setState({ search: false, zoom: false });
   }
 
   render() {
@@ -110,6 +118,7 @@ export default class InputPicker extends Component {
           display={this.state.display}
           onChange={this.onChange}
           onClear={this.onClear}
+          onZoom={this.onZoom}
           onMore={this.onMore}
           onSelect={this.onSelect}
           required={this.props.required || false}
@@ -118,6 +127,7 @@ export default class InputPicker extends Component {
           pickerDisplay="sick_name"
           clearIcon={<DelOne size={this.props.size === 'sm' ? 0.7 : 0.9} className="text-warning" />}
           moreIcon={<More size={this.props.size === 'sm' ? 0.7 : 0.9} className="text-secondary" />}
+          zoomIcon={<Zoom size={this.props.size === 'sm' ? 0.7 : 0.9} className="text-secondary" />}
         />
         <Search
           title={this.props.label}
@@ -125,6 +135,9 @@ export default class InputPicker extends Component {
           onClose={this.onCloseMore}
           onSelect={this.onSelect}
         />
+        {this.state.zoom && (
+          <Modify loader={false} modal={true} sickId={this.state.item.id} onClose={this.onCloseMore} />
+        )}
       </div>
     );
   }

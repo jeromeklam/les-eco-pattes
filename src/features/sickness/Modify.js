@@ -7,7 +7,7 @@ import { withRouter } from 'react-router-dom';
 import Form from './Form';
 import { getJsonApi } from 'freejsonapi';
 import { propagateModel } from '../../common';
-import { CenteredLoading9X9, modifySuccess, modifyError } from '../ui';
+import { CenteredLoading3Dots, modifySuccess, modifyError } from '../ui';
 
 /**
  * Modification d'une maladie
@@ -16,6 +16,10 @@ export class Modify extends Component {
   static propTypes = {
     sickness: PropTypes.object.isRequired,
     actions: PropTypes.object.isRequired,
+    loader: PropTypes.bool,
+  };
+  static defaultProps = {
+    loader: true,
   };
 
   constructor(props) {
@@ -90,8 +94,8 @@ export class Modify extends Component {
     const item = this.state.item;
     return (
       <div className="sickness-modify global-card">
-        {this.props.sickness.loadOnePending ? (
-          <CenteredLoading9X9 />
+        {!item ? (
+          <CenteredLoading3Dots show={this.props.loader} />
         ) : (
           <div>
             {item && (

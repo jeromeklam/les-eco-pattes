@@ -1,4 +1,5 @@
 import { freeAssoApi } from '../../../common';
+import { jsonApiNormalizer } from 'freejsonapi';
 import {
   CAUSE_DEL_ONE_BEGIN,
   CAUSE_DEL_ONE_SUCCESS,
@@ -61,10 +62,14 @@ export function reducer(state, action) {
 
     case CAUSE_DEL_ONE_FAILURE:
       // The request is failed
+      let error = null;
+      if (action.data.error && action.data.error.response) {
+        error = jsonApiNormalizer(action.data.error.response);
+      }
       return {
         ...state,
         delOnePending: false,
-        delOneError: action.data.error,
+        delOneError: error,
       };
 
     case CAUSE_DEL_ONE_DISMISS_ERROR:

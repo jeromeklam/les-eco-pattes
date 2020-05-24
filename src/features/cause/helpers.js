@@ -263,7 +263,7 @@ export const getCols = ({ props }) => {
       size: '10',
       mob_size: '18',
       title: false,
-      type: 'text',
+      type: 'html',
       sortable: false,
       filterable: false,
       last: false,

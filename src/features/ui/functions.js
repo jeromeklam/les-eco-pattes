@@ -1,4 +1,5 @@
 import cogoToast from 'cogo-toast';
+import { jsonApiNormalizer } from 'freejsonapi';
 
 export const getFromLS = key => {
   let ls = {};
@@ -23,20 +24,48 @@ export const saveToLS = (key, value) => {
   }
 };
 
-export const showErrors = (intl, error) => {
-  if (error && error.errors) {
-    error.errors.forEach((oneError) => {
-      if (oneError.code) {
-        const code = `app.errors.code.${oneError.code}`;
-        const message = intl.formatMessage({
-          id: code,
-          defaultMessage: oneError.title + ' (' + code + ')',
-        });
-        cogoToast.error(message);
+export function showErrors(intl, error) {
+  if (error) {
+    if (!error.errors) {
+      if (error.response) {
+        error = jsonApiNormalizer(error.response);
       }
+    }
+    if (error.errors) {
+      error.errors.forEach(oneError => {
+        if (oneError.code) {
+          const code = `app.errors.code.${oneError.code}`;
+          const message = intl.formatMessage({
+            id: code,
+            defaultMessage: oneError.title,
+          });
+          cogoToast.error(message);
+        } else {
+          if (oneError.status) {
+            const code = `app.errors.code.${oneError.status}`;
+            const message = intl.formatMessage({
+              id: code,
+              defaultMessage: oneError.title,
+            });
+            cogoToast.error(message);
+          }
+        }
+      });
+    } else {
+      const message = intl.formatMessage({
+        id: 'app.errors.default',
+        defaultMessage: 'Unknown error !',
+      });
+      cogoToast.error(message);
+    }
+  } else {
+    const message = intl.formatMessage({
+      id: 'app.errors.default',
+      defaultMessage: 'Unknown error !',
     });
+    cogoToast.error(message);
   }
-};
+}
 
 export const messageError = (message = 'Unknown error') => {
   cogoToast.error(message);

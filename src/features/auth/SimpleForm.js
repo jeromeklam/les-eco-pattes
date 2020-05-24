@@ -172,7 +172,6 @@ export class SimpleForm extends Component {
         .catch(errors => {
           // @todo display errors to fields
           const { intl } = this.props;
-          console.log(this.props.auth.updatePasswordError);
           showErrors(intl, this.props.auth.updatePasswordError);
         });
     }
@@ -245,7 +244,7 @@ export class SimpleForm extends Component {
                 <form onSubmit={this.onSubmitSettings}>
                   <InputJson
                     name="user_cache"
-                    value={user.user_cache}
+                    value={JSON.parse(user.config.ubrk_config)}
                     labelTop
                     onChange={this.onChangeSettings}
                     schema={schema}
