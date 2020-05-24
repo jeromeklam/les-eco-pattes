@@ -119,7 +119,6 @@ export default function Form(props) {
             name="site_code"
             value={values.site_code}
             onChange={handleChange}
-            required={true}
             error={getErrorMessage('site_code')}
             warning={validated ? false : 'Format : ' + regPlaceholder}
           />

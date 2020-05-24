@@ -3,7 +3,6 @@ import React, { Component } from 'react';
 export default class SiteMarker extends Component {
   static propTypes = {};
 
-  // what do you expect to get back with the event
   eventParameters = event => ({
     event,
     anchor: this.props.anchor,

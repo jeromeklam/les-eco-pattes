@@ -72,6 +72,7 @@ export const getCols = ({ props }) => {
       mob_size: '36',
       title: true,
       sortable: true,
+      first: true,
       filterable: { type: 'text' },
     },
     {

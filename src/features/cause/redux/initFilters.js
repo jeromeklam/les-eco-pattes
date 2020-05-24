@@ -10,9 +10,12 @@ export function initFilters() {
 export function reducer(state, action) {
   switch (action.type) {
     case CAUSE_INIT_FILTERS:
+      let newFilters = new Filter();
+      const now = new Date().toISOString();
+      newFilters.addFilter('cau_to', now, 'gten');
       return {
         ...state,
-        filters: new Filter(),
+        filters: newFilters,
       };
 
     default:

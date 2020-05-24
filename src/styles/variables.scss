@@ -8,11 +8,12 @@ $theme-colors: (
   "secondary-dark": darken(#5a4e4e, 20%),
   "danger": #ff4136,
   "warning": #ef8c1d,
-  "warning-light": lighten(#ef8c1d, 10%),
+  "warning-light": lighten(#ef8c1d, 40%),
   "warning-dark": darken(#ef8c1d, 10%),
   "light": lighten(#5a4e4e, 60%),
   "success": #7ab255,
 );
+
 $grid-breakpoints: (
   xs: 0,
   sm: 768px,

@@ -345,6 +345,9 @@ const useForm = (initialState, initialTab, onSubmit, onCancel, onNavTab, errors,
           break;
       }
     }
+    if (afterChange) {
+      afterChange(event.target.name, values);
+    }
     setValues(explodeReduxModel(values));
   };
 

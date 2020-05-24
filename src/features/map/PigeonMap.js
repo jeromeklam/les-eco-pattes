@@ -168,13 +168,13 @@ export class PigeonMap extends Component {
   }
 
   onClick({ event, latLng, pixel }) {
-     console.log("onClick")
+    //console.log("onClick")
     //console.log("FK click",latLng,pixel)
     this.props.history.push('/pigeon-map/' + this.state.selected  + "/" + latLng[0] + "/" + latLng[1]);
   }
 
   onMarkerClick({ event, anchor, payload }) { 
-     console.log("onMarkerClick")
+    //console.log("onMarkerClick")
     if (Array.isArray(anchor) && anchor.length >= 2) {
       this.props.history.push('/pigeon-map/' + parseInt(payload, 10)  + "/" + anchor[0] + "/" + anchor[1]);
     }
@@ -182,7 +182,7 @@ export class PigeonMap extends Component {
   }
 
   onSiteClick(id, anchorCoord) {
-    console.log("onSiteClick")
+    //console.log("onSiteClick")
     let coord = this.state.center || [49.096306, 6.160053];
     const json = JSON.parse(anchorCoord);
     if (json) {

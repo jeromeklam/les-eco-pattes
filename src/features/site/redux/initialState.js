@@ -1,5 +1,9 @@
 import { Filter } from 'freeassofront';
 
+let initialFilters = new Filter();
+const now = new Date().toISOString();
+initialFilters.addFilter('site_to', now, 'gten');
+
 const initialState = {
   items: [],
   causes: [],
@@ -11,7 +15,7 @@ const initialState = {
   page_number: 1,
   page_size: 999999,
   tab: '1',
-  filters: new Filter(),
+  filters: initialFilters,
   sort: [{col:"site_name",way:"up"}],
   properties: [
     'number_1',
