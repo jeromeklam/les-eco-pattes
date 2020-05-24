@@ -33,7 +33,7 @@ const modifyTabs = [
   { key: '6', name: 'descendant', label: 'Déscendance', shortcut: 'E', icon: 'descendant' },
   { key: '7', name: 'documents', label: 'Documents', shortcut: 'E', icon: 'documents' },
   { key: '8', name: 'photos', label: 'Photos', shortcut: 'E', icon: 'photos' },
-]
+];
 
 export default function Form(props) {
   const {
@@ -120,7 +120,7 @@ export default function Form(props) {
       {values.currentTab === '1' && (
         <div>
           <div className="row">
-            <div className="col-18">
+            <div className="col-12">
               <InputText
                 label="Nom"
                 key="cau_name"
@@ -132,7 +132,7 @@ export default function Form(props) {
                 error={getErrorMessage('cau_name')}
               />
             </div>
-            <div className="col-18">
+            <div className="col-8">
               <InputSelect
                 label="M/F"
                 name="cau_sex"
@@ -142,6 +142,16 @@ export default function Form(props) {
                 options={sexSelect}
                 labelTop={true}
                 error={getErrorMessage('cau_sex')}
+              />
+            </div>
+            <div className="col-16">
+              <ClientInputPicker
+                label="Eleveur"
+                key="raiser"
+                name="raiser"
+                item={values.raiser || null}
+                onChange={handleChange}
+                error={getErrorMessage('raiser')}
               />
             </div>
           </div>
@@ -216,14 +226,16 @@ export default function Form(props) {
               />
             </div>
             <div className="col-16">
-              <ClientInputPicker
-                label="Eleveur"
-                key="raiser"
-                name="raiser"
-                item={values.raiser || null}
-                onChange={handleChange}
-                error={getErrorMessage('raiser')}
-              />
+              {values.cau_to !== null && values.cau_to !== '' && (
+                <InputData
+                  name="cau_string_3"
+                  labelTop={true}
+                  value={values.cau_string_3}
+                  datas={props.tab_datas}
+                  config={props.tab_configs}
+                  onChange={handleChange}
+                />
+              )}
             </div>
           </div>
         </div>

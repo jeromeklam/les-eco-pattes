@@ -1,5 +1,9 @@
 import { Filter } from 'freeassofront';
 
+let initialFilters = new Filter();
+const now = new Date().toISOString();
+initialFilters.addFilter('cau_to', now, 'gten');
+
 const initialState = {
   items: [],
   selected: [],
@@ -12,8 +16,11 @@ const initialState = {
   page_number: 1,
   page_size: process.env.REACT_APP_PAGE_SIZE,
   tab: '1',
-  filters: new Filter(),
+  filters: initialFilters,
   sort: [{ col: 'cau_code', way: 'up' }],
+  properties: [
+    'string_1',
+  ],
   loadMorePending: false,
   loadMoreFinish: false,
   loadMoreError: null,

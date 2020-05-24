@@ -151,9 +151,9 @@ export const getInlineActions = ({
 export const getCols = ({ props }) => {
   return [
     {
-      name: 'id',
-      label: 'Identifiant',
-      col: 'id',
+      name: 'name',
+      label: 'Nom',
+      col: 'cau_name',
       size: '6',
       mob_size: '10',
       title: true,
@@ -163,7 +163,7 @@ export const getCols = ({ props }) => {
       first: true,
     },
     {
-      name: 'name',
+      name: 'num',
       label: 'N° boucle',
       col: 'cau_code',
       size: '6',

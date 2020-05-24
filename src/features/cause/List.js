@@ -59,6 +59,7 @@ export class List extends Component {
     this.onUpdateSort = this.onUpdateSort.bind(this);
     this.onSelectList = this.onSelectList.bind(this);
     this.onClose = this.onClose.bind(this);
+    this.itemClassName = this.itemClassName.bind(this);
   }
 
   componentDidMount() {
@@ -163,8 +164,14 @@ export class List extends Component {
     this.props.actions.loadMore();
   }
 
+  itemClassName(item) {
+    if (item && item.cau_to !== null && item.cau_to !== '') {
+      return 'row-line-warning';
+    }
+    return '';
+  }
+
   render() {
-    // Les des items à afficher avec remplissage progressif
     let items = [];
     if (this.props.cause.items.FreeAsso_Cause) {
       items = buildModel(this.props.cause.items, 'FreeAsso_Cause');
@@ -256,6 +263,7 @@ export class List extends Component {
           loadMorePending={this.props.cause.loadMorePending}
           loadMoreFinish={this.props.cause.loadMoreFinish}
           loadMoreError={this.props.cause.loadMoreError}
+          fClassName={this.itemClassName}
         />
         {this.state.cauId > 0 && (
           <Modify modal={true} cauId={this.state.cauId} onClose={this.onClose} />

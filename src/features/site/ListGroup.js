@@ -50,21 +50,16 @@ export class ListGroup extends Component {
   }
 
   componentDidMount() {
-    //console.log("FK CDM",this.refs);
     if (this.refs) {
       const elem = this.refs['site-selector-' + this.state.selected];
       if (elem && !isInViewPort(elem)) {
-        //console.log("FK CDM22",this.refs);
         elem.scrollIntoView({ behavior: 'smooth' });
-      } else {
-        //console.log("FK CDM33",this.refs);
-      }
+      } 
     }
     this.props.actions.loadMore();
   }
 
   componentDidUpdate(prevProps, prevState) {
-    //console.log("FK CDU",this.state.selected,prevState.selected);
     if (this.state.selected !== prevState.selected) {
       if (this.refs) {
         const elem = this.refs['site-selector-' + this.state.selected];
@@ -106,8 +101,7 @@ export class ListGroup extends Component {
   }
 
   static getDerivedStateFromProps(props, state) {
-    //console.log("FK GDSFP",props.selected,state.selected);
-    console.log("FK GDSFP",props.selected, state.selected,state.causes);
+    //console.log("FK GDSFP",props.selected, state.selected,state.causes);
     if (props.selected !== state.selected) {
       let documents = 0;
       if (props.selected === state.documents) {
@@ -138,7 +132,7 @@ export class ListGroup extends Component {
         </div>
       );
     }
-    console.log("FK render liste ",this.state.selected,this.state.causes);
+    //console.log("FK render liste ",this.state.selected,this.state.causes);
     return (
       <div className="site-list-group">
         <ul className="list-group">

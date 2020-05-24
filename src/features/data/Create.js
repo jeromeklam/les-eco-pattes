@@ -5,7 +5,8 @@ import { connect } from 'react-redux';
 import * as actions from './redux/actions';
 import { getJsonApi } from 'freejsonapi';
 import { withRouter } from 'react-router-dom';
-import { CenteredLoading3Dots } from '../ui';
+import { propagateModel } from '../../common';
+import { CenteredLoading3Dots, createError, createSuccess } from '../ui';
 import Form from './Form';
 
 /**
@@ -58,11 +59,12 @@ export class Create extends Component {
     this.props.actions
       .createOne(obj)
       .then(result => {
-        this.props.actions.clearItems();
+        createSuccess();
+        this.props.actions.propagateModel('FreeAsso_Data', result);
         this.props.onClose();
       })
       .catch(errors => {
-        // @todo display errors to fields
+        createError();
       });
   }
 
@@ -98,7 +100,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    actions: bindActionCreators({ ...actions }, dispatch),
+    actions: bindActionCreators({ ...actions, propagateModel }, dispatch),
   };
 }
 

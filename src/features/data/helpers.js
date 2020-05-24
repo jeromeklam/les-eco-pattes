@@ -29,14 +29,6 @@ export const getInlineActions = ({ onGetOne, onDelOne }) => {
       icon: <GetOneIcon color="white" />,
       role: 'MODIFY',
     },
-    {
-      name: 'delete',
-      label: 'Supprimer',
-      onClick: onDelOne,
-      theme: 'warning',
-      icon: <DelOneIcon color="white" />,
-      role: 'DELETE',
-    },
   ];
 };
 
