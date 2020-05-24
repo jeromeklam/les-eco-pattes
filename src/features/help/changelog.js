@@ -1,7 +1,6 @@
 export default `
 
 # Version 1.1.0 : 24/05/2020
-
 * Général
     * Léger ajustement du menu de gauche au niveau des couleurs et sous-menu visible avec fond blanc.
     * Champ date modifié avec masque de saisie, contrôle et nouveau sélecteur
@@ -10,12 +9,12 @@ export default `
     * Police réduite pour afficher plus d'informations
     * Ajustement sur les filtres : couleurs, nouveaux opérateurs, filtres par défaut
     * Passage en modification au double-clic
-    * Fermerture des éléments périphériques avant modification pour éviter les soucis de rafraichissement
+    * Fermerture des éléments périphériques avant modification pour éviter les soucis de rafraîchissement
     * Ouverture des éléments en "inline" avec icônes de navigation à droite et élément sélectionné plus visible + couleur
     * Messages lors des anomalies de suppression (il est en effet impossible, par exemple, de supprimer un site avec des animaux liés à ce dernier)
     * Correction d'un bug d'affichage des accents, ... pour les colonnes contenant des commentaires
 * Saisie
-    * Les saisies modales sont le comportement par défaut pour tous les éléments
+    * Les saisies modales (qui prennent le contrôle total du clavier et de l'écran) sont le comportement par défaut pour tous les éléments
     * Les fenêtres de saisie ont été retaillées.
     * Ajout des éléments annexes en saisie directe dans les modales (enregistrement direct de ces éléments)
     * Les sélecteurs d'élément (site, personne, ...), permettent maintenant de zoomer sur un élément sélectionné
@@ -26,7 +25,7 @@ export default `
 * Maladies
     * Gestion possible sous forme de sélecteur
 * Variables
-    * Blocage de la suppresion le temps de mieux gérer celà.
+    * Blocage de la suppression le temps de mieux gérer celà.
 * Tableau de bord
     * Bouton permettant de sauvegarder la position des blocs pour l'utilisateur connecté
 * Carte
@@ -50,7 +49,7 @@ export default `
     * Gestion d'un type de maladie
     * Correction d'affichage de la liste des mouvements
 * Personnes
-    * Ajout en colonne de l'addrese type et catégorie (également dans les filtres)
+    * Ajout en colonne de l'adresse type et catégorie (également dans les filtres)
 
 # Version 1.0.3 : 09/03/2020
 

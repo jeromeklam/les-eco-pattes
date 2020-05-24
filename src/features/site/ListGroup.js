@@ -271,8 +271,7 @@ export class ListGroup extends Component {
                             <p className="text-warning">{'- '}Site non localisé{' -'}</p>
                           )}
                         </div>
-                        {this.state.selected === parseInt(item.id,10) &&
-                          this.state.selected === parseInt(this.state.documents,10) && (
+                        {parseInt(this.state.documents,10) === parseInt(item.id,10) && (
                             <div className="card-footer bg-transparent">
                               <p>Documents :</p>
                               <InlineDocuments siteId={item.id} inline={true} />
