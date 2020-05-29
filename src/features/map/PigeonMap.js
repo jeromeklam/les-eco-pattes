@@ -96,7 +96,7 @@ export class PigeonMap extends Component {
     let id = 0
     let lat = center[0];
     let lon = center[1];
-    console.log("FK gDSFP",id,lat,lon);
+    //console.log("FK gDSFP",id,lat,lon);
     if ((props.match.params.id) || ((props.match.params.lat) && (props.match.params.lon))) {
       if (props.match.params.id) {
         id = parseInt(props.match.params.id,10);
@@ -226,7 +226,7 @@ export class PigeonMap extends Component {
       items = buildModel(this.props.site.items, 'FreeAsso_Site');
     }
     //console.log("FK render", parseInt(this.state.moved.id, 10)  === this.state.selected, this.state.moved.id ,this.state.selected, this.state.center  )
-    console.log("FK render", this.state.moved.id, this.state.selected);
+    //console.log("FK render", this.state.moved.id, this.state.selected);
     return (
       <div className="map-pigeon-map bg-light">
         <Responsive displayIn={['Laptop', 'Tablet']}>

@@ -78,7 +78,6 @@ export class Create extends Component {
         }
       })
       .catch(errors => {
-        // @todo display errors to fields
         const { intl } = this.props;
         showErrors(intl, this.props.site.createOneError);
       });

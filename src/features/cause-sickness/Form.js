@@ -18,7 +18,6 @@ export default function Form(props) {
     handleNavTab,
     getErrorMessage,
   } = useForm(props.item, props.tab, props.onSubmit, props.onCancel, props.onNavTab, props.errors);
-  console.log(values);
   return (
     <ResponsiveModalOrForm
       title="Maladie"

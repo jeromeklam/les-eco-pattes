@@ -30,7 +30,7 @@ const modifyTabs = [
   { key: '3', name: 'movements', label: 'Mouvements', shortcut: 'E', icon: 'movements' },
   { key: '4', name: 'sicknesses', label: 'Maladies', shortcut: 'E', icon: 'sicknesses' },
   { key: '5', name: 'croissance', label: 'Croissance', shortcut: 'E', icon: 'croissance' },
-  { key: '6', name: 'descendant', label: 'Déscendance', shortcut: 'E', icon: 'descendant' },
+  { key: '6', name: 'descendant', label: 'Descendance', shortcut: 'E', icon: 'descendant' },
   { key: '7', name: 'documents', label: 'Documents', shortcut: 'E', icon: 'documents' },
   { key: '8', name: 'photos', label: 'Photos', shortcut: 'E', icon: 'photos' },
 ];

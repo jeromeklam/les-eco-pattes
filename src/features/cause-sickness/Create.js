@@ -67,7 +67,6 @@ export class Create extends Component {
         this.props.onClose();
       })
       .catch(errors => {
-        // @todo display errors to fields
         createError();
       });
   }

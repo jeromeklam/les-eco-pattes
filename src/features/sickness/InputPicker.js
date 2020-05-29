@@ -55,6 +55,7 @@ export default class InputPicker extends Component {
     if (this.state.source) {
       this.state.source.cancel();
     }
+    
     const CancelToken = axios.CancelToken;
     const source = CancelToken.source();
     const headers = {
