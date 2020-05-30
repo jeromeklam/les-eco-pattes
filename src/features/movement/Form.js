@@ -39,10 +39,11 @@ export default function Form(props) {
     getErrorMessage,
     handleNavTab,
   } = useForm(props.item, props.tab, props.onSubmit, props.onCancel, props.onNavTab, props.errors);
+  console.log(props.mode);
   return (
     <ResponsiveModalOrForm
       className=""
-      title="Mouvement"
+      title={`Mouvement ${props.mode}`}
       tab={values.currentTab}
       tabs={tabs}
       onSubmit={handleSubmit}
@@ -492,7 +493,7 @@ export default function Form(props) {
                   name="move_desc"
                   id="move_desc"
                   labelTop={true}
-                  value={values.move_desc}
+                  causes={values.causes}
                   onChange={handleChange}
                 />
           </div>

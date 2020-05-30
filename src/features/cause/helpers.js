@@ -41,6 +41,50 @@ export const getSexlabel = (p_code, p_icon = true, p_className = "" ) => {
   return '';
 }
 
+export const getSelectActions = ({ props, onSelectMenu }) => {
+  const arrOne = [
+    {
+      name: 'mvtSelectAll',
+      label: 'Tout sélectionner',
+      onClick: () => {onSelectMenu('mvtSelectAll');}
+    }
+  ];
+  const arrAppend = [
+    {
+      name: 'mvtSelectNone',
+      label: 'Tout désélectionner',
+      onClick: () => {onSelectMenu('mvtSelectNone');}
+    },
+    {
+      name: 'divider',
+    },
+    {
+      name: 'mvtWithNotif',
+      label: 'Mvt interne avec notification',
+      onClick: () => {onSelectMenu('mvtWithNotif');}
+    },
+    {
+      name: 'mvtWithoutNotif',
+      label: 'Mvt interne avec notification',
+      onClick: () => {onSelectMenu('mvtWithoutNotif');}
+    },
+    {
+      name: 'mvtInput',
+      label: 'Entrée notification',
+      onClick: () => {onSelectMenu('mvtInput');}
+    },
+    {
+      name: 'mvtOutput',
+      label: 'Sortie avec notification',
+      onClick: () => {onSelectMenu('mvtOutput');}
+    }
+  ];
+  if (props.cause.selected.length > 0) {
+    return arrOne.concat(arrAppend);
+  }
+  return arrOne;
+};
+
 export const getGlobalActions = ({ onClearFilters, onCreate }) => {
   return [
     {

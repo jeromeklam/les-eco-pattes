@@ -35,7 +35,7 @@ export const getMedias = (cause_id, caum_type) => {
 /**
  *
  */
-export const getCauses = (mode, site_id, cause) => {
+export const getCauses = (mode, site_id, cause, ids = []) => {
   const promise = new Promise((resolve, reject) => {
     const filter = {
       filter: {}
@@ -43,10 +43,14 @@ export const getCauses = (mode, site_id, cause) => {
     if (mode === 'site') {
       filter.filter.site_id = site_id;
     } else {
-      if (cause.cau_sex === 'M') {
-        filter.filter['parent1.cau_id'] = cause.id;
+      if (mode === 'list') {
+        filter.filter.cau_id = {in: ids};
       } else {
-        filter.filter['parent2.cau_id'] = cause.id;
+        if (cause.cau_sex === 'M') {
+          filter.filter['parent1.cau_id'] = cause.id;
+        } else {
+          filter.filter['parent2.cau_id'] = cause.id;
+        }
       }
     }
     const addUrl = objectToQueryString(filter);

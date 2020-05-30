@@ -118,6 +118,14 @@ export function reducer(state, action) {
 
     case AUTH_SIGN_IN_FAILURE:
       // The request is failed
+      const datas2 = action.data;
+      if (datas2 && datas2.headers && datas2.headers['app-id']) {
+        cookie.save('APP_ID', datas.headers['app-id'], { path: '/' });
+      }
+      if (datas2 && datas2.headers && datas2.headers['sso-id']) {
+        cookie.save('SSO_ID', datas2.headers['sso-id'], { path: '/' });
+      }
+      cookie.remove('Authorization', { path: '/' });
       let error = null;
       if (action.data.error && action.data.error.response) {
         error = jsonApiNormalizer(action.data.error.response);

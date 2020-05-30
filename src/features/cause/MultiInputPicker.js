@@ -15,15 +15,23 @@ const _loadCause = id => {
 export default class MultiInputPicker extends Component {
   static propTypes = {};
 
+  static getDerivedStateFromProps(props, state) {
+    if (props.causes !== state.causes) {
+      return ({ causes: props.causes || []});
+    }
+    return null;
+  }
+
   constructor(props) {
     super(props);
     let causes = [];
     try {
-      causes = JSON.parse(this.props.value || []);
+      causes = this.props.causes || [];
     } catch (ex) {}
     if (causes.length <= 0) {
       causes.push({ type: '', value: '' });
     }
+    console.log(causes);
     this.state = {
       list: [],
       causes: causes,
@@ -88,26 +96,39 @@ export default class MultiInputPicker extends Component {
   }
 
   onChange(e, i) {
-    let { causes } = this.state;
+    let { causes, list } = this.state;
     const id = e.target.value;
-    _loadCause(e.target.value).then(result => {
-      if (result && result.data) {
-        const lines = jsonApiNormalizer(result.data);
-        const item = buildModel(lines, 'FreeAsso_Cause', id, { eager: true });
-        causes[i] = item;
-        let { list } = this.state;
-        list[i] = false;
-        this.props.onChange(
-          {
-            target: {
-              name: this.props.name,
-              value: JSON.stringify(causes),
+    if (id && parseInt(id, 10) > 0) {
+      _loadCause(e.target.value).then(result => {
+        if (result && result.data) {
+          const lines = jsonApiNormalizer(result.data);
+          const item = buildModel(lines, 'FreeAsso_Cause', id, { eager: true });
+          causes[i] = item;
+          list[i] = false;
+          this.props.onChange(
+            {
+              target: {
+                name: this.props.name,
+                value: causes,
+              }
             }
+          );
+          this.setState({ causes: causes, list: list });
+        }
+      });
+    } else {
+      causes = causes.splice(i, 1);
+      list[i] = false;
+      this.props.onChange(
+        {
+          target: {
+            name: this.props.name,
+            value: causes,
           }
-        );
-        this.setState({ causes: causes, list: list });
-      }
-    });
+        }
+      );
+      this.setState({ causes: causes, list: list });
+    }
   }
 
   render() {

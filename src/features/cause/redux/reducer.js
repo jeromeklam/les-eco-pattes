@@ -25,6 +25,7 @@ import { reducer as delCauseMediaReducer } from './delCauseMedia';
 import { reducer as loadDescendantsReducer } from './loadDescendants';
 import { reducer as onSelectReducer } from './onSelect';
 import { reducer as loadPhotosReducer } from './loadPhotos';
+import { reducer as selectNoneReducer } from './selectNone';
 
 const reducers = [
   loadMoreReducer,
@@ -45,6 +46,7 @@ const reducers = [
   loadDescendantsReducer,
   onSelectReducer,
   loadPhotosReducer,
+  selectNoneReducer,
 ];
 
 export default function reducer(state = initialState, action) {

@@ -23,12 +23,14 @@ import { deleteSuccess, showErrors } from '../ui';
 import { InlineMovements } from '../cause-movement';
 import { InlineSicknesses } from '../cause-sickness';
 import { InlineGrowths } from '../cause-growth';
+import { Create as CreateMovement } from '../movement';
 import {
   InlineCauses,
   InlinePhotos,
   Create,
   Modify,
   InlineDocuments,
+  getSelectActions,
   getGlobalActions,
   getInlineActions,
   getCols,
@@ -47,6 +49,8 @@ export class List extends Component {
       item: null,
       mode: false,
       cauId: -1,
+      menu: null,
+      menuOption: null,
     };
     this.onCreate = this.onCreate.bind(this);
     this.onGetOne = this.onGetOne.bind(this);
@@ -60,6 +64,7 @@ export class List extends Component {
     this.onUpdateSort = this.onUpdateSort.bind(this);
     this.onSelectList = this.onSelectList.bind(this);
     this.onClose = this.onClose.bind(this);
+    this.onSelectMenu = this.onSelectMenu.bind(this);
     this.itemClassName = this.itemClassName.bind(this);
   }
 
@@ -72,11 +77,11 @@ export class List extends Component {
   }
 
   onGetOne(id) {
-    this.setState({ cauId: id, mode: false, item: null });
+    this.setState({ cauId: id, mode: false, item: null, menu: null, });
   }
 
   onClose() {
-    this.setState({ cauId: -1 });
+    this.setState({ cauId: -1, menu: null });
   }
 
   onDelOne(id) {
@@ -172,6 +177,21 @@ export class List extends Component {
     return '';
   }
 
+  onSelectMenu(option) {
+    switch (option) {
+      case 'mvtSelectAll':
+        this.setState({ menu: null, cauid: -1 });
+        break;
+      case 'mvtSelectNone':
+        this.setState({ menu: null, cauid: -1 });
+        this.props.actions.selectNone();
+        break;
+      default:
+        this.setState({ menu: 'movement', menuOption: option, cauid: -1 });
+        break;
+    }
+  }
+
   render() {
     let items = [];
     if (this.props.cause.items.FreeAsso_Cause) {
@@ -179,6 +199,7 @@ export class List extends Component {
     }
     const globalActions = getGlobalActions(this);
     const inlineActions = getInlineActions(this);
+    const selectActions = getSelectActions(this);
     const cols = getCols(this);
     // L'affichage, items, loading, loadMoreError
     let search = '';
@@ -241,6 +262,7 @@ export class List extends Component {
           cols={cols}
           items={items}
           selected={selected}
+          selectMenu={selectActions}
           quickSearch={quickSearch}
           mainCol="cau_code"
           filterIcon={filterIcon}
@@ -267,9 +289,10 @@ export class List extends Component {
           fClassName={this.itemClassName}
         />
         {this.state.cauId > 0 && (
-          <Modify modal={true} cauId={this.state.cauId} onClose={this.onClose} />
+          <Modify modal={true} cauId={this.state.cauId} onClose={this.onClose} loader={false} />
         )}
-        {this.state.cauId === 0 && <Create modal={true} onClose={this.onClose} />}
+        {this.state.cauId === 0 && <Create modal={true} onClose={this.onClose} loader={false} />}
+        {this.state.menu === 'movement' && <CreateMovement loader={false} modal={true} mode={this.state.menuOption} onClose={this.onClose} selected={selected} />}
       </div>
     );
   }

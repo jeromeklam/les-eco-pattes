@@ -114,6 +114,14 @@ export function reducer(state, action) {
 
     case AUTH_CHECK_IS_AUTHENTICATED_FAILURE:
       // The request is failed
+      const datas2 = action.data;
+      if (datas2 && datas2.headers && datas2.headers['app-id']) {
+        cookie.save('APP_ID', datas.headers['app-id'], { path: '/' });
+      }
+      if (datas2 && datas2.headers && datas2.headers['sso-id']) {
+        cookie.save('SSO_ID', datas2.headers['sso-id'], { path: '/' });
+      }
+      cookie.remove('Authorization', { path: '/' });
       return {
         ...state,
         firstCheck: true,
