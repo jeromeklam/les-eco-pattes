@@ -6,16 +6,22 @@ import { IntlProvider, FormattedMessage } from 'react-intl';
 import * as actions from './redux/actions';
 import * as authActions from '../auth/redux/actions';
 import { ResponsivePage } from 'freeassofront';
-import { 
-  Menu as MenuIcon, 
-  AccountDetail, 
+import {
+  Menu as MenuIcon,
+  AccountDetail,
   AccountClose,
   MenuOpened as MenuOpenedIcon,
   MenuClosed as MenuClosedIcon,
 } from '../icons';
 import { CenteredLoading9X9 } from '../ui';
 import { SimpleForm } from '../auth';
-import { initAxios } from '../../common';
+import {
+  initAxios,
+  initSocket,
+  propagateCreate,
+  propagateUpdate,
+  propagateDelete,
+} from '../../common';
 import fond from '../../images/fond2.jpg';
 import messages_fr from '../../translations/fr.json';
 import messages_en from '../../translations/en.json';
@@ -40,6 +46,9 @@ export class App extends Component {
     this.onNavigate = this.onNavigate.bind(this);
     this.onChangeSettings = this.onChangeSettings.bind(this);
     this.onGeo = this.onGeo.bind(this);
+    this.state = {
+      mySocket: initSocket(),
+    };
   }
 
   componentDidMount() {
@@ -56,6 +65,7 @@ export class App extends Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
+    const { propagateCreate, propagateUpdate, propagateDelete } = this.props.actions;
     if (prevProps.auth.authenticated !== this.props.auth.authenticated) {
       if (
         this.props.auth.authenticated &&
@@ -65,6 +75,49 @@ export class App extends Component {
       ) {
         initAxios(prevProps.auth.token);
         this.props.actions.loadAll();
+        const socket = initSocket();
+        socket.subscribe('storage_create', {
+          onSuccess: datas => {
+            console.log('WAMPY : Successfully subscribed to storage_create');
+          },
+          onError: datas => {
+            console.log('WAMPY : Subscription error:');
+          },
+          onEvent: datas => {
+            if (datas && datas.details) {
+              if (datas.details.datas) {
+                propagateCreate(datas.details.type, datas.details.id, datas.details.datas);
+              }
+            }
+          },
+        });
+        socket.subscribe('storage_update', {
+          onSuccess: datas => {
+            console.log('WAMPY : Successfully subscribed to storage_update');
+          },
+          onError: datas => {
+            console.log('WAMPY : Subscription error:');
+          },
+          onEvent: datas => {
+            if (datas && datas.details) {
+              if (datas.details.datas) {
+                propagateUpdate(datas.details.type, datas.details.id, datas.details.datas);
+              }
+            }
+          },
+        });
+        socket.subscribe('storage_delete', {
+          onEvent: datas => {
+            if (datas && datas.details) {
+              if (datas.details.datas) {
+                propagateDelete(datas.details.type, datas.details.id, datas.details.datas);
+              }
+            }
+          },
+        });
+        this.props.actions.initSocket(socket);
+      } else {
+        this.props.actions.closeSocket();
       }
     }
   }
@@ -111,7 +164,7 @@ export class App extends Component {
             menuIcon={<MenuIcon className="light" />}
             title={process.env.REACT_APP_APP_NAME}
             options={appMenu}
-            settings={{...this.props.auth.settings.layout}}
+            settings={{ ...this.props.auth.settings.layout }}
             authenticated={this.props.auth.authenticated}
             location={this.props.location}
             onNavigate={this.onNavigate}
@@ -123,7 +176,8 @@ export class App extends Component {
             menuOpened={<MenuOpenedIcon />}
             menuClosed={<MenuClosedIcon />}
           >
-            {this.props.auth.firstCheck && (!this.props.auth.authenticated || this.props.home.loadAllFinish) ? (
+            {this.props.auth.firstCheck &&
+            (!this.props.auth.authenticated || this.props.home.loadAllFinish) ? (
               <div>{this.props.children}</div>
             ) : (
               <div className="text-center mt-5 text-secondary">
@@ -152,7 +206,10 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    actions: bindActionCreators({ ...actions, ...authActions }, dispatch),
+    actions: bindActionCreators(
+      { ...actions, ...authActions, propagateCreate, propagateUpdate, propagateDelete },
+      dispatch,
+    ),
   };
 }
 
