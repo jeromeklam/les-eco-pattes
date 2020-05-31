@@ -1,3 +1,4 @@
+import { jsonApiNormalizer, buildModel } from 'freejsonapi';
 import { DATA_UPDATE_ONE_UPDATE } from '../features/data/redux/constants';
 import { SITE_TYPE_UPDATE_ONE_UPDATE } from '../features/site-type/redux/constants';
 import { CAUSE_TYPE_UPDATE_ONE_UPDATE } from '../features/cause-type/redux/constants';
@@ -12,6 +13,19 @@ import { CAUSE_SICKNESS_UPDATE_ONE_UPDATE } from '../features/cause-sickness/red
 import { SICKNESS_UPDATE_ONE_UPDATE } from '../features/sickness/redux/constants';
 import { ITEM_UPDATE_ONE_UPDATE } from '../features/item/redux/constants';
 import { MOVEMENT_UPDATE_ONE_UPDATE } from '../features/movement/redux/constants';
+
+export function propagateCreate(type, id, datas) {
+  return propagateModel(type, {data: datas });
+}
+
+export function propagateUpdate(type, id, datas) {
+  return propagateModel(type, {data: datas });
+}
+
+export function propagateDelete(type, id, datas) {
+  return dispatch => {
+  };
+}
 
 export function propagateModel(type, model) {
   return dispatch => {

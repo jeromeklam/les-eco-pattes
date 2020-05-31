@@ -1,8 +1,9 @@
 export { default as freeAssoApi } from './api';
 export { initAxios } from './init';
+export * from './socket';
 
 /**/
-export { propagateModel } from './update';
+export { propagateModel, propagateCreate, propagateUpdate, propagateDelete } from './update';
 
 export const setModelValue = (model, key, value) => {
   const parts = key.split('.');
