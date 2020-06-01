@@ -138,7 +138,7 @@ export class App extends Component {
     const locale = this.props.home.locale || 'fr';
     const messages = intlMessages[locale];
     const icons = [];
-    if (this.props.home.socketOn) {
+    if (this.props.home.socketOn && this.props.auth.authenticated) {
       if (this.props.home.socketConnected) {
         icons.push(
           {
