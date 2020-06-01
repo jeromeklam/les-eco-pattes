@@ -70,3 +70,4 @@ export { default as ZoomMap } from './ZoomMap';
 export { default as MenuClosed } from './MenuClosed';
 export { default as MenuOpened } from './MenuOpened';
 export { default as MapPose } from './MapPose';
+export { default as MenuDown } from './MenuDown';
