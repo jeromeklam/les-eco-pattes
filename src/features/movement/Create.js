@@ -78,7 +78,6 @@ export class Create extends Component {
   onSubmit(datas = {}) {
     // Conversion des données en objet pour le service web
     let obj = getJsonApi(datas, 'FreeAsso_Movement', this.state.movementId);
-    console.log(obj);
     return false;
     this.props.actions
       .createOne(obj)
@@ -94,13 +93,12 @@ export class Create extends Component {
         }
       })
       .catch(errors => {
-        // @todo display errors to fields
         createError();
       });
   }
 
   render() {
-    const item = this.state.item;
+    let item = this.state.item;
     return (
       <div className="movement-modify global-card">
         {this.props.loading ? (

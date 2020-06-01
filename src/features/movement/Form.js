@@ -4,29 +4,36 @@ import { MultiInputPicker as CauseMultiInputPicker } from '../cause';
 import { InputPicker as SiteInputPicker } from '../site';
 import { Movement as MovementIcon, Cause as CauseIcon } from '../icons';
 import { useForm, ResponsiveModalOrForm, InputDatetime } from '../ui';
-import { fromTypeSelect, toTypeSelect } from './';
+import { fromTypeSelect, toTypeSelect, getModeLabel, getTypeMvt, mvtTypes } from './';
 
 const tabs = [
   {
     key: '1',
+    name: 'causes',
+    label: 'Animaux',
+    shortcut: 'C',
+    icon: <CauseIcon />,
+  },
+  {
+    key: '2',
+    name: 'move',
+    label: 'Transport',
+    shortcut: 'M',
+    icon: <MovementIcon />,
+  },
+  {
+    key: '3',
     name: 'from',
     label: 'Départ',
     shortcut: 'D',
     icon: <MovementIcon />,
   },
   {
-    key: '2',
+    key: '4',
     name: 'to',
     label: 'Arrivée',
-    shortcut: 'E',
+    shortcut: 'A',
     icon: <MovementIcon />,
-  },
-  {
-    key: '3',
-    name: 'causes',
-    label: 'Animaux',
-    shortcut: 'E',
-    icon: <CauseIcon />,
   },
 ];
 
@@ -39,11 +46,10 @@ export default function Form(props) {
     getErrorMessage,
     handleNavTab,
   } = useForm(props.item, props.tab, props.onSubmit, props.onCancel, props.onNavTab, props.errors);
-  console.log(props.mode);
   return (
     <ResponsiveModalOrForm
       className=""
-      title={`Mouvement ${props.mode}`}
+      title={getModeLabel(props.mode)}
       tab={values.currentTab}
       tabs={tabs}
       onSubmit={handleSubmit}
@@ -54,45 +60,113 @@ export default function Form(props) {
     >
       <div className="card-body">
         <InputHidden name="id" id="id" value={values.id} />
-
         <div className="row">
-          <div className="col-12">
-            <InputText
-              label="Nom transporteur"
-              name="move_tr_name"
-              id="move_tr_name"
+          <div className="col-8">
+            <InputSelect
+              label="Type"
+              id="move_type"
+              name="move_type"
               required={true}
-              value={values.move_tr_name}
+              value={values.move_type}
               onChange={handleChange}
-              error={getErrorMessage('move_tr_name')}
+              options={mvtTypes}
+              addempty={true}
+              error={getErrorMessage('move_type')}
             />
           </div>
-          <div className="col-sm-12">
-            <InputText
-              label="N° transporteur"
-              name="move_tr_num"
-              id="move_tr_num"
+          <div className="col-8">
+            <InputDatetime
+              label="Date"
+              name="move_to"
+              id="move_to"
               required={true}
-              value={values.move_tr_num}
+              value={values.move_to}
               onChange={handleChange}
-              error={getErrorMessage('move_tr_num')}
+              error={getErrorMessage('move_to')}
             />
           </div>
-          <div className="col-sm-12">
-            <InputText
-              label="N° véhicule"
-              name="move_tr_num2"
-              id="move_tr_num2"
-              required={true}
-              value={values.move_tr_num2}
+
+          <div className="col-sm-14">
+            <SiteInputPicker
+              label="Site"
+              key="from_site"
+              name="from_site"
+              labelTop={true}
+              item={values.from_site || null}
               onChange={handleChange}
-              error={getErrorMessage('move_tr_num2')}
+              error={getErrorMessage('from_site')}
+            />
+          </div>
+        </div>
+        <div className="row">
+          <div className="col-sm-16"></div>
+          <div className="col-sm-14">
+            <SiteInputPicker
+              label="Site"
+              key="to_site"
+              name="to_site"
+              labelTop={true}
+              item={values.to_site || null}
+              onChange={handleChange}
+              error={getErrorMessage('to_site')}
             />
           </div>
         </div>
         <hr />
         {values.currentTab === '1' && (
           <div>
+              <CauseMultiInputPicker
+                label="Animal"
+                name="move_desc"
+                id="move_desc"
+                labelTop={true}
+                causes={values.causes}
+                onChange={handleChange}
+              />
+          </div>
+        )}
+
+        {values.currentTab === '2' && (
+          <div>
+            <div className="row">
+              <div className="col-12">
+                <InputText
+                  label="Nom transporteur"
+                  name="move_tr_name"
+                  id="move_tr_name"
+                  required={true}
+                  value={values.move_tr_name}
+                  onChange={handleChange}
+                  error={getErrorMessage('move_tr_name')}
+                />
+              </div>
+              <div className="col-sm-12">
+                <InputText
+                  label="N° transporteur"
+                  name="move_tr_num"
+                  id="move_tr_num"
+                  required={true}
+                  value={values.move_tr_num}
+                  onChange={handleChange}
+                  error={getErrorMessage('move_tr_num')}
+                />
+              </div>
+              <div className="col-sm-12">
+                <InputText
+                  label="N° véhicule"
+                  name="move_tr_num2"
+                  id="move_tr_num2"
+                  required={true}
+                  value={values.move_tr_num2}
+                  onChange={handleChange}
+                  error={getErrorMessage('move_tr_num2')}
+                />
+              </div>
+            </div>
+          </div>
+        )}
+        {values.currentTab === '3' && (
+            <div>
             <div className="row">
               <div className="col-12">
                 <InputDatetime
@@ -130,17 +204,6 @@ export default function Form(props) {
               </div>
             </div>
             <div className="row">
-              <div className="col-sm-12">
-                <SiteInputPicker
-                  label="Site"
-                  key="from_site"
-                  name="from_site"
-                  labelTop={true}
-                  item={values.from_site || null}
-                  onChange={handleChange}
-                  error={getErrorMessage('from_site')}
-                />
-              </div>
               <div className="col-sm-12">
                 <InputText
                   label="N° exploitation / SIREN"
@@ -247,10 +310,10 @@ export default function Form(props) {
             </div>
           </div>
         )}
-        {values.currentTab === '2' && (
+        {values.currentTab === '4' && (
           <div>
             <div className="row">
-              <div className="col-12">
+            <div className="col-12">
                 <InputDatetime
                   label="Le"
                   name="move_to"
@@ -287,17 +350,6 @@ export default function Form(props) {
               </div>
             </div>
             <div className="row">
-              <div className="col-sm-12">
-                <SiteInputPicker
-                  label="Site"
-                  key="to_site"
-                  name="to_site"
-                  labelTop={true}
-                  item={values.to_site || null}
-                  onChange={handleChange}
-                  error={getErrorMessage('to_site')}
-                />
-              </div>
               <div className="col-sm-12">
                 <InputText
                   label="N° exploitation / SIREN"
@@ -402,100 +454,6 @@ export default function Form(props) {
                 />
               </div>
             </div>
-          </div>
-        )}
-        {values.currentTab === '3' && (
-          <div>
-            <div className="row">
-              <div className="col-6">
-                <InputText
-                  label="Indicatfif 1"
-                  name="move_group_name_1"
-                  id="move_group_name_1"
-                  value={values.move_group_name_1}
-                  onChange={handleChange}
-                  error={getErrorMessage('move_group_name_1')}
-                />
-              </div>
-              <div className="col-3">
-                <InputText
-                  label="Nb 1"
-                  name="move_group_num_1"
-                  id="move_group_num_1"
-                  value={values.move_group_num_1}
-                  onChange={handleChange}
-                  error={getErrorMessage('move_group_num_1')}
-                />
-              </div>
-              <div className="col-6">
-                <InputText
-                  label="Indicatfif 2"
-                  name="move_group_name_2"
-                  id="move_group_name_2"
-                  value={values.move_group_name_2}
-                  onChange={handleChange}
-                  error={getErrorMessage('move_group_name_2')}
-                />
-              </div>
-              <div className="col-3">
-                <InputText
-                  label="Nb 2"
-                  name="move_group_num_2"
-                  id="move_group_num_2"
-                  value={values.move_group_num_2}
-                  onChange={handleChange}
-                  error={getErrorMessage('move_group_num_2')}
-                />
-              </div>
-              <div className="col-6">
-                <InputText
-                  label="Indicatfif 3"
-                  name="move_group_name_3"
-                  id="move_group_name_3"
-                  value={values.move_group_name_3}
-                  onChange={handleChange}
-                  error={getErrorMessage('move_group_name_3')}
-                />
-              </div>
-              <div className="col-3">
-                <InputText
-                  label="Nb 3"
-                  name="move_group_num_3"
-                  id="move_group_num_3"
-                  value={values.move_group_num_3}
-                  onChange={handleChange}
-                  error={getErrorMessage('move_group_num_3')}
-                />
-              </div>
-              <div className="col-6">
-                <InputText
-                  label="Indicatfif 4"
-                  name="move_group_name_4"
-                  id="move_group_name_4"
-                  value={values.move_group_name_4}
-                  onChange={handleChange}
-                  error={getErrorMessage('move_group_name_4')}
-                />
-              </div>
-              <div className="col-3">
-                <InputText
-                  label="Nb 4"
-                  name="move_group_num_4"
-                  id="move_group_num_4"
-                  value={values.move_group_num_4}
-                  onChange={handleChange}
-                  error={getErrorMessage('move_group_num_4')}
-                />
-              </div>
-            </div>
-                <CauseMultiInputPicker
-                  label="Animal"
-                  name="move_desc"
-                  id="move_desc"
-                  labelTop={true}
-                  causes={values.causes}
-                  onChange={handleChange}
-                />
           </div>
         )}
       </div>
