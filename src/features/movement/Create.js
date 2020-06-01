@@ -78,7 +78,6 @@ export class Create extends Component {
   onSubmit(datas = {}) {
     // Conversion des données en objet pour le service web
     let obj = getJsonApi(datas, 'FreeAsso_Movement', this.state.movementId);
-    return false;
     this.props.actions
       .createOne(obj)
       .then(result => {
@@ -110,6 +109,7 @@ export class Create extends Component {
                 item={item}
                 modal={this.state.modal}
                 mode={this.props.mode}
+                fromSite={this.props.site}
                 datas={this.props.data.items}
                 config={this.props.config.items}
                 errors={this.props.movement.createOneError}

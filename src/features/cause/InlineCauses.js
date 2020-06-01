@@ -5,13 +5,14 @@ import { CenteredLoading3Dots } from '../ui';
 import { Movement as MovementIcon, MenuDown as MenuDownIcon } from '../icons';
 import { Create as CreateMovement } from '../movement';
 import { getSexlabel, getCauses } from './';
+import { getOne as getOneSite } from '../site';
 
 export default class InlineCauses extends Component {
   static propTypes = {};
 
   static getDerivedStateFromProps(props, state) {
     if (props.siteId !== state.site_id || props.mode !== state.mode || props.cause !== state.item) {
-      return { site_id: props.siteId, mode: props.mode, item: props.cause };
+      return { site_id: props.siteId, site: props.site, mode: props.mode, item: props.cause };
     }
     return null;
   }
@@ -19,6 +20,7 @@ export default class InlineCauses extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      site: props.site || null,
       site_id: props.site_id || 0,
       mode: props.mode || '',
       loading: true,
@@ -41,7 +43,13 @@ export default class InlineCauses extends Component {
   localLoadCauses() {
     this.setState({ loading: true });
     getCauses(this.state.mode, this.state.site_id, this.state.item).then(result => {
-      this.setState({ loading: false, items: result });
+      if (this.state.mode === 'site') {
+        getOneSite(this.state.site_id).then(otherResult => {
+          this.setState({ loading: false, items: result, site: otherResult });
+        })
+      } else {
+        this.setState({ loading: false, items: result });
+      }
     });
   }
 
@@ -133,7 +141,7 @@ export default class InlineCauses extends Component {
                   <span className="pr-2">Père</span>
                 </div>
               )}
-              {(selected.length > 0) && (
+              {this.state.mode === 'site' &&
                 <div className="col-sm-4 text-right">
                   <div className="dropdown">
                     <button
@@ -155,34 +163,57 @@ export default class InlineCauses extends Component {
                           className="bg-light border border-secondary text-secondary"
                           aria-labelledby="dropdownMenuButton"
                         >
+                          {(selected.length > 0) && (
+                            <button
+                              type="button"
+                              className="text-secondary dropdown-item"
+                              key={'SIMPLE'}
+                              onClick={() => this.onSelectMvt('SIMPLE')}
+                            >
+                              Mvt sans notification
+                            </button>
+                          )}
+                          {(selected.length > 0) && (
+                            <button
+                              type="button"
+                              className="text-secondary dropdown-item"
+                              key={'TRANSFER'}
+                              onClick={() => this.onSelectMvt('TRANSFER')}
+                            >
+                              Mvt avec notification
+                            </button>
+                          )}
                           <button
                             type="button"
                             className="text-secondary dropdown-item"
-                            key={'internalMvt'}
-                            onClick={() => this.onSelectMvt('internalMvt')}
+                            key={'INPUT'}
+                            onClick={() => this.onSelectMvt('INPUT')}
                           >
-                            Mouvement interne
+                            Entrée
                           </button>
-                          <button
-                            type="button"
-                            className="text-secondary dropdown-item"
-                            key={'ouputMvt'}
-                            onClick={() => this.onSelectMvt('outputMvt')}
-                          >
-                            Sortie
-                          </button>
+                          {(selected.length > 0) && (
+                            <button
+                              type="button"
+                              className="text-secondary dropdown-item"
+                              key={'OUTPUT'}
+                              onClick={() => this.onSelectMvt('OUTPUT')}
+                            >
+                              Sortie
+                            </button>
+                          )}
                         </div>
                       </Dropdown>
                     )}
                   </div>
                 </div>
-              )}
+              }
             </div>
             {(this.state.typeMvt !== '') && 
               <CreateMovement
                 loader={false}
                 modal={true}
                 mode={this.state.typeMvt}
+                site={this.state.site}
                 onClose={this.onCloseMvt}
                 selected={selected}
               />

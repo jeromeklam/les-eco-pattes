@@ -59,24 +59,24 @@ export const getSelectActions = ({ props, onSelectMenu }) => {
       name: 'divider',
     },
     {
-      name: 'mvtWithNotif',
+      name: 'SIMPLE',
       label: 'Mvt interne avec notification',
-      onClick: () => {onSelectMenu('mvtWithNotif');}
+      onClick: () => {onSelectMenu('SIMPLE');}
     },
     {
-      name: 'mvtWithoutNotif',
+      name: 'TRANSFER',
       label: 'Mvt interne avec notification',
-      onClick: () => {onSelectMenu('mvtWithoutNotif');}
+      onClick: () => {onSelectMenu('TRANSFER');}
     },
     {
-      name: 'inputMvt',
+      name: 'INPUT',
       label: 'Entrée notification',
-      onClick: () => {onSelectMenu('inputMvt');}
+      onClick: () => {onSelectMenu('INPUT');}
     },
     {
-      name: 'outputMvt',
+      name: 'OUTPUT',
       label: 'Sortie avec notification',
-      onClick: () => {onSelectMenu('outputMvt');}
+      onClick: () => {onSelectMenu('OUTPUT');}
     }
   ];
   if (props.cause.selected.length > 0) {

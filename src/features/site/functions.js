@@ -2,6 +2,33 @@ import { buildModel, objectToQueryString, jsonApiNormalizer } from 'freejsonapi'
 import { freeAssoApi } from '../../common';
 
 /**
+ * 
+ */
+export const getOne = (id) => {
+  if (!id) {
+    id = '0';
+  }
+  const promise = new Promise((resolve, reject) => {
+    const doRequest = freeAssoApi.get('/v1/asso/site/' + id, {})
+    doRequest.then(
+      res => {
+        if (res.data && res.data.data) {
+          const list = jsonApiNormalizer(res.data);
+          const model = buildModel(list, 'FreeAsso_Site', id, {eager: true});
+          resolve(model);
+        } else {
+          resolve([]);
+        }
+      },
+      err => {
+        reject(err);
+      },
+    );
+  });
+  return promise;
+}
+
+/**
  *
  */
 export const getMedias = (site_id, sitm_type) => {

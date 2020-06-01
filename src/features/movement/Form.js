@@ -4,7 +4,7 @@ import { MultiInputPicker as CauseMultiInputPicker } from '../cause';
 import { InputPicker as SiteInputPicker } from '../site';
 import { Movement as MovementIcon, Cause as CauseIcon } from '../icons';
 import { useForm, ResponsiveModalOrForm, InputDatetime } from '../ui';
-import { fromTypeSelect, toTypeSelect, getModeLabel, getTypeMvt, mvtTypes } from './';
+import { fromTypeSelect, toTypeSelect, getTypeLabel, mvtTypes } from './';
 
 const tabs = [
   {
@@ -20,14 +20,18 @@ const tabs = [
     label: 'Transport',
     shortcut: 'M',
     icon: <MovementIcon />,
-  },
+  }
+];
+const tabsFrom = [
   {
     key: '3',
     name: 'from',
     label: 'Départ',
     shortcut: 'D',
     icon: <MovementIcon />,
-  },
+  }
+];
+const tabsTo = [
   {
     key: '4',
     name: 'to',
@@ -38,6 +42,12 @@ const tabs = [
 ];
 
 export default function Form(props) {
+  const modify = props.modify || false;
+  if (!modify) {
+    props.item.move_type = props.mode || 'OTHER';
+    props.item.from_site = props.fromSite;
+    props.item.move_from = new Date().toISOString();;
+  }
   const {
     values,
     handleChange,
@@ -46,12 +56,17 @@ export default function Form(props) {
     getErrorMessage,
     handleNavTab,
   } = useForm(props.item, props.tab, props.onSubmit, props.onCancel, props.onNavTab, props.errors);
+  let myTabs = tabs;
+  if (values.move_type !== 'SIMPLE' && values.mode_type !== 'TRANSFER') {
+    myTabs = tabs.concat(tabsFrom, tabsTo); 
+  }
   return (
     <ResponsiveModalOrForm
       className=""
-      title={getModeLabel(props.mode)}
+      title={getTypeLabel(values.move_type)}
       tab={values.currentTab}
-      tabs={tabs}
+      tabs={myTabs}
+      size="xl"
       onSubmit={handleSubmit}
       onCancel={handleCancel}
       onNavTab={handleNavTab}
@@ -61,7 +76,7 @@ export default function Form(props) {
       <div className="card-body">
         <InputHidden name="id" id="id" value={values.id} />
         <div className="row">
-          <div className="col-8">
+          <div className="col-sm-12">
             <InputSelect
               label="Type"
               id="move_type"
@@ -74,21 +89,11 @@ export default function Form(props) {
               error={getErrorMessage('move_type')}
             />
           </div>
-          <div className="col-8">
-            <InputDatetime
-              label="Date"
-              name="move_to"
-              id="move_to"
-              required={true}
-              value={values.move_to}
-              onChange={handleChange}
-              error={getErrorMessage('move_to')}
-            />
-          </div>
-
-          <div className="col-sm-14">
+        </div>
+        <div className="row">
+          <div className="col-sm-12">
             <SiteInputPicker
-              label="Site"
+              label="Site de départ"
               key="from_site"
               name="from_site"
               labelTop={true}
@@ -97,18 +102,39 @@ export default function Form(props) {
               error={getErrorMessage('from_site')}
             />
           </div>
+          <div className="col-sm-12">
+            <InputDatetime
+              label="Date"
+              name="move_from"
+              id="move_from"
+              required={true}
+              value={values.move_from}
+              onChange={handleChange}
+              error={getErrorMessage('move_from')}
+            />
+          </div>
         </div>
         <div className="row">
-          <div className="col-sm-16"></div>
-          <div className="col-sm-14">
+          <div className="col-sm-12">
             <SiteInputPicker
-              label="Site"
+              label="Site d'arrivée"
               key="to_site"
               name="to_site"
               labelTop={true}
               item={values.to_site || null}
               onChange={handleChange}
               error={getErrorMessage('to_site')}
+            />
+          </div>
+          <div className="col-sm-12">
+            <InputDatetime
+              label="Date"
+              name="move_to"
+              id="move_to"
+              required={true}
+              value={values.move_to}
+              onChange={handleChange}
+              error={getErrorMessage('move_to')}
             />
           </div>
         </div>

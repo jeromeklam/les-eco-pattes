@@ -136,7 +136,7 @@ export default class MultiInputPicker extends Component {
       <div className="row">
         {this.state.causes.map((elem, i) => {
           return (
-            <div className="col-9" key={`cause-picker-${i}`}>
+            <div className="col-12" key={`cause-picker-${i}`}>
               <InputPicker
                 {...this.props}
                 item={elem}
