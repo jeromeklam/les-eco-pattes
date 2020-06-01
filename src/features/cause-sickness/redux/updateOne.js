@@ -15,7 +15,7 @@ export function updateOne(args = {}) {
     });
     const promise = new Promise((resolve, reject) => {
       const id = args.data.id;
-      const doRequest = freeAssoApi.put('/v1/asso/cause_movement/' + id, args);
+      const doRequest = freeAssoApi.put('/v1/asso/cause_sickness/' + id, args);
       doRequest.then(
         (res) => {
           dispatch({
