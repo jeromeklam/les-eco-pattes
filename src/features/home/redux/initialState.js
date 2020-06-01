@@ -5,6 +5,9 @@ const initialState = {
   loadAllPending: false,
   loadAllError: null,
   socket: null,
+  socketOn: false,
+  socketConnected: false,
+  socketMessage: null,
 };
 
 export default initialState;

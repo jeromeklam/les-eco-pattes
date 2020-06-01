@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import ReactMarkdown from 'react-markdown';
+import { ResponsiveContent } from 'freeassofront';
 import { changelog } from './';
 
 export default class Version extends Component {
@@ -7,9 +8,9 @@ export default class Version extends Component {
 
   render() {
     return (
-      <div className="help-version p-5 ">
+      <ResponsiveContent className="help-version p-5 ">
         <ReactMarkdown source={changelog} escapeHtml={false} />
-      </div>
+      </ResponsiveContent>
     );
   }
 }

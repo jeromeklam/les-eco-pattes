@@ -18,7 +18,7 @@ export default class DashboardCard extends Component {
       }
     }
     return (
-      <div className="dashboard-stat-card">
+      <div className="dashboard-stat-card text-center">
         <div className="card">
           <div className="card-header card-header-warning card-header-icon">
             {this.props.url ? (

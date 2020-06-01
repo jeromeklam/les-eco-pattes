@@ -74,7 +74,7 @@ export class DashboardGrid extends Component {
         <div>
           <DashboardToolbar />
           <ResponsiveReactGridLayout
-            className="layout"
+            className="layout p-2"
             cols={{ lg: 36, md: 36, sm: 36, xs: 36, xxs: 36 }}
             rowHeight={30}
             verticalCompact={true}

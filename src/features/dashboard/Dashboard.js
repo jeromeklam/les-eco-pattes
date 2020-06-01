@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Responsive } from 'freeassofront';
+import { ResponsiveContent } from 'freeassofront';
 import fond from '../../images/fond2.jpg';
 import logo from '../../images/logo-les-eco-pattes.jpg';
 import { DashboardGrid } from './';
@@ -9,7 +10,8 @@ export default class Dashboard extends Component {
 
   render() {
     return (
-      <div className="container-fluid">
+      <div className="content-fixed">
+        <img className="fond-site" src={fond} alt="" />
         <Responsive displayIn={['Mobile']}>
           <div className="text-center">
             <br />
@@ -22,10 +24,9 @@ export default class Dashboard extends Component {
           </div>
         </Responsive>
         <Responsive displayIn={['Laptop', 'Tablet']}>
-          <div className="text-center">
-            <img className="fond-site" src={fond} alt="" />
+          <ResponsiveContent>
             <DashboardGrid />
-          </div>
+          </ResponsiveContent>
         </Responsive>
       </div>
     );

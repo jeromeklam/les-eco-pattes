@@ -66,7 +66,7 @@ export class App extends Component {
 
   componentDidUpdate(prevProps, prevState) {
     const { propagateCreate, propagateUpdate, propagateDelete } = this.props.actions;
-    if (prevProps.auth.authenticated !== this.props.auth.authenticated) {
+    if (prevProps.auth.authenticated !== this.props.auth.authenticated || prevProps.home.socketOn !== this.props.home.socketOn) {
       if (
         this.props.auth.authenticated &&
         !this.props.home.loadAllFinish &&
@@ -75,47 +75,39 @@ export class App extends Component {
       ) {
         initAxios(prevProps.auth.token);
         this.props.actions.loadAll();
-        const socket = initSocket();
-        socket.subscribe('storage_create', {
-          onSuccess: datas => {
-            console.log('WAMPY : Successfully subscribed to storage_create');
-          },
-          onError: datas => {
-            console.log('WAMPY : Subscription error:');
-          },
-          onEvent: datas => {
-            if (datas && datas.details) {
-              if (datas.details.datas) {
-                propagateCreate(datas.details.type, datas.details.id, datas.details.datas);
-              }
+        if (this.props.home.socketOn) {
+          const options = {
+            onConnected: this.props.actions.socketConnected,
+            onDisconnected: this.props.actions.socketDisconnected,
+            subscriptions: {
+              storage_create: datas => {
+                if (datas && datas.details) {
+                  if (datas.details.datas) {
+                    propagateCreate(datas.details.type, datas.details.id, datas.details.datas);
+                  }
+                }
+              },
+              storage_update: datas => {
+                if (datas && datas.details) {
+                  if (datas.details.datas) {
+                    propagateUpdate(datas.details.type, datas.details.id, datas.details.datas);
+                  }
+                }
+              },
+              storage_delete: datas => {
+                if (datas && datas.details) {
+                  if (datas.details.datas) {
+                    propagateDelete(datas.details.type, datas.details.id, null);
+                  }
+                }
+              },
             }
-          },
-        });
-        socket.subscribe('storage_update', {
-          onSuccess: datas => {
-            console.log('WAMPY : Successfully subscribed to storage_update');
-          },
-          onError: datas => {
-            console.log('WAMPY : Subscription error:');
-          },
-          onEvent: datas => {
-            if (datas && datas.details) {
-              if (datas.details.datas) {
-                propagateUpdate(datas.details.type, datas.details.id, datas.details.datas);
-              }
-            }
-          },
-        });
-        socket.subscribe('storage_delete', {
-          onEvent: datas => {
-            if (datas && datas.details) {
-              if (datas.details.datas) {
-                propagateDelete(datas.details.type, datas.details.id, datas.details.datas);
-              }
-            }
-          },
-        });
-        this.props.actions.initSocket(socket);
+          };
+          const socket = initSocket(options);
+          this.props.actions.initSocket(socket);
+        } else {
+          this.props.actions.closeSocket();
+        }
       } else {
         this.props.actions.closeSocket();
       }
@@ -170,7 +162,7 @@ export class App extends Component {
             onNavigate={this.onNavigate}
             onChangeSettings={this.onChangeSettings}
             userForm={<SimpleForm />}
-            userTitle={this.props.auth.user.user_first_name || this.props.auth.user.user_first_name}
+            userTitle={this.props.auth.user.user_first_name || this.props.auth.user.user_last_name}
             accountOpened={<AccountClose />}
             accountClosed={<AccountDetail className="text-primary" />}
             menuOpened={<MenuOpenedIcon />}
