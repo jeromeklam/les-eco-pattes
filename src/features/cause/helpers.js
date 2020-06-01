@@ -69,14 +69,14 @@ export const getSelectActions = ({ props, onSelectMenu }) => {
       onClick: () => {onSelectMenu('mvtWithoutNotif');}
     },
     {
-      name: 'mvtInput',
+      name: 'inputMvt',
       label: 'Entrée notification',
-      onClick: () => {onSelectMenu('mvtInput');}
+      onClick: () => {onSelectMenu('inputMvt');}
     },
     {
-      name: 'mvtOutput',
+      name: 'outputMvt',
       label: 'Sortie avec notification',
-      onClick: () => {onSelectMenu('mvtOutput');}
+      onClick: () => {onSelectMenu('outputMvt');}
     }
   ];
   if (props.cause.selected.length > 0) {

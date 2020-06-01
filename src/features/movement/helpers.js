@@ -6,6 +6,47 @@ import {
   FilterClear as FilterClearIcon,
 } from '../icons';
 
+export const mvtTypes = [
+  { label: 'Mouvement interne sans notification', value: 'SIMPLE' },
+  { label: 'Mouvement interne avec notification', value: 'TRANSFERT' },
+  { label: 'Entrée', value: 'INPUT' },
+  { label: 'Sortie', value: 'OUTPUT' },
+  { label: 'Autre', value: 'OTHER' },
+];
+
+export const mvtModes = [
+  { mode: 'outputMvt', type: 'OUTPUT' },
+  { mode: 'inputMvt', type: 'INPUT' },
+  { mode: 'internalMvt', type: 'SIMPLE' },
+  { mode: 'mvtWithNotif', type: 'TRANSFERT' },
+  { mode: 'mvtWithoutNotif', type: 'SIMPLE' },
+];
+
+export const getTypeMvt = (p_mode) => {
+  const found = mvtModes.find(elem => elem.mode === p_mode);
+  if (found) {
+    return found.type;
+  }
+  return '';
+}
+
+export const getTypeLabel = (p_type) => {
+  const found = mvtTypes.find(elem => elem.value === p_type);
+  if (found) {
+    return found.label;
+  }
+  return '';
+}
+
+export const getModeLabel = (p_mode) => {
+  const typeMvt = getTypeMvt(p_mode)
+  let labelMode = ''
+  if (typeMvt !== "") {
+    labelMode = getTypeLabel(typeMvt); 
+  }
+  return labelMode;
+}
+
 export const fromTypeSelect = [
   { label: 'Autre', value: 'OTHER' },
 ];
