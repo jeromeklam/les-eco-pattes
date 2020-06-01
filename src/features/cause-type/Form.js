@@ -1,7 +1,6 @@
 import React from 'react';
-import { InputHidden, InputText, InputSelect, InputCheckbox, InputMonetary } from 'freeassofront';
+import { InputHidden, InputText, InputSelect } from 'freeassofront';
 import { useForm, ResponsiveModalOrForm } from '../ui';
-import { causeTypeMntType, causeTypeFamily } from './';
 
 export default function Form(props) {
   const { values, handleChange, handleSubmit, handleCancel, getErrorMessage } = useForm(
@@ -12,17 +11,6 @@ export default function Form(props) {
     '',
     props.errors,
   );
-  let minDate = true;
-  let maxDate = true;
-  let maxLabel = 'Maximum';
-  if (values.caut_mnt_type === 'OTHER') {
-    minDate = false;
-    maxDate = false;
-  }
-  if (values.caut_mnt_type === 'ANNUAL') {
-    minDate = false;
-    maxLabel = 'Montant annuel';
-  }
   return (
     <ResponsiveModalOrForm
       className="m-5"

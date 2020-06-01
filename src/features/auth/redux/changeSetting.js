@@ -1,4 +1,4 @@
-import { jsonApiNormalizer, getJsonApi } from 'freejsonapi';
+import { getJsonApi } from 'freejsonapi';
 import {
   AUTH_CHANGE_SETTING_BEGIN,
   AUTH_CHANGE_SETTING_SUCCESS,

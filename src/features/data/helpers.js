@@ -2,7 +2,6 @@
 import {
   AddOne as AddOneIcon,
   GetOne as GetOneIcon,
-  DelOne as DelOneIcon,
 } from '../icons';
 import { dataTypes } from './';
 

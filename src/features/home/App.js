@@ -10,6 +10,8 @@ import {
   Menu as MenuIcon,
   AccountDetail,
   AccountClose,
+  SocketConnected,
+  SocketDisconnected,
   MenuOpened as MenuOpenedIcon,
   MenuClosed as MenuClosedIcon,
 } from '../icons';
@@ -135,6 +137,26 @@ export class App extends Component {
   render() {
     const locale = this.props.home.locale || 'fr';
     const messages = intlMessages[locale];
+    const icons = [];
+    if (this.props.home.socketOn) {
+      if (this.props.home.socketConnected) {
+        icons.push(
+          {
+            name: 'socket',
+            label: 'Synchronisation serveur activée',
+            icon: <SocketConnected className="text-success"/>
+          }
+        );
+      } else {
+        icons.push(
+          {
+            name: 'socket',
+            label: 'Erreur de synchronisation serveur',
+            icon: <SocketDisconnected className="text-danger"/>
+          }
+        );
+      }
+    }
     if (this.props.home.loadAllError) {
       return (
         <IntlProvider locale={locale} messages={messages}>
@@ -156,6 +178,7 @@ export class App extends Component {
             menuIcon={<MenuIcon className="light" />}
             title={process.env.REACT_APP_APP_NAME}
             options={appMenu}
+            icons={icons}
             settings={{ ...this.props.auth.settings.layout }}
             authenticated={this.props.auth.authenticated}
             location={this.props.location}

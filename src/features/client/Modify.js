@@ -84,8 +84,8 @@ export class Modify extends Component {
             'client',
             'default',
             {
-              category: datas.client_category && datas.client_category.id || null,
-              type: datas.client_type && datas.client_type.id || null
+              category: (datas.client_category && datas.client_category.id) ? datas.client_category.id : null,
+              type: (datas.client_type && datas.client_type.id) ? datas.client_type.id : null
             }
           );
         } catch (ex) {

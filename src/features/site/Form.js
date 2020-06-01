@@ -114,7 +114,7 @@ export default function Form(props) {
         </div>
         <div className="col-sm-9">
           <InputMask
-            mask={values.site_type && values.site_type.sitt_mask || '[*]'}
+            mask={(values.site_type && values.site_type.sitt_mask) ? values.site_type.sitt_mask : '[*]'}
             label="N° Elevage EDE"
             name="site_code"
             value={values.site_code}

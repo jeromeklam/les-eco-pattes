@@ -85,7 +85,7 @@ export default function Form(props) {
             value={values.cau_code}
             onChange={handleChange}
             labelTop={true}
-            mask={values.cause_type && values.cause_type.caut_mask || '[*]'}
+            mask={(values.cause_type && values.cause_type.caut_mask) ? values.cause_type.caut_mask : '[*]'}
             pattern={regexp}
             error={getErrorMessage('cau_code')}
             warning={validated ? false : 'Format : ' + regPlaceholder}

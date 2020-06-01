@@ -71,3 +71,5 @@ export { default as MenuClosed } from './MenuClosed';
 export { default as MenuOpened } from './MenuOpened';
 export { default as MapPose } from './MapPose';
 export { default as MenuDown } from './MenuDown';
+export { default as SocketConnected } from './SocketConnected';
+export { default as SocketDisconnected } from './SocketDisconnected';

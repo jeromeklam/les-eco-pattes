@@ -1,4 +1,3 @@
-import { jsonApiNormalizer, buildModel } from 'freejsonapi';
 import { DATA_UPDATE_ONE_UPDATE } from '../features/data/redux/constants';
 import { SITE_TYPE_UPDATE_ONE_UPDATE } from '../features/site-type/redux/constants';
 import { CAUSE_TYPE_UPDATE_ONE_UPDATE } from '../features/cause-type/redux/constants';

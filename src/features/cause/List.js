@@ -224,7 +224,6 @@ export class List extends Component {
     );
     let inlineComponent = null;
     let id = null;
-    let current = null;
     switch (this.state.mode) {
       case 'document':
         id = this.state.item.id;
