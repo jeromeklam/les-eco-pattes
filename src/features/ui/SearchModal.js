@@ -80,6 +80,7 @@ export default class SearchModal extends Component {
         show={this.props.show}
         onClose={this.props.onClose}
         buttons={buttons}
+        modalClassName="bg-primary-light text-primary"
       >
         <div className="search-modal">
           <h6 className="text-secondary">Critères de recherche :</h6>

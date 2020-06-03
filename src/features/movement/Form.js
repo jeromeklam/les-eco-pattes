@@ -147,6 +147,7 @@ export default function Form(props) {
                 id="move_desc"
                 labelTop={true}
                 causes={values.causes}
+                cause_types={props.cause_types}
                 onChange={handleChange}
               />
           </div>

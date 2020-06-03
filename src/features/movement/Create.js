@@ -115,6 +115,7 @@ export class Create extends Component {
                 errors={this.props.movement.createOneError}
                 tab={this.props.movement.tab}
                 tabs={this.props.movement.tabs}
+                cause_types={this.props.causeType.items}
                 onSubmit={this.onSubmit}
                 onCancel={this.onCancel}
                 onClose={this.props.onClose}
@@ -133,6 +134,7 @@ function mapStateToProps(state) {
     data: state.data,
     config: state.config,
     movementType: state.movementType,
+    causeType: state.causeType,
   };
 }
 

@@ -32,6 +32,27 @@ export const getMedias = (cause_id, caum_type) => {
   return promise;
 };
 
+export const getCause = (cau_id, eager = true) => {
+  const promise = new Promise((resolve, reject) => {
+    const doRequest = freeAssoApi.get('/v1/asso/cause/' + cau_id, {});
+    doRequest.then(
+      res => {
+        if (res.data && res.data.data) {
+          const list  = jsonApiNormalizer(res.data);
+          const model = buildModel(list, 'FreeAsso_Cause', cau_id, {eager: eager});
+          resolve(model);
+        } else {
+          resolve([]);
+        }
+      },
+      err => {
+        reject(err);
+      },
+    );
+  });
+  return promise;
+}
+
 /**
  *
  */
