@@ -130,6 +130,7 @@ export default class InputPicker extends Component {
           pickerId="cau_id"
           pickerDisplay="cau_code"
           filters={this.props.filters || {}}
+          disabled={this.props.disabled || false}
           clearIcon={<DelOne className="text-warning" size={0.9 } />}
           moreIcon={<More className="text-secondary" size={0.9 } />}
           zoomIcon={<Zoom className="text-secondary" size={0.9 } />}

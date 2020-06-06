@@ -79,6 +79,10 @@ export default function Form(props) {
   props.item.transportRequired = false;
   props.item.fromRequired = false;
   props.item.toRequired = false;
+  props.item.globalDisabled = false;
+  if (modify && props.item.move_status === 'OK') {
+    props.item.globalDisabled = true;
+  }
   const {
     values,
     handleChange,
@@ -118,6 +122,7 @@ export default function Form(props) {
               onChange={handleChange}
               options={mvtTypes}
               addempty={true}
+              disabled={values.globalDisabled}
               error={getErrorMessage('move_type')}
             />
           </div>
@@ -131,6 +136,7 @@ export default function Form(props) {
               onChange={handleChange}
               options={mvtStatus}
               addempty={true}
+              disabled={values.globalDisabled}
               error={getErrorMessage('move_status')}
             />
           </div>
@@ -144,6 +150,7 @@ export default function Form(props) {
               labelTop={true}
               item={values.from_site || null}
               onChange={handleChange}
+              disabled={values.globalDisabled}
               error={getErrorMessage('from_site')}
             />
           </div>
@@ -155,6 +162,7 @@ export default function Form(props) {
               required={true}
               value={values.move_from}
               onChange={handleChange}
+              disabled={values.globalDisabled}
               error={getErrorMessage('move_from')}
             />
           </div>
@@ -165,6 +173,7 @@ export default function Form(props) {
               id="move_from_empty"
               checked={values.move_from_empty}
               onChange={handleChange}
+              disabled={values.globalDisabled}
               error={getErrorMessage('move_from_empty')}
             />
           </div>
@@ -178,6 +187,7 @@ export default function Form(props) {
               labelTop={true}
               item={values.to_site || null}
               onChange={handleChange}
+              disabled={values.globalDisabled}
               error={getErrorMessage('to_site')}
             />
           </div>
@@ -189,6 +199,7 @@ export default function Form(props) {
               required={true}
               value={values.move_to}
               onChange={handleChange}
+              disabled={values.globalDisabled}
               error={getErrorMessage('move_to')}
             />
           </div>
@@ -199,6 +210,7 @@ export default function Form(props) {
               id="move_to_empty"
               checked={values.move_to_empty || false}
               onChange={handleChange}
+              disabled={values.globalDisabled}
               error={getErrorMessage('move_to_empty')}
             />
           </div>
@@ -215,6 +227,7 @@ export default function Form(props) {
                   required={values.transportRequired}
                   value={values.move_tr_name}
                   onChange={handleChange}
+                  disabled={values.globalDisabled}
                   error={getErrorMessage('move_tr_name')}
                 />
               </div>
@@ -226,6 +239,7 @@ export default function Form(props) {
                   required={values.transportRequired}
                   value={values.move_tr_num}
                   onChange={handleChange}
+                  disabled={values.globalDisabled}
                   error={getErrorMessage('move_tr_num')}
                 />
               </div>
@@ -237,6 +251,7 @@ export default function Form(props) {
                   required={values.transportRequired}
                   value={values.move_tr_num2}
                   onChange={handleChange}
+                  disabled={values.globalDisabled}
                   error={getErrorMessage('move_tr_num2')}
                 />
               </div>
@@ -256,6 +271,7 @@ export default function Form(props) {
                   onChange={handleChange}
                   options={mvtFromType}
                   addempty={true}
+                  disabled={values.globalDisabled}
                   error={getErrorMessage('move_from_type')}
                 />
               </div>
@@ -267,6 +283,7 @@ export default function Form(props) {
                   required={values.fromRequired}
                   value={values.move_from_num}
                   onChange={handleChange}
+                  disabled={values.globalDisabled}
                   error={getErrorMessage('move_from_num')}
                 />
               </div>
@@ -278,6 +295,7 @@ export default function Form(props) {
                   required={values.fromRequired}
                   value={values.move_from_name}
                   onChange={handleChange}
+                  disabled={values.globalDisabled}
                   error={getErrorMessage('move_from_name')}
                 />
               </div>
@@ -291,6 +309,7 @@ export default function Form(props) {
                   required={values.fromRequired}
                   value={values.move_from_address}
                   onChange={handleChange}
+                  disabled={values.globalDisabled}
                   error={getErrorMessage('move_from_address')}
                 />
               </div>
@@ -302,6 +321,7 @@ export default function Form(props) {
                   required={values.fromRequired}
                   value={values.move_from_cp}
                   onChange={handleChange}
+                  disabled={values.globalDisabled}
                   error={getErrorMessage('move_from_cp')}
                 />
               </div>
@@ -313,6 +333,7 @@ export default function Form(props) {
                   required={values.fromRequired}
                   value={values.move_from_town}
                   onChange={handleChange}
+                  disabled={values.globalDisabled}
                   error={getErrorMessage('move_from_town')}
                 />
               </div>
@@ -326,6 +347,7 @@ export default function Form(props) {
                   required={values.fromRequired}
                   value={values.move_from_number_1}
                   onChange={handleChange}
+                  disabled={values.globalDisabled}
                   error={getErrorMessage('move_from_number_1')}
                 />
               </div>
@@ -337,6 +359,7 @@ export default function Form(props) {
                   required={values.fromRequired}
                   value={values.move_from_number_2}
                   onChange={handleChange}
+                  disabled={values.globalDisabled}
                   error={getErrorMessage('move_from_number_2')}
                 />
               </div>
@@ -348,6 +371,7 @@ export default function Form(props) {
                   required={values.fromRequired}
                   value={values.move_from_number_3}
                   onChange={handleChange}
+                  disabled={values.globalDisabled}
                   error={getErrorMessage('move_from_number_3')}
                 />
               </div>
@@ -359,6 +383,7 @@ export default function Form(props) {
                   required={values.fromRequired}
                   value={values.move_from_number_4}
                   onChange={handleChange}
+                  disabled={values.globalDisabled}
                   error={getErrorMessage('move_from_number_4')}
                 />
               </div>
@@ -378,6 +403,7 @@ export default function Form(props) {
                   onChange={handleChange}
                   options={mvtToType}
                   addempty={true}
+                  disabled={values.globalDisabled}
                   error={getErrorMessage('move_to_type')}
                 />
               </div>
@@ -389,6 +415,7 @@ export default function Form(props) {
                   required={values.toRequired}
                   value={values.move_to_num}
                   onChange={handleChange}
+                  disabled={values.globalDisabled}
                   error={getErrorMessage('move_to_num')}
                 />
               </div>
@@ -400,6 +427,7 @@ export default function Form(props) {
                   required={values.toRequired}
                   value={values.move_to_name}
                   onChange={handleChange}
+                  disabled={values.globalDisabled}
                   error={getErrorMessage('move_to_name')}
                 />
               </div>
@@ -413,6 +441,7 @@ export default function Form(props) {
                   required={values.toRequired}
                   value={values.move_to_address}
                   onChange={handleChange}
+                  disabled={values.globalDisabled}
                   error={getErrorMessage('move_to_address')}
                 />
               </div>
@@ -424,6 +453,7 @@ export default function Form(props) {
                   required={values.toRequired}
                   value={values.move_to_cp}
                   onChange={handleChange}
+                  disabled={values.globalDisabled}
                   error={getErrorMessage('move_to_cp')}
                 />
               </div>
@@ -435,6 +465,7 @@ export default function Form(props) {
                   required={values.toRequired}
                   value={values.move_to_town}
                   onChange={handleChange}
+                  disabled={values.globalDisabled}
                   error={getErrorMessage('move_to_town')}
                 />
               </div>
@@ -448,6 +479,7 @@ export default function Form(props) {
                   required={values.toRequired}
                   value={values.move_to_number_1}
                   onChange={handleChange}
+                  disabled={values.globalDisabled}
                   error={getErrorMessage('move_to_number_1')}
                 />
               </div>
@@ -459,6 +491,7 @@ export default function Form(props) {
                   required={values.toRequired}
                   value={values.move_to_number_2}
                   onChange={handleChange}
+                  disabled={values.globalDisabled}
                   error={getErrorMessage('move_to_number_2')}
                 />
               </div>
@@ -470,6 +503,7 @@ export default function Form(props) {
                   required={values.toRequired}
                   value={values.move_to_number_3}
                   onChange={handleChange}
+                  disabled={values.globalDisabled}
                   error={getErrorMessage('move_to_number_3')}
                 />
               </div>
@@ -481,6 +515,7 @@ export default function Form(props) {
                   required={values.toRequired}
                   value={values.move_to_number_4}
                   onChange={handleChange}
+                  disabled={values.globalDisabled}
                   error={getErrorMessage('move_to_number_4')}
                 />
               </div>
@@ -497,6 +532,7 @@ export default function Form(props) {
                 causes={values.causes}
                 cause_types={props.cause_types}
                 onChange={handleChange}
+                disabled={values.globalDisabled}
               />
           </div>
         )}

@@ -123,6 +123,7 @@ export default class InputPicker extends Component {
           onSelect={this.onSelect}
           error={this.props.error}
           pickerId="site_id"
+          disabled={this.props.disabled || false}
           pickerUp={this.props.pickerUp || false}
           pickerDisplay="site_name,site_code"
           required={this.props.required || false}

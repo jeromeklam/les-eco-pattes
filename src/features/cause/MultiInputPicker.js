@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import axios from 'axios';
 import { AddOne as AddOneIcon } from '../icons';
 import { CenteredLoading3Dots } from '../ui';
@@ -6,7 +7,12 @@ import { InputPickerEnhanced, getCause } from './';
 import { getCauseType } from '../cause-type';
 
 export default class MultiInputPicker extends Component {
-  static propTypes = {};
+  static propTypes = {
+    disabled: PropTypes.bool,
+  };
+  static defaultProps = {
+    disabled: false,
+  };
 
   constructor(props) {
     super(props);
@@ -196,14 +202,17 @@ export default class MultiInputPicker extends Component {
               onDelOne={e => {
                 this.delOne(i);
               }}
+              disabled={this.props.disabled}
             />
           );
         })}
-        <div className="col-9">
-          <button className="btn btn-primary" onClick={this.addOne}>
-            <AddOneIcon />
-          </button>
-        </div>
+        {!this.props.disabled &&
+          <div className="col-9">
+            <button className="btn btn-primary" onClick={this.addOne}>
+              <AddOneIcon />
+            </button>
+          </div>
+        }
       </div>
     );
   }

@@ -13,10 +13,12 @@ export default class InputPickerEnhanced extends Component {
     item: PropTypes.object,
     onChange: PropTypes.func.isRequired,
     multi: PropTypes.bool,
+    disabled: PropTypes.bool,
   };
 
   static defaultProps = {
     multi: false,
+    disabled: false,
   };
 
   constructor(props) {
@@ -142,6 +144,7 @@ export default class InputPickerEnhanced extends Component {
               pickerId="cau_id"
               pickerDisplay="cau_code"
               filters={this.props.filters || {}}
+              disabled={this.props.disabled}
               clearIcon={<DelOne className="text-warning" size={0.9} />}
               moreIcon={<More className="text-secondary" size={0.9} />}
               zoomIcon={<Zoom className="text-secondary" size={0.9} />}
@@ -161,7 +164,7 @@ export default class InputPickerEnhanced extends Component {
               addempty={true}
               onChange={this.props.onHandleChange}
               options={causeTypeAsOptions(this.props.cause_types)}
-              disabled={this.state.item && parseInt(this.state.item.id, 10) > 0}
+              disabled={(this.state.item && parseInt(this.state.item.id, 10) > 0) || this.props.disabled}
               labelTop={false}
               required={true}
             />
@@ -173,14 +176,16 @@ export default class InputPickerEnhanced extends Component {
               value={this.state.item && this.state.item.cau_sex}
               onChange={this.props.onHandleChange}
               options={sexSelect}
-              disabled={this.state.item && parseInt(this.state.item.id, 10) > 0}
+              disabled={(this.state.item && parseInt(this.state.item.id, 10) > 0) || this.props.disabled}
               labelTop={false}
             />
           </div>
           <div className="col-sm-4">
-            <button className="btn btn-warning" onClick={this.props.onDelOne}>
-              <DelOne className="text-light"/>
-            </button>
+            {!this.props.disabled &&
+              <button className="btn btn-warning" onClick={this.props.onDelOne}>
+                <DelOne className="text-light"/>
+              </button>
+            }
           </div>
         </div>
         {this.state.zoom && (
