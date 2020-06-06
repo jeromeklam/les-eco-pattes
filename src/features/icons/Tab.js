@@ -4,7 +4,7 @@ import {
   mdiSheep,
   mdiSwapHorizontal,
   mdiMapMarkerOutline, 
-  mdiSettingsOutline, 
+  mdiCogOutline, 
   mdiClipboardTextOutline,
   mdiFilter,
   mdiDelete,
@@ -24,7 +24,7 @@ export default class AddOne extends Component {
         path = mdiMapMarkerOutline;
         break;
       case 'settings':
-        path = mdiSettingsOutline;
+        path = mdiCogOutline;
         break;
       case 'misc':
         path = mdiClipboardTextOutline;

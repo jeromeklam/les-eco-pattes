@@ -133,7 +133,6 @@ function mapStateToProps(state) {
     movement: state.movement,
     data: state.data,
     config: state.config,
-    movementType: state.movementType,
     causeType: state.causeType,
   };
 }

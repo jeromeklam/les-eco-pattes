@@ -32,6 +32,9 @@ export const getMedias = (cause_id, caum_type) => {
   return promise;
 };
 
+/**
+ * 
+ */
 export const getCause = (cau_id, eager = true) => {
   const promise = new Promise((resolve, reject) => {
     const doRequest = freeAssoApi.get('/v1/asso/cause/' + cau_id, {});

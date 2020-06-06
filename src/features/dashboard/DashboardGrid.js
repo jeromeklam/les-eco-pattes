@@ -55,6 +55,7 @@ export class DashboardGrid extends Component {
       layouts: JSON.parse(JSON.stringify(originalLayouts)),
     };
     this.onLayoutChange = this.onLayoutChange.bind(this);
+    this.onResizeStop = this.onResizeStop.bind(this);
     this.onBreakpointChange = this.onBreakpointChange.bind(this);
   }
 
@@ -65,6 +66,9 @@ export class DashboardGrid extends Component {
 
   onBreakpointChange(breakpoint) {
     this.setState({ breakpoint });
+  }
+
+  onResizeStop(param1, param2) {
   }
 
   render() {
@@ -80,7 +84,9 @@ export class DashboardGrid extends Component {
             verticalCompact={true}
             onResize={this.onResize}
             onLayoutChange={this.onLayoutChange}
+            onResizeStop={this.onResizeStop}
             onBreakpointChange={this.onBreakpointChange}
+            draggableHandle=".card-header"
             layouts={layouts}
           >
             <div key="cause" data-grid={{ w: 6, h: 5, x: 1, y: 1, minW: 6, maxW: 18, minH: 4 }}>

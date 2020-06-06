@@ -1,48 +1,27 @@
 import React, { Component } from 'react';
-import { jsonApiNormalizer, buildModel } from 'freejsonapi';
 import axios from 'axios';
-import { freeAssoApi } from '../../common';
 import { AddOne as AddOneIcon } from '../icons';
 import { CenteredLoading3Dots } from '../ui';
 import { InputPickerEnhanced, getCause } from './';
-
-const _loadCause = id => {
-  if (!id) {
-    id = '0';
-  }
-  return freeAssoApi.get('/v1/asso/cause/' + id, {});
-};
+import { getCauseType } from '../cause-type';
 
 export default class MultiInputPicker extends Component {
   static propTypes = {};
 
-  static getDerivedStateFromProps(props, state) {
-    if (props.causes !== state.causes) {
-      return { causes: props.causes || [] };
-    }
-    return null;
-  }
-
   constructor(props) {
     super(props);
-    let causes = [];
-    try {
-      causes = this.props.causes || [];
-    } catch (ex) {}
-    if (causes.length <= 0) {
-      causes.push({ type: '', value: '' });
-    }
     this.state = {
       list: [],
-      causes: causes,
       autocomplete: false,
       source: false,
       emptyItem: {},
       loading: false,
       mouting: true,
+      index: -1,
     };
     this.onChange = this.onChange.bind(this);
     this.addOne = this.addOne.bind(this);
+    this.delOne = this.delOne.bind(this);
     this.onClose = this.onClose.bind(this);
     this.onFineChange = this.onFineChange.bind(this);
     this.onHandleChange = this.onHandleChange.bind(this);
@@ -55,13 +34,62 @@ export default class MultiInputPicker extends Component {
   }
 
   addOne() {
-    let { causes } = this.state;
-    causes.push({ type: '', id: '' });
-    this.setState({ causes: causes });
+    let { causes } = this.props;
+    const newItem = {...this.state.emptyItem};
+    if (!Array.isArray(causes)) {
+      causes = [];
+    }
+    let index = this.state.index;
+    index = index - 1;
+    newItem.id = index;
+    newItem.cau_id = index;
+    this.setState({ index: index });
+    causes.push(newItem);
+    this.props.onChange({
+      target: {
+        name: this.props.name,
+        value: causes,
+      },
+    });
+  }
+
+  delOne(i) {
+    let { causes } = this.props;
+    causes.splice(i, 1);
+    this.props.onChange({
+      target: {
+        name: this.props.name,
+        value: causes,
+      },
+    });
   }
 
   onClose() {
     this.setState({ list: [] });
+  }
+
+  onHandleChange(event, i) {
+    const { name, value } = event.target;
+    let { causes } = this.props;
+    if (name.indexOf('cause_type')>=0) {
+      getCauseType(value).then(causeType => {
+        causes[i]['cause_type'] = causeType;
+        this.props.onChange({
+          target: {
+            name: this.props.name,
+            value: causes,
+          },
+        });
+      });
+    } else {
+      causes[i][name] = value;
+      this.props.onChange({
+        target: {
+          name: this.props.name,
+          value: causes,
+        },
+      });
+    }
   }
 
   onFineChange(event, i) {
@@ -75,18 +103,18 @@ export default class MultiInputPicker extends Component {
       Accept: 'application/json',
       cancelToken: source.token,
     };
-    let { causes } = this.state;
+    let { causes } = this.props;
     const search = '' + event.target.value;
-    const newItem = {...this.state.emptyItem};
-    newItem.id = -1 * parseInt(i, 10);
+    let newItem = {...causes[i]}
     newItem.value = search;
     newItem.cau_code = search;
+    newItem.cau_name = search;
     causes[i] = newItem;
-    this.setState({ causes: causes, display: search, loading: true, cancel: source });
+    this.setState({ display: search, loading: true, cancel: source });
     this.props.onChange({
       target: {
         name: this.props.name,
-        value: JSON.stringify(causes),
+        value: causes,
       },
     });
     if (search.length >= 2) {
@@ -108,23 +136,19 @@ export default class MultiInputPicker extends Component {
   }
 
   onChange(e, i) {
-    let { causes, list } = this.state;
+    let { causes, list } = this.props;
     const id = e.target.value;
     if (id && parseInt(id, 10) > 0) {
-      _loadCause(e.target.value).then(result => {
-        if (result && result.data) {
-          const lines = jsonApiNormalizer(result.data);
-          const item = buildModel(lines, 'FreeAsso_Cause', id, { eager: true });
-          causes[i] = item;
-          list[i] = false;
-          this.props.onChange({
-            target: {
-              name: this.props.name,
-              value: causes,
-            },
-          });
-          this.setState({ causes: causes, list: list });
-        }
+      getCause(e.target.value).then(item => {
+        causes[i] = item;
+        list[i] = false;
+        this.props.onChange({
+          target: {
+            name: this.props.name,
+            value: causes,
+          },
+        });
+        this.setState({ list: list });
       });
     } else {
       causes = causes.splice(i, 1);
@@ -135,7 +159,7 @@ export default class MultiInputPicker extends Component {
           value: causes,
         },
       });
-      this.setState({ causes: causes, list: list });
+      this.setState({ list: list });
     }
   }
 
@@ -147,7 +171,7 @@ export default class MultiInputPicker extends Component {
     }
     return (
       <div className="cause-list">
-        {this.state.causes.map((elem, i) => {
+        {Array.isArray(this.props.causes) && this.props.causes.map((elem, i) => {
           return (
             <InputPickerEnhanced
               {...this.props}
@@ -169,6 +193,9 @@ export default class MultiInputPicker extends Component {
                 this.onChange(e, i);
               }}
               onClose={this.onClose}
+              onDelOne={e => {
+                this.delOne(i);
+              }}
             />
           );
         })}

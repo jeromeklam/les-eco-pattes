@@ -6,6 +6,30 @@ import {
   FilterClear as FilterClearIcon,
 } from '../icons';
 
+export const mvtFromType = [
+  { label: 'Autre', value: 'OTHER' },
+  { label: 'Interne', value: 'INTERNAL' },
+  { label: 'Op Commerciaux', value: 'COMMERCIAL' },
+  { label: 'Centre rassemblement', value: 'ASSEMBLY' },
+  { label: 'Marché', value: 'MARKET' },
+]
+
+export const mvtToType = [
+  { label: 'Autre', value: 'OTHER' },
+  { label: 'Interne', value: 'INTERNAL' },
+  { label: 'Op Commerciaux', value: 'COMMERCIAL' },
+  { label: 'Centre rassemblement', value: 'ASSEMBLY' },
+  { label: 'Marché', value: 'MARKET' },
+  { label: 'Abattoir', value: 'SLAUGHTERHOUSE' },
+  { label: 'Particulier', value: 'PRIVATE' },
+]
+
+export const mvtStatus = [
+  { label: 'Validé', value: 'OK' },
+  { label: 'Annulé', value: 'KO' },
+  { label: 'En cours', value: 'WAIT' },
+];
+
 export const mvtTypes = [
   { label: 'Mouvement interne sans notification', value: 'SIMPLE' },
   { label: 'Mouvement interne avec notification', value: 'TRANSFER' },
@@ -21,14 +45,6 @@ export const getTypeLabel = (p_type) => {
   }
   return '';
 }
-
-export const fromTypeSelect = [
-  { label: 'Autre', value: 'OTHER' },
-];
-
-export const toTypeSelect = [
-  { label: 'Autre', value: 'OTHER' },
-];
 
 export const getGlobalActions = ({ onClearFilters, onCreate }) => {
   return [
@@ -85,8 +101,8 @@ export const getCols = ({ props }) => {
       size: '4',
       mob_size: '36',
       title: true,
+      hidden: true,
       sortable: true,
-      first: true,
       filterable: { type: 'text' },
     },
     {
@@ -96,6 +112,7 @@ export const getCols = ({ props }) => {
       size: '8',
       mob_size: '36',
       title: true,
+      first: true,
       sortable: true,
       filterable: { type: 'text' },
     },
@@ -103,7 +120,7 @@ export const getCols = ({ props }) => {
       name: 'move_from',
       label: 'Départ',
       col: 'move_from',
-      size: '12',
+      size: '10',
       mob_size: '36',
       title: true,
       sortable: true,
@@ -114,7 +131,7 @@ export const getCols = ({ props }) => {
       name: 'move_to',
       label: 'Arrivée',
       col: 'move_to',
-      size: '12',
+      size: '10',
       mob_size: '36',
       title: true,
       sortable: true,
@@ -122,20 +139,36 @@ export const getCols = ({ props }) => {
       filterable: { type: 'date' },
     },
     {
+      name: 'status',
+      label: 'Statut',
+      col: 'move_status',
+      size: '4',
+      mob_size: '36',
+      title: true,
+      sortable: true,
+      first: true,
+      type: 'switch',
+      values: mvtStatus,
+      filterable: { type: 'select', options: mvtStatus },
+    },
+    {
       name: 'sep1',
       label: '',
-      col: '',
+      col: 'move_type',
       size: '12',
       mob_size: '0',
+      first: true,
       title: false,
-      sortable: false,
-      filterable: false,
+      type: 'switch',
+      values: mvtTypes,
+      sortable: true,
+      filterable: { type: 'select', options: mvtTypes },
     },
     {
       name: 'move_from_name',
       label: '',
       col: 'move_from_name',
-      size: '12',
+      size: '10',
       mob_size: '36',
       title: false,
       sortable: true,
@@ -145,7 +178,7 @@ export const getCols = ({ props }) => {
       name: 'move_to_name',
       label: '',
       col: 'move_to_name',
-      size: '12',
+      size: '10',
       mob_size: '36',
       title: false,
       sortable: true,

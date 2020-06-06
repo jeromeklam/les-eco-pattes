@@ -110,6 +110,7 @@ export class Modify extends Component {
             {item && (
               <Form
                 item={item}
+                modify={true}
                 modal={this.state.modal}
                 datas={this.props.data.items}
                 config={this.props.config.items}
@@ -117,6 +118,7 @@ export class Modify extends Component {
                 errors={this.props.movement.updateOneError}
                 tab={this.props.movement.tab}
                 tabs={this.props.movement.tabs}
+                cause_types={this.props.causeType.items}
                 onSubmit={this.onSubmit}
                 onCancel={this.onCancel}
                 onClose={this.props.onClose}
@@ -134,6 +136,7 @@ function mapStateToProps(state) {
     movement: state.movement,
     data: state.data,
     config: state.config,
+    causeType: state.causeType,
   };
 }
 

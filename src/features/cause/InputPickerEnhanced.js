@@ -51,13 +51,8 @@ export default class InputPickerEnhanced extends Component {
     if (props.item !== state.item || props.list !== state.list) {
       let value = null;
       let display = '';
-      if (props.item && parseInt(props.item.id, 10) > 0) {
-        value = props.item.id || '';
-        display = props.item.cau_code;
-      } else {
-        value = props.item.id || '';
-        display = props.item.cau_code;
-      }
+      value = props.item.id || '';
+      display = props.item.cau_code;
       return { item: props.item, value: value, display: display, list: props.list };
     }
     return null;
@@ -164,7 +159,7 @@ export default class InputPickerEnhanced extends Component {
               name="cause_type.id"
               value={this.state.item.cause_type ? this.state.item.cause_type.id : null}
               addempty={true}
-              onChange={this.handleChange}
+              onChange={this.props.onHandleChange}
               options={causeTypeAsOptions(this.props.cause_types)}
               disabled={this.state.item && parseInt(this.state.item.id, 10) > 0}
               labelTop={false}
@@ -176,11 +171,16 @@ export default class InputPickerEnhanced extends Component {
               name="cau_sex"
               id="cau_sex"
               value={this.state.item && this.state.item.cau_sex}
-              onChange={this.handleChange}
+              onChange={this.props.onHandleChange}
               options={sexSelect}
               disabled={this.state.item && parseInt(this.state.item.id, 10) > 0}
               labelTop={false}
             />
+          </div>
+          <div className="col-sm-4">
+            <button className="btn btn-warning" onClick={this.props.onDelOne}>
+              <DelOne className="text-light"/>
+            </button>
           </div>
         </div>
         {this.state.zoom && (

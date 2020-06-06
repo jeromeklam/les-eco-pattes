@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { mdiImageFilter as myIcon } from '@mdi/js';
+import { mdiFolderMultipleImage as myIcon } from '@mdi/js';
 import { Icon } from './';
 
 export default class Photo extends Component {

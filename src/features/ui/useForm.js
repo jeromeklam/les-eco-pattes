@@ -182,6 +182,9 @@ const useForm = (initialState, initialTab, onSubmit, onCancel, onNavTab, errors,
         default:
           datas = event.target.value;
           values[first] = datas;
+          if (afterChange) {
+            afterChange(event.target.name, values);
+          }
           break;
       }
     } else {
@@ -342,11 +345,11 @@ const useForm = (initialState, initialTab, onSubmit, onCancel, onNavTab, errors,
         default:
           datas[second] = event.target.value;
           values[first] = datas;
+          if (afterChange) {
+            afterChange(event.target.name, values);
+          }
           break;
       }
-    }
-    if (afterChange) {
-      afterChange(event.target.name, values);
     }
     setValues(explodeReduxModel(values));
   };
