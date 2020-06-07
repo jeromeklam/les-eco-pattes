@@ -4,6 +4,7 @@ import {
   GetOne as GetOneIcon,
   DelOne as DelOneIcon,
   FilterClear as FilterClearIcon,
+  Movement as MovementIcon,
 } from '../icons';
 
 export const mvtFromType = [
@@ -67,12 +68,23 @@ export const getGlobalActions = ({ onClearFilters, onCreate }) => {
 };
 
 export const getInlineActions = ({
+  onSelectList,
   onListCause,
   onGetOne,
   onDelOne,
   state,
 }) => {
   return [
+    {
+      name: 'move',
+      label: 'Mouvements',
+      onClick: (obj) => {onSelectList(obj, 'movement');},
+      param: 'object',
+      theme: 'secondary',
+      icon: <MovementIcon color="white" />,
+      role: 'OTHER',
+      active: state.mode === 'movement',
+    },
     {
       name: 'modify',
       label: 'Modifier',

@@ -1,4 +1,4 @@
-import { buildModel, objectToQueryString, jsonApiNormalizer } from 'freejsonapi';
+import { buildModel, jsonApiNormalizer } from 'freejsonapi';
 import { freeAssoApi } from '../../common';
 
 export const causeTypeMntType = [
@@ -36,6 +36,23 @@ export const getCauseType = (caut_id, eager = true) => {
     );
   });
   return promise;
+}
+
+/**
+ * 
+ */
+export const getCauseTypeLabel = (store, id) => {
+  let label = '';
+  if (store) {
+    let items = buildModel(store, 'FreeAsso_CauseType');
+    if (items) {
+      const found = items.find(elem => elem.id === id);
+      if (found) {
+        label = found.caut_name;
+      }
+    }
+  }
+  return label;
 }
 
 /**

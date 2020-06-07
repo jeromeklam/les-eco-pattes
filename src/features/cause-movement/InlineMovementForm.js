@@ -68,7 +68,7 @@ export default function InlineMovementForm(props) {
             <SimpleValidIcon className="inline-action text-light" />
           </button>
         </div>
-        <div className="col-10">
+        <div className="col-10 col-first">
           <InputPickerSite
             label="Vers"
             key="to_site"

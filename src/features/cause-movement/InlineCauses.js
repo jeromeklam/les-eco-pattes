@@ -7,12 +7,14 @@ import { getJsonApi } from 'freejsonapi';
 import * as actions from './redux/actions';
 import { ResponsiveConfirm, HoverObserver } from 'freeassofront';
 import { CenteredLoading3Dots, createSuccess, createError } from '../ui';
-import { InlineMovementForm } from './';
-import { propagateModel, intlDate } from '../../common';
+import { InlineCauseForm } from './';
+import { propagateModel } from '../../common';
+import { getCauseTypeLabel } from '../cause-type';
+import { getSexlabel } from '../cause';
 import { DelOne as DelOneIcon, SimpleCheck as SimpleCheckIcon } from '../icons';
 import { statusLabel, getMovements } from './';
 
-export class InlineMovements extends Component {
+export class InlineCauses extends Component {
   static propTypes = {
     causeMovement: PropTypes.object.isRequired,
     actions: PropTypes.object.isRequired,
@@ -74,15 +76,20 @@ export class InlineMovements extends Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if (prevState.cause !== this.state.cause) {
+    if (prevState.movement !== this.state.movement) {
       this.localLoadMovements();
     }
   }
 
   onSubmit(datas = {}) {
     // Conversion des données en objet pour le service web
+    const { movement } = this.state;
+    datas.movement = movement;
+    datas.camv_start = movement.move_from;
+    datas.camv_to = movement.move_to;
+    datas.from_site = movement.from_site;
+    datas.to_site = movement.to_site;
     const obj = getJsonApi(datas, 'FreeAsso_CauseMovement');
-    const { cause } = this.state;
     this.props.actions
       .createOne(obj)
       .then(result => {
@@ -151,13 +158,13 @@ export class InlineMovements extends Component {
             <div className="inline-list">
               <div className={classnames('row row-title row-line', (counter++ % 2 !== 1) ? 'row-odd' : 'row-even')} key="cause-inline-movements">
                 <div className="col-sm-5 col-first">
-                  <span>Date</span>
+                  <span>N° boucle</span>
                 </div>
                 <div className="col-sm-7">
-                  <span>Depuis</span>
+                  <span>Race</span>
                 </div>
                 <div className="col-sm-7">
-                  <span>Vers</span>
+                  <span>Sexe</span>
                 </div>
                 <div className="col-sm-7">
                   <span>Notes</span>
@@ -170,9 +177,9 @@ export class InlineMovements extends Component {
                 return (
                   <HoverObserver onMouseEnter={() => {this.mouseEnter(movement.id)}} onMouseLeave={this.mouseLeave}>
                     <div className={classnames('row row-line', (counter++ % 2 !== 1) ? 'row-odd' : 'row-even')} key={movement.id}>
-                      <div className="col-sm-5 col-first">{intlDate(movement.camv_to)}</div>
-                      <div className="col-sm-7">{movement.from_site.site_name}</div>
-                      <div className="col-sm-7">{movement.to_site.site_name}</div>
+                      <div className="col-sm-5 col-first">{movement.cause.cau_code}</div>
+                      <div className="col-sm-7">{getCauseTypeLabel(this.props.causeType.items, movement.cause.cause_type.id)}</div>
+                      <div className="col-sm-7">{getSexlabel(movement.cause.cau_sex)}</div>
                       <div className="col-sm-7">{movement.camv_comment}</div>
                       <div className="col-sm-5">{statusLabel(movement.camv_status)}</div>
                       <div className="col-sm-5 text-right col-last">
@@ -208,6 +215,7 @@ export class InlineMovements extends Component {
               />
               <ResponsiveConfirm
                 show={valid}
+                theme="success"
                 onClose={this.onConfirmClose}
                 onConfirm={() => {
                   this.onValid();
@@ -219,8 +227,8 @@ export class InlineMovements extends Component {
             <div className="row row-new-movement">
               <div className="col-36 p-3">
                 {emptyItem && (
-                  <InlineMovementForm
-                    cause={this.state.cause}
+                  <InlineCauseForm
+                    movement={this.state.movement}
                     item={emptyItem}
                     errors={this.props.causeMovement.createOneError}
                     onSubmit={this.onSubmit}
@@ -236,8 +244,8 @@ export class InlineMovements extends Component {
             <div className="row row-new-movement">
               <div className="col-36 pt-2">
                 {emptyItem && (
-                  <InlineMovementForm
-                    cause={this.props.causeMovement.cause}
+                  <InlineCauseForm
+                    movement={this.props.causeMovement.movement}
                     item={emptyItem}
                     errors={this.props.causeMovement.createOneError}
                     onSubmit={this.onSubmit}
@@ -255,6 +263,7 @@ export class InlineMovements extends Component {
 function mapStateToProps(state) {
   return {
     causeMovement: state.causeMovement,
+    causeType: state.causeType,
   };
 }
 
@@ -264,4 +273,4 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(InlineMovements);
+export default connect(mapStateToProps, mapDispatchToProps)(InlineCauses);

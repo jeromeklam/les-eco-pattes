@@ -23,6 +23,8 @@ export default class ImageModal extends Component {
           show={true}
           onClose={this.props.onClose}
           buttons={[]}
+          modalClassName="bg-primary-light text-secondary"
+          closeClassName="text-secondary"
         >
           <div className="container-fluid text-center">
             <img src={this.props.image} className="img-fluid" alt="Responsive" />

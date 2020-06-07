@@ -73,3 +73,4 @@ export { default as MapPose } from './MapPose';
 export { default as MenuDown } from './MenuDown';
 export { default as SocketConnected } from './SocketConnected';
 export { default as SocketDisconnected } from './SocketDisconnected';
+export { default as SimpleCheck } from './SimpleCheck';

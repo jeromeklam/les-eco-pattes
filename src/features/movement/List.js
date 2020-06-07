@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import * as actions from './redux/actions';
 import { buildModel } from 'freejsonapi';
 import { ResponsiveList, ResponsiveQuickSearch } from 'freeassofront';
+import { InlineCauses } from '../cause-movement';
 import {
   Filter as FilterIcon,
   FilterFull as FilterFullIcon,
@@ -16,7 +17,7 @@ import {
   Search as SearchIcon,
 } from '../icons';
 import { deleteSuccess, deleteError } from '../ui';
-import { InlineCauses, getGlobalActions, getInlineActions, getCols, Create, Modify } from './';
+import { getGlobalActions, getInlineActions, getCols, Create, Modify } from './';
 
 /**
  * Liste des movements
@@ -38,6 +39,8 @@ export class List extends Component {
       photosMovement: 0,
       documentsMovement: 0,
       movementId: -1,
+      item: null,
+      mode: null,
     };
     this.onCreate = this.onCreate.bind(this);
     this.onGetOne = this.onGetOne.bind(this);
@@ -50,6 +53,7 @@ export class List extends Component {
     this.onSetFiltersAndSort = this.onSetFiltersAndSort.bind(this);
     this.onUpdateSort = this.onUpdateSort.bind(this);
     this.onListCause = this.onListCause.bind(this);
+    this.onSelectList = this.onSelectList.bind(this);
   }
 
   componentDidMount() {
@@ -66,6 +70,15 @@ export class List extends Component {
 
   onClose() {
     this.setState({ movementId: -1 });
+  }
+
+  onSelectList(obj, list) {
+    const { item, mode } = this.state;
+    if (item && item.id === obj.id && mode === list) {
+      this.setState({ mode: false, item: null });
+    } else {
+      this.setState({ mode: list, item: obj });
+    }
   }
 
   onDelOne(id) {
@@ -156,17 +169,16 @@ export class List extends Component {
    * Génération du contenu
    */
   render() {
+    let inlineComponent = null;
+    let id = null;
+    if (this.state.mode === 'movement') {
+      id = this.state.item.id;
+      inlineComponent = <InlineCauses movement={this.state.item} />;
+    }
     // Les des items à afficher avec remplissage progressif
     let items = [];
     if (this.props.movement.items.FreeAsso_Movement) {
       items = buildModel(this.props.movement.items, 'FreeAsso_Movement');
-    }
-    // Inline Element
-    let inlineComponent = null;
-    let id = null;
-    if (this.state.animalsMovement > 0) {
-      inlineComponent = <InlineCauses />;
-      id = this.state.animalsMovement;
     }
     // Toolsbars and lists
     const globalActions = getGlobalActions(this);

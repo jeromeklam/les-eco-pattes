@@ -41,6 +41,7 @@ export default class MultiInputPicker extends Component {
 
   addOne() {
     let { causes } = this.props;
+    let { list } = this.state;
     const newItem = {...this.state.emptyItem};
     if (!Array.isArray(causes)) {
       causes = [];
@@ -51,6 +52,8 @@ export default class MultiInputPicker extends Component {
     newItem.cau_id = index;
     this.setState({ index: index });
     causes.push(newItem);
+    list.push(false);
+    this.setState({list: list});
     this.props.onChange({
       target: {
         name: this.props.name,
@@ -142,7 +145,8 @@ export default class MultiInputPicker extends Component {
   }
 
   onChange(e, i) {
-    let { causes, list } = this.props;
+    let { causes } = this.props;
+    let { list } = this.state;
     const id = e.target.value;
     if (id && parseInt(id, 10) > 0) {
       getCause(e.target.value).then(item => {

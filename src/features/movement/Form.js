@@ -2,6 +2,7 @@ import React from 'react';
 import { InputHidden, InputText, InputSelect, InputCheckbox } from 'freeassofront';
 import { MultiInputPicker as CauseMultiInputPicker } from '../cause';
 import { InputPicker as SiteInputPicker } from '../site';
+import { InlineCauses } from '../cause-movement';
 import { Movement as MovementIcon, Cause as CauseIcon } from '../icons';
 import { useForm, ResponsiveModalOrForm, InputDatetime } from '../ui';
 import { getTypeLabel, mvtStatus, mvtTypes, mvtFromType, mvtToType } from './';
@@ -524,6 +525,11 @@ export default function Form(props) {
         )}
         {(values.currentTab === '9') && (
           <div>
+            {modify ? (
+              <div className="border border-secondary rounded overflow-x-hidden">
+                <InlineCauses movement={values} />
+              </div>
+            ) : (
               <CauseMultiInputPicker
                 label="Animal"
                 name="causes"
@@ -534,6 +540,7 @@ export default function Form(props) {
                 onChange={handleChange}
                 disabled={values.globalDisabled}
               />
+            )}
           </div>
         )}
       </div>
