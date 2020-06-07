@@ -44,6 +44,36 @@ const tabsEnd = [
   },
 ];
 
+const initItem = (item) => {
+  if (!item.modify) {
+    item.move_type = item.param_mode || 'SIMPLE';
+    item.move_from = new Date().toISOString();
+    item.move_to = new Date().toISOString();
+    if (item.param_site) {
+      switch (item.param_mode) {
+        case 'INPUT':
+          item.to_site = item.param_site;
+          afterChange('to_site', item);
+          break;
+        case 'OUTPUT':
+          item.from_site = item.param_site;
+          afterChange('from_site', item);
+          break;
+        default:
+          break;
+      }
+    }
+  }
+  item.transportRequired = false;
+  item.fromRequired = false;
+  item.toRequired = false;
+  item.globalDisabled = false;
+  if (item.modify && item.move_status === 'OK') {
+    item.globalDisabled = true;
+  }
+  return item;
+}
+
 const afterChange = (name, item) => {
   console.log(name, item);
   try {
@@ -72,18 +102,9 @@ const afterChange = (name, item) => {
 
 export default function Form(props) {
   const modify = props.modify || false;
-  if (!modify) {
-    props.item.move_type = props.mode || 'OTHER';
-    props.item.from_site = props.fromSite;
-    props.item.move_from = new Date().toISOString();;
-  }
-  props.item.transportRequired = false;
-  props.item.fromRequired = false;
-  props.item.toRequired = false;
-  props.item.globalDisabled = false;
-  if (modify && props.item.move_status === 'OK') {
-    props.item.globalDisabled = true;
-  }
+  props.item.modify = modify;
+  props.item.param_mode = props.mode || 'SIMPLE';
+  props.item.param_site = props.fromSite || null;
   const {
     values,
     handleChange,
@@ -91,7 +112,7 @@ export default function Form(props) {
     handleCancel,
     getErrorMessage,
     handleNavTab,
-  } = useForm(props.item, props.tab, props.onSubmit, props.onCancel, props.onNavTab, props.errors, afterChange);
+  } = useForm(props.item, props.tab, props.onSubmit, props.onCancel, props.onNavTab, props.errors, afterChange, initItem);
   let myTabs = tabs;
   //if (values.move_type !== 'SIMPLE' && values.mode_type !== 'TRANSFER') {
     myTabs = tabs.concat(tabsFrom, tabsTo); 

@@ -40,7 +40,7 @@ export default class InputData extends Component {
     let list = [];
     if (this.state.data.data_type === 'LIST') {
       try {
-      list = JSON.parse(this.state.data.data_content);
+        list = JSON.parse(this.state.data.data_content);
       } catch (ex) {
         // @todo
       }

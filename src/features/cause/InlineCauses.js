@@ -115,7 +115,15 @@ export default class InlineCauses extends Component {
               key="cause-inline-causes"
             >
               <div className="col-sm-1 col-first">
-                <input type="checkbox" checked={this.state.selectAll} onClick={this.onSelectAll} />
+                <div
+                  className={classnames(
+                    'inline-select-line border border-secondary mr-2',
+                    this.state.selectAll && 'selected'
+                  )}
+                  onClick={this.onSelectAll}
+                >
+                  <div className="inline-select-line-inner bg-secondary" />
+                </div>
               </div>
               <div className="col-sm-6">
                 <span>N° boucle</span>
@@ -224,11 +232,15 @@ export default class InlineCauses extends Component {
                 key={cause.id}
               >
                 <div className="col-sm-1 col-first">
-                  <input
-                    type="checkbox"
-                    checked={selected.includes(cause.id)}
+                  <div
+                    className={classnames(
+                      'inline-select-line border border-secondary mr-2',
+                      selected.includes(cause.id) && 'selected'
+                    )}
                     onClick={() => this.onSelect(cause.id)}
-                  />
+                  >
+                    <div className="inline-select-line-inner bg-secondary" />
+                  </div>
                 </div>
                 <div className="col-sm-6">
                   <span>{cause.cau_code}</span>

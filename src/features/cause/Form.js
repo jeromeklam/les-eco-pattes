@@ -227,7 +227,7 @@ export default function Form(props) {
               />
             </div>
             <div className="col-16">
-              {values.cau_to !== null && values.cau_to !== '' && (
+              {(values.cau_to !== null && values.cau_to !== '') && (
                 <InputData
                   name="cau_string_3"
                   labelTop={true}

@@ -50,9 +50,10 @@ const _loadClient = id => {
   return freeAssoApi.get('/v1/asso/client/' + id, {});
 };
 
-const useForm = (initialState, initialTab, onSubmit, onCancel, onNavTab, errors, afterChange = null) => {
+const useForm = (initialState, initialTab, onSubmit, onCancel, onNavTab, errors, afterChange = null, init = null) => {
+  const initial = init ? init(initialState) : initialState;
   const [values, setValues] = useState({
-    ...initialState,
+    ...initial,
     currentTab: initialTab,
     loadCauseType: false,
     loadSiteType: false,

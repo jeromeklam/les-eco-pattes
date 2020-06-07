@@ -1,5 +1,19 @@
 export default `
 
+# Version 1.2.0 : 07/06/2020
+* Général
+    * Ajustements des barres de défilement pour Windows
+    * Amélioration de la saisie des dates et dates heures
+    * Ajustements graphiques (fenêtres, uniformisation des boutons)
+* Sites
+    * Problème d'activation des champs (linéaire et type de clôture posé)
+* Causes
+    * Problème d'activation du champ motif de sortie
+* Mouvements
+    * Adaptation de la fiche de saisie des mouvements
+    * Saisie en masse des mouvements
+    * Mouvements possibles depuis la fiche des sites
+
 # Version 1.1.0 : 24/05/2020
 * Général
     * Léger ajustement du menu de gauche au niveau des couleurs et sous-menu visible avec fond blanc.
