@@ -5,7 +5,7 @@ const initialState = {
   loadAllPending: false,
   loadAllError: null,
   socket: null,
-  socketOn: true,
+  socketOn: false,
   socketConnected: false,
   socketMessage: null,
 };
