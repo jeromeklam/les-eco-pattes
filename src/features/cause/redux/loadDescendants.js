@@ -16,8 +16,8 @@ export function loadDescendants(args = {}) {
       const filter = {
         filter: {
           or: {
-            parent1_cau_id: args.id,
-            parent2_cau_id: args.id,
+            parent1_cau_id: {eq : args.id},
+            parent2_cau_id: {eq : args.id},
           }
         }
       }

@@ -15,7 +15,7 @@ export function loadCauses(args = {}) {
     const promise = new Promise((resolve, reject) => {
       const filter = {
         filter: {
-          site_id: args,
+          site_id: {eq: args},
         }
       }
       const addUrl = objectToQueryString(filter);

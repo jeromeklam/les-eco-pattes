@@ -8,7 +8,7 @@ export const getGrowths = (cau_id) => {
   const promise = new Promise((resolve, reject) => {
     const filter = {
       filter: {
-        cau_id: cau_id,
+        cau_id: {eq : cau_id},
       },
       sort: '-grow_ts'
     }

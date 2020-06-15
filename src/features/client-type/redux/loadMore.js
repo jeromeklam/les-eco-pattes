@@ -35,7 +35,7 @@ export function loadMore(args = {}, reload = false) {
         if (args && Object.keys(args).length > 0 && args !== '') {
           params.filter = {
             and: {
-              clit_name: args,
+              clit_name: {eq: args},
             },
           };
         }

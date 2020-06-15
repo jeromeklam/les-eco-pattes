@@ -2,7 +2,7 @@ import { buildModel, objectToQueryString, jsonApiNormalizer } from 'freejsonapi'
 import { freeAssoApi } from '../../common';
 
 /**
- * 
+ *
  */
 export const getOne = (id) => {
   if (!id) {
@@ -35,8 +35,8 @@ export const getMedias = (site_id, sitm_type) => {
   const promise = new Promise((resolve, reject) => {
     const filter = {
       filter: {
-        site_id: site_id,
-        sitm_type: sitm_type,
+        site_id: {eq: site_id},
+        sitm_type: {eq: sitm_type},
       }
     }
     const addUrl = objectToQueryString(filter);

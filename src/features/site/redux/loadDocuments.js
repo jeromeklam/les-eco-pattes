@@ -15,8 +15,8 @@ export function loadDocuments(args = {}) {
     const promise = new Promise((resolve, reject) => {
       const filter = {
         filter: {
-          site_id: args,
-          sitm_type: 'OTHER',
+          site_id: {eq: args},
+          sitm_type: {eq: 'OTHER'},
         }
       }
       const addUrl = objectToQueryString(filter);

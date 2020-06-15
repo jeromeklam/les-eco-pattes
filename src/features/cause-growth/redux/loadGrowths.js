@@ -15,7 +15,7 @@ export function loadGrowths(args = {}) {
     const promise = new Promise((resolve, reject) => {
       const filter = {
         filter: {
-          cau_id: args.id,
+          cau_id: {eq: args.id},
         },
         sort: '-grow_ts'
       }

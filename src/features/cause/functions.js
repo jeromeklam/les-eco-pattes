@@ -8,8 +8,8 @@ export const getMedias = (cause_id, caum_type) => {
   const promise = new Promise((resolve, reject) => {
     const filter = {
       filter: {
-        cau_id: cause_id,
-        caum_type: caum_type,
+        cau_id: {eq: cause_id},
+        caum_type: {eq: caum_type},
       }
     }
     const addUrl = objectToQueryString(filter);
@@ -33,7 +33,7 @@ export const getMedias = (cause_id, caum_type) => {
 };
 
 /**
- * 
+ *
  */
 export const getCause = (cau_id, eager = true) => {
   const promise = new Promise((resolve, reject) => {
@@ -119,16 +119,16 @@ export const downloadCauseMediaBlob = sitm_id => {
 
 /**
  * Export all cause group
- * 
- * @param {causeList} array 
- * 
+ *
+ * @param {causeList} array
+ *
  * @return {array}
  */
 export function causeGroup(causeList) {
   let causeGroup = [];
   let find;
   let nbGrp = 0 ;
-  if ( causeList ) { 
+  if ( causeList ) {
     causeList.forEach((item) => {
       find = false;
       causeGroup.forEach((group) => {

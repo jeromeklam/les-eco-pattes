@@ -16,8 +16,8 @@ export function loadPhotos(args = {}) {
     const promise = new Promise((resolve, reject) => {
       const filter = {
         filter: {
-          cause_id: args,
-          caum_type: 'PHOTO',
+          cause_id: {eq: args},
+          caum_type: {eq: 'PHOTO'},
         }
       }
       const addUrl = objectToQueryString(filter);

@@ -15,8 +15,8 @@ export function loadPhotos(args = {}) {
     const promise = new Promise((resolve, reject) => {
       const filter = {
         filter: {
-          site_id: args,
-          sitm_type: 'PHOTO',
+          site_id: {eq: args},
+          sitm_type: {eq: 'PHOTO'},
         }
       }
       const addUrl = objectToQueryString(filter);

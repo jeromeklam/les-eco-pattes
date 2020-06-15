@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import { InputSpin as FAInputSpin } from 'freeassofront';
-import { Up as UpIcon, Down as DownIcon } from '../icons';
+import { Up as UpIcon, Down as DownIcon, DelOne as DelOneIcon } from '../icons';
 
 export default class InputSpin extends Component {
 
   render() {
     return (
-      <FAInputSpin {...this.props} upIcon={<UpIcon />} downIcon={<DownIcon />} />
+      <FAInputSpin {...this.props} upIcon={<UpIcon />} downIcon={<DownIcon />} clearIcon={<DelOneIcon />} />
     );
   }
 }
