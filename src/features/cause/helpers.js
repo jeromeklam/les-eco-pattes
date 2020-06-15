@@ -60,7 +60,7 @@ export const getSelectActions = ({ props, onSelectMenu }) => {
     },
     {
       name: 'SIMPLE',
-      label: 'Mvt interne avec notification',
+      label: 'Mvt interne sans notification',
       onClick: () => {onSelectMenu('SIMPLE');}
     },
     {

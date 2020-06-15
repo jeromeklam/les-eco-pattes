@@ -99,7 +99,7 @@ export default function InlineMovementForm(props) {
         </div>
         <div className="col-13">
           <InputSelect
-            label="Status"
+            label="Statut"
             name="camv_status"
             labelTop={false}
             size="sm"

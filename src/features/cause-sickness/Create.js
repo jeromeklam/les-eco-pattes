@@ -34,9 +34,11 @@ export class Create extends Component {
      *  En async on va demander le chargement des données
      *  Lorsque fini le store sera modifié
      */
+    console.log("FK cDM", this.state.causId);
     this.props.actions.loadOne(this.state.causId).then(result => {
       const item = this.props.causeSickness.loadOneItem;
       this.setState({ item: item });
+      console.log("FK cDM 2", item)
     });
   }
 
@@ -57,6 +59,7 @@ export class Create extends Component {
   onSubmit(datas = {}) {
     // Conversion des données en objet pour le service web
     datas.cause = this.state.cause; 
+    console.log("FK datas", datas);
     let obj = getJsonApi(datas, 'FreeAsso_CauseSickness', this.state.causId);
     this.props.actions
       .createOne(obj)

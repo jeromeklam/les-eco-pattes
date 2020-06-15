@@ -170,7 +170,7 @@ export class InlineCauses extends Component {
                   <span>Notes</span>
                 </div>
                 <div className="col-sm-10">
-                  <span>Status</span>
+                  <span>Statut</span>
                 </div>
               </div>
               {movements.map(movement => {

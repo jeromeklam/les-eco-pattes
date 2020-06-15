@@ -89,7 +89,7 @@ export class PendingMovements extends Component {
                     <span>Animal</span>
                   </Col>
                   <Col layoutSize={this.props.layoutSize || 'md'} md={12} lg={6} xl={6} col={12}>
-                    <span>Status</span>
+                    <span>Statut</span>
                   </Col>
                   <Col layoutSize={this.props.layoutSize || 'md'} md={12} lg={5} xl={5} col={12}>
                     <span>Depuis</span>

@@ -51,7 +51,7 @@ export default function InlineCauseForm(props) {
         </div>
         <div className="col-10">
           <InputSelect
-            label="Status"
+            label="Statut"
             name="camv_status"
             labelTop={false}
             size="sm"

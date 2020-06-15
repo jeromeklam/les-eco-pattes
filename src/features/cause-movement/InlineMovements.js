@@ -91,7 +91,6 @@ export class InlineMovements extends Component {
         this.localLoadMovements();
       })
       .catch(errors => {
-        // @todo display errors to fields
         createError();
       });
   }
@@ -163,7 +162,7 @@ export class InlineMovements extends Component {
                   <span>Notes</span>
                 </div>
                 <div className="col-sm-10">
-                  <span>Status</span>
+                  <span>Statut</span>
                 </div>
               </div>
               {movements.map(movement => {
