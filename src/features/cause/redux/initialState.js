@@ -1,8 +1,9 @@
-import { Filter } from 'freeassofront';
+import { Filter, FILTER_MODE_AND, FILTER_OPER_GREATER_OR_EQUAL_OR_NULL } from 'freeassofront';
 
 let initialFilters = new Filter();
 const now = new Date().toISOString();
-initialFilters.addFilter('cau_to', now, 'gten');
+initialFilters.addFilter('cau_to', now, FILTER_OPER_GREATER_OR_EQUAL_OR_NULL);
+initialFilters.setMode(FILTER_MODE_AND);
 
 const initialState = {
   items: [],

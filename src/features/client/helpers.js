@@ -85,7 +85,7 @@ export const getCols = ({ props }) => {
     {
       name: 'adress',
       label: 'Adresse',
-      col: 'cli_adress1',
+      col: 'cli_address1',
       size: '7',
       mob_size: '36',
       sortable: true,

@@ -1,5 +1,21 @@
 export default `
 
+# Version 1.2.1 : 15/06/2020
+* Général
+    * Les listes avec filtres par défaut passent en mode ET,
+    * La recherche via la loupe ne fonctionnait plus sur les fiche, fenêtre modifiée en look,
+    * Adaptation de fenêtres de validation
+    * Ajustement des critères de recherche pour les chargements
+    * Changement de certains éléments graphiques
+* Personnes
+    * Correction d'un problème d'affichage et de rafraichissement en cas de modification
+    * Correction de la saisie de l'email2
+* Animaux
+    * Correction du champ année de naissance, il manquait la possibilité de remise à zéro
+* Mouvements
+    * Adaptation de la saisie, quelques bugs d'affichage
+    * Uniformisation des libellés des statuts, il restait quelques valeurs en "dur"
+
 # Version 1.2.0 : 07/06/2020
 * Général
     * Ajustements des barres de défilement pour Windows
@@ -7,7 +23,7 @@ export default `
     * Ajustements graphiques (fenêtres, uniformisation des boutons)
 * Sites
     * Problème d'activation des champs (linéaire et type de clôture posé)
-* Causes
+* Animaux
     * Problème d'activation du champ motif de sortie
 * Mouvements
     * Adaptation de la fiche de saisie des mouvements

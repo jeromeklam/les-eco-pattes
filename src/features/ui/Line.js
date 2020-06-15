@@ -14,8 +14,18 @@ export default class Line extends Component {
   };
 
   render() {
+    let className = '';
+    if (this.props.header) {
+      className += 'row-title';
+    } else {
+      if (this.props.oddEven % 2 !== 1) {
+        className += 'row-odd';
+      } else {
+        className += 'row-even';
+      }
+    }
     return (
-      <div className={classnames('row row-line', this.props.header && 'row-title', (this.props.oddEven % 2 !== 1) ? 'row-odd' : 'row-even')}>
+      <div className={classnames('row row-line', className)}>
         {this.props.children}
       </div>
     );

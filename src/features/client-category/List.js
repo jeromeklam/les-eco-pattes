@@ -9,7 +9,7 @@ import {
   Filter as FilterIcon,
   FilterFull as FilterFullIcon,
   SimpleCancel as CancelPanelIcon,
-  SimpleValid as ValidPanelIcon,
+  SimpleCheck as ValidPanelIcon,
   SortDown as SortDownIcon,
   SortUp as SortUpIcon,
   Sort as SortNoneIcon,

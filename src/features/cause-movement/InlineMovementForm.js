@@ -4,6 +4,7 @@ import { InputPicker as InputPickerSite } from '../site';
 import { InputDate } from '../ui';
 import useForm from '../ui/useForm';
 import { SimpleValid as SimpleValidIcon } from '../icons';
+import { mvtStatus } from './';
 
 export default function InlineMovementForm(props) {
   if (props.cause) {
@@ -107,11 +108,7 @@ export default function InlineMovementForm(props) {
             inputSize={30}
             value={values.camv_status || 'OK'}
             onChange={handleChange}
-            options={[
-              { value: 'OK', label: 'Effectué' },
-              { value: 'WAIT', label: 'A valider' },
-              { value: 'KO', label: 'Autre' },
-            ]}
+            options={mvtStatus}
             error={getErrorMessage('camv_status')}
           />
         </div>

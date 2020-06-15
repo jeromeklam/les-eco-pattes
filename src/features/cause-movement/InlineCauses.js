@@ -157,16 +157,16 @@ export class InlineCauses extends Component {
           <div className="cause-inline-movements">
             <div className="inline-list">
               <div className={classnames('row row-title row-line', (counter++ % 2 !== 1) ? 'row-odd' : 'row-even')} key="cause-inline-movements">
-                <div className="col-sm-5 col-first">
+                <div className="col-sm-7 col-first">
                   <span>N° boucle</span>
                 </div>
                 <div className="col-sm-7">
                   <span>Race</span>
                 </div>
-                <div className="col-sm-7">
+                <div className="col-sm-3">
                   <span>Sexe</span>
                 </div>
-                <div className="col-sm-7">
+                <div className="col-sm-9">
                   <span>Notes</span>
                 </div>
                 <div className="col-sm-10">
@@ -177,10 +177,10 @@ export class InlineCauses extends Component {
                 return (
                   <HoverObserver onMouseEnter={() => {this.mouseEnter(movement.id)}} onMouseLeave={this.mouseLeave}>
                     <div className={classnames('row row-line', (counter++ % 2 !== 1) ? 'row-odd' : 'row-even')} key={movement.id}>
-                      <div className="col-sm-5 col-first">{movement.cause.cau_code}</div>
+                      <div className="col-sm-7 col-first">{movement.cause.cau_code}</div>
                       <div className="col-sm-7">{getCauseTypeLabel(this.props.causeType.items, movement.cause.cause_type.id)}</div>
-                      <div className="col-sm-7">{getSexlabel(movement.cause.cau_sex)}</div>
-                      <div className="col-sm-7">{movement.camv_comment}</div>
+                      <div className="col-sm-3">{getSexlabel(movement.cause.cau_sex)}</div>
+                      <div className="col-sm-9">{movement.camv_comment}</div>
                       <div className="col-sm-5">{statusLabel(movement.camv_status)}</div>
                       <div className="col-sm-5 text-right col-last">
                       {this.state.flipped && this.state.flipped === movement.id && 

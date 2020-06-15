@@ -13,11 +13,13 @@ import {
   Filter as FilterIcon,
   FilterFull as FilterFullIcon,
   SimpleCancel as CancelPanelIcon,
-  SimpleValid as ValidPanelIcon,
+  SimpleCheck as ValidPanelIcon,
   SortDown as SortDownIcon,
   SortUp as SortUpIcon,
   Sort as SortNoneIcon,
   Search as SearchIcon,
+  DelOne as ClearIcon,
+  Calendar as CalendarIcon,
 } from '../icons';
 import { deleteSuccess, showErrors } from '../ui';
 import { InlineMovements } from '../cause-movement';
@@ -270,6 +272,8 @@ export class List extends Component {
           sortDownIcon={<SortDownIcon color="secondary" />}
           sortUpIcon={<SortUpIcon color="secondary" />}
           sortNoneIcon={<SortNoneIcon color="secondary" />}
+          calIcon={<CalendarIcon className="text-secondary" />}
+          clearIcon={<ClearIcon className="text-warning" />}
           inlineActions={inlineActions}
           inlineOpenedId={id}
           inlineComponent={inlineComponent}

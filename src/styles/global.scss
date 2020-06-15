@@ -245,24 +245,28 @@ svg.text-warning.inline-action:hover {
       fill: theme-color('secondary-light') !important;
     }
   }
-  .row-title span {
-    font-weight: bold;
-  }
   .row-line {
     min-height: 30px;
     line-height: 30px;
   }
-  .row-line.row-even {
+  .row-line.row-even:not(.row-title) {
     background: lighten(theme-color('secondary-light'), 6%);
   }
   .row-line.row-even:not(.row-title):hover {
     background: lighten(theme-color('secondary-light'), 8%);
   }
-  .row-line.row-odd {
+  .row-line.row-odd:not(.row-title) {
     background: lighten(theme-color('secondary-light'), 10%);
   }
   .row-line.row-odd:not(.row-title):hover {
     background: lighten(theme-color('secondary-light'), 12%);
+  }
+  .row-title {
+    background-color: theme-color('secondary');
+    color: theme-color('light');
+  }
+  .row-title span {
+    /*font-weight: bold;*/
   }
   svg.inline-action:hover {
     cursor: pointer;
@@ -272,6 +276,12 @@ svg.text-warning.inline-action:hover {
       fill: theme-color('light') !important;
     }
   }
+  .btn-group {
+    position: absolute;
+    right: 10px;
+  }
+}
+.inline-list {
 }
 .list-group-item {
   background-color: transparent;

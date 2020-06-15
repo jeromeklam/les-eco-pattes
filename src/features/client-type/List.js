@@ -7,7 +7,7 @@ import { buildModel } from 'freejsonapi';
 import { ResponsiveList } from 'freeassofront';
 import {
   SimpleCancel as CancelPanelIcon,
-  SimpleValid as ValidPanelIcon,
+  SimpleCheck as ValidPanelIcon,
   SortDown as SortDownIcon,
   SortUp as SortUpIcon,
   Sort as SortNoneIcon,

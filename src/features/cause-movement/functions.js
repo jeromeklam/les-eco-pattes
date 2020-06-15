@@ -1,6 +1,12 @@
 import { buildModel, objectToQueryString, jsonApiNormalizer } from 'freejsonapi';
 import { freeAssoApi } from '../../common';
 
+export const mvtStatus = [
+  { label: 'Validé', value: 'OK' },
+  { label: 'Annulé', value: 'KO' },
+  { label: 'En cours', value: 'WAIT' },
+];
+
 /**
  *
  */
@@ -40,15 +46,9 @@ export const getMovements = (cau_id = null, move_id = null) => {
  * 
  */
 export const statusLabel = (code) => {
-  switch (code) {
-    case 'OK': {
-      return 'Effectué';
-    }
-    case 'WAIT': {
-      return 'A valider';
-    }
-    default: {
-      return 'Autre';
-    }
+  const found = mvtStatus.find(elem => elem.value === code);
+  if (found) {
+    return found.label;
   }
+  return '';
 };

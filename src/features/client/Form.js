@@ -195,7 +195,7 @@ export default function Form(props) {
                   label="Email 2"
                   name="cli_email_2"
                   labelTop={true}
-                  value={values.cli_email}
+                  value={values.cli_email_2}
                   onChange={handleChange}
                 />
               </div>

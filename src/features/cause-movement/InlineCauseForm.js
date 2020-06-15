@@ -4,6 +4,7 @@ import { InputPicker as InputPickerCause } from '../cause';
 import { InputDate } from '../ui';
 import useForm from '../ui/useForm';
 import { SimpleValid as SimpleValidIcon } from '../icons';
+import { mvtStatus } from './';
 
 export default function InlineCauseForm(props) {
   if (props.cause) {
@@ -27,8 +28,8 @@ export default function InlineCauseForm(props) {
             key="cause"
             name="cause"
             size="sm"
-            labelSize={6}
-            inputSize={30}
+            labelSize={10}
+            inputSize={26}
             required={true}
             item={values.cause || ''}
             onChange={handleChange}
@@ -59,11 +60,7 @@ export default function InlineCauseForm(props) {
             inputSize={30}
             value={values.camv_status || 'OK'}
             onChange={handleChange}
-            options={[
-              { value: 'OK', label: 'Effectué' },
-              { value: 'WAIT', label: 'A valider' },
-              { value: 'KO', label: 'Autre' },
-            ]}
+            options={mvtStatus}
             error={getErrorMessage('camv_status')}
           />
         </div>

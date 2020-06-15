@@ -153,13 +153,13 @@ export default class InlineCauses extends Component {
                 <div className="col-sm-4 text-right">
                   <div className="dropdown">
                     <button
-                      className="btn btn-inline text-secondary"
+                      className="btn btn-inline text-light"
                       ref={this.state.refMvt}
                       onClick={this.onMenuMvt}
                     >
-                      <MovementIcon />
+                      <MovementIcon className="text-light" />
                       <span>{selected.length}</span>
-                      <MenuDownIcon />
+                      <MenuDownIcon className="text-light" />
                     </button>
                     {this.state.menuMvt && (
                       <Dropdown

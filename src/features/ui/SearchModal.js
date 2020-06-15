@@ -40,6 +40,7 @@ export default class SearchModal extends Component {
         item.value = event.target.value;
       }
     });
+    console.log(filters);
     this.setState({ fields: filters });
   }
 
@@ -73,23 +74,15 @@ export default class SearchModal extends Component {
       {name: "Effacer", function: this.onClear, theme: "warning" , icon: "delete"},
       {name: "Annuler", function: this.props.onClose, theme: "secondary", icon: "close"},
     ];
-    return (
-      <ResponsiveModal
-        size="lg"
-        title={this.props.title}
-        show={this.props.show}
-        onClose={this.props.onClose}
-        buttons={buttons}
-        modalClassName="bg-primary-light text-primary"
-      >
-        <div className="search-modal">
-          <h6 className="text-secondary">Critères de recherche :</h6>
-          <div className="search-filters row">
+    const searchArea =
+      <div>
+        <h6 className="text-secondary">Critères de recherche :</h6>
+        <div className="search-filters row">
             {this.state.fields &&
               this.state.fields.map((item, i) => {
                 if (item.type === 'select') {
                   return (
-                    <div className={classnames('col-sm-' + (item.size || '18'))} key={`${item.value}-${i}`}>
+                    <div className={classnames('col-sm-' + (item.size || '18'))} key={`${item.name}-${i}`}>
                       <select
                         className="form-control"
                         value={item.value}
@@ -106,7 +99,7 @@ export default class SearchModal extends Component {
                   );
                 } else {
                   return (
-                    <div className="col-sm-18" key={item.value}>
+                    <div className="col-sm-18" key={`${item.name}-${i}`}>
                       <input
                         className="form-control"
                         value={item.value}
@@ -121,8 +114,21 @@ export default class SearchModal extends Component {
               })
             }
           </div>
-          <hr />
-          <div className="search-results">
+      </div>
+    return (
+      <ResponsiveModal
+        size="lg"
+        title={this.props.title}
+        show={this.props.show}
+        onClose={this.props.onClose}
+        buttons={buttons}
+        header={searchArea}
+        height="400px"
+        modalClassName="bg-primary-light text-primary"
+        closeClassName="text-primary"
+      >
+        <div className="search-modal">
+          <div className="search-results pt-2">
             {this.props.loading ? (
               <CenteredLoading3Dots />
             ) : (

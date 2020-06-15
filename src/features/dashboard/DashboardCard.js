@@ -33,6 +33,7 @@ export default class DashboardCard extends Component {
               </div>
             )}
             <p className="card-category">{this.props.title}</p>
+            {this.props.header}
           </div>
           <div className="card-body" style={{ height: '100%' }}>
             {counter && <h3 className="card-title">{counter}</h3>}
