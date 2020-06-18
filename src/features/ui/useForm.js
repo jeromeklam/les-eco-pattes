@@ -12,42 +12,42 @@ const _loadCauseType = id => {
   if (!id) {
     id = '0';
   }
-  return freeAssoApi.get('/v1/asso/cause_type/' + id, {});
+  return freeAssoApi.get('/v1/asso/cause_type/' + id + '?include=', {});
 };
 
 const _loadSiteType = id => {
   if (!id) {
     id = '0';
   }
-  return freeAssoApi.get('/v1/asso/site_type/' + id, {});
+  return freeAssoApi.get('/v1/asso/site_type/' + id + '?include=', {});
 };
 
 const _loadSickness = id => {
   if (!id) {
     id = '0';
   }
-  return freeAssoApi.get('/v1/asso/sickness/' + id, {});
+  return freeAssoApi.get('/v1/asso/sickness/' + id + '?include=', {});
 };
 
 const _loadSite = id => {
   if (!id) {
     id = '0';
   }
-  return freeAssoApi.get('/v1/asso/site/' + id, {});
+  return freeAssoApi.get('/v1/asso/site/' + id + '?include=', {});
 };
 
 const _loadCause = id => {
   if (!id) {
     id = '0';
   }
-  return freeAssoApi.get('/v1/asso/cause/' + id, {});
+  return freeAssoApi.get('/v1/asso/cause/' + id + '?include=', {});
 };
 
 const _loadClient = id => {
   if (!id) {
     id = '0';
   }
-  return freeAssoApi.get('/v1/asso/client/' + id, {});
+  return freeAssoApi.get('/v1/asso/client/' + id + '?include=', {});
 };
 
 const useForm = (initialState, initialTab, onSubmit, onCancel, onNavTab, errors, afterChange = null, init = null) => {

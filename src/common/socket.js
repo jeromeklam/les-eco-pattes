@@ -13,19 +13,23 @@ export const initSocket = (options={}) => {
     onClose: options.onDisconnected || (() => { console.log('WAMPY : See you next time!'); }),
     onError: options.onDisconnected || (() => { console.log('WAMPY : See you next time!'); }),
   };
-  const ws = new Wampy(process.env.REACT_APP_WS_URL, myOptions);
-  if (options.subscriptions) {
-    Object.keys(options.subscriptions).forEach((key) => {
-      ws.subscribe(key, {
-        onSuccess: datas => {
-          console.log(`WAMPY : Successfully subscribed to ${key}`);
-        },
-        onError: datas => {
-          console.log(`WAMPY : Error subscribed to ${key}`);
-        },
-        onEvent: options.subscriptions[key],
+  if (process.env.REACT_APP_WS_URL !== '') {
+    const ws = new Wampy(process.env.REACT_APP_WS_URL, myOptions);
+    if (options.subscriptions) {
+      Object.keys(options.subscriptions).forEach((key) => {
+        ws.subscribe(key, {
+          onSuccess: datas => {
+            console.log(`WAMPY : Successfully subscribed to ${key}`);
+          },
+          onError: datas => {
+            console.log(`WAMPY : Error subscribed to ${key}`);
+          },
+          onEvent: options.subscriptions[key],
+        });
       });
-    });
+    }
+    return ws;
+  } else {
+    return null;
   }
-  return ws;
 };
