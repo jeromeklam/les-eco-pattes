@@ -1,7 +1,6 @@
 import React from 'react';
 import { InputText, InputSelect } from 'freeassofront';
 import { InputPicker as InputPickerCause } from '../cause';
-import { InputDate } from '../ui';
 import useForm from '../ui/useForm';
 import { SimpleValid as SimpleValidIcon } from '../icons';
 import { mvtStatus } from './';

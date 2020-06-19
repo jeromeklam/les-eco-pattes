@@ -33,21 +33,21 @@ const _loadSite = id => {
   if (!id) {
     id = '0';
   }
-  return freeAssoApi.get('/v1/asso/site/' + id + '?include=', {});
+  return freeAssoApi.get('/v1/asso/site/' + id + '?include=site_type,parent_site', {});
 };
 
 const _loadCause = id => {
   if (!id) {
     id = '0';
   }
-  return freeAssoApi.get('/v1/asso/cause/' + id + '?include=', {});
+  return freeAssoApi.get('/v1/asso/cause/' + id + '?include=cause_type,site,parent1,parent2', {});
 };
 
 const _loadClient = id => {
   if (!id) {
     id = '0';
   }
-  return freeAssoApi.get('/v1/asso/client/' + id + '?include=', {});
+  return freeAssoApi.get('/v1/asso/client/' + id + '?include=lang,country,client_category,client_type', {});
 };
 
 const useForm = (initialState, initialTab, onSubmit, onCancel, onNavTab, errors, afterChange = null, init = null) => {

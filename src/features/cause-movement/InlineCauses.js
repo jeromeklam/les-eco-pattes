@@ -112,7 +112,7 @@ export class InlineCauses extends Component {
   }
 
   onValid() {
-    const { camv_id, cause } = this.state;
+    const { camv_id } = this.state;
     this.setState({ valid: false, camv_id: null });
     this.props.actions.validateOne(camv_id).then(result => {
       this.props.actions.propagateModel('FreeAsso_CauseMovement', result);
@@ -121,7 +121,7 @@ export class InlineCauses extends Component {
   }
 
   onConfirm() {
-    const { camv_id, cause } = this.state;
+    const { camv_id } = this.state;
     this.setState({ confirm: false, camv_id: 0 });
     this.props.actions.delOne(camv_id).then(result => {
       this.localLoadMovements();

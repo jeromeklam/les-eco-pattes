@@ -60,7 +60,7 @@ export class PendingMovements extends Component {
   }
 
   onConfirm() {
-    const { camv_id, cause } = this.state;
+    const { camv_id } = this.state;
     this.setState({ confirm: false, camv_id: 0 });
     this.props.actions.delOne(camv_id).then(result => {
       this.props.actions.loadPendings();

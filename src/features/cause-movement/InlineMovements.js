@@ -82,7 +82,6 @@ export class InlineMovements extends Component {
   onSubmit(datas = {}) {
     // Conversion des données en objet pour le service web
     const obj = getJsonApi(datas, 'FreeAsso_CauseMovement');
-    const { cause } = this.state;
     this.props.actions
       .createOne(obj)
       .then(result => {
@@ -104,7 +103,7 @@ export class InlineMovements extends Component {
   }
 
   onValid() {
-    const { camv_id, cause } = this.state;
+    const { camv_id } = this.state;
     this.setState({ valid: false, camv_id: null });
     this.props.actions.validateOne(camv_id).then(result => {
       this.props.actions.propagateModel('FreeAsso_CauseMovement', result);
@@ -113,7 +112,7 @@ export class InlineMovements extends Component {
   }
 
   onConfirm() {
-    const { camv_id, cause } = this.state;
+    const { camv_id } = this.state;
     this.setState({ confirm: false, camv_id: 0 });
     this.props.actions.delOne(camv_id).then(result => {
       this.localLoadMovements();
