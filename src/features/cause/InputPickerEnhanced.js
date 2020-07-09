@@ -9,7 +9,7 @@ import { More, DelOne, Zoom } from '../icons';
 
 export default class InputPickerEnhanced extends Component {
   static propTypes = {
-    name: PropTypes.string.isRequired,
+    code: PropTypes.string.isRequired,
     item: PropTypes.object,
     onChange: PropTypes.func.isRequired,
     multi: PropTypes.bool,
@@ -98,7 +98,7 @@ export default class InputPickerEnhanced extends Component {
   onClear() {
     this.setState({ autocomplete: false });
     this.props.onChange({
-      target: { name: this.props.name, value: null, type: 'FreeAsso_Cause' },
+      target: { code: this.props.code, value: null, type: 'FreeAsso_Cause' },
     });
   }
 
@@ -106,7 +106,7 @@ export default class InputPickerEnhanced extends Component {
     this.setState({ search: false, autocomplete: false, list: [] });
     if (item) {
       this.props.onChange({
-        target: { name: this.props.name, value: item.id, type: 'FreeAsso_Cause' },
+        target: { code: this.props.code, value: item.id, type: 'FreeAsso_Cause' },
       });
     } else {
       this.props.onClose();
@@ -128,7 +128,7 @@ export default class InputPickerEnhanced extends Component {
           <div className="col-sm-10">
             <DefaultInputPicker
               {...this.props}
-              name={this.props.name}
+              code={this.props.code}
               label=""
               labelTop={false}
               value={this.state.value || ''}

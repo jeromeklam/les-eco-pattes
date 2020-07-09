@@ -1,13 +1,16 @@
 import React, { Component } from 'react';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import * as actions from './redux/actions';
+import axios from 'axios';
 import PropTypes from 'prop-types';
 import { InputPicker as DefaultInputPicker } from 'freeassofront';
-import { Search, Modify } from './';
-import axios from 'axios';
 import { More, DelOne, Zoom } from '../icons';
+import { Search, Modify } from './';
 
-export default class InputPicker extends Component {
+export class InputPicker extends Component {
   static propTypes = {
-    name: PropTypes.string.isRequired,
+    code: PropTypes.string.isRequired,
     item: PropTypes.object,
     onChange: PropTypes.func.isRequired,
     multi: PropTypes.bool,
@@ -92,7 +95,7 @@ export default class InputPicker extends Component {
   onClear() {
     this.setState({ autocomplete: false });
     this.props.onChange({
-      target: { name: this.props.name, value: null, type: 'FreeAsso_Cause' },
+      target: { code: this.props.code, value: null, type: 'FreeAsso_Cause' },
     });
   }
 
@@ -100,7 +103,7 @@ export default class InputPicker extends Component {
     this.setState({ search: false, autocomplete: false, list: [] });
     if (item) {
       this.props.onChange({
-        target: { name: this.props.name, value: item.id, type: 'FreeAsso_Cause' },
+        target: { code: this.props.code, value: item.id, type: 'FreeAsso_Cause' },
       });
     }
   }
@@ -114,7 +117,7 @@ export default class InputPicker extends Component {
       <div className="cause-input-picker">
         <DefaultInputPicker 
           {...this.props}
-          name={this.props.name}
+          code={this.props.code}
           label={this.props.label}
           labelTop={this.props.labelTop || false}
           value={this.state.value || ''}
@@ -139,6 +142,7 @@ export default class InputPicker extends Component {
           title={this.props.label}
           show={this.state.search}
           filters={this.props.filters || {}}
+          types={this.props.causeType.items}
           onClose={this.onCloseMore}
           onSelect={this.onSelect}
         />
@@ -149,3 +153,17 @@ export default class InputPicker extends Component {
     );
   }
 }
+
+function mapStateToProps(state) {
+  return {
+    causeType: state.causeType,
+  };
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    actions: bindActionCreators({ ...actions }, dispatch),
+  };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(InputPicker);

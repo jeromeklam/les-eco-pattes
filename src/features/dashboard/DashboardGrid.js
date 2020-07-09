@@ -73,6 +73,7 @@ export class DashboardGrid extends Component {
 
   render() {
     const { layouts, breakpoint } = this.state;
+    console.log("FK totaux ",this.props.dashboard.stats);
     if (this.props.auth.authenticated && this.props.dashboard.stats) {
       return (
         <div>

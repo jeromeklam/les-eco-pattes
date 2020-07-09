@@ -44,16 +44,16 @@ export const getSexlabel = (p_code, p_icon = true, p_className = "" ) => {
 export const getSelectActions = ({ props, onSelectMenu }) => {
   const arrOne = [
     {
-      name: 'mvtSelectAll',
+      name: 'selectAll',
       label: 'Tout sélectionner',
-      onClick: () => {onSelectMenu('mvtSelectAll');}
+      onClick: () => {onSelectMenu('selectAll');}
     }
   ];
   const arrAppend = [
     {
-      name: 'mvtSelectNone',
+      name: 'selectNone',
       label: 'Tout désélectionner',
-      onClick: () => {onSelectMenu('mvtSelectNone');}
+      onClick: () => {onSelectMenu('selectNone');}
     },
     {
       name: 'divider',
@@ -195,18 +195,6 @@ export const getInlineActions = ({
 export const getCols = ({ props }) => {
   return [
     {
-      name: 'name',
-      label: 'Nom',
-      col: 'cau_name',
-      size: '6',
-      mob_size: '10',
-      title: true,
-      selectable: true,
-      sortable: true,
-      filterable: { type: 'text' },
-      first: true,
-    },
-    {
       name: 'num',
       label: 'N° boucle',
       col: 'cau_code',
@@ -215,6 +203,8 @@ export const getCols = ({ props }) => {
       title: true,
       sortable: true,
       filterable: { type: 'text' },
+      selectable: true,
+      first: true,
     },
     {
       name: 'type',
@@ -261,11 +251,31 @@ export const getCols = ({ props }) => {
       name: 'sep1',
       label: '',
       col: '',
-      size: '12',
+      size: '8',
       mob_size: '0',
       title: false,
       sortable: false,
       filterable: false,
+    },
+    {
+      name: 'sep2',
+      label: '',
+      col: '',
+      size: '1',
+      mob_size: '0',
+      title: false,
+      sortable: false,
+      filterable: false,
+    },
+
+    {
+      name: 'name',
+      label: '',
+      col: 'cau_name',
+      size: '5',
+      mob_size: '10',
+      title: false,      
+      filterable: { type: 'text' },      
     },
     {
       name: 'color',

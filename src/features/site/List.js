@@ -256,6 +256,7 @@ export class List extends Component {
     ) : (
       <FilterFullIcon className="text-light" />
     );
+    console.log("FK site liste",items);
     return (
       <div>
         <ResponsiveList
@@ -302,6 +303,7 @@ export class List extends Component {
 function mapStateToProps(state) {
   return {
     site: state.site,
+    siteType: state.siteType,
   };
 }
 
