@@ -119,6 +119,7 @@ export default function Form(props) {
             name="site_code"
             value={values.site_code}
             onChange={handleChange}
+            required={true}
             error={getErrorMessage('site_code')}
             warning={validated ? false : 'Format : ' + regPlaceholder}
           />
@@ -182,15 +183,6 @@ export default function Form(props) {
                 onChange={handleChange}
                 labtop={true}
                 error={getErrorMessage('site_town')}
-              />
-            </div>
-            <div className="col-sm-4">
-              <InputCheckbox
-                label="Conforme"
-                name="site_conform"
-                labelTop={true}
-                checked={values.site_conform === true}
-                onChange={handleChange}
               />
             </div>
           </div>

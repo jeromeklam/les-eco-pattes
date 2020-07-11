@@ -50,7 +50,7 @@ export default class Search extends Component {
 
   render() {
     const filters = [
-      { name: 'site_name', label: 'Site', type: 'text' },
+      { name: 'site_name', label: 'Nom', type: 'text' },
       { name: 'site_code', label: 'N° EDE', type: 'text' },
     ];
     return (

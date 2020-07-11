@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useIntl } from 'react-intl';
-import { freeAssoApi } from '../../common';
 import { jsonApiNormalizer, buildModel } from 'freejsonapi';
+import { freeAssoApi } from '../../common';
 
 const explodeReduxModel = obj => {
   let ret = { ...obj };

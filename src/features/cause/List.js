@@ -181,10 +181,10 @@ export class List extends Component {
 
   onSelectMenu(option) {
     switch (option) {
-      case 'mvtSelectAll':
+      case 'selectAll':
         this.setState({ menu: null, cauid: -1 });
         break;
-      case 'mvtSelectNone':
+      case 'selectNone':
         this.setState({ menu: null, cauid: -1 });
         this.props.actions.selectNone();
         break;
@@ -255,6 +255,7 @@ export class List extends Component {
         id = 0;
         break;
     }
+    console.log("FK cause liste",items);
     const { selected } = this.props.cause;
     return (
       <div>

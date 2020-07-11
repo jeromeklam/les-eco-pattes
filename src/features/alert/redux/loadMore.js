@@ -10,7 +10,7 @@ import {
 
 export function loadMore(args = false, reload = false) {
   return (dispatch, getState) => {
-    const loaded =  getState().cause.loadMoreFinish;
+    const loaded =  getState().alert.loadMoreFinish;
     if (!loaded || reload) {
       if (reload) {
         dispatch({
@@ -23,27 +23,27 @@ export function loadMore(args = false, reload = false) {
       }
       const promise = new Promise((resolve, reject) => {
         let filters = getState().alert.filters.asJsonApiObject()
-          let params = {
-            page: { number: getState().alert.page_number, size: getState().alert.page_size },
-            ...filters
-          };
-          let sort = '';
-          getState().alert.sort.forEach(elt => {
-            let add = elt.col;
-            if (elt.way === 'down') {
-              add = '-' + add;
-            }
-            if (sort === '') {
-              sort = add;
-            } else {
-              sort = sort + ',' + add;
-            }
-          });
-          if (sort !== '') {
-            params.sort = sort;
+        let params = {
+          page: { number: getState().alert.page_number, size: getState().alert.page_size },
+          ...filters
+        };
+        let sort = '';
+        getState().alert.sort.forEach(elt => {
+          let add = elt.col;
+          if (elt.way === 'down') {
+            add = '-' + add;
           }
-          const addUrl = objectToQueryString(params);
-          const doRequest = freeAssoApi.get('/v1/asso/alert' + addUrl, {});
+          if (sort === '') {
+            sort = add;
+          } else {
+            sort = sort + ',' + add;
+          }
+        });
+        if (sort !== '') {
+          params.sort = sort;
+        }
+        const addUrl = objectToQueryString(params);
+        const doRequest = freeAssoApi.get('/v1/asso/alert' + addUrl, {});
         doRequest.then(
           (res) => {
             dispatch({

@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { jsonApiNormalizer, buildModel, objectToQueryString } from 'freejsonapi';
 import { SearchModal } from '../ui';
 import { freeAssoApi } from '../../common';
+import { causeTypeAsOptions } from '../cause-type/functions.js';
 import { sexSelect } from './';
 
 export default class Search extends Component {
@@ -50,14 +51,21 @@ export default class Search extends Component {
   }
 
   render() {
+    console.log("FK search cause",this.props);
     const filters = [
-      { name: 'cau_code', label: 'Nom', type: 'text', value: this.props.filters.cau_code || '' },
+      { name: 'cau_code', label: 'N° boucle', type: 'text', value: this.props.filters.cau_code || '' },      
       {
         name: 'cau_sex',
         label: 'Sexe',
         type: 'select',
         value: this.props.filters.cau_sex || '',
         options: sexSelect,
+      },
+      {
+        name: 'clit_id',
+        label: 'Race',
+        type: 'select',
+        options: causeTypeAsOptions(this.props.types),
       },
     ];
     return (
