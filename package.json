@@ -30,6 +30,7 @@
     "jsoneditor": "^8.6.3",
     "jsoneditor-react": "^3.0.0",
     "lodash": "^4.17.5",
+    "loglevel": "^1.6.8",
     "nock": "^9.2.3",
     "node-sass-chokidar": "^1.2.1",
     "object-assign": "4.1.1",

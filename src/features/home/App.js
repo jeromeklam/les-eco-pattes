@@ -28,6 +28,7 @@ import fond from '../../images/fond2.jpg';
 import messages_fr from '../../translations/fr.json';
 import messages_en from '../../translations/en.json';
 import { appMenu } from './';
+import log from 'loglevel';
 
 const intlMessages = {
   fr: messages_fr,
@@ -51,6 +52,8 @@ export class App extends Component {
     this.state = {
       mySocket: initSocket(),
     };
+    log.getLogger("freejsonapi.jsonApiNormalizer").setLevel("WARN");
+    log.getLogger("freeassofront.inputSelect").setLevel("TRACE");
   }
 
   componentDidMount() {
