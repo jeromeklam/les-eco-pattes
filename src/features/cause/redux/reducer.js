@@ -26,6 +26,7 @@ import { reducer as loadDescendantsReducer } from './loadDescendants';
 import { reducer as onSelectReducer } from './onSelect';
 import { reducer as loadPhotosReducer } from './loadPhotos';
 import { reducer as selectNoneReducer } from './selectNone';
+import { reducer as selectAllReducer } from './selectAll';
 
 const reducers = [
   loadMoreReducer,
@@ -47,6 +48,7 @@ const reducers = [
   onSelectReducer,
   loadPhotosReducer,
   selectNoneReducer,
+  selectAllReducer,
 ];
 
 export default function reducer(state = initialState, action) {

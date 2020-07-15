@@ -191,14 +191,16 @@ export default class InlineCauses extends Component {
                               Mvt avec notification
                             </button>
                           )}
-                          <button
-                            type="button"
-                            className="text-secondary dropdown-item"
-                            key={'INPUT'}
-                            onClick={() => this.onSelectMvt('INPUT')}
-                          >
-                            Entrée
-                          </button>
+                          {(selected.length === 0) && (
+                            <button
+                              type="button"
+                              className="text-secondary dropdown-item"
+                              key={'INPUT'}
+                              onClick={() => this.onSelectMvt('INPUT')}
+                            >
+                              Entrée
+                            </button>
+                          )}
                           {(selected.length > 0) && (
                             <button
                               type="button"

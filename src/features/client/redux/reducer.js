@@ -19,6 +19,7 @@ import { reducer as setFiltersReducer } from './setFilters';
 import { reducer as setSortReducer } from './setSort';
 import { reducer as updateQuickSearchReducer } from './updateQuickSearch';
 import { reducer as updateSortReducer } from './updateSort';
+import { reducer as loadCliSpecReducer } from './loadCliSpec';
 
 const reducers = [
   loadMoreReducer,
@@ -33,6 +34,7 @@ const reducers = [
   setSortReducer,
   updateQuickSearchReducer,
   updateSortReducer,
+  loadCliSpecReducer,
 ];
 
 export default function reducer(state = initialState, action) {

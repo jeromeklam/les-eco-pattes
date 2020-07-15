@@ -80,7 +80,6 @@ export class InlineMovements extends Component {
   }
 
   onSubmit(datas = {}) {
-    // Conversion des données en objet pour le service web
     const obj = getJsonApi(datas, 'FreeAsso_CauseMovement');
     this.props.actions
       .createOne(obj)
@@ -90,6 +89,7 @@ export class InlineMovements extends Component {
         this.localLoadMovements();
       })
       .catch(errors => {
+        console.log("FK error",errors);
         createError();
       });
   }
@@ -235,7 +235,7 @@ export class InlineMovements extends Component {
               <div className="col-36 pt-2">
                 {emptyItem && (
                   <InlineMovementForm
-                    cause={this.props.causeMovement.cause}
+                    cause={this.state.cause}
                     item={emptyItem}
                     errors={this.props.causeMovement.createOneError}
                     onSubmit={this.onSubmit}

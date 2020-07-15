@@ -2,7 +2,6 @@ const initialState = {
   emptyItem: null,
   items: [],
   cause: null,
-  movements: [],
   pendings: [],
   loadOneItem: null,
   loadOnePending: false,

@@ -14,6 +14,7 @@ import { loadMore as loadMoreCauseMainType } from '../../cause-main-type/redux/l
 import { loadMore as loadMoreClientType } from '../../client-type/redux/loadMore';
 import { loadMore as loadMoreClientCategory } from '../../client-category/redux/loadMore';
 import { loadMore as loadMoreDashboard } from '../../dashboard/redux/loadMore';
+import { loadCliSpec } from '../../client/redux/loadCliSpec';
 
 export function loadAll(args = {}) {
   return dispatch => {
@@ -32,6 +33,7 @@ export function loadAll(args = {}) {
       dispatch(loadMoreClientType()),
       dispatch(loadMoreClientCategory()),
       dispatch(loadMoreDashboard()),
+      dispatch(loadCliSpec()),
     ]);
     return promise.then(
       res => {

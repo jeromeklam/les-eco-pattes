@@ -32,7 +32,7 @@ export function loadMore(args = {}, reload = true) {
         if (args && Object.keys(args).length > 0 && args !== '') {
           params.filter = {
             and: {
-              clit_name: {eq: args},
+              cnty_name: {eq: args},
             },
           };
         }

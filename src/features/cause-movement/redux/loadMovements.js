@@ -81,7 +81,7 @@ export function reducer(state, action) {
         loadMovementsPending: false,
         loadMovementsError: null,
         loadMovementssFinish: true,
-        movements: list,
+        items: list,
         cause: action.cause,
       };
 

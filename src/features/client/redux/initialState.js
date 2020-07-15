@@ -23,6 +23,8 @@ const initialState = {
   delOneError: null,
   createOnePending: false,
   createOneError: null,
+  loadCliSpecPending: false,
+  loadCliSpecError: null,
 };
 
 export default initialState;

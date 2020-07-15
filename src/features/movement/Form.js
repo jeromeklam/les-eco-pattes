@@ -50,17 +50,12 @@ const initItem = (item) => {
     item.move_from = new Date().toISOString();
     item.move_to = new Date().toISOString();
     if (item.param_site) {
-      switch (item.param_mode) {
-        case 'INPUT':
-          item.to_site = item.param_site;
-          afterChange('to_site', item);
-          break;
-        case 'OUTPUT':
-          item.from_site = item.param_site;
-          afterChange('from_site', item);
-          break;
-        default:
-          break;
+      if (item.param_mode === 'INPUT') {
+        item.to_site = item.param_site;
+        afterChange('to_site', item);
+      } else {
+        item.from_site = item.param_site;
+        afterChange('from_site', item);
       }
     }
   }
@@ -75,7 +70,6 @@ const initItem = (item) => {
 }
 
 const afterChange = (name, item) => {
-  console.log(name, item);
   try {
     switch (name) {
       case 'from_site':
@@ -172,7 +166,7 @@ export default function Form(props) {
               labelTop={true}
               item={values.from_site || null}
               onChange={handleChange}
-              disabled={values.globalDisabled}
+              disabled={values.globalDisabled || values.param_mode !== 'INPUT'}
               error={getErrorMessage('from_site')}
             />
           </div>
@@ -195,7 +189,7 @@ export default function Form(props) {
               id="move_from_empty"
               checked={values.move_from_empty}
               onChange={handleChange}
-              disabled={values.globalDisabled}
+              disabled={values.globalDisabled  || values.param_mode === 'INPUT'}
               error={getErrorMessage('move_from_empty')}
             />
           </div>
