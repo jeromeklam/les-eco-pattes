@@ -53,7 +53,7 @@ export class App extends Component {
       mySocket: initSocket(),
     };
     log.getLogger("freejsonapi.jsonApiNormalizer").setLevel("WARN");
-    log.getLogger("freeassofront.inputSelect").setLevel("TRACE");
+    log.getLogger("freeassofront.inputSelect").setLevel("WARN");
   }
 
   componentDidMount() {

@@ -10,3 +10,4 @@ export { setFilters } from './setFilters';
 export { setSort } from './setSort';
 export { updateQuickSearch } from './updateQuickSearch';
 export { updateSort } from './updateSort';
+export { loadCliSpec, dismissLoadCliSpecError } from './loadCliSpec';

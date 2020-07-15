@@ -30,6 +30,11 @@ $container-max-widths: (
 $grid-columns:                36;
 $grid-gutter-width:           20px;
 
+$modal-xl: 1440px !default;
+$modal-lg: 1200px !default;
+$modal-md:  800px !default;
+$modal-sm:  500px !default;
+
 // Menu gauche
 $left-menu-width: 250px;
 $left-menu-item-height: 70px;

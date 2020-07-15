@@ -183,6 +183,7 @@ export class List extends Component {
     switch (option) {
       case 'selectAll':
         this.setState({ menu: null, cauid: -1 });
+        this.props.actions.selectAll();
         break;
       case 'selectNone':
         this.setState({ menu: null, cauid: -1 });
