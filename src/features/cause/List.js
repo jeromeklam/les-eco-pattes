@@ -256,7 +256,6 @@ export class List extends Component {
         id = 0;
         break;
     }
-    console.log("FK cause liste render :: ",this.props.cause);
     const { selected } = this.props.cause;
     return (
       <div>
