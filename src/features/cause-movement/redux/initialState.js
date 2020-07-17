@@ -1,6 +1,8 @@
+import { getNewNormalizedObject } from 'freejsonapi';
+
 const initialState = {
   emptyItem: null,
-  items: [],
+  items: getNewNormalizedObject('FreeAsso_CauseMovement'),
   cause: null,
   pendings: [],
   loadOneItem: null,

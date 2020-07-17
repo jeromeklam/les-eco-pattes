@@ -1,7 +1,8 @@
+import { getNewNormalizedObject } from 'freejsonapi';
 import { Filter } from 'freeassofront';
 
 const initialState = {
-  items: [],
+  items: getNewNormalizedObject('FreeAsso_Item'),
   loadOneItem: null,
   loadOneRaw: null,
   loadMorePending: false,

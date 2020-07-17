@@ -1,5 +1,5 @@
-import { freeAssoApi } from '../../../common';
 import { jsonApiNormalizer } from 'freejsonapi';
+import { freeAssoApi } from '../../../common';
 import {
   CAUSE_MOVEMENT_LOAD_PENDINGS_BEGIN,
   CAUSE_MOVEMENT_LOAD_PENDINGS_SUCCESS,

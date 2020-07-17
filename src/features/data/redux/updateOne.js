@@ -1,5 +1,5 @@
-import { freeAssoApi } from '../../../common';
 import { jsonApiNormalizer, jsonApiUpdate } from 'freejsonapi';
+import { freeAssoApi } from '../../../common';
 import {
   DATA_UPDATE_ONE_BEGIN,
   DATA_UPDATE_ONE_SUCCESS,

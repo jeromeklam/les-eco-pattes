@@ -1,5 +1,5 @@
-import { freeAssoApi } from '../../../common';
 import { jsonApiNormalizer, buildModel } from 'freejsonapi';
+import { freeAssoApi } from '../../../common';
 import {
   FAMILY_LOAD_CHILDREN_INIT,
   FAMILY_LOAD_CHILDREN_BEGIN,

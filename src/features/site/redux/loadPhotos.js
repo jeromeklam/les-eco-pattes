@@ -1,5 +1,5 @@
-import { freeAssoApi } from '../../../common';
 import { jsonApiNormalizer, objectToQueryString, buildModel } from 'freejsonapi';
+import { freeAssoApi } from '../../../common';
 import {
   SITE_LOAD_PHOTOS_BEGIN,
   SITE_LOAD_PHOTOS_SUCCESS,

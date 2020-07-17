@@ -1,5 +1,5 @@
+import { jsonApiNormalizer, objectToQueryString, getNewNormalizedObject } from 'freejsonapi';
 import { freeAssoApi } from '../../../common';
-import { jsonApiNormalizer, objectToQueryString } from 'freejsonapi';
 import {
   EMAIL_LOAD_MORE_INIT,
   EMAIL_LOAD_MORE_BEGIN,
@@ -50,8 +50,6 @@ export function loadMore(args = {}, reload = false) {
   };
 }
 
-// Async action saves request error by default, this method is used to dismiss the error info.
-// If you don't want errors to be saved in Redux store, just ignore this method.
 export function dismissLoadMoreError() {
   return {
     type: EMAIL_LOAD_MORE_DISMISS_ERROR,
@@ -67,7 +65,7 @@ export function reducer(state, action) {
         loadMorePending: true,
         loadMoreError: null,
         loadMoreFinish: false,
-        items: [],
+        items: getNewNormalizedObject('FreeFW_Email'),
         page_number: 1,
         page_size: process.env.REACT_APP_PAGE_SIZE,
         filters: [],

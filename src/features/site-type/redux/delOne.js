@@ -8,7 +8,7 @@ import {
 } from './constants';
 
 export function delOne(args = {}) {
-  return (dispatch) => { // optionally you can have getState as the second argument
+  return (dispatch) => {
     dispatch({
       type: SITE_TYPE_DEL_ONE_BEGIN,
     });

@@ -1,5 +1,5 @@
-import { freeAssoApi } from '../../../common';
 import { jsonApiNormalizer, jsonApiUpdate } from 'freejsonapi';
+import { freeAssoApi } from '../../../common';
 import {
   EMAIL_UPDATE_ONE_BEGIN,
   EMAIL_UPDATE_ONE_SUCCESS,
@@ -10,14 +10,10 @@ import {
 
 export function updateOne(args = {}) {
   return dispatch => {
-    // optionally you can have getState as the second argument
     dispatch({
       type: EMAIL_UPDATE_ONE_BEGIN,
     });
     const promise = new Promise((resolve, reject) => {
-      // doRequest is a placeholder Promise. You should replace it with your own logic.
-      // See the real-word example at:  https://github.com/supnate/rekit/blob/master/src/features/home/redux/fetchRedditReactjsList.js
-      // args.error here is only for test coverage purpose.
       const id = args.data.id;
       const doRequest = freeAssoApi.put('/v1/core/email/' + id, args);
       doRequest.then(
@@ -29,7 +25,6 @@ export function updateOne(args = {}) {
           });
           resolve(res);
         },
-        // Use rejectHandler as the second argument so that render errors won't be caught.
         err => {
           dispatch({
             type: EMAIL_UPDATE_ONE_FAILURE,
@@ -44,8 +39,6 @@ export function updateOne(args = {}) {
   };
 }
 
-// Async action saves request error by default, this method is used to dismiss the error info.
-// If you don't want errors to be saved in Redux store, just ignore this method.
 export function dismissUpdateOneError() {
   return {
     type: EMAIL_UPDATE_ONE_DISMISS_ERROR,

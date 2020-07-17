@@ -1,5 +1,5 @@
+import { jsonApiNormalizer, objectToQueryString, getNewNormalizedObject } from 'freejsonapi';
 import { freeAssoApi } from '../../../common';
-import { jsonApiNormalizer, objectToQueryString } from 'freejsonapi';
 import {
   COUNTRY_LOAD_MORE_INIT,
   COUNTRY_LOAD_MORE_BEGIN,
@@ -75,7 +75,7 @@ export function reducer(state, action) {
         loadMorePending: true,
         loadMoreError: null,
         loadMoreFinish: false,
-        items: [],
+        items: getNewNormalizedObject('FreeFW_Country'),
         page_number: 1,
         page_size: 0,
       };

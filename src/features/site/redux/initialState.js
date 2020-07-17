@@ -1,4 +1,5 @@
 import { Filter, FILTER_MODE_AND, FILTER_OPER_GREATER_OR_EQUAL_OR_NULL } from 'freeassofront';
+import { getNewNormalizedObject } from 'freejsonapi';
 
 let initialFilters = new Filter();
 const now = new Date().toISOString();
@@ -6,7 +7,7 @@ initialFilters.addFilter('site_to', now, FILTER_OPER_GREATER_OR_EQUAL_OR_NULL);
 initialFilters.setMode(FILTER_MODE_AND);
 
 const initialState = {
-  items: [],
+  items: getNewNormalizedObject('FreeAsso_Site'),
   causes: [],
   causesModels: [],
   photos: [],

@@ -4,11 +4,11 @@ import { injectIntl } from 'react-intl';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as actions from './redux/actions';
+import { buildModel } from 'freejsonapi';
+import { ResponsiveList, ResponsiveQuickSearch } from 'freeassofront';
 import { loadMovements } from '../cause-movement/redux/actions';
 import { loadGrowths } from '../cause-growth/redux/actions';
 import { loadSicknesses } from '../cause-sickness/redux/actions';
-import { buildModel } from 'freejsonapi';
-import { ResponsiveList, ResponsiveQuickSearch } from 'freeassofront';
 import {
   Filter as FilterIcon,
   FilterFull as FilterFullIcon,
@@ -256,7 +256,7 @@ export class List extends Component {
         id = 0;
         break;
     }
-    console.log("FK cause liste",items);
+    console.log("FK cause liste render :: ",this.props.cause);
     const { selected } = this.props.cause;
     return (
       <div>
