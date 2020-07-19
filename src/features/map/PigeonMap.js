@@ -6,7 +6,6 @@ import { connect } from 'react-redux';
 import * as actions from './redux/actions';
 import Map from 'pigeon-maps';
 import Draggable from 'pigeon-draggable';
-import ScrollArea from 'react-scrollbar';
 import { buildModel, getJsonApi } from 'freejsonapi';
 import { propagateModel } from '../../common';
 import { loadMore as loadMoreSite, updateOne as updateOneSite } from '../site/redux/actions';
@@ -287,7 +286,7 @@ export class PigeonMap extends Component {
               {Math.round(this.state.zoom * 100) / 100}
             </p>
           </div>
-          <ScrollArea className="map-list-scroll" noScrollX>
+          <div className="custom-scrollbar map-list-scroll" style={{overflowX: 'hidden', overflowY: 'auto'}}>
             <div>
               <ListGroup
                 selected={this.state.selected}
@@ -296,7 +295,7 @@ export class PigeonMap extends Component {
                 onSitePose={this.onSitePose}
               />
             </div>
-          </ScrollArea>
+          </div>
         </Responsive>
         <Responsive displayIn={['Mobile']}>
           <div className={classnames('map-content-mobile')}>

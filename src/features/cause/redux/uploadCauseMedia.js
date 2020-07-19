@@ -1,4 +1,4 @@
-import { buildSingleFromjson } from 'freejsonapi';
+import { getNewJsonApi } from 'freejsonapi';
 import { freeAssoApi } from '../../../common';
 import {
   CAUSE_UPLOAD_CAUSE_MEDIA_BEGIN,
@@ -20,7 +20,7 @@ export function uploadCauseMedia(caum_id, cau_id, binary, filename = '') {
       };
       const doRequest = freeAssoApi.post(
         '/v1/asso/cause_media_blob',
-        buildSingleFromjson('FreeAsso_CauseMediaBlob', datas),
+        getNewJsonApi('FreeAsso_CauseMediaBlob', "", datas),
       );
       doRequest.then(
         (res) => {

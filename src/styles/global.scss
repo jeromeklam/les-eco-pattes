@@ -21,6 +21,11 @@ body {
   }
 }
 
+.custom-scrollbar {
+  @include scrollbars(10px, theme-color('primary'), theme-color('paimary-light'));
+}
+
+
 .form-group-sm {
   margin-bottom: 0rem;
 }
@@ -153,6 +158,10 @@ svg.text-warning.inline-action:hover {
     height: 1rem !important;
     width: 1rem !important;
   }
+}
+
+.modal-body {
+  padding: 1em;
 }
 
 .modal-fullscreen {

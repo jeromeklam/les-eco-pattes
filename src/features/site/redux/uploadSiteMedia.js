@@ -1,4 +1,4 @@
-import { buildSingleFromjson } from 'freejsonapi';
+import { getNewJsonApi } from 'freejsonapi';
 import { freeAssoApi } from '../../../common';
 import {
   SITE_UPLOAD_SITE_MEDIA_BEGIN,
@@ -21,7 +21,7 @@ export function uploadSiteMedia(sitm_id, site_id, binary, filename = '') {
       };
       const doRequest = freeAssoApi.post(
         '/v1/asso/site_media_blob',
-        buildSingleFromjson('FreeAsso_SiteMediaBlob', datas),
+        getNewJsonApi('FreeAsso_SiteMediaBlob', "", datas),
       );
       doRequest.then(
         (res) => {

@@ -11,7 +11,15 @@ export default class Search extends Component {
     title: PropTypes.string.isRequired,
     show: PropTypes.bool.isRequired,
     onClose: PropTypes.func.isRequired,
+    filters: PropTypes.element,
+    typeCodes: PropTypes.element,
+    categoryCodes: PropTypes.element,
   };
+  static defaultProps = {
+    filters: {},
+    typeCodes: [],
+    categoryCodes: [],
+  }
 
   constructor(props) {
     super(props);
@@ -20,6 +28,9 @@ export default class Search extends Component {
       list: [],
       loading: false,
       finish: false,
+      filters: this.props.filters,
+      typeCodes: this.props.typeCodes,
+      categoryCodes: this.props.categoryCodes,
     };
     this.onChange = this.onChange.bind(this);
     this.onSearch = this.onSearch.bind(this);
@@ -56,15 +67,17 @@ export default class Search extends Component {
       { name: 'cli_lastname', label: 'Nom', type: 'text' },
       {
         name: 'clit_id',
-        label: 'Catégorie',
+        label: 'Type',
         type: 'select',
-        options: clientTypeAsOptions(this.props.types),
+        options: clientTypeAsOptions(this.props.types, this.props.typeCodes),
+        filtered: this.props.typeCodes.length > 0
       },
       {
         name: 'clic_id',
-        label: 'Type',
+        label: 'Catégorie',
         type: 'select',
-        options: clientCategoryAsOptions(this.props.categories),
+        options: clientCategoryAsOptions(this.props.categories, this.props.categoryCodes),
+        filtered: this.props.categoryCodes.length > 0
       },
     ];
     return (

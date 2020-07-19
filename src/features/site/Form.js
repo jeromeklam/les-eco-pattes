@@ -217,6 +217,7 @@ export default function Form(props) {
                 item={values.owner || null}
                 onChange={handleChange}
                 error={getErrorMessage('owner')}
+                typeCodes={['PROPRIETAIRE']}
               />
             </div>
           </div>
@@ -269,6 +270,7 @@ export default function Form(props) {
                 item={values.sanitary || null}
                 onChange={handleChange}
                 error={getErrorMessage('sanitary')}
+                typeCodes={['VETERINAIRE']}
               />
             </div>
           </div>

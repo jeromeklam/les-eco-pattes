@@ -7,14 +7,17 @@ import { buildModel } from 'freejsonapi';
  * 
  * @return {array}
  */
-export function clientTypeAsOptions(object) {
+export function clientTypeAsOptions(object, restrictedCodes = []) {
   let arr   = [];
   let items = buildModel(
     object,
     'FreeAsso_ClientType',
   );
   items.forEach((item) => {
-    arr.push({value: item.id, label: item.clit_name});
+    const idx = restrictedCodes.indexOf(item.clit_code);
+    if (restrictedCodes.length === 0 || idx >= 0) {
+      arr.push({value: item.id, label: item.clit_name});
+    }
   });
   arr.sort(function (a, b) {
     if (a.label > b.label) {

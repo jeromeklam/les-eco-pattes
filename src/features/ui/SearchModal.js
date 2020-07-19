@@ -33,6 +33,18 @@ export default class SearchModal extends Component {
     this.onSearch = this.onSearch.bind(this);
   }
 
+  componentDidMount() {
+    let load = false;
+    this.state.fields.forEach(item => {
+      if (item.filtered) {
+        load = true;
+      }
+    });
+    if (load) {
+      this.onSearch();
+    }
+  }
+
   onChange(event) {
     let filters = this.state.fields;
     filters.forEach(item => {
@@ -56,11 +68,22 @@ export default class SearchModal extends Component {
   onSearch(event) {
     let params = false;
     this.state.fields.forEach(item => {
+      if (item.filtered) {
+        if (params === false) {
+            params = { filter: { [this.state.condition]: {} } };
+          }
+          let values = [];
+          item.options.forEach(elem => {
+            values.push(elem.value);
+          });
+          params.filter[this.state.condition][item.name] = values;
+      } else {
         if (item.value !== '') {
           if (params === false) {
-            params = { filter: { [this.state.condition]: {} }};
+            params = { filter: { [this.state.condition]: {} } };
           }
           params.filter[this.state.condition][item.name] = item.value;
+        }
       }
     });
     const filters = params || {};
@@ -70,51 +93,59 @@ export default class SearchModal extends Component {
   render() {
     const fields = this.props.pickerDisplay.split(',');
     const buttons = [
-      {name: "Filtrer", function: this.onSearch, theme: "primary", icon: "filter" },
-      {name: "Effacer", function: this.onClear, theme: "warning" , icon: "delete"},
-      {name: "Annuler", function: this.props.onClose, theme: "secondary", icon: "close"},
+      { name: 'Filtrer', function: this.onSearch, theme: 'primary', icon: 'filter' },
+      { name: 'Effacer', function: this.onClear, theme: 'warning', icon: 'delete' },
+      { name: 'Annuler', function: this.props.onClose, theme: 'secondary', icon: 'close' },
     ];
-    const searchArea =
+    const searchArea = (
       <div>
         <h6 className="text-secondary">Critères de recherche :</h6>
         <div className="search-filters row">
-            {this.state.fields &&
-              this.state.fields.map((item, i) => {
-                if (item.type === 'select') {
-                  return (
-                    <div className={classnames('col-sm-' + (item.size || '18'))} key={`${item.name}-${i}`}>
-                      <select
-                        className="form-control"
-                        value={item.value}
-                        name={item.name}
-                        placeholder={item.label}
-                        onChange={this.onChange}
-                      >
-                        <option value="">{item.label}</option>
-                        {item.options.map(option => (
-                          <option key={option.value} value={option.value}>{option.label}</option>
-                        ))}
-                      </select>
-                    </div>
-                  );
-                } else {
-                  return (
-                    <div className="col-sm-18" key={`${item.name}-${i}`}>
-                      <input
-                        className="form-control"
-                        value={item.value}
-                        name={item.name}
-                        placeholder={item.label}
-                        type="text"
-                        onChange={this.onChange}
-                      />
-                    </div>
-                  );
-                }
-              })
-            }
-          </div>
+          {this.state.fields &&
+            this.state.fields.map((item, i) => {
+              if (item.filtered) {
+                return null;
+              }
+              if (item.type === 'select') {
+                return (
+                  <div
+                    className={classnames('col-sm-' + (item.size || '18'))}
+                    key={`${item.name}-${i}`}
+                  >
+                    <select
+                      className="form-control"
+                      value={item.value}
+                      name={item.name}
+                      placeholder={item.label}
+                      onChange={this.onChange}
+                    >
+                      <option value="">{item.label}</option>
+                      {item.options.map(option => (
+                        <option key={option.value} value={option.value}>
+                          {option.label}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                );
+              } else {
+                return (
+                  <div className="col-sm-18" key={`${item.name}-${i}`}>
+                    <input
+                      className="form-control"
+                      value={item.value}
+                      name={item.name}
+                      placeholder={item.label}
+                      type="text"
+                      onChange={this.onChange}
+                    />
+                  </div>
+                );
+              }
+            })}
+        </div>
       </div>
+    );
     return (
       <ResponsiveModal
         size="lg"

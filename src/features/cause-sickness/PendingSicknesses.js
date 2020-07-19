@@ -120,7 +120,7 @@ export class PendingSicknesses extends Component {
                         xl={9}
                         col={16}
                       >
-                        {sickness.cause.site.site_name}
+                        {sickness.cause.site && sickness.cause.site.site_name}
                       </Col>
                       <Col
                         layoutSize={this.props.layoutSize || 'md'}

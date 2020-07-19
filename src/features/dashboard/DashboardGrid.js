@@ -59,6 +59,10 @@ export class DashboardGrid extends Component {
     this.onBreakpointChange = this.onBreakpointChange.bind(this);
   }
 
+  componentDidMount() {
+    this.props.actions.loadMore();
+  }
+
   onLayoutChange(layout, layouts) {
     saveToLS('layouts', layouts);
     this.setState({ layouts });
@@ -111,19 +115,19 @@ export class DashboardGrid extends Component {
             <div key="m2" data-grid={{ w: 6, h: 5, x: 15, y: 1, minW: 6, maxW: 18, minH: 4 }}>
               <DashboardCard
                 title="Surface"
-                count={this.props.dashboard.stats.area_site}
+                count={this.props.dashboard.stats.area_site || 0}
                 unit="m2"
                 icon={<AreaIcon />}
                 size={getLayoutSize(layouts, breakpoint, 'm2')}
               />
             </div>
-            <div key="m" data-grid={{ w: 6, h: 5, x: 22, y: 1, minW: 6, maxW: 18, minH: 4 }}>
+            <div key="ml" data-grid={{ w: 6, h: 5, x: 22, y: 1, minW: 6, maxW: 18, minH: 4 }}>
               <DashboardCard
-                title="Clôtures"
-                count={this.props.dashboard.stats.clot_site}
-                unit="m"
+                title="Clôtures posées"
+                count={this.props.dashboard.stats.clot_site || 0}
+                unit="ml"
                 icon={<FenceIcon />}
-                size={getLayoutSize(layouts, breakpoint, 'm')}
+                size={getLayoutSize(layouts, breakpoint, 'ml')}
               />
             </div>
             <div key="movements" data-grid={{ w: 36, h: 6, x: 1, y: 10, minW: 12, minH: 4 }}>

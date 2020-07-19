@@ -7,14 +7,16 @@ import { buildModel } from 'freejsonapi';
  * 
  * @return {array}
  */
-export function clientCategoryAsOptions(object) {
+export function clientCategoryAsOptions(object, restrictedCodes = []) {
   let arr   = [];
   let items = buildModel(
     object,
     'FreeAsso_ClientCategory',
   );
   items.forEach((item) => {
-    arr.push({value: item.id, label: item.clic_name});
+    if (restrictedCodes.length === 0 || restrictedCodes.indexOf(elem => {console.log(elem); return elem === item.clic_code}) >= 0) {
+      arr.push({value: item.id, label: item.clic_name});
+    }
   });
   arr.sort(function (a, b) {
     if (a.label > b.label) {

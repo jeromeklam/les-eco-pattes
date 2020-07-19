@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { getJsonApi } from 'freejsonapi';
 import * as actions from './redux/actions';
 import { updateConfig } from '../auth/redux/actions';
-import { Save } from '../icons';
+import { Save, Reload } from '../icons';
 import { modifySuccess, modifyError } from '../ui';
 import { getFromLS } from '../ui';
 
@@ -17,7 +17,15 @@ export class DashboardToolbar extends Component {
 
   constructor(props) {
     super(props);
+    this.onRefreshDashboard = this.onRefreshDashboard.bind(this);
     this.onSaveDashboard = this.onSaveDashboard.bind(this);
+  }
+
+  onRefreshDashboard(evt) {
+    if (evt) {
+      evt.preventDefault();
+    }
+    this.props.actions.loadMore();
   }
 
   onSaveDashboard(evt) {
@@ -48,6 +56,9 @@ export class DashboardToolbar extends Component {
           <div className="col-36 text-right">
             <div className="nav justify-content-end">
               <div className="nav-item">
+                <button className="btn btn-primary text-light" onClick={this.onRefreshDashboard}>
+                  <Reload />
+                </button>
                 <button className="btn btn-primary text-light" onClick={this.onSaveDashboard}>
                   <Save />
                 </button>
@@ -63,7 +74,6 @@ export class DashboardToolbar extends Component {
 function mapStateToProps(state) {
   return {
     dashboard: state.dashboard,
-    auth: state.auth,
   };
 }
 

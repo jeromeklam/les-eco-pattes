@@ -153,6 +153,7 @@ export default function Form(props) {
                 item={values.raiser || null}
                 onChange={handleChange}
                 error={getErrorMessage('raiser')}
+                typeCodes={['ELEVEUR']}
               />
             </div>
           </div>
@@ -250,6 +251,7 @@ export default function Form(props) {
             item={values.origin || null}
             onChange={handleChange}
             error={getErrorMessage('origin')}
+            typeCodes={['PROVENANCE']}
           />
           <InputTextarea
             label="Observations"

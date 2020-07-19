@@ -13,6 +13,14 @@ export class InputPicker extends Component {
     name: PropTypes.string.isRequired,
     item: PropTypes.object,
     onChange: PropTypes.func.isRequired,
+    filters: PropTypes.element,
+    typeCodes: PropTypes.element,
+    categoryCodes: PropTypes.element,
+  };
+  static defaultProps = {
+    filters: {},
+    typeCodes: [],
+    categoryCodes: [],
   };
 
   static getDerivedStateFromProps(props, state) {
@@ -53,6 +61,9 @@ export class InputPicker extends Component {
       autocomplete: false,
       source: false,
       zoom: false,
+      filters: this.props.filters,
+      typeCodes: this.props.typeCodes,
+      categoryCodes: this.props.categoryCodes,
     };
     this.onMore = this.onMore.bind(this);
     this.onZoom = this.onZoom.bind(this);
@@ -148,6 +159,9 @@ export class InputPicker extends Component {
           onSelect={this.onSelect}
           types={this.props.clientType.items}
           categories={this.props.clientCategory.items}
+          filters={this.props.filters || {}}
+          typeCodes={this.props.typeCodes || []}
+          categoryCodes={this.props.categoryCodes || []}
         />
         {this.state.zoom && (
           <Modify loader={false} modal={true} cliId={this.state.item.id} onClose={this.onCloseMore} />
