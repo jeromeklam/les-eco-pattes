@@ -8,7 +8,6 @@ import axios from 'axios';
 
 export function loadMore(args = {}) {
   return dispatch => {
-    // optionally you can have getState as the second argument
     dispatch({
       type: DASHBOARD_LOAD_MORE_BEGIN,
     });

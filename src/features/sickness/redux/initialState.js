@@ -1,10 +1,11 @@
+import { getNewNormalizedObject } from 'freejsonapi';
 import { Filter } from 'freeassofront';
 
 const initialState = {
   loadMorePending: false,
   loadMoreError: null,
   loadMoreFinish: false,
-  items: [],
+  items: getNewNormalizedObject('FreeAsso_Sickness'),
   page_number: 1,
   page_size: process.env.REACT_APP_PAGE_SIZE,
   filters: new Filter(),

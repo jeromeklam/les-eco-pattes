@@ -1,7 +1,8 @@
+import { getNewNormalizedObject } from 'freejsonapi';
 import { Filter } from 'freeassofront';
 
 const initialState = {
-  items: [],
+  items: getNewNormalizedObject('FreeAsso_Client'),
   page_number: 1,
   page_size: process.env.REACT_APP_PAGE_SIZE,
   tab: "1",

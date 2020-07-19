@@ -61,6 +61,7 @@ export class PendingSicknesses extends Component {
     if (this.props.causeSickness.pendings.FreeAsso_CauseSickness) {
       sicknesses = buildModel(this.props.causeSickness.pendings, 'FreeAsso_CauseSickness');
     }
+    console.log("FK sickness", this.props.causeSickness);
     const header = (
       <InlineList>
         <Line header oddEven={counter}>

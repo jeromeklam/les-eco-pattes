@@ -1,5 +1,5 @@
-import { freeAssoApi } from '../../../common';
 import { jsonApiNormalizer, objectToQueryString, buildModel } from 'freejsonapi';
+import { freeAssoApi } from '../../../common';
 import {
   CAUSE_LOAD_DOCUMENTS_BEGIN,
   CAUSE_LOAD_DOCUMENTS_SUCCESS,

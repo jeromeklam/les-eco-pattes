@@ -16,8 +16,10 @@ export function loadCliSpec(args = {}) {
 
     const promise = new Promise((resolve, reject) => {
       const params = {
-        filter: { clit_id: this.props.site_id }
-      };
+        params: {
+          //clit_code: {eq: 'VETERINAIRE'},
+        }
+      }
       const addUrl = objectToQueryString(params);
       const doRequest = freeAssoApi.get('/v1/asso/client' + addUrl, {});
       doRequest.then(

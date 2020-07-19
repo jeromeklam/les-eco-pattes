@@ -1,3 +1,4 @@
+import { buildModel } from 'freejsonapi';
 import {
   CAUSE_SELECT_ALL,
 } from './constants';
@@ -11,10 +12,13 @@ export function selectAll() {
 export function reducer(state, action) {
   switch (action.type) {
     case CAUSE_SELECT_ALL:
-     console.log("FK liste cause", state.items );
+      let items = [];
+      if (state.items.FreeAsso_Cause) {
+        items = buildModel(state.items, 'FreeAsso_Cause');
+      }
       return {
         ...state,
-        selected: [],
+        selected: items,
       };
 
     default:

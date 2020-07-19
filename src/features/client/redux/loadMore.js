@@ -1,4 +1,4 @@
-import { jsonApiNormalizer, objectToQueryString } from 'freejsonapi';
+import { jsonApiNormalizer, objectToQueryString, getNewNormalizedObject } from 'freejsonapi';
 import { freeAssoApi } from '../../../common';
 import {
   CLIENT_LOAD_MORE_INIT,
@@ -82,7 +82,7 @@ export function reducer(state, action) {
         loadMorePending: true,
         loadMoreError: null,
         loadMoreFinish: false,
-        items: [],
+        items: getNewNormalizedObject('FreeAsso_Client'),
         page_number: 1,
         page_size: process.env.REACT_APP_PAGE_SIZE,
       };

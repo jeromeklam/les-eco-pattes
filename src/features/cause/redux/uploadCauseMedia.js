@@ -1,5 +1,5 @@
-import { freeAssoApi } from '../../../common';
 import { buildSingleFromjson } from 'freejsonapi';
+import { freeAssoApi } from '../../../common';
 import {
   CAUSE_UPLOAD_CAUSE_MEDIA_BEGIN,
   CAUSE_UPLOAD_CAUSE_MEDIA_SUCCESS,

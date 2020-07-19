@@ -1,5 +1,5 @@
-import { freeAssoApi } from '../../../common';
 import { objectToQueryString } from 'freejsonapi';
+import { freeAssoApi } from '../../../common';
 import {
   SITE_TYPE_FILTER_BEGIN,
   SITE_TYPE_FILTER_SUCCESS,

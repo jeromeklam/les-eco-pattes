@@ -7,6 +7,7 @@ import { Create as CreateMovement } from '../movement';
 import { getSexlabel, getCauses } from './';
 import { getOne as getOneSite } from '../site';
 
+
 export default class InlineCauses extends Component {
   static propTypes = {};
 
@@ -65,6 +66,7 @@ export default class InlineCauses extends Component {
 
   onSelectAll() {
     const causes_selected = [];
+    console.log("FK slect all inline : ",this.state.items);
     if (!this.state.selectAll) {
       this.state.items.map(cause => causes_selected.push(cause.id));
     }
