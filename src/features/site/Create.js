@@ -78,8 +78,7 @@ export class Create extends Component {
         }
       })
       .catch(errors => {
-        const { intl } = this.props;
-        showErrors(intl, this.props.site.createOneError);
+        showErrors(this.props.intl, errors, 'createOneError');
       });
   }
 

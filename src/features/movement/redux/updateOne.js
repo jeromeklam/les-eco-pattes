@@ -1,4 +1,4 @@
-import { jsonApiNormalizer, jsonApiUpdate } from 'freejsonapi';
+import { jsonApiNormalizer, normalizedObjectUpdate } from 'freejsonapi';
 import {
   MOVEMENT_UPDATE_ONE_BEGIN,
   MOVEMENT_UPDATE_ONE_SUCCESS,
@@ -84,7 +84,7 @@ export function reducer(state, action) {
     case MOVEMENT_UPDATE_ONE_UPDATE:
       let object = jsonApiNormalizer(action.data.data);
       let myItems = state.items;
-      let news = jsonApiUpdate(myItems, 'FreeAsso_Movement', object);
+      let news = normalizedObjectUpdate(myItems, 'FreeAsso_Movement', object);
       return {
         ...state,
         updateOneError: null,

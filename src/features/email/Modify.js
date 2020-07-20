@@ -6,7 +6,7 @@ import * as actions from './redux/actions';
 import { withRouter } from 'react-router-dom';
 import { getJsonApi } from 'freejsonapi';
 import { propagateModel, modelsToSelect } from '../../common';
-import { CenteredLoading9X9 } from '../ui';
+import { CenteredLoading9X9, modifySuccess, showErrors } from '../ui';
 import Form from './Form';
 
 export class Modify extends Component {
@@ -28,7 +28,7 @@ export class Modify extends Component {
   componentDidMount() {
     this.props.actions.loadOne(this.state.id).then(result => {
       const item = this.props.email.loadOneItem;
-      console.log(item);
+      //console.log(item);
       this.setState({ item: item });
     });
   }
@@ -49,14 +49,12 @@ export class Modify extends Component {
     this.props.actions
       .updateOne(obj)
       .then(result => {
-        // @Todo propagate result to store
-        // propagateModel est ajouté aux actions en bas de document
+        modifySuccess();
         this.props.actions.propagateModel('FreeFW_Email', result);
         this.props.history.push('/email');
       })
       .catch(errors => {
-        // @todo display errors to fields
-        console.log(errors);
+        showErrors(this.props.intl, errors, 'updateOneError');
       });
   }
 

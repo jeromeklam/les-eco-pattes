@@ -1,4 +1,4 @@
-import { jsonApiNormalizer, jsonApiUpdate } from 'freejsonapi';
+import { jsonApiNormalizer, normalizedObjectUpdate } from 'freejsonapi';
 import { freeAssoApi } from '../../../common';
 import {
   CAUSE_MAIN_TYPE_UPDATE_ONE_BEGIN,
@@ -84,7 +84,7 @@ export function reducer(state, action) {
       // Dismiss the request failure error
       let object = jsonApiNormalizer(action.data.data);
       let myItems = state.items;
-      let news = jsonApiUpdate(myItems, 'FreeAsso_CauseMainType', object);
+      let news = normalizedObjectUpdate(myItems, 'FreeAsso_CauseMainType', object);
       return {
         ...state,
         updateOneError: null,

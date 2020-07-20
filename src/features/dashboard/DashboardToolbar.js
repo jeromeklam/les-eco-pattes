@@ -6,7 +6,7 @@ import { getJsonApi } from 'freejsonapi';
 import * as actions from './redux/actions';
 import { updateConfig } from '../auth/redux/actions';
 import { Save, Reload } from '../icons';
-import { modifySuccess, modifyError } from '../ui';
+import { modifySuccess, showErrors } from '../ui';
 import { getFromLS } from '../ui';
 
 export class DashboardToolbar extends Component {
@@ -45,7 +45,7 @@ export class DashboardToolbar extends Component {
         modifySuccess();
       })
       .catch(errors => {
-        modifyError();
+        showErrors(this.props.intl, errors, 'updateOneError');
       });
   }
 

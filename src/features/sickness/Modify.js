@@ -7,7 +7,7 @@ import { withRouter } from 'react-router-dom';
 import Form from './Form';
 import { getJsonApi } from 'freejsonapi';
 import { propagateModel } from '../../common';
-import { CenteredLoading3Dots, modifySuccess, modifyError } from '../ui';
+import { CenteredLoading3Dots, modifySuccess, showErrors } from '../ui';
 
 /**
  * Modification d'une maladie
@@ -78,15 +78,12 @@ export class Modify extends Component {
     this.props.actions
       .updateOne(obj)
       .then(result => {
-        // @Todo propagate result to store
-        // propagateModel est ajouté aux actions en bas de document
         modifySuccess();
         this.props.actions.propagateModel('FreeAsso_Sickness', result);
         this.props.onClose();
       })
       .catch(errors => {
-        // @todo display errors to fields
-        modifyError();
+        showErrors(this.props.intl, errors, 'updateOneError');
       });
   }
 

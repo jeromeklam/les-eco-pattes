@@ -1,4 +1,4 @@
-import { jsonApiNormalizer, jsonApiUpdate } from 'freejsonapi';
+import { jsonApiNormalizer, normalizedObjectUpdate } from 'freejsonapi';
 import { freeAssoApi } from '../../../common';
 import {
   DATA_UPDATE_ONE_BEGIN,
@@ -83,7 +83,7 @@ export function reducer(state, action) {
       // On update, refresh store
       let object = jsonApiNormalizer(action.data.data);
       let myItems = state.items;
-      let news = jsonApiUpdate(myItems, 'FreeAsso_Data', object);
+      let news = normalizedObjectUpdate(myItems, 'FreeAsso_Data', object);
       return {
         ...state,
         updateOneError: null,

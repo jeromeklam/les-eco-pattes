@@ -6,7 +6,7 @@ import * as actions from './redux/actions';
 import { withRouter } from 'react-router-dom';
 import { getJsonApi } from 'freejsonapi';
 import { getCauses } from '../cause';
-import { CenteredLoading9X9, createSuccess, createError } from '../ui';
+import { CenteredLoading9X9, createSuccess, showErrors } from '../ui';
 import Form from './Form';
 
 export class Create extends Component {
@@ -92,7 +92,7 @@ export class Create extends Component {
         }
       })
       .catch(errors => {
-        createError();
+        showErrors(this.props.intl, errors, 'createOneError');
       });
   }
 

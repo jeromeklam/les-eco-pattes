@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import * as actions from './redux/actions';
 import { withRouter } from 'react-router-dom';
 import { getJsonApi } from 'freejsonapi';
-import { CenteredLoading9X9, createSuccess, createError } from '../ui';
+import { CenteredLoading9X9, createSuccess, showErrors } from '../ui';
 import Form from './Form';
 import { propagateModel } from '../../common';
 
@@ -63,8 +63,7 @@ export class Create extends Component {
         this.props.onClose();
       })
       .catch(errors => {
-        // @todo display errors to fields
-        createError();
+        showErrors(this.props.intl, errors, 'createOneError');
       });
   }
 

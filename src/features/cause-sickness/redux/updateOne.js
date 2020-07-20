@@ -1,4 +1,4 @@
-import { jsonApiNormalizer, jsonApiUpdate } from 'freejsonapi';
+import { jsonApiNormalizer, normalizedObjectUpdate } from 'freejsonapi';
 import { freeAssoApi } from '../../../common';
 import {
   CAUSE_SICKNESS_UPDATE_ONE_BEGIN,
@@ -83,9 +83,9 @@ export function reducer(state, action) {
     case CAUSE_SICKNESS_UPDATE_ONE_UPDATE:
       let object = jsonApiNormalizer(action.data.data);
       let oldSicknesses = state.sicknesses;
-      let newSicknesses = jsonApiUpdate(oldSicknesses, 'FreeAsso_CauseSickness', object);
+      let newSicknesses = normalizedObjectUpdate(oldSicknesses, 'FreeAsso_CauseSickness', object);
       let oldPendings = state.pendings;
-      let newPendings = jsonApiUpdate(oldPendings, 'FreeAsso_CauseSickness', object);
+      let newPendings = normalizedObjectUpdate(oldPendings, 'FreeAsso_CauseSickness', object);
       return {
         ...state,
         updateOneError: null,

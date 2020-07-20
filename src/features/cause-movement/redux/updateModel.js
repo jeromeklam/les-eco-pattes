@@ -1,4 +1,4 @@
-import { jsonApiNormalizer, jsonApiUpdate } from 'freejsonapi';
+import { jsonApiNormalizer, normalizedObjectUpdate } from 'freejsonapi';
 import { CAUSE_MOVEMENT_UPDATE_MODEL } from './constants';
 
 export function updateModel(model) {
@@ -13,7 +13,7 @@ export function reducer(state, action) {
     case CAUSE_MOVEMENT_UPDATE_MODEL:
       let object = jsonApiNormalizer(action.data.data);
       let myItems = state.items;
-      let news = jsonApiUpdate(myItems, 'FreeAsso_CauseMovement', object);
+      let news = normalizedObjectUpdate(myItems, 'FreeAsso_CauseMovement', object);
       return {
         ...state,
         updateOneError: null,

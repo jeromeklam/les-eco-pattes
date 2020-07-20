@@ -7,7 +7,7 @@ import { withRouter } from 'react-router-dom';
 import Form from './Form';
 import { getJsonApi } from 'freejsonapi';
 import { propagateModel } from '../../common';
-import { CenteredLoading9X9, modifySuccess, modifyError } from '../ui';
+import { CenteredLoading9X9, modifySuccess, showErrors } from '../ui';
 
 /**
  * Modification d'une maladie
@@ -69,8 +69,7 @@ export class Modify extends Component {
         this.props.onClose();
       })
       .catch(errors => {
-        // @todo display errors to fields
-        modifyError();
+        showErrors(this.props.intl, errors, 'updateOneError');
       });
   }
 

@@ -6,7 +6,7 @@ import * as actions from './redux/actions';
 import { withRouter } from 'react-router-dom';
 import { getJsonApi } from 'freejsonapi';
 import { modelsToSelect } from '../../common';
-import { CenteredLoading9X9 } from '../ui';
+import { CenteredLoading9X9, createSuccess ,showErrors } from '../ui';
 import Form from './Form';
 
 export class Create extends Component {
@@ -59,12 +59,13 @@ export class Create extends Component {
     this.props.actions
       .createOne(obj)
       .then(result => {
+        createSuccess();
         this.props.actions.clearItems();
         this.props.history.push('/email');
       })
       .catch(errors => {
         // @todo display errors to fields
-        console.log(errors);
+        showErrors(this.props.intl, errors, 'createOneError');
       });
   }
 
