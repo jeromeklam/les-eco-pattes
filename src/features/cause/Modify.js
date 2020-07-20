@@ -41,6 +41,7 @@ export class Modify extends Component {
      *  En async on va demander le chargement des données
      *  Lorsque fini le store sera modifié
      */
+    console.log("FK cDM", this.state.causeId);
     this.props.actions.loadOne(this.state.causeId).then(result => {
       const item = this.props.cause.loadOneItem;
       this.setState({ item: item });

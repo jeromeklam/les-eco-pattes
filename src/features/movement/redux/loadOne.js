@@ -50,15 +50,18 @@ export function reducer(state, action) {
         ...state,
         loadOnePending: true,
         loadOneError: null,
+        createOneError: null,
+        updateOneError: null,
+        delOneError: null,
       };
 
     case MOVEMENT_LOAD_ONE_SUCCESS:
-      // The request is success
       // The request is success
       let item = null;
       let raw = null;
       let object = jsonApiNormalizer(action.data.data);
       raw = buildModel(object, 'FreeAsso_Movement', action.id);
+      console.log("FK dans le load one", object);
       item = buildModel(object, 'FreeAsso_Movement', action.id, {eager: true});
       return {
         ...state,
