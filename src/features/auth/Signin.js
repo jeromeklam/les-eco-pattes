@@ -3,12 +3,12 @@ import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { FormattedMessage, injectIntl } from 'react-intl';
-import * as actions from './redux/actions';
-import logo from '../../images/logo-les-eco-pattes.jpg';
-import { InputEmail, InputPassword, InputCheckbox, Highlight } from 'freeassofront';
-import { getJsonApi, getFieldErrorMessage } from 'freejsonapi';
 import { withRouter } from 'react-router-dom';
+import { InputEmail, InputPassword, InputCheckbox, Highlight, showErrors } from 'freeassofront';
+import { getJsonApi } from 'freejsonapi';
+import * as actions from './redux/actions';
 import { Copyright, messageError } from '../ui';
+import logo from '../../images/logo-les-eco-pattes.jpg';
 
 export class Signin extends Component {
   static propTypes = {
@@ -58,9 +58,10 @@ export class Signin extends Component {
       props.history.push('/');
     } else {
       if (props.auth.signInError) {
-        return {
-          username_error: getFieldErrorMessage(props.auth.signInError, 'login'),
-          password_error: getFieldErrorMessage(props.auth.signInError, 'password'),
+        const { intl } = this.props;
+        return {          
+          username_error: showErrors(intl, props.auth.signInError, 'login'),
+          password_error: showErrors(intl, props.auth.signInError, 'password'),
         };
       }
     }

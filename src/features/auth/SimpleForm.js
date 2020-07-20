@@ -8,7 +8,7 @@ import { injectIntl, FormattedMessage } from 'react-intl';
 import * as actions from './redux/actions';
 import { getJsonApi } from 'freejsonapi';
 import { InputText, InputPassword, InputSelect } from 'freeassofront';
-import { modifySuccess, modifyError, messageSuccess, showErrors, InputJson } from '../ui';
+import { modifySuccess, messageSuccess, showErrors, InputJson } from '../ui';
 import { langAsOptions } from '../lang';
 import { setModelValue } from '../../common';
 import { schema, defaultConfig } from './';
@@ -105,7 +105,7 @@ export class SimpleForm extends Component {
         modifySuccess();
       })
       .catch(errors => {
-        modifyError();
+        showErrors(this.props.intl, errors, 'updateOneError');
       });
   }
 

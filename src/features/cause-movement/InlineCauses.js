@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import { getJsonApi } from 'freejsonapi';
 import * as actions from './redux/actions';
 import { ResponsiveConfirm, HoverObserver } from 'freeassofront';
-import { CenteredLoading3Dots, createSuccess, createError } from '../ui';
+import { CenteredLoading3Dots, createSuccess, showErrors } from '../ui';
 import { InlineCauseForm } from './';
 import { propagateModel } from '../../common';
 import { getCauseTypeLabel } from '../cause-type';
@@ -98,8 +98,7 @@ export class InlineCauses extends Component {
         this.localLoadMovements();
       })
       .catch(errors => {
-        // @todo display errors to fields
-        createError();
+        showErrors(this.props.intl, errors, 'createOneError');
       });
   }
 

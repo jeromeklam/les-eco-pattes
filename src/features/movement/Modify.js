@@ -7,7 +7,7 @@ import { withRouter } from 'react-router-dom';
 import Form from './Form';
 import { getJsonApi } from 'freejsonapi';
 import { propagateModel } from '../../common';
-import { CenteredLoading9X9, modifySuccess, modifyError } from '../ui';
+import { CenteredLoading9X9, modifySuccess, showErrors } from '../ui';
 
 /**
  * Modification d'un movement
@@ -81,8 +81,6 @@ export class Modify extends Component {
     this.props.actions
       .updateOne(obj)
       .then(result => {
-        // @Todo propagate result to store
-        // propagateModel est ajouté aux actions en bas de document
         modifySuccess();
         this.props.actions.propagateModel('FreeAsso_Movement', result);
         if (!this.props.modal) {
@@ -94,8 +92,7 @@ export class Modify extends Component {
         }
       })
       .catch(errors => {
-        // @todo display errors to fields
-        modifyError();
+        showErrors(this.props.intl, errors, 'updateOneError');
       });
   }
 

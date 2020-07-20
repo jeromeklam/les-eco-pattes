@@ -5,9 +5,9 @@ import { connect } from 'react-redux';
 import * as actions from './redux/actions';
 import { withRouter } from 'react-router-dom';
 import { getJsonApi } from 'freejsonapi';
-import { CenteredLoading3Dots, createSuccess, createError } from '../ui';
-import Form from './Form';
 import { propagateModel } from '../../common';
+import { CenteredLoading3Dots, createSuccess, showErrors } from '../ui';
+import Form from './Form';
 
 export class Create extends Component {
   static propTypes = {
@@ -77,7 +77,7 @@ export class Create extends Component {
         }
       })
       .catch(errors => {
-        createError();
+        showErrors(this.props.intl, errors, 'createOneError');
       });
   }
 

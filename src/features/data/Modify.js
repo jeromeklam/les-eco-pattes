@@ -6,7 +6,7 @@ import * as actions from './redux/actions';
 import { getJsonApi } from 'freejsonapi';
 import { propagateModel } from '../../common';
 import { withRouter } from 'react-router-dom';
-import { CenteredLoading3Dots } from '../ui';
+import { CenteredLoading3Dots, createSuccess, showErrors } from '../ui';
 import Form from './Form';
 
 /**
@@ -61,13 +61,12 @@ export class Modify extends Component {
     this.props.actions
       .updateOne(this.state.id, obj)
       .then(result => {
-        // @Todo propagate result to store
-        // propagateModel est ajouté aux actions en bas de document
+        createSuccess();
         this.props.actions.propagateModel('FreeAsso_Data', result);
         this.props.onClose();
       })
       .catch(errors => {
-        // @todo display errors to fields
+        showErrors(this.props.intl, errors, 'updateOneError');
       });
   }
 

@@ -93,7 +93,7 @@ export class Modify extends Component {
         }
       })
       .catch(errors => {
-        showErrors(this.props.intl, errors);
+        showErrors(this.props.intl, errors, 'updateOneError');
       });
   }
 

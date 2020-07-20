@@ -6,7 +6,7 @@ import * as actions from './redux/actions';
 import { withRouter } from 'react-router-dom';
 import { getJsonApi } from 'freejsonapi';
 import { propagateModel } from '../../common';
-import { CenteredLoading3Dots, modifySuccess, modifyError } from '../ui';
+import { CenteredLoading3Dots, modifySuccess, showErrors } from '../ui';
 import Form from './Form';
 
 export class Modify extends Component {
@@ -95,7 +95,7 @@ export class Modify extends Component {
         }
       })
       .catch(errors => {
-        modifyError();
+        showErrors(this.props.intl, errors, 'updateOneError');
       });
   }
 

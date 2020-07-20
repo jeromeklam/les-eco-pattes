@@ -6,8 +6,8 @@ import { connect } from 'react-redux';
 import { getJsonApi } from 'freejsonapi';
 import { ResponsiveConfirm, HoverObserver } from 'freeassofront';
 import * as actions from './redux/actions';
-import { CenteredLoading3Dots, createSuccess, createError } from '../ui';
 import { propagateModel, intlDate } from '../../common';
+import { CenteredLoading3Dots, createSuccess, showErrors } from '../ui';
 import { DelOne as DelOneIcon } from '../icons';
 import { InlineGrowthForm, getGrowths } from './';
 
@@ -79,8 +79,7 @@ export class InlineGrowths extends Component {
         this.localLoadGrowths();
       })
       .catch(errors => {
-        // @todo display errors to fields
-        createError();
+        showErrors(this.props.intl, errors, 'createOneError');
       });
   }
 
@@ -113,7 +112,7 @@ export class InlineGrowths extends Component {
     const growths = this.state.items;
     if (this.state.loading) {
       return (
-        <div className="cause-inline-mevements">
+        <div className="cause-inline-movements">
           <CenteredLoading3Dots />
         </div>
       );

@@ -6,11 +6,10 @@ import { connect } from 'react-redux';
 import { getJsonApi } from 'freejsonapi';
 import * as actions from './redux/actions';
 import { ResponsiveConfirm, HoverObserver } from 'freeassofront';
-import { CenteredLoading3Dots, createSuccess, createError } from '../ui';
-import { InlineMovementForm } from './';
 import { propagateModel, intlDate } from '../../common';
+import { CenteredLoading3Dots, createSuccess, showErrors } from '../ui';
 import { DelOne as DelOneIcon, SimpleCheck as SimpleCheckIcon } from '../icons';
-import { statusLabel, getMovements } from './';
+import { statusLabel, getMovements, InlineMovementForm } from './';
 
 export class InlineMovements extends Component {
   static propTypes = {
@@ -89,8 +88,7 @@ export class InlineMovements extends Component {
         this.localLoadMovements();
       })
       .catch(errors => {
-        console.log("FK error",errors);
-        createError();
+        showErrors(this.props.intl, errors, 'createOneError');
       });
   }
 
