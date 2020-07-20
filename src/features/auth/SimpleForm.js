@@ -85,7 +85,7 @@ export class SimpleForm extends Component {
         modifySuccess();
       })
       .catch(errors => {
-        modifyError();
+        showErrors(this.props.intl, errors, 'updateOneError');
       });
   }
 

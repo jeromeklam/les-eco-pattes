@@ -4,10 +4,10 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { FormattedMessage, injectIntl } from 'react-intl';
 import { withRouter } from 'react-router-dom';
-import { InputEmail, InputPassword, InputCheckbox, Highlight, showErrors } from 'freeassofront';
+import { InputEmail, InputPassword, InputCheckbox, Highlight } from 'freeassofront';
 import { getJsonApi } from 'freejsonapi';
 import * as actions from './redux/actions';
-import { Copyright, messageError } from '../ui';
+import { Copyright, messageError, getFieldErrorMessage } from '../ui';
 import logo from '../../images/logo-les-eco-pattes.jpg';
 
 export class Signin extends Component {
@@ -58,10 +58,9 @@ export class Signin extends Component {
       props.history.push('/');
     } else {
       if (props.auth.signInError) {
-        const { intl } = this.props;
         return {          
-          username_error: showErrors(intl, props.auth.signInError, 'login'),
-          password_error: showErrors(intl, props.auth.signInError, 'password'),
+          username_error: getFieldErrorMessage(props.intl,  props.auth.signInError, 'login'),
+          password_error: getFieldErrorMessage(props.intl,  props.auth.signInError, 'password'),
         };
       }
     }
