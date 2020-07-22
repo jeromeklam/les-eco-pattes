@@ -4,10 +4,10 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as actions from './redux/actions';
 import { withRouter } from 'react-router-dom';
-import Form from './Form';
 import { getJsonApi } from 'freejsonapi';
 import { propagateModel } from '../../common';
 import { CenteredLoading9X9, modifySuccess, showErrors } from '../ui';
+import Form from './Form';
 
 /**
  * Modification d'un movement
@@ -98,6 +98,7 @@ export class Modify extends Component {
 
   render() {
     const item = this.state.item;
+    console.log("FK est dans le modify",item);
     return (
       <div className="movement-modify global-card">
         {this.props.movement.loadOnePending ? (

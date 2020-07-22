@@ -96,6 +96,7 @@ const afterChange = (name, item) => {
 
 export default function Form(props) {
   const modify = props.modify || false;
+  console.log("FK est dans le Form");
   props.item.modify = modify;
   props.item.param_mode = props.mode || 'SIMPLE';
   props.item.param_site = props.fromSite || null;

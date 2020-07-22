@@ -85,6 +85,7 @@ export default function Form(props) {
             value={values.cau_code}
             onChange={handleChange}
             labelTop={true}
+            required={true}
             mask={(values.cause_type && values.cause_type.caut_mask) ? values.cause_type.caut_mask : '[*]'}
             pattern={regexp}
             error={getErrorMessage('cau_code')}
@@ -128,7 +129,6 @@ export default function Form(props) {
                 name="cau_name"
                 labelTop={true}
                 value={values.cau_name}
-                required={true}
                 onChange={handleChange}
                 error={getErrorMessage('cau_name')}
               />

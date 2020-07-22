@@ -67,6 +67,21 @@ export function showErrors(intl, error) {
   }
 }
 
+export const getFieldErrorMessage = (intl, errors, field) => {
+  let message = false;
+  if (errors && errors.errors) {
+    errors.errors.forEach(error => {
+      if (error.source && error.source.parameter === field) {
+        if (error.source && error.source.parameter === field) {
+          message = intl.formatMessage({ id: 'app.errors.code.' + error.code, defaultMessage: 'Unknown error ' + error.code });
+          return true;
+        }
+      }
+    })
+  }
+  return message;
+};
+
 export const messageError = (message = 'Unknown error') => {
   cogoToast.error(message);
 };
