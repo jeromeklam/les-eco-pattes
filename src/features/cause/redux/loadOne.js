@@ -1,4 +1,4 @@
-import { jsonApiNormalizer, buildModel } from 'freejsonapi';
+import { jsonApiNormalizer, normalizedObjectModeler } from 'freejsonapi';
 import { freeAssoApi, getPreviousNext } from '../../../common';
 import {
   CAUSE_LOAD_ONE_BEGIN,
@@ -60,7 +60,7 @@ export function reducer(state, action) {
       let item = null;
       let itemPrevNext = null;
       const object = jsonApiNormalizer(action.data.data);
-      item = buildModel(object, 'FreeAsso_Cause', action.id, { eager: true });
+      item = normalizedObjectModeler(object, 'FreeAsso_Cause', action.id, { eager: true });
       itemPrevNext = getPreviousNext(state.items, action.id);
       return {
         ...state,

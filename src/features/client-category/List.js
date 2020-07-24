@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as actions from './redux/actions';
-import { buildModel } from 'freejsonapi';
+import { normalizedObjectModeler } from 'freejsonapi';
 import { ResponsiveList, ResponsiveQuickSearch } from 'freeassofront';
 import {
   Filter as FilterIcon,
@@ -135,7 +135,7 @@ export class List extends Component {
   render() {
     let items = [];
     if (this.props.clientCategory.items.FreeAsso_ClientCategory) {
-      items = buildModel(this.props.clientCategory.items, 'FreeAsso_ClientCategory');
+      items = normalizedObjectModeler(this.props.clientCategory.items, 'FreeAsso_ClientCategory');
     }
     const globalActions = getGlobalActions(this);
     const inlineActions = getInlineActions(this);

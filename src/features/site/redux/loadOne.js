@@ -1,4 +1,4 @@
-import { jsonApiNormalizer, buildModel } from 'freejsonapi';
+import { jsonApiNormalizer, normalizedObjectModeler } from 'freejsonapi';
 import { freeAssoApi, getPreviousNext } from '../../../common';
 import {
   SITE_LOAD_ONE_BEGIN,
@@ -58,8 +58,8 @@ export function reducer(state, action) {
       let raw = null;
       let itemPrevNext = null;
       let object = jsonApiNormalizer(action.data.data);
-      raw = buildModel(object, 'FreeAsso_Site', action.id);
-      item = buildModel(object, 'FreeAsso_Site', action.id, {eager: true});
+      raw = normalizedObjectModeler(object, 'FreeAsso_Site', action.id);
+      item = normalizedObjectModeler(object, 'FreeAsso_Site', action.id, {eager: true});
       itemPrevNext = getPreviousNext(state.items, action.id);
       return {
         ...state,

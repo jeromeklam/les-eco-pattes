@@ -1,4 +1,4 @@
-import { buildModel, jsonApiNormalizer } from 'freejsonapi';
+import { jsonApiNormalizer, normalizedObjectModeler } from 'freejsonapi';
 import { freeAssoApi } from '../../common';
 
 export const causeTypeMntType = [
@@ -24,7 +24,7 @@ export const getCauseType = (caut_id, eager = true) => {
       res => {
         if (res.data && res.data.data) {
           const list  = jsonApiNormalizer(res.data);
-          const model = buildModel(list, 'FreeAsso_CauseType', caut_id, {eager: eager});
+          const model = normalizedObjectModeler(list, 'FreeAsso_CauseType', caut_id, {eager: eager});
           resolve(model);
         } else {
           resolve([]);
@@ -44,7 +44,7 @@ export const getCauseType = (caut_id, eager = true) => {
 export const getCauseTypeLabel = (store, id) => {
   let label = '';
   if (store) {
-    let items = buildModel(store, 'FreeAsso_CauseType');
+    let items = normalizedObjectModeler(store, 'FreeAsso_CauseType');
     if (items) {
       const found = items.find(elem => elem.id === id);
       if (found) {
@@ -65,7 +65,7 @@ export const getCauseTypeLabel = (store, id) => {
 export function causeTypeAsOptions(object) {
   let arr = [];
   if (object) {
-    let items = buildModel(object, 'FreeAsso_CauseType');
+    let items = normalizedObjectModeler(object, 'FreeAsso_CauseType');
     if (items) {
       items.forEach(item => {
         arr.push({ value: item.id, label: item.caut_name });

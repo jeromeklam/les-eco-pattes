@@ -1,4 +1,4 @@
-import { buildModel } from 'freejsonapi';
+import { normalizedObjectModeler } from 'freejsonapi';
 
 /**
  * Export all site types as an array of value=>label
@@ -9,7 +9,7 @@ import { buildModel } from 'freejsonapi';
  */
 export function siteTypeAsOptions(object) {
   let arr = [];
-  let items = buildModel(object, 'FreeAsso_SiteType');
+  let items = normalizedObjectModeler(object, 'FreeAsso_SiteType');
   items.forEach(item => {
     arr.push({ value: item.id, label: item.sitt_name });
   });

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { SearchModal } from '../ui';
-import { jsonApiNormalizer, buildModel, objectToQueryString } from 'freejsonapi';
+import { jsonApiNormalizer, normalizedObjectModeler, objectToQueryString } from 'freejsonapi';
 import { freeAssoApi } from '../../common';
 
 export default class Search extends Component {
@@ -37,7 +37,7 @@ export default class Search extends Component {
         let items = [];
         if (result && result.data) {
           const lines = jsonApiNormalizer(result.data);
-          items = buildModel(lines, 'FreeAsso_Sickness');
+          items = normalizedObjectModeler(lines, 'FreeAsso_Sickness');
         }
         this.setState({ loading: false, finish: true, list: items });
       });

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as actions from './redux/actions';
-import { buildModel } from 'freejsonapi';
+import { normalizedObjectModeler } from 'freejsonapi';
 import { ResponsiveConfirm, Loading3Dots, HoverObserver } from 'freeassofront';
 import { DashboardCard } from '../dashboard';
 import { propagateModel, intlDate } from '../../common';
@@ -84,7 +84,7 @@ export class PendingMovements extends Component {
     const { confirm, valid } = this.state;
     let movements = [];
     if (this.props.causeMovement.pendings.FreeAsso_CauseMovement) {
-      movements = buildModel(this.props.causeMovement.pendings, 'FreeAsso_CauseMovement');
+      movements = normalizedObjectModeler(this.props.causeMovement.pendings, 'FreeAsso_CauseMovement');
     }
     const header = (
       <InlineList>

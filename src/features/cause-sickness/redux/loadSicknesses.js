@@ -1,4 +1,4 @@
-import { jsonApiNormalizer, objectToQueryString, buildModel } from 'freejsonapi';
+import { jsonApiNormalizer, objectToQueryString, normalizedObjectModeler } from 'freejsonapi';
 import {
   CAUSE_SICKNESS_LOAD_SICKNESSES_BEGIN,
   CAUSE_SICKNESS_LOAD_SICKNESSES_SUCCESS,
@@ -78,7 +78,7 @@ export function reducer(state, action) {
       } else {
         list = [];
       }
-      const sicknessesModels = buildModel(list, 'FreeAsso_CauseSickness');
+      const sicknessesModels = normalizedObjectModeler(list, 'FreeAsso_CauseSickness');
       return {
         ...state,
         loadSicknessesPending: false,

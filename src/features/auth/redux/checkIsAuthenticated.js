@@ -4,7 +4,7 @@ import {
   AUTH_CHECK_IS_AUTHENTICATED_FAILURE,
   AUTH_CHECK_IS_AUTHENTICATED_DISMISS_ERROR,
 } from './constants';
-import { jsonApiNormalizer, buildModel } from 'freejsonapi';
+import { jsonApiNormalizer, normalizedObjectModeler } from 'freejsonapi';
 import { initAxios, freeAssoApi } from '../../../common';
 import cookie from 'react-cookies';
 import { schema, defaultConfig } from '../';
@@ -80,7 +80,7 @@ export function reducer(state, action) {
       }
       if (datas.data) {
         let object = jsonApiNormalizer(datas.data);
-        user = buildModel(object, 'FreeSSO_User', object.SORTEDELEMS[0], { eager: true });
+        user = normalizedObjectModeler(object, 'FreeSSO_User', object.SORTEDELEMS[0], { eager: true });
       }
       if (token && user) {
         authenticated = true;

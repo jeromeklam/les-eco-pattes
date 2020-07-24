@@ -1,9 +1,5 @@
-import {
-  freeAssoApi } from '../../../common';
-import {
-  jsonApiNormalizer,
-  buildModel
-} from 'freejsonapi';
+import { jsonApiNormalizer, normalizedObjectModeler } from 'freejsonapi';
+import { freeAssoApi } from '../../../common';
 import {
   EMAIL_LOAD_ONE_BEGIN,
   EMAIL_LOAD_ONE_SUCCESS,
@@ -62,7 +58,7 @@ export function reducer(state, action) {
       // The request is success
       let item = null;      
       let object = jsonApiNormalizer(action.data.data);
-      item = buildModel(
+      item = normalizedObjectModeler(
           object,
           'FreeFW_Email',
           action.id,

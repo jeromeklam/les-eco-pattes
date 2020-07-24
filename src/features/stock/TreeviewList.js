@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { buildModel } from 'freejsonapi';
+import { normalizedObjectModeler } from 'freejsonapi';
 import { ResponsiveTreeviewList } from 'freeassofront';
 import * as actions from './redux/actions';
 import { loadChildren, select, toggle, delOne as delOneFamily } from '../family/redux/actions';
@@ -137,7 +137,7 @@ export class TreeviewList extends Component {
     // Les des items à afficher avec remplissage progressif
     let items = [];
     if (this.props.item.items.FreeAsso_Item) {
-      items = buildModel(this.props.item.items, 'FreeAsso_Item');
+      items = normalizedObjectModeler(this.props.item.items, 'FreeAsso_Item');
     }
     // Inline Element
     let inlineComponent = null;

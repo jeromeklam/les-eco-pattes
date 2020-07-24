@@ -1,5 +1,5 @@
 import { freeAssoApi, initAxios } from '../../../common';
-import { jsonApiNormalizer, buildModel  } from 'freejsonapi';
+import { jsonApiNormalizer, normalizedObjectModeler  } from 'freejsonapi';
 import {
   AUTH_SIGN_IN_BEGIN,
   AUTH_SIGN_IN_SUCCESS,
@@ -71,7 +71,7 @@ export function reducer(state, action) {
       }
       if (datas.data) {
         let object = jsonApiNormalizer(datas.data);
-        user = buildModel(object, 'FreeSSO_User', object.SORTEDELEMS[0], {eager: true});
+        user = normalizedObjectModeler(object, 'FreeSSO_User', object.SORTEDELEMS[0], {eager: true});
       }
       if (user) {
         authenticated = true;

@@ -1,4 +1,4 @@
-import { buildModel } from 'freejsonapi';
+import { normalizedObjectModeler } from 'freejsonapi';
 import {
   CAUSE_SELECT_ALL,
 } from './constants';
@@ -14,7 +14,7 @@ export function reducer(state, action) {
     case CAUSE_SELECT_ALL:
       let items = [];
       if (state.items.FreeAsso_Cause) {
-        items = buildModel(state.items, 'FreeAsso_Cause');
+        items = normalizedObjectModeler(state.items, 'FreeAsso_Cause');
       }
       return {
         ...state,

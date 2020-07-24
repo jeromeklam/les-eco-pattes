@@ -5,7 +5,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as actions from './redux/actions';
 import { HoverObserver } from 'freeassofront';
-import { buildModel } from 'freejsonapi';
+import { normalizedObjectModeler } from 'freejsonapi';
 import { isInViewPort } from '../../common';
 import { InlineList as InlineListCause } from '../cause';
 import { CenteredLoading3Dots } from '../ui';
@@ -123,7 +123,7 @@ export class ListGroup extends Component {
   render() {
     let items = false;
     if (this.props.site.items.FreeAsso_Site) {
-      items = buildModel(this.props.site.items, 'FreeAsso_Site');
+      items = normalizedObjectModeler(this.props.site.items, 'FreeAsso_Site');
     }
     if (this.props.site.loadMorePending) {
       return (

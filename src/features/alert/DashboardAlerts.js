@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
-import { buildModel } from 'freejsonapi';
+import { normalizedObjectModeler } from 'freejsonapi';
 import { Loading3Dots } from 'freeassofront';
 import { connect } from 'react-redux';
 import * as actions from './redux/actions';
@@ -21,7 +21,7 @@ export class DashboardAlerts extends Component {
   render() {
     let alerts = [];
     if (this.props.alert.items.FreeAsso_Alert) {
-      alerts = buildModel(this.props.alert.items, 'FreeAsso_Alert');
+      alerts = normalizedObjectModeler(this.props.alert.items, 'FreeAsso_Alert');
     }
     return (
       <StatCard title="Alertes" icon={<AlertIcon />} size="md">

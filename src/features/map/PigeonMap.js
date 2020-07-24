@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import * as actions from './redux/actions';
 import Map from 'pigeon-maps';
 import Draggable from 'pigeon-draggable';
-import { buildModel, getJsonApi } from 'freejsonapi';
+import { normalizedObjectModeler, getJsonApi } from 'freejsonapi';
 import { propagateModel } from '../../common';
 import { loadMore as loadMoreSite, updateOne as updateOneSite } from '../site/redux/actions';
 import Icon from '@mdi/react';
@@ -222,7 +222,7 @@ export class PigeonMap extends Component {
   render() {
     let items = false;
     if (this.props.site.items.FreeAsso_Site) {
-      items = buildModel(this.props.site.items, 'FreeAsso_Site');
+      items = normalizedObjectModeler(this.props.site.items, 'FreeAsso_Site');
     }
     //console.log("FK render", parseInt(this.state.moved.id, 10)  === this.state.selected, this.state.moved.id ,this.state.selected, this.state.center  )
     //console.log("FK render", this.state.moved.id, this.state.selected);
