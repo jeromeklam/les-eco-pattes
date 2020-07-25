@@ -28,7 +28,7 @@ const tabs = [
 ];
 const modifyTabs = [
   { key: '3', name: 'movements', label: 'Mouvements', shortcut: 'E', icon: 'movements' },
-  { key: '4', name: 'sicknesses', label: 'Maladies', shortcut: 'E', icon: 'sicknesses' },
+  { key: '4', name: 'sicknesses', label: 'Santé', shortcut: 'E', icon: 'sicknesses' },
   { key: '5', name: 'croissance', label: 'Croissance', shortcut: 'E', icon: 'croissance' },
   { key: '6', name: 'descendant', label: 'Descendance', shortcut: 'E', icon: 'descendant' },
   { key: '7', name: 'documents', label: 'Documents', shortcut: 'E', icon: 'documents' },
@@ -50,10 +50,12 @@ export default function Form(props) {
   if (regexp !== '') {
     validated = false;
     if (regPlaceholder === '' || caut_id !== values.cause_type.id) {
-      const parser = new RegexpParser('/' + regexp + '/',{namedGroupConf:{
-        pays: ['FR'],
-        cpays: ['250']
-      }});
+      const parser = new RegexpParser('/' + regexp + '/',
+        {namedGroupConf:{
+          pays: ['FR'],
+          cpays: ['250']
+        }
+      });
       regPlaceholder = parser.build();
     }
     if (values.cau_code !== '' && validateRegex(values.cau_code, regexp)) {
@@ -89,7 +91,7 @@ export default function Form(props) {
             mask={(values.cause_type && values.cause_type.caut_mask) ? values.cause_type.caut_mask : '[*]'}
             pattern={regexp}
             error={getErrorMessage('cau_code')}
-            warning={validated ? false : 'Format : ' + regPlaceholder}
+            help={validated ? false : 'Format : ' + regPlaceholder}
           />
         </div>
         <div className="col-10">

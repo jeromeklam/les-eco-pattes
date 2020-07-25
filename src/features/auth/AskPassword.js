@@ -93,7 +93,6 @@ export class AskPassword extends Component {
           this.props.history.push('/');
         })
         .catch(errors => {
-          // @todo display errors to fields
           const { intl } = this.props;
           showErrors(intl, this.props.auth.changePasswordError);
         });

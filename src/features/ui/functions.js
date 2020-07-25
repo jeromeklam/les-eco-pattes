@@ -24,7 +24,7 @@ export const saveToLS = (key, value) => {
   }
 };
 
-export function showErrors(intl, error) {
+export function showErrors(intl, error, defCode = "") {
   if (error) {
     if (!error.errors) {
       if (error.response) {
@@ -32,25 +32,39 @@ export function showErrors(intl, error) {
       }
     }
     if (error.errors) {
+      let nbErrorField = 0;
+      let displayDefaultError = true;  
       error.errors.forEach(oneError => {
-        if (oneError.code) {
-          const code = `app.errors.code.${oneError.code}`;
-          const message = intl.formatMessage({
-            id: code,
-            defaultMessage: oneError.title,
-          });
-          cogoToast.error(message);
+        if (oneError.source && oneError.source.parameter && oneError.source.parameter !== "") {
+          nbErrorField += 1;
         } else {
-          if (oneError.status) {
-            const code = `app.errors.code.${oneError.status}`;
+          displayDefaultError = false;
+          if (oneError.code) {
+            const code = `app.errors.code.${oneError.code}`;
             const message = intl.formatMessage({
               id: code,
               defaultMessage: oneError.title,
             });
             cogoToast.error(message);
+          } else {
+            if (oneError.status) {
+              const code = `app.errors.code.${oneError.status}`;
+              const message = intl.formatMessage({
+                id: code,
+                defaultMessage: oneError.title,
+              });
+              cogoToast.error(message);
+            }
           }
         }
       });
+      if (displayDefaultError) {
+        const message = intl.formatMessage({
+          id: `app.errors.default.${defCode}`,
+          defaultMessage: 'Unknown error !',
+        });
+        cogoToast.error(message);
+      } 
     } else {
       const message = intl.formatMessage({
         id: 'app.errors.default',

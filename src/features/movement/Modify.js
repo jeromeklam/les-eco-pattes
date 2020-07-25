@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { injectIntl } from 'react-intl';
 import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
@@ -98,7 +99,7 @@ export class Modify extends Component {
 
   render() {
     const item = this.state.item;
-    console.log("FK est dans le modify",item);
+    //console.log("FK est dans le modify",item);
     return (
       <div className="movement-modify global-card">
         {this.props.movement.loadOnePending ? (
@@ -144,4 +145,4 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Modify));
+export default withRouter(injectIntl(connect(mapStateToProps, mapDispatchToProps)(Modify)));

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { injectIntl } from 'react-intl';
 import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
@@ -12,6 +13,7 @@ import Form from './Form';
 export class Create extends Component {
   static propTypes = {
     cause: PropTypes.object.isRequired,
+
     actions: PropTypes.object.isRequired,
   };
 
@@ -127,4 +129,4 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Create));
+export default withRouter(injectIntl(connect(mapStateToProps, mapDispatchToProps)(Create)));

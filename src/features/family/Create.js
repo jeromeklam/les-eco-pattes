@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { injectIntl } from 'react-intl';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as actions from './redux/actions';
 import { withRouter } from 'react-router-dom';
 import { getJsonApi } from 'freejsonapi';
+import { propagateModel } from '../../common';
 import { CenteredLoading9X9, createSuccess, showErrors } from '../ui';
 import Form from './Form';
-import { propagateModel } from '../../common';
 
 export class Create extends Component {
   static propTypes = {
@@ -111,4 +112,4 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Create));
+export default withRouter(injectIntl(connect(mapStateToProps, mapDispatchToProps)(Create)));

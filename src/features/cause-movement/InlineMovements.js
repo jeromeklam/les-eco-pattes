@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { injectIntl } from 'react-intl';
 import classnames from 'classnames';
 import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
@@ -260,4 +261,4 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(InlineMovements);
+export default injectIntl(connect(mapStateToProps, mapDispatchToProps)(InlineMovements));

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { injectIntl } from 'react-intl';
 import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
@@ -64,7 +65,6 @@ export class Create extends Component {
         this.props.history.push('/email');
       })
       .catch(errors => {
-        // @todo display errors to fields
         showErrors(this.props.intl, errors, 'createOneError');
       });
   }
@@ -99,7 +99,7 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default withRouter(connect(
+export default withRouter(injectIntl(connect(
   mapStateToProps,
   mapDispatchToProps
-)(Create));
+)(Create)));

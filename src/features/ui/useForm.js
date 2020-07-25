@@ -367,6 +367,7 @@ const useForm = (initialState, initialTab, onSubmit, onCancel, onNavTab, errors,
   const getErrorMessage = field => {
     const intl = useIntl();
     let message = false;
+    
     if (errors && errors.errors) {
       errors.errors.forEach(error => {
         if (error.source && error.source.parameter === field) {

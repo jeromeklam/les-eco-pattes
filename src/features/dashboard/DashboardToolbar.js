@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { injectIntl } from 'react-intl';
 import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
@@ -83,7 +84,7 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default connect(
+export default injectIntl(connect(
   mapStateToProps,
   mapDispatchToProps
-)(DashboardToolbar);
+)(DashboardToolbar));

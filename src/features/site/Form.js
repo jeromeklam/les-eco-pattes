@@ -1,5 +1,5 @@
 import React from 'react';
-import { InputHidden, InputText, InputSelect, InputCheckbox, InputMask } from 'freeassofront';
+import { InputHidden, InputText, InputSelect, InputMask } from 'freeassofront';
 import RegexpParser from 'reregexp';
 import classnames from 'classnames';
 import { validateRegex } from '../../common';
@@ -121,7 +121,7 @@ export default function Form(props) {
             onChange={handleChange}
             required={true}
             error={getErrorMessage('site_code')}
-            warning={validated ? false : 'Format : ' + regPlaceholder}
+            help={validated ? false : 'Format : ' + regPlaceholder}
           />
         </div>
         <div className="col-15">

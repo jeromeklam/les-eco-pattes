@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { injectIntl } from 'react-intl';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import { bindActionCreators } from 'redux';
@@ -389,4 +390,4 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(PigeonMap);
+export default injectIntl(connect(mapStateToProps, mapDispatchToProps)(PigeonMap));
