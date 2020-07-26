@@ -62,7 +62,7 @@ export default function Form(props) {
         <div className="row">
           <div className="col-12">
             <InputText
-              label="Dure moyenne (j)"
+              label="Durée moyenne (j)"
               name="sick_duration"
               id="sick_duration"
               value={values.sick_duration}
