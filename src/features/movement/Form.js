@@ -156,6 +156,7 @@ export default function Form(props) {
                   options={mvtStatus}
                   addempty={true}
                   disabled={values.globalDisabled}
+                  defaultValue='WAIT'
                   error={getErrorMessage('move_status')}
                 />
               </div>

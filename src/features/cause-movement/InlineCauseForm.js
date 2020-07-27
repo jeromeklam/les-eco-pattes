@@ -57,8 +57,7 @@ export default function InlineCauseForm(props) {
             size="sm"
             labelSize={6}
             inputSize={30}
-            defaultValue='WAIT'
-            value={values.camv_status || 'WAIT'}
+            value={values.camv_status || 'OK'}
             onChange={handleChange}
             options={mvtStatus}
             error={getErrorMessage('camv_status')}

@@ -92,7 +92,6 @@ export class List extends Component {
         deleteSuccess();
       })
       .catch(errors => {
-        // @todo display errors to fields
         showErrors(this.props.intl, this.props.site.delOneError);
       });
   }
@@ -256,7 +255,6 @@ export class List extends Component {
     ) : (
       <FilterFullIcon className="text-light" />
     );
-    console.log("FK site liste",items);
     return (
       <div>
         <ResponsiveList
