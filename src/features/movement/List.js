@@ -193,7 +193,7 @@ export class List extends Component {
     const quickSearch = (
       <ResponsiveQuickSearch
         name="quickSearch"
-        label="Recherche nom"
+        label="Recherche Sites"
         quickSearch={search}
         onSubmit={this.onQuickSearch}
         onChange={this.onSearchChange}
@@ -212,7 +212,7 @@ export class List extends Component {
           cols={cols}
           items={items || []}
           quickSearch={quickSearch}
-          mainCol="move_tr_name"
+          mainCol="move_from"
           filterIcon={filterIcon}
           cancelPanelIcon={<CancelPanelIcon />}
           validPanelIcon={<ValidPanelIcon />}
