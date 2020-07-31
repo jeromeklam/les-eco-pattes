@@ -1,4 +1,4 @@
-import { buildModel, objectToQueryString, jsonApiNormalizer } from 'freejsonapi';
+import { objectToQueryString, jsonApiNormalizer, normalizedObjectModeler } from 'freejsonapi';
 import { freeAssoApi } from '../../common';
 
 /**
@@ -18,7 +18,7 @@ export const getSicknesses = (cau_id) => {
       res => {
         if (res.data && res.data.data) {
           const list = jsonApiNormalizer(res.data);
-          const models = buildModel(list, 'FreeAsso_CauseSickness');
+          const models = normalizedObjectModeler(list, 'FreeAsso_CauseSickness');
           resolve(models);
         } else {
           resolve([]);

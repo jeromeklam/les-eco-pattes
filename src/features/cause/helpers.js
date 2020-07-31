@@ -125,7 +125,7 @@ export const getInlineActions = ({
     },
     {
       name: 'medical',
-      label: 'Maladies',
+      label: 'Santé',
       onClick: (obj) => {onSelectList(obj, 'sickness');},
       param: 'object',
       theme: 'secondary',

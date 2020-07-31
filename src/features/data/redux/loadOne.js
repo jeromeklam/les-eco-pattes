@@ -1,4 +1,4 @@
-import { jsonApiNormalizer, buildModel } from 'freejsonapi';
+import { jsonApiNormalizer, normalizedObjectModeler } from 'freejsonapi';
 import { freeAssoApi } from '../../../common';
 import {
   DATA_LOAD_ONE_BEGIN,
@@ -58,7 +58,7 @@ export function reducer(state, action) {
       // The request is success
       let item = null;
       let object = jsonApiNormalizer(action.data.data);
-      item = buildModel(object, 'FreeAsso_Data', action.id);
+      item = normalizedObjectModeler(object, 'FreeAsso_Data', action.id);
       return {
         ...state,
         loadOnePending: false,

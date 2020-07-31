@@ -63,7 +63,7 @@ const initItem = (item) => {
   item.fromRequired = false;
   item.toRequired = false;
   item.globalDisabled = false;
-  if (item.modify && item.move_status === 'OK') {
+  if (item.modify && item.move_status === 'ARCHIVE') {
     item.globalDisabled = true;
   }
   return item;
@@ -96,7 +96,7 @@ const afterChange = (name, item) => {
 
 export default function Form(props) {
   const modify = props.modify || false;
-  console.log("FK est dans le Form");
+  //console.log("FK est dans le Form");
   props.item.modify = modify;
   props.item.param_mode = props.mode || 'SIMPLE';
   props.item.param_site = props.fromSite || null;
@@ -128,113 +128,38 @@ export default function Form(props) {
     >
       <div className="card-body">
         <InputHidden name="id" id="id" value={values.id} />
-        <div className="row">
-          <div className="col-sm-12">
-            <InputSelect
-              label="Type"
-              id="move_type"
-              name="move_type"
-              required={true}
-              value={values.move_type}
-              onChange={handleChange}
-              options={mvtTypes}
-              addempty={true}
-              disabled={values.globalDisabled}
-              error={getErrorMessage('move_type')}
-            />
-          </div>
-          <div className="col-sm-8">
-            <InputSelect
-              label="Statut"
-              id="move_status"
-              name="move_status"
-              required={true}
-              value={values.move_status}
-              onChange={handleChange}
-              options={mvtStatus}
-              addempty={true}
-              disabled={values.globalDisabled}
-              error={getErrorMessage('move_status')}
-            />
-          </div>
-        </div>
-        <div className="row">
-          <div className="col-sm-12">
-            <SiteInputPicker
-              label="Site de départ"
-              key="from_site"
-              name="from_site"
-              labelTop={true}
-              item={values.from_site || null}
-              onChange={handleChange}
-              disabled={values.globalDisabled || values.param_mode !== 'INPUT'}
-              error={getErrorMessage('from_site')}
-            />
-          </div>
-          <div className="col-sm-8">
-            <InputDatetime
-              label="Date"
-              name="move_from"
-              id="move_from"
-              required={true}
-              value={values.move_from}
-              onChange={handleChange}
-              disabled={values.globalDisabled}
-              error={getErrorMessage('move_from')}
-            />
-          </div>
-          <div className="col-4">
-            <InputCheckbox
-              label="Camion vide"
-              name="move_from_empty"
-              id="move_from_empty"
-              checked={values.move_from_empty}
-              onChange={handleChange}
-              disabled={values.globalDisabled  || values.param_mode === 'INPUT'}
-              error={getErrorMessage('move_from_empty')}
-            />
-          </div>
-        </div>
-        <div className="row">
-          <div className="col-sm-12">
-            <SiteInputPicker
-              label="Site d'arrivée"
-              key="to_site"
-              name="to_site"
-              labelTop={true}
-              item={values.to_site || null}
-              onChange={handleChange}
-              disabled={values.globalDisabled}
-              error={getErrorMessage('to_site')}
-            />
-          </div>
-          <div className="col-sm-8">
-            <InputDatetime
-              label="Date"
-              name="move_to"
-              id="move_to"
-              required={true}
-              value={values.move_to}
-              onChange={handleChange}
-              disabled={values.globalDisabled}
-              error={getErrorMessage('move_to')}
-            />
-          </div>
-            <div className="col-12">
-            <InputCheckbox
-              label="Camion vide"
-              name="move_to_empty"
-              id="move_to_empty"
-              checked={values.move_to_empty || false}
-              onChange={handleChange}
-              disabled={values.globalDisabled}
-              error={getErrorMessage('move_to_empty')}
-            />
-          </div>
-        </div>
-        <hr />
         {(values.currentTab === '1') && (
           <div>
+            <div className="row">
+              <div className="col-sm-12">
+                <InputSelect
+                  label="Type"
+                  id="move_type"
+                  name="move_type"
+                  required={true}
+                  value={values.move_type}
+                  onChange={handleChange}
+                  options={mvtTypes}
+                  addempty={true}
+                  disabled={values.globalDisabled}
+                  error={getErrorMessage('move_type')}
+                />
+              </div>
+              <div className="col-sm-8">
+                <InputSelect
+                  label="Statut"
+                  id="move_status"
+                  name="move_status"
+                  required={true}
+                  value={values.move_status}
+                  onChange={handleChange}
+                  options={mvtStatus}
+                  addempty={true}
+                  disabled={values.globalDisabled}
+                  error={getErrorMessage('move_status')}
+                />
+              </div>
+            </div>
             <div className="row">
               <div className="col-12">
                 <InputText
@@ -277,6 +202,43 @@ export default function Form(props) {
         )}
         {values.currentTab === '3' && (
           <div>
+            <div className="row">
+              <div className="col-sm-12">
+                <SiteInputPicker
+                  label="Site de départ"
+                  key="from_site"
+                  name="from_site"
+                  labelTop={true}
+                  item={values.from_site || null}
+                  onChange={handleChange}
+                  disabled={values.globalDisabled || values.param_mode !== 'INPUT'}
+                  error={getErrorMessage('from_site')}
+                />
+              </div>
+              <div className="col-sm-8">
+                <InputDatetime
+                  label="Date"
+                  name="move_from"
+                  id="move_from"
+                  required={true}
+                  value={values.move_from}
+                  onChange={handleChange}
+                  disabled={values.globalDisabled}
+                  error={getErrorMessage('move_from')}
+                />
+              </div>
+              <div className="col-4">
+                <InputCheckbox
+                  label="Camion vide"
+                  name="move_from_empty"
+                  id="move_from_empty"
+                  checked={values.move_from_empty}
+                  onChange={handleChange}
+                  disabled={values.globalDisabled  || values.param_mode === 'INPUT'}
+                  error={getErrorMessage('move_from_empty')}
+                />
+              </div>
+            </div>
             <div className="row">
               <div className="col-12">
                 <InputSelect
@@ -409,6 +371,43 @@ export default function Form(props) {
         )}
         {values.currentTab === '4' && (
           <div>
+            <div className="row">
+              <div className="col-sm-12">
+                <SiteInputPicker
+                  label="Site d'arrivée"
+                  key="to_site"
+                  name="to_site"
+                  labelTop={true}
+                  item={values.to_site || null}
+                  onChange={handleChange}
+                  disabled={values.globalDisabled}
+                  error={getErrorMessage('to_site')}
+                />
+              </div>
+              <div className="col-sm-8">
+                <InputDatetime
+                  label="Date"
+                  name="move_to"
+                  id="move_to"
+                  required={true}
+                  value={values.move_to}
+                  onChange={handleChange}
+                  disabled={values.globalDisabled}
+                  error={getErrorMessage('move_to')}
+                />
+              </div>
+                <div className="col-12">
+                <InputCheckbox
+                  label="Camion vide"
+                  name="move_to_empty"
+                  id="move_to_empty"
+                  checked={values.move_to_empty || false}
+                  onChange={handleChange}
+                  disabled={values.globalDisabled}
+                  error={getErrorMessage('move_to_empty')}
+                />
+              </div>
+            </div>
             <div className="row">
               <div className="col-12">
                 <InputSelect

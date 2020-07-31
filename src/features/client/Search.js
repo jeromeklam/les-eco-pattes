@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { SearchModal } from '../ui';
-import { jsonApiNormalizer, buildModel, objectToQueryString } from 'freejsonapi';
+import { jsonApiNormalizer, objectToQueryString, normalizedObjectModeler } from 'freejsonapi';
 import { freeAssoApi } from '../../common';
 import { clientTypeAsOptions } from '../client-type/functions.js';
 import { clientCategoryAsOptions } from '../client-category/functions.js';
@@ -50,7 +50,7 @@ export default class Search extends Component {
         let items = [];
         if (result && result.data) {
           const lines = jsonApiNormalizer(result.data);
-          items = buildModel(lines, 'FreeAsso_Client');
+          items = normalizedObjectModeler(lines, 'FreeAsso_Client');
         }
         this.setState({ loading: false, finish: true, list: items });
       });

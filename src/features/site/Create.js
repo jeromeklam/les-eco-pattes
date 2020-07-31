@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
+import { injectIntl } from 'react-intl';
 import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as actions from './redux/actions';
 import { withRouter } from 'react-router-dom';
 import { getJsonApi } from 'freejsonapi';
-import { injectIntl } from 'react-intl';
 import { CenteredLoading3Dots, createSuccess, showErrors } from '../ui';
 import Form from './Form';
 import { propagateModel } from '../../common';

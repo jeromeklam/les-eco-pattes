@@ -1,4 +1,4 @@
-import { jsonApiNormalizer, objectToQueryString, buildModel, getNewNormalizedObject } from 'freejsonapi';
+import { jsonApiNormalizer, objectToQueryString, normalizedObjectModeler, getNewNormalizedObject } from 'freejsonapi';
 import { freeAssoApi } from '../../../common';
 import {
   DATA_LOAD_MORE_INIT,
@@ -121,7 +121,7 @@ export function reducer(state, action) {
         loadMoreError: null,
         loadMoreFinish: nbre < state.page_size,
         items: list,
-        models: buildModel(list, 'FreeAsso_Data'),
+        models: normalizedObjectModeler(list, 'FreeAsso_Data'),
         page_number: state.page_number + 1,
       };
 

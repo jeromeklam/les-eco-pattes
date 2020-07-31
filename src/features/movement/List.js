@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as actions from './redux/actions';
-import { buildModel } from 'freejsonapi';
+import { normalizedObjectModeler } from 'freejsonapi';
 import { ResponsiveList, ResponsiveQuickSearch } from 'freeassofront';
 import { InlineCauses } from '../cause-movement';
 import {
@@ -178,7 +178,7 @@ export class List extends Component {
     // Les des items à afficher avec remplissage progressif
     let items = [];
     if (this.props.movement.items.FreeAsso_Movement) {
-      items = buildModel(this.props.movement.items, 'FreeAsso_Movement');
+      items = normalizedObjectModeler(this.props.movement.items, 'FreeAsso_Movement');
     }
     // Toolsbars and lists
     const globalActions = getGlobalActions(this);

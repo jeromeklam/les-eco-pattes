@@ -29,6 +29,7 @@ export const mvtStatus = [
   { label: 'Validé', value: 'OK' },
   { label: 'Annulé', value: 'KO' },
   { label: 'En cours', value: 'WAIT' },
+  { label: 'Archivé', value: 'ARCHIVE' },
 ];
 
 export const mvtTypes = [

@@ -1,4 +1,4 @@
-import { buildModel } from 'freejsonapi';
+import { normalizedObjectModeler } from 'freejsonapi';
 
 /**
  * Export all data types as an array of value=>label
@@ -34,7 +34,7 @@ export function dataTypes() {
  */
 export function dataAsOptions(object) {
   let arr = [];
-  let items = buildModel(object, 'FreeAsso_Data');
+  let items = normalizedObjectModeler(object, 'FreeAsso_Data');
   items.forEach(item => {
     arr.push({ value: item.id, label: item.data_name });
   });

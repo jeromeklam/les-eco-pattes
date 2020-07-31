@@ -1,4 +1,4 @@
-import { buildModel, objectToQueryString, jsonApiNormalizer } from 'freejsonapi';
+import { objectToQueryString, jsonApiNormalizer, normalizedObjectModeler } from 'freejsonapi';
 import { freeAssoApi } from '../../common';
 
 export const mvtStatus = [
@@ -28,7 +28,7 @@ export const getMovements = (cau_id = null, move_id = null) => {
       res => {
         if (res.data && res.data.data) {
           const list = jsonApiNormalizer(res.data);
-          const models = buildModel(list, 'FreeAsso_CauseMovement');
+          const models = normalizedObjectModeler(list, 'FreeAsso_CauseMovement');
           resolve(models);
         } else {
           resolve([]);

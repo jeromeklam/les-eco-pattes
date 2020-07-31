@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
-import { buildModel } from 'freejsonapi';
+import { normalizedObjectModeler } from 'freejsonapi';
 import { Loading3Dots, HoverObserver } from 'freeassofront';
 import { connect } from 'react-redux';
 import striptags from 'striptags';
@@ -59,9 +59,9 @@ export class PendingSicknesses extends Component {
     let counter = 0;
     let sicknesses = [];
     if (this.props.causeSickness.pendings.FreeAsso_CauseSickness) {
-      sicknesses = buildModel(this.props.causeSickness.pendings, 'FreeAsso_CauseSickness');
+      sicknesses = normalizedObjectModeler(this.props.causeSickness.pendings, 'FreeAsso_CauseSickness');
     }
-    console.log("FK sickness", this.props.causeSickness);
+    //console.log("FK sickness", this.props.causeSickness);
     const header = (
       <InlineList>
         <Line header oddEven={counter}>

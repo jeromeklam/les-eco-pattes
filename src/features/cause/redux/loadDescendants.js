@@ -1,4 +1,4 @@
-import { jsonApiNormalizer, objectToQueryString, buildModel } from 'freejsonapi';
+import { jsonApiNormalizer, objectToQueryString, normalizedObjectModeler } from 'freejsonapi';
 import {
   CAUSE_LOAD_DESCENDANTS_BEGIN,
   CAUSE_LOAD_DESCENDANTS_SUCCESS,
@@ -76,7 +76,7 @@ export function reducer(state, action) {
       } else {
         list = [];
       }
-      const causes = buildModel(list, 'FreeAsso_Cause');
+      const causes = normalizedObjectModeler(list, 'FreeAsso_Cause');
       return {
         ...state,
         loadDescendantsPending: false,

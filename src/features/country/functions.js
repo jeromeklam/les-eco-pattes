@@ -1,4 +1,4 @@
-import { buildModel } from 'freejsonapi';
+import { normalizedObjectModeler } from 'freejsonapi';
 
 /**
  * Export all countries as an array of value=>label
@@ -10,7 +10,7 @@ import { buildModel } from 'freejsonapi';
 export function countryAsOptions(object) {
   let arr = [];
   if (object) {
-    let items = buildModel(
+    let items = normalizedObjectModeler(
       object,
       'FreeFW_Country',
     );

@@ -343,3 +343,36 @@ svg.text-warning.inline-action:hover {
   padding-left: 6px;
   padding-right: 6px;
 }
+
+.card-body {
+  padding: 0px;
+}
+.modal-body {
+  font-size: 0.9rem;
+}
+.input-group {
+  font-size: 0.9rem;
+}
+.modal-shadow {
+  -webkit-box-shadow: 0 5px 11px 0 rgba(0,0,0,0.18), 0 4px 15px 0 rgba(0,0,0,0.15);
+  box-shadow: 0 5px 11px 0 rgba(0,0,0,0.18), 0 4px 15px 0 rgba(0,0,0,0.15);
+}
+.btn-secondary {
+  color: white;
+  background-color: theme-color('secondary');
+  border-color: theme-color('secondary-light');
+}
+.btn-primary {
+  color: white;
+  background-color: theme-color('primary');
+  border-color: theme-color('primary-light');
+}
+.btn-warning {
+  color: white;
+  background-color: theme-color('warning');
+  border-color: theme-color('warning-light');
+}
+hr {
+  border-top: 2px solid;
+  border-top-color: theme-color('secondary');
+}

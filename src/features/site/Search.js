@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { SearchModal } from '../ui';
 import { freeAssoApi } from '../../common';
-import { jsonApiNormalizer, buildModel, objectToQueryString } from 'freejsonapi';
+import { jsonApiNormalizer, normalizedObjectModeler, objectToQueryString } from 'freejsonapi';
 
 export default class Search extends Component {
   static propTypes = {
@@ -37,7 +37,7 @@ export default class Search extends Component {
         let items = [];
         if (result && result.data) {
           const lines = jsonApiNormalizer(result.data);
-          items = buildModel(lines, 'FreeAsso_Site');
+          items = normalizedObjectModeler(lines, 'FreeAsso_Site');
         }
         this.setState({ loading: false, finish: true, list: items });
       });

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { buildModel } from 'freejsonapi';
+import { normalizedObjectModeler } from 'freejsonapi';
 import { ResponsiveList } from 'freeassofront';
 import * as actions from './redux/actions';
 import {
@@ -105,7 +105,7 @@ export class List extends Component {
   render() {
     let items = [];
     if (this.props.siteType.items.FreeAsso_SiteType) {
-      items = buildModel(this.props.siteType.items, 'FreeAsso_SiteType');
+      items = normalizedObjectModeler(this.props.siteType.items, 'FreeAsso_SiteType');
     }
     const globalActions = getGlobalActions(this);
     const inlineActions = getInlineActions(this);

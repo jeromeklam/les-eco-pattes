@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
+import { injectIntl } from 'react-intl';
 import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 import * as actions from './redux/actions';
 import { getJsonApi } from 'freejsonapi';
 import { propagateModel } from '../../common';
-import { withRouter } from 'react-router-dom';
 import { CenteredLoading3Dots, createSuccess, showErrors } from '../ui';
 import Form from './Form';
 
@@ -107,4 +108,4 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Modify));
+export default withRouter(injectIntl(connect(mapStateToProps, mapDispatchToProps)));

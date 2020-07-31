@@ -20,7 +20,7 @@ export default function Form(props) {
   } = useForm(props.item, props.tab, props.onSubmit, props.onCancel, props.onNavTab, props.errors);
   return (
     <ResponsiveModalOrForm
-      title="Maladie"
+      title="Santé"
       tab={values.currentTab}
       tabs={props.tabs}
       size="xl"
@@ -100,6 +100,7 @@ export default function Form(props) {
         <div className="col-16">
           <ClientInputPicker
             label="Vétérinaire"
+            key="sanitary"
             name="sanitary"
             item={values.sanitary || null}
             onChange={handleChange}
@@ -107,6 +108,7 @@ export default function Form(props) {
             labelSize={0}
             inputSize={36}
             error={getErrorMessage('sanitary')}
+            typeCodes={['VETERINAIRE']}
           />
         </div>
       </div>

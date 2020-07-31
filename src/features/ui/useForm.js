@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useIntl } from 'react-intl';
-import { jsonApiNormalizer, buildModel } from 'freejsonapi';
+import { jsonApiNormalizer, normalizedObjectModeler } from 'freejsonapi';
 import { freeAssoApi } from '../../common';
 
 const explodeReduxModel = obj => {
@@ -94,7 +94,7 @@ const useForm = (initialState, initialTab, onSubmit, onCancel, onNavTab, errors,
                 values.loadCause = false;
                 if (result && result.data) {
                   const lines = jsonApiNormalizer(result.data);
-                  const item = buildModel(lines, 'FreeAsso_Cause', id, { eager: true });
+                  const item = normalizedObjectModeler(lines, 'FreeAsso_Cause', id, { eager: true });
                   values[first] = item;         
                   setValues(explodeReduxModel(values));
                   if (afterChange) {
@@ -118,7 +118,7 @@ const useForm = (initialState, initialTab, onSubmit, onCancel, onNavTab, errors,
                 values.loadClient = false;
                 if (result && result.data) {
                   const lines = jsonApiNormalizer(result.data);
-                  const item = buildModel(lines, 'FreeAsso_Client', id, { eager: true });
+                  const item = normalizedObjectModeler(lines, 'FreeAsso_Client', id, { eager: true });
                   values[first] = item;
                   if (afterChange) {
                     afterChange(event.target.name, values);
@@ -142,7 +142,7 @@ const useForm = (initialState, initialTab, onSubmit, onCancel, onNavTab, errors,
                 values.loadSite = false;
                 if (result && result.data) {
                   const lines = jsonApiNormalizer(result.data);
-                  const item = buildModel(lines, 'FreeAsso_Site', id, { eager: true });
+                  const item = normalizedObjectModeler(lines, 'FreeAsso_Site', id, { eager: true });
                   values[first] = item;
                   if (afterChange) {
                     afterChange(event.target.name, values);
@@ -166,7 +166,7 @@ const useForm = (initialState, initialTab, onSubmit, onCancel, onNavTab, errors,
                 values.loadSickness = false;
                 if (result && result.data) {
                   const lines = jsonApiNormalizer(result.data);
-                  const item = buildModel(lines, 'FreeAsso_Sickness', id, { eager: true });
+                  const item = normalizedObjectModeler(lines, 'FreeAsso_Sickness', id, { eager: true });
                   values[first] = item;
                   if (afterChange) {
                     afterChange(event.target.name, values);
@@ -209,7 +209,7 @@ const useForm = (initialState, initialTab, onSubmit, onCancel, onNavTab, errors,
                 values.loadCauseType = false;
                 if (result && result.data) {
                   const lines = jsonApiNormalizer(result.data);
-                  const item = buildModel(lines, 'FreeAsso_CauseType', id, { eager: true });
+                  const item = normalizedObjectModeler(lines, 'FreeAsso_CauseType', id, { eager: true });
                   values[first] = item;
                   if (afterChange) {
                     afterChange(event.target.name, values);
@@ -233,7 +233,7 @@ const useForm = (initialState, initialTab, onSubmit, onCancel, onNavTab, errors,
                 values.loadSiteType = false;
                 if (result && result.data) {
                   const lines = jsonApiNormalizer(result.data);
-                  const item = buildModel(lines, 'FreeAsso_SiteType', id, { eager: true });
+                  const item = normalizedObjectModeler(lines, 'FreeAsso_SiteType', id, { eager: true });
                   values[first] = item;
                   if (afterChange) {
                     afterChange(event.target.name, values);
@@ -257,7 +257,7 @@ const useForm = (initialState, initialTab, onSubmit, onCancel, onNavTab, errors,
                 values.loadCause = false;
                 if (result && result.data) {
                   const lines = jsonApiNormalizer(result.data);
-                  const item = buildModel(lines, 'FreeAsso_Cause', id, { eager: true });
+                  const item = normalizedObjectModeler(lines, 'FreeAsso_Cause', id, { eager: true });
                   values[first] = item;
                   if (afterChange) {
                     afterChange(event.target.name, values);
@@ -281,7 +281,7 @@ const useForm = (initialState, initialTab, onSubmit, onCancel, onNavTab, errors,
                 values.loadClient = false;
                 if (result && result.data) {
                   const lines = jsonApiNormalizer(result.data);
-                  const item = buildModel(lines, 'FreeAsso_Client', id, { eager: true });
+                  const item = normalizedObjectModeler(lines, 'FreeAsso_Client', id, { eager: true });
                   values[first] = item;
                   if (afterChange) {
                     afterChange(event.target.name, values);
@@ -305,7 +305,7 @@ const useForm = (initialState, initialTab, onSubmit, onCancel, onNavTab, errors,
                 values.loadSite = false;
                 if (result && result.data) {
                   const lines = jsonApiNormalizer(result.data);
-                  const item = buildModel(lines, 'FreeAsso_Site', id, { eager: true });
+                  const item = normalizedObjectModeler(lines, 'FreeAsso_Site', id, { eager: true });
                   values[first] = item;
                   if (afterChange) {
                     afterChange(event.target.name, values);
@@ -329,7 +329,7 @@ const useForm = (initialState, initialTab, onSubmit, onCancel, onNavTab, errors,
                 values.loadSickness = false;
                 if (result && result.data) {
                   const lines = jsonApiNormalizer(result.data);
-                  const item = buildModel(lines, 'FreeAsso_Sickness', id, { eager: true });
+                  const item = normalizedObjectModeler(lines, 'FreeAsso_Sickness', id, { eager: true });
                   values[first] = item;
                   if (afterChange) {
                     afterChange(event.target.name, values);
@@ -367,6 +367,7 @@ const useForm = (initialState, initialTab, onSubmit, onCancel, onNavTab, errors,
   const getErrorMessage = field => {
     const intl = useIntl();
     let message = false;
+    
     if (errors && errors.errors) {
       errors.errors.forEach(error => {
         if (error.source && error.source.parameter === field) {

@@ -1,4 +1,4 @@
-import { jsonApiNormalizer, objectToQueryString, buildModel } from 'freejsonapi';
+import { jsonApiNormalizer, objectToQueryString, normalizedObjectModeler } from 'freejsonapi';
 import { freeAssoApi } from '../../../common';
 import {
   SITE_LOAD_DOCUMENTS_BEGIN,
@@ -78,8 +78,8 @@ export function reducer(state, action) {
       } else {
         list = [];
       }
-      let currentItem = buildModel(state.items, 'FreeAsso_Site', action.site_id);
-      const documents = buildModel(list, 'FreeAsso_SiteMedia');
+      let currentItem = normalizedObjectModeler(state.items, 'FreeAsso_Site', action.site_id);
+      const documents = normalizedObjectModeler(list, 'FreeAsso_SiteMedia');
       return {
         ...state,
         loadDocumentsPending: false,

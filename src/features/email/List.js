@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as actions from './redux/actions';
-import { buildModel } from 'freejsonapi';
+import { normalizedObjectModeler } from 'freejsonapi';
 import { ResponsiveList } from 'freeassofront';
 
 export class List extends Component {
@@ -55,7 +55,7 @@ export class List extends Component {
     // Les des items à afficher avec remplissage progressif
     let items = false;
     if (this.props.email.items.FreeFW_Email) {
-      items = buildModel(this.props.email.items, 'FreeFW_Email');
+      items = normalizedObjectModeler(this.props.email.items, 'FreeFW_Email');
     }
     const cols = [
       {

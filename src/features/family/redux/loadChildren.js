@@ -1,4 +1,4 @@
-import { jsonApiNormalizer, buildModel } from 'freejsonapi';
+import { jsonApiNormalizer, normalizedObjectModeler } from 'freejsonapi';
 import { freeAssoApi } from '../../../common';
 import {
   FAMILY_LOAD_CHILDREN_INIT,
@@ -108,7 +108,7 @@ export function reducer(state, action) {
       } else {
         list = state.items;
       }
-      const models = buildModel(list, 'FreeAsso_Family');
+      const models = normalizedObjectModeler(list, 'FreeAsso_Family');
       let tree = state.tree;
       tree.setData(models);
       tree.addLoaded(id2);

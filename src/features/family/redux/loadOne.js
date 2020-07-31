@@ -1,4 +1,4 @@
-import { jsonApiNormalizer, buildModel } from 'freejsonapi';
+import { jsonApiNormalizer, normalizedObjectModeler } from 'freejsonapi';
 import { freeAssoApi } from '../../../common';
 import {
   FAMILY_LOAD_ONE_BEGIN,
@@ -58,8 +58,8 @@ export function reducer(state, action) {
       let item = null;
       let raw = null;
       let object = jsonApiNormalizer(action.data.data);
-      raw = buildModel(object, 'FreeAsso_Family', action.id);
-      item = buildModel(object, 'FreeAsso_Family', action.id, {eager: true});
+      raw = normalizedObjectModeler(object, 'FreeAsso_Family', action.id);
+      item = normalizedObjectModeler(object, 'FreeAsso_Family', action.id, {eager: true});
       return {
         ...state,
         loadOnePending: false,

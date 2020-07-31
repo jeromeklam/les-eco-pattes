@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as actions from './redux/actions';
-import { buildModel } from 'freejsonapi';
+import { normalizedObjectModeler } from 'freejsonapi';
 import { ResponsiveList } from 'freeassofront';
 import {
   SimpleCancel as CancelPanelIcon,
@@ -127,7 +127,7 @@ export class List extends Component {
     // Les des items à afficher avec remplissage progressif
     let items = [];
     if (this.props.data.items.FreeAsso_Data) {
-      items = buildModel(this.props.data.items, 'FreeAsso_Data');
+      items = normalizedObjectModeler(this.props.data.items, 'FreeAsso_Data');
     }
     const globalActions = getGlobalActions(this);
     const inlineActions = getInlineActions(this);

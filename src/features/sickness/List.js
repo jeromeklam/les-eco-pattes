@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as actions from './redux/actions';
-import { buildModel } from 'freejsonapi';
+import { normalizedObjectModeler } from 'freejsonapi';
 import { ResponsiveList, ResponsiveQuickSearch } from 'freeassofront';
 import {
   Filter as FilterIcon,
@@ -145,7 +145,7 @@ export class List extends Component {
     // Les des items à afficher avec remplissage progressif
     let items = [];
     if (this.props.sickness.items.FreeAsso_Sickness) {
-      items = buildModel(this.props.sickness.items, 'FreeAsso_Sickness');
+      items = normalizedObjectModeler(this.props.sickness.items, 'FreeAsso_Sickness');
     }
     // Toolsbars and lists
     const globalActions = getGlobalActions(this);

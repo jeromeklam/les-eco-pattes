@@ -1,4 +1,4 @@
-import { buildModel } from 'freejsonapi';
+import { normalizedObjectModeler } from 'freejsonapi';
 
 /**
  * Export all cause main types as an array of value=>label
@@ -9,7 +9,7 @@ import { buildModel } from 'freejsonapi';
  */
 export function causeMainTypeAsOptions(object) {
   let arr   = [];
-  let items = buildModel(
+  let items = normalizedObjectModeler(
     object,
     'FreeAsso_CauseMainType',
   );

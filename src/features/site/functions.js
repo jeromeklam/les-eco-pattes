@@ -1,4 +1,4 @@
-import { buildModel, objectToQueryString, jsonApiNormalizer } from 'freejsonapi';
+import { normalizedObjectModeler, objectToQueryString, jsonApiNormalizer } from 'freejsonapi';
 import { freeAssoApi } from '../../common';
 
 /**
@@ -14,7 +14,7 @@ export const getOne = (id) => {
       res => {
         if (res.data && res.data.data) {
           const list = jsonApiNormalizer(res.data);
-          const model = buildModel(list, 'FreeAsso_Site', id, {eager: true});
+          const model = normalizedObjectModeler(list, 'FreeAsso_Site', id, {eager: true});
           resolve(model);
         } else {
           resolve([]);
@@ -45,7 +45,7 @@ export const getMedias = (site_id, sitm_type) => {
       res => {
         if (res.data && res.data.data) {
           const list = jsonApiNormalizer(res.data);
-          const models = buildModel(list, 'FreeAsso_SiteMedia');
+          const models = normalizedObjectModeler(list, 'FreeAsso_SiteMedia');
           resolve(models);
         } else {
           resolve([]);
@@ -88,7 +88,7 @@ export const downloadSiteMediaBlob = sitm_id => {
  */
 export const siteAsOptions = object => {
   let arr = [];
-  let items = buildModel(object, 'FreeAsso_Site');
+  let items = normalizedObjectModeler(object, 'FreeAsso_Site');
   items.forEach(item => {
     arr.push({ value: item.id, label: item.caut_name });
   });

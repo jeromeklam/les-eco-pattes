@@ -1,9 +1,9 @@
-import { buildModel } from 'freejsonapi';
+import { normalizedObjectModeler } from 'freejsonapi';
 
 export function raiserAsOptions(object) {
   let arr = [];
   if (object) {
-    let items = buildModel(object, 'FreeAsso_Client');
+    let items = normalizedObjectModeler(object, 'FreeAsso_Client');
     if (items) {
       items.forEach(item => {
         arr.push({ value: item.id, label: item.clicaut_name });

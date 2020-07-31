@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { injectIntl } from 'react-intl';
 import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
@@ -41,7 +42,7 @@ export class Modify extends Component {
      *  En async on va demander le chargement des données
      *  Lorsque fini le store sera modifié
      */
-    console.log("FK cDM", this.state.causeId);
+    //console.log("FK cDM", this.state.causeId);
     this.props.actions.loadOne(this.state.causeId).then(result => {
       const item = this.props.cause.loadOneItem;
       this.setState({ item: item });
@@ -151,4 +152,4 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Modify));
+export default withRouter(injectIntl(connect(mapStateToProps, mapDispatchToProps)(Modify)));

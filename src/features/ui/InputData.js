@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import { buildModel } from 'freejsonapi';
+import { normalizedObjectModeler } from 'freejsonapi';
 import { InputText, InputTextarea, InputSelect, InputCheckbox } from 'freeassofront';
 
 function getFieldData(field_name, tab_config, tab_data) {
-  const myDatas = buildModel(tab_data, 'FreeAsso_Data');
+  const myDatas = normalizedObjectModeler(tab_data, 'FreeAsso_Data');
   let data = false;
   Object.keys(tab_config.FreeAsso_Config).forEach(key => {
     //console.log(key);

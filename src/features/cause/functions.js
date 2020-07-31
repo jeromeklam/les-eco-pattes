@@ -1,4 +1,4 @@
-import { buildModel, objectToQueryString, jsonApiNormalizer } from 'freejsonapi';
+import { normalizedObjectModeler, objectToQueryString, jsonApiNormalizer } from 'freejsonapi';
 import { freeAssoApi } from '../../common';
 
 /**
@@ -18,7 +18,7 @@ export const getMedias = (cause_id, caum_type) => {
       res => {
         if (res.data && res.data.data) {
           const list = jsonApiNormalizer(res.data);
-          const models = buildModel(list, 'FreeAsso_CauseMedia');
+          const models = normalizedObjectModeler(list, 'FreeAsso_CauseMedia');
           resolve(models);
         } else {
           resolve([]);
@@ -42,7 +42,7 @@ export const getCause = (cau_id, eager = true) => {
       res => {
         if (res.data && res.data.data) {
           const list  = jsonApiNormalizer(res.data);
-          const model = buildModel(list, 'FreeAsso_Cause', cau_id, {eager: eager});
+          const model = normalizedObjectModeler(list, 'FreeAsso_Cause', cau_id, {eager: eager});
           resolve(model);
         } else {
           resolve([]);
@@ -83,7 +83,7 @@ export const getCauses = (mode, site_id, cause, ids = []) => {
       res => {
         if (res.data && res.data.data) {
           const list = jsonApiNormalizer(res.data);
-          const models = buildModel(list, 'FreeAsso_Cause');
+          const models = normalizedObjectModeler(list, 'FreeAsso_Cause');
           resolve(models);
         } else {
           resolve([]);

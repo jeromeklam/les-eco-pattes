@@ -1,4 +1,4 @@
-import { jsonApiNormalizer, objectToQueryString, buildModel } from 'freejsonapi';
+import { jsonApiNormalizer, objectToQueryString, normalizedObjectModeler } from 'freejsonapi';
 import {
   CAUSE_GROWTH_LOAD_GROWTHS_BEGIN,
   CAUSE_GROWTH_LOAD_GROWTHS_SUCCESS,
@@ -77,7 +77,7 @@ export function reducer(state, action) {
       } else {
         list = [];
       }
-      const growthsModels = buildModel(list, 'FreeAsso_CauseGrowth');
+      const growthsModels = normalizedObjectModeler(list, 'FreeAsso_CauseGrowth');
       return {
         ...state,
         loadGrowthsPending: false,

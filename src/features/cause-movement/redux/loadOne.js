@@ -1,4 +1,4 @@
-import { jsonApiNormalizer, buildModel } from 'freejsonapi';
+import { jsonApiNormalizer, normalizedObjectModeler } from 'freejsonapi';
 import { freeAssoApi } from '../../../common';
 import {
   CAUSE_MOVEMENT_LOAD_ONE_BEGIN,
@@ -57,7 +57,7 @@ export function reducer(state, action) {
       let item = null;
       let object = jsonApiNormalizer(action.data.data);
       let emptyItem = state.emptyItem;
-      item = buildModel(object, 'FreeAsso_CauseMovement', action.id, {eager: true});
+      item = normalizedObjectModeler(object, 'FreeAsso_CauseMovement', action.id, {eager: true});
       if (action.id <= 0) {
         emptyItem = {...item};
       }

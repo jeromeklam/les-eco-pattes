@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { injectIntl } from 'react-intl';
 import classnames from 'classnames';
 import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
@@ -182,12 +183,14 @@ export class InlineMovements extends Component {
                               />
                             </div>
                           )}
-                          <div className="btn btn-inline btn-warning">
-                            <DelOneIcon
-                              onClick={() => this.onConfirmMovement(movement.id)}
-                              className="text-light inline-action"
-                            />
-                          </div>
+                          {(movement.camv_status === 'WAIT' || movement.camv_status === 'NOK') && (
+                            <div className="btn btn-inline btn-warning">
+                              <DelOneIcon
+                                onClick={() => this.onConfirmMovement(movement.id)}
+                                className="text-light inline-action"
+                              />
+                            </div>
+                          )}
                         </div>
                       }
                       </div>
@@ -260,4 +263,4 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(InlineMovements);
+export default injectIntl(connect(mapStateToProps, mapDispatchToProps)(InlineMovements));
