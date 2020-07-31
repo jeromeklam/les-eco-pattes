@@ -106,7 +106,8 @@ export default function InlineMovementForm(props) {
             size="sm"
             labelSize={6}
             inputSize={30}
-            value={values.camv_status || 'OK'}
+            value={values.camv_status}
+            defaultValue="WAIT"
             onChange={handleChange}
             options={mvtStatus}
             error={getErrorMessage('camv_status')}

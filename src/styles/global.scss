@@ -346,20 +346,21 @@ svg.text-warning.inline-action:hover {
   padding-left: 6px;
   padding-right: 6px;
 }
-
 .modal-body {
   font-size: 0.9rem;
 }
 .input-group {
   font-size: 0.9rem;
 }
-
 .modal-body {
   .card-body {
     padding: 0px;
   }
 }
-
+.modal-shadow {
+  -webkit-box-shadow: 0 5px 11px 0 rgba(0,0,0,0.18), 0 4px 15px 0 rgba(0,0,0,0.15);
+  box-shadow: 0 5px 11px 0 rgba(0,0,0,0.18), 0 4px 15px 0 rgba(0,0,0,0.15);
+}
 .btn-secondary {
   color: white;
   background-color: theme-color('secondary');
