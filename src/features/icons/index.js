@@ -74,3 +74,4 @@ export { default as MenuDown } from './MenuDown';
 export { default as SocketConnected } from './SocketConnected';
 export { default as SocketDisconnected } from './SocketDisconnected';
 export { default as SimpleCheck } from './SimpleCheck';
+export { default as Wait } from './Wait';

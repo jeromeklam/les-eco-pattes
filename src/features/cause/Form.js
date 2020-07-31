@@ -1,5 +1,5 @@
 import React from 'react';
-import { InputHidden, InputText, InputSelect, InputMask } from 'freeassofront';
+import { InputHidden, InputText, InputSelect, InputMask, InputCheckbox } from 'freeassofront';
 import RegexpParser from 'reregexp';
 import { validateRegex } from '../../common';
 import { 
@@ -207,6 +207,15 @@ export default function Form(props) {
             </div>
           </div>
           <div className="row">
+            <div className="col-sm-2">
+              <InputCheckbox
+                label="Attente"
+                name="cau_waiting"
+                labelTop={true}
+                checked={values.cau_waiting === true}
+                onChange={handleChange}
+              />
+            </div>
             <div className="col-10">
               <InputDate
                 label="Entrée"
@@ -229,7 +238,7 @@ export default function Form(props) {
                 position="top-start"
               />
             </div>
-            <div className="col-16">
+            <div className="col-14">
               {(values.cau_to !== null && values.cau_to !== '') && (
                 <InputData
                   name="cau_string_3"

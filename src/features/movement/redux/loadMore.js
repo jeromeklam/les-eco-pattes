@@ -23,7 +23,7 @@ export function loadMore(args = {}, reload = false) {
         });
       }
       const promise = new Promise((resolve, reject) => {
-                let filters = getState().movement.filters.asJsonApiObject()
+        let filters = getState().movement.filters.asJsonApiObject()
         let params = {
           page: { number: getState().movement.page_number, size: getState().movement.page_size },
           ...filters

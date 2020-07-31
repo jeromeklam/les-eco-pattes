@@ -13,6 +13,7 @@ import {
   Female as FemaleIcon,
   Medical as MedicalIcon,
   Photo as PhotoIcon,
+  Wait as WaitIcon,
 } from '../icons';
 import { causeTypeAsOptions } from '../cause-type/functions';
 
@@ -20,6 +21,11 @@ export const sexSelect = [
   { label: 'Femelle', value: 'F', icon: <FemaleIcon className="col-icon" /> },
   { label: 'Mâle', value: 'M', icon: <MaleIcon className="col-icon" />  },
   { label: 'Indéfini', value: 'OTHER' },
+];
+
+export const waitingSelect = [
+  { value: true, label: 'En attente', icon: <WaitIcon className="col-icon"/> },
+  { value: false, label: '' },
 ];
 
 export const getSexlabel = (p_code, p_icon = true, p_className = "" ) => {
@@ -219,10 +225,22 @@ export const getCols = ({ props }) => {
       name: 'site',
       label: 'Site',
       col: 'site.site_name',
-      size: '10',
+      size: '7',
       mob_size: '36',
       title: true,
       sortable: true,
+    },
+    {
+      name: 'waiting',
+      label: 'En Attente',
+      col: 'cau_waiting',
+      size: '3',
+      mob_size: '36',
+      title: true,
+      sortable: true,
+      type: 'bool',
+      values: waitingSelect,
+      filterable: { type: 'bool' },
     },
     {
       name: 'type',

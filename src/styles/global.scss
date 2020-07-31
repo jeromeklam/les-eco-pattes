@@ -259,20 +259,20 @@ svg.text-warning.inline-action:hover {
     line-height: 30px;
   }
   .row-line.row-even:not(.row-title) {
-    background: lighten(theme-color('secondary-light'), 6%);
+    background: lighten(theme-color('secondary-light'), 14%);
   }
   .row-line.row-even:not(.row-title):hover {
-    background: lighten(theme-color('secondary-light'), 8%);
+    background: lighten(theme-color('secondary-light'), 16%);
   }
   .row-line.row-odd:not(.row-title) {
-    background: lighten(theme-color('secondary-light'), 10%);
+    background: lighten(theme-color('secondary-light'), 18%);
   }
   .row-line.row-odd:not(.row-title):hover {
-    background: lighten(theme-color('secondary-light'), 12%);
+    background: lighten(theme-color('secondary-light'), 20%);
   }
   .row-title {
-    background-color: theme-color('secondary');
-    color: theme-color('light');
+    background-color: theme-color('secondary-light');
+    color: theme-color('secondary');
   }
   .row-title span {
     /*font-weight: bold;*/
@@ -290,8 +290,7 @@ svg.text-warning.inline-action:hover {
     right: 10px;
   }
 }
-.inline-list {
-}
+
 .list-group-item {
   background-color: transparent;
 }
@@ -305,6 +304,10 @@ svg.text-warning.inline-action:hover {
   font-style: italic;
 }
 
+/* Ligne de séparation entre les lignes des listes */
+.row-line-separator {
+  border-bottom: 1px solid;
+}
 /* Hover des lignes des listes */
 .row-line-hover {
   background-color: theme-color('primary-light');
@@ -343,15 +346,16 @@ svg.text-warning.inline-action:hover {
   padding-left: 6px;
   padding-right: 6px;
 }
-
-.card-body {
-  padding: 0px;
-}
 .modal-body {
   font-size: 0.9rem;
 }
 .input-group {
   font-size: 0.9rem;
+}
+.modal-body {
+  .card-body {
+    padding: 0px;
+  }
 }
 .modal-shadow {
   -webkit-box-shadow: 0 5px 11px 0 rgba(0,0,0,0.18), 0 4px 15px 0 rgba(0,0,0,0.15);

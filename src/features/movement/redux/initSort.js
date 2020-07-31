@@ -11,7 +11,7 @@ export function reducer(state, action) {
     case MOVEMENT_INIT_SORT:
       return {
         ...state,
-        sort: [{col:"move_from",way:"down"}],
+        sort: [{col:"move_from",way:"up"}],
       };
 
     default:
