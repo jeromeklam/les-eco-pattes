@@ -1,5 +1,48 @@
 export default `
 
+# Version 1.2.2 : 31/07/2020
+  * Général 
+    * Modification de la taille des fenêtres pour quelles soient mieux affichées sur une plus petite résolution
+    * Ajout d'un trait autour des boutons
+  * Tableau de bord 
+    * Nombre de sites Actifs
+    * Nombre d'animaux Actifs
+    * Linéaire des clôtures posées 
+  * Sites
+    * Liste
+      * Ajout de la colonne Type 
+      * Ajout de la colonne Nombre d'animaux
+      * Par défaut, on n'a dans la liste que les sites qui n'ont pas de date de fin de validité 
+        ou une date supérieure à la date du jour
+    * Fiche
+      * Suppression de la coche "Conforme"
+      * N° EDE devient obligatoire
+  * Animaux
+    * Liste
+      * Correction sur l'option "Tout sélectionner" 
+      * La première colonne est le numéro de boucle
+      * Ajout de la colonne "En attente", si l'animal est en attente, il y a dans la colonne une montre
+      * Par défaut, on a dans la liste tous les animaux qui n'ont pas de date de fin de validité 
+        ou une date supérieure à la date du jour 
+        et donc, les animaux en attente seront dans la liste si leur date de fin de validité est ok
+      * La recherche d'un éleveur s'ouvre directement avec la liste de tous les éleveurs
+      * De même la recherche d'un vétérinaire dans la saisie d'une ligne de maladie s'ouvre directement sur la liste des vétérinaires
+    * Fiche
+      * Le N° de boucle devient obligatoire et plus le nom
+      * Modification de la taille des vignettes des images et des documents liés 
+        car dans certains cas la visualisation et la suppression ne fonctionnait pas 
+      * Ajout de la coche "En attente"
+  * Mouvement
+    * Création depuis une liste d'animaux d'un site
+      * Si des animaux sont sélectionnés, on peut créer un mouvement ou une sortie 
+        Le site de départ est pré-rempli et non modifiable
+      * Si aucun animal n'est sélectionné, on peut juste créer une entrée
+        Le site d'arrivée est pré-rempli et non modifiable
+    * Fiche 
+      * Suppression de l'en-tête du mouvement, les informations sont seulement dans les onglets
+      * Ajout d'un état "archivé" qui empêche toute modification
+      * Suppression impossible d'un mouvement validé ou archivé
+
 # Version 1.2.1 : 15/06/2020
 * Général
     * Les listes avec filtres par défaut passent en mode ET,
