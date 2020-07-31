@@ -15,6 +15,7 @@ export function reducer(state, action) {
       filters.init(FILTER_MODE_OR, FILTER_OPER_LIKE);
       filters.setSearch(FILTER_SEARCH_QUICK);
       filters.addFilter('site_name', action.value);
+      console.log(filters);
       return {
         ...state,
         filters: filters,

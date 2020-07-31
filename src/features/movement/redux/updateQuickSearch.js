@@ -15,7 +15,8 @@ export function reducer(state, action) {
       let filters = state.filters;
       filters.init(FILTER_MODE_OR, FILTER_OPER_LIKE);
       filters.setSearch(FILTER_SEARCH_QUICK);
-      filters.addFilter('move_from_site_id.sitt_id.site_name', action.value); 
+      filters.addFilter('to_site.site_name', action.value);
+      filters.addFilter('from_site.site_name', action.value);
       return {
         ...state,
         filters: filters,
