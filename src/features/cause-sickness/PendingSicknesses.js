@@ -164,7 +164,7 @@ export class PendingSicknesses extends Component {
           </div>
         </div>
         {this.state.caus_id > 0 && (
-          <ModifyCauseSickness caus_id={this.state.caus_id} onClose={this.onCloseForm} />
+          <ModifyCauseSickness caus_id={this.state.caus_id} onClose={this.onCloseForm} loader={false} />
         )}
       </DashboardCard>
     );
