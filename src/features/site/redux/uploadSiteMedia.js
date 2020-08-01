@@ -38,7 +38,14 @@ export function uploadSiteMedia(sitm_id, site_id, binary, filename = '') {
           });
           reject(err);
         },
-      );
+      )
+      .catch(error => {
+        dispatch({
+          type: SITE_UPLOAD_SITE_MEDIA_FAILURE,
+          data: { error: error },
+        });
+        reject(error);
+      });
     });
     return promise;
   };
