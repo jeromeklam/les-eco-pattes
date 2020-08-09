@@ -47,6 +47,14 @@ export const getSexlabel = (p_code, p_icon = true, p_className = "" ) => {
   return '';
 }
 
+const getComm = (item) => {
+  if (item.cau_to === '' || item.cau_to === null) {
+    return item.cau_desc;
+  } else {
+    return item.cau_string_3;
+  }
+}
+
 export const getSelectActions = ({ props, onSelectMenu }) => {
   const arrOne = [
     {
@@ -336,9 +344,10 @@ export const getCols = ({ props }) => {
       mob_size: '18',
       title: false,
       type: 'html',
+      fDisplay: getComm,
+      last: false,
       sortable: false,
       filterable: false,
-      last: false,
     },
     {
       name: 'cau_to',

@@ -1,5 +1,5 @@
 import React from 'react';
-import { InputHidden, InputText, InputSelect, InputMask } from 'freeassofront';
+import { InputHidden, InputText, InputSelect, InputMask, InputCheckbox } from 'freeassofront';
 import RegexpParser from 'reregexp';
 import classnames from 'classnames';
 import { validateRegex } from '../../common';
@@ -150,7 +150,7 @@ export default function Form(props) {
                 error={getErrorMessage('site_address1')}
               />
             </div>
-            <div className="col-sm-12">
+            <div className="col-sm-10">
               <InputSelect
                 label="Type"
                 id="site_type.id"
@@ -161,6 +161,15 @@ export default function Form(props) {
                 options={siteTypeAsOptions(props.site_types)}
                 addempty={true}
                 error={getErrorMessage('site_type')}
+              />
+            </div>
+            <div className="col-sm-2">
+              <InputCheckbox
+                label="Externe"
+                name="site_extern"
+                labelTop={true}
+                checked={values.site_extern === true}
+                onChange={handleChange}
               />
             </div>
           </div>

@@ -1,0 +1,16 @@
+@import '../../styles/mixins';
+
+.full-input {
+  height: 100%;
+  width: 100%;
+  border: 0px;
+  outline: none;
+}
+.full-input:focus {
+  border: 0px;
+  outline: none;
+}
+.full-input:selected {
+  border: 0px;
+  outline: none;
+}

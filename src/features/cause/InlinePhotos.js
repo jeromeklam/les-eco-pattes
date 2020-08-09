@@ -11,9 +11,10 @@ import {
   Download as DownloadIcon,
   View as ViewIcon,
   Upload as UploadIcon,
+  Comment as CommentIcon,
 } from '../icons';
 import { downloadCauseMediaBlob, getMedias } from './';
-import { downloadBlob, ImageModal } from '../ui';
+import { downloadBlob, ImageModal, CommentModal } from '../ui';
 
 export class InlinePhotos extends Component {
   static propTypes = {
@@ -39,6 +40,7 @@ export class InlinePhotos extends Component {
       item: null,
       items: [],
       loading: true,
+      comment: false,
     };
     this.onDropFiles = this.onDropFiles.bind(this);
     this.onConfirmClose = this.onConfirmClose.bind(this);
@@ -47,6 +49,9 @@ export class InlinePhotos extends Component {
     this.onDownload = this.onDownload.bind(this);
     this.onView = this.onView.bind(this);
     this.onCloseView = this.onCloseView.bind(this);
+    this.onComment = this.onComment.bind(this);
+    this.onValidComment = this.onValidComment.bind(this);    
+    this.onCloseComment = this.onCloseComment.bind(this);
     this.localLoadPhotos = this.localLoadPhotos.bind(this);
   }
 
@@ -117,12 +122,24 @@ export class InlinePhotos extends Component {
       const bytes = new Uint8Array(result.data);
       const blob = new Blob([bytes], { type: type });
       const url = window.URL.createObjectURL(blob);
-      this.setState({ blob: url, view: true, item: item });
+      this.setState({ blob: url, view: true, comment: false ,item: item });
     });
   }
 
   onCloseView() {
-    this.setState({ blob: null, view: false, item: null });
+    this.setState({ blob: null, view: false, comment: false, item: null });
+  }
+
+  onComment(item) {
+    this.setState({ blob: null, view: false, comment: true , item: item });
+  }
+
+  onValidComment() {
+    this.setState({  blob: null, view: false, comment: false, item: null });
+  }
+
+  onCloseComment() {
+    this.setState({  blob: null, view: false, comment: false, item: null });
   }
 
   onConfirm() {
@@ -145,7 +162,7 @@ export class InlinePhotos extends Component {
               {photos && photos.map(photo => {
                 let img = '';
                 try {
-                  if (photo.caum_short_blob) {
+                  if (photo.caum_short_blob) {                    
                     img = `data:image/jpeg;base64,${photo.caum_short_blob}`;
                   }
                 } catch (ex) {
@@ -159,6 +176,12 @@ export class InlinePhotos extends Component {
                           <div className="col-16"></div>
                           <div className="col-20 text-right">
                             <div className="btn-group btn-group-sm" role="group" aria-label="...">
+                              <button type="button" className="btn btn-inline btn-secondary">
+                                <CommentIcon
+                                  className="text-light inline-action"
+                                  onClick={() => this.onComment(photo)}
+                                />
+                              </button>
                               <button type="button" className="btn btn-inline btn-secondary">
                                 <ViewIcon
                                   className="text-light inline-action"
@@ -237,6 +260,16 @@ export class InlinePhotos extends Component {
             onClose={this.onCloseView}
             title=""
             image={this.state.blob}
+          />
+        )}
+        {this.state.comment && (
+          <CommentModal
+            show={this.state.comment}
+            onClose={this.onCloseComment}
+            comment={this.state.item.caum_desc}
+            onSubmit={() => {
+              this.onValidComment();
+            }}
           />
         )}
         <ResponsiveConfirm

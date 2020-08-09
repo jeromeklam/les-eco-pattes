@@ -5,7 +5,7 @@ export const whereSelect = [
 ];
 
 export const careSelect = [
-  { label: 'Médicament', value: 'DRUG' },
+  { label: 'Traitement', value: 'DRUG' },
   { label: 'Vétérinaire', value: 'SANITARY' },
   { label: 'Autre', value: 'OTHER' },
 ];

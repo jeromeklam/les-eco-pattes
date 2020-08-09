@@ -1,10 +1,10 @@
 import React from 'react';
 import { InputSelect } from 'freeassofront';
-import { InputTextarea, InputDate, ResponsiveModalOrForm } from '../ui';
+import { InputTextarea, InputDate, InputData, ResponsiveModalOrForm } from '../ui';
 import useForm from '../ui/useForm';
 import { InputPicker as SicknessInputPicker } from '../sickness';
 import { InputPicker as ClientInputPicker } from '../client';
-import { careSelect, whereSelect } from './';
+import { whereSelect } from './';
 
 export default function Form(props) {
   if (props.cause) {
@@ -85,16 +85,13 @@ export default function Form(props) {
           />
         </div>
         <div className="col-10">
-          <InputSelect
-            label="Soins"
+          <InputData
             name="caus_care"
-            labelTop={true}
-            required={true}
-            labelSize={0}
-            inputSize={36}
-            value={values.caus_care || ''}
+            value={values.caus_care}
+            datas={props.tab_datas}
+            config={props.tab_configs}
             onChange={handleChange}
-            options={careSelect}
+            labelTop={true}
           />
         </div>
         <div className="col-16">

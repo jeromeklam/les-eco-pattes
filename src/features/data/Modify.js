@@ -108,4 +108,4 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default withRouter(injectIntl(connect(mapStateToProps, mapDispatchToProps)));
+export default withRouter(injectIntl(connect(mapStateToProps, mapDispatchToProps)(Modify)));

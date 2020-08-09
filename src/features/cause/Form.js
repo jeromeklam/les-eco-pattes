@@ -63,7 +63,7 @@ export default function Form(props) {
     }
     caut_id = values.cause_type.id;
   }
-  return (
+  return (  
     <ResponsiveModalOrForm
       title="Animaux"
       tab={values.currentTab}
@@ -247,6 +247,30 @@ export default function Form(props) {
                   datas={props.tab_datas}
                   config={props.tab_configs}
                   onChange={handleChange}
+                />
+              )}
+            </div>
+          </div>
+          <div className="row">
+            <div className="col-sm-2">
+              <InputCheckbox
+                label="Conforme"
+                name="cau_conform"
+                labelTop={true}
+                checked={values.cau_conform === true}
+                onChange={handleChange}
+              />
+            </div>
+            <div className="col-20">
+              {(!values.cau_conform) && (
+                <InputText
+                  label="Commentaire conformité"
+                  key="cau_conform_text"
+                  name="cau_conform_text"
+                  labelTop={true}
+                  value={values.cau_conform_text}
+                  onChange={handleChange}
+                  error={getErrorMessage('cau_conform_text')}
                 />
               )}
             </div>

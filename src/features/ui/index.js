@@ -20,3 +20,4 @@ export { default as Line } from './Line';
 export { default as InlineList } from './InlineList';
 export { default as InputJson } from './InputJson';
 export { default as InputSpin } from './InputSpin';
+export { default as CommentModal } from './CommentModal';

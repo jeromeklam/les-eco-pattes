@@ -381,7 +381,7 @@ export default function Form(props) {
                   labelTop={true}
                   item={values.to_site || null}
                   onChange={handleChange}
-                  disabled={values.globalDisabled  || values.param_mode == 'INPUT'}
+                  disabled={values.globalDisabled  || values.param_mode === 'INPUT'}
                   error={getErrorMessage('to_site')}
                 />
               </div>

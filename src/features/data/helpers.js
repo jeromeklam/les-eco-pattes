@@ -1,13 +1,14 @@
  import React from 'react';
 import {
-  AddOne as AddOneIcon,
+  //AddOne as AddOneIcon,
   GetOne as GetOneIcon,
 } from '../icons';
 import { dataTypes } from './';
 
 export const getGlobalActions = ({ onCreate }) => { 
   return [
-    {
+    /*{
+      Création seulement en mode administrateur
       name: 'create',
       label: 'Ajouter',
       onClick: onCreate,
@@ -15,6 +16,7 @@ export const getGlobalActions = ({ onCreate }) => {
       icon: <AddOneIcon color="white" />,
       role: 'CREATE',
     },
+    */
   ];
 };
 
