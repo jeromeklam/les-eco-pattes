@@ -49,6 +49,8 @@ export default function Form(props) {
       {values.data_type === 'LIST' && (
         <InputStringarray
           label="Valeurs"
+          titleValue="Code"
+          titleLabel="Libellé"
           name="data_content"
           value={values.data_content}
           onChange={handleChange}

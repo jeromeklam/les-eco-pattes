@@ -1,9 +1,10 @@
-import { Filter, FILTER_MODE_AND, FILTER_OPER_GREATER_OR_EQUAL_OR_NULL } from 'freeassofront';
+import { Filter, FILTER_MODE_AND, FILTER_OPER_GREATER_OR_EQUAL_OR_NULL, FILTER_OPER_EQUAL } from 'freeassofront';
 import { getNewNormalizedObject } from 'freejsonapi';
 
 let initialFilters = new Filter();
 const now = new Date().toISOString();
 initialFilters.addFilter('site_to', now, FILTER_OPER_GREATER_OR_EQUAL_OR_NULL);
+initialFilters.addFilter('site_extern', false, FILTER_OPER_EQUAL);
 initialFilters.setMode(FILTER_MODE_AND);
 
 const initialState = {

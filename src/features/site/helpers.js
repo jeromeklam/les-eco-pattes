@@ -8,6 +8,7 @@ import {
   Document as DocumentIcon,
   MapPose as ZoomMapIcon,
   FilterClear as FilterClearIcon,
+  SiteExtern as SiteExternIcon,
 } from '../icons';
 import { siteTypeAsOptions } from '../site-type/functions';
 
@@ -21,6 +22,12 @@ const townCol = (item) => {
   }
   return cpTown;
 }
+
+const externCol = [
+  { value: true, label: 'Externe', icon: <SiteExternIcon className="col-icon"/> },
+  { value: false, label: '' },
+];
+
 
 export const getGlobalActions = ({ onClearFilters, onCreate }) => {
   return [
@@ -124,7 +131,7 @@ export const getCols = ({ props }) => {
       name: 'site_name',
       label: 'Nom site',
       col: 'site_name',
-      size: '6',
+      size: '5',
       mob_size: '36',
       title: true,
       sortable: true,
@@ -176,24 +183,34 @@ export const getCols = ({ props }) => {
       name: 'parent_site',
       label: 'Site principal',
       col: 'parent_site.site_name',
-      size: '7',
+      size: '6',
       mob_size: '26',
       title: true,
       sortable: true,
       filterable: { type: 'text' },
     },
     {
-      name: 'site_count_cause',
-      label: 'Animaux',
-      col: 'site_count_cause',
-      size: '4',
-      mob_size: 10,
-    },
-    {
       name: 'sep1',
       label: '',
       col: '',
-      size: '6',
+      size: '1',
+      mob_size: '0',
+      title: true,
+      sortable: false,
+      filterable: false,
+    },
+    {
+      name: 'site_count_cause',
+      label: 'Animaux',
+      col: 'site_count_cause',
+      size: '3',
+      mob_size: 10,
+    },
+    {
+      name: 'sep2',
+      label: '',
+      col: '',
+      size: '5',
       mob_size: '0',
       title: true,
       sortable: false,
@@ -220,6 +237,28 @@ export const getCols = ({ props }) => {
       hidden: true,
       sortable: false,
       filterable: { type: 'date' },
+    },
+    {
+      name: 'sep1',
+      label: '',
+      col: '',
+      size: '14',
+      mob_size: '0',
+      title: true,
+      sortable: false,
+      filterable: false,
+    },
+    {
+      name: 'site_extern',
+      label: 'Externe',
+      col: 'site_extern',
+      size: '1',
+      mob_size: '1',
+      title: false,
+      sortable: false,
+      type: 'bool',
+      values: externCol,
+      filterable: { type: 'bool' },
     },
   ];
 };

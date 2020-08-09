@@ -9,7 +9,7 @@ export function updateQuickSearch(value) {
 }
 
 export function reducer(state, action) {
-  console.log("FK quickSearch", action);
+  //console.log("FK quickSearch", action);
   switch (action.type) {
     case MOVEMENT_UPDATE_QUICK_SEARCH:
       let filters = state.filters;
