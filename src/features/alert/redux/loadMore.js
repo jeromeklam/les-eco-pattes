@@ -43,7 +43,7 @@ export function loadMore(args = false, reload = false) {
           params.sort = sort;
         }
         const addUrl = objectToQueryString(params);
-        const doRequest = freeAssoApi.get('/v1/asso/alert' + addUrl, {});
+        const doRequest = freeAssoApi.get('/v1/core/alert' + addUrl, {});
         doRequest.then(
           (res) => {
             dispatch({

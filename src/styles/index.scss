@@ -6,6 +6,8 @@
 @import "../../node_modules/react-grid-layout/css/styles.css";
 @import "../../node_modules/react-resizable/css/styles.css";
 
+@import '../../node_modules/freeassofront/src/features/calendar/sass/styles';
+
 @import './global';
 @import './form';
 
@@ -40,3 +42,4 @@
 @import '../features/item/style';
 @import '../features/cause-sickness/style';
 @import '../features/movement/style';
+@import '../features/agenda/style';
