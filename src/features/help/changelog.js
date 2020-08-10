@@ -1,5 +1,21 @@
 export default `
 
+# Version 1.3.1 : 10/08/2020
+  * Sites
+    * Fiche
+      * Ajout d'une coche Externe
+      * Ajout d'un commentaire sur les photos
+    * Liste
+      * Si site externe ajout d'un icône pour indiquer que ce n'est pas un vrai site
+      * Par défaut les sites externes ne sont pas dans la liste, il aller dans les filtres si on veut les retrouver
+  * Animaux
+    * Fiche
+      * Ajout d'un commentaire sur les photos
+      * Ajout d'une coche conformité + saisie d'un commentaire si l'animal n'est pas conforme
+      * La liste déroulante des soins donne sur une variable dans les paramètres (possibilité d'en ajouter)
+    * Liste
+      * Si animal sorti,  dans la colonne description, on voit le motif de sortie et plus le commentaire
+
 # Version 1.2.2 : 31/07/2020
   * Général 
     * Modification de la taille des fenêtres pour quelles soient mieux affichées sur une plus petite résolution
