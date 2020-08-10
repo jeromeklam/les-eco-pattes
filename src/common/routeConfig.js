@@ -32,6 +32,7 @@ import unitRoute from '../features/unit/route';
 import itemRoute from '../features/item/route';
 import causeSicknessRoute from '../features/cause-sickness/route';
 import movementRoute from '../features/movement/route';
+import agendaRoute from '../features/agenda/route';
 
 // NOTE: DO NOT CHANGE the 'childRoutes' name and the declaration pattern.
 // This is used for Rekit cmds to register routes config for new features, and remove config when remove features, etc.
@@ -67,6 +68,7 @@ const childRoutes = [
   itemRoute,
   causeSicknessRoute,
   movementRoute,
+  agendaRoute,
 ];
 
 const routes = [{
