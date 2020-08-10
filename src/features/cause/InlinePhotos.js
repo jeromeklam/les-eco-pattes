@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { injectIntl } from 'react-intl';
 import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
@@ -6,6 +7,7 @@ import Dropzone from 'react-dropzone';
 import { ResponsiveConfirm } from 'freeassofront';
 import { CenteredLoading3Dots } from '../ui';
 import * as actions from './redux/actions';
+import { propagateModel } from '../../common';
 import {
   DelOne as DelOneIcon,
   Download as DownloadIcon,
@@ -14,7 +16,7 @@ import {
   Comment as CommentIcon,
 } from '../icons';
 import { downloadCauseMediaBlob, getMedias } from './';
-import { downloadBlob, ImageModal, CommentModal } from '../ui';
+import { downloadBlob, ImageModal, CommentModal, modifySuccess, showErrors } from '../ui';
 
 export class InlinePhotos extends Component {
   static propTypes = {
@@ -50,7 +52,7 @@ export class InlinePhotos extends Component {
     this.onView = this.onView.bind(this);
     this.onCloseView = this.onCloseView.bind(this);
     this.onComment = this.onComment.bind(this);
-    this.onValidComment = this.onValidComment.bind(this);    
+    this.onValidComment = this.onValidComment.bind(this); 
     this.onCloseComment = this.onCloseComment.bind(this);
     this.localLoadPhotos = this.localLoadPhotos.bind(this);
   }
@@ -134,12 +136,23 @@ export class InlinePhotos extends Component {
     this.setState({ blob: null, view: false, comment: true , item: item });
   }
 
-  onValidComment() {
-    this.setState({  blob: null, view: false, comment: false, item: null });
+  onValidComment(comment) {
+    let photo = this.state.item;
+    this.props.actions
+      .updateCauseMediaDesc(photo.id, this.state.cause_id, comment)
+      .then(result => {
+        modifySuccess();
+        //this.props.actions.propagateModel('FreeAsso_CauseMedia', result);
+        this.setState({ comment: false, item: null });
+        this.localLoadPhotos();
+      })
+      .catch(errors => {
+        showErrors(this.props.intl, errors, 'updateOneError');
+     });
   }
 
   onCloseComment() {
-    this.setState({  blob: null, view: false, comment: false, item: null });
+    this.setState({ blob: null, view: false, comment: false, item: null });
   }
 
   onConfirm() {
@@ -267,8 +280,8 @@ export class InlinePhotos extends Component {
             show={this.state.comment}
             onClose={this.onCloseComment}
             comment={this.state.item.caum_desc}
-            onSubmit={() => {
-              this.onValidComment();
+            onSubmit={(comm) => {
+              this.onValidComment(comm);
             }}
           />
         )}
@@ -292,8 +305,8 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    actions: bindActionCreators({ ...actions }, dispatch),
+    actions: bindActionCreators({ ...actions, propagateModel }, dispatch),
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(InlinePhotos);
+export default injectIntl(connect(mapStateToProps, mapDispatchToProps)(InlinePhotos));

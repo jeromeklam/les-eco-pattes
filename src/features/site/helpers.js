@@ -239,7 +239,7 @@ export const getCols = ({ props }) => {
       filterable: { type: 'date' },
     },
     {
-      name: 'sep1',
+      name: 'sep3',
       label: '',
       col: '',
       size: '14',

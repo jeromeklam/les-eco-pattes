@@ -52,7 +52,7 @@ export default class SearchModal extends Component {
         item.value = event.target.value;
       }
     });
-    console.log(filters);
+    //console.log(filters);
     this.setState({ fields: filters });
   }
 

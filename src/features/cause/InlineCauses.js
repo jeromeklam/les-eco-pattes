@@ -66,7 +66,6 @@ export default class InlineCauses extends Component {
 
   onSelectAll() {
     const causes_selected = [];
-    console.log("FK slect all inline : ",this.state.items);
     if (!this.state.selectAll) {
       this.state.items.map(cause => causes_selected.push(cause.id));
     }

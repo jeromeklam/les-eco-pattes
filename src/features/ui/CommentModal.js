@@ -13,9 +13,26 @@ export default class CommentModal extends Component {
     title: '',
   };
 
+  constructor(props) {
+    super(props);
+    this.state = {
+      comment: props.comment,
+    };
+    this.onChange = this.onChange.bind(this);
+    this.onSubmit = this.onSubmit.bind(this);
+  }
+
+  onChange(event) {
+    this.setState({ comment: event.target.value });
+  }
+
+  onSubmit() {
+    this.props.onSubmit(this.state.comment);
+  }
+
   render() {
     const buttons = [
-      { name: 'Enregistrer', function: this.props.onSubmit, theme: 'primary', icon: 'valid' },
+      { name: 'Enregistrer', function: this.onSubmit, theme: 'primary', icon: 'valid' },
       { name: 'Annuler', function: this.props.onClose, theme: 'secondary', icon: 'close' },
     ];
     if (this.props.show) {
@@ -29,9 +46,11 @@ export default class CommentModal extends Component {
           modalClassName="bg-primary-light text-secondary"
           closeClassName="text-secondary"
         >
-          <textarea className="full-input">
-            {this.props.comment}
-          </textarea>
+          <textarea 
+            className="full-input" 
+            value={this.state.comment}
+            onChange={this.onChange}
+          />
         </ResponsiveModal>
       );
     }

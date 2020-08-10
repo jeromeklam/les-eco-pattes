@@ -25,6 +25,7 @@ import { reducer as loadPhotosReducer } from './loadPhotos';
 import { reducer as uploadSiteMediaReducer } from './uploadSiteMedia';
 import { reducer as delSiteMediaReducer } from './delSiteMedia';
 import { reducer as loadDocumentsReducer } from './loadDocuments';
+import { reducer as updateSiteMediaDescReducer } from './updateSiteMediaDesc';
 
 const reducers = [
   loadMoreReducer,
@@ -45,6 +46,7 @@ const reducers = [
   uploadSiteMediaReducer,
   delSiteMediaReducer,
   loadDocumentsReducer,
+  updateSiteMediaDescReducer,
 ];
 
 export default function reducer(state = initialState, action) {
