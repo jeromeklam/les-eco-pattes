@@ -16,3 +16,4 @@ export { loadPhotos, dismissLoadPhotosError } from './loadPhotos';
 export { uploadSiteMedia, dismissUploadSiteMediaError } from './uploadSiteMedia';
 export { delSiteMedia, dismissDelSiteMediaError } from './delSiteMedia';
 export { loadDocuments, dismissLoadDocumentsError } from './loadDocuments';
+export { updateSiteMediaDesc, dismissUpdateSiteMediaDescError } from './updateSiteMediaDesc';

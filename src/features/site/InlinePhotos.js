@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { injectIntl } from 'react-intl';
 import classnames from 'classnames';
 import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
@@ -7,14 +8,16 @@ import Dropzone from 'react-dropzone';
 import { ResponsiveConfirm } from 'freeassofront';
 import { CenteredLoading3Dots } from '../ui';
 import * as actions from './redux/actions';
+import { propagateModel } from '../../common';
 import {
   DelOne as DelOneIcon,
   Download as DownloadIcon,
   View as ViewIcon,
   Upload as UploadIcon,
+  Comment as CommentIcon,
 } from '../icons';
 import { downloadSiteMediaBlob, getMedias } from './';
-import { downloadBlob, ImageModal } from '../ui';
+import { downloadBlob, ImageModal, CommentModal, modifySuccess, showErrors } from '../ui';
 
 export class InlinePhotos extends Component {
   static propTypes = {
@@ -48,6 +51,9 @@ export class InlinePhotos extends Component {
     this.onDownload = this.onDownload.bind(this);
     this.onView = this.onView.bind(this);
     this.onCloseView = this.onCloseView.bind(this);
+    this.onComment = this.onComment.bind(this);
+    this.onValidComment = this.onValidComment.bind(this); 
+    this.onCloseComment = this.onCloseComment.bind(this);
     this.localLoadPhotos = this.localLoadPhotos.bind(this);
   }
 
@@ -126,6 +132,29 @@ export class InlinePhotos extends Component {
     this.setState({ blob: null, view: false, item: null });
   }
 
+  onComment(item) {
+    this.setState({ blob: null, view: false, comment: true , item: item });
+  }
+
+  onValidComment(comment) {
+    let photo = this.state.item;
+    this.props.actions
+      .updateSiteMediaDesc(photo.id, this.state.site_id, comment)
+      .then(result => {
+        modifySuccess();
+        //this.props.actions.propagateModel('FreeAsso_SiteMedia', result);
+        this.setState({ comment: false, item: null });
+        this.localLoadPhotos();
+      })
+      .catch(errors => {
+        showErrors(this.props.intl, errors, 'updateOneError');
+     });
+  }
+
+  onCloseComment() {
+    this.setState({ blob: null, view: false, comment: false, item: null });
+  }
+
   onConfirm() {
     const sitm_id = this.state.sitm_id;
     this.setState({ confirm: false, sitm_id: 0 });
@@ -160,6 +189,12 @@ export class InlinePhotos extends Component {
                           <div className="col-16"></div>
                           <div className="col-20 text-right">
                             <div className="btn-group btn-group-sm" role="group" aria-label="...">
+                              <button type="button" className="btn btn-inline btn-secondary">
+                                <CommentIcon
+                                  className="text-light inline-action"
+                                  onClick={() => this.onComment(photo)}
+                                />
+                              </button>
                               <button type="button" className="btn btn-inline btn-secondary">
                                 <ViewIcon
                                   className="text-light inline-action"
@@ -240,6 +275,16 @@ export class InlinePhotos extends Component {
             image={this.state.blob}
           />
         )}
+        {this.state.comment && (
+          <CommentModal
+            show={this.state.comment}
+            onClose={this.onCloseComment}
+            comment={this.state.item.sitm_desc}
+            onSubmit={(comm) => {
+              this.onValidComment(comm);
+            }}
+          />
+        )}
         <ResponsiveConfirm
           show={this.state.confirm}
           onClose={this.onConfirmClose}
@@ -260,8 +305,8 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    actions: bindActionCreators({ ...actions }, dispatch),
+    actions: bindActionCreators({ ...actions, propagateModel }, dispatch),
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(InlinePhotos);
+export default injectIntl(connect(mapStateToProps, mapDispatchToProps)(InlinePhotos));

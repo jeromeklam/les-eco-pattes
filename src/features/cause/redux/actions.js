@@ -18,3 +18,4 @@ export { onSelect } from './onSelect';
 export { loadPhotos, dismissLoadPhotosError } from './loadPhotos';
 export { selectNone } from './selectNone';
 export { selectAll } from './selectAll';
+export { updateCauseMediaDesc, dismissUpdateCauseMediaDescError } from './updateCauseMediaDesc';

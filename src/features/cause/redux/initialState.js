@@ -47,6 +47,8 @@ const initialState = {
   loadDescendantsError: null,
   loadPhotosPending: false,
   loadPhotosError: null,
+  updateCauseMediaDescPending: false,
+  updateCauseMediaDescError: null,
 };
 
 export default initialState;
