@@ -22,7 +22,7 @@ body {
 }
 
 .custom-scrollbar {
-  @include scrollbars(10px, theme-color('primary'), theme-color('paimary-light'));
+  @include scrollbars(10px, theme-color('primary'), theme-color('primary-light'));
 }
 
 
