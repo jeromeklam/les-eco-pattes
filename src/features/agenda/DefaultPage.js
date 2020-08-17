@@ -74,7 +74,7 @@ export class DefaultPage extends Component {
     window.__localeId__ = 'fr';
     let myEventsList = [];
     if (this.props.agenda.events) {
-      myEventsList = normalizedObjectModeler(this.props.agenda.events, 'FreeFW_Alert');
+      //myEventsList = normalizedObjectModeler(this.props.agenda.events, 'FreeFW_Alert');
     }
     return (
       <div>

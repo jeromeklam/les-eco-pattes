@@ -77,3 +77,6 @@ export { default as SimpleCheck } from './SimpleCheck';
 export { default as Wait } from './Wait';
 export { default as SiteExtern } from './SiteExtern';
 export { default as Comment } from './Comment';
+export { default as Contract } from './Contract';
+export { default as Agenda } from './Agenda';
+export { default as DashboardReset } from './DashboardReset';

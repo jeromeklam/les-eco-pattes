@@ -1,6 +1,4 @@
-import {
-  CLIENT_INIT_SORT,
-} from './constants';
+import { CLIENT_INIT_SORT } from './constants';
 
 export function initSort() {
   return {

@@ -2,11 +2,10 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { normalizedObjectModeler } from 'freejsonapi';
-import { Loading3Dots } from 'freeassofront';
 import { connect } from 'react-redux';
 import * as actions from './redux/actions';
-import { StatCard } from '../ui';
 import { Alert as AlertIcon } from '../icons';
+import { CenteredLoading3Dots, StatCard } from '../ui';
 
 export class DashboardAlerts extends Component {
   static propTypes = {
@@ -39,7 +38,7 @@ export class DashboardAlerts extends Component {
             <div className="inline-list">
               <div className="row row-line">
                 <div className="col-36 text-center">
-                  <Loading3Dots />
+                  <CenteredLoading3Dots />
                 </div>
               </div>
             </div>

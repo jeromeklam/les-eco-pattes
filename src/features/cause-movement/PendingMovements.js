@@ -4,16 +4,16 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as actions from './redux/actions';
 import { normalizedObjectModeler } from 'freejsonapi';
-import { ResponsiveConfirm, Loading3Dots, HoverObserver } from 'freeassofront';
-import { DashboardCard } from '../dashboard';
+import { ResponsiveConfirm, HoverObserver } from 'freeassofront';
 import { propagateModel, intlDate } from '../../common';
 import {
   DelOne as DelOneIcon,
   SimpleCheck as SimpleValidIcon,
   Movement as MovementIcon,
 } from '../icons';
+import { CenteredLoading3Dots, InlineList, Line, Col } from '../ui';
+import { DashboardCard } from '../dashboard';
 import { statusLabel } from './';
-import { InlineList, Line, Col } from '../ui';
 
 export class PendingMovements extends Component {
   static propTypes = {
@@ -119,12 +119,13 @@ export class PendingMovements extends Component {
                 {movements.map(movement => {
                   return (
                     <HoverObserver
+                      key={`pending-${movement.id}`}
                       onMouseEnter={() => {
                         this.mouseEnter(movement.id);
                       }}
-                      onMouseLeave={this.mouseLeave}
+                      onMouseLeave={this.mouseLeave}      
                     >
-                      <Line oddEven={counter++} key={`pending-${movement.id}`}>
+                      <Line oddEven={counter++}>
                         <Col
                           layoutSize={this.props.layoutSize || 'md'}
                           md={12}
@@ -217,7 +218,7 @@ export class PendingMovements extends Component {
               <div className="inline-list">
                 <div className="row row-line">
                   <div className="col-36 text-center">
-                    <Loading3Dots />
+                    <CenteredLoading3Dots />
                   </div>
                 </div>
               </div>

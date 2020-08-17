@@ -2,13 +2,13 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { normalizedObjectModeler } from 'freejsonapi';
-import { Loading3Dots, HoverObserver } from 'freeassofront';
+import { HoverObserver } from 'freeassofront';
 import { connect } from 'react-redux';
 import striptags from 'striptags';
 import * as actions from './redux/actions';
 import { DashboardCard } from '../dashboard';
 import { Medical as SicknessIcon, GetOne as GetOneIcon } from '../icons';
-import { InlineList, Line, Col } from '../ui';
+import { CenteredLoading3Dots, InlineList, Line, Col } from '../ui';
 import { Modify as ModifyCauseSickness } from '../cause-sickness';
 
 export class PendingSicknesses extends Component {
@@ -89,12 +89,13 @@ export class PendingSicknesses extends Component {
                 {sicknesses.map(sickness => {
                   return (
                     <HoverObserver
+                      key={`pending-${sickness.id}`}
                       onMouseEnter={() => {
                         this.mouseEnter(sickness.id);
                       }}
-                      onMouseLeave={this.mouseLeave}
+                      onMouseLeave={this.mouseLeave}       
                     >
-                    <Line oddEven={counter++} key={`pending-${sickness.id}`}>
+                    <Line oddEven={counter++}>
                       <Col
                         layoutSize={this.props.layoutSize || 'md'}
                         md={16}
@@ -156,7 +157,7 @@ export class PendingSicknesses extends Component {
               <div className="inline-list">
                 <div className="row row-line">
                   <div className="col-36 text-center">
-                    <Loading3Dots />
+                    <CenteredLoading3Dots />
                   </div>
                 </div>
               </div>

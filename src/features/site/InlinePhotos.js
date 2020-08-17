@@ -223,7 +223,7 @@ export class InlinePhotos extends Component {
                             {img && <img src={img} className="rounded" alt="" />}
                           </div>
                           <div className="col-36">
-                            <small className="text-center text-secondary">{photo.sitm_title}</small>
+                            <small className="text-center text-secondary">{photo.sitm_desc}</small>
                           </div>
                         </div>
                       </div>

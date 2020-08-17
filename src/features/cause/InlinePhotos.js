@@ -15,8 +15,8 @@ import {
   Upload as UploadIcon,
   Comment as CommentIcon,
 } from '../icons';
-import { downloadCauseMediaBlob, getMedias } from './';
 import { downloadBlob, ImageModal, CommentModal, modifySuccess, showErrors } from '../ui';
+import { downloadCauseMediaBlob, getMedias } from './';
 
 export class InlinePhotos extends Component {
   static propTypes = {
@@ -223,7 +223,7 @@ export class InlinePhotos extends Component {
                             {img && <img src={img} className="rounded" alt="" />}
                           </div>
                           <div className="col-36">
-                            <small className="text-center text-secondary">{photo.caum_title}</small>
+                            <small className="text-center text-secondary">{photo.caum_desc}</small>
                           </div>
                         </div>
                       </div>
