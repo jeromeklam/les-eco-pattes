@@ -80,3 +80,4 @@ export { default as Comment } from './Comment';
 export { default as Contract } from './Contract';
 export { default as Agenda } from './Agenda';
 export { default as DashboardReset } from './DashboardReset';
+export { default as Follow } from './Follow';

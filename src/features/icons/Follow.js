@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import { mdiClipboardAlertOutline as myIcon } from '@mdi/js';
+import { mdiClipboardTextOutline as myIcon } from '@mdi/js';
 import { Icon } from './';
 
-export default class Alert extends Component {
+export default class Follow extends Component {
   static propTypes = {};
 
   render() {

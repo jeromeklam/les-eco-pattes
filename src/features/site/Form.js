@@ -10,6 +10,7 @@ import { siteTypeAsOptions } from '../site-type/functions.js';
 import { InputPicker as ClientInputPicker } from '../client';
 import { InputPicker as SiteInputPicker, InlinePhotos, InlineDocuments } from '../site';
 import { InlineCauses } from '../cause';
+import { InlineAlerts } from '../alert';
 
 let regPlaceholder = '';
 let sitt_id = 0;
@@ -40,8 +41,9 @@ const tabs = [
 ];
 const modifyTabs = [
   { key: '5', name: 'causes', label: 'Animaux', shortcut: 'E', icon: <SettingsIcon /> },
-  { key: '6', name: 'documents', label: 'Documents', shortcut: 'E', icon: <SettingsIcon /> },
-  { key: '7', name: 'photos', label: 'Photos', shortcut: 'E', icon: <SettingsIcon /> },
+  { key: '6', name: 'alerts', label: 'Suivi', shortcut: 'S', icon: <SettingsIcon /> },
+  { key: '7', name: 'documents', label: 'Documents', shortcut: 'D', icon: <SettingsIcon /> },
+  { key: '8', name: 'photos', label: 'Photos', shortcut: 'I', icon: <SettingsIcon /> },
 ]
 
 const afterChange = (name, item) => {
@@ -329,10 +331,15 @@ export default function Form(props) {
       )}
       {values.currentTab === '6' && (
         <div className="border border-secondary rounded overflow-x-hidden">
-          <InlineDocuments siteId={values.id} />
+          <InlineAlerts objId={values.id} />
         </div>
       )}
       {values.currentTab === '7' && (
+        <div className="border border-secondary rounded overflow-x-hidden">
+          <InlineDocuments siteId={values.id} />
+        </div>
+      )}
+      {values.currentTab === '8' && (
         <div className="border border-secondary rounded overflow-x-hidden">
           <InlinePhotos siteId={values.id} />
         </div>

@@ -1,24 +1,24 @@
 import { jsonApiNormalizer, normalizedObjectModeler } from 'freejsonapi';
 import { freeAssoApi } from '../../../common';
 import {
-  CAUSE_SICKNESS_LOAD_ONE_BEGIN,
-  CAUSE_SICKNESS_LOAD_ONE_SUCCESS,
-  CAUSE_SICKNESS_LOAD_ONE_FAILURE,
-  CAUSE_SICKNESS_LOAD_ONE_DISMISS_ERROR,
+  ALERT_LOAD_ONE_BEGIN,
+  ALERT_LOAD_ONE_SUCCESS,
+  ALERT_LOAD_ONE_FAILURE,
+  ALERT_LOAD_ONE_DISMISS_ERROR,
 } from './constants';
 
 export function loadOne(args = {}) {
-  return (dispatch) => {
+  return (dispatch) => { 
     dispatch({
-      type: CAUSE_SICKNESS_LOAD_ONE_BEGIN,
+      type: ALERT_LOAD_ONE_BEGIN,
     });
-    
+
     const promise = new Promise((resolve, reject) => {
-      const doRequest = freeAssoApi.get('/v1/asso/cause_sickness/' + args, {});
+      const doRequest = freeAssoApi.get('/v1/core/alert/' + args, {});
       doRequest.then(
         (res) => {
           dispatch({
-            type: CAUSE_SICKNESS_LOAD_ONE_SUCCESS,
+            type: ALERT_LOAD_ONE_SUCCESS,
             data: res,
             id: args,
           });
@@ -26,26 +26,27 @@ export function loadOne(args = {}) {
         },
         (err) => {
           dispatch({
-            type: CAUSE_SICKNESS_LOAD_ONE_FAILURE,
+            type: ALERT_LOAD_ONE_FAILURE,
             data: { error: err },
           });
           reject(err);
         },
       );
     });
+
     return promise;
   };
 }
 
 export function dismissLoadOneError() {
   return {
-    type: CAUSE_SICKNESS_LOAD_ONE_DISMISS_ERROR,
+    type: ALERT_LOAD_ONE_DISMISS_ERROR,
   };
 }
 
 export function reducer(state, action) {
   switch (action.type) {
-    case CAUSE_SICKNESS_LOAD_ONE_BEGIN:
+    case ALERT_LOAD_ONE_BEGIN:
       // Just after a request is sent
       return {
         ...state,
@@ -53,24 +54,25 @@ export function reducer(state, action) {
         loadOneError: null,
       };
 
-    case CAUSE_SICKNESS_LOAD_ONE_SUCCESS:
+    case ALERT_LOAD_ONE_SUCCESS:
       // The request is success
       let item = null;
       let object = jsonApiNormalizer(action.data.data);
       let emptyItem = state.emptyItem;
-      item = normalizedObjectModeler(object, 'FreeAsso_CauseSickness', action.id, {eager: true});
+      item = normalizedObjectModeler(object, 'FreeFW_Alert', action.id, {eager: true});
       if (action.id <= 0) {
         emptyItem = {...item};
       }
+      console.log("FK load one alert",item);
       return {
         ...state,
         loadOnePending: false,
-        loadOneItem: item,
         loadOneError: null,
+        loadOneItem: item,
         emptyItem: emptyItem,
       };
 
-    case CAUSE_SICKNESS_LOAD_ONE_FAILURE:
+    case ALERT_LOAD_ONE_FAILURE:
       // The request is failed
       return {
         ...state,
@@ -78,7 +80,7 @@ export function reducer(state, action) {
         loadOneError: action.data.error,
       };
 
-    case CAUSE_SICKNESS_LOAD_ONE_DISMISS_ERROR:
+    case ALERT_LOAD_ONE_DISMISS_ERROR:
       // Dismiss the request failure error
       return {
         ...state,

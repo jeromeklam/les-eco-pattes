@@ -20,6 +20,7 @@ import {
 } from '../icons';
 import { deleteSuccess, showErrors } from '../ui';
 import { InlineCauses } from '../cause';
+import { InlineAlerts } from '../alert';
 import {
   InlinePhotos,
   InlineDocuments,
@@ -47,6 +48,7 @@ export class List extends Component {
     this.state = {
       timer: null,
       animalsSite: 0,
+      alertsSite: 0,
       photosSite: 0,
       documentsSite: 0,
       siteId: -1,
@@ -62,6 +64,7 @@ export class List extends Component {
     this.onSetFiltersAndSort = this.onSetFiltersAndSort.bind(this);
     this.onUpdateSort = this.onUpdateSort.bind(this);
     this.onListCause = this.onListCause.bind(this);
+    this.onListAlert = this.onListAlert.bind(this);
     this.onListPhoto = this.onListPhoto.bind(this);
     this.onListDocument = this.onListDocument.bind(this);
     this.onZoomMap = this.onZoomMap.bind(this);
@@ -73,11 +76,11 @@ export class List extends Component {
   }
 
   onCreate(event) {
-    this.setState({ animalsSite: 0, photosSite: 0, documentsSite: 0, siteId: 0 });
+    this.setState({ animalsSite: 0, alertsSite: 0 ,photosSite: 0, documentsSite: 0, siteId: 0 });
   }
 
   onGetOne(id) {
-    this.setState({ animalsSite: 0, photosSite: 0, documentsSite: 0, siteId: id });
+    this.setState({ animalsSite: 0, alertsSite: 0 ,photosSite: 0, documentsSite: 0, siteId: id });
   }
 
   onClose() {
@@ -100,9 +103,19 @@ export class List extends Component {
     const { id } = obj;
     const { animalsSite } = this.state;
     if (animalsSite === id) {
-      this.setState({ animalsSite: 0, photosSite: 0, documentsSite: 0 });
+      this.setState({ animalsSite: 0, alertsSite: 0 ,photosSite: 0, documentsSite: 0 });
     } else {
-      this.setState({ animalsSite: id, photosSite: 0, documentsSite: 0 });
+      this.setState({ animalsSite: id, alertsSite: 0 ,photosSite: 0, documentsSite: 0 });
+    }
+  }
+
+  onListAlert(obj) {
+    const { id } = obj;
+    const { alertsSite } = this.state;
+    if (alertsSite === id) {
+      this.setState({ animalsSite: 0, alertsSite: 0 ,photosSite: 0, documentsSite: 0 });
+    } else {
+      this.setState({ animalsSite: 0, alertsSite: id ,photosSite: 0, documentsSite: 0 });
     }
   }
 
@@ -110,9 +123,9 @@ export class List extends Component {
     const { id } = obj;
     const { photosSite } = this.state;
     if (photosSite === id) {
-      this.setState({ animalsSite: 0, photosSite: 0, documentsSite: 0 });
+      this.setState({ animalsSite: 0, alertsSite: 0 ,photosSite: 0, documentsSite: 0 });
     } else {
-      this.setState({ animalsSite: 0, photosSite: id, documentsSite: 0 });
+      this.setState({ animalsSite: 0, alertsSite: 0 ,photosSite: id, documentsSite: 0 });
     }
   }
 
@@ -120,9 +133,9 @@ export class List extends Component {
     const { id } = obj;
     const { documentsSite } = this.state;
     if (documentsSite === id) {
-      this.setState({ animalsSite: 0, photosSite: 0, documentsSite: 0 });
+      this.setState({ animalsSite: 0, alertsSite: 0 ,photosSite: 0, documentsSite: 0 });
     } else {
-      this.setState({ animalsSite: 0, photosSite: 0, documentsSite: id });
+      this.setState({ animalsSite: 0, alertsSite: 0 ,photosSite: 0, documentsSite: id });
     }
   }
 
@@ -216,17 +229,22 @@ export class List extends Component {
     // Inline Element
     let inlineComponent = null;
     let id = null;
-    if (this.state.photosSite > 0) {
-      inlineComponent = <InlinePhotos siteId={this.state.photosSite} />;
-      id = this.state.photosSite;
-    } else {
-      if (this.state.animalsSite > 0) {
+    if (this.state.animalsSite > 0) {
         inlineComponent = <InlineCauses mode="site" siteId={this.state.animalsSite} />;
         id = this.state.animalsSite;
+    } else {
+      if (this.state.alertsSite > 0) {
+        inlineComponent = <InlineAlerts mode="site" objId={this.state.alertsSite} objName='FreeAsso_Site'/>;
+        id = this.state.alertsSite;
       } else {
-        if (this.state.documentsSite > 0) {
-          inlineComponent = <InlineDocuments siteId={this.state.documentsSite} />;
-          id = this.state.documentsSite;
+        if (this.state.photosSite > 0) {
+          inlineComponent = <InlinePhotos siteId={this.state.photosSite} />;
+          id = this.state.photosSite;
+        } else {
+          if (this.state.documentsSite > 0) {
+            inlineComponent = <InlineDocuments siteId={this.state.documentsSite} />;
+            id = this.state.documentsSite;
+          }
         }
       }
     }
