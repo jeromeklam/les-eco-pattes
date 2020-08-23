@@ -100,9 +100,9 @@ export const getCauses = (mode, site_id, cause, ids = []) => {
 /**
  *
  */
-export const downloadCauseMediaBlob = sitm_id => {
+export const downloadCauseMediaBlob = caum_id => {
   const promise = new Promise((resolve, reject) => {
-    const doRequest = freeAssoApi.get('/v1/asso/cause_media_blob/download/' + sitm_id, {
+    const doRequest = freeAssoApi.get('/v1/asso/cause_media_blob/download/' + caum_id, {
       responseType: 'arraybuffer',
     });
     doRequest.then(

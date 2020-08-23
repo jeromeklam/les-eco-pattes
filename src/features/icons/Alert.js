@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { mdiBellAlert as myIcon } from '@mdi/js';
+import { mdiClipboardAlertOutline as myIcon } from '@mdi/js';
 import { Icon } from './';
 
 export default class Alert extends Component {

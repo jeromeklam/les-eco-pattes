@@ -18,6 +18,8 @@
   }
   .card-category {
     margin-bottom: 0;
+    font-weight: bold;
+    margin-bottom: 8px;
   }
   .card-body {
     background-color: theme-color('secondary');
@@ -47,6 +49,23 @@
     background-color: $header-background-color;
     padding-bottom: 0px;
     margin-bottom: 0px;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+    padding-top: 0.1rem;
+
+    .nav-link {
+      float: left;
+    }
+
+    .inline-list {
+      overflow: hidden;
+      
+      .row-title {
+        background-color: theme-color('secondary');
+        color: theme-color('light');
+        overflow: hidden,
+      }
+    }
   }
   .card-footer .nav-link {
     padding: 0px;

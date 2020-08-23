@@ -4,9 +4,8 @@ import { Dropdown } from 'freeassofront';
 import { CenteredLoading3Dots } from '../ui';
 import { Movement as MovementIcon, MenuDown as MenuDownIcon } from '../icons';
 import { Create as CreateMovement } from '../movement';
-import { getSexlabel, getCauses } from './';
 import { getOne as getOneSite } from '../site';
-
+import { getSexlabel, getCauses } from './';
 
 export default class InlineCauses extends Component {
   static propTypes = {};

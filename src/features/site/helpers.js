@@ -2,6 +2,7 @@ import React from 'react';
 import {
   AddOne as AddOneIcon,
   Cause as CauseIcon,
+  Follow as FollowIcon,
   GetOne as GetOneIcon,
   DelOne as DelOneIcon,
   Photo as PhotoIcon,
@@ -51,6 +52,7 @@ export const getGlobalActions = ({ onClearFilters, onCreate }) => {
 
 export const getInlineActions = ({
   onListCause,
+  onListAlert,
   onListDocument,
   onListPhoto,
   onZoomMap,
@@ -68,6 +70,16 @@ export const getInlineActions = ({
       icon: <CauseIcon color="white" />,
       role: 'DETAIL',
       active: state.animalsSite > 0,
+    },
+    {
+      name: 'alerts',
+      label: 'Suivi',
+      onClick: onListAlert,
+      param: 'object',
+      theme: 'secondary',
+      icon: <FollowIcon color="white" />,
+      role: 'DETAIL',
+      active: state.alertsSite > 0,
     },
     {
       name: 'documents',

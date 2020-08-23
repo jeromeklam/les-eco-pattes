@@ -12,6 +12,7 @@ export function loadOne(args = {}) {
     dispatch({
       type: CAUSE_SICKNESS_LOAD_ONE_BEGIN,
     });
+    
     const promise = new Promise((resolve, reject) => {
       const doRequest = freeAssoApi.get('/v1/asso/cause_sickness/' + args, {});
       doRequest.then(

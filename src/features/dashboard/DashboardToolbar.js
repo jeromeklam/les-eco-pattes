@@ -6,7 +6,10 @@ import { connect } from 'react-redux';
 import { getJsonApi } from 'freejsonapi';
 import * as actions from './redux/actions';
 import { updateConfig } from '../auth/redux/actions';
-import { Save, Reload } from '../icons';
+import { 
+  Save as SaveIcon, 
+  Reload as ReloadIcon,
+  DashboardReset as ResetIcon } from '../icons';
 import { modifySuccess, showErrors } from '../ui';
 import { getFromLS } from '../ui';
 
@@ -20,6 +23,7 @@ export class DashboardToolbar extends Component {
     super(props);
     this.onRefreshDashboard = this.onRefreshDashboard.bind(this);
     this.onSaveDashboard = this.onSaveDashboard.bind(this);
+    this.onResetDashboard = this.onResetDashboard.bind(this);
   }
 
   onRefreshDashboard(evt) {
@@ -33,7 +37,7 @@ export class DashboardToolbar extends Component {
     if (evt) {
       evt.preventDefault();
     }
-    const originalLayouts = getFromLS('layouts') || {};
+    const originalLayouts = getFromLS('layouts') || {} ;
     const datas = {
       type: 'FreeSSO_ConfigRequest',
       config: JSON.stringify(originalLayouts),
@@ -50,6 +54,10 @@ export class DashboardToolbar extends Component {
       });
   }
 
+  onResetDashboard() {
+    this.props.onResetLayout();
+  }
+
   render() {
     return (
       <div className="dashboard-dashboard-toolbar">
@@ -58,10 +66,13 @@ export class DashboardToolbar extends Component {
             <div className="nav justify-content-end">
               <div className="nav-item">
                 <button className="btn btn-primary text-light" onClick={this.onRefreshDashboard}>
-                  <Reload />
+                  <ReloadIcon />
+                </button>
+                <button className="btn btn-primary text-light" onClick={this.onResetDashboard}>
+                  <ResetIcon />
                 </button>
                 <button className="btn btn-primary text-light" onClick={this.onSaveDashboard}>
-                  <Save />
+                  <SaveIcon />
                 </button>
               </div>
             </div>

@@ -1,10 +1,10 @@
 import React from 'react';
 import { InputHidden, InputText, InputSelect, InputCheckbox } from 'freeassofront';
+import { Movement as MovementIcon, Cause as CauseIcon } from '../icons';
+import { useForm, ResponsiveModalOrForm, InputDatetime } from '../ui';
 import { MultiInputPicker as CauseMultiInputPicker } from '../cause';
 import { InputPicker as SiteInputPicker } from '../site';
 import { InlineCauses } from '../cause-movement';
-import { Movement as MovementIcon, Cause as CauseIcon } from '../icons';
-import { useForm, ResponsiveModalOrForm, InputDatetime } from '../ui';
 import { getTypeLabel, mvtStatus, mvtTypes, mvtFromType, mvtToType } from './';
 
 const tabs = [
@@ -96,7 +96,6 @@ const afterChange = (name, item) => {
 
 export default function Form(props) {
   const modify = props.modify || false;
-  //console.log("FK est dans le Form");
   props.item.modify = modify;
   props.item.param_mode = props.mode || 'SIMPLE';
   props.item.param_site = props.fromSite || null;
@@ -108,6 +107,7 @@ export default function Form(props) {
     getErrorMessage,
     handleNavTab,
   } = useForm(props.item, props.tab, props.onSubmit, props.onCancel, props.onNavTab, props.errors, afterChange, initItem);
+  console.log("FK MVT ",values);
   let myTabs = tabs;
   //if (values.move_type !== 'SIMPLE' && values.mode_type !== 'TRANSFER') {
     myTabs = tabs.concat(tabsFrom, tabsTo); 
