@@ -31,8 +31,8 @@ export class InlineAlerts extends Component {
     this.state = {
       confirm: false,
       alert_id: -1,
+      obj_name: props.objName,
       obj_id: props.objId,
-      obj_name: props.objName || '',
       items: [],
       loading: true,
       emptyItem: null,
@@ -51,7 +51,7 @@ export class InlineAlerts extends Component {
 
   localLoadAlerts() {
     this.setState({ loading: true });
-    getAlerts(this.state.obj_id).then(result => {
+    getAlerts(this.state.obj_name, this.state.obj_id).then(result => {
       this.setState({ loading: false, items: result });
     });
   }
@@ -66,7 +66,7 @@ export class InlineAlerts extends Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if (prevState.obj !== this.state.obj) {
+    if (prevState.obj_name !== this.state.obj_name || prevState.obj_id !== this.state.obj_id ) {
       this.localLoadAlert();
     }
   }
@@ -122,8 +122,11 @@ export class InlineAlerts extends Component {
         <div className="alert-inline-alerts">
           <div className="inline-list">
             <div className={classnames('row row-title row-line', (counter++ % 2 !== 1) ? 'row-odd' : 'row-even')} key="alert-inline-alerts">
-              <div className="col-6 col-first">
-                <span>Du</span>
+              <div className="col-5 col-first">
+                <span>Date</span>
+              </div>
+              <div className="col-8">
+                <span>Libellé</span>
               </div>
               <div className="col-4 text-right col-last">
                 <div className="btn-group btn-group-xs" role="group" aria-label="...">
@@ -142,7 +145,8 @@ export class InlineAlerts extends Component {
               alerts.map(alert => (
                 <HoverObserver onMouseEnter={() => {this.mouseEnter(alert.id)}} onMouseLeave={this.mouseLeave}>
                   <div className={classnames('row row-line', (counter++ % 2 !== 1) ? 'row-odd' : 'row-even')} key={alert.id}>
-                    <div className="col-6 col-first">{intlDate(alert.alert_from)}</div>
+                    <div className="col-5 col-first">{intlDate(alert.alert_from)}</div>
+                    <div className="col-8">{alert.alert_title}</div>
                     <div className="col-4 text-right col-last">
                     {this.state.flipped && this.state.flipped === alert.id && 
                       <div className="btn-group btn-group-xs" role="group" aria-label="...">
@@ -174,9 +178,9 @@ export class InlineAlerts extends Component {
               }}
             />
           </div>
-          {!this.state.confirm && this.state.alert_id === 0 && <Create onClose={this.onClose} obj={this.state.obj} />}
+          {!this.state.confirm && this.state.alert_id === 0 && <Create onClose={this.onClose} objName={this.state.obj_name} objId={this.state.obj_id} />}
           {!this.state.confirm && this.state.alert_id > 0 && (
-            <Modify onClose={this.onClose} alert_id={this.state.alert_id} obj={this.state.obj} />
+            <Modify onClose={this.onClose} alert_id={this.state.alert_id} />
           )}
         </div>
       );

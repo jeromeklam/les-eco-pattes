@@ -62,11 +62,10 @@ export class Modify extends Component {
     // Conversion des données en objet pour le service web
     let obj = getJsonApi(datas, 'FreeFW_Alert', this.state.alertId);
     this.props.actions
-      .updateOne(obj)
+      .updateOne(this.state.alertId, obj)
       .then(result => {
         modifySuccess();
         this.props.actions.propagateModel('FreeFW_Alert', result);
-        this.props.actions.loadAlerts(this.state.obj);
         this.props.onClose();
       })
       .catch(errors => {

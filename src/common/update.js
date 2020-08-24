@@ -13,6 +13,7 @@ import { CAUSE_SICKNESS_UPDATE_ONE_UPDATE } from '../features/cause-sickness/red
 import { SICKNESS_UPDATE_ONE_UPDATE } from '../features/sickness/redux/constants';
 import { ITEM_UPDATE_ONE_UPDATE } from '../features/item/redux/constants';
 import { MOVEMENT_UPDATE_ONE_UPDATE } from '../features/movement/redux/constants';
+import { ALERT_UPDATE_ONE_UPDATE } from '../features/alert/redux/constants';
 
 export function propagateCreate(type, id, datas) {
   return propagateModel(type, {data: datas });
@@ -30,9 +31,9 @@ export function propagateDelete(type, id, datas) {
 export function propagateModel(type, model) {
   return dispatch => {
     switch (type) {
-      case 'FreeAsso_Site':
+      case 'FreeFW_Alert':
         dispatch({
-          type: SITE_UPDATE_ONE_UPDATE,
+          type: ALERT_UPDATE_ONE_UPDATE,
           data: model,
         });
         break;
@@ -42,21 +43,9 @@ export function propagateModel(type, model) {
           data: model,
         });
         break;
-      case 'FreeAsso_Client':
+      case 'FreeAsso_CauseMainType':
         dispatch({
-          type: CLIENT_UPDATE_ONE_UPDATE,
-          data: model,
-        });
-        break;
-      case 'FreeAsso_Data':
-        dispatch({
-          type: DATA_UPDATE_ONE_UPDATE,
-          data: model,
-        });
-        break;
-      case 'FreeAsso_SiteType':
-        dispatch({
-          type: SITE_TYPE_UPDATE_ONE_UPDATE,
+          type: CAUSE_MAIN_TYPE_UPDATE_ONE_UPDATE,
           data: model,
         });
         break;
@@ -66,19 +55,7 @@ export function propagateModel(type, model) {
           data: model,
         });
         break;
-      case 'FreeAsso_CauseMainType':
-        dispatch({
-          type: CAUSE_MAIN_TYPE_UPDATE_ONE_UPDATE,
-          data: model,
-        });
-        break;
-      case 'FreeAsso_Movement':
-        dispatch({
-          type: MOVEMENT_UPDATE_ONE_UPDATE,
-          data: model,
-        });
-        break;
-      case 'FreeAsso_CauseMovement':
+     case 'FreeAsso_CauseMovement':
         dispatch({
           type: CAUSE_MOVEMENT_UPDATE_MODEL,
           data: model,
@@ -98,9 +75,9 @@ export function propagateModel(type, model) {
           data: model,
         });
         break;
-      case 'FreeAsso_ClientType':
+      case 'FreeAsso_Client':
         dispatch({
-          type: CLIENT_TYPE_UPDATE_ONE_UPDATE,
+          type: CLIENT_UPDATE_ONE_UPDATE,
           data: model,
         });
         break;
@@ -110,9 +87,21 @@ export function propagateModel(type, model) {
           data: model,
         });
         break;
-      case 'FreeAsso_Sickness':
+      case 'FreeAsso_ClientType':
         dispatch({
-          type: SICKNESS_UPDATE_ONE_UPDATE,
+          type: CLIENT_TYPE_UPDATE_ONE_UPDATE,
+          data: model,
+        });
+        break;
+      case 'FreeAsso_Data':
+        dispatch({
+          type: DATA_UPDATE_ONE_UPDATE,
+          data: model,
+        });
+        break;
+      case 'FreeFW_Email':
+        dispatch({
+          type: EMAIL_UPDATE_ONE_UPDATE,
           data: model,
         });
         break;
@@ -122,9 +111,27 @@ export function propagateModel(type, model) {
           data: model,
         });
         break;
-      case 'FreeFW_Email':
+      case 'FreeAsso_Movement':
         dispatch({
-          type: EMAIL_UPDATE_ONE_UPDATE,
+          type: MOVEMENT_UPDATE_ONE_UPDATE,
+          data: model,
+        });
+        break;
+      case 'FreeAsso_Sickness':
+        dispatch({
+          type: SICKNESS_UPDATE_ONE_UPDATE,
+          data: model,
+        });
+        break;
+      case 'FreeAsso_Site':
+        dispatch({
+          type: SITE_UPDATE_ONE_UPDATE,
+          data: model,
+        });
+        break;
+      case 'FreeAsso_SiteType':
+        dispatch({
+          type: SITE_TYPE_UPDATE_ONE_UPDATE,
           data: model,
         });
         break;
