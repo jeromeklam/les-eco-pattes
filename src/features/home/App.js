@@ -134,7 +134,7 @@ export class App extends Component {
   }
 
   onChangeSettings(setting, value) {
-    console.log(setting, value);
+    console.log("FK changesetting",setting, value);
     this.props.actions.changeSetting('layout', setting, value);
   }
 

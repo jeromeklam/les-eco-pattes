@@ -110,6 +110,8 @@ export class InlineAlerts extends Component {
 
   render() {
     let counter = 0;
+    let status = "";
+    const today = new Date().toISOString();
     const alerts = this.state.items;
     if (this.state.loading) {
       return (
@@ -118,72 +120,87 @@ export class InlineAlerts extends Component {
         </div>
       );
     } else {
-      return (
-        <div className="alert-inline-alerts">
-          <div className="inline-list">
-            <div className={classnames('row row-title row-line', (counter++ % 2 !== 1) ? 'row-odd' : 'row-even')} key="alert-inline-alerts">
-              <div className="col-5 col-first">
-                <span>Date</span>
-              </div>
-              <div className="col-8">
-                <span>Libellé</span>
-              </div>
-              <div className="col-4 text-right col-last">
-                <div className="btn-group btn-group-xs" role="group" aria-label="...">
-                  <button
-                    type="button"
-                    className="btn btn-inline btn-primary"
-                    onClick={this.onAddOne}
-                  >
-                    <AddOneIcon className="inline-action text-light" />
-                  </button>
+      if (alerts && alerts.length > 0) {
+        return (
+          <div className="alert-inline-alerts">
+            <div className="inline-list">
+              <div className={classnames('row row-title row-line', (counter++ % 2 !== 1) ? 'row-odd' : 'row-even')} key="alert-inline-alerts">
+                <div className="col-5 col-first">
+                  <span>Date début</span>
+                </div>
+                <div className="col-5">
+                  <span>Date fin</span>
+                </div>
+                <div className="col-12">
+                  <span>Libellé</span>
+                </div>
+                <div className="col-10">
+                  <span>Etat</span>
+                </div>
+                <div className="col-4 text-right col-last">
+                  <div className="btn-group btn-group-xs" role="group" aria-label="...">
+                    <button
+                      type="button"
+                      className="btn btn-inline btn-primary"
+                      onClick={this.onAddOne}
+                    >
+                      <AddOneIcon className="inline-action text-light" />
+                    </button>
+                  </div>
                 </div>
               </div>
-            </div>
-            {alerts &&
-              alerts.length > 0 &&
-              alerts.map(alert => (
-                <HoverObserver onMouseEnter={() => {this.mouseEnter(alert.id)}} onMouseLeave={this.mouseLeave}>
-                  <div className={classnames('row row-line', (counter++ % 2 !== 1) ? 'row-odd' : 'row-even')} key={alert.id}>
-                    <div className="col-5 col-first">{intlDate(alert.alert_from)}</div>
-                    <div className="col-8">{alert.alert_title}</div>
-                    <div className="col-4 text-right col-last">
-                    {this.state.flipped && this.state.flipped === alert.id && 
-                      <div className="btn-group btn-group-xs" role="group" aria-label="...">
-                        <button
-                          type="button"
-                          className="btn btn-inline btn-secondary"
-                          onClick={() => {this.onGetOne(alert.id)}}
-                        >
-                          <GetOneIcon className="inline-action text-light" />
-                        </button>
-                        <button
-                          type="button"
-                          className="btn btn-inline btn-warning"
-                          onClick={() => this.onConfirmOpen(alert.id)}
-                        >
-                          <DelOneIcon className="inline-action text-light" />
-                        </button>
+              {alerts.map(alert => {
+                if (alert.alert_done_ts !== "" && alert.alert_done_ts !== null && alert.alert_done_ts < today ) {
+                  status = "effectué le " + intlDate(alert.alert_done_ts);
+                }
+                return (
+                  <HoverObserver onMouseEnter={() => {this.mouseEnter(alert.id)}} onMouseLeave={this.mouseLeave}>
+                    <div className={classnames('row row-line', (counter++ % 2 !== 1) ? 'row-odd' : 'row-even')} key={alert.id}>
+                      <div className="col-5 col-first">{intlDate(alert.alert_from)}</div>
+                      <div className="col-5">{intlDate(alert.alert_to)}</div>
+                      <div className="col-12">{alert.alert_title}</div>
+                      <div className="col-10">{status}</div>
+                      <div className="col-4 text-right col-last">
+                        {this.state.flipped && this.state.flipped === alert.id && 
+                          <div className="btn-group btn-group-xs" role="group" aria-label="...">
+                            <button
+                              type="button"
+                              className="btn btn-inline btn-secondary"
+                              onClick={() => {this.onGetOne(alert.id)}}
+                            >
+                              <GetOneIcon className="inline-action text-light" />
+                            </button>
+                            <button
+                              type="button"
+                              className="btn btn-inline btn-warning"
+                              onClick={() => this.onConfirmOpen(alert.id)}
+                            >
+                            <DelOneIcon className="inline-action text-light" />
+                            </button>
+                          </div>
+                        }
                       </div>
-                    }
                     </div>
-                  </div>
-                </HoverObserver>
-              ))}
-            <ResponsiveConfirm
-              show={this.state.confirm}
-              onClose={this.onConfirmClose}
-              onConfirm={() => {
-                this.onConfirm();
-              }}
-            />
+                  </HoverObserver>
+                );
+              })}
+              <ResponsiveConfirm
+                show={this.state.confirm}
+                onClose={this.onConfirmClose}
+                onConfirm={() => {
+                  this.onConfirm();
+                }}
+              />
+            </div>
+            <div>
+              {!this.state.confirm && this.state.alert_id === 0 && <Create onClose={this.onClose} objName={this.state.obj_name} objId={this.state.obj_id} />}
+              {!this.state.confirm && this.state.alert_id > 0 && (
+                <Modify onClose={this.onClose} alert_id={this.state.alert_id} />
+              )}
+            </div>
           </div>
-          {!this.state.confirm && this.state.alert_id === 0 && <Create onClose={this.onClose} objName={this.state.obj_name} objId={this.state.obj_id} />}
-          {!this.state.confirm && this.state.alert_id > 0 && (
-            <Modify onClose={this.onClose} alert_id={this.state.alert_id} />
-          )}
-        </div>
-      );
+        );
+      }
     }
   }
 }

@@ -114,3 +114,5 @@ export function intlDate(date) {
   }
   return '';
 }
+
+//toLocaleDateString(props.language, options)} ${event.toLocaleTimeString(props.language)}`;
