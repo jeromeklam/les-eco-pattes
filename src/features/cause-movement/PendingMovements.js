@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import * as actions from './redux/actions';
 import { normalizedObjectModeler } from 'freejsonapi';
 import { ResponsiveConfirm, HoverObserver } from 'freeassofront';
-import { propagateModel, intlDate } from '../../common';
+import { propagateModel, intlDateTime } from '../../common';
 import {
   DelOne as DelOneIcon,
   SimpleCheck as SimpleValidIcon,
@@ -92,20 +92,19 @@ export class PendingMovements extends Component {
           <Col layoutSize={this.props.layoutSize || 'md'} md={12} lg={5} xl={5} col={12}>
             <span>Pour le</span>
           </Col>
-          <Col layoutSize={this.props.layoutSize || 'md'} md={12} lg={6} xl={6} col={12}>
+          <Col layoutSize={this.props.layoutSize || 'md'} md={12} lg={7} xl={7} col={12}>
             <span>Animal</span>
           </Col>
           <Col layoutSize={this.props.layoutSize || 'md'} md={12} lg={6} xl={6} col={12}>
             <span>Statut</span>
           </Col>
-          <Col layoutSize={this.props.layoutSize || 'md'} md={12} lg={5} xl={5} col={12}>
+          <Col layoutSize={this.props.layoutSize || 'md'} md={12} lg={7} xl={7} col={12}>
             <span>Depuis</span>
           </Col>
-          <Col layoutSize={this.props.layoutSize || 'md'} md={12} lg={5} xl={5} col={12}>
+          <Col layoutSize={this.props.layoutSize || 'md'} md={12} lg={7} xl={7} col={12}>
             <span>Vers</span>
           </Col>
-          <Col layoutSize={this.props.layoutSize || 'md'} md={12} lg={6} xl={6} col={12}>
-            <span>Notes</span>
+          <Col layoutSize={this.props.layoutSize || 'md'} md={12} lg={4} xl={4} col={12}>
           </Col>
         </Line>
       </InlineList>
@@ -126,59 +125,22 @@ export class PendingMovements extends Component {
                       onMouseLeave={this.mouseLeave}      
                     >
                       <Line oddEven={counter++}>
-                        <Col
-                          layoutSize={this.props.layoutSize || 'md'}
-                          md={12}
-                          lg={5}
-                          xl={5}
-                          col={12}
-                        >
-                          {intlDate(movement.camv_to)}
+                        <Col layoutSize={this.props.layoutSize || 'md'} md={12} lg={5} xl={5} col={12}>
+                          {intlDateTime(movement.camv_to, true)}
                         </Col>
-                        <Col
-                          layoutSize={this.props.layoutSize || 'md'}
-                          md={12}
-                          lg={6}
-                          xl={6}
-                          col={12}
-                        >
+                        <Col layoutSize={this.props.layoutSize || 'md'} md={12} lg={7} xl={7} col={12}>
                           {movement.cause.cau_code}
                         </Col>
-                        <Col
-                          layoutSize={this.props.layoutSize || 'md'}
-                          md={12}
-                          lg={6}
-                          xl={6}
-                          col={12}
-                        >
+                        <Col layoutSize={this.props.layoutSize || 'md'} md={12} lg={6} xl={6} col={12}>
                           {statusLabel(movement.camv_status)}
                         </Col>
-                        <Col
-                          layoutSize={this.props.layoutSize || 'md'}
-                          md={12}
-                          lg={5}
-                          xl={5}
-                          col={12}
-                        >
+                        <Col layoutSize={this.props.layoutSize || 'md'} md={12} lg={7} xl={7} col={12}>
                           {movement.from_site.site_name}
                         </Col>
-                        <Col
-                          layoutSize={this.props.layoutSize || 'md'}
-                          md={12}
-                          lg={5}
-                          xl={5}
-                          col={12}
-                        >
+                        <Col layoutSize={this.props.layoutSize || 'md'} md={12} lg={7} xl={7} col={12}>
                           {movement.to_site.site_name}
                         </Col>
-                        <Col
-                          layoutSize={this.props.layoutSize || 'md'}
-                          md={12}
-                          lg={6}
-                          xl={6}
-                          col={12}
-                        >
-                          {movement.camv_comment}
+                        <Col layoutSize={this.props.layoutSize || 'md'} md={12} lg={4} xl={4} col={12}>
                           {this.state.flipped && this.state.flipped === movement.id && (
                             <div
                               className="btn-group btn-group-sm float-right"

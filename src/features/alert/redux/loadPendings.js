@@ -14,6 +14,7 @@ export function loadPendings(args = {}) {
     });
 
     const promise = new Promise((resolve, reject) => {
+
       const doRequest = freeAssoApi.get('/v1/core/alert', {});
       doRequest.then(
         (res) => {

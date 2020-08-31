@@ -88,6 +88,8 @@ export class Create extends Component {
               <Form
                 item={item}
                 modal={true}
+                tab={this.props.alert.tab}
+                tabs={this.props.alert.tabs}
                 errors={this.props.alert.createOneError}
                 onSubmit={this.onSubmit}
                 onCancel={this.onCancel}

@@ -103,16 +103,36 @@ export function getPreviousNext(items, id) {
   return ret;
 }
 
-export function intlDate(date) {
+export function intlDateTime(date, dateOnly = false, timeOnly = false, seconds = false) {
   if (date) {
     try {
       const laDate = new Date(date);
-      return new Intl.DateTimeFormat('fr-FR').format(laDate);
+      let options = {};
+      if (!dateOnly) {
+        if (!timeOnly) {
+          options = {
+            year: 'numeric',
+            month: 'numeric',
+            day: 'numeric',
+            hour: 'numeric',
+            minute: 'numeric',
+            hour12: false,
+          } 
+        } else {
+          options = {
+            hour: 'numeric',
+            minute: 'numeric',
+            hour12: false, 
+          }
+        }
+        if (seconds) {
+          options.seconds = 'numéric' 
+        }
+      }
+      return new Intl.DateTimeFormat('fr-FR', options).format(laDate);
     } catch (ex) {
-      // @TODO
+      console.log(ex);
     }
   }
   return '';
 }
-
-//toLocaleDateString(props.language, options)} ${event.toLocaleTimeString(props.language)}`;

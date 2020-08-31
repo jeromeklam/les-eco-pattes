@@ -9,6 +9,12 @@ const initialState = {
   pendings: [],
   page_number: 1,
   page_size: process.env.REACT_APP_PAGE_SIZE,
+  tab: "1",
+  tabs: [
+    { key: '1', name: 'ident', label: 'Identification', shortcut: 'I'},
+    { key: '2', name: 'desc', label: 'Détails', shortcut: 'D'},
+    { key: '3', name: 'done', label: 'Réalisation', shortcut: 'R'},
+  ],
   loadMorePending: false,
   loadMoreError: null,
   loadPendingsPending: false,

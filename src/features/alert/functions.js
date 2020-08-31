@@ -1,5 +1,5 @@
 import { objectToQueryString, jsonApiNormalizer, normalizedObjectModeler } from 'freejsonapi';
-import { freeAssoApi } from '../../common';
+import { freeAssoApi, intlDateTime } from '../../common';
 
 /**
  *
@@ -17,9 +17,9 @@ export const getAlerts = (obj_name, obj_id) => {
     const doRequest = freeAssoApi.get('/v1/core/alert' + addUrl, {});
     doRequest.then(
       res => {
-        if (res.data && res.data.data) {
+        if (res.data && res.data.data) {     
           const list = jsonApiNormalizer(res.data);
-          const models = normalizedObjectModeler(list, 'FreeFW_Alert');
+          const models = normalizedObjectModeler(list, 'FreeFW_Alert');  
           resolve(models);
         } else {
           resolve([]);
@@ -34,32 +34,48 @@ export const getAlerts = (obj_name, obj_id) => {
 };
 
 export const getAlertRecur = (alert) => {
-  let alertRecur = 'Tâche à effectuer tous les ';
+  let alertRecur = 'Tâche à effectuer ';
+  let period = '';
   if (alert.alert_recur_number > 1) {
-    alertRecur = alertRecur + (alert.alert_recur_number);
+    period = ' ' + alert.alert_recur_number;
   }
   switch (alert.alert_recur_type) {
     case 'NONE':
       alertRecur = '';
       break;
     case 'DAY':
-      alertRecur = alertRecur + ' jours';
+      alertRecur = 'tous les' + period + ' jours';
       break;
     case 'MONTH':
-      alertRecur = alertRecur + ' mois';
+      alertRecur = 'tous les' + period + ' mois';
       break;
     case 'YEAR':
-      alertRecur = alertRecur + ' ans';
+      alertRecur = 'tous les' + period + ' ans';
       break;
     case 'HOUR':
-      alertRecur = alertRecur + ' heures';
+      alertRecur = 'toutes les' + period + ' heures';
       break;
     case 'MINUTE':
-      alertRecur = alertRecur + ' minutes';
+      alertRecur = 'toutes les' + period + ' minutes';
       break;
     default:
       alertRecur = '';
       break;
   }
   return alertRecur;
+}
+
+export const getLibStatus = (done_ts, deadline) => {
+  const today = new Date().toISOString();
+  let libStatus = "";
+  if (done_ts !== "" && done_ts !== null) {
+    if (done_ts < today ) {
+      libStatus = "effectué le " + intlDateTime(done_ts, true);
+    }
+  } else {
+    if (deadline !== "" && deadline !== null) {
+      libStatus = "à faire avant le " + intlDateTime(deadline, true) + " !";
+    }
+  }
+  return libStatus;
 }
