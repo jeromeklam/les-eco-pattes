@@ -75,7 +75,6 @@ export class Create extends Component {
 
   render() {
     const item = this.state.item;
-
     return (
       <div className="site-type-create global-card">
         {!item ? (
