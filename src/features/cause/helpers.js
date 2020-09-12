@@ -47,9 +47,9 @@ export const getSexlabel = (p_code, p_icon = true, p_className = "" ) => {
   return '';
 }
 
-const getComm = (item) => {
+const getComm = (item, content) => {
   if (item.cau_to === '' || item.cau_to === null) {
-    return item.cau_desc;
+    return content;
   } else {
     return item.cau_string_3;
   }
