@@ -10,6 +10,7 @@ import { loadMovements } from '../cause-movement/redux/actions';
 import { loadGrowths } from '../cause-growth/redux/actions';
 import { loadSicknesses } from '../cause-sickness/redux/actions';
 import {
+  Close as CloseIcon,
   Filter as FilterIcon,
   FilterFull as FilterFullIcon,
   SimpleCancel as CancelPanelIcon,
@@ -103,11 +104,14 @@ export class List extends Component {
   }
 
   onSelectList(obj, list) {
-    const { item, mode } = this.state;
-    if (item && item.id === obj.id && mode === list) {
-      this.setState({ mode: false, item: null });
+    if (obj) {
+      if (list) {
+        this.setState({ mode: list, item: obj });
+      } else {
+        this.setState({ item: obj });
+      }
     } else {
-      this.setState({ mode: list, item: obj });
+      this.setState({ mode: false, item: null });
     }
   }
 
@@ -275,8 +279,10 @@ export class List extends Component {
           sortNoneIcon={<SortNoneIcon color="secondary" />}
           calIcon={<CalendarIcon className="text-secondary" />}
           clearIcon={<ClearIcon className="text-warning" />}
+          closeIcon={<CloseIcon />}
           inlineActions={inlineActions}
           inlineOpenedId={id}
+          inlineOpenedItem={this.state.item}
           inlineComponent={inlineComponent}
           globalActions={globalActions}
           sort={this.props.cause.sort}
@@ -287,6 +293,7 @@ export class List extends Component {
           onClearFilters={this.onClearFilters}
           onLoadMore={this.onLoadMore}
           onSelect={this.onSelect}
+          onClick={this.onSelectList}
           loadMorePending={this.props.cause.loadMorePending}
           loadMoreFinish={this.props.cause.loadMoreFinish}
           loadMoreError={this.props.cause.loadMoreError}

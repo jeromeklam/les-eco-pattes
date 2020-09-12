@@ -51,10 +51,7 @@ export const getGlobalActions = ({ onClearFilters, onCreate }) => {
 };
 
 export const getInlineActions = ({
-  onListCause,
-  onListAlert,
-  onListDocument,
-  onListPhoto,
+  onSelectList,
   onZoomMap,
   onGetOne,
   onDelOne,
@@ -64,7 +61,7 @@ export const getInlineActions = ({
     {
       name: 'animals',
       label: 'Animaux',
-      onClick: onListCause,
+      onClick: (obj) => {onSelectList(obj, 'animal');},
       param: 'object',
       theme: 'secondary',
       icon: <CauseIcon color="white" />,
@@ -74,7 +71,7 @@ export const getInlineActions = ({
     {
       name: 'alerts',
       label: 'Suivi',
-      onClick: onListAlert,
+      onClick: (obj) => {onSelectList(obj, 'alert');},
       param: 'object',
       theme: 'secondary',
       icon: <FollowIcon color="white" />,
@@ -84,7 +81,7 @@ export const getInlineActions = ({
     {
       name: 'documents',
       label: 'Documents',
-      onClick: onListDocument,
+      onClick: (obj) => {onSelectList(obj, 'document');},
       param: 'object',
       theme: 'secondary',
       icon: <DocumentIcon color="white" />,
@@ -94,7 +91,7 @@ export const getInlineActions = ({
     {
       name: 'photos',
       label: 'Photos',
-      onClick: onListPhoto,
+      onClick: (obj) => {onSelectList(obj, 'photo');},
       param: 'object',
       theme: 'secondary',
       icon: <PhotoIcon color="white" />,
