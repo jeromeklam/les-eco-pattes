@@ -62,11 +62,10 @@ export class Modify extends Component {
     // Conversion des données en objet pour le service web
     let obj = getJsonApi(datas, 'FreeFW_Alert', this.state.alertId);
     this.props.actions
-      .updateOne(obj)
+      .updateOne(this.state.alertId, obj)
       .then(result => {
         modifySuccess();
         this.props.actions.propagateModel('FreeFW_Alert', result);
-        this.props.actions.loadAlerts(this.state.obj);
         this.props.onClose();
       })
       .catch(errors => {
@@ -76,6 +75,7 @@ export class Modify extends Component {
 
   render() {
     const item = this.state.item;
+    console.log("FK propsalert",this.props.alert);
     return (
       <div className="alert-create global-card">
         {!item ? (
@@ -86,6 +86,8 @@ export class Modify extends Component {
               <Form
                 item={item}
                 modal={true}
+                tab={this.props.alert.tab}
+                tabs={this.props.alert.tabs}
                 errors={this.props.alert.createOneError}
                 onSubmit={this.onSubmit}
                 onCancel={this.onCancel}

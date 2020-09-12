@@ -19,7 +19,8 @@ export class Create extends Component {
     super(props);
     this.state = {
       alertId: 0,
-      obj: this.props.obj,
+      obj_name: this.props.objName,
+      obj_id: this.props.objId,
       item: false,
     };
     /**
@@ -58,15 +59,16 @@ export class Create extends Component {
    */
   onSubmit(datas = {}) {
     // Conversion des données en objet pour le service web
-    datas.obj = this.state.obj; 
-    //console.log("FK datas", datas);
-    let obj = getJsonApi(datas, 'FreeFW_Alert', this.state.causId);
+    datas.user = this.props.user;
+    datas.alert_object_name = this.state.obj_name; 
+    datas.alert_object_id = this.state.obj_id;
+    console.log("FK datas", datas);
+    let obj = getJsonApi(datas, 'FreeFW_Alert', this.state.alertId);
     this.props.actions
       .createOne(obj)
       .then(result => {
         createSuccess();
         this.props.actions.propagateModel('FreeFW_Alert', result);
-        this.props.actions.loadAlerts(this.state.obj);
         this.props.onClose();
       })
       .catch(errors => {
@@ -86,6 +88,8 @@ export class Create extends Component {
               <Form
                 item={item}
                 modal={true}
+                tab={this.props.alert.tab}
+                tabs={this.props.alert.tabs}
                 errors={this.props.alert.createOneError}
                 onSubmit={this.onSubmit}
                 onCancel={this.onCancel}
@@ -102,6 +106,7 @@ export class Create extends Component {
 function mapStateToProps(state) {
   return {
     alert: state.alert,
+    user: state.auth.user,
   };
 }
 

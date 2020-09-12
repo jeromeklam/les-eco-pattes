@@ -1,6 +1,5 @@
 import { objectToQueryString, jsonApiNormalizer, normalizedObjectModeler } from 'freejsonapi';
 import { freeAssoApi } from '../../common';
-
 /**
  *
  */

@@ -7,7 +7,7 @@ import { connect } from 'react-redux';
 import { getJsonApi } from 'freejsonapi';
 import { ResponsiveConfirm, HoverObserver } from 'freeassofront';
 import * as actions from './redux/actions';
-import { propagateModel, intlDate } from '../../common';
+import { propagateModel, intlDateTime } from '../../common';
 import { CenteredLoading3Dots, createSuccess, showErrors } from '../ui';
 import { DelOne as DelOneIcon } from '../icons';
 import { InlineGrowthForm, getGrowths } from './';
@@ -167,7 +167,7 @@ export class InlineGrowths extends Component {
                         )}
                         key={growth.id}
                       >
-                        <div className="col-16 col-first">{intlDate(growth.grow_ts)}</div>
+                        <div className="col-16 col-first">{intlDateTime(growth.grow_ts, true)}</div>
                         <div className="col-8">{growth.grow_weight}</div>
                         <div className="col-8">{growth.grow_height}</div>
                         <div className="col-4 text-right">

@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import * as actions from './redux/actions';
 import { normalizedObjectModeler } from 'freejsonapi';
 import { HoverObserver } from 'freeassofront';
-import { intlDate } from '../../common';
+import { intlDateTime } from '../../common';
 import { DashboardCard } from '../dashboard';
 import { Alert as AlertIcon } from '../icons';
 import { CenteredLoading3Dots, InlineList, Line, Col } from '../ui';
@@ -48,7 +48,10 @@ export class PendingAlerts extends Component {
       <InlineList>
         <Line header>
           <Col layoutSize={this.props.layoutSize || 'md'} md={12} lg={5} xl={5} col={12}>
-            <span>Date</span>
+            <span>Echéance</span>
+          </Col>
+          <Col layoutSize={this.props.layoutSize || 'md'} md={12} lg={5} xl={5} col={12}>
+            <span>Libellé</span>
           </Col>
         </Line>
       </InlineList>
@@ -69,14 +72,11 @@ export class PendingAlerts extends Component {
                       onMouseLeave={this.mouseLeave}    
                     >
                       <Line oddEven={counter++} >
-                        <Col
-                          layoutSize={this.props.layoutSize || 'md'}
-                          md={12}
-                          lg={5}
-                          xl={5}
-                          col={12}
-                        >
-                          {intlDate(alert.alert_deadline)}
+                        <Col layoutSize={this.props.layoutSize || 'md'} md={12} lg={5} xl={5} col={12}>
+                          {intlDateTime(alert.alert_deadline, true)}
+                        </Col>
+                        <Col layoutSize={this.props.layoutSize || 'md'} md={12} lg={5} xl={5} col={12}>
+                          {alert.alert_title}
                         </Col>
                       </Line>
                     </HoverObserver>

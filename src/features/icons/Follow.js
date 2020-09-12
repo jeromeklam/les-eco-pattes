@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
-import { mdiClipboardTextOutline as myIcon } from '@mdi/js';
+import { mdiClipboardCheckOutline as myIcon } from '@mdi/js';
 import { Icon } from './';
+
+//mdiClipboardListOutline 
 
 export default class Follow extends Component {
   static propTypes = {};

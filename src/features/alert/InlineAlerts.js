@@ -5,13 +5,13 @@ import { connect } from 'react-redux';
 import * as actions from './redux/actions';
 import { ResponsiveConfirm, HoverObserver } from 'freeassofront';
 import classnames from 'classnames';
-import { intlDate } from '../../common';
+import { intlDateTime } from '../../common';
 import { 
   GetOne as GetOneIcon, 
   DelOne as DelOneIcon, 
   AddOne as AddOneIcon } from '../icons';
 import { CenteredLoading3Dots } from '../ui';
-import { Create, Modify, getAlerts } from './';
+import { Create, Modify, getAlerts, getLibStatus } from './';
 
 export class InlineAlerts extends Component {
   static propTypes = {
@@ -31,8 +31,8 @@ export class InlineAlerts extends Component {
     this.state = {
       confirm: false,
       alert_id: -1,
+      obj_name: props.objName,
       obj_id: props.objId,
-      obj_name: props.objName || '',
       items: [],
       loading: true,
       emptyItem: null,
@@ -51,7 +51,7 @@ export class InlineAlerts extends Component {
 
   localLoadAlerts() {
     this.setState({ loading: true });
-    getAlerts(this.state.obj_id).then(result => {
+    getAlerts(this.state.obj_name, this.state.obj_id).then(result => {
       this.setState({ loading: false, items: result });
     });
   }
@@ -66,7 +66,7 @@ export class InlineAlerts extends Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if (prevState.obj !== this.state.obj) {
+    if (prevState.obj_name !== this.state.obj_name || prevState.obj_id !== this.state.obj_id ) {
       this.localLoadAlert();
     }
   }
@@ -110,7 +110,9 @@ export class InlineAlerts extends Component {
 
   render() {
     let counter = 0;
+    let status = "";
     const alerts = this.state.items;
+    console.log("FK items alerts",alerts);
     if (this.state.loading) {
       return (
         <div className="alert-inline-alerts">
@@ -123,7 +125,16 @@ export class InlineAlerts extends Component {
           <div className="inline-list">
             <div className={classnames('row row-title row-line', (counter++ % 2 !== 1) ? 'row-odd' : 'row-even')} key="alert-inline-alerts">
               <div className="col-6 col-first">
-                <span>Du</span>
+                <span>Date début</span>
+              </div>
+              <div className="col-6">
+                <span>Date fin</span>
+              </div>
+              <div className="col-11">
+                <span>Libellé</span>
+              </div>
+              <div className="col-9">
+                <span>Etat</span>
               </div>
               <div className="col-4 text-right col-last">
                 <div className="btn-group btn-group-xs" role="group" aria-label="...">
@@ -137,35 +148,39 @@ export class InlineAlerts extends Component {
                 </div>
               </div>
             </div>
-            {alerts &&
+            { alerts && 
               alerts.length > 0 &&
               alerts.map(alert => (
                 <HoverObserver onMouseEnter={() => {this.mouseEnter(alert.id)}} onMouseLeave={this.mouseLeave}>
                   <div className={classnames('row row-line', (counter++ % 2 !== 1) ? 'row-odd' : 'row-even')} key={alert.id}>
-                    <div className="col-6 col-first">{intlDate(alert.alert_from)}</div>
+                    <div className="col-6 col-first">{intlDateTime(alert.alert_from)}</div>
+                    <div className="col-6">{intlDateTime(alert.alert_to)}</div>
+                    <div className="col-11">{alert.alert_title}</div>
+                    <div className="col-9">{getLibStatus(alert.alert_done_ts, alert.alert_deadline)}</div>
                     <div className="col-4 text-right col-last">
-                    {this.state.flipped && this.state.flipped === alert.id && 
-                      <div className="btn-group btn-group-xs" role="group" aria-label="...">
-                        <button
-                          type="button"
-                          className="btn btn-inline btn-secondary"
-                          onClick={() => {this.onGetOne(alert.id)}}
-                        >
-                          <GetOneIcon className="inline-action text-light" />
-                        </button>
-                        <button
-                          type="button"
-                          className="btn btn-inline btn-warning"
-                          onClick={() => this.onConfirmOpen(alert.id)}
-                        >
-                          <DelOneIcon className="inline-action text-light" />
-                        </button>
-                      </div>
-                    }
+                      {this.state.flipped && this.state.flipped === alert.id && 
+                        <div className="btn-group btn-group-xs" role="group" aria-label="...">
+                          <button
+                            type="button"
+                            className="btn btn-inline btn-secondary"
+                            onClick={() => {this.onGetOne(alert.id)}}
+                          >
+                            <GetOneIcon className="inline-action text-light" />
+                          </button>
+                          <button
+                            type="button"
+                            className="btn btn-inline btn-warning"
+                            onClick={() => this.onConfirmOpen(alert.id)}
+                          >
+                            <DelOneIcon className="inline-action text-light" />
+                          </button>
+                        </div>
+                      }
                     </div>
                   </div>
                 </HoverObserver>
-              ))}
+              ))
+            }
             <ResponsiveConfirm
               show={this.state.confirm}
               onClose={this.onConfirmClose}
@@ -174,10 +189,12 @@ export class InlineAlerts extends Component {
               }}
             />
           </div>
-          {!this.state.confirm && this.state.alert_id === 0 && <Create onClose={this.onClose} obj={this.state.obj} />}
-          {!this.state.confirm && this.state.alert_id > 0 && (
-            <Modify onClose={this.onClose} alert_id={this.state.alert_id} obj={this.state.obj} />
-          )}
+          <div>
+            {!this.state.confirm && this.state.alert_id === 0 && <Create onClose={this.onClose} objName={this.state.obj_name} objId={this.state.obj_id} />}
+            {!this.state.confirm && this.state.alert_id > 0 && (
+              <Modify onClose={this.onClose} alert_id={this.state.alert_id} />
+            )}
+          </div>
         </div>
       );
     }

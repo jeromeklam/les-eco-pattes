@@ -7,7 +7,7 @@ import { connect } from 'react-redux';
 import { getJsonApi } from 'freejsonapi';
 import * as actions from './redux/actions';
 import { ResponsiveConfirm, HoverObserver } from 'freeassofront';
-import { propagateModel, intlDate } from '../../common';
+import { propagateModel, intlDateTime } from '../../common';
 import { CenteredLoading3Dots, createSuccess, showErrors } from '../ui';
 import { DelOne as DelOneIcon, SimpleCheck as SimpleCheckIcon } from '../icons';
 import { statusLabel, getMovements, InlineMovementForm } from './';
@@ -167,7 +167,7 @@ export class InlineMovements extends Component {
                 return (
                   <HoverObserver onMouseEnter={() => {this.mouseEnter(movement.id)}} onMouseLeave={this.mouseLeave}>
                     <div className={classnames('row row-line', (counter++ % 2 !== 1) ? 'row-odd' : 'row-even')} key={movement.id}>
-                      <div className="col-sm-5 col-first">{intlDate(movement.camv_to)}</div>
+                      <div className="col-sm-5 col-first">{intlDateTime(movement.camv_to, true)}</div>
                       <div className="col-sm-7">{movement.from_site.site_name}</div>
                       <div className="col-sm-7">{movement.to_site.site_name}</div>
                       <div className="col-sm-7">{movement.camv_comment}</div>

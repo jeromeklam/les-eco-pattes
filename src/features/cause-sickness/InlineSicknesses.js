@@ -5,7 +5,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { ResponsiveConfirm, HoverObserver } from 'freeassofront';
 import * as actions from './redux/actions';
-import { intlDate } from '../../common';
+import { intlDateTime } from '../../common';
 import { GetOne as GetOneIcon, DelOne as DelOneIcon, AddOne as AddOneIcon } from '../icons';
 import { CenteredLoading3Dots } from '../ui';
 import { Create, Modify, getWhereLabel, getCareLabel, getSicknesses } from './';
@@ -150,8 +150,8 @@ export class InlineSicknesses extends Component {
               sicknesses.map(sickness => (
                 <HoverObserver onMouseEnter={() => {this.mouseEnter(sickness.id)}} onMouseLeave={this.mouseLeave}>
                   <div className={classnames('row row-line', (counter++ % 2 !== 1) ? 'row-odd' : 'row-even')} key={sickness.id}>
-                    <div className="col-6 col-first">{intlDate(sickness.caus_from)}</div>
-                    <div className="col-6">{intlDate(sickness.caus_to)}</div>
+                    <div className="col-6 col-first">{intlDateTime(sickness.caus_from, true)}</div>
+                    <div className="col-6">{intlDateTime(sickness.caus_to, true)}</div>
                     <div className="col-6">{getWhereLabel(sickness.caus_where)}</div>
                     <div className="col-6">{getCareLabel(sickness.caus_care)}</div>
                     <div className="col-8">{sickness.sickness && sickness.sickness.sick_name}</div>
