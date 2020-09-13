@@ -63,7 +63,7 @@ export const getCols = ({ props }) => {
     },
     {
       name: 'code',
-      label: 'Code',
+      label: 'Numéro',
       col: 'ct_code',
       size: '6',
       mob_size: '18',
@@ -84,9 +84,9 @@ export const getCols = ({ props }) => {
       filterable: { type: 'date' },
     },
     {
-      name: 'ct_site_name',
+      name: 'site.site_name',
       label: 'Site',
-      col: 'ct_from_name',
+      col: 'site.site_name',
       size: '6',
       mob_size: '36',
       title: true,
