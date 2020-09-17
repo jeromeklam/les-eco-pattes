@@ -7,6 +7,7 @@ import * as actions from './redux/actions';
 import { normalizedObjectModeler } from 'freejsonapi';
 import { ResponsiveList, ResponsiveQuickSearch } from 'freeassofront';
 import {
+  Close as CloseIcon,
   Filter as FilterIcon,
   FilterFull as FilterFullIcon,
   SimpleCancel as CancelPanelIcon,
@@ -52,6 +53,8 @@ export class List extends Component {
       photosSite: 0,
       documentsSite: 0,
       siteId: -1,
+      mode: false,
+      item: null,
     };
     this.onCreate = this.onCreate.bind(this);
     this.onGetOne = this.onGetOne.bind(this);
@@ -59,14 +62,11 @@ export class List extends Component {
     this.onReload = this.onReload.bind(this);
     this.onClose = this.onClose.bind(this);
     this.onLoadMore = this.onLoadMore.bind(this);
+    this.onSelectList = this.onSelectList.bind(this);
     this.onQuickSearch = this.onQuickSearch.bind(this);
     this.onClearFilters = this.onClearFilters.bind(this);
     this.onSetFiltersAndSort = this.onSetFiltersAndSort.bind(this);
     this.onUpdateSort = this.onUpdateSort.bind(this);
-    this.onListCause = this.onListCause.bind(this);
-    this.onListAlert = this.onListAlert.bind(this);
-    this.onListPhoto = this.onListPhoto.bind(this);
-    this.onListDocument = this.onListDocument.bind(this);
     this.onZoomMap = this.onZoomMap.bind(this);
     this.itemClassName = this.itemClassName.bind(this);
   }
@@ -99,43 +99,15 @@ export class List extends Component {
       });
   }
 
-  onListCause(obj) {
-    const { id } = obj;
-    const { animalsSite } = this.state;
-    if (animalsSite === id) {
-      this.setState({ animalsSite: 0, alertsSite: 0 ,photosSite: 0, documentsSite: 0 });
+  onSelectList(obj, list) {
+    if (obj) {
+      if (list) {
+        this.setState({ mode: list, item: obj });
+      } else {
+        this.setState({ item: obj });
+      }
     } else {
-      this.setState({ animalsSite: id, alertsSite: 0 ,photosSite: 0, documentsSite: 0 });
-    }
-  }
-
-  onListAlert(obj) {
-    const { id } = obj;
-    const { alertsSite } = this.state;
-    if (alertsSite === id) {
-      this.setState({ animalsSite: 0, alertsSite: 0 ,photosSite: 0, documentsSite: 0 });
-    } else {
-      this.setState({ animalsSite: 0, alertsSite: id ,photosSite: 0, documentsSite: 0 });
-    }
-  }
-
-  onListPhoto(obj) {
-    const { id } = obj;
-    const { photosSite } = this.state;
-    if (photosSite === id) {
-      this.setState({ animalsSite: 0, alertsSite: 0 ,photosSite: 0, documentsSite: 0 });
-    } else {
-      this.setState({ animalsSite: 0, alertsSite: 0 ,photosSite: id, documentsSite: 0 });
-    }
-  }
-
-  onListDocument(obj) {
-    const { id } = obj;
-    const { documentsSite } = this.state;
-    if (documentsSite === id) {
-      this.setState({ animalsSite: 0, alertsSite: 0 ,photosSite: 0, documentsSite: 0 });
-    } else {
-      this.setState({ animalsSite: 0, alertsSite: 0 ,photosSite: 0, documentsSite: id });
+      this.setState({ mode: false, item: null });
     }
   }
 
@@ -229,24 +201,26 @@ export class List extends Component {
     // Inline Element
     let inlineComponent = null;
     let id = null;
-    if (this.state.animalsSite > 0) {
-        inlineComponent = <InlineCauses mode="site" siteId={this.state.animalsSite} />;
-        id = this.state.animalsSite;
-    } else {
-      if (this.state.alertsSite > 0) {
-        inlineComponent = <InlineAlerts mode="site" objId={this.state.alertsSite} objName='FreeAsso_Site'/>;
-        id = this.state.alertsSite;
-      } else {
-        if (this.state.photosSite > 0) {
-          inlineComponent = <InlinePhotos siteId={this.state.photosSite} />;
-          id = this.state.photosSite;
-        } else {
-          if (this.state.documentsSite > 0) {
-            inlineComponent = <InlineDocuments siteId={this.state.documentsSite} />;
-            id = this.state.documentsSite;
-          }
-        }
-      }
+    switch (this.state.mode) {
+      case 'animal':
+        id = this.state.item.id;
+        inlineComponent = <InlineCauses mode="site" siteId={id} />;
+        break;
+      case "alert":
+        id = this.state.item.id;
+        inlineComponent = <InlineAlerts mode="site" objId={id} objName='FreeAsso_Site' />;
+        break;
+      case "photo":
+        id = this.state.item.id;
+        inlineComponent = <InlinePhotos siteId={id} />;
+        break;
+      case "document":
+        id = this.state.item.id;
+        inlineComponent = <InlineDocuments siteId={id} />;
+        break;
+      default:
+        id = 0;
+        break;
     }
     // Toolsbars and lists
     const globalActions = getGlobalActions(this);
@@ -289,9 +263,11 @@ export class List extends Component {
           sortNoneIcon={<SortNoneIcon color="secondary" />}
           calIcon={<CalendarIcon className="text-secondary" />}
           clearIcon={<ClearIcon className="text-warning" />}
+          closeIcon={<CloseIcon />}
           inlineActions={inlineActions}
           inlineOpenedId={id}
           inlineComponent={inlineComponent}
+          inlineOpenedItem={this.state.item}
           globalActions={globalActions}
           sort={this.props.site.sort}
           filters={this.props.site.filters}
@@ -300,6 +276,7 @@ export class List extends Component {
           onSort={this.onUpdateSort}
           onSetFiltersAndSort={this.onSetFiltersAndSort}
           onLoadMore={this.onLoadMore}
+          onClick={this.onSelectList}
           loadMorePending={this.props.site.loadMorePending}
           loadMoreFinish={this.props.site.loadMoreFinish}
           loadMoreError={this.props.site.loadMoreError}

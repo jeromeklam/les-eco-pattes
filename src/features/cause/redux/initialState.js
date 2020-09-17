@@ -13,6 +13,7 @@ const initialState = {
   documents: [],
   photos: [],
   currentItem: null,
+  currentTab: null,
   causes: [],
   causesModels: [],
   page_number: 1,

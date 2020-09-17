@@ -33,10 +33,11 @@ export default function Form(props) {
         <div className="row">
           <div className="col-sm-20">
             <InputText
-              label="Code"
+              label="Numéro"
               name="ct_code"
               id="ct_code"
               required={true}
+              mask={'0000.00'}
               value={values.ct_code}
               onChange={handleChange}
               error={getErrorMessage('ct_code')}
