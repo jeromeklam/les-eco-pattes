@@ -52,7 +52,6 @@ export default class SearchModal extends Component {
         item.value = event.target.value;
       }
     });
-    //console.log(filters);
     this.setState({ fields: filters });
   }
 
@@ -70,19 +69,19 @@ export default class SearchModal extends Component {
     this.state.fields.forEach(item => {
       if (item.filtered) {
         if (params === false) {
-            params = { filter: { [this.state.condition]: {} } };
-          }
-          let values = [];
-          item.options.forEach(elem => {
-            values.push(elem.value);
-          });
-          params.filter[this.state.condition][item.name] = values;
+          params = { filter: { [this.state.condition]: {} } };
+        }
+        let values = [];
+        item.options.forEach(elem => {
+          values.push(elem.value);
+        });
+        params.filter[this.state.condition][item.name] = {'in': values};
       } else {
         if (item.value !== '') {
           if (params === false) {
             params = { filter: { [this.state.condition]: {} } };
           }
-          params.filter[this.state.condition][item.name] = item.value;
+          params.filter[this.state.condition][item.name] = {'in': item.value};
         }
       }
     });

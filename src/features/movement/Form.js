@@ -107,7 +107,6 @@ export default function Form(props) {
     getErrorMessage,
     handleNavTab,
   } = useForm(props.item, props.tab, props.onSubmit, props.onCancel, props.onNavTab, props.errors, afterChange, initItem);
-  console.log("FK MVT ",values);
   let myTabs = tabs;
   //if (values.move_type !== 'SIMPLE' && values.mode_type !== 'TRANSFER') {
     myTabs = tabs.concat(tabsFrom, tabsTo); 

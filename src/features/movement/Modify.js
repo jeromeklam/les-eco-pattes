@@ -99,7 +99,6 @@ export class Modify extends Component {
 
   render() {
     const item = this.state.item;
-    //console.log("FK est dans le modify",item);
     return (
       <div className="movement-modify global-card">
         {this.props.movement.loadOnePending ? (

@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { SearchModal } from '../ui';
 import { jsonApiNormalizer, objectToQueryString, normalizedObjectModeler } from 'freejsonapi';
 import { freeAssoApi } from '../../common';
+import { SearchModal } from '../ui';
 import { clientTypeAsOptions } from '../client-type/functions.js';
 import { clientCategoryAsOptions } from '../client-category/functions.js';
 
@@ -11,7 +11,7 @@ export default class Search extends Component {
     title: PropTypes.string.isRequired,
     show: PropTypes.bool.isRequired,
     onClose: PropTypes.func.isRequired,
-    filters: PropTypes.element,
+    filters: PropTypes.object,
     typeCodes: PropTypes.element,
     categoryCodes: PropTypes.element,
   };

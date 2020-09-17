@@ -25,7 +25,7 @@ export default function Form(props) {
       title="Personne"
       tab={values.currentTab}
       tabs={props.tabs}
-      size="xl"
+      size="lg"
       onSubmit={handleSubmit}
       onCancel={handleCancel}
       onNavTab={handleNavTab}

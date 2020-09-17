@@ -13,9 +13,9 @@ export class InputPicker extends Component {
     name: PropTypes.string.isRequired,
     item: PropTypes.object,
     onChange: PropTypes.func.isRequired,
-    filters: PropTypes.element,
-    typeCodes: PropTypes.element,
-    categoryCodes: PropTypes.element,
+    filters: PropTypes.object,
+    typeCodes: PropTypes.array,
+    categoryCodes: PropTypes.array,
   };
   static defaultProps = {
     filters: {},
