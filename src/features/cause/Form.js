@@ -147,7 +147,7 @@ export default function Form(props) {
                 error={getErrorMessage('cau_sex')}
               />
             </div>
-            <div className="col-16">              
+            <div className="col-16">
               <ClientInputPicker
                 label="Eleveur"
                 key="raiser"
@@ -155,7 +155,7 @@ export default function Form(props) {
                 item={values.raiser || null}
                 onChange={handleChange}
                 error={getErrorMessage('raiser')}
-                typeCodes={['ELEVEUR']}
+                typeCodes={['ELEVEUR','VETERINAIRE']}
               />
             </div>
           </div>

@@ -58,9 +58,10 @@ export const getCols = ({ props }) => {
       size: '4',
       mob_size: '36',
       sortable: true,
-      filterable: { type: 'text' },
-      title: true,
+      filterable: false,
+      title: true, 
       first: true,
+      hidden: true,           
     },
     {
       name: 'lastname',
@@ -69,7 +70,8 @@ export const getCols = ({ props }) => {
       size: '6',
       mob_size: '18',
       sortable: true,
-      filterable: { ty7e: 'text' },
+      filterable: { type: 'text' },
+      first: true,
       title: true,
     },
     {
@@ -122,6 +124,7 @@ export const getCols = ({ props }) => {
       mob_size: '0',
       sortable: true,
       filterable: {
+        col: 'client_type.clit_id',
         type: 'select',
         options: clientTypeAsOptions(props.clientType.items),
       },
@@ -136,6 +139,7 @@ export const getCols = ({ props }) => {
       mob_size: '0',
       sortable: true,
       filterable: {
+        col: 'client_categery.clic_id',
         type: 'select',
         options: clientCategoryAsOptions(props.clientCategory.items),
       },

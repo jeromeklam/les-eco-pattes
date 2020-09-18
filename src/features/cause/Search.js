@@ -62,7 +62,7 @@ export default class Search extends Component {
         options: sexSelect,
       },
       {
-        name: 'clit_id',
+        name: 'caut_id',
         label: 'Race',
         type: 'select',
         options: causeTypeAsOptions(this.props.types),

@@ -61,7 +61,6 @@ export function reducer(state, action) {
       let raw = null;
       let object = jsonApiNormalizer(action.data.data);
       raw = normalizedObjectModeler(object, 'FreeAsso_Movement', action.id);
-      //console.log("FK dans le load one", object);
       item = normalizedObjectModeler(object, 'FreeAsso_Movement', action.id, {eager: true});
       return {
         ...state,
