@@ -6,6 +6,10 @@ import {
   FilterClear as FilterClearIcon,
 } from '../icons';
 
+export const getDurationLabel = value => {
+  return '';
+}
+
 export const getGlobalActions = ({ onClearFilters, onCreate }) => {
   return [
     {
@@ -65,7 +69,7 @@ export const getCols = ({ props }) => {
       name: 'code',
       label: 'Numéro',
       col: 'ct_code',
-      size: '6',
+      size: '4',
       mob_size: '18',
       sortable: true,
       filterable: { ty7e: 'text' },
@@ -74,9 +78,9 @@ export const getCols = ({ props }) => {
     },
     {
       name: 'ct_from',
-      label: 'Date',
+      label: 'Date début',
       col: 'ct_from',
-      size: '4',
+      size: '5',
       mob_size: '36',
       title: true,
       sortable: true,
@@ -92,6 +96,16 @@ export const getCols = ({ props }) => {
       title: true,
       sortable: true,
       filterable: { type: 'text' },
+    },
+    {
+      name: 'duration',
+      label: 'Durée',
+      col: 'ct_duration',
+      size: '6',
+      mob_size: '18',
+      title: false,
+      sortable: false,
+      filterable: false,
     },
   ];
 };
