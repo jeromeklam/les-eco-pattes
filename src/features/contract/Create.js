@@ -91,7 +91,11 @@ export class Create extends Component {
           <div>
             <Form
               item={item}
+              tab_datas={this.props.data.items}
+              tab_configs={this.props.config.items}
               modal={this.state.modal}
+              tab={this.props.contract.tab}
+              tabs={this.props.contract.tabs}
               errors={this.props.contract.createOneError}
               onSubmit={this.onSubmit}
               onCancel={this.onCancel}
@@ -107,6 +111,8 @@ export class Create extends Component {
 function mapStateToProps(state) {
   return {
     contract: state.contract,
+    data: state.data,
+    config: state.config,
   };
 }
 

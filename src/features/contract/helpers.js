@@ -5,10 +5,7 @@ import {
   DelOne as DelOneIcon,
   FilterClear as FilterClearIcon,
 } from '../icons';
-
-export const getDurationLabel = value => {
-  return '';
-}
+import { getLabel as getDataLabel } from '../data';
 
 export const getGlobalActions = ({ onClearFilters, onCreate }) => {
   return [
@@ -72,7 +69,7 @@ export const getCols = ({ props }) => {
       size: '4',
       mob_size: '18',
       sortable: true,
-      filterable: { ty7e: 'text' },
+      filterable: { type: 'text' },
       title: true,
       first: true,
     },
@@ -103,9 +100,10 @@ export const getCols = ({ props }) => {
       col: 'ct_duration',
       size: '6',
       mob_size: '18',
-      title: false,
+      title: true,
       sortable: false,
       filterable: false,
+      fDisplay: (item, newContent) => {return getDataLabel(props.data.models, "DUREECONTRAT", item.ct_duration)},
     },
   ];
 };

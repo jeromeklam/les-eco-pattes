@@ -104,9 +104,9 @@ export class Create extends Component {
 
 function mapStateToProps(state) {
   return {
+    causeSickness: state.causeSickness,
     data: state.data,
     config: state.config,
-    causeSickness: state.causeSickness,
   };
 }
 

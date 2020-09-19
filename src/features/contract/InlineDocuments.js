@@ -2,24 +2,23 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import FileIcon, { defaultStyles } from 'react-file-icon';
 import Dropzone from 'react-dropzone';
+import FileIcon, { defaultStyles } from 'react-file-icon';
 import * as actions from './redux/actions';
 import { ResponsiveConfirm } from 'freeassofront';
 import { DelOne as DelOneIcon, Download as DownloadIcon, Upload as UploadIcon } from '../icons';
 import { CenteredLoading3Dots, downloadBlob } from '../ui';
-import { downloadCauseMediaBlob, getMedias } from './';
-
+import { downloadContractMediaBlob, getMedias } from './';
 
 export class InlineDocuments extends Component {
   static propTypes = {
-    cause: PropTypes.object.isRequired,
+    contract: PropTypes.object.isRequired,
     actions: PropTypes.object.isRequired,
   };
 
   static getDerivedStateFromProps(props, state) {
-    if (props.cauId !== state.cau_id) {
-      return({cau_id: props.cauId});
+    if (props.ctId !== state.ct_id) {
+      return({ct_id: props.ctId});
     }
     return null;
   }
@@ -27,9 +26,9 @@ export class InlineDocuments extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      cau_id: props.cauId || null,
+      ct_id: props.ctId || null,
       confirm: false,
-      caum_id: 0,
+      ctm_id: 0,
       items: [],
       loading: true,
     };
@@ -43,7 +42,7 @@ export class InlineDocuments extends Component {
 
   localLoadDocuments() {
     this.setState({loading: true});
-    getMedias(this.state.cau_id, 'OTHER')
+    getMedias(this.state.ct_id, 'OTHER')
       .then(result => {
         this.setState({items: result, loading: false});
       })
@@ -55,7 +54,7 @@ export class InlineDocuments extends Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if (prevState.cau_id !== this.state.cau_id) {
+    if (prevState.ct_id !== this.state.ct_id) {
       this.localLoadDocuments();
     }
   }
@@ -74,7 +73,7 @@ export class InlineDocuments extends Component {
           // Do whatever you want with the file contents
           const binaryStr = reader.result;
           this.props.actions
-            .uploadCauseMedia(0, id, binaryStr, file.name)
+            .uploadContractMedia(0, id, binaryStr, file.name)
             .then(result => resolve(true));
         };
         reader.readAsDataURL(file);
@@ -87,25 +86,25 @@ export class InlineDocuments extends Component {
   }
 
   onConfirmClose() {
-    this.setState({ confirm: false, caum_id: 0 });
+    this.setState({ confirm: false, ctm_id: 0 });
   }
 
   onConfirmDocument(id) {
-    this.setState({ confirm: !this.state.confirm, caum_id: id });
+    this.setState({ confirm: !this.state.confirm, ctm_id: id });
   }
 
   onDownload(item) {
-    downloadCauseMediaBlob(item.id, true).then(result => {
+    downloadContractMediaBlob(item.id, true).then(result => {
       const type = result.headers['content-type'] || 'application/octet-stream';
       const blob = result.data;
-      downloadBlob(blob, type, item.caum_title);
+      downloadBlob(blob, type, item.ctm_title);
     });
   }
 
   onConfirm() {
-    const caum_id = this.state.caum_id;
-    this.setState({ confirm: false, caum_id: 0 });
-    this.props.actions.delCauseMedia(caum_id).then(result => {
+    const ctm_id = this.state.ctm_id;
+    this.setState({ confirm: false, ctm_id: 0 });
+    this.props.actions.delContractMedia(ctm_id).then(result => {
       this.localLoadDocuments();
     });
   }
@@ -114,15 +113,15 @@ export class InlineDocuments extends Component {
     let documents = this.state.items;
     return (
       <div>
-        <div className="cause-inline-documents">
-          {this.props.cause.loadDocumentsPending ? (
+        <div className="contract-inline-documents">
+          {this.props.contract.loadDocumentsPending ? (
             <CenteredLoading3Dots />
           ) : (
             <div className="row p-2 row-cols-1 row-cols-sm-2 row-cols-md-2 row-cols-lg-3">
               {documents && documents.map(document => {
                 let content = <FileIcon type="document" size={80} {...defaultStyles.docx} />;
                 try {
-                  const ext = document.caum_title.split('.').pop();
+                  const ext = document.ctm_title.split('.').pop();
                   let style = defaultStyles[ext];
                   content = <FileIcon size={80} extension={ext} {...style} />;
                 } catch (ex) {
@@ -157,7 +156,7 @@ export class InlineDocuments extends Component {
                           <div className="col-36">{content}</div>
                           <div className="col-36">
                             <small className="text-center text-secondary">
-                              {document.caum_title}
+                              {document.ctm_title}
                             </small>
                           </div>
                         </div>
@@ -176,12 +175,12 @@ export class InlineDocuments extends Component {
                     </div>
                   </div>
                   <div className="card-body text-center">
-                    {this.props.cause.uploadDocumentPending ? (
+                    {this.props.contract.uploadDocumentPending ? (
                       <CenteredLoading3Dots />
                     ) : (
                       <Dropzone
                         onDrop={acceptedFiles => {
-                          this.onDropFiles(this.state.cau_id, acceptedFiles);
+                          this.onDropFiles(this.state.ct_id, acceptedFiles);
                         }}
                       >
                         {({ getRootProps, getInputProps }) => (
@@ -204,7 +203,7 @@ export class InlineDocuments extends Component {
           show={this.state.confirm}
           onClose={this.onConfirmClose}
           onConfirm={() => {
-            this.onConfirm(this.state.cau_id);
+            this.onConfirm(this.state.ct_id);
           }}
         />
       </div>
@@ -214,14 +213,17 @@ export class InlineDocuments extends Component {
 
 function mapStateToProps(state) {
   return {
-    cause: state.cause,
+    contract: state.contract,
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
-    actions: bindActionCreators({ ...actions }, dispatch),
+    actions: bindActionCreators({ ...actions }, dispatch)
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(InlineDocuments);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(InlineDocuments);

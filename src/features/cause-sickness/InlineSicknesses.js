@@ -8,7 +8,8 @@ import * as actions from './redux/actions';
 import { intlDateTime } from '../../common';
 import { GetOne as GetOneIcon, DelOne as DelOneIcon, AddOne as AddOneIcon } from '../icons';
 import { CenteredLoading3Dots } from '../ui';
-import { Create, Modify, getWhereLabel, getCareLabel, getSicknesses } from './';
+import { getLabel as getDataLabel } from '../data';
+import { Create, Modify, getWhereLabel, getSicknesses } from './';
 
 export class InlineSicknesses extends Component {
   static propTypes = {
@@ -153,7 +154,7 @@ export class InlineSicknesses extends Component {
                     <div className="col-6 col-first">{intlDateTime(sickness.caus_from, true)}</div>
                     <div className="col-6">{intlDateTime(sickness.caus_to, true)}</div>
                     <div className="col-6">{getWhereLabel(sickness.caus_where)}</div>
-                    <div className="col-6">{getCareLabel(sickness.caus_care)}</div>
+                    <div className="col-6">{getDataLabel(this.props.data.models,"SOINS",sickness.caus_care)}</div>
                     <div className="col-8">{sickness.sickness && sickness.sickness.sick_name}</div>
                     <div className="col-4 text-right col-last">
                     {this.state.flipped && this.state.flipped === sickness.id && 
@@ -199,6 +200,7 @@ export class InlineSicknesses extends Component {
 function mapStateToProps(state) {
   return {
     causeSickness: state.causeSickness,
+    data: state.data,
   };
 }
 

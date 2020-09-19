@@ -104,9 +104,9 @@ export class Modify extends Component {
 
 function mapStateToProps(state) {
   return {
-    data: state.data,
-    config: state.config,
     causeSickness: state.causeSickness,
+    data: state.data,
+    config: state.config, 
   };
 }
 
