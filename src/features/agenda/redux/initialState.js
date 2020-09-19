@@ -7,6 +7,8 @@ const initialState = {
   resources: [],
   loadEventsPending: false,
   loadEventsError: null,
+  loadResourcesPending: false,
+  loadResourcesError: null,
 };
 
 export default initialState;

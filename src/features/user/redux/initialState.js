@@ -1,0 +1,47 @@
+import { getNewNormalizedObject } from 'freejsonapi';
+import { Filter } from 'freeassofront';
+
+const initialState = {
+  items: getNewNormalizedObject('POSSO_User'),
+  page_number: 1,
+  page_size: process.env.REACT_APP_PAGE_SIZE,
+  tab: "1",
+  filters: new Filter(),
+  sort: [{col:"user_login",way:"up"}],
+  properties: [
+    'number_1',
+    'string_1',
+    'string_2',
+    'number_3',
+    'string_3',
+    'number_4',
+    'string_4',
+    'bool_1',
+    'number_5',
+    'string_5',
+    'string_6',
+  ],  
+  quickSearch: '',
+  mobileQuickSearch: false,
+  loadMorePending: false,
+  loadMoreFinish: false,
+  loadMoreError: null,
+  loadOnePending: false,
+  loadOneError: null,  
+  loadOneItem: null,
+  loadOneRaw: null,
+  updateOnePending: false,
+  updateOneError: null,
+  delOnePending: false,
+  delOneError: null,
+  createOnePending: false,
+  createOneError: null,
+  filterPending: false,
+  filterError: null,
+  uploadAvatarPending: false,
+  uploadAvatarError: null,
+  loadTokensPending: false,
+  loadTokensError: null,
+};
+
+export default initialState;

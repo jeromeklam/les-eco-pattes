@@ -7,7 +7,9 @@ import { fr } from 'date-fns/locale';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as actions from './redux/actions';
-import { AddOne as AddOneIcon } from '../icons';
+import { AddOne as AddOneIcon } from '../icons'; 
+import { CenteredLoading3Dots } from '../ui';
+import { Create as CreateEvent, Modify as ModifyEvent } from '../alert';
 
 const locales = { "fr": fr };
 const localizer = dateFnsLocalizer({
@@ -43,38 +45,122 @@ export class DefaultPage extends Component {
     const now = new Date();
     const yesterday = subDays(now, 350);
     this.state = {
-      date: yesterday
+      view: Views.MONTH,
+      loaded: false,
+      date: yesterday,
+      current: null,
+      params: {},
     };
-    this.addOneEvent = this.addOneEvent.bind(this);
+    this.onAddEvent = this.onAddEvent.bind(this);
     this.onRangeChange = this.onRangeChange.bind(this);
     this.onNavigate = this.onNavigate.bind(this);
+    this.onClick = this.onClick.bind(this);
+    this.onCloseEvent = this.onCloseEvent.bind(this);
+    this.onSelecting = this.onSelecting.bind(this);
+    this.onSelectSlot = this.onSelectSlot.bind(this);
   }
 
   componentDidMount() {
     const now = new Date();
     this.setState({
-      date: now
+      date: now,
+    });
+    this.props.actions.loadResources().then(result => {
+      this.setState({
+        loaded: true,
+      });
     });
   }
 
   onNavigate() {
-    console.log('navigate');
+    //console.log('navigate');
   }
 
-  addOneEvent() {
-
+  onSelecting(param) {
+    //console.log('selecting');
   }
 
-  onRangeChange(p_range) {
-    this.props.actions.loadEvents();
-    console.log(p_range);
+  onSelectSlot(param) {
+    if (param && param.action && param.action === 'select') {
+      const start = param.start || new Date();
+      const end = param.end || new Date();
+      const user_id = param.resourceId || this.props.user.id;
+      let user = null;
+      const { resources } = this.props.agenda;
+      if (Array.isArray(resources)) {
+        const found = resources.find(elem => elem.id === user_id);
+        if (found) {
+          user = found;
+        }
+      }
+      this.setState({current: 0, params:{alert_from: start, alert_to: end, user: user}});
+    }
+  }
+
+  onAddEvent() {
+    this.setState({current: 0});
+  }
+
+  onClick(event) {
+    if (event) {
+      this.setState({current: parseInt(event.id, 10)});
+    }
+  }
+
+  onCloseEvent() {
+    this.setState({current: null, params: {}});
+  }
+
+  onRangeChange(p_range, p_view) {
+    if (p_view) {
+      this.setState({view: p_view});
+    } else {
+      p_view = this.state.view;
+    }
+    let filters = {};
+    switch (p_view) {
+      case Views.MONTH: {
+        filters = {
+          'and' : {
+            'alert_from' : { 'gte' : new Date(Date.parse(p_range.start)).toISOString() },
+            'alert_to' : { 'ltwe' : new Date(Date.parse(p_range.end)).toISOString() }
+          }
+        };
+        break;
+      }
+      case Views.DAY: {
+        const day = new Date(Date.parse(p_range[0]));
+        const dayStart = day;
+        let dayEnd = new Date(day);
+        dayEnd.setDate(dayEnd.getDate() + 1);
+        filters = {
+          'and' : {
+            'alert_from' : { 'gte' : dayStart.toISOString() },
+            'alert_to' : { 'ltwe' : dayEnd.toISOString() }
+          }
+        };
+        break;
+      }
+      case Views.WEEK: {
+        filters = {
+          'and' : {
+            'alert_from' : { 'gte' : new Date(Date.parse(p_range[0])).toISOString() },
+            'alert_to' : { 'ltwe' : new Date(Date.parse(p_range[p_range.length-1])).toISOString() }
+          }
+        };
+        break;
+      }
+      default:
+        break;
+    }
+    this.props.actions.loadEvents(filters);
   }
 
   render() {
     window.__localeId__ = 'fr';
     let myEventsList = [];
     if (this.props.agenda.events) {
-      //myEventsList = normalizedObjectModeler(this.props.agenda.events, 'FreeFW_Alert');
+      myEventsList = normalizedObjectModeler(this.props.agenda.events, 'FreeFW_Alert', null, {eager: true}) || [];
     }
     return (
       <div>
@@ -83,7 +169,7 @@ export class DefaultPage extends Component {
             <div className="col-36 text-right">
               <div className="nav justify-content-end">
                 <div className="nav-item">
-                  <button className="btn btn-primary text-light" onClick={this.addOneEvent}>
+                  <button className="btn btn-primary text-light" onClick={this.onAddEvent}>
                     <AddOneIcon />
                   </button>
                 </div>
@@ -92,22 +178,39 @@ export class DefaultPage extends Component {
           </div>
         </div>
         <div className="agenda-default-page">
-          <Calendar
-            selectable
-            localizer={localizer}
-            events={myEventsList}
-            startAccessor="alert_from"
-            endAccessor="alert_to"
-            titleAccessor="alert_title"
-            tooltipAccessor="alert_desc"
-            messages={messages}
-            culture="fr"
-            defaultView={Views.MONTH}
-            onRangeChange={this.onRangeChange}
-            onNavigate={this.onNavigate}
-            style={{ height: '100%' }}
-          />
+          {this.state.loaded ?
+            <Calendar
+              selectable
+              localizer={localizer}
+              events={myEventsList}
+              startAccessor={(data) => {if (data.alert_from) { return new Date(data.alert_from); } return null;}}
+              endAccessor={(data) => {if (data.alert_to) { return new Date(data.alert_to); } return null;}}
+              titleAccessor="alert_title"
+              tooltipAccessor="alert_text"
+              resourceAccessor="user.id"
+              resources={this.props.agenda.resources}
+              resourceIdAccessor="id"
+              resourceTitleAccessor="user_first_name"
+              messages={messages}
+              culture="fr"
+              defaultView={this.state.view}
+              onRangeChange={this.onRangeChange}
+              onNavigate={this.onNavigate}
+              onDoubleClickEvent={this.onClick}
+              onSelectSlot={this.onSelectSlot}
+              onSelecting={this.onSelecting}
+              style={{ height: '100%' }}
+            />
+            :
+            <CenteredLoading3Dots />
+          }
         </div>
+        {this.state.current && this.state.current > 0 &&
+          <ModifyEvent onClose={this.onCloseEvent} alert_id={this.state.current} />
+        }
+        {this.state.current === 0 &&
+          <CreateEvent onClose={this.onCloseEvent} alert_id={this.state.current} params={this.state.params} />
+        }
       </div>
     );
   }
@@ -117,6 +220,7 @@ export class DefaultPage extends Component {
 function mapStateToProps(state) {
   return {
     agenda: state.agenda,
+    user: state.auth.user,
   };
 }
 

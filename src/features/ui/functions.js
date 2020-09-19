@@ -1,6 +1,30 @@
 import cogoToast from 'cogo-toast';
 import { jsonApiNormalizer } from 'freejsonapi';
 
+export const isNull = value => {
+  let ret = true ;
+  if (value > 0) {
+    ret = false;
+  }
+  return ret;
+}
+
+export const isEmpty = value => {
+  let ret = false ;
+  if (value == null || value === "") {
+    ret = true;
+  }
+  return ret;
+}
+
+export const isNotEmpty = value => {
+  let ret = false ;
+  if (value != null || value !== "") {
+    ret = true;
+  }
+  return ret;
+}
+
 export const getFromLS = key => {
   let ls = {};
   if (global.localStorage) {

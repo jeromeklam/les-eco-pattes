@@ -14,6 +14,7 @@ import { SICKNESS_UPDATE_ONE_UPDATE } from '../features/sickness/redux/constants
 import { ITEM_UPDATE_ONE_UPDATE } from '../features/item/redux/constants';
 import { MOVEMENT_UPDATE_ONE_UPDATE } from '../features/movement/redux/constants';
 import { ALERT_UPDATE_ONE_UPDATE } from '../features/alert/redux/constants';
+import { AGENDA_PROPAGATE } from '../features/agenda/redux/constants';
 
 export function propagateCreate(type, id, datas) {
   return propagateModel(type, {data: datas });
@@ -34,6 +35,10 @@ export function propagateModel(type, model) {
       case 'FreeFW_Alert':
         dispatch({
           type: ALERT_UPDATE_ONE_UPDATE,
+          data: model,
+        });
+        dispatch({
+          type: AGENDA_PROPAGATE,
           data: model,
         });
         break;

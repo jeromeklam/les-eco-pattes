@@ -81,3 +81,7 @@ export { default as Contract } from './Contract';
 export { default as Agenda } from './Agenda';
 export { default as DashboardReset } from './DashboardReset';
 export { default as Follow } from './Follow';
+export { default as Check } from './Check';
+export { default as Group } from './Group';
+export { default as GroupType } from './GroupType';
+export { default as Token } from './Token';

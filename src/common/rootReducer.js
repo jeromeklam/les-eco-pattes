@@ -34,6 +34,7 @@ import { highlightReducer } from 'freeassofront';
 import movementReducer from '../features/movement/redux/reducer';
 import agendaReducer from '../features/agenda/redux/reducer';
 import contractReducer from '../features/contract/redux/reducer';
+import userReducer from '../features/user/redux/reducer';
 
 // NOTE 1: DO NOT CHANGE the 'reducerMap' name and the declaration pattern.
 // This is used for Rekit cmds to register new features, remove features, etc.
@@ -76,6 +77,7 @@ const reducerMap = {
   movement: movementReducer,
   agenda: agendaReducer,
   contract: contractReducer,
+  user: userReducer,
 };
 
 export default combineReducers(reducerMap);

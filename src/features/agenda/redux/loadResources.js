@@ -1,60 +1,60 @@
 import { freeAssoApi } from '../../../common';
-import { jsonApiNormalizer, objectToQueryString } from 'freejsonapi';
+import { jsonApiNormalizer, objectToQueryString, normalizedObjectModeler } from 'freejsonapi';
 import {
-  AGENDA_LOAD_EVENTS_BEGIN,
-  AGENDA_LOAD_EVENTS_SUCCESS,
-  AGENDA_LOAD_EVENTS_FAILURE,
-  AGENDA_LOAD_EVENTS_DISMISS_ERROR,
+  AGENDA_LOAD_RESOURCES_BEGIN,
+  AGENDA_LOAD_RESOURCES_SUCCESS,
+  AGENDA_LOAD_RESOURCES_FAILURE,
+  AGENDA_LOAD_RESOURCES_DISMISS_ERROR,
 } from './constants';
 
-export function loadEvents(args = {}) {
-  return (dispatch, getState) => {
+export function loadResources(args = {}) {
+  return (dispatch) => {
     dispatch({
-      type: AGENDA_LOAD_EVENTS_BEGIN,
+      type: AGENDA_LOAD_RESOURCES_BEGIN,
     });
     const promise = new Promise((resolve, reject) => {
-      const params = {filter : args};
+      const params = {};
       const addUrl = objectToQueryString(params);
-      const doRequest = freeAssoApi.get('/v1/core/alert' + addUrl, {});
+      const doRequest = freeAssoApi.get('/v1/sso/colleagues' + addUrl, {});
       doRequest.then(
         (res) => {
           dispatch({
-            type: AGENDA_LOAD_EVENTS_SUCCESS,
+            type: AGENDA_LOAD_RESOURCES_SUCCESS,
             data: res,
           });
           resolve(res);
         },
         (err) => {
           dispatch({
-            type: AGENDA_LOAD_EVENTS_FAILURE,
+            type: AGENDA_LOAD_RESOURCES_FAILURE,
             data: { error: err },
           });
           reject(err);
         },
       );
     });
-
     return promise;
   };
 }
 
-export function dismissLoadEventsError() {
+export function dismissLoadResourcesError() {
   return {
-    type: AGENDA_LOAD_EVENTS_DISMISS_ERROR,
+    type: AGENDA_LOAD_RESOURCES_DISMISS_ERROR,
   };
 }
 
 export function reducer(state, action) {
   switch (action.type) {
-    case AGENDA_LOAD_EVENTS_BEGIN:
+    case AGENDA_LOAD_RESOURCES_BEGIN:
       // Just after a request is sent
       return {
         ...state,
-        loadEventsPending: true,
-        loadEventsError: null,
+        loadResourcesPending: true,
+        loadResourcesError: null,
       };
 
-    case AGENDA_LOAD_EVENTS_SUCCESS:
+    case AGENDA_LOAD_RESOURCES_SUCCESS:
+      // The request is success
       let list = {};
       let nbre = 0;
       let result = false;
@@ -71,12 +71,12 @@ export function reducer(state, action) {
       }
       return {
         ...state,
-        loadEventsPending: false,
-        loadEventsError: null,
-        events: list,
+        loadResourcesPending: false,
+        loadResourcesError: null,
+        resources: normalizedObjectModeler(list, 'FreeSSO_User'),
       };
 
-    case AGENDA_LOAD_EVENTS_FAILURE:
+    case AGENDA_LOAD_RESOURCES_FAILURE:
       // The request is failed
       let error = null;
       if (action.data.error && action.data.error.response) {
@@ -84,15 +84,15 @@ export function reducer(state, action) {
       }
       return {
         ...state,
-        loadEventsPending: false,
-        loadEventsError: error,
+        loadResourcesPending: false,
+        loadResourcesError: error,
       };
 
-    case AGENDA_LOAD_EVENTS_DISMISS_ERROR:
+    case AGENDA_LOAD_RESOURCES_DISMISS_ERROR:
       // Dismiss the request failure error
       return {
         ...state,
-        loadEventsError: null,
+        loadResourcesError: null,
       };
 
     default:

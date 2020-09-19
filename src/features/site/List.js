@@ -247,6 +247,7 @@ export class List extends Component {
     ) : (
       <FilterFullIcon className="text-light" />
     );
+    console.log(id);
     return (
       <div>
         <ResponsiveList

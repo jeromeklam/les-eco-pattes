@@ -13,9 +13,13 @@ export class Create extends Component {
   static propTypes = {
     alert: PropTypes.object.isRequired,
     actions: PropTypes.object.isRequired,
+    params: PropTypes.object,
+  };
+  static defaultProps = {
+    params: {},
   };
 
-    constructor(props) {
+  constructor(props) {
     super(props);
     this.state = {
       alertId: 0,
@@ -38,6 +42,19 @@ export class Create extends Component {
     //console.log("FK cDM", this.state.alertId);
     this.props.actions.loadOne(this.state.alertId).then(result => {
       const item = this.props.alert.loadOneItem;
+      item.user = this.props.user || null;
+      if (this.props.params) {
+        const { params } = this.props;
+        if (params.alert_from) {
+          item.alert_from = params.alert_from;
+        }
+        if (params.alert_to) {
+          item.alert_to = params.alert_to;
+        }
+        if (params.user) {
+          item.user = params.user;
+        }
+      }
       this.setState({ item: item });
       //console.log("FK cDM 2", item)
     });
@@ -59,10 +76,8 @@ export class Create extends Component {
    */
   onSubmit(datas = {}) {
     // Conversion des données en objet pour le service web
-    datas.user = this.props.user;
-    datas.alert_object_name = this.state.obj_name; 
-    datas.alert_object_id = this.state.obj_id;
-    console.log("FK datas", datas);
+    datas.alert_object_name = this.state.obj_name || null;
+    datas.alert_object_id = this.state.obj_id || null;
     let obj = getJsonApi(datas, 'FreeFW_Alert', this.state.alertId);
     this.props.actions
       .createOne(obj)
