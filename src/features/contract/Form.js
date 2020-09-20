@@ -22,6 +22,7 @@ export default function Form(props) {
       tab={values.currentTab}
       tabs={props.tabs}
       size="md"
+      height="480px"
       onSubmit={handleSubmit}
       onCancel={handleCancel}
       onNavTab={handleNavTab}
