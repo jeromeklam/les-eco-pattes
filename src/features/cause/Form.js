@@ -155,7 +155,7 @@ export default function Form(props) {
                 item={values.raiser || null}
                 onChange={handleChange}
                 error={getErrorMessage('raiser')}
-                typeCodes={['ELEVEUR','VETERINAIRE']}
+                typeCodes={['ELEVEUR']}
               />
             </div>
           </div>

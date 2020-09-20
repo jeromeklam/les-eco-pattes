@@ -50,3 +50,18 @@ export function dataAsOptions(object) {
   });
   return arr;
 }
+
+export function getLabel(model, code, value) {
+  let label = '';
+  model.forEach(item => {
+    if (item.data_code === code) {
+      const datas = JSON.parse(item.data_content);
+      datas.forEach(item => {
+        if (item.value === value) {
+          label = item.label;
+        }
+      });
+    }
+  })
+  return label;
+}

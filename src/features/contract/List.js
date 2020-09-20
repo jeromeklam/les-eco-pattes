@@ -193,6 +193,7 @@ export class List extends Component {
 function mapStateToProps(state) {
   return {
     contract: state.contract,
+    data: state.data,
   };
 }
 

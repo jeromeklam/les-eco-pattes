@@ -16,6 +16,8 @@ import { reducer as initSortReducer } from './initSort';
 import { reducer as setFiltersReducer } from './setFilters';
 import { reducer as setSortReducer } from './setSort';
 import { reducer as delOneReducer } from './delOne';
+import { reducer as uploadContractMediaReducer } from './uploadContractMedia';
+import { reducer as delContractMediaReducer } from './delContractMedia';
 
 const reducers = [
   loadMoreReducer,
@@ -27,6 +29,8 @@ const reducers = [
   setFiltersReducer,
   setSortReducer,
   delOneReducer,
+  uploadContractMediaReducer,
+  delContractMediaReducer,
 ];
 
 export default function reducer(state = initialState, action) {
