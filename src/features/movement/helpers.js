@@ -3,7 +3,6 @@ import {
   AddOne as AddOneIcon,
   GetOne as GetOneIcon,
   DelOne as DelOneIcon,
-  FilterClear as FilterClearIcon,
   Movement as MovementIcon,
 } from '../icons';
 
@@ -50,13 +49,6 @@ export const getTypeLabel = (p_type) => {
 
 export const getGlobalActions = ({ onClearFilters, onCreate }) => {
   return [
-    {
-      name: 'clear',
-      label: 'Effacer',
-      onClick: onClearFilters,
-      theme: 'secondary',
-      icon: <FilterClearIcon color="white" />,
-    },
     {
       name: 'create',
       label: 'Ajouter',

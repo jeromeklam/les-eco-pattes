@@ -3,20 +3,12 @@ import {
   AddOne as AddOneIcon,
   GetOne as GetOneIcon,
   DelOne as DelOneIcon,
-  FilterClear as FilterClearIcon,
 } from '../icons';
 import { clientCategoryAsOptions } from '../client-category';
 import { clientTypeAsOptions } from '../client-type';
 
 export const getGlobalActions = ({ onClearFilters, onCreate }) => {
   return [
-    {
-      name: 'clear',
-      label: 'Effacer',
-      onClick: onClearFilters,
-      theme: 'secondary',
-      icon: <FilterClearIcon color="white" />,
-    },
     {
       name: 'create',
       label: 'Ajouter',
