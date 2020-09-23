@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { mdiFilter as myIcon } from '@mdi/js';
+import { mdiFilterMenu as myIcon } from '@mdi/js';
 import { Icon } from './';
 
 export default class FilterFull extends Component {

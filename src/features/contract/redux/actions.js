@@ -9,3 +9,4 @@ export { setSort } from './setSort';
 export { delOne, dismissDelOneError } from './delOne';
 export { uploadContractMedia, dismissUploadContractMediaError } from './uploadContractMedia';
 export { delContractMedia, dismissDelContractMediaError } from './delContractMedia';
+export { updateQuickSearch } from './updateQuickSearch';

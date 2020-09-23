@@ -12,8 +12,7 @@ export function reducer(state, action) {
   switch (action.type) {
     case CAUSE_UPDATE_QUICK_SEARCH:
       let filters = state.filters;
-      filters.init(FILTER_MODE_OR, FILTER_OPER_LIKE);
-      filters.setSearch(FILTER_SEARCH_QUICK);
+      filters.init(FILTER_MODE_OR, FILTER_OPER_LIKE, FILTER_SEARCH_QUICK);
       filters.addFilter('cau_code', action.value);
       return {
         ...state,

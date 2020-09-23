@@ -48,7 +48,7 @@ export const saveToLS = (key, value) => {
   }
 };
 
-export function showErrors(intl, error, defCode = "") {
+export function showErrors(intl, error, defCode = "", firstMess = "") {
   if (error) {
     if (!error.errors) {
       if (error.response) {
@@ -65,7 +65,7 @@ export function showErrors(intl, error, defCode = "") {
           displayDefaultError = false;
           if (oneError.code) {
             const code = `app.errors.code.${oneError.code}`;
-            const message = intl.formatMessage({
+            const message = firstMess + intl.formatMessage({
               id: code,
               defaultMessage: oneError.title,
             });
@@ -73,7 +73,7 @@ export function showErrors(intl, error, defCode = "") {
           } else {
             if (oneError.status) {
               const code = `app.errors.code.${oneError.status}`;
-              const message = intl.formatMessage({
+              const message = firstMess +  intl.formatMessage({
                 id: code,
                 defaultMessage: oneError.title,
               });
@@ -83,21 +83,21 @@ export function showErrors(intl, error, defCode = "") {
         }
       });
       if (displayDefaultError) {
-        const message = intl.formatMessage({
+        const message = firstMess +  intl.formatMessage({
           id: `app.errors.default.${defCode}`,
           defaultMessage: 'Unknown error !',
         });
         cogoToast.error(message);
       } 
     } else {
-      const message = intl.formatMessage({
+      const message = firstMess +  intl.formatMessage({
         id: 'app.errors.default',
         defaultMessage: 'Unknown error !',
       });
       cogoToast.error(message);
     }
   } else {
-    const message = intl.formatMessage({
+    const message = firstMess + intl.formatMessage({
       id: 'app.errors.default',
       defaultMessage: 'Unknown error !',
     });

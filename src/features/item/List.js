@@ -6,7 +6,7 @@ import * as actions from './redux/actions';
 import { normalizedObjectModeler } from 'freejsonapi';
 import { ResponsiveList, ResponsiveQuickSearch } from 'freeassofront';
 import {
-  Filter as FilterIcon,
+  FilterEmpty as FilterEmptyIcon,
   FilterFull as FilterFullIcon,
   SimpleCancel as CancelPanelIcon,
   SimpleValid as ValidPanelIcon,
@@ -171,7 +171,7 @@ export class List extends Component {
       />
     );
     const filterIcon = this.props.item.filters.isEmpty() ? (
-      <FilterIcon className="text-light" />
+      <FilterEmptyIcon className="text-light" />
     ) : (
       <FilterFullIcon className="text-light" />
     );

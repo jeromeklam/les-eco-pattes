@@ -7,14 +7,17 @@ import { normalizedObjectModeler } from 'freejsonapi';
 import { ResponsiveList, ResponsiveQuickSearch } from 'freeassofront';
 import { InlineCauses } from '../cause-movement';
 import {
-  Filter as FilterIcon,
+  FilterEmpty as FilterEmptyIcon,
   FilterFull as FilterFullIcon,
+  FilterClear as FilterClearIcon,
   SimpleCancel as CancelPanelIcon,
   SimpleCheck as ValidPanelIcon,
   SortDown as SortDownIcon,
   SortUp as SortUpIcon,
   Sort as SortNoneIcon,
   Search as SearchIcon,
+  Calendar as CalendarIcon,
+  DelOne as ClearDateIcon,
 } from '../icons';
 import { deleteSuccess, deleteError } from '../ui';
 import { getGlobalActions, getInlineActions, getCols, Create, Modify } from './';
@@ -200,11 +203,6 @@ export class List extends Component {
         icon={<SearchIcon className="text-secondary" />}
       />
     );
-    const filterIcon = this.props.movement.filters.isEmpty() ? (
-      <FilterIcon className="text-light" />
-    ) : (
-      <FilterFullIcon className="text-light" />
-    );
     return (
       <div>
         <ResponsiveList
@@ -213,18 +211,22 @@ export class List extends Component {
           items={items || []}
           quickSearch={quickSearch}
           mainCol="move_from"
-          filterIcon={filterIcon}
           cancelPanelIcon={<CancelPanelIcon />}
           validPanelIcon={<ValidPanelIcon />}
           sortDownIcon={<SortDownIcon color="secondary" />}
           sortUpIcon={<SortUpIcon color="secondary" />}
           sortNoneIcon={<SortNoneIcon color="secondary" />}
+          calIcon={<CalendarIcon className="text-secondary" />}
+          clearIcon={<ClearDateIcon className="text-warning" />}
           inlineActions={inlineActions}
           inlineOpenedId={id}
           inlineComponent={inlineComponent}
           globalActions={globalActions}
           sort={this.props.movement.sort}
           filters={this.props.movement.filters}
+          filterFullIcon={<FilterFullIcon color="white" />}
+          filterEmptyIcon={<FilterEmptyIcon color="white" />}
+          filterClearIcon={<FilterClearIcon color="white" />}
           onSearch={this.onQuickSearch}
           onClearFilters={this.onClearFilters}
           onSort={this.onUpdateSort}
