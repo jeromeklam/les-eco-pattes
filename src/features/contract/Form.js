@@ -1,10 +1,14 @@
 import React from 'react';
-import { InputHidden, InputText, InputMonetary } from 'freeassofront';
+import RegexpParser from 'reregexp';
+import { InputHidden, InputText, InputMonetary, InputMask } from 'freeassofront';
+import { validateRegex } from '../../common';
 import useForm from '../ui/useForm';
 import { ResponsiveModalOrForm, InputDate, InputData } from '../ui';
 import { InputPicker as SiteInputPicker } from '../site';
 import { InputPicker as ClientInputPicker } from '../client';
 import { InlineDocuments } from '../contract';
+
+let regPlaceholder = '';
 
 export default function Form(props) {
   const {
@@ -15,7 +19,22 @@ export default function Form(props) {
     handleNavTab,
     getErrorMessage,
   } = useForm(props.item, props.tab, props.onSubmit, props.onCancel, props.onNavTab, props.errors);
-  console.log("FK contract",values);
+  let validated = true;
+  const regexp = "(?<year>[0-9]{4})\\.(?<num>[0-9]{3})";
+  if (regexp !== '') {
+    validated = false;
+    if (regPlaceholder === '') {
+      const parser = new RegexpParser('/' + regexp + '/',
+        {namedGroupConf:{
+          year: ['2020'],
+        }
+      }); 
+      regPlaceholder = parser.build();
+    }
+    if (values.ct_code !== '' && validateRegex(values.ct_code, regexp)) {
+      validated = true;
+    }
+  }
   return (
     <ResponsiveModalOrForm
       title="Contrat"
@@ -33,15 +52,18 @@ export default function Form(props) {
         <InputHidden name="id" id="id" value={values.id} />
         <div className="row">
           <div className="col-sm-8">
-            <InputText
+            <InputMask
+              labelTop={true}
               label="Numéro"
               name="ct_code"
               id="ct_code"
               required={true}
-              mask={'0000.000'}
+              mask={"0000.000"}
+              pattern={regexp}
               value={values.ct_code}
               onChange={handleChange}
               error={getErrorMessage('ct_code')}
+              help={validated ? false : 'Format : ' + regPlaceholder}
             />
           </div>
           <div className="col-sm-20">
@@ -180,7 +202,7 @@ export default function Form(props) {
         {values.currentTab === '2' && (
           <div>
             <div className="row">
-              <div className="col-12">
+              <div className="col-36">
                 <ClientInputPicker
                   label="Contact 1"
                   key="contact1"
@@ -193,7 +215,7 @@ export default function Form(props) {
              </div>
             </div>
             <div className="row">
-              <div className="col-12">
+              <div className="col-36">
                 <ClientInputPicker
                   label="Contact 2"
                   key="contact2"

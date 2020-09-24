@@ -6,14 +6,17 @@ import * as actions from './redux/actions';
 import { normalizedObjectModeler } from 'freejsonapi';
 import { ResponsiveList, ResponsiveQuickSearch } from 'freeassofront';
 import {
-  Filter as FilterIcon,
+  FilterEmpty as FilterEmptyIcon,
   FilterFull as FilterFullIcon,
+  FilterClear as FilterClearIcon,
   SimpleCancel as CancelPanelIcon,
   SimpleCheck as ValidPanelIcon,
   SortDown as SortDownIcon,
   SortUp as SortUpIcon,
   Sort as SortNoneIcon,
   Search as SearchIcon,
+  Calendar as CalendarIcon,
+  DelOne as ClearDateIcon,
 } from '../icons';
 import { getGlobalActions, getInlineActions, getCols } from './';
 import { Create, Modify } from './';
@@ -140,17 +143,12 @@ export class List extends Component {
     const quickSearch = (
       <ResponsiveQuickSearch
         name="quickSearch"
-        label="Recherche code"
+        label="Recherche numéro"
         quickSearch={search}
         onSubmit={this.onQuickSearch}
         onChange={this.onSearchChange}
         icon={<SearchIcon className="text-secondary" />}
       />
-    );
-    const filterIcon = this.props.contract.filters.isEmpty() ? (
-      <FilterIcon color="white" />
-    ) : (
-      <FilterFullIcon color="white" />
     );
     return (
       <div>
@@ -160,16 +158,20 @@ export class List extends Component {
           items={items}
           quickSearch={quickSearch}
           mainCol="ct_code"
-          filterIcon={filterIcon}
           cancelPanelIcon={<CancelPanelIcon color="light" />}
           validPanelIcon={<ValidPanelIcon color="light" />}
           sortDownIcon={<SortDownIcon color="secondary" />}
           sortUpIcon={<SortUpIcon color="secondary" />}
           sortNoneIcon={<SortNoneIcon color="secondary" />}
+          calIcon={<CalendarIcon className="text-secondary" />}
+          clearIcon={<ClearDateIcon className="text-warning" />}
           inlineActions={inlineActions}
           globalActions={globalActions}
           sort={this.props.contract.sort}
           filters={this.props.contract.filters}
+          filterFullIcon={<FilterFullIcon color="white" />}
+          filterEmptyIcon={<FilterEmptyIcon color="white" />}
+          filterClearIcon={<FilterClearIcon color="white" />}
           onSearch={this.onQuickSearch}
           onSort={this.onUpdateSort}
           onSetFiltersAndSort={this.onSetFiltersAndSort}

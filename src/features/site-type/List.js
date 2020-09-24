@@ -118,7 +118,6 @@ export class List extends Component {
           cols={cols}
           items={items}
           mainCol="sitt_name"
-          filterIcon={null}
           cancelPanelIcon={<CancelPanelIcon />}
           validPanelIcon={<ValidPanelIcon />}
           sortDownIcon={<SortDownIcon color="secondary" />}
@@ -126,8 +125,8 @@ export class List extends Component {
           sortNoneIcon={<SortNoneIcon color="secondary" />}
           inlineActions={inlineActions}
           globalActions={globalActions}
+          filters={null}
           sort={this.props.siteType.sort}
-          filters={this.props.siteType.filters}
           onSort={this.onUpdateSort}
           onSetFiltersAndSort={this.onSetFiltersAndSort}
           onLoadMore={this.onLoadMore}

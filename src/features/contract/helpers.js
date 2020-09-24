@@ -3,19 +3,11 @@ import {
   AddOne as AddOneIcon,
   GetOne as GetOneIcon,
   DelOne as DelOneIcon,
-  FilterClear as FilterClearIcon,
 } from '../icons';
 import { getLabel as getDataLabel } from '../data';
 
 export const getGlobalActions = ({ onClearFilters, onCreate }) => {
   return [
-    {
-      name: 'clear',
-      label: 'Effacer',
-      onClick: onClearFilters,
-      theme: 'secondary',
-      icon: <FilterClearIcon color="white" />,
-    },
     {
       name: 'create',
       label: 'Ajouter',
@@ -70,6 +62,7 @@ export const getCols = ({ props }) => {
       mob_size: '18',
       sortable: true,
       filterable: { type: 'text' },
+      selectable: true,
       title: true,
       first: true,
     },

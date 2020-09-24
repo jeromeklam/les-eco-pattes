@@ -4,7 +4,6 @@ import {
   AddOne as AddOneIcon,
   GetOne as GetOneIcon,
   DelOne as DelOneIcon,
-  FilterClear as FilterClearIcon,
   Movement as MovementIcon,
   Document as DocumentIcon,
   Growth as GrowthIcon,
@@ -20,6 +19,7 @@ import { causeTypeAsOptions } from '../cause-type/functions';
 export const sexSelect = [
   { label: 'Femelle', value: 'F', icon: <FemaleIcon className="col-icon" /> },
   { label: 'Mâle', value: 'M', icon: <MaleIcon className="col-icon" />  },
+  { label: 'Mâle castré', value: 'C', icon: <MaleIcon className="col-icon" />  },
   { label: 'Indéfini', value: 'OTHER' },
 ];
 
@@ -101,14 +101,6 @@ export const getSelectActions = ({ props, onSelectMenu }) => {
 
 export const getGlobalActions = ({ onClearFilters, onCreate }) => {
   return [
-    {
-      name: 'clear',
-      label: 'Effacer',
-      onClick: onClearFilters,
-      theme: 'secondary',
-      icon: <FilterClearIcon color="white" />,
-      role: 'OTHER',
-    },
     {
       name: 'create',
       label: 'Ajouter',
@@ -296,7 +288,7 @@ export const getCols = ({ props }) => {
 
     {
       name: 'name',
-      label: '',
+      label: 'Nom',
       col: 'cau_name',
       size: '5',
       mob_size: '10',

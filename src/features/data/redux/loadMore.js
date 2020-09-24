@@ -23,10 +23,11 @@ export function loadMore(args = {}, reload = false) {
         });
       }
       const promise = new Promise((resolve, reject) => {
-        let filters = getState().data.filters.asJsonApiObject();
         let params = {
-          page: { number: getState().data.page_number, size: getState().data.page_size },
-          ...filters,
+          page: { 
+            number: getState().data.page_number, 
+            size: getState().data.page_size 
+          },
         };
         let sort = '';
         getState().data.sort.forEach(elt => {
