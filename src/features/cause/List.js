@@ -10,7 +10,6 @@ import { loadMovements } from '../cause-movement/redux/actions';
 import { loadGrowths } from '../cause-growth/redux/actions';
 import { loadSicknesses } from '../cause-sickness/redux/actions';
 import {
-  Close as CloseIcon,
   FilterEmpty as FilterEmptyIcon,
   FilterFull as FilterFullIcon,
   FilterClear as FilterClearIcon,
@@ -24,6 +23,7 @@ import {
   Search as SearchIcon,
   DelOne as ClearIcon,
   Calendar as CalendarIcon,
+  Close as CloseIcon,
 } from '../icons';
 import { deleteSuccess, showErrors } from '../ui';
 import { InlineMovements } from '../cause-movement';
