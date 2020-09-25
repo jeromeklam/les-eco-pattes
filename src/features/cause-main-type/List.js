@@ -116,7 +116,6 @@ export class List extends Component {
           title="Espèces"
           cols={cols}
           items={items}
-          quickSearch={null}
           mainCol="camt_name"
           cancelPanelIcon={<CancelPanelIcon />}
           validPanelIcon={<ValidPanelIcon />}
@@ -126,9 +125,6 @@ export class List extends Component {
           inlineActions={inlineActions}
           globalActions={globalActions}
           sort={this.props.causeMainType.sort}
-          filters={null}
-          onSearch={null}
-          onClearFilters={null}
           onSort={this.onUpdateSort}
           onSetFiltersAndSort={this.onSetFiltersAndSort}
           onLoadMore={this.onLoadMore}

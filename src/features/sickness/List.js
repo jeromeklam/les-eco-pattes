@@ -128,7 +128,6 @@ export class List extends Component {
           title="Maladies"
           cols={cols}
           items={items || []}
-          quickSearch={null}
           mainCol="sick_name"
           cancelPanelIcon={<CancelPanelIcon />}
           validPanelIcon={<ValidPanelIcon />}
@@ -138,9 +137,6 @@ export class List extends Component {
           inlineActions={inlineActions}
           globalActions={globalActions}
           sort={this.props.sickness.sort}
-          filters={null}
-          onSearch={null}
-          onClearFilters={null}
           onSort={this.onUpdateSort}
           onSetFiltersAndSort={this.onSetFiltersAndSort}
           onLoadMore={this.onLoadMore}

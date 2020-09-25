@@ -111,13 +111,13 @@ export class List extends Component {
     const globalActions = getGlobalActions(this);
     const inlineActions = getInlineActions(this);
     const cols = getCols(this);
+
     return (
       <div>
         <ResponsiveList
           title="Races"
           cols={cols}
           items={items}
-          quickSearch={null}
           mainCol="caut_name"
           cancelPanelIcon={<CancelPanelIcon />}
           validPanelIcon={<ValidPanelIcon />}
@@ -127,9 +127,6 @@ export class List extends Component {
           inlineActions={inlineActions}
           globalActions={globalActions}
           sort={this.props.causeType.sort}
-          filters={null}
-          onSearch={this.onQuickSearch}
-          onClearFilters={null}
           onSort={this.onUpdateSort}
           onSetFiltersAndSort={this.onSetFiltersAndSort}
           onLoadMore={this.onLoadMore}

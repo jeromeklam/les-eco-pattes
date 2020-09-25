@@ -24,10 +24,6 @@ export function loadMore(args = {}, reload = false) {
       }
       const promise = new Promise((resolve, reject) => {
         let params = {
-          page: { 
-            number: getState().sickness.page_number, 
-            size: getState().sickness.page_size 
-          },
         };
         let sort = '';
         getState().sickness.sort.forEach(elt => {

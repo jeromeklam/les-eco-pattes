@@ -125,7 +125,6 @@ export class List extends Component {
           sortNoneIcon={<SortNoneIcon color="secondary" />}
           inlineActions={inlineActions}
           globalActions={globalActions}
-          filters={null}
           sort={this.props.siteType.sort}
           onSort={this.onUpdateSort}
           onSetFiltersAndSort={this.onSetFiltersAndSort}

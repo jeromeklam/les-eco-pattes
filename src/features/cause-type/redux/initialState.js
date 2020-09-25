@@ -3,7 +3,7 @@ import { getNewNormalizedObject } from 'freejsonapi';
 const initialState = {
   items: getNewNormalizedObject('FreeAsso_CauseType'),
   page_number: 1,
-  page_size: process.env.REACT_APP_PAGE_SIZE,
+  page_size: 999999,
   sort: [{col:"caut_name",way:"up"}],
   loadMorePending: false,
   loadModeFinish: false,

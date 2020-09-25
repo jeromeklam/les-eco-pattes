@@ -24,10 +24,6 @@ export function loadMore(args = {}, reload = false) {
       }
       const promise = new Promise((resolve, reject) => {
         let params = {
-          page: {
-            number: getState().causeType.page_number,
-            size: getState().causeType.page_size,
-          },
         };
         let sort = '';
         getState().causeType.sort.forEach(elt => {

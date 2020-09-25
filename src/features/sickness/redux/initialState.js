@@ -6,7 +6,7 @@ const initialState = {
   loadMoreFinish: false,
   items: getNewNormalizedObject('FreeAsso_Sickness'),
   page_number: 1,
-  page_size: process.env.REACT_APP_PAGE_SIZE,
+  page_size: 999999,
   sort: [{col:"sick_name",way:"up"}],
   createOnePending: false,
   createOneError: null,

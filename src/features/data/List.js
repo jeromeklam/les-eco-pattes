@@ -112,9 +112,7 @@ export class List extends Component {
           title="Variables"
           cols={cols}
           items={items}
-          quickSearch={null}
           mainCol="data_name"
-          filterIcon={null}
           cancelPanelIcon={<CancelPanelIcon />}
           validPanelIcon={<ValidPanelIcon />}
           sortDownIcon={<SortDownIcon />}
@@ -123,11 +121,8 @@ export class List extends Component {
           inlineActions={inlineActions}
           globalActions={globalActions}
           sort={this.props.data.sort}
-          filters={null}
-          onSearch={null}
           onSort={this.onUpdateSort}
           onSetFiltersAndSort={this.onSetFiltersAndSort}
-          onClearFilters={null}
           onReload={this.onReload}
           onLoadMore={this.onLoadMore}
           loadMorePending={this.props.data.loadMorePending}

@@ -126,10 +126,7 @@ export class List extends Component {
           sortNoneIcon={<SortNoneIcon />}
           inlineActions={inlineActions}
           globalActions={globalActions}
-          filters={null}
           sort={this.props.clientType.sort}
-          onSearch={this.onQuickSearch}
-          onClearFilters={this.onClearFilters}
           onSort={this.onUpdateSort}
           onSetFiltersAndSort={this.onSetFiltersAndSort}
           onLoadMore={this.onLoadMore}
