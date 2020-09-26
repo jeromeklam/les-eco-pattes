@@ -35,6 +35,7 @@ import movementReducer from '../features/movement/redux/reducer';
 import agendaReducer from '../features/agenda/redux/reducer';
 import contractReducer from '../features/contract/redux/reducer';
 import userReducer from '../features/user/redux/reducer';
+import alertCategoryReducer from '../features/alert-category/redux/reducer';
 
 // NOTE 1: DO NOT CHANGE the 'reducerMap' name and the declaration pattern.
 // This is used for Rekit cmds to register new features, remove features, etc.
@@ -78,6 +79,7 @@ const reducerMap = {
   agenda: agendaReducer,
   contract: contractReducer,
   user: userReducer,
+  alertCategory: alertCategoryReducer,
 };
 
 export default combineReducers(reducerMap);

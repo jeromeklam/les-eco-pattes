@@ -11,6 +11,27 @@ import {
 import { InputPicker as UserInputPicker } from '../user';
 import { alertPriority, alertRecurType, alertRemind, getAlertRecur } from './';
 
+const afterChange = (name, item) => {
+  switch (name) {
+    case 'alert_from':
+      const dateFrom1 = new Date(item.alert_from) || null;
+      const dateTo1 = new Date(item.alert_to) || null;
+      if (dateTo1 === null || dateTo1 < dateFrom1) {
+        item.alert_to = item.alert_from;
+      }
+      break;
+    case 'alert_to':
+      const dateFrom2 = new Date(item.alert_from) || null;
+      const dateTo2 = new Date(item.alert_to) || null;
+      if (dateFrom2 === null || dateTo2 < dateFrom2) {
+        item.alert_from = item.alert_to;
+      }
+      break;
+    default:
+      break;
+  }
+};
+
 export default function Form(props) {
   if (props.cause) {
     props.item.cause = props.cause;
@@ -22,7 +43,7 @@ export default function Form(props) {
     handleCancel,
     handleNavTab,
     getErrorMessage,
-  } = useForm(props.item, props.tab, props.onSubmit, props.onCancel, props.onNavTab, props.errors);
+  } = useForm(props.item, props.tab, props.onSubmit, props.onCancel, props.onNavTab, props.errors, afterChange);
   const today = new Date();
   let libRecur = getAlertRecur(values);
   return (
@@ -95,7 +116,7 @@ export default function Form(props) {
             error={getErrorMessage('alert_title')}
           />
         </div>
-        <div className="col-16">
+        <div className="col-13">
           <UserInputPicker
             label="Utilisateur"
             key="user"
@@ -104,6 +125,15 @@ export default function Form(props) {
             item={values.user || null}
             onChange={handleChange}
             error={getErrorMessage('user')}
+          />
+        </div>
+        <div className="col-3">
+          <InputCheckbox
+            label="Actif"
+            name="alert_activ"
+            labelTop={true}
+            checked={values.alert_activ === true}
+            onChange={handleChange}
           />
         </div>
       </div>
@@ -116,7 +146,7 @@ export default function Form(props) {
                 label="Réalisée le"
                 name="alert_done_ts"
                 labelTop={true}
-                value={values.alert_done_ts || today}
+                value={values.alert_done_ts}
                 onChange={handleChange}
                 error={getErrorMessage('alert_done_ts')}
               />
@@ -181,16 +211,6 @@ export default function Form(props) {
                   error={getErrorMessage('alert_recur_number')}
                 />
               )}
-            </div>
-            <div className="col-13"></div>
-            <div className="col-3">
-              <InputCheckbox
-                label="Actif"
-                name="alert_activ"
-                labelTop={true}
-                checked={values.alert_activ === true}
-                onChange={handleChange}
-              />
             </div>
           </div>
           <div className="row">
