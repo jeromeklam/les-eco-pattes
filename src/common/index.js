@@ -1,5 +1,4 @@
 export { default as freeAssoApi } from './api';
-export { initAxios } from './init';
 export * from './socket';
 
 /**/

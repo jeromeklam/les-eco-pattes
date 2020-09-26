@@ -85,7 +85,6 @@ export function reducer(state, action) {
       if (token && user) {
         authenticated = true;
         cookie.save('Authorization', token, { path: '/' });
-        initAxios(token);
         if (user.config && user.config.ubrk_config) {
           more.settings = JSON.parse(user.config.ubrk_config) || defaultConfig;
         } else {

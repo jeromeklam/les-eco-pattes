@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { InputPicker as DefaultInputPicker } from 'freeassofront';
 import axios from 'axios';
+import { freeAssoApi } from '../../common';
 import { More, DelOne, Zoom } from '../icons';
 import { Search, getFullName } from './';
 
@@ -60,19 +61,18 @@ export default class InputPicker extends Component {
     if (this.state.source) {
       this.state.source.cancel();
     }
-    const CancelToken = axios.CancelToken;
-    const source = CancelToken.source();
+    const source = axios.CancelToken.source();
     const headers = {
       'Content-Type': 'application/json',
       Accept: 'application/json',
-      cancelToken: source.token,
     };
     const search = '' + event.target.value;
     this.setState({ display: search, loading: true, cancel: source });
     if (search.length >= 2) {
-      axios
+      freeAssoApi
         .get(process.env.REACT_APP_BO_URL + '/v1/sso/user/autocomplete/' + search, {
           headers: headers,
+          cancelToken: source.token,
         })
         .then(result => {
           this.setState({ list: result.data, loading: false });

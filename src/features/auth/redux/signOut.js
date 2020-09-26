@@ -56,7 +56,6 @@ export function reducer(state, action) {
       // The request is success
       cookie.remove('Authorization', { path: '/' });
       cookie.remove('AutoLogin', { path: '/' });
-      initAxios(false);
       return {
         ...state,
         authenticated: false,
@@ -68,7 +67,6 @@ export function reducer(state, action) {
 
     case AUTH_SIGN_OUT_FAILURE:
       cookie.remove('Authorization', { path: '/' });
-      initAxios(false);
       // The request is failed
       return {
         ...state,

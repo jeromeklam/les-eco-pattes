@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
+import { freeAssoApi } from '../../common';
 import { AddOne as AddOneIcon } from '../icons';
 import { CenteredLoading3Dots } from '../ui';
 import { InputPickerEnhanced, getCause } from './';
@@ -105,12 +106,10 @@ export default class MultiInputPicker extends Component {
     if (this.state.source) {
       this.state.source.cancel();
     }
-    const CancelToken = axios.CancelToken;
-    const source = CancelToken.source();
+    const source = axios.CancelToken.source();
     const headers = {
       'Content-Type': 'application/json',
       Accept: 'application/json',
-      cancelToken: source.token,
     };
     let { causes } = this.props;
     const search = '' + event.target.value;
@@ -127,9 +126,10 @@ export default class MultiInputPicker extends Component {
       },
     });
     if (search.length >= 2) {
-      axios
+      freeAssoApi
         .get(process.env.REACT_APP_BO_URL + '/v1/asso/cause/autocomplete/' + search, {
           headers: headers,
+          cancelToken: source.token,
         })
         .then(result => {
           let { list } = this.state;

@@ -83,7 +83,6 @@ export function reducer(state, action) {
         }
         if (token) {
           cookie.save('Authorization', token, { path: '/' });
-          initAxios(token);
         }
         if (autologin) {
           let aYearFromNow = new Date();

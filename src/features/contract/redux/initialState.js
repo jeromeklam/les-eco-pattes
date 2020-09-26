@@ -12,7 +12,7 @@ const initialState = {
   page_number: 1,
   page_size: process.env.REACT_APP_PAGE_SIZE,
   filters: new Filter(),
-  sort: [{col:"ct_code",way:"up"}],
+  sort: [{col:"ct_code",way:"down"}],
   tab: '1',
   tabs: tabs,
   loadMorePending: false,

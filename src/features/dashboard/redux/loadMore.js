@@ -4,7 +4,7 @@ import {
   DASHBOARD_LOAD_MORE_FAILURE,
   DASHBOARD_LOAD_MORE_DISMISS_ERROR,
 } from './constants';
-import axios from 'axios';
+import { freeAssoApi } from '../../../common';
 
 export function loadMore(args = {}) {
   return dispatch => {
@@ -17,7 +17,7 @@ export function loadMore(args = {}) {
         'Content-Type': 'application/json',
         Accept: 'application/json',
       };
-      const doRequest = axios.get(process.env.REACT_APP_BO_URL + '/v1/asso/dashboard/stats', {
+      const doRequest = freeAssoApi.get(process.env.REACT_APP_BO_URL + '/v1/asso/dashboard/stats', {
         headers: headers,
       });
       doRequest.then(

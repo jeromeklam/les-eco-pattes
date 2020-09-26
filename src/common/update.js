@@ -14,6 +14,7 @@ import { SICKNESS_UPDATE_ONE_UPDATE } from '../features/sickness/redux/constants
 import { ITEM_UPDATE_ONE_UPDATE } from '../features/item/redux/constants';
 import { MOVEMENT_UPDATE_ONE_UPDATE } from '../features/movement/redux/constants';
 import { ALERT_UPDATE_ONE_UPDATE } from '../features/alert/redux/constants';
+import { CONTRACT_UPDATE_ONE_UPDATE } from '../features/contract/redux/constants';
 import { AGENDA_PROPAGATE } from '../features/agenda/redux/constants';
 
 export function propagateCreate(type, id, datas) {
@@ -95,6 +96,12 @@ export function propagateModel(type, model) {
       case 'FreeAsso_ClientType':
         dispatch({
           type: CLIENT_TYPE_UPDATE_ONE_UPDATE,
+          data: model,
+        });
+        break;
+      case 'FreeAsso_Contract':
+        dispatch({
+          type: CONTRACT_UPDATE_ONE_UPDATE,
           data: model,
         });
         break;

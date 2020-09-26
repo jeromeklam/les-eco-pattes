@@ -11,7 +11,7 @@ export function reducer(state, action) {
     case CONTRACT_INIT_SORT:
       return {
         ...state,
-        sort: [{col:"ct_code", way:"up"}],
+        sort: [{col:"ct_code", way:"down"}],
       };
 
     default:

@@ -18,7 +18,6 @@ import {
 import { CenteredLoading9X9 } from '../ui';
 import { SimpleForm } from '../auth';
 import {
-  initAxios,
   initSocket,
   propagateCreate,
   propagateUpdate,
@@ -58,7 +57,6 @@ export class App extends Component {
   }
 
   componentDidMount() {
-    initAxios();
     if (this.props.auth.authenticated) {
       this.props.actions.loadAll();
     } else {
@@ -79,7 +77,6 @@ export class App extends Component {
         !this.props.home.loadAllError &&
         !this.props.home.loadAllPending
       ) {
-        initAxios(prevProps.auth.token);
         this.props.actions.loadAll();
         if (this.props.home.socketOn) {
           const options = {

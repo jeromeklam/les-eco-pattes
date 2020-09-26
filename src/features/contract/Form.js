@@ -95,7 +95,7 @@ export default function Form(props) {
             <div className="row">
               <div className="col-sm-12">
                 <InputDate
-                  label="Début début"
+                  label="Début"
                   name="ct_from"
                   id="ct_from"
                   required={true}
@@ -166,7 +166,7 @@ export default function Form(props) {
             <div className="row">
               <div className="col-sm-24">
                 <InputText
-                  label="Adresse"
+                  label=""
                   name="ct_address_2"
                   value={values.ct_address_2}
                   onChange={handleChange}
