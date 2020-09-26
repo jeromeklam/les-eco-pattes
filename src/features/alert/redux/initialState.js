@@ -13,7 +13,7 @@ const initialState = {
   tabs: [
     { key: '1', name: 'ident', label: 'Identification', shortcut: 'I'},
     { key: '2', name: 'desc', label: 'Description', shortcut: 'D'},
-    { key: '3', name: 'recu', label: 'Réccurrence', shortcut: 'R'},
+    { key: '3', name: 'recu', label: 'Récurrence / Rappel', shortcut: 'R'},
   ],
   loadMorePending: false,
   loadMoreError: null,
