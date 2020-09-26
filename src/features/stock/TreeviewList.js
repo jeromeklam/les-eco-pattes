@@ -19,7 +19,7 @@ import {
   Modify as ModifyFamily,
 } from '../family';
 import {
-  Filter as FilterIcon,
+  FilterEmpty as FilterEmptyIcon,
   FilterFull as FilterFullIcon,
   SimpleCancel as CancelPanelIcon,
   SimpleValid as ValidPanelIcon,
@@ -148,7 +148,7 @@ export class TreeviewList extends Component {
     const cols = getCols(this);
     // filter
     const filterIcon = this.props.item.filters.isEmpty() ? (
-      <FilterIcon className="text-light" />
+      <FilterEmptyIcon className="text-light" />
     ) : (
       <FilterFullIcon className="text-light" />
     );

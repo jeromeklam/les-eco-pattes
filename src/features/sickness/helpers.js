@@ -3,7 +3,6 @@ import {
   AddOne as AddOneIcon,
   GetOne as GetOneIcon,
   DelOne as DelOneIcon,
-  FilterClear as FilterClearIcon,
 } from '../icons';
 
 export const sicknessTypeSelect = [
@@ -15,13 +14,6 @@ export const sicknessTypeSelect = [
 
 export const getGlobalActions = ({ onClearFilters, onCreate }) => {
   return [
-    {
-      name: 'clear',
-      label: 'Effacer',
-      onClick: onClearFilters,
-      theme: 'secondary',
-      icon: <FilterClearIcon color="white" />,
-    },
     {
       name: 'create',
       label: 'Ajouter',

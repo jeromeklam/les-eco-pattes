@@ -24,10 +24,6 @@ export function loadMore(args = {}, reload = false) {
       }
       const promise = new Promise((resolve, reject) => {
         let params = {
-          page: {
-            number: getState().clientType.page_number,
-            size: getState().clientType.page_size,
-          },
         };
         if (args && Object.keys(args).length > 0 && args !== '') {
           params.filter = {

@@ -6,8 +6,9 @@ import * as actions from './redux/actions';
 import { normalizedObjectModeler } from 'freejsonapi';
 import { ResponsiveList, ResponsiveQuickSearch } from 'freeassofront';
 import {
-  Filter as FilterIcon,
+  FilterEmpty as FilterEmptyIcon,
   FilterFull as FilterFullIcon,
+  FilterClear as FilterClearIcon,
   SimpleCancel as CancelPanelIcon,
   SimpleCheck as ValidPanelIcon,
   SortDown as SortDownIcon,
@@ -148,11 +149,6 @@ export class List extends Component {
         icon={<SearchIcon className="text-secondary" />}
       />
     );
-    const filterIcon = this.props.client.filters.isEmpty() ? (
-      <FilterIcon color="white" />
-    ) : (
-      <FilterFullIcon color="white" />
-    );
     return (
       <div>
         <ResponsiveList
@@ -161,7 +157,6 @@ export class List extends Component {
           items={items}
           quickSearch={quickSearch}
           mainCol="cli_firstname"
-          filterIcon={filterIcon}
           cancelPanelIcon={<CancelPanelIcon color="light" />}
           validPanelIcon={<ValidPanelIcon color="light" />}
           sortDownIcon={<SortDownIcon color="secondary" />}
@@ -171,6 +166,9 @@ export class List extends Component {
           globalActions={globalActions}
           sort={this.props.client.sort}
           filters={this.props.client.filters}
+          filterFullIcon={<FilterFullIcon color="white" />}
+          filterEmptyIcon={<FilterEmptyIcon color="white" />}
+          filterClearIcon={<FilterClearIcon color="white" />}
           onSearch={this.onQuickSearch}
           onSort={this.onUpdateSort}
           onSetFiltersAndSort={this.onSetFiltersAndSort}

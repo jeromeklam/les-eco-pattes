@@ -10,9 +10,11 @@ import { loadMovements } from '../cause-movement/redux/actions';
 import { loadGrowths } from '../cause-growth/redux/actions';
 import { loadSicknesses } from '../cause-sickness/redux/actions';
 import {
-  Close as CloseIcon,
-  Filter as FilterIcon,
+  FilterEmpty as FilterEmptyIcon,
   FilterFull as FilterFullIcon,
+  FilterClear as FilterClearIcon,
+  FilterDefault as FilterDefaultIcon,
+  FilterClearDefault as FilterClearDefaultIcon,
   SimpleCancel as CancelPanelIcon,
   SimpleCheck as ValidPanelIcon,
   SortDown as SortDownIcon,
@@ -21,6 +23,7 @@ import {
   Search as SearchIcon,
   DelOne as ClearIcon,
   Calendar as CalendarIcon,
+  Close as CloseIcon,
 } from '../icons';
 import { deleteSuccess, showErrors } from '../ui';
 import { InlineMovements } from '../cause-movement';
@@ -61,8 +64,8 @@ export class List extends Component {
     this.onReload = this.onReload.bind(this);
     this.onSelect = this.onSelect.bind(this);
     this.onLoadMore = this.onLoadMore.bind(this);
-    this.onClearFilters = this.onClearFilters.bind(this);
     this.onQuickSearch = this.onQuickSearch.bind(this);
+    this.onFiltersDefault = this.onFiltersDefault.bind(this);
     this.onSetFiltersAndSort = this.onSetFiltersAndSort.bind(this);
     this.onUpdateSort = this.onUpdateSort.bind(this);
     this.onSelectList = this.onSelectList.bind(this);
@@ -95,7 +98,7 @@ export class List extends Component {
         deleteSuccess();
       })
       .catch(errors => {
-        showErrors(this.props.intl, errors);
+        showErrors(this.props.intl, errors, "", "Suppression impossible ! ");
       });
   }
 
@@ -159,8 +162,8 @@ export class List extends Component {
     this.setState({ timer: timer });
   }
 
-  onClearFilters() {
-    this.props.actions.initFilters();
+  onFiltersDefault(enable) {
+    this.props.actions.initFilters(enable);
     this.props.actions.initSort();
     let timer = this.state.timer;
     if (timer) {
@@ -224,11 +227,6 @@ export class List extends Component {
         icon={<SearchIcon className="text-secondary" />}
       />
     );
-    const filterIcon = this.props.cause.filters.isEmpty() ? (
-      <FilterIcon className="text-light" />
-    ) : (
-      <FilterFullIcon className="text-light" />
-    );
     let inlineComponent = null;
     let id = null;
     switch (this.state.mode) {
@@ -271,7 +269,6 @@ export class List extends Component {
           selectMenu={selectActions}
           quickSearch={quickSearch}
           mainCol="cau_code"
-          filterIcon={filterIcon}
           cancelPanelIcon={<CancelPanelIcon />}
           validPanelIcon={<ValidPanelIcon />}
           sortDownIcon={<SortDownIcon color="secondary" />}
@@ -287,10 +284,16 @@ export class List extends Component {
           globalActions={globalActions}
           sort={this.props.cause.sort}
           filters={this.props.cause.filters}
+          filterFullIcon={<FilterFullIcon color="white" />}
+          filterEmptyIcon={<FilterEmptyIcon color="white" />}
+          filterClearIcon={<FilterClearIcon color="white" />}
+          filterDefaultIcon={<FilterDefaultIcon color="white" />}
+          filterClearDefaultIcon={<FilterClearDefaultIcon color="white" />}
           onSearch={this.onQuickSearch}
           onSort={this.onUpdateSort}
           onSetFiltersAndSort={this.onSetFiltersAndSort}
-          onClearFilters={this.onClearFilters}
+          onClearFilters={() => this.onFiltersDefault(true)}
+          onClearFiltersDefault={() => this.onFiltersDefault(false)}
           onLoadMore={this.onLoadMore}
           onSelect={this.onSelect}
           onClick={this.onSelectList}

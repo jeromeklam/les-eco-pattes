@@ -8,8 +8,11 @@ import { normalizedObjectModeler } from 'freejsonapi';
 import { ResponsiveList, ResponsiveQuickSearch } from 'freeassofront';
 import {
   Close as CloseIcon,
-  Filter as FilterIcon,
+  FilterEmpty as FilterEmptyIcon,
   FilterFull as FilterFullIcon,
+  FilterClear as FilterClearIcon,
+  FilterDefault as FilterDefaultIcon,
+  FilterClearDefault as FilterClearDefaultIcon,
   SimpleCancel as CancelPanelIcon,
   SimpleCheck as ValidPanelIcon,
   SortDown as SortDownIcon,
@@ -64,7 +67,7 @@ export class List extends Component {
     this.onLoadMore = this.onLoadMore.bind(this);
     this.onSelectList = this.onSelectList.bind(this);
     this.onQuickSearch = this.onQuickSearch.bind(this);
-    this.onClearFilters = this.onClearFilters.bind(this);
+    this.onFiltersDefault = this.onFiltersDefault.bind(this);
     this.onSetFiltersAndSort = this.onSetFiltersAndSort.bind(this);
     this.onUpdateSort = this.onUpdateSort.bind(this);
     this.onZoomMap = this.onZoomMap.bind(this);
@@ -95,7 +98,7 @@ export class List extends Component {
         deleteSuccess();
       })
       .catch(errors => {
-        showErrors(this.props.intl, this.props.site.delOneError);
+        showErrors(this.props.intl, this.props.site.delOneError, "", "Suppression impossible ! ");
       });
   }
 
@@ -165,8 +168,8 @@ export class List extends Component {
     this.setState({ timer: timer });
   }
 
-  onClearFilters() {
-    this.props.actions.initFilters();
+  onFiltersDefault(enable) {
+    this.props.actions.initFilters(enable);
     this.props.actions.initSort();
     let timer = this.state.timer;
     if (timer) {
@@ -242,12 +245,6 @@ export class List extends Component {
         icon={<SearchIcon className="text-secondary" />}
       />
     );
-    const filterIcon = this.props.site.filters.isEmpty() ? (
-      <FilterIcon className="text-light" />
-    ) : (
-      <FilterFullIcon className="text-light" />
-    );
-    console.log(id);
     return (
       <div>
         <ResponsiveList
@@ -256,7 +253,6 @@ export class List extends Component {
           items={items || []}
           quickSearch={quickSearch}
           mainCol="site_name"
-          filterIcon={filterIcon}
           cancelPanelIcon={<CancelPanelIcon />}
           validPanelIcon={<ValidPanelIcon />}
           sortDownIcon={<SortDownIcon color="secondary" />}
@@ -272,10 +268,16 @@ export class List extends Component {
           globalActions={globalActions}
           sort={this.props.site.sort}
           filters={this.props.site.filters}
+          filterFullIcon={<FilterFullIcon color="white" />}
+          filterEmptyIcon={<FilterEmptyIcon color="white" />}
+          filterClearIcon={<FilterClearIcon color="white" />}
+          filterDefaultIcon={<FilterDefaultIcon color="white" />}
+          filterClearDefaultIcon={<FilterClearDefaultIcon color="white" />}
           onSearch={this.onQuickSearch}
-          onClearFilters={this.onClearFilters}
           onSort={this.onUpdateSort}
           onSetFiltersAndSort={this.onSetFiltersAndSort}
+          onClearFilters={() => this.onFiltersDefault(true)}
+          onClearFiltersDefault={() => this.onFiltersDefault(false)}
           onLoadMore={this.onLoadMore}
           onClick={this.onSelectList}
           loadMorePending={this.props.site.loadMorePending}

@@ -7,14 +7,18 @@ import { normalizedObjectModeler } from 'freejsonapi';
 import { ResponsiveList, ResponsiveQuickSearch } from 'freeassofront';
 import { InlineCauses } from '../cause-movement';
 import {
-  Filter as FilterIcon,
+  FilterEmpty as FilterEmptyIcon,
   FilterFull as FilterFullIcon,
+  FilterClear as FilterClearIcon,
   SimpleCancel as CancelPanelIcon,
   SimpleCheck as ValidPanelIcon,
   SortDown as SortDownIcon,
   SortUp as SortUpIcon,
   Sort as SortNoneIcon,
   Search as SearchIcon,
+  Calendar as CalendarIcon,
+  DelOne as ClearDateIcon,
+  Close as CloseIcon,
 } from '../icons';
 import { deleteSuccess, deleteError } from '../ui';
 import { getGlobalActions, getInlineActions, getCols, Create, Modify } from './';
@@ -35,9 +39,6 @@ export class List extends Component {
     super(props);
     this.state = {
       timer: null,
-      animalsMovement: 0,
-      photosMovement: 0,
-      documentsMovement: 0,
       movementId: -1,
       item: null,
       mode: null,
@@ -52,7 +53,6 @@ export class List extends Component {
     this.onClearFilters = this.onClearFilters.bind(this);
     this.onSetFiltersAndSort = this.onSetFiltersAndSort.bind(this);
     this.onUpdateSort = this.onUpdateSort.bind(this);
-    this.onListCause = this.onListCause.bind(this);
     this.onSelectList = this.onSelectList.bind(this);
   }
 
@@ -73,11 +73,14 @@ export class List extends Component {
   }
 
   onSelectList(obj, list) {
-    const { item, mode } = this.state;
-    if (item && item.id === obj.id && mode === list) {
-      this.setState({ mode: false, item: null });
+    if (obj) {
+      if (list) {
+        this.setState({ mode: list, item: obj });
+      } else {
+        this.setState({ item: obj });
+      }
     } else {
-      this.setState({ mode: list, item: obj });
+      this.setState({ mode: false, item: null });
     }
   }
 
@@ -91,17 +94,6 @@ export class List extends Component {
       .catch(errors => {
         deleteError();
       });
-  }
-
-  onListCause(obj) {
-    const { id } = obj;
-    const { animalsMovement } = this.state;
-    if (animalsMovement === id) {
-      this.setState({ animalsMovement: 0, photosMovement: 0, documentsMovement: 0 });
-    } else {
-      this.props.actions.loadCauses(id, true).then(result => {});
-      this.setState({ animalsMovement: id, photosMovement: 0, documentsMovement: 0 });
-    }
   }
 
   onReload(event) {
@@ -200,11 +192,6 @@ export class List extends Component {
         icon={<SearchIcon className="text-secondary" />}
       />
     );
-    const filterIcon = this.props.movement.filters.isEmpty() ? (
-      <FilterIcon className="text-light" />
-    ) : (
-      <FilterFullIcon className="text-light" />
-    );
     return (
       <div>
         <ResponsiveList
@@ -213,22 +200,28 @@ export class List extends Component {
           items={items || []}
           quickSearch={quickSearch}
           mainCol="move_from"
-          filterIcon={filterIcon}
           cancelPanelIcon={<CancelPanelIcon />}
           validPanelIcon={<ValidPanelIcon />}
           sortDownIcon={<SortDownIcon color="secondary" />}
           sortUpIcon={<SortUpIcon color="secondary" />}
           sortNoneIcon={<SortNoneIcon color="secondary" />}
+          calIcon={<CalendarIcon className="text-secondary" />}
+          clearIcon={<ClearDateIcon className="text-warning" />}
+          closeIcon={<CloseIcon />}
           inlineActions={inlineActions}
           inlineOpenedId={id}
           inlineComponent={inlineComponent}
           globalActions={globalActions}
           sort={this.props.movement.sort}
           filters={this.props.movement.filters}
+          filterFullIcon={<FilterFullIcon color="white" />}
+          filterEmptyIcon={<FilterEmptyIcon color="white" />}
+          filterClearIcon={<FilterClearIcon color="white" />}
           onSearch={this.onQuickSearch}
           onClearFilters={this.onClearFilters}
           onSort={this.onUpdateSort}
           onSetFiltersAndSort={this.onSetFiltersAndSort}
+          onClick={this.onSelectList}
           onLoadMore={this.onLoadMore}
           loadMorePending={this.props.movement.loadMorePending}
           loadMoreFinish={this.props.movement.loadMoreFinish}

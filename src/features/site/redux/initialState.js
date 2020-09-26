@@ -1,11 +1,5 @@
-import { Filter, FILTER_MODE_AND, FILTER_OPER_GREATER_OR_EQUAL_OR_NULL, FILTER_OPER_EQUAL } from 'freeassofront';
 import { getNewNormalizedObject } from 'freejsonapi';
-
-let initialFilters = new Filter();
-const now = new Date().toISOString();
-initialFilters.addFilter('site_to', now, FILTER_OPER_GREATER_OR_EQUAL_OR_NULL);
-initialFilters.addFilter('site_extern', false, FILTER_OPER_EQUAL);
-initialFilters.setMode(FILTER_MODE_AND);
+import { getInitFilters } from './initFilters';
 
 const initialState = {
   items: getNewNormalizedObject('FreeAsso_Site'),
@@ -18,7 +12,7 @@ const initialState = {
   page_number: 1,
   page_size: 999999,
   tab: '1',
-  filters: initialFilters,
+  filters: getInitFilters(),
   sort: [{col:"site_name",way:"up"}],
   properties: [
     'number_1',

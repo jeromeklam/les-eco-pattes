@@ -1,11 +1,9 @@
 import { getNewNormalizedObject } from 'freejsonapi';
-import { Filter } from 'freeassofront';
 
 const initialState = {
   items: getNewNormalizedObject('FreeAsso_SiteType'),
   page_number: 1,
-  page_size: process.env.REACT_APP_PAGE_SIZE,
-  filters: new Filter(),
+  page_size: 999999,
   sort: [{col:"sitt_name",way:"up"}],
   loadMorePending: false,
   loadMoreFinish: false,

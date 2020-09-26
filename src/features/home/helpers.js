@@ -86,7 +86,7 @@ export const appMenu = [
     url: '/contract',
     role: 'NAV',
     position: 5,
-    help: <FormattedMessage id="app.features.home.app.menu.help.contracts" defaultMessage="Cintracts" />,
+    help: <FormattedMessage id="app.features.home.app.menu.help.contracts" defaultMessage="Contracts" />,
     public: false,
   },
   {

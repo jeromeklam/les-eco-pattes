@@ -8,7 +8,6 @@ import {
   Photo as PhotoIcon,
   Document as DocumentIcon,
   MapPose as ZoomMapIcon,
-  FilterClear as FilterClearIcon,
   SiteExtern as SiteExternIcon,
 } from '../icons';
 import { siteTypeAsOptions } from '../site-type/functions';
@@ -32,13 +31,6 @@ const externCol = [
 
 export const getGlobalActions = ({ onClearFilters, onCreate }) => {
   return [
-    {
-      name: 'clear',
-      label: 'Effacer',
-      onClick: onClearFilters,
-      theme: 'secondary',
-      icon: <FilterClearIcon color="white" />,
-    },
     {
       name: 'create',
       label: 'Ajouter',
@@ -199,21 +191,14 @@ export const getCols = ({ props }) => {
       filterable: { type: 'text' },
     },
     {
-      name: 'sep1',
-      label: '',
-      col: '',
-      size: '1',
-      mob_size: '0',
-      title: true,
-      sortable: false,
-      filterable: false,
-    },
-    {
       name: 'site_count_cause',
       label: 'Animaux',
       col: 'site_count_cause',
-      size: '3',
+      size: '4',
       mob_size: 10,
+      title : true,
+      sortable: true,
+      filterable: true,
     },
     {
       name: 'sep2',

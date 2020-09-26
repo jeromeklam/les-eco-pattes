@@ -34,8 +34,6 @@ export class List extends Component {
     this.onClose = this.onClose.bind(this);
     this.onReload = this.onReload.bind(this);
     this.onLoadMore = this.onLoadMore.bind(this);
-    this.onQuickSearch = this.onQuickSearch.bind(this);
-    this.onClearFilters = this.onClearFilters.bind(this);
     this.onUpdateSort = this.onUpdateSort.bind(this);
     this.onSetFiltersAndSort = this.onSetFiltersAndSort.bind(this);
   }
@@ -75,18 +73,6 @@ export class List extends Component {
     this.props.actions.loadMore({}, true);
   }
 
-  onQuickSearch(quickSearch) {
-    this.props.actions.updateQuickSearch(quickSearch);
-    let timer = this.state.timer;
-    if (timer) {
-      clearTimeout(timer);
-    }
-    timer = setTimeout(() => {
-      this.props.actions.loadMore({}, true);
-    }, 2000);
-    this.setState({ timer: timer });
-  }
-
   onUpdateSort(col, way, pos = 99) {
     this.props.actions.updateSort(col.col, way, pos);
     let timer = this.state.timer;
@@ -102,19 +88,6 @@ export class List extends Component {
   onSetFiltersAndSort(filters, sort) {
     this.props.actions.setFilters(filters);
     this.props.actions.setSort(sort);
-    let timer = this.state.timer;
-    if (timer) {
-      clearTimeout(timer);
-    }
-    timer = setTimeout(() => {
-      this.props.actions.loadMore({}, true);
-    }, 2000);
-    this.setState({ timer: timer });
-  }
-
-  onClearFilters() {
-    this.props.actions.initFilters();
-    this.props.actions.initSort();
     let timer = this.state.timer;
     if (timer) {
       clearTimeout(timer);
@@ -143,7 +116,6 @@ export class List extends Component {
           title="Espèces"
           cols={cols}
           items={items}
-          quickSearch={null}
           mainCol="camt_name"
           cancelPanelIcon={<CancelPanelIcon />}
           validPanelIcon={<ValidPanelIcon />}
@@ -153,9 +125,6 @@ export class List extends Component {
           inlineActions={inlineActions}
           globalActions={globalActions}
           sort={this.props.causeMainType.sort}
-          filters={this.props.causeMainType.filters}
-          onSearch={null}
-          onClearFilters={null}
           onSort={this.onUpdateSort}
           onSetFiltersAndSort={this.onSetFiltersAndSort}
           onLoadMore={this.onLoadMore}

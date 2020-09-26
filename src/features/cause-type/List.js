@@ -4,16 +4,13 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as actions from './redux/actions';
 import { normalizedObjectModeler } from 'freejsonapi';
-import { ResponsiveList, ResponsiveQuickSearch } from 'freeassofront';
+import { ResponsiveList } from 'freeassofront';
 import {
-  Filter as FilterIcon,
-  FilterFull as FilterFullIcon,
   SimpleCancel as CancelPanelIcon,
   SimpleCheck as ValidPanelIcon,
   SortDown as SortDownIcon,
   SortUp as SortUpIcon,
   Sort as SortNoneIcon,
-  Search as SearchIcon,
 } from '../icons';
 import { deleteError, deleteSuccess } from '../ui';
 import { getGlobalActions, getInlineActions, getCols } from './';
@@ -37,8 +34,6 @@ export class List extends Component {
     this.onClose = this.onClose.bind(this);
     this.onReload = this.onReload.bind(this);
     this.onLoadMore = this.onLoadMore.bind(this);
-    this.onQuickSearch = this.onQuickSearch.bind(this);
-    this.onClearFilters = this.onClearFilters.bind(this);
     this.onUpdateSort = this.onUpdateSort.bind(this);
     this.onSetFiltersAndSort = this.onSetFiltersAndSort.bind(this);
   }
@@ -78,18 +73,6 @@ export class List extends Component {
     this.props.actions.loadMore({}, true);
   }
 
-  onQuickSearch(quickSearch) {
-    this.props.actions.updateQuickSearch(quickSearch);
-    let timer = this.state.timer;
-    if (timer) {
-      clearTimeout(timer);
-    }
-    timer = setTimeout(() => {
-      this.props.actions.loadMore({}, true);
-    }, 2000);
-    this.setState({ timer: timer });
-  }
-
   onUpdateSort(col, way, pos = 99) {
     this.props.actions.updateSort(col.col, way, pos);
     let timer = this.state.timer;
@@ -115,19 +98,6 @@ export class List extends Component {
     this.setState({ timer: timer });
   }
 
-  onClearFilters() {
-    this.props.actions.initFilters();
-    this.props.actions.initSort();
-    let timer = this.state.timer;
-    if (timer) {
-      clearTimeout(timer);
-    }
-    timer = setTimeout(() => {
-      this.props.actions.loadMore({}, true);
-    }, 2000);
-    this.setState({ timer: timer });
-  }
-
   onLoadMore(event) {
     this.props.actions.loadMore();
   }
@@ -141,35 +111,14 @@ export class List extends Component {
     const globalActions = getGlobalActions(this);
     const inlineActions = getInlineActions(this);
     const cols = getCols(this);
-    let search = '';
-    const crit = this.props.causeType.filters.findFirst('caut_name');
-    if (crit) {
-      search = crit.getFilterCrit();
-    }
-    const quickSearch = (
-      <ResponsiveQuickSearch
-        name="quickSearch"
-        label="Recherche nom"
-        quickSearch={search}
-        onSubmit={this.onQuickSearch}
-        onChange={this.onSearchChange}
-        icon={<SearchIcon className="text-secondary" />}
-      />
-    );
-    const filterIcon = this.props.causeType.filters.isEmpty() ? (
-      <FilterIcon color="white" />
-    ) : (
-      <FilterFullIcon color="white" />
-    );
+
     return (
       <div>
         <ResponsiveList
           title="Races"
           cols={cols}
           items={items}
-          quickSearch={quickSearch}
           mainCol="caut_name"
-          filterIcon={filterIcon}
           cancelPanelIcon={<CancelPanelIcon />}
           validPanelIcon={<ValidPanelIcon />}
           sortDownIcon={<SortDownIcon />}
@@ -178,9 +127,6 @@ export class List extends Component {
           inlineActions={inlineActions}
           globalActions={globalActions}
           sort={this.props.causeType.sort}
-          filters={this.props.causeType.filters}
-          onSearch={this.onQuickSearch}
-          onClearFilters={this.onClearFilters}
           onSort={this.onUpdateSort}
           onSetFiltersAndSort={this.onSetFiltersAndSort}
           onLoadMore={this.onLoadMore}

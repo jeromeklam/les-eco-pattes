@@ -24,10 +24,7 @@ export function loadMore(args = {}, reload = false) {
       }
 
       const promise = new Promise((resolve, reject) => {
-        let filters = getState().siteType.filters.asJsonApiObject();
         let params = {
-          page: { number: getState().siteType.page_number, size: getState().siteType.page_size },
-          ...filters,
         };
         let sort = '';
         getState().siteType.sort.forEach(elt => {

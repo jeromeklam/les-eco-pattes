@@ -1,10 +1,5 @@
-import { Filter, FILTER_MODE_AND, FILTER_OPER_GREATER_OR_EQUAL_OR_NULL } from 'freeassofront';
 import { getNewNormalizedObject } from 'freejsonapi';
-
-let initialFilters = new Filter();
-const now = new Date().toISOString();
-initialFilters.addFilter('cau_to', now, FILTER_OPER_GREATER_OR_EQUAL_OR_NULL);
-initialFilters.setMode(FILTER_MODE_AND);
+import { getInitFilters } from './initFilters';
 
 const initialState = {
   items: getNewNormalizedObject('FreeAsso_Cause'),
@@ -19,7 +14,7 @@ const initialState = {
   page_number: 1,
   page_size: process.env.REACT_APP_PAGE_SIZE,
   tab: '1',
-  filters: initialFilters,
+  filters: getInitFilters(),
   sort: [{ col: 'cau_code', way: 'up' }],
   properties: [
     'string_1',

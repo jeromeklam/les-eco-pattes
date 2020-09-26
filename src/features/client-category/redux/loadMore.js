@@ -24,13 +24,11 @@ export function loadMore(args = {}, reload = false) {
         });
       }
       const promise = new Promise((resolve, reject) => {
-        let filters = getState().clientCategory.filters.asJsonApiObject();
         let params = {
           page: {
             number: getState().clientCategory.page_number,
             size: getState().clientCategory.page_size,
           },
-          ...filters,
         };
         let sort = '';
         getState().clientCategory.sort.forEach(elt => {
