@@ -6,8 +6,8 @@ import { connect } from 'react-redux';
 import axios from 'axios';
 import { freeAssoApi } from '../../common';
 import * as actions from './redux/actions';
-import { Search, Modify } from './';
-import { More, DelOne, Zoom } from '../icons';
+import { Search, Create, Modify } from './';
+import { More, DelOne, Zoom, AddOne } from '../icons';
 
 export class InputPicker extends Component {
   static propTypes = {
@@ -62,6 +62,7 @@ export class InputPicker extends Component {
       autocomplete: false,
       source: false,
       zoom: false,
+      add: false,
       filters: this.props.filters,
       typeCodes: this.props.typeCodes,
       categoryCodes: this.props.categoryCodes,
@@ -69,9 +70,11 @@ export class InputPicker extends Component {
     this.onMore = this.onMore.bind(this);
     this.onZoom = this.onZoom.bind(this);
     this.onClear = this.onClear.bind(this);
+    this.onCreate = this.onCreate.bind(this);
     this.onChange = this.onChange.bind(this);
     this.onSelect = this.onSelect.bind(this);
-    this.onCloseMore = this.onCloseMore.bind(this);
+    this.onClose = this.onClose.bind(this);
+    this.onAdd = this.onAdd.bind(this);
   }
 
   onChange(event) {
@@ -105,6 +108,19 @@ export class InputPicker extends Component {
     this.setState({ zoom: true });
   }
 
+  onAdd() {
+    this.setState({ add: true });
+  }
+
+  onCreate(item) {
+    this.setState({ search: false, autocomplete: false, list: [] });
+    if (item && item.id) {
+      this.props.onChange({
+        target: { name: this.props.name, value: item.id, type: 'FreeAsso_Client' },
+      });
+    }
+  }
+
   onClear() {
     this.setState({ autocomplete: false });
     this.props.onChange({
@@ -114,15 +130,15 @@ export class InputPicker extends Component {
 
   onSelect(item) {
     this.setState({ search: false, autocomplete: false, list: [] });
-    if (item) {
+    if (item && item.id) {
       this.props.onChange({
         target: { name: this.props.name, value: item.id, type: 'FreeAsso_Client' },
       });
     }
   }
 
-  onCloseMore() {
-    this.setState({ search: false, zoom: false });
+  onClose() {
+    this.setState({ search: false, zoom: false, add: false });
   }
 
   render() {
@@ -143,6 +159,7 @@ export class InputPicker extends Component {
           onClear={this.onClear}
           onMore={this.onMore}
           onZoom={this.onZoom}
+          onAdd={this.onAdd}
           onSelect={this.onSelect}
           required={this.props.required || false}
           error={this.props.error}
@@ -150,12 +167,13 @@ export class InputPicker extends Component {
           pickerDisplay="cli_lastname,cli_firstname"
           clearIcon={<DelOne size={this.props.size === 'sm' ? 0.7 : 0.9} className="text-warning" />}
           moreIcon={<More size={this.props.size === 'sm' ? 0.7 : 0.9} className="text-secondary" />}
-          zoomIcon={<Zoom className="text-secondary" size={0.9} />}
+          zoomIcon={<Zoom size={this.props.size === 'sm' ? 0.7 : 0.9} className="text-secondary" />}
+          addIcon={<AddOne size={this.props.size === 'sm' ? 0.7 : 0.9} className="text-primary" />}
         />
         <Search
           title={this.props.label}
           show={this.state.search}
-          onClose={this.onCloseMore}
+          onClose={this.onClose}
           onSelect={this.onSelect}
           types={this.props.clientType.items}
           categories={this.props.clientCategory.items}
@@ -164,7 +182,10 @@ export class InputPicker extends Component {
           categoryCodes={this.props.categoryCodes || []}
         />
         {this.state.zoom && (
-          <Modify loader={false} modal={true} cliId={this.state.item.id} onClose={this.onCloseMore} />
+          <Modify loader={false} modal={true} cliId={this.state.item.id} onClose={this.onClose} />
+        )}
+        {this.state.add && (
+          <Create loader={false} modal={true} cliId={this.state.item.id} onClose={this.onClose} onCreate={this.onCreate} />
         )}
       </div>
     );

@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as actions from './redux/actions';
-import { getJsonApi } from 'freejsonapi';
+import { getJsonApi, jsonApiNormalizer, normalizedObjectFirstModel } from 'freejsonapi';
 import { propagateModel } from '../../common';
 import { CenteredLoading3Dots, createSuccess, showErrors } from '../ui';
 import Form from './Form';
@@ -68,6 +68,11 @@ export class Create extends Component {
       .then(result => {
         createSuccess();
         this.props.actions.propagateModel('FreeAsso_Client', result);
+        if (this.props.onCreate) {
+          const lines = jsonApiNormalizer(result.data);
+          const item = normalizedObjectFirstModel(lines, 'FreeAsso_Client');
+          this.props.onCreate(item);
+        }
         if (!this.state.modal) {
           this.props.history.push('/client');
         } else {
