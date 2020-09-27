@@ -35,10 +35,16 @@ export default class Search extends Component {
     this.onChange = this.onChange.bind(this);
     this.onSearch = this.onSearch.bind(this);
     this.onClear = this.onClear.bind(this);
+    this.onClose = this.onClose.bind(this);
   }
 
   onClear() {
     this.setState({ loading: false, finish: true, list: [] });
+  }
+
+  onClose() {
+    this.onClear();
+    this.props.onClose();
   }
 
   onSearch(filters) {
@@ -63,8 +69,8 @@ export default class Search extends Component {
 
   render() {
     const filters = [
-      { name: 'cli_firstname', label: 'Prénom', type: 'text', value: this.props.value },
-      { name: 'cli_lastname', label: 'Nom', type: 'text' },
+      { name: 'cli_lastname', label: 'Nom', type: 'text', value: this.props.value },
+      { name: 'cli_firstname', label: 'Prénom', type: 'text' },
       {
         name: 'clit_id',
         label: 'Type',
@@ -85,7 +91,7 @@ export default class Search extends Component {
         title={this.props.title}
         show={this.props.show}
         loading={this.state.loading}
-        onClose={this.props.onClose}
+        onClose={this.onClose}
         onClear={this.onClear}
         onSearch={this.onSearch}
         onSelect={this.props.onSelect}

@@ -151,6 +151,7 @@ export default class InputPickerEnhanced extends Component {
             />
             <Search
               title={this.props.label}
+              value={this.state.display}
               show={this.state.search}
               filters={this.props.filters || {}}
               onClose={this.onCloseMore}

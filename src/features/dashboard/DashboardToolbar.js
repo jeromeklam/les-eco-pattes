@@ -65,13 +65,13 @@ export class DashboardToolbar extends Component {
           <div className="col-36 text-right">
             <div className="nav justify-content-end">
               <div className="nav-item">
-                <button className="btn btn-primary text-light" onClick={this.onRefreshDashboard}>
+                <button className="btn btn-primary text-light" title="Recharger votre présentation personnalisée" onClick={this.onRefreshDashboard}>
                   <ReloadIcon />
                 </button>
-                <button className="btn btn-primary text-light" onClick={this.onResetDashboard}>
+                <button className="btn btn-primary text-light" title="Revenir à la présentation initiale" onClick={this.onResetDashboard}>
                   <ResetIcon />
                 </button>
-                <button className="btn btn-primary text-light" onClick={this.onSaveDashboard}>
+                <button className="btn btn-primary text-light" title="Enregistrer cette présentation personnalisée" onClick={this.onSaveDashboard}>
                   <SaveIcon />
                 </button>
               </div>
