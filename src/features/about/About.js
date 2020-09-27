@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { injectIntl, FormattedMessage } from 'react-intl';
+import { SocialIcon } from 'react-social-icons';
 import { ResponsiveContent } from 'freeassofront';
 import { Copyright } from '../ui';
 import logo from '../../images/logo-les-eco-pattes.jpg';
@@ -64,20 +65,27 @@ class About extends Component {
                       defaultMessage="00 33 6 51 81 70 28"
                     />
                   </p>
-                  <p className="card-text mb-auto">
-                    <a href={"mailto:" + intl.formatMessage({ id: 'app.contact.email', defaultMessage: 'jeromeklam@free.fr' })}>
-                      <FormattedMessage
-                        id="app.contact.email"
-                        defaultMessage="jeromeklam@free.fr"
-                      />
-                    </a>
-                  </p>
-                  <a href={intl.formatMessage({ id: 'app.contact.site', defaultMessage: 'https://freeasso.fr' })} target="_blank" rel="noopener noreferrer">
-                    <FormattedMessage
-                      id="app.contact.site"
-                      defaultMessage="https://freeasso.fr"
-                    />
-                  </a>
+                  <div className="row">
+                    <div classNale="col-26"> 
+                      <p className="card-text mb-auto">
+                        <a href={"mailto:" + intl.formatMessage({ id: 'app.contact.email', defaultMessage: 'jeromeklam@free.fr' })}>
+                          <FormattedMessage
+                            id="app.contact.email"
+                            defaultMessage="jeromeklam@free.fr"
+                          />
+                        </a>
+                      </p>
+                      <a href={intl.formatMessage({ id: 'app.contact.site', defaultMessage: 'https://freeasso.fr' })} target="_blank" rel="noopener noreferrer">
+                        <FormattedMessage
+                          id="app.contact.site"
+                          defaultMessage="https://freeasso.fr"
+                        />
+                      </a>
+                    </div>
+                    <div className="col-10">
+                      <SocialIcon url="https://facebook.com/Les-éco-pattes-140387953308320/" />
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>

@@ -6,6 +6,7 @@ import {
   InputDatetime,
   InputSpin,
   InputTextarea,
+  InputCheckList,
   ResponsiveModalOrForm,
 } from '../ui';
 import { InputPicker as UserInputPicker } from '../user';
@@ -177,6 +178,14 @@ export default function Form(props) {
                 onChange={handleChange}
                 labelTop={true}
                 error={getErrorMessage('alert_text')}
+              />
+            </div>
+          </div>
+          <div className="row">
+            <div className="col-36">
+              <InputCheckList 
+                title="A faire"
+                items={[{"done":false,"text":"Eau"},{"done":false,"text":"Clôture"},{"done":false,"text":"Abri"},{"done":false,"text":"Pierre de sel"}]}
               />
             </div>
           </div>
