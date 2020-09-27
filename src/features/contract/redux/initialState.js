@@ -1,5 +1,5 @@
 import { getNewNormalizedObject } from 'freejsonapi';
-import { Filter } from 'freeassofront';
+import { getInitFilters } from './initFilters';
 
 const tabs = [
   { key: '1', name: 'identification', label: 'Identification', shortcut: 'I' },
@@ -11,7 +11,7 @@ const initialState = {
   items: getNewNormalizedObject('FreeAsso_Contract'),
   page_number: 1,
   page_size: process.env.REACT_APP_PAGE_SIZE,
-  filters: new Filter(),
+  filters: getInitFilters(),
   sort: [{col:"ct_code",way:"down"}],
   tab: '1',
   tabs: tabs,

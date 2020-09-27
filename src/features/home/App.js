@@ -138,6 +138,10 @@ export class App extends Component {
     const locale = this.props.home.locale || 'fr';
     const messages = intlMessages[locale];
     const icons = [];
+    let footer = true;
+    if (this.props.auth.authenticated) {
+      footer = false;
+    } 
     if (this.props.home.socketOn && this.props.auth.authenticated) {
       if (this.props.home.socketConnected) {
         icons.push(
@@ -190,6 +194,7 @@ export class App extends Component {
             accountClosed={<AccountDetail className="text-primary" />}
             menuOpened={<MenuOpenedIcon />}
             menuClosed={<MenuClosedIcon />}
+            footer={footer}
           >
             {this.props.auth.firstCheck &&
             (!this.props.auth.authenticated || this.props.home.loadAllFinish) ? (

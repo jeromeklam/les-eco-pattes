@@ -13,9 +13,10 @@ export const getInitFilters = (enable = true) => {
   return initFilters;
 }
 
-export function initFilters() {
+export function initFilters(enable) {
   return {
     type: SITE_INIT_FILTERS,
+    enable: enable,
   };
 }
 

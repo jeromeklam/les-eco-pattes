@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
-import { ResponsiveModal } from 'freeassofront';
+import { ResponsiveModal, FILTER_OPER_LIKE, FILTER_MODE_AND } from 'freeassofront';
 import { CenteredLoading3Dots } from './';
 
 export default class SearchModal extends Component {
@@ -18,6 +18,18 @@ export default class SearchModal extends Component {
     filters: PropTypes.array,
   };
 
+  static getDerivedStateFromProps(props, state) {
+    state.fields.forEach(field => {
+      const found = props.filters.find(filter => filter.name === field.name);
+      if (found) {
+        if (found.value !== field.value) {
+          field.value = found.value ;
+        }
+      }
+    })
+    return false;
+  }
+
   constructor(props) {
     super(props);
     let filters = this.props.filters;
@@ -26,7 +38,7 @@ export default class SearchModal extends Component {
     });
     this.state = {
       fields: filters,
-      condition: 'and',
+      condition: FILTER_MODE_AND,
     };
     this.onChange = this.onChange.bind(this);
     this.onClear = this.onClear.bind(this);
@@ -83,13 +95,13 @@ export default class SearchModal extends Component {
         item.options.forEach(elem => {
           values.push(elem.value);
         });
-        params.filter[this.state.condition][item.name] = {'in': values};
+        params.filter[this.state.condition][item.name] = {[FILTER_OPER_LIKE]: values};
       } else {
         if (item.value !== '') {
           if (params === false) {
             params = { filter: { [this.state.condition]: {} } };
           }
-          params.filter[this.state.condition][item.name] = {'in': item.value};
+          params.filter[this.state.condition][item.name] = {[FILTER_OPER_LIKE]: item.value};
         }
       }
     });

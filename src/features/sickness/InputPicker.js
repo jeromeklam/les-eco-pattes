@@ -132,6 +132,7 @@ export default class InputPicker extends Component {
         />
         <Search
           title={this.props.label}
+          value={this.state.display}
           show={this.state.search}
           onClose={this.onCloseMore}
           onSelect={this.onSelect}

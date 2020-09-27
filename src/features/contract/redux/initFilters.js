@@ -1,18 +1,31 @@
+import { Filter, FILTER_MODE_AND, FILTER_OPER_GREATER_OR_EQUAL_OR_NULL } from 'freeassofront';
 import { CONTRACT_INIT_FILTERS } from './constants';
-import { Filter } from 'freeassofront';
 
-export function initFilters() {
+/**
+ *
+ */
+export const getInitFilters = (enable = true) => {
+  let initFilters = new Filter();
+  const now = new Date().toISOString();
+  initFilters.addFilter('ct_to', now, FILTER_OPER_GREATER_OR_EQUAL_OR_NULL, false, true, enable);
+  initFilters.setMode(FILTER_MODE_AND);    
+  return initFilters;
+}
+
+export function initFilters(enable) {
   return {
     type: CONTRACT_INIT_FILTERS,
+    enable: enable,
   };
 }
 
 export function reducer(state, action) {
   switch (action.type) {
     case CONTRACT_INIT_FILTERS:
+      let newFilters = getInitFilters(action.enable);   
       return {
         ...state,
-        filters: new Filter(),
+        filters: newFilters,
       };
 
     default:

@@ -84,7 +84,7 @@ export function reducer(state, action) {
       // Dismiss the request failure error
       let object = jsonApiNormalizer(action.data.data);
       let myItems = state.items;
-      let news = normalizedObjectUpdate(myItems, 'FreeAsso_Contract', object);
+      let news = normalizedObjectUpdate(myItems, 'FreeAsso_Contract', object, false);
       return {
         ...state,
         updateOneError: null,
