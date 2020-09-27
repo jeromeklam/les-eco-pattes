@@ -24,10 +24,16 @@ export default class Search extends Component {
     this.onChange = this.onChange.bind(this);
     this.onSearch = this.onSearch.bind(this);
     this.onClear = this.onClear.bind(this);
+    this.onClose = this.onClose.bind(this);
   }
 
   onClear() {
     this.setState({ loading: false, finish: true, list: [] });
+  }
+
+  onClose() {
+    this.onClear();
+    this.props.onClose();
   }
 
   onSearch(filters) {
@@ -53,7 +59,7 @@ export default class Search extends Component {
   render() {
     //console.log("FK search cause",this.props);
     const filters = [
-      { name: 'cau_code', label: 'N° boucle', type: 'text', value: this.props.value || '' },      
+      { name: 'cau_code', label: 'N° boucle', type: 'text', value: this.props.value },      
       {
         name: 'cau_sex',
         label: 'Sexe',
@@ -73,7 +79,7 @@ export default class Search extends Component {
         title={this.props.title}
         show={this.props.show}
         loading={this.state.loading}
-        onClose={this.props.onClose}
+        onClose={this.onClose}
         onClear={this.onClear}
         onSearch={this.onSearch}
         onSelect={this.props.onSelect}

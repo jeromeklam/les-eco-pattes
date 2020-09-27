@@ -25,7 +25,8 @@ export default class SearchModal extends Component {
     state.fields.forEach(field => {
       const found = props.filters.find(filter => filter.name === field.name);
       if (found) {
-        if (found.value !== field.value) {
+        if (found.value !== field.origin) {
+          field.origin = found.value ;
           field.value = found.value ;
         }
       }
@@ -37,6 +38,7 @@ export default class SearchModal extends Component {
     super(props);
     let filters = this.props.filters;
     filters.forEach(item => {
+      item.origin = item.value || '';
       item.value = item.value || '';
     });
     this.state = {
