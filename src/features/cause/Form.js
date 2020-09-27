@@ -65,7 +65,7 @@ export default function Form(props) {
   }
   return (  
     <ResponsiveModalOrForm
-      title="Animaux"
+      title={values.cau_code}
       tab={values.currentTab}
       tabs={props.modify ? tabs.concat(modifyTabs) : tabs}
       size="xl"

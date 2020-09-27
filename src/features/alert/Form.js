@@ -10,6 +10,7 @@ import {
   ResponsiveModalOrForm,
 } from '../ui';
 import { InputPicker as UserInputPicker } from '../user';
+import { InputPicker as SiteInputPicker } from '../site';
 import { alertPriority, alertRecurType, alertRemind, getAlertRecur } from './';
 
 const afterChange = (name, item) => {
@@ -44,12 +45,20 @@ export default function Form(props) {
     handleCancel,
     handleNavTab,
     getErrorMessage,
-  } = useForm(props.item, props.tab, props.onSubmit, props.onCancel, props.onNavTab, props.errors, afterChange);
+  } = useForm(
+    props.item,
+    props.tab,
+    props.onSubmit,
+    props.onCancel,
+    props.onNavTab,
+    props.errors,
+    afterChange,
+  );
   const today = new Date();
   let libRecur = getAlertRecur(values);
   return (
     <ResponsiveModalOrForm
-      title="Suivi"
+      title={values.alert_title}
       tab={values.currentTab}
       tabs={props.tabs}
       size="lg"
@@ -82,7 +91,7 @@ export default function Form(props) {
             error={getErrorMessage('alert_to')}
           />
         </div>
-        <div className="col-9">
+        <div className="col-6">
           <InputSelect
             label="Priorité"
             id="alert_priority"
@@ -92,6 +101,15 @@ export default function Form(props) {
             onChange={handleChange}
             options={alertPriority}
             error={getErrorMessage('alert_priority')}
+          />
+        </div>
+        <div className="col-3">
+          <InputCheckbox
+            label="Actif"
+            name="alert_activ"
+            labelTop={true}
+            checked={values.alert_activ === true}
+            onChange={handleChange}
           />
         </div>
         <div className="col-9">
@@ -105,43 +123,36 @@ export default function Form(props) {
           />
         </div>
       </div>
-      <div className="row">
-        <div className="col-20">
-          <InputText
-            label="Libellé"
-            name="alert_title"
-            key="alert_title"
-            labelTop={true}
-            value={values.alert_title}
-            onChange={handleChange}
-            error={getErrorMessage('alert_title')}
-          />
-        </div>
-        <div className="col-13">
-          <UserInputPicker
-            label="Utilisateur"
-            key="user"
-            name="user"
-            pickerUp={true}
-            item={values.user || null}
-            onChange={handleChange}
-            error={getErrorMessage('user')}
-          />
-        </div>
-        <div className="col-3">
-          <InputCheckbox
-            label="Actif"
-            name="alert_activ"
-            labelTop={true}
-            checked={values.alert_activ === true}
-            onChange={handleChange}
-          />
-        </div>
-      </div>
       <hr />
       {values.currentTab === '1' && (
         <div>
           <div className="row">
+            <div className="col-27">
+              <InputText
+                label="Libellé"
+                name="alert_title"
+                key="alert_title"
+                labelTop={true}
+                value={values.alert_title}
+                onChange={handleChange}
+                error={getErrorMessage('alert_title')}
+              />
+            </div>
+            <div className="col-9">
+              <UserInputPicker
+                label="Utilisateur"
+                key="user"
+                name="user"
+                pickerUp={true}
+                item={values.user || null}
+                onChange={handleChange}
+                error={getErrorMessage('user')}
+              />
+            </div>
+          </div>
+          <div className="row">
+            <div className="col-27">
+            </div>
             <div className="col-9">
               <InputDatetime
                 label="Réalisée le"
@@ -183,9 +194,14 @@ export default function Form(props) {
           </div>
           <div className="row">
             <div className="col-36">
-              <InputCheckList 
+              <InputCheckList
                 title="A faire"
-                items={[{"done":false,"text":"Eau"},{"done":false,"text":"Clôture"},{"done":false,"text":"Abri"},{"done":false,"text":"Pierre de sel"}]}
+                items={[
+                  { done: false, text: 'Eau' },
+                  { done: false, text: 'Clôture' },
+                  { done: false, text: 'Abri' },
+                  { done: false, text: 'Pierre de sel' },
+                ]}
               />
             </div>
           </div>
