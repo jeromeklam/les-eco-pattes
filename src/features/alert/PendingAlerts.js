@@ -7,8 +7,9 @@ import { normalizedObjectModeler } from 'jsonapi-tools';
 import { HoverObserver } from 'react-bootstrap-front';
 import { intlDateTime } from '../../common';
 import { DashboardCard } from '../dashboard';
-import { Alert as AlertIcon } from '../icons';
+import { Alert as AlertIcon, GetOne as GetOneIcon } from '../icons';
 import { CenteredLoading3Dots, InlineList, Line, Col } from '../ui';
+import { Modify } from './';
 
 export class PendingAlerts extends Component {
   static propTypes = {
@@ -19,11 +20,13 @@ export class PendingAlerts extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      alert_id: 0,
+      alert_id: -1,
       flipped: false,
     };
     this.mouseLeave = this.mouseLeave.bind(this);
     this.mouseEnter = this.mouseEnter.bind(this);
+    this.onClose = this.onClose.bind(this);
+    this.onGetOne = this.onGetOne.bind(this);
   }
 
   componentDidMount() {
@@ -36,6 +39,15 @@ export class PendingAlerts extends Component {
 
   mouseEnter(id) {
     this.setState({ flipped: id });
+  }
+
+  onGetOne(id) {
+    this.setState({ alert_id: id });
+  }
+
+  onClose() {
+    this.setState({ alert_id: -1 });
+    this.props.actions.loadPendings();
   }
 
   render() {
@@ -60,7 +72,7 @@ export class PendingAlerts extends Component {
       </InlineList>
     );
     return (
-      <DashboardCard title="Alertes" icon={<AlertIcon />} size="md" header={header} >
+      <DashboardCard title="Alertes" icon={<AlertIcon />} size="md" header={header}>
         <div className="pending-alerts">
           <div className="alert-pendings text-secondary bg-secondary-light">
             {alerts && alerts.length > 0 ? (
@@ -72,18 +84,49 @@ export class PendingAlerts extends Component {
                       onMouseEnter={() => {
                         this.mouseEnter(alert.id);
                       }}
-                      onMouseLeave={this.mouseLeave}    
+                      onMouseLeave={this.mouseLeave}
                     >
-                      <Line oddEven={counter++} >
-                        <Col layoutSize={this.props.layoutSize || 'md'} md={20} lg={20} xl={12} col={12}>
+                      <Line oddEven={counter++}>
+                        <Col
+                          layoutSize={this.props.layoutSize || 'md'}
+                          md={20}
+                          lg={20}
+                          xl={12}
+                          col={12}
+                        >
                           {alert.alert_title}
                         </Col>
-                        <Col layoutSize={this.props.layoutSize || 'md'} md={8} lg={8} xl={5} col={12}>
+                        <Col
+                          layoutSize={this.props.layoutSize || 'md'}
+                          md={8}
+                          lg={8}
+                          xl={5}
+                          col={12}
+                        >
                           {intlDateTime(alert.alert_from, true)}
                         </Col>
-                        <Col layoutSize={this.props.layoutSize || 'md'} md={8} lg={8} xl={5} col={12}>
+                        <Col
+                          layoutSize={this.props.layoutSize || 'md'}
+                          md={8}
+                          lg={8}
+                          xl={5}
+                          col={12}
+                        >
                           {intlDateTime(alert.alert_deadline, true)}
                         </Col>
+                        {this.state.flipped && this.state.flipped === alert.id && (
+                          <div className="btn-group btn-group-xs" role="group" aria-label="...">
+                            <button
+                              type="button"
+                              className="btn btn-inline btn-secondary"
+                              onClick={() => {
+                                this.onGetOne(alert.id);
+                              }}
+                            >
+                              <GetOneIcon className="inline-action text-light" />
+                            </button>
+                          </div>
+                        )}
                       </Line>
                     </HoverObserver>
                   );
@@ -105,6 +148,9 @@ export class PendingAlerts extends Component {
             )}
           </div>
         </div>
+        {parseInt(this.state.alert_id, 10) > 0 && (
+          <Modify alert_id={this.state.alert_id} onClose={this.onClose} loader={false} />
+        )}
       </DashboardCard>
     );
   }
@@ -118,11 +164,8 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    actions: bindActionCreators({ ...actions }, dispatch)
+    actions: bindActionCreators({ ...actions }, dispatch),
   };
 }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(PendingAlerts);
+export default connect(mapStateToProps, mapDispatchToProps)(PendingAlerts);

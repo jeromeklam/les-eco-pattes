@@ -25,7 +25,7 @@ export class Modify extends Component {
      * On récupère l'id et l'élément à afficher
      */
     this.state = {
-      movementId: this.props.movementId || this.props.match.params.movementId || false,
+      movementId: this.props.move_id || this.props.movementId || this.props.match.params.movementId || false,
       item: false,
       modal: this.props.modal || false,
     };
@@ -109,7 +109,7 @@ export class Modify extends Component {
               <Form
                 item={item}
                 modify={true}
-                modal={this.state.modal}
+                modal={true}
                 datas={this.props.data.items}
                 config={this.props.config.items}
                 properties={this.props.movement.properties}

@@ -15,7 +15,7 @@ export function loadPendings(args = {}) {
     const promise = new Promise((resolve, reject) => {
       const params = {
         filter: {
-          alert_ts : {'empty': ''}
+          alert_done_ts : {'empty': ''}
         },
         sort : 'alert_from'
       }

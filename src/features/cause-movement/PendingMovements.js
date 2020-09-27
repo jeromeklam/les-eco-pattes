@@ -4,15 +4,15 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as actions from './redux/actions';
 import { normalizedObjectModeler } from 'jsonapi-tools';
-import { ResponsiveConfirm, HoverObserver } from 'react-bootstrap-front';
+import { HoverObserver } from 'react-bootstrap-front';
 import { propagateModel, intlDateTime } from '../../common';
 import {
-  DelOne as DelOneIcon,
-  SimpleCheck as SimpleValidIcon,
+  GetOne as GetOneIcon,
   Movement as MovementIcon,
 } from '../icons';
 import { CenteredLoading3Dots, InlineList, Line, Col } from '../ui';
 import { DashboardCard } from '../dashboard';
+import { Modify } from '../movement';
 import { statusLabel } from './';
 
 export class PendingMovements extends Component {
@@ -26,49 +26,27 @@ export class PendingMovements extends Component {
     this.state = {
       confirm: false,
       valid: false,
-      camv_id: 0,
+      move_id: -1,
       flipped: false,
     };
-    this.onConfirm = this.onConfirm.bind(this);
-    this.onConfirmMovement = this.onConfirmMovement.bind(this);
-    this.onConfirmValidation = this.onConfirmValidation.bind(this);
-    this.onConfirmClose = this.onConfirmClose.bind(this);
-    this.onValid = this.onValid.bind(this);
+    this.onGetOne = this.onGetOne.bind(this);
     this.mouseLeave = this.mouseLeave.bind(this);
     this.mouseEnter = this.mouseEnter.bind(this);
+    this.onClose = this.onClose.bind(this);
+    this.onGetOne = this.onGetOne.bind(this);
   }
 
   componentDidMount() {
     this.props.actions.loadPendings();
   }
 
-  onConfirmMovement(id) {
-    this.setState({ confirm: !this.state.confirm, camv_id: id });
+  onClose(id) {
+    this.setState({ move_id: -1 });
+    this.props.actions.loadPendings();
   }
 
-  onConfirmValidation(id) {
-    this.setState({ valid: !this.state.valid, camv_id: id });
-  }
-
-  onValid() {
-    const { camv_id } = this.state;
-    this.setState({ valid: false, camv_id: null });
-    this.props.actions.validateOne(camv_id).then(result => {
-      this.props.actions.propagateModel('FreeAsso_CauseMovement', result);
-      this.props.actions.loadPendings();
-    });
-  }
-
-  onConfirm() {
-    const { camv_id } = this.state;
-    this.setState({ confirm: false, camv_id: 0 });
-    this.props.actions.delOne(camv_id).then(result => {
-      this.props.actions.loadPendings();
-    });
-  }
-
-  onConfirmClose() {
-    this.setState({ valid: false, confirm: false, camv_id: 0, cause_movement: null });
+  onGetOne(id) {
+    this.setState({ move_id: id });
   }
 
   mouseLeave() {
@@ -81,7 +59,6 @@ export class PendingMovements extends Component {
 
   render() {
     let counter = 0;
-    const { confirm, valid } = this.state;
     let movements = [];
     if (this.props.causeMovement.pendings.FreeAsso_CauseMovement) {
       movements = normalizedObjectModeler(this.props.causeMovement.pendings, 'FreeAsso_CauseMovement');
@@ -110,7 +87,7 @@ export class PendingMovements extends Component {
       </InlineList>
     );
     return (
-      <DashboardCard title="Mouvements en attente" icon={<MovementIcon />} size="md" header={header} >
+      <DashboardCard title="Animaux en attente de mouvement" icon={<MovementIcon />} size="md" header={header} >
         <div className="pending-movements">
           <div className="cause-movement-pendings text-secondary bg-secondary-light">
             {movements && movements.length > 0 ? (
@@ -150,19 +127,12 @@ export class PendingMovements extends Component {
                               {movement.camv_status === 'WAIT' && (
                                 <button
                                   type="button"
-                                  className="btn btn-inline btn-primary"
-                                  onClick={() => this.onConfirmValidation(movement.id)}
+                                  className="btn btn-inline btn-secondary"
+                                  onClick={() => this.onGetOne(movement.movement.id)}
                                 >
-                                  <SimpleValidIcon className="text-light inline-action" />
+                                  <GetOneIcon className="text-light inline-action" />
                                 </button>
                               )}
-                              <button
-                                type="button"
-                                className="btn btn-inline btn-warning"
-                                onClick={() => this.onConfirmMovement(movement.id)}
-                              >
-                                <DelOneIcon className="text-light inline-action" />
-                              </button>
                             </div>
                           )}
                         </Col>
@@ -186,23 +156,9 @@ export class PendingMovements extends Component {
               </div>
             )}
           </div>
-          <ResponsiveConfirm
-            show={confirm}
-            onClose={this.onConfirmClose}
-            onConfirm={() => {
-              this.onConfirm();
-            }}
-          />
-          <ResponsiveConfirm
-            show={valid}
-            onClose={this.onConfirmClose}
-            theme="success"
-            onConfirm={() => {
-              this.onValid();
-            }}
-          >
-            <p>Confirmez-vous la validation du mouvement ?</p>
-          </ResponsiveConfirm>
+          {parseInt(this.state.move_id, 10) > 0 && 
+            <Modify move_id={this.state.move_id} loader={false} onClose={this.onClose} />
+          }
         </div>
       </DashboardCard>
     );
