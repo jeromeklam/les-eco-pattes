@@ -292,8 +292,10 @@ export class DefaultPage extends Component {
                 return null;
               }}
               doneAccessor={data => {
-                console.log(data);
-                return true;
+                if (data && data.alert_done_ts) {
+                  return true;
+                }
+                return false;
               }}
               titleAccessor="alert_title"
               tooltipAccessor="alert_text"
@@ -310,6 +312,7 @@ export class DefaultPage extends Component {
               onSelectSlot={this.onSelectSlot}
               onSelecting={this.onSelecting}
               style={{ height: '100%' }}
+              icons={{done : <Checked />}}
             />
           ) : (
             <CenteredLoading3Dots />

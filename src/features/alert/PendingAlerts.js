@@ -47,11 +47,14 @@ export class PendingAlerts extends Component {
     const header = (
       <InlineList>
         <Line header>
-          <Col layoutSize={this.props.layoutSize || 'md'} md={12} lg={5} xl={5} col={12}>
-            <span>Echéance</span>
-          </Col>
-          <Col layoutSize={this.props.layoutSize || 'md'} md={12} lg={5} xl={5} col={12}>
+          <Col layoutSize={this.props.layoutSize || 'md'} md={20} lg={20} xl={12} col={12}>
             <span>Libellé</span>
+          </Col>
+          <Col layoutSize={this.props.layoutSize || 'md'} md={8} lg={8} xl={5} col={12}>
+            <span>Prévu le</span>
+          </Col>
+          <Col layoutSize={this.props.layoutSize || 'md'} md={8} lg={8} xl={5} col={12}>
+            <span>Echéance</span>
           </Col>
         </Line>
       </InlineList>
@@ -72,11 +75,14 @@ export class PendingAlerts extends Component {
                       onMouseLeave={this.mouseLeave}    
                     >
                       <Line oddEven={counter++} >
-                        <Col layoutSize={this.props.layoutSize || 'md'} md={12} lg={5} xl={5} col={12}>
-                          {intlDateTime(alert.alert_deadline, true)}
-                        </Col>
-                        <Col layoutSize={this.props.layoutSize || 'md'} md={12} lg={5} xl={5} col={12}>
+                        <Col layoutSize={this.props.layoutSize || 'md'} md={20} lg={20} xl={12} col={12}>
                           {alert.alert_title}
+                        </Col>
+                        <Col layoutSize={this.props.layoutSize || 'md'} md={8} lg={8} xl={5} col={12}>
+                          {intlDateTime(alert.alert_from, true)}
+                        </Col>
+                        <Col layoutSize={this.props.layoutSize || 'md'} md={8} lg={8} xl={5} col={12}>
+                          {intlDateTime(alert.alert_deadline, true)}
                         </Col>
                       </Line>
                     </HoverObserver>

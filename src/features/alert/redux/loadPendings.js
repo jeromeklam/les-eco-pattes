@@ -1,4 +1,4 @@
-import { jsonApiNormalizer } from 'freejsonapi';
+import { jsonApiNormalizer, objectToQueryString } from 'freejsonapi';
 import { freeAssoApi } from '../../../common';
 import {
   ALERT_LOAD_PENDINGS_BEGIN,
@@ -12,10 +12,15 @@ export function loadPendings(args = {}) {
     dispatch({
       type: ALERT_LOAD_PENDINGS_BEGIN,
     });
-
     const promise = new Promise((resolve, reject) => {
-
-      const doRequest = freeAssoApi.get('/v1/core/alert', {});
+      const params = {
+        filter: {
+          alert_ts : {'empty': ''}
+        },
+        sort : 'alert_from'
+      }
+      const addUrl = objectToQueryString(params);
+      const doRequest = freeAssoApi.get('/v1/core/alert' + addUrl, {});
       doRequest.then(
         (res) => {
           dispatch({

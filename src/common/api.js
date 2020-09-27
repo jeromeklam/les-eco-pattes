@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { store } from '../index.js';
 import cookie from 'react-cookies';
 
 let instance = axios.create({
@@ -29,5 +30,35 @@ instance.interceptors.request.use(function(config) {
   }
   return config;
 });
+
+instance.interceptors.response.use(
+  function(response) {
+    let status = 200;
+    if (response && response.status) {
+      status = response.status;
+    }
+    if (status === 401 || status === '401') {
+      cookie.remove('Authorization', { path: '/' });
+      cookie.remove('AutoLogin', { path: '/' });
+      const auth = (store && store.getState().auth.authenticated) || false;
+      if (auth) {
+        window.location.replace("/auth/signin");
+      }
+    }
+    return response;
+  },
+  function(error) {
+    if (401 === error.response.status) {
+      cookie.remove('Authorization', { path: '/' });
+      cookie.remove('AutoLogin', { path: '/' });
+      const auth = (store && store.getState().auth.authenticated) || false;
+      console.log(auth, store.getState().auth);
+      if (auth) {
+        window.location.replace("/auth/signin");
+      }
+    }
+    return Promise.reject(error);
+  },
+);
 
 export default instance;
