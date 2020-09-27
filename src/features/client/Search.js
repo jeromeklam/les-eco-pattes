@@ -12,8 +12,8 @@ export default class Search extends Component {
     show: PropTypes.bool.isRequired,
     onClose: PropTypes.func.isRequired,
     filters: PropTypes.object,
-    typeCodes: PropTypes.element,
-    categoryCodes: PropTypes.element,
+    typeCodes: PropTypes.array,
+    categoryCodes: PropTypes.array,
   };
   static defaultProps = {
     filters: {},

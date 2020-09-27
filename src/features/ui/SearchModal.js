@@ -13,9 +13,12 @@ export default class SearchModal extends Component {
     onSearch: PropTypes.func.isRequired,
     onClose: PropTypes.func.isRequired,
     onSelect: PropTypes.func.isRequired,
-    list: PropTypes.array.isRequired,
+    list: PropTypes.array,
     pickerDisplay: PropTypes.string.isRequired,
     filters: PropTypes.array,
+  };
+  static defaultProps = {
+    list: [],
   };
 
   static getDerivedStateFromProps(props, state) {

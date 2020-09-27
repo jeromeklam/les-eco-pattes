@@ -1,4 +1,4 @@
-import { freeAssoApi, initAxios } from '../../../common';
+import { freeAssoApi } from '../../../common';
 import { jsonApiNormalizer, normalizedObjectModeler  } from 'freejsonapi';
 import {
   AUTH_SIGN_IN_BEGIN,

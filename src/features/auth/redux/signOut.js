@@ -5,7 +5,6 @@ import {
   AUTH_SIGN_OUT_DISMISS_ERROR,
 } from './constants';
 import cookie from 'react-cookies';
-import { initAxios } from '../../../common';
 
 export function signOut(args = {}) {
   return (dispatch) => {

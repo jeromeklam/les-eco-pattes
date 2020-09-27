@@ -110,7 +110,6 @@ export class InlineAlerts extends Component {
 
   render() {
     let counter = 0;
-    let status = "";
     const alerts = this.state.items;
     console.log("FK items alerts",alerts);
     if (this.state.loading) {

@@ -5,7 +5,7 @@ import {
   AUTH_CHECK_IS_AUTHENTICATED_DISMISS_ERROR,
 } from './constants';
 import { jsonApiNormalizer, normalizedObjectModeler } from 'freejsonapi';
-import { initAxios, freeAssoApi } from '../../../common';
+import { freeAssoApi } from '../../../common';
 import cookie from 'react-cookies';
 import { schema, defaultConfig } from '../';
 import { saveToLS } from '../../ui';
