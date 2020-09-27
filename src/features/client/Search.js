@@ -63,7 +63,7 @@ export default class Search extends Component {
 
   render() {
     const filters = [
-      { name: 'cli_firstname', label: 'Prénom', type: 'text' },
+      { name: 'cli_firstname', label: 'Prénom', type: 'text', value: this.props.value },
       { name: 'cli_lastname', label: 'Nom', type: 'text' },
       {
         name: 'clit_id',

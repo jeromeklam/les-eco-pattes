@@ -179,13 +179,6 @@ export class List extends Component {
     this.props.actions.loadMore();
   }
 
-  itemClassName(item) {
-    if (item && item.cau_to !== null && item.cau_to !== '') {
-      return 'row-line-warning';
-    }
-    return '';
-  }
-
   onSelectMenu(option) {
     switch (option) {
       case 'selectAll':
@@ -200,6 +193,13 @@ export class List extends Component {
         this.setState({ menu: 'movement', menuOption: option, cauid: -1 });
         break;
     }
+  }
+
+  itemClassName(item) {
+    if (item && item.cau_to !== null && item.cau_to !== '') {
+      return 'row-line-warning';
+    }
+    return '';
   }
 
   render() {

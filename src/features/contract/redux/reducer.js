@@ -19,6 +19,7 @@ import { reducer as delOneReducer } from './delOne';
 import { reducer as uploadContractMediaReducer } from './uploadContractMedia';
 import { reducer as delContractMediaReducer } from './delContractMedia';
 import { reducer as updateQuickSearchReducer } from './updateQuickSearch';
+import { reducer as updateSortReducer } from './updateSort';
 
 const reducers = [
   loadMoreReducer,
@@ -33,6 +34,7 @@ const reducers = [
   uploadContractMediaReducer,
   delContractMediaReducer,
   updateQuickSearchReducer,
+  updateSortReducer,
 ];
 
 export default function reducer(state = initialState, action) {

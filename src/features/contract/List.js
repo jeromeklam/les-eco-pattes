@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { injectIntl } from 'react-intl';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as actions from './redux/actions';
@@ -9,6 +10,8 @@ import {
   FilterEmpty as FilterEmptyIcon,
   FilterFull as FilterFullIcon,
   FilterClear as FilterClearIcon,
+  FilterDefault as FilterDefaultIcon,
+  FilterClearDefault as FilterClearDefaultIcon,
   SimpleCancel as CancelPanelIcon,
   SimpleCheck as ValidPanelIcon,
   SortDown as SortDownIcon,
@@ -18,6 +21,7 @@ import {
   Calendar as CalendarIcon,
   DelOne as ClearDateIcon,
 } from '../icons';
+import { deleteSuccess, showErrors } from '../ui';
 import { getGlobalActions, getInlineActions, getCols } from './';
 import { Create, Modify } from './';
 
@@ -39,10 +43,11 @@ export class List extends Component {
     this.onReload = this.onReload.bind(this);
     this.onClose = this.onClose.bind(this);
     this.onLoadMore = this.onLoadMore.bind(this);
-    this.onClearFilters = this.onClearFilters.bind(this);
+    this.onFiltersDefault = this.onFiltersDefault.bind(this);
     this.onQuickSearch = this.onQuickSearch.bind(this);
     this.onSetFiltersAndSort = this.onSetFiltersAndSort.bind(this);
     this.onUpdateSort = this.onUpdateSort.bind(this);
+    this.itemClassName = this.itemClassName.bind(this);
   }
 
   componentDidMount() {
@@ -62,7 +67,15 @@ export class List extends Component {
   }
 
   onDelOne(id) {
-    this.props.actions.delOne(id).then(result => this.props.actions.loadMore({}, true));
+    this.props.actions
+      .delOne(id)
+      .then(result => {
+        this.props.actions.loadMore({}, true);
+        deleteSuccess();
+      })
+      .catch(errors => {
+        showErrors(this.props.intl, errors, "", "Suppression impossible ! ");
+      });
   }
 
   onReload(event) {
@@ -113,8 +126,8 @@ export class List extends Component {
     this.setState({ timer: timer });
   }
 
-  onClearFilters() {
-    this.props.actions.initFilters();
+  onFiltersDefault(enable) {
+    this.props.actions.initFilters(enable);
     this.props.actions.initSort();
     let timer = this.state.timer;
     if (timer) {
@@ -124,6 +137,13 @@ export class List extends Component {
       this.props.actions.loadMore({}, true);
     }, 2000);
     this.setState({ timer: timer });
+  }
+
+  itemClassName(item) {
+    if (item && item.ct_to !== null && item.ct_to !== '') {
+      return 'row-line-warning';
+    }
+    return '';
   }
 
   render() {
@@ -172,14 +192,18 @@ export class List extends Component {
           filterFullIcon={<FilterFullIcon color="white" />}
           filterEmptyIcon={<FilterEmptyIcon color="white" />}
           filterClearIcon={<FilterClearIcon color="white" />}
+          filterDefaultIcon={<FilterDefaultIcon color="white" />}
+          filterClearDefaultIcon={<FilterClearDefaultIcon color="white" />}
           onSearch={this.onQuickSearch}
           onSort={this.onUpdateSort}
           onSetFiltersAndSort={this.onSetFiltersAndSort}
-          onClearFilters={this.onClearFilters}
+          onClearFilters={() => this.onFiltersDefault(true)}
+          onClearFiltersDefault={() => this.onFiltersDefault(false)}
           onLoadMore={this.onLoadMore}
           loadMorePending={this.props.contract.loadMorePending}
           loadMoreFinish={this.props.contract.loadMoreFinish}
           loadMoreError={this.props.contract.loadMoreError}
+          fClassName={this.itemClassName}
         />
         {this.state.ctId > 0 && (
           <Modify modal={true} ctId={this.state.ctId} onClose={this.onClose} />
@@ -205,7 +229,7 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default connect(
+export default injectIntl(connect(
   mapStateToProps,
   mapDispatchToProps
-)(List);
+)(List));

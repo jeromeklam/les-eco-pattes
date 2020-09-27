@@ -50,7 +50,7 @@ export default class Search extends Component {
 
   render() {
     const filters = [
-      {name: 'sick_name', label:"Nom", type:'text'},
+      {name: 'sick_name', label:"Nom", type:'text', value: this.props.value},
     ]
     return (
       <SearchModal 

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { injectIntl } from 'react-intl';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as actions from './redux/actions';
@@ -16,6 +17,7 @@ import {
   Sort as SortNoneIcon,
   Search as SearchIcon,
 } from '../icons';
+import { deleteSuccess, showErrors } from '../ui';
 import { getGlobalActions, getInlineActions, getCols } from './';
 import { Create, Modify } from './';
 
@@ -60,7 +62,15 @@ export class List extends Component {
   }
 
   onDelOne(id) {
-    this.props.actions.delOne(id).then(result => this.props.actions.loadMore({}, true));
+    this.props.actions
+      .delOne(id)
+      .then(result => {
+        this.props.actions.loadMore({}, true);
+        deleteSuccess();
+      })
+      .catch(errors => {
+        showErrors(this.props.intl, errors, "", "Suppression impossible ! ");
+      });
   }
 
   onReload(event) {
@@ -203,4 +213,4 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(List);
+export default injectIntl(connect(mapStateToProps, mapDispatchToProps)(List));

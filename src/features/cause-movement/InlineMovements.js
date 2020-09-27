@@ -66,11 +66,11 @@ export class InlineMovements extends Component {
 
   componentDidMount() {
     this.localLoadMovements();
-    if (!this.state.emptyItem) {
+    /*if (!this.state.emptyItem) {
       this.props.actions.loadOne(0).then(result => {
          this.setState({emptyItem: this.props.causeMovement.emptyItem});
       });
-    }
+    }*/
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -137,7 +137,7 @@ export class InlineMovements extends Component {
     const { emptyItem } = this.state;
     if (this.state.loading) {
       return (
-        <div className="cause-inline-mevements">
+        <div className="cause-inline-movements">
           <CenteredLoading3Dots className="text-light" />
         </div>
       );
@@ -215,35 +215,43 @@ export class InlineMovements extends Component {
                 <p>Confirmez-vous la validation du mouvement ?</p>
               </ResponsiveConfirm>
             </div>
-            <div className="row row-new-movement">
-              <div className="col-36 p-3">
-                {emptyItem && (
-                  <InlineMovementForm
-                    cause={this.state.cause}
-                    item={emptyItem}
-                    errors={this.props.causeMovement.createOneError}
-                    onSubmit={this.onSubmit}
-                  />
-                )}
+            {emptyItem && (
+              <div className="row row-new-movement">
+                <div className="col-36 p-3">
+                  {emptyItem && (
+                    <InlineMovementForm
+                      cause={this.state.cause}
+                      item={emptyItem}
+                      errors={this.props.causeMovement.createOneError}
+                      onSubmit={this.onSubmit}
+                    />
+                  )}
+                </div>
               </div>
-            </div>
+            )}
           </div>
         );
       } else {
-        return (
+        return (   
           <div className="cause-inline-movements">
-            <div className="row row-new-movement">
-              <div className="col-36 pt-2">
-                {emptyItem && (
-                  <InlineMovementForm
-                    cause={this.state.cause}
-                    item={emptyItem}
-                    errors={this.props.causeMovement.createOneError}
-                    onSubmit={this.onSubmit}
-                  />
-                )}
+            {emptyItem ? (
+              <div className="row row-new-movement">
+                <div className="col-36 pt-2">
+                  {emptyItem && (
+                    <InlineMovementForm
+                      cause={this.state.cause}
+                      item={emptyItem}
+                      errors={this.props.causeMovement.createOneError}
+                      onSubmit={this.onSubmit}
+                    />
+                  )}
+                </div>
+              </div>  
+            ) : (
+              <div className="text-center p-3">
+                <span className="text-secondary">Aucun mouvement</span>
               </div>
-            </div>
+            )} 
           </div>
         );
       }

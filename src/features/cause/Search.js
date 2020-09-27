@@ -53,7 +53,7 @@ export default class Search extends Component {
   render() {
     //console.log("FK search cause",this.props);
     const filters = [
-      { name: 'cau_code', label: 'N° boucle', type: 'text', value: this.props.filters.cau_code || '' },      
+      { name: 'cau_code', label: 'N° boucle', type: 'text', value: this.props.value || '' },      
       {
         name: 'cau_sex',
         label: 'Sexe',
