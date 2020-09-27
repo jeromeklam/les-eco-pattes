@@ -31,6 +31,7 @@ export default class SearchModal extends Component {
     this.onChange = this.onChange.bind(this);
     this.onClear = this.onClear.bind(this);
     this.onSearch = this.onSearch.bind(this);
+    this.handleKeyUp = this.handleKeyUp.bind(this);
   }
 
   componentDidMount() {
@@ -62,6 +63,13 @@ export default class SearchModal extends Component {
     });
     this.setState({ fields: filters });
     this.props.onClear();
+  }
+
+  handleKeyUp(event) {
+    if (event.key === 'Enter') {
+      event.preventDefault();
+      this.onSearch(event);
+    }
   }
 
   onSearch(event) {
@@ -97,7 +105,7 @@ export default class SearchModal extends Component {
       { name: 'Annuler', function: this.props.onClose, theme: 'secondary', icon: 'close' },
     ];
     const searchArea = (
-      <div>
+      <div onKeyUp={this.handleKeyUp}>
         <h6 className="text-secondary">Critères de recherche :</h6>
         <div className="search-filters row">
           {this.state.fields &&
