@@ -1,4 +1,4 @@
-import { jsonApiNormalizer } from 'freejsonapi';
+import { jsonApiNormalizer } from 'jsonapi-tools';
 import {
   AUTH_ASK_PASSWORD_BEGIN,
   AUTH_ASK_PASSWORD_SUCCESS,

@@ -30,7 +30,7 @@ import familyReducer from '../features/family/redux/reducer';
 import unitReducer from '../features/unit/redux/reducer';
 import itemReducer from '../features/item/redux/reducer';
 import causeSicknessReducer from '../features/cause-sickness/redux/reducer';
-import { highlightReducer } from 'freeassofront';
+import { highlightReducer } from 'react-bootstrap-front';
 import movementReducer from '../features/movement/redux/reducer';
 import agendaReducer from '../features/agenda/redux/reducer';
 import contractReducer from '../features/contract/redux/reducer';

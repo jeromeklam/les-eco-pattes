@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { InputSelect } from 'freeassofront';
+import { InputSelect } from 'react-bootstrap-front';
 
 const getYears = () => {
   let year = new Date().getFullYear();

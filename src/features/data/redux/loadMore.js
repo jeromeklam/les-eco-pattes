@@ -1,4 +1,4 @@
-import { jsonApiNormalizer, objectToQueryString, normalizedObjectModeler, getNewNormalizedObject } from 'freejsonapi';
+import { jsonApiNormalizer, objectToQueryString, normalizedObjectModeler, getNewNormalizedObject } from 'jsonapi-tools';
 import { freeAssoApi } from '../../../common';
 import {
   DATA_LOAD_MORE_INIT,

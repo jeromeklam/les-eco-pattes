@@ -1,4 +1,4 @@
-import { jsonApiNormalizer } from 'freejsonapi';
+import { jsonApiNormalizer } from 'jsonapi-tools';
 import {
   DATA_CREATE_ONE_BEGIN,
   DATA_CREATE_ONE_SUCCESS,

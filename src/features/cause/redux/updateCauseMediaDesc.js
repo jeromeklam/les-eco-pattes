@@ -1,4 +1,4 @@
-import { jsonApiNormalizer, normalizedObjectUpdate, getNewJsonApi } from 'freejsonapi';
+import { jsonApiNormalizer, normalizedObjectUpdate, getNewJsonApi } from 'jsonapi-tools';
 import { freeAssoApi } from '../../../common';
 import {
   CAUSE_UPDATE_CAUSE_MEDIA_DESC_BEGIN,

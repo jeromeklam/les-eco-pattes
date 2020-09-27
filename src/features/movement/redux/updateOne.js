@@ -1,4 +1,4 @@
-import { jsonApiNormalizer, normalizedObjectUpdate } from 'freejsonapi';
+import { jsonApiNormalizer, normalizedObjectUpdate } from 'jsonapi-tools';
 import {
   MOVEMENT_UPDATE_ONE_BEGIN,
   MOVEMENT_UPDATE_ONE_SUCCESS,

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Dropzone from 'react-dropzone';
 import PropTypes from 'prop-types';
-import { ResponsiveConfirm } from 'freeassofront';
+import { ResponsiveConfirm } from 'react-bootstrap-front';
 import { Upload as UploadIcon, GetOne as GetOneIcon, DelOne as DelOneIcon } from '../icons';
 
 export default class InputImage extends Component {

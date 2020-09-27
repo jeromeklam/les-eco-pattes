@@ -1,4 +1,4 @@
-import { Filter, FILTER_MODE_AND, FILTER_OPER_GREATER_OR_EQUAL_OR_NULL } from 'freeassofront';
+import { Filter, FILTER_MODE_AND, FILTER_OPER_GREATER_OR_EQUAL_OR_NULL } from 'react-bootstrap-front';
 import { CAUSE_INIT_FILTERS } from './constants';
 
 /**

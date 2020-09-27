@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { freeAssoApi } from '../../common';
-import { jsonApiNormalizer, objectToQueryString, normalizedObjectModeler } from 'freejsonapi';
+import { jsonApiNormalizer, objectToQueryString, normalizedObjectModeler } from 'jsonapi-tools';
 import {CenteredLoading3Dots } from '../ui';
 import { InlineListGroup } from '.';
 import { causeGroup } from './functions.js';

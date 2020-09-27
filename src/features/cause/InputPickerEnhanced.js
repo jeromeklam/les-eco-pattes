@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
 import { freeAssoApi } from '../../common';
-import { InputPicker as DefaultInputPicker, InputSelect } from 'freeassofront';
+import { InputPicker as DefaultInputPicker, InputSelect } from 'react-bootstrap-front';
 import { causeTypeAsOptions } from '../cause-type/functions.js';
 import { sexSelect } from '../cause';
 import { Search, Modify } from './';

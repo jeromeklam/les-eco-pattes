@@ -1,4 +1,4 @@
-import { jsonApiNormalizer } from 'freejsonapi';
+import { jsonApiNormalizer } from 'jsonapi-tools';
 import {
   AUTH_UPDATE_CONFIG_BEGIN,
   AUTH_UPDATE_CONFIG_SUCCESS,

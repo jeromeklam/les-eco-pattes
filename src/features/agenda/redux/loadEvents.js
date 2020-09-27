@@ -1,5 +1,5 @@
 import { freeAssoApi } from '../../../common';
-import { jsonApiNormalizer, objectToQueryString } from 'freejsonapi';
+import { jsonApiNormalizer, objectToQueryString } from 'jsonapi-tools';
 import {
   AGENDA_LOAD_EVENTS_BEGIN,
   AGENDA_LOAD_EVENTS_SUCCESS,

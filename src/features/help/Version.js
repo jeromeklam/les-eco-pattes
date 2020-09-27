@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import ReactMarkdown from 'react-markdown';
-import { ResponsiveContent } from 'freeassofront';
+import { ResponsiveContent } from 'react-bootstrap-front';
 import { changelog } from './';
 
 export default class Version extends Component {

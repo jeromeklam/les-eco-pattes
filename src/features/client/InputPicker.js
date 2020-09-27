@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { InputPicker as DefaultInputPicker } from 'freeassofront';
+import { InputPicker as DefaultInputPicker } from 'react-bootstrap-front';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import axios from 'axios';

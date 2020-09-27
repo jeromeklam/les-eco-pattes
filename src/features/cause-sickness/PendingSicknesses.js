@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
-import { normalizedObjectModeler } from 'freejsonapi';
-import { HoverObserver } from 'freeassofront';
+import { normalizedObjectModeler } from 'jsonapi-tools';
+import { HoverObserver } from 'react-bootstrap-front';
 import { connect } from 'react-redux';
 import striptags from 'striptags';
 import * as actions from './redux/actions';

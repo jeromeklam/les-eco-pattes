@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as actions from './redux/actions';
-import { ResponsiveConfirm, HoverObserver } from 'freeassofront';
+import { ResponsiveConfirm, HoverObserver } from 'react-bootstrap-front';
 import classnames from 'classnames';
 import { intlDateTime } from '../../common';
 import { 

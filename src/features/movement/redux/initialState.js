@@ -1,5 +1,5 @@
-import { getNewNormalizedObject } from 'freejsonapi';
-import { Filter } from 'freeassofront';
+import { getNewNormalizedObject } from 'jsonapi-tools';
+import { Filter } from 'react-bootstrap-front';
 
 const initialState = {
   items: getNewNormalizedObject('FreeAsso_Movement'),

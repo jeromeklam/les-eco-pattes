@@ -1,7 +1,7 @@
 
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Loading3Dots } from 'freeassofront';
+import { Loading3Dots } from 'react-bootstrap-front';
 
 export default class CenteredLoading3Dots extends Component {
   static propTypes = {

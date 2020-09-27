@@ -1,4 +1,4 @@
-import { jsonApiNormalizer } from 'freejsonapi';
+import { jsonApiNormalizer } from 'jsonapi-tools';
 import { freeAssoApi } from '../../../common';
 import {
   CLIENT_CATEGORY_DEL_ONE_BEGIN,

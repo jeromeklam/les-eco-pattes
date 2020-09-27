@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { normalizedObjectModeler } from 'freejsonapi';
-import { Calendar, Views, dateFnsLocalizer, Dropdown } from 'freeassofront';
+import { normalizedObjectModeler } from 'jsonapi-tools';
+import { Calendar, Views, dateFnsLocalizer, Dropdown } from 'react-bootstrap-front';
 import { format, parse, startOfWeek, subDays, getDay } from 'date-fns';
 import { fr } from 'date-fns/locale';
 import { bindActionCreators } from 'redux';

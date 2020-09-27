@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { normalizedObjectModeler } from 'freejsonapi';
-import { InputText, InputTextarea, InputSelect, InputCheckbox } from 'freeassofront';
+import { normalizedObjectModeler } from 'jsonapi-tools';
+import { InputText, InputTextarea, InputSelect, InputCheckbox } from 'react-bootstrap-front';
 
 function getFieldData(field_name, tab_config, tab_data) {
   const myDatas = normalizedObjectModeler(tab_data, 'FreeAsso_Data');

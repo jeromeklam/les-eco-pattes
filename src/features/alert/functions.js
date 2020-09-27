@@ -1,4 +1,4 @@
-import { objectToQueryString, jsonApiNormalizer, normalizedObjectModeler } from 'freejsonapi';
+import { objectToQueryString, jsonApiNormalizer, normalizedObjectModeler } from 'jsonapi-tools';
 import { freeAssoApi, intlDateTime } from '../../common';
 
 /**

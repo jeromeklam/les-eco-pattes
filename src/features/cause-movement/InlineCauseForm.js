@@ -1,5 +1,5 @@
 import React from 'react';
-import { InputText, InputSelect } from 'freeassofront';
+import { InputText, InputSelect } from 'react-bootstrap-front';
 import { InputPicker as InputPickerCause } from '../cause';
 import useForm from '../ui/useForm';
 import { SimpleValid as SimpleValidIcon } from '../icons';

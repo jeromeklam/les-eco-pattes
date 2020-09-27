@@ -1,5 +1,5 @@
 import React from 'react';
-import { InputText, InputSelect, InputCheckbox } from 'freeassofront';
+import { InputText, InputSelect, InputCheckbox } from 'react-bootstrap-front';
 import {
   useForm,
   InputDate,

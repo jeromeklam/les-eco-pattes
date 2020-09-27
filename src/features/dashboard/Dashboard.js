@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { Responsive } from 'freeassofront';
-import { ResponsiveContent } from 'freeassofront';
+import { Responsive } from 'react-bootstrap-front';
+import { ResponsiveContent } from 'react-bootstrap-front';
 import fond from '../../images/fond2.jpg';
 import logo from '../../images/logo-les-eco-pattes.jpg';
 import { DashboardGrid } from './';

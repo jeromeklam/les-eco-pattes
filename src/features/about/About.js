@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { injectIntl, FormattedMessage } from 'react-intl';
 import { SocialIcon } from 'react-social-icons';
-import { ResponsiveContent } from 'freeassofront';
+import { ResponsiveContent } from 'react-bootstrap-front';
 import { Copyright } from '../ui';
 import logo from '../../images/logo-les-eco-pattes.jpg';
 

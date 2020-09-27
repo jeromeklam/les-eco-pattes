@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { InputSpin as FAInputSpin } from 'freeassofront';
+import { InputSpin as FAInputSpin } from 'react-bootstrap-front';
 import { Up as UpIcon, Down as DownIcon, DelOne as DelOneIcon } from '../icons';
 
 export default class InputSpin extends Component {

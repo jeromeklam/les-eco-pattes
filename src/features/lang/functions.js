@@ -1,4 +1,4 @@
-import { normalizedObjectModeler } from 'freejsonapi';
+import { normalizedObjectModeler } from 'jsonapi-tools';
 
 /**
  * Export all langs as an array of value=>label

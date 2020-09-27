@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { InputPicker as DefaultInputPicker } from 'freeassofront';
+import { InputPicker as DefaultInputPicker } from 'react-bootstrap-front';
 import { Search, Modify } from './';
 import axios from 'axios';
 import { freeAssoApi } from '../../common';

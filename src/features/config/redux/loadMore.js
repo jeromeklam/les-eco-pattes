@@ -1,4 +1,4 @@
-import { jsonApiNormalizer, objectToQueryString } from 'freejsonapi';
+import { jsonApiNormalizer, objectToQueryString } from 'jsonapi-tools';
 import { freeAssoApi } from '../../../common';
 import {
   CONFIG_LOAD_MORE_BEGIN,

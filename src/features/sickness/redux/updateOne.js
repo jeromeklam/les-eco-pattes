@@ -1,4 +1,4 @@
-import { jsonApiNormalizer, normalizedObjectUpdate } from 'freejsonapi';
+import { jsonApiNormalizer, normalizedObjectUpdate } from 'jsonapi-tools';
 import {
   SICKNESS_UPDATE_ONE_UPDATE,
   SICKNESS_UPDATE_ONE_BEGIN,

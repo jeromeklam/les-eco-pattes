@@ -1,4 +1,4 @@
-import { FILTER_MODE_OR, FILTER_OPER_LIKE, FILTER_SEARCH_QUICK } from 'freeassofront';
+import { FILTER_MODE_OR, FILTER_OPER_LIKE, FILTER_SEARCH_QUICK } from 'react-bootstrap-front';
 import { DATA_UPDATE_QUICK_SEARCH } from './constants';
 
 export function updateQuickSearch(value) {

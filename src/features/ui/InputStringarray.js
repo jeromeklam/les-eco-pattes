@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { InputStringarray as FAInputStringarray } from 'freeassofront';
+import { InputStringarray as FAInputStringarray } from 'react-bootstrap-front';
 import { Plus, Minus } from '../icons';
 
 export default class InputStringarray extends Component {

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { InputDate as FAInputDate } from 'freeassofront';
+import { InputDate as FAInputDate } from 'react-bootstrap-front';
 import { Calendar as CalendarIcon, DelOne as DelOneIcon } from '../icons';
 
 export default class InputDate extends Component {

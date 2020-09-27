@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { ResponsiveModal } from 'freeassofront'
+import { ResponsiveModal } from 'react-bootstrap-front'
 
 export default class ImageModal extends Component {
   static propTypes = {

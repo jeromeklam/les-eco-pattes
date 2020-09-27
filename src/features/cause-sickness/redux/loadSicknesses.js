@@ -1,4 +1,4 @@
-import { jsonApiNormalizer, objectToQueryString, normalizedObjectModeler } from 'freejsonapi';
+import { jsonApiNormalizer, objectToQueryString, normalizedObjectModeler } from 'jsonapi-tools';
 import {
   CAUSE_SICKNESS_LOAD_SICKNESSES_BEGIN,
   CAUSE_SICKNESS_LOAD_SICKNESSES_SUCCESS,

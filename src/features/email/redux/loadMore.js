@@ -1,4 +1,4 @@
-import { jsonApiNormalizer, objectToQueryString, getNewNormalizedObject } from 'freejsonapi';
+import { jsonApiNormalizer, objectToQueryString, getNewNormalizedObject } from 'jsonapi-tools';
 import { freeAssoApi } from '../../../common';
 import {
   EMAIL_LOAD_MORE_INIT,

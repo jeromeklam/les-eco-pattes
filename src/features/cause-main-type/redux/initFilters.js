@@ -1,4 +1,4 @@
-import { Filter } from 'freeassofront';
+import { Filter } from 'react-bootstrap-front';
 import { CAUSE_MAIN_TYPE_INIT_FILTERS } from './constants';
 
 export function initFilters() {

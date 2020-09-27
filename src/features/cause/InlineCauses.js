@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import classnames from 'classnames';
-import { Dropdown } from 'freeassofront';
+import { Dropdown } from 'react-bootstrap-front';
 import { CenteredLoading3Dots } from '../ui';
 import { Movement as MovementIcon, MenuDown as MenuDownIcon } from '../icons';
 import { Create as CreateMovement } from '../movement';

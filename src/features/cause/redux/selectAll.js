@@ -1,4 +1,4 @@
-import { normalizedObjectModeler } from 'freejsonapi';
+import { normalizedObjectModeler } from 'jsonapi-tools';
 import {
   CAUSE_SELECT_ALL,
 } from './constants';

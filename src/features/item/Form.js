@@ -1,5 +1,5 @@
 import React from 'react';
-import { InputHidden, InputText, InputSelect, InputCheckbox } from 'freeassofront';
+import { InputHidden, InputText, InputSelect, InputCheckbox } from 'react-bootstrap-front';
 import { InputPicker as ClientInputPicker } from '../client';
 import { ResponsiveModalOrForm, useForm, InputDate, InputTextarea } from '../ui';
 import { stockSelect, typeSelect } from './';

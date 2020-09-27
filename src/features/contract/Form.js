@@ -1,6 +1,6 @@
 import React from 'react';
 import RegexpParser from 'reregexp';
-import { InputHidden, InputText, InputMonetary, InputMask } from 'freeassofront';
+import { InputHidden, InputText, InputMonetary, InputMask } from 'react-bootstrap-front';
 import { validateRegex } from '../../common';
 import useForm from '../ui/useForm';
 import { ResponsiveModalOrForm, InputDate, InputData } from '../ui';

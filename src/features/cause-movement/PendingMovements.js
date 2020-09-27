@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as actions from './redux/actions';
-import { normalizedObjectModeler } from 'freejsonapi';
-import { ResponsiveConfirm, HoverObserver } from 'freeassofront';
+import { normalizedObjectModeler } from 'jsonapi-tools';
+import { ResponsiveConfirm, HoverObserver } from 'react-bootstrap-front';
 import { propagateModel, intlDateTime } from '../../common';
 import {
   DelOne as DelOneIcon,

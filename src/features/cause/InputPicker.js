@@ -5,7 +5,7 @@ import * as actions from './redux/actions';
 import axios from 'axios';
 import { freeAssoApi } from '../../common';
 import PropTypes from 'prop-types';
-import { InputPicker as DefaultInputPicker } from 'freeassofront';
+import { InputPicker as DefaultInputPicker } from 'react-bootstrap-front';
 import { More, DelOne, Zoom } from '../icons';
 import { Search, Modify } from './';
 

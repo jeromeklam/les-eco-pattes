@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Loading9x9 } from 'freeassofront';
+import { Loading9x9 } from 'react-bootstrap-front';
 
 export default class CenteredLoading9X9 extends Component {
   static propTypes = {

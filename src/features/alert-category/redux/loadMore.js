@@ -1,4 +1,4 @@
-import { jsonApiNormalizer } from 'freejsonapi';
+import { jsonApiNormalizer } from 'jsonapi-tools';
 import { freeAssoApi } from '../../../common';
 import {
   ALERT_CATEGORY_LOAD_MORE_BEGIN,

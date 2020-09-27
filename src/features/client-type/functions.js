@@ -1,4 +1,4 @@
-import { normalizedObjectModeler } from 'freejsonapi';
+import { normalizedObjectModeler } from 'jsonapi-tools';
 
 /**
  * Export all client types as an array of value=>label

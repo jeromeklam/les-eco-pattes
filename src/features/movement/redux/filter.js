@@ -1,4 +1,4 @@
-import { objectToQueryString } from 'freejsonapi';
+import { objectToQueryString } from 'jsonapi-tools';
 import { freeAssoApi } from '../../../common';
 import {
   MOVEMENT_FILTER_BEGIN,

@@ -1,5 +1,5 @@
 import React from 'react';
-import { InputHidden, InputText, InputSelect, InputMask, InputCheckbox } from 'freeassofront';
+import { InputHidden, InputText, InputSelect, InputMask, InputCheckbox } from 'react-bootstrap-front';
 import RegexpParser from 'reregexp';
 import { validateRegex } from '../../common';
 import { 

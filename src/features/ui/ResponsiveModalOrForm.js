@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { ResponsiveForm, ResponsiveModal } from 'freeassofront';
+import { ResponsiveForm, ResponsiveModal } from 'react-bootstrap-front';
 
 export default class ResponsiveModalOrForm extends Component {
   static propTypes = {};

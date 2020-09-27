@@ -1,5 +1,5 @@
 import React from 'react';
-import { InputHidden, InputText, InputSelect, InputCheckbox } from 'freeassofront';
+import { InputHidden, InputText, InputSelect, InputCheckbox } from 'react-bootstrap-front';
 import { ResponsiveModalOrForm, InputTextarea, useForm } from '../ui';
 import { sicknessTypeSelect } from './';
 

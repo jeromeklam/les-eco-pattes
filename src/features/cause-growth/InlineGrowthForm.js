@@ -1,6 +1,6 @@
 import React from 'react';
 import classnames from 'classnames';
-import { InputText } from 'freeassofront';
+import { InputText } from 'react-bootstrap-front';
 import { InputDate } from '../ui';
 import useForm from '../ui/useForm';
 import { SimpleValid as SimpleValidIcon } from '../icons';

@@ -1,4 +1,4 @@
-import { Treeview } from 'freeassofront';
+import { Treeview } from 'react-bootstrap-front';
 
 const initialState = {
   items: [],

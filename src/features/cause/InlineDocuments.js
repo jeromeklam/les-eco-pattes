@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import FileIcon, { defaultStyles } from 'react-file-icon';
 import Dropzone from 'react-dropzone';
 import * as actions from './redux/actions';
-import { ResponsiveConfirm } from 'freeassofront';
+import { ResponsiveConfirm } from 'react-bootstrap-front';
 import { DelOne as DelOneIcon, Download as DownloadIcon, Upload as UploadIcon } from '../icons';
 import { CenteredLoading3Dots, downloadBlob } from '../ui';
 import { downloadCauseMediaBlob, getMedias } from './';

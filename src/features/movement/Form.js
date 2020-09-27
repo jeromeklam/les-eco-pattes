@@ -1,5 +1,5 @@
 import React from 'react';
-import { InputHidden, InputText, InputSelect, InputCheckbox } from 'freeassofront';
+import { InputHidden, InputText, InputSelect, InputCheckbox } from 'react-bootstrap-front';
 import { Movement as MovementIcon, Cause as CauseIcon } from '../icons';
 import { useForm, ResponsiveModalOrForm, InputDatetime } from '../ui';
 import { MultiInputPicker as CauseMultiInputPicker } from '../cause';

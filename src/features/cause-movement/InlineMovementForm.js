@@ -1,5 +1,5 @@
 import React from 'react';
-import { InputText, InputSelect } from 'freeassofront';
+import { InputText, InputSelect } from 'react-bootstrap-front';
 import { InputPicker as InputPickerSite } from '../site';
 import { InputDate } from '../ui';
 import useForm from '../ui/useForm';

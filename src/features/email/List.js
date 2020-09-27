@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as actions from './redux/actions';
-import { normalizedObjectModeler } from 'freejsonapi';
-import { ResponsiveList } from 'freeassofront';
+import { normalizedObjectModeler } from 'jsonapi-tools';
+import { ResponsiveList } from 'react-bootstrap-front';
 
 export class List extends Component {
   static propTypes = {

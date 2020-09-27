@@ -1,5 +1,5 @@
 import React from 'react';
-import { InputSelect } from 'freeassofront';
+import { InputSelect } from 'react-bootstrap-front';
 import { InputTextarea, InputDate, InputData, ResponsiveModalOrForm } from '../ui';
 import useForm from '../ui/useForm';
 import { InputPicker as SicknessInputPicker } from '../sickness';

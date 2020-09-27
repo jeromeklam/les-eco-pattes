@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { IntlProvider, FormattedMessage } from 'react-intl';
 import * as actions from './redux/actions';
 import * as authActions from '../auth/redux/actions';
-import { ResponsivePage } from 'freeassofront';
+import { ResponsivePage } from 'react-bootstrap-front';
 import {
   Menu as MenuIcon,
   AccountDetail,
@@ -51,9 +51,9 @@ export class App extends Component {
     this.state = {
       mySocket: initSocket(),
     };
-    log.getLogger("freejsonapi.jsonApiNormalizer").setLevel("WARN");
-    log.getLogger("freeassofront.inputMask").setLevel("WARN");
-    log.getLogger("freeassofront.inputSelect").setLevel("WARN");
+    log.getLogger("jsonapi-tools.jsonApiNormalizer").setLevel("WARN");
+    log.getLogger("react-bootstrap-front.inputMask").setLevel("WARN");
+    log.getLogger("react-bootstrap-front.inputSelect").setLevel("WARN");
   }
 
   componentDidMount() {

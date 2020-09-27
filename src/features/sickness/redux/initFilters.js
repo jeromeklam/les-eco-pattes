@@ -1,4 +1,4 @@
-import { Filter } from 'freeassofront';
+import { Filter } from 'react-bootstrap-front';
 import { SICKNESS_INIT_FILTERS } from './constants';
 
 export function initFilters() {

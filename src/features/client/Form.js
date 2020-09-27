@@ -4,7 +4,7 @@ import {
   InputText,
   InputSelect,
   InputCheckbox,
-} from 'freeassofront';
+} from 'react-bootstrap-front';
 import useForm from '../ui/useForm';
 import { clientTypeAsOptions } from '../client-type/functions.js';
 import { clientCategoryAsOptions } from '../client-category/functions.js';

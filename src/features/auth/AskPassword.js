@@ -5,8 +5,8 @@ import { connect } from 'react-redux';
 import { FormattedMessage, injectIntl } from 'react-intl';
 import * as actions from './redux/actions';
 import logo from '../../images/logo-les-eco-pattes.jpg';
-import { InputPassword } from 'freeassofront';
-import { getJsonApi, queryStringToObject } from 'freejsonapi';
+import { InputPassword } from 'react-bootstrap-front';
+import { getJsonApi, queryStringToObject } from 'jsonapi-tools';
 import { withRouter } from 'react-router-dom';
 import { Copyright, messageSuccess, showErrors } from '../ui';
 

@@ -1,4 +1,4 @@
-import { jsonApiNormalizer } from 'freejsonapi';
+import { jsonApiNormalizer } from 'jsonapi-tools';
 import { freeAssoApi } from '../../../common';
 import {
   ITEM_CREATE_ONE_BEGIN,

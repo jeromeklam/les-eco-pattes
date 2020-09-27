@@ -1,4 +1,4 @@
-import { jsonApiNormalizer, normalizedObjectModeler } from 'freejsonapi';
+import { jsonApiNormalizer, normalizedObjectModeler } from 'jsonapi-tools';
 
 /**
  * Export all site types as an array of value=>label

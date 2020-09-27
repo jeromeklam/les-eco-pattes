@@ -1,4 +1,4 @@
-import { jsonApiNormalizer, normalizedObjectUpdate } from 'freejsonapi';
+import { jsonApiNormalizer, normalizedObjectUpdate } from 'jsonapi-tools';
 import { CAUSE_MOVEMENT_UPDATE_MODEL } from './constants';
 
 export function updateModel(model) {

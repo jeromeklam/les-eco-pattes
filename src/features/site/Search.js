@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { SearchModal } from '../ui';
 import { freeAssoApi } from '../../common';
-import { jsonApiNormalizer, normalizedObjectModeler, objectToQueryString } from 'freejsonapi';
+import { jsonApiNormalizer, normalizedObjectModeler, objectToQueryString } from 'jsonapi-tools';
 
 export default class Search extends Component {
   static propTypes = {

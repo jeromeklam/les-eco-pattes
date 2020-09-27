@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { InputCheckbox } from 'freeassofront';
+import { InputCheckbox } from 'react-bootstrap-front';
 import { AddOne as AddOneIcon } from '../icons';
 
 export default class InputCheckList extends Component {

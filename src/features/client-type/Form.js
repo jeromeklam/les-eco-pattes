@@ -1,5 +1,5 @@
 import React from 'react';
-import { InputHidden, InputText } from 'freeassofront';
+import { InputHidden, InputText } from 'react-bootstrap-front';
 import { useForm, ResponsiveModalOrForm } from '../ui';
 
 export default function Form(props) {

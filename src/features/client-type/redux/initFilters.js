@@ -1,4 +1,4 @@
-import {Filter} from 'freeassofront';
+import {Filter} from 'react-bootstrap-front';
 import {
   CLIENT_TYPE_INIT_FILTERS,
 } from './constants';

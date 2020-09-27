@@ -1,5 +1,5 @@
 import { freeAssoApi } from '../../../common';
-import { buildSingleFromjson } from 'freejsonapi';
+import { buildSingleFromjson } from 'jsonapi-tools';
 import {
   USER_UPLOAD_AVATAR_BEGIN,
   USER_UPLOAD_AVATAR_SUCCESS,

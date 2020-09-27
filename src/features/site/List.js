@@ -4,8 +4,8 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { injectIntl } from 'react-intl';
 import * as actions from './redux/actions';
-import { normalizedObjectModeler } from 'freejsonapi';
-import { ResponsiveList, ResponsiveQuickSearch } from 'freeassofront';
+import { normalizedObjectModeler } from 'jsonapi-tools';
+import { ResponsiveList, ResponsiveQuickSearch } from 'react-bootstrap-front';
 import {
   Close as CloseIcon,
   FilterEmpty as FilterEmptyIcon,

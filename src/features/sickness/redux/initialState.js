@@ -1,4 +1,4 @@
-import { getNewNormalizedObject } from 'freejsonapi';
+import { getNewNormalizedObject } from 'jsonapi-tools';
 
 const initialState = {
   loadMorePending: false,

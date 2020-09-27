@@ -1,5 +1,5 @@
 import { CLIENT_INIT_FILTERS } from './constants';
-import { Filter } from 'freeassofront';
+import { Filter } from 'react-bootstrap-front';
 
 export function initFilters() {
   return {

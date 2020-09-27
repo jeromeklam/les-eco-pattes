@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
-import { ResponsiveModal, FILTER_OPER_LIKE, FILTER_MODE_AND } from 'freeassofront';
+import { ResponsiveModal, FILTER_OPER_LIKE, FILTER_MODE_AND } from 'react-bootstrap-front';
 import { CenteredLoading3Dots } from './';
 
 export default class SearchModal extends Component {
