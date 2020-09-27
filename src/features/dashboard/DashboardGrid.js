@@ -10,6 +10,7 @@ import * as actions from './redux/actions';
 import {
   Site as SiteIcon,
   Cause as CauseIcon,
+  Contract as ContractIcon,
   Area as AreaIcon,
   Fence as FenceIcon,
 } from '../icons';
@@ -50,7 +51,7 @@ export class DashboardGrid extends Component {
 
   constructor(props) {
     super(props);
-    const originalLayouts = props.auth.cache || getFromLS('layouts') || {};
+    const originalLayouts = getFromLS('layouts') || {};
     this.state = {
       breakpoint: 'lg',
       layouts: JSON.parse(JSON.stringify(originalLayouts)),
@@ -104,6 +105,15 @@ export class DashboardGrid extends Component {
           >
             <div key="alerts" data-grid={{ w: 26, h: 6, x: 1, y: 1, minW: 12, minH: 4 }}>
               <PendingAlerts layoutSize={getLayoutSize(layouts, breakpoint, 'alerts')} />
+            </div>
+            <div key="contract" data-grid={{ w: 6, h: 4, x: 28, y: 8, minW: 6, maxW: 18, minH: 4 }}>
+              <DashboardCard
+                title="Contrats"
+                count={this.props.dashboard.stats.total_contract}
+                icon={<ContractIcon />}
+                url="/contract"
+                size={getLayoutSize(layouts, breakpoint, 'contract')}
+              />
             </div>
             <div key="cause" data-grid={{ w: 6, h: 4, x: 28, y: 1, minW: 6, maxW: 18, minH: 4 }}>
               <DashboardCard
