@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import Avatar from 'react-avatar';
 import { injectIntl, FormattedMessage } from 'react-intl';
 import * as actions from './redux/actions';
-import { getJsonApi } from 'jsonapi-tools';
+import { getJsonApi } from 'jsonapi-front';
 import { InputText, InputPassword, InputSelect } from 'react-bootstrap-front';
 import { modifySuccess, messageSuccess, showErrors, InputJson } from '../ui';
 import { langAsOptions } from '../lang';

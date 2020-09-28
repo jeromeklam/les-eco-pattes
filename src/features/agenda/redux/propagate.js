@@ -1,5 +1,5 @@
 // Rekit uses a new approach to organizing actions and reducers. That is
-import { jsonApiNormalizer, normalizedObjectUpdate } from 'jsonapi-tools';
+import { jsonApiNormalizer, normalizedObjectUpdate } from 'jsonapi-front';
 import { AGENDA_PROPAGATE } from './constants';
 
 export function propagate(data) {

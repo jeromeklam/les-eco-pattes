@@ -4,7 +4,7 @@ import {
   AUTH_CHECK_IS_AUTHENTICATED_FAILURE,
   AUTH_CHECK_IS_AUTHENTICATED_DISMISS_ERROR,
 } from './constants';
-import { jsonApiNormalizer, normalizedObjectModeler } from 'jsonapi-tools';
+import { jsonApiNormalizer, normalizedObjectModeler } from 'jsonapi-front';
 import { freeAssoApi } from '../../../common';
 import cookie from 'react-cookies';
 import { schema, defaultConfig } from '../';

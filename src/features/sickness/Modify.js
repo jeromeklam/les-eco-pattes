@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import * as actions from './redux/actions';
 import { withRouter } from 'react-router-dom';
 import Form from './Form';
-import { getJsonApi } from 'jsonapi-tools';
+import { getJsonApi } from 'jsonapi-front';
 import { propagateModel } from '../../common';
 import { CenteredLoading3Dots, modifySuccess, showErrors } from '../ui';
 

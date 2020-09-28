@@ -7,7 +7,7 @@ import { connect } from 'react-redux';
 import * as actions from './redux/actions';
 import Map from 'pigeon-maps';
 import Draggable from 'pigeon-draggable';
-import { normalizedObjectModeler, getJsonApi } from 'jsonapi-tools';
+import { normalizedObjectModeler, getJsonApi } from 'jsonapi-front';
 import { propagateModel } from '../../common';
 import { loadMore as loadMoreSite, updateOne as updateOneSite } from '../site/redux/actions';
 import Icon from '@mdi/react';

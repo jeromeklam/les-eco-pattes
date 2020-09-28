@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { injectIntl } from 'react-intl';
 import * as actions from './redux/actions';
 import { withRouter } from 'react-router-dom';
-import { getJsonApi } from 'jsonapi-tools';
+import { getJsonApi } from 'jsonapi-front';
 import { propagateModel } from '../../common';
 import { CenteredLoading9X9, modifySuccess, showErrors } from '../ui';
 import Form from './Form';

@@ -5,7 +5,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as actions from './redux/actions';
 import { HoverObserver } from 'react-bootstrap-front';
-import { normalizedObjectModeler } from 'jsonapi-tools';
+import { normalizedObjectModeler } from 'jsonapi-front';
 import { isInViewPort } from '../../common';
 import { InlineList as InlineListCause } from '../cause';
 import { CenteredLoading3Dots } from '../ui';

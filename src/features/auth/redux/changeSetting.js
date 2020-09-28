@@ -1,4 +1,4 @@
-import { getJsonApi } from 'jsonapi-tools';
+import { getJsonApi } from 'jsonapi-front';
 import {
   AUTH_CHANGE_SETTING_BEGIN,
   AUTH_CHANGE_SETTING_SUCCESS,

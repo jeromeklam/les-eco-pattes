@@ -1,4 +1,4 @@
-import { jsonApiNormalizer, normalizedObjectUpdate, getNewJsonApi } from 'jsonapi-tools';
+import { jsonApiNormalizer, normalizedObjectUpdate, getNewJsonApi } from 'jsonapi-front';
 import { freeAssoApi } from '../../../common';
 import {
   SITE_UPDATE_SITE_MEDIA_DESC_BEGIN,

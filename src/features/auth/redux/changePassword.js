@@ -1,4 +1,4 @@
-import { jsonApiNormalizer } from 'jsonapi-tools';
+import { jsonApiNormalizer } from 'jsonapi-front';
 import {
   AUTH_CHANGE_PASSWORD_BEGIN,
   AUTH_CHANGE_PASSWORD_SUCCESS,

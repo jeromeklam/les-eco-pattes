@@ -1,4 +1,4 @@
-import { jsonApiNormalizer, objectToQueryString } from 'jsonapi-tools';
+import { jsonApiNormalizer, objectToQueryString } from 'jsonapi-front';
 import { freeAssoApi } from '../../../common';
 import {
   ALERT_LOAD_PENDINGS_BEGIN,

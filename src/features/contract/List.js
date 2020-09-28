@@ -4,7 +4,7 @@ import { injectIntl } from 'react-intl';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as actions from './redux/actions';
-import { normalizedObjectModeler } from 'jsonapi-tools';
+import { normalizedObjectModeler } from 'jsonapi-front';
 import { ResponsiveList, ResponsiveQuickSearch } from 'react-bootstrap-front';
 import {
   FilterEmpty as FilterEmptyIcon,

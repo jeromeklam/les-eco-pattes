@@ -1,4 +1,4 @@
-import { jsonApiNormalizer, normalizedObjectUpdate } from 'jsonapi-tools';
+import { jsonApiNormalizer, normalizedObjectUpdate } from 'jsonapi-front';
 import {
   ITEM_UPDATE_ONE_BEGIN,
   ITEM_UPDATE_ONE_SUCCESS,

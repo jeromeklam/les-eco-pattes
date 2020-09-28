@@ -1,4 +1,4 @@
-import { normalizedObjectModeler } from 'jsonapi-tools';
+import { normalizedObjectModeler } from 'jsonapi-front';
 
 /**
  * Export all cause main types as an array of value=>label

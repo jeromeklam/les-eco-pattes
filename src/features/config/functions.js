@@ -1,4 +1,4 @@
-import { jsonApiNormalizer, normalizedObjectModeler } from 'jsonapi-tools';
+import { jsonApiNormalizer, normalizedObjectModeler } from 'jsonapi-front';
 
 /**
  * Export all site types as an array of value=>label

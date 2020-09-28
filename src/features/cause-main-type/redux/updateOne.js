@@ -1,4 +1,4 @@
-import { jsonApiNormalizer, normalizedObjectUpdate } from 'jsonapi-tools';
+import { jsonApiNormalizer, normalizedObjectUpdate } from 'jsonapi-front';
 import { freeAssoApi } from '../../../common';
 import {
   CAUSE_MAIN_TYPE_UPDATE_ONE_BEGIN,

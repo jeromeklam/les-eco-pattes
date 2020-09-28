@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
-import { normalizedObjectModeler } from 'jsonapi-tools';
+import { normalizedObjectModeler } from 'jsonapi-front';
 import { connect } from 'react-redux';
 import * as actions from './redux/actions';
 import { Alert as AlertIcon } from '../icons';

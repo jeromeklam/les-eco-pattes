@@ -51,7 +51,7 @@ export class App extends Component {
     this.state = {
       mySocket: initSocket(),
     };
-    log.getLogger("jsonapi-tools.jsonApiNormalizer").setLevel("WARN");
+    log.getLogger("jsonapi-front.jsonApiNormalizer").setLevel("WARN");
     log.getLogger("react-bootstrap-front.inputMask").setLevel("WARN");
     log.getLogger("react-bootstrap-front.inputSelect").setLevel("WARN");
   }

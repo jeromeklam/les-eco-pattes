@@ -1,5 +1,5 @@
 import cogoToast from 'cogo-toast';
-import { jsonApiNormalizer } from 'jsonapi-tools';
+import { jsonApiNormalizer } from 'jsonapi-front';
 
 export const isNull = value => {
   let ret = true ;

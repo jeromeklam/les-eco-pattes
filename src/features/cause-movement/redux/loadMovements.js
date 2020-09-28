@@ -1,4 +1,4 @@
-import { jsonApiNormalizer, objectToQueryString } from 'jsonapi-tools';
+import { jsonApiNormalizer, objectToQueryString } from 'jsonapi-front';
 import { freeAssoApi } from '../../../common';
 import {
   CAUSE_MOVEMENT_LOAD_MOVEMENTS_BEGIN,

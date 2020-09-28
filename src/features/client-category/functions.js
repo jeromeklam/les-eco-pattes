@@ -1,4 +1,4 @@
-import { normalizedObjectModeler } from 'jsonapi-tools';
+import { normalizedObjectModeler } from 'jsonapi-front';
 
 /**
  * Export all clientcategories as an array of value=>label

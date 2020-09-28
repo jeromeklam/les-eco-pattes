@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { normalizedObjectModeler } from 'jsonapi-tools';
+import { normalizedObjectModeler } from 'jsonapi-front';
 import { InputText, InputTextarea, InputSelect, InputCheckbox } from 'react-bootstrap-front';
 
 function getFieldData(field_name, tab_config, tab_data) {

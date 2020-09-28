@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as actions from './redux/actions';
-import { getJsonApi } from 'jsonapi-tools';
+import { getJsonApi } from 'jsonapi-front';
 import { propagateModel } from '../../common';
 import { CenteredLoading3Dots, modifySuccess, showErrors} from '../ui';
 import Form from './Form';

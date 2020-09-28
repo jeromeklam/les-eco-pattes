@@ -1,4 +1,4 @@
-import { normalizedObjectModeler } from 'jsonapi-tools';
+import { normalizedObjectModeler } from 'jsonapi-front';
 
 export function raiserAsOptions(object) {
   let arr = [];

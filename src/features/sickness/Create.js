@@ -5,7 +5,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as actions from './redux/actions';
 import { withRouter } from 'react-router-dom';
-import { getJsonApi } from 'jsonapi-tools';
+import { getJsonApi } from 'jsonapi-front';
 import { CenteredLoading9X9, createSuccess, showErrors } from '../ui';
 import Form from './Form';
 import { propagateModel } from '../../common';

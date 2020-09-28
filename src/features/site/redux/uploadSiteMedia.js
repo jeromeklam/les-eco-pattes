@@ -1,4 +1,4 @@
-import { getNewJsonApi } from 'jsonapi-tools';
+import { getNewJsonApi } from 'jsonapi-front';
 import { freeAssoApi } from '../../../common';
 import {
   SITE_UPLOAD_SITE_MEDIA_BEGIN,

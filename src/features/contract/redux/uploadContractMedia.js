@@ -1,4 +1,4 @@
-import { getNewJsonApi } from 'jsonapi-tools';
+import { getNewJsonApi } from 'jsonapi-front';
 import { freeAssoApi } from '../../../common';
 import {
   CONTRACT_UPLOAD_CONTRACT_MEDIA_BEGIN,

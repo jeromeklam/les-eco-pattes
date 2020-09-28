@@ -1,5 +1,5 @@
 import { freeAssoApi } from '../../../common';
-import { jsonApiNormalizer, objectToQueryString, normalizedObjectModeler } from 'jsonapi-tools';
+import { jsonApiNormalizer, objectToQueryString, normalizedObjectModeler } from 'jsonapi-front';
 import {
   AGENDA_LOAD_RESOURCES_BEGIN,
   AGENDA_LOAD_RESOURCES_SUCCESS,

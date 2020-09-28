@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { normalizedObjectModeler } from 'jsonapi-tools';
+import { normalizedObjectModeler } from 'jsonapi-front';
 import { Calendar, Views, dateFnsLocalizer, Dropdown } from 'react-bootstrap-front';
 import { format, parse, startOfWeek, subDays, getDay } from 'date-fns';
 import { fr } from 'date-fns/locale';

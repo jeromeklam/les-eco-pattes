@@ -3,7 +3,7 @@ import { injectIntl } from 'react-intl';
 import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { getJsonApi } from 'jsonapi-tools';
+import { getJsonApi } from 'jsonapi-front';
 import * as actions from './redux/actions';
 import { updateConfig } from '../auth/redux/actions';
 import { 

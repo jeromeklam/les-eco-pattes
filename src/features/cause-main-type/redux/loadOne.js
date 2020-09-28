@@ -1,4 +1,4 @@
-import { jsonApiNormalizer, normalizedObjectModeler } from 'jsonapi-tools';
+import { jsonApiNormalizer, normalizedObjectModeler } from 'jsonapi-front';
 import { freeAssoApi } from '../../../common';
 import {
   CAUSE_MAIN_TYPE_LOAD_ONE_BEGIN,

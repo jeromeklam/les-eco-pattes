@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useIntl } from 'react-intl';
-import { jsonApiNormalizer, normalizedObjectModeler } from 'jsonapi-tools';
+import { jsonApiNormalizer, normalizedObjectModeler } from 'jsonapi-front';
 import { freeAssoApi } from '../../common';
 
 const explodeReduxModel = obj => {

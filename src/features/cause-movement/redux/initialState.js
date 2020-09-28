@@ -1,4 +1,4 @@
-import { getNewNormalizedObject } from 'jsonapi-tools';
+import { getNewNormalizedObject } from 'jsonapi-front';
 
 const initialState = {
   emptyItem: null,

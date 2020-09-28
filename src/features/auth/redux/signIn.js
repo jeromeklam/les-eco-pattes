@@ -1,5 +1,5 @@
 import { freeAssoApi } from '../../../common';
-import { jsonApiNormalizer, normalizedObjectModeler  } from 'jsonapi-tools';
+import { jsonApiNormalizer, normalizedObjectModeler  } from 'jsonapi-front';
 import {
   AUTH_SIGN_IN_BEGIN,
   AUTH_SIGN_IN_SUCCESS,

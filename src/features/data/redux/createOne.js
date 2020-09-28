@@ -1,4 +1,4 @@
-import { jsonApiNormalizer } from 'jsonapi-tools';
+import { jsonApiNormalizer } from 'jsonapi-front';
 import {
   DATA_CREATE_ONE_BEGIN,
   DATA_CREATE_ONE_SUCCESS,

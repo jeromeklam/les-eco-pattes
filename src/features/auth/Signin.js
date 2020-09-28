@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { FormattedMessage, injectIntl } from 'react-intl';
 import { withRouter } from 'react-router-dom';
 import { InputEmail, InputPassword, InputCheckbox, Highlight } from 'react-bootstrap-front';
-import { getJsonApi } from 'jsonapi-tools';
+import { getJsonApi } from 'jsonapi-front';
 import * as actions from './redux/actions';
 import { Copyright, messageError, getFieldErrorMessage } from '../ui';
 import logo from '../../images/logo-les-eco-pattes.jpg';

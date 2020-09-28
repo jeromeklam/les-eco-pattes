@@ -1,4 +1,4 @@
-import { objectToQueryString, jsonApiNormalizer, normalizedObjectModeler } from 'jsonapi-tools';
+import { objectToQueryString, jsonApiNormalizer, normalizedObjectModeler } from 'jsonapi-front';
 import { freeAssoApi } from '../../common';
 
 export const mvtStatus = [

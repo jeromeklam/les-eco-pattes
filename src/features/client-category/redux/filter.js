@@ -1,4 +1,4 @@
-import { objectToQueryString } from 'jsonapi-tools';
+import { objectToQueryString } from 'jsonapi-front';
 import { freeAssoApi } from '../../../common';
 import {
   CLIENT_CATEGORY_FILTER_BEGIN,

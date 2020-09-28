@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { jsonApiNormalizer, objectToQueryString, normalizedObjectModeler } from 'jsonapi-tools';
+import { jsonApiNormalizer, objectToQueryString, normalizedObjectModeler } from 'jsonapi-front';
 import { freeAssoApi } from '../../common';
 import { SearchModal } from '../ui';
 import { clientTypeAsOptions } from '../client-type/functions.js';

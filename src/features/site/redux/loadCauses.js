@@ -1,4 +1,4 @@
-import { jsonApiNormalizer, objectToQueryString, normalizedObjectModeler } from 'jsonapi-tools';
+import { jsonApiNormalizer, objectToQueryString, normalizedObjectModeler } from 'jsonapi-front';
 import {
   SITE_LOAD_CAUSES_BEGIN,
   SITE_LOAD_CAUSES_SUCCESS,
