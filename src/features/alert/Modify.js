@@ -75,7 +75,7 @@ export class Modify extends Component {
 
   render() {
     const item = this.state.item;
-    console.log("FK propsalert",this.props.alert);
+    //console.log("FK propsalert",this.props.alert);
     return (
       <div className="alert-create global-card">
         {!item ? (

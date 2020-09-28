@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { InputText, InputCheckbox } from 'react-bootstrap-front';
+import classnames from 'classnames';
+import { InputText } from 'react-bootstrap-front';
 import { 
   AddOne as AddOneIcon,
-  DelOne as DelOneIcon } from '../icons';
+  DelOne as DelOneIcon,
+  Checked ,UnChecked } from '../icons';
 
 const emptyItem = { label : '', done: false };
 const emptyList = { title : "Checklist", items : []}
@@ -21,10 +23,9 @@ export default class InputCheckList extends Component {
   static getDerivedStateFromProps(props, state) {
     const list = JSON.parse(props.value) || emptyList;
     if (list.title !== state.title || list.items !== state.items) { 
-      state.title = list.title;
-      state.items = list.items;
+      return {title: list.title, items: list.items};
     }
-    return false;
+    return null;
   }
 
   constructor(props) {
@@ -35,7 +36,8 @@ export default class InputCheckList extends Component {
       items: list.items,
     };
     this.onChangeTitle = this.onChangeTitle.bind(this);
-    this.onChangeItem = this.onChangeItem.bind(this);
+    this.onChangeItemCheck = this.onChangeItemCheck.bind(this);
+    this.onChangeItemLabel = this.onChangeItemLabel.bind(this);
     this.onAddNew = this.onAddNew.bind(this);
     this.onDelOne = this.onDelOne.bind(this);
     this.onChange = this.onChange.bind(this);
@@ -55,14 +57,17 @@ export default class InputCheckList extends Component {
     this.onChange(list);
   }
 
-  onChangeItem(event, idx, field) {
+  onChangeItemLabel(event, idx) {
     let { title, items } = this.state;
+    items[idx].label = event.target.value;
     const list = {title: title, items: items};
-    if (field === 'label') {
-      items[idx].label = event.target.value;
-    } else {
-      items[idx].done = event.target.checked;
-    }
+    this.onChange(list);
+  }
+
+  onChangeItemCheck(event, idx) {
+    let { title, items } = this.state;
+    items[idx].done = !items[idx].done;
+    const list = {title: title, items: items};
     this.onChange(list);
   }
 
@@ -102,27 +107,31 @@ export default class InputCheckList extends Component {
         </div>
         {this.state.items.map((item, i) => (
           <div className='row' key={`item-${i}`}>
-            <div className='col-4'>
-              <InputCheckbox
-                label=''
-                name={`check-${i}`}
-                labelTop={false}
-                checked={item.done === true}
-                onChange={(e) => {this.onChangeItem(e, i, "done")}}
-              />
-            </div>
-            <div className='col-30'>
-              <InputText
-                label=''
-                name={`label-${i}`}
-                value={item.label}
-                onChange={(e) => {this.onChangeItem(e, i, "label")}}
-              />
-            </div>
-            <div className="col-2">
-              <button className="btn btn-warning" onClick={() => {this.onDelOne(i)}}>
-                <DelOneIcon />
-              </button>
+            <div className='col-34'>
+              <div class="input-group">
+                <div className="input-group-prepend border border-secondary rounded-left">
+                  <div class="input-group-text" onClick={(e) => {this.onChangeItemCheck(e, i)}}>
+                    {item.done === true ? <Checked /> : <UnChecked />}
+                  </div>
+                </div>
+                <input 
+                  type="text" 
+                  className={classnames('border-secondary form-control', item.done && 'item-done')}
+                  name={`label-${i}`}
+                  value={item.label}
+                  disabled={item.done}
+                  onChange={(e) => {this.onChangeItemLabel(e, i, "label")}}
+                />
+                <div className="input-group-append">
+                  <button
+                    type="button"
+                    className={classnames(`btn btn-input border-secondary bg-light`)}
+                    onClick={() => {this.onDelOne(i)}}
+                  >
+                    <DelOneIcon className="text-warning" size={0.9} />
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
         ))}

@@ -63,7 +63,7 @@ export function reducer(state, action) {
       if (action.id <= 0) {
         emptyItem = {...item};
       }
-      console.log("FK load one alert",item);
+      //console.log("FK load one alert",item);
       return {
         ...state,
         loadOnePending: false,
