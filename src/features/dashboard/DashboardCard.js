@@ -20,7 +20,7 @@ export default class DashboardCard extends Component {
     return (
       <div className="dashboard-stat-card text-center">
         <div className="card">
-          <div className="card-header card-header-warning card-header-icon">
+          <div className="card-header dashboard-card-header card-header-warning card-header-icon">
             {this.props.url ? (
               <NavLink strict className="nav-link link" to={this.props.url}>
                 <div className="card-icon card-icon-btn">{this.props.icon}</div>

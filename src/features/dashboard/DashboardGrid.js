@@ -100,8 +100,9 @@ export class DashboardGrid extends Component {
             onLayoutChange={this.onLayoutChange}
             onResizeStop={this.onResizeStop}
             onBreakpointChange={this.onBreakpointChange}
-            draggableHandle=".card-header"
+            draggableHandle=".dashboard-card-header"
             layouts={layouts}
+            isDraggable={false}
           >
             <div key="alerts" data-grid={{ w: 26, h: 6, x: 1, y: 1, minW: 12, minH: 4 }}>
               <PendingAlerts layoutSize={getLayoutSize(layouts, breakpoint, 'alerts')} />
