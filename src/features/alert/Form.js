@@ -193,15 +193,12 @@ export default function Form(props) {
             </div>
           </div>
           <div className="row">
-            <div className="col-36">
+            <div className="col-26">
               <InputCheckList
-                title="A faire"
-                items={[
-                  { done: false, text: 'Eau' },
-                  { done: false, text: 'Clôture' },
-                  { done: false, text: 'Abri' },
-                  { done: false, text: 'Pierre de sel' },
-                ]}
+                name="alert_checklist"
+                value={values.alert_checklist}
+                onChange={handleChange}
+                error={getErrorMessage('alert_checklist')}
               />
             </div>
           </div>
