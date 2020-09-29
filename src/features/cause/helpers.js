@@ -351,5 +351,15 @@ export const getCols = ({ props }) => {
       sortable: false,
       filterable: { type: 'date' },
     },
+    {
+      name: 'cau_string_3',
+      label: 'Motif de sortie',
+      col: 'cau_string_3',
+      size: '',
+      mob_size: '',
+      hidden: true,
+      sortable: false,
+      filterable: { type: 'text' },
+    },
   ];
 };

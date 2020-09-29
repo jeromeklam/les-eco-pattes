@@ -48,7 +48,7 @@ instance.interceptors.response.use(
     return response;
   },
   function(error) {
-    if (401 === error.response.status) {
+    if (!error.response || 401 === error.response.status) {
       cookie.remove('Authorization', { path: '/' });
       cookie.remove('AutoLogin', { path: '/' });
       const auth = (store && store.getState().auth.authenticated) || false;
