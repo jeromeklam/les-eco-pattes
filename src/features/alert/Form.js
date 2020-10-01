@@ -7,11 +7,20 @@ import {
   InputSpin,
   InputTextarea,
   ResponsiveModalOrForm,
-  InputCheckList, 
+  InputCheckList,
 } from '../ui';
 import { InputPicker as UserInputPicker } from '../user';
 import { InputPicker as SiteInputPicker } from '../site';
+import { InputPicker as ClientInputPicker } from '../client';
 import { alertPriority, alertRecurType, alertRemind, getAlertRecur } from './';
+
+const objects = [
+  { value: '', label: 'Aucun' },
+  { value: 'FreeAsso_Cause', label: 'Animal' },
+  { value: 'FreeAsso_Contract', label: 'Contrat' },
+  { value: 'FreeAsso_Client', label: 'Personne' },
+  { value: 'FreeAsso_Site', label: 'Site' },
+];
 
 const afterChange = (name, item) => {
   switch (name) {
@@ -134,6 +143,7 @@ export default function Form(props) {
                 key="alert_title"
                 labelTop={true}
                 value={values.alert_title}
+                required={true}
                 onChange={handleChange}
                 error={getErrorMessage('alert_title')}
               />
@@ -151,7 +161,47 @@ export default function Form(props) {
             </div>
           </div>
           <div className="row">
-            <div className="col-27">
+            <div className="col-7">
+              <InputSelect
+                label="Elément lié"
+                id="alert_object_name"
+                name="alert_object_name"
+                value={values.alert_object_name}
+                defaultValue=""
+                onChange={handleChange}
+                options={objects}
+                error={getErrorMessage('alert_object_name')}
+              />
+            </div>
+            <div className="col-20">
+              {
+                {
+                  FreeAsso_Client: (
+                    <ClientInputPicker
+                      label="Personne"
+                      key="object"
+                      name="object"
+                      item={values.object || null}
+                      onChange={handleChange}
+                      labelTop={true}
+                      required={true}
+                      error={getErrorMessage('object')}
+                    />
+                  ),
+                  FreeAsso_Site: (
+                    <SiteInputPicker
+                      label="Site"
+                      key="object"
+                      name="object"
+                      item={values.object || null}
+                      onChange={handleChange}
+                      labelTop={true}
+                      required={true}
+                      error={getErrorMessage('object')}
+                    />
+                  ),
+                }[values.alert_object_name]
+              }
             </div>
             <div className="col-9">
               <InputDatetime
@@ -196,7 +246,7 @@ export default function Form(props) {
           <div className="row">
             <div className="col-26">
               <InputCheckList
-                label=''
+                label=""
                 name="alert_checklist"
                 value={values.alert_checklist}
                 onChange={handleChange}
