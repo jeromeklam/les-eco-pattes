@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { Icon } from './';
 import { mdiCheckboxBlankOutline as myIcon } from '@mdi/js';
+import { Icon } from './';
 
 export default class UnChecked extends Component {
   static propTypes = {};

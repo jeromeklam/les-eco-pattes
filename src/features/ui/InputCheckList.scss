@@ -1,9 +1,10 @@
 @import '../../styles/mixins';
 
-.ui-input-check-list {
-
-}
-
-.item-done {
-  text-decoration:line-through;
+.input-check-list {
+  .item-done {
+    text-decoration:line-through;
+  }
+  .text-warning-line {
+    color: lighten(theme-color('warning'), 10%) !important;
+  }
 }

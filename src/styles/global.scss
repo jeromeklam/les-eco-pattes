@@ -104,6 +104,10 @@ svg.text-warning.inline-action:hover {
   }
 }
 
+.inline-add-one inline-action:hover {
+  cursor: pointer;
+}
+
 .btn-sm {
   &.btn {
     padding-top: 0px;

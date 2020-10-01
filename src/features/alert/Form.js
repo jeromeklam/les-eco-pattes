@@ -6,8 +6,8 @@ import {
   InputDatetime,
   InputSpin,
   InputTextarea,
-  InputCheckList,
   ResponsiveModalOrForm,
+  InputCheckList, 
 } from '../ui';
 import { InputPicker as UserInputPicker } from '../user';
 import { InputPicker as SiteInputPicker } from '../site';
@@ -192,9 +192,11 @@ export default function Form(props) {
               />
             </div>
           </div>
+          <br />
           <div className="row">
             <div className="col-26">
               <InputCheckList
+                label=''
                 name="alert_checklist"
                 value={values.alert_checklist}
                 onChange={handleChange}

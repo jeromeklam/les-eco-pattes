@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
+import { mdiAccountCircle as myIcon } from '@mdi/js';
 import { Icon } from './';
-import { mdiAccountCircle } from '@mdi/js';
 
 export default class Token extends Component {
   static propTypes = {};
 
   render() {
-    return <Icon path={mdiAccountCircle} {...this.props} />;
+    return <Icon path={myIcon} {...this.props} />;
   }
 }
