@@ -19,10 +19,18 @@ export class Create extends Component {
     params: {},
   };
 
+  static getDerivedStateFromProps(props, state) {
+    if (props.objId !== state.obj_id || props.objName !== state.obj_name || props.object !== state.object) {
+      return { obj_id: props.objId, obj_name: props.objName, object: props.object, alert_id: -1, confirm: false };
+    }
+    return null;
+  }
+
   constructor(props) {
     super(props);
     this.state = {
       alertId: 0,
+      object: this.props.object,
       obj_name: this.props.objName,
       obj_id: this.props.objId,
       item: false,
@@ -39,7 +47,6 @@ export class Create extends Component {
      *  En async on va demander le chargement des données
      *  Lorsque fini le store sera modifié
      */
-    //console.log("FK cDM", this.state.alertId);
     this.props.actions.loadOne(this.state.alertId).then(result => {
       const item = this.props.alert.loadOneItem;
       item.user = this.props.user || null;
@@ -55,8 +62,17 @@ export class Create extends Component {
           item.user = params.user;
         }
       }
+      if (this.state.obj_name) {
+        item.alert_object_name = this.state.obj_name;
+      }
+      if (this.state.obj_id) {
+        item.alert_object_id = this.state.obj_id;
+      }
+      if (this.state.object) {
+        item.object = this.state.object;
+      }
+      item.alert_task = true;
       this.setState({ item: item });
-      //console.log("FK cDM 2", item)
     });
   }
 
@@ -76,8 +92,6 @@ export class Create extends Component {
    */
   onSubmit(datas = {}) {
     // Conversion des données en objet pour le service web
-    datas.alert_object_name = this.state.obj_name || null;
-    datas.alert_object_id = this.state.obj_id || null;
     let obj = getJsonApi(datas, 'FreeFW_Alert', this.state.alertId);
     this.props.actions
       .createOne(obj)

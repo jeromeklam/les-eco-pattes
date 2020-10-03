@@ -331,7 +331,7 @@ export default function Form(props) {
       )}
       {values.currentTab === '6' && (
         <div className="border border-secondary rounded overflow-x-hidden">
-          <InlineAlerts objId={values.id} />
+          <InlineAlerts objId={values.id} objName='FreeAsso_Site' object={values}/>
         </div>
       )}
       {values.currentTab === '7' && (

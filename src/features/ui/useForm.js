@@ -50,6 +50,13 @@ const _loadClient = id => {
   return freeAssoApi.get('/v1/asso/client/' + id + '?include=lang,country,client_category,client_type', {});
 };
 
+const _loadContract = id => {
+  if (!id) {
+    id = '0';
+  }
+  return freeAssoApi.get('/v1/asso/contract/' + id + '?include=', {});
+};
+
 const useForm = (initialState, initialTab, onSubmit, onCancel, onNavTab, errors, afterChange = null, init = null) => {
   const initial = init ? init(initialState) : initialState;
   const [values, setValues] = useState({
@@ -58,21 +65,19 @@ const useForm = (initialState, initialTab, onSubmit, onCancel, onNavTab, errors,
     loadCauseType: false,
     loadSiteType: false,
     loadClient: false,
+    loadContract: false,
     loadCause: false,
     loadSite: false,
     loadSickness: false,
     errors: errors,
+    sending: false,
   });
-
-  const handleSubmit = event => {
-    if (event) event.preventDefault();
-    onSubmit(values);
-  };
 
   const handleChange = event => {
     if (event && event.persist) {
       event.persist();
     }
+    values.sending = false;
     let tType = (event.target.dataset && event.target.dataset.type) ? event.target.dataset.type : '';
     if (tType === '') {
       tType = event.target.type || 'text';
@@ -131,6 +136,30 @@ const useForm = (initialState, initialTab, onSubmit, onCancel, onNavTab, errors,
               })
               .catch(err => {
                 values.loadClient = false;
+                setValues(explodeReduxModel(values));
+              });
+          }
+          break;
+        case 'FreeAsso_Contract':
+          if (!values.loadContract) {
+            const id = event.target.value || '0';
+            values.loadContract = true;
+            setValues(explodeReduxModel(values));
+            _loadContract(id)
+              .then(result => {
+                values.loadContract = false;
+                if (result && result.data) {
+                  const lines = jsonApiNormalizer(result.data);
+                  const item = normalizedObjectModeler(lines, 'FreeAsso_Contract', id, { eager: true });
+                  values[first] = item;
+                  if (afterChange) {
+                    afterChange(event.target.name, values);
+                  }
+                  setValues(explodeReduxModel(values));
+                }
+              })
+              .catch(err => {
+                values.loadContract = false;
                 setValues(explodeReduxModel(values));
               });
           }
@@ -326,6 +355,30 @@ const useForm = (initialState, initialTab, onSubmit, onCancel, onNavTab, errors,
               });
           }
           break;
+        case 'FreeAsso_Contract':
+          if (!values.loadContract) {
+            const id = event.target.value || '0';
+            values.loadContract = true;
+            setValues(explodeReduxModel(values));
+            _loadContract(id)
+              .then(result => {
+                values.loadContract = false;
+                if (result && result.data) {
+                  const lines = jsonApiNormalizer(result.data);
+                  const item = normalizedObjectModeler(lines, 'FreeAsso_Contract', id, { eager: true });
+                  values[first] = item;
+                  if (afterChange) {
+                    afterChange(event.target.name, values);
+                  }
+                  setValues(explodeReduxModel(values));
+                }
+              })
+              .catch(err => {
+                values.loadContract = false;
+                setValues(explodeReduxModel(values));
+              });
+          }
+          break;
         case 'FreeAsso_Site':
           if (!values.loadSite) {
             const id = event.target.value || '0';
@@ -386,9 +439,22 @@ const useForm = (initialState, initialTab, onSubmit, onCancel, onNavTab, errors,
     setValues(explodeReduxModel(values));
   };
 
+  const handleSubmit = event => {
+    if (!values.sending) {
+      values.sending = true;
+      setValues(explodeReduxModel(values));
+      if (event) event.preventDefault();
+      onSubmit(values);
+    }
+  };
+
   const handleCancel = event => {
-    if (event) event.preventDefault();
-    onCancel();
+    if (!values.sending) {
+      values.sending = true;
+      setValues(explodeReduxModel(values));
+      if (event) event.preventDefault();
+      onCancel();
+    }
   };
 
   const handleNavTab = keyTab => {

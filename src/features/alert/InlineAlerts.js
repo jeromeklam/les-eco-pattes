@@ -6,10 +6,7 @@ import * as actions from './redux/actions';
 import { ResponsiveConfirm, HoverObserver } from 'react-bootstrap-front';
 import classnames from 'classnames';
 import { intlDateTime } from '../../common';
-import { 
-  GetOne as GetOneIcon, 
-  DelOne as DelOneIcon, 
-  AddOne as AddOneIcon } from '../icons';
+import { GetOne as GetOneIcon, DelOne as DelOneIcon, AddOne as AddOneIcon } from '../icons';
 import { CenteredLoading3Dots } from '../ui';
 import { Create, Modify, getAlerts, getLibStatus } from './';
 
@@ -20,8 +17,18 @@ export class InlineAlerts extends Component {
   };
 
   static getDerivedStateFromProps(props, state) {
-    if (props.objId !== state.obj_id || props.objName !== state.obj_name) {
-      return { obj_id: props.objId, obj_name: props.abjName, alert_id: -1, confirm: false };
+    if (
+      props.objId !== state.obj_id ||
+      props.objName !== state.obj_name ||
+      props.object !== state.object
+    ) {
+      return {
+        obj_id: props.objId,
+        obj_name: props.objName,
+        object: props.object,
+        alert_id: -1,
+        confirm: false,
+      };
     }
     return null;
   }
@@ -31,6 +38,7 @@ export class InlineAlerts extends Component {
     this.state = {
       confirm: false,
       alert_id: -1,
+      object: props.object || null,
       obj_name: props.objName,
       obj_id: props.objId,
       items: [],
@@ -60,13 +68,13 @@ export class InlineAlerts extends Component {
     this.localLoadAlerts();
     if (!this.state.emptyItem) {
       this.props.actions.loadOne(0).then(result => {
-         this.setState({emptyItem: this.props.alert.emptyItem});
+        this.setState({ emptyItem: this.props.alert.emptyItem });
       });
     }
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if (prevState.obj_name !== this.state.obj_name || prevState.obj_id !== this.state.obj_id ) {
+    if (prevState.obj_name !== this.state.obj_name || prevState.obj_id !== this.state.obj_id) {
       this.localLoadAlert();
     }
   }
@@ -111,7 +119,6 @@ export class InlineAlerts extends Component {
   render() {
     let counter = 0;
     const alerts = this.state.items;
-    console.log("FK items alerts",alerts);
     if (this.state.loading) {
       return (
         <div className="alert-inline-alerts">
@@ -122,7 +129,13 @@ export class InlineAlerts extends Component {
       return (
         <div className="alert-inline-alerts">
           <div className="inline-list">
-            <div className={classnames('row row-title row-line', (counter++ % 2 !== 1) ? 'row-odd' : 'row-even')} key="alert-inline-alerts">
+            <div
+              className={classnames(
+                'row row-title row-line',
+                counter++ % 2 !== 1 ? 'row-odd' : 'row-even',
+              )}
+              key="alert-inline-alerts"
+            >
               <div className="col-6 col-first">
                 <span>Date début</span>
               </div>
@@ -147,22 +160,37 @@ export class InlineAlerts extends Component {
                 </div>
               </div>
             </div>
-            { alerts && 
+            {alerts &&
               alerts.length > 0 &&
               alerts.map(alert => (
-                <HoverObserver onMouseEnter={() => {this.mouseEnter(alert.id)}} onMouseLeave={this.mouseLeave}>
-                  <div className={classnames('row row-line', (counter++ % 2 !== 1) ? 'row-odd' : 'row-even')} key={alert.id}>
+                <HoverObserver
+                  onMouseEnter={() => {
+                    this.mouseEnter(alert.id);
+                  }}
+                  onMouseLeave={this.mouseLeave}
+                >
+                  <div
+                    className={classnames(
+                      'row row-line',
+                      counter++ % 2 !== 1 ? 'row-odd' : 'row-even',
+                    )}
+                    key={alert.id}
+                  >
                     <div className="col-6 col-first">{intlDateTime(alert.alert_from)}</div>
                     <div className="col-6">{intlDateTime(alert.alert_to)}</div>
                     <div className="col-11">{alert.alert_title}</div>
-                    <div className="col-9">{getLibStatus(alert.alert_done_ts, alert.alert_deadline)}</div>
+                    <div className="col-9">
+                      {getLibStatus(alert.alert_done_ts, alert.alert_deadline)}
+                    </div>
                     <div className="col-4 text-right col-last">
-                      {this.state.flipped && this.state.flipped === alert.id && 
+                      {this.state.flipped && this.state.flipped === alert.id && (
                         <div className="btn-group btn-group-xs" role="group" aria-label="...">
                           <button
                             type="button"
                             className="btn btn-inline btn-secondary"
-                            onClick={() => {this.onGetOne(alert.id)}}
+                            onClick={() => {
+                              this.onGetOne(alert.id);
+                            }}
                           >
                             <GetOneIcon className="inline-action text-light" />
                           </button>
@@ -174,12 +202,11 @@ export class InlineAlerts extends Component {
                             <DelOneIcon className="inline-action text-light" />
                           </button>
                         </div>
-                      }
+                      )}
                     </div>
                   </div>
                 </HoverObserver>
-              ))
-            }
+              ))}
             <ResponsiveConfirm
               show={this.state.confirm}
               onClose={this.onConfirmClose}
@@ -189,7 +216,14 @@ export class InlineAlerts extends Component {
             />
           </div>
           <div>
-            {!this.state.confirm && this.state.alert_id === 0 && <Create onClose={this.onClose} objName={this.state.obj_name} objId={this.state.obj_id} />}
+            {!this.state.confirm && this.state.alert_id === 0 && (
+              <Create
+                onClose={this.onClose}
+                object={this.state.object}
+                objName={this.state.obj_name}
+                objId={this.state.obj_id}
+              />
+            )}
             {!this.state.confirm && this.state.alert_id > 0 && (
               <Modify onClose={this.onClose} alert_id={this.state.alert_id} />
             )}
@@ -208,11 +242,8 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    actions: bindActionCreators({ ...actions }, dispatch)
+    actions: bindActionCreators({ ...actions }, dispatch),
   };
 }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(InlineAlerts);
+export default connect(mapStateToProps, mapDispatchToProps)(InlineAlerts);

@@ -94,7 +94,8 @@ export class TreeviewList extends Component {
   }
 
   onGetOneFamily(family) {
-    this.setState({ currentFamily: family, fam_id: family.id });
+    console.log(family);
+    //this.setState({ currentFamily: family, fam_id: family.id });
   }
 
   onDelOneFamily(family) {

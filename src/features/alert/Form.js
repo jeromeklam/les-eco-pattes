@@ -11,6 +11,8 @@ import {
 } from '../ui';
 import { InputPicker as UserInputPicker } from '../user';
 import { InputPicker as SiteInputPicker } from '../site';
+import { InputPicker as CauseInputPicker } from '../cause';
+import { InputPicker as ContractInputPicker } from '../contract';
 import { InputPicker as ClientInputPicker } from '../client';
 import { alertPriority, alertRecurType, alertRemind, getAlertRecur } from './';
 
@@ -64,6 +66,12 @@ export default function Form(props) {
     afterChange,
   );
   const today = new Date();
+  if (!values.alert_from) {
+    values.alert_from = today;
+  }
+  if (!values.alert_to) {
+    values.alert_to = today;
+  }
   let libRecur = getAlertRecur(values);
   return (
     <ResponsiveModalOrForm
@@ -84,7 +92,7 @@ export default function Form(props) {
             name="alert_from"
             labelTop={true}
             required={true}
-            value={values.alert_from || today}
+            value={values.alert_from}
             onChange={handleChange}
             error={getErrorMessage('alert_from')}
           />
@@ -95,7 +103,7 @@ export default function Form(props) {
             name="alert_to"
             labelTop={true}
             required={true}
-            value={values.alert_to || today}
+            value={values.alert_to}
             onChange={handleChange}
             error={getErrorMessage('alert_to')}
           />
@@ -176,6 +184,30 @@ export default function Form(props) {
             <div className="col-20">
               {
                 {
+                  FreeAsso_Cause: (
+                    <CauseInputPicker
+                      label="Animal"
+                      key="object"
+                      name="object"
+                      item={values.object || null}
+                      onChange={handleChange}
+                      labelTop={true}
+                      required={true}
+                      error={getErrorMessage('object')}
+                    />
+                  ),
+                  FreeAsso_Contract: (
+                    <ContractInputPicker
+                      label="Contrat"
+                      key="object"
+                      name="object"
+                      item={values.object || null}
+                      onChange={handleChange}
+                      labelTop={true}
+                      required={true}
+                      error={getErrorMessage('object')}
+                    />
+                  ),
                   FreeAsso_Client: (
                     <ClientInputPicker
                       label="Personne"

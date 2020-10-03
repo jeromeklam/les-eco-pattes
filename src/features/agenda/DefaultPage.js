@@ -110,7 +110,7 @@ export class DefaultPage extends Component {
           user = found;
         }
       }
-      this.setState({ current: 0, params: { alert_from: start, alert_to: end, user: user } });
+      this.setState({ current: 0, params: { alert_task: true, alert_from: start, alert_to: end, user: user } });
     }
   }
 
@@ -139,6 +139,7 @@ export class DefaultPage extends Component {
       case Views.MONTH: {
         filters = {
           and: {
+            alert_task: true,
             alert_from: { gte: new Date(Date.parse(p_range.start)).toISOString() },
             alert_to: { ltwe: new Date(Date.parse(p_range.end)).toISOString() },
           },
@@ -152,6 +153,7 @@ export class DefaultPage extends Component {
         dayEnd.setDate(dayEnd.getDate() + 1);
         filters = {
           and: {
+            alert_task: true,
             alert_from: { gte: dayStart.toISOString() },
             alert_to: { ltwe: dayEnd.toISOString() },
           },
@@ -161,6 +163,7 @@ export class DefaultPage extends Component {
       case Views.WEEK: {
         filters = {
           and: {
+            alert_task: true,
             alert_from: { gte: new Date(Date.parse(p_range[0])).toISOString() },
             alert_to: { ltwe: new Date(Date.parse(p_range[p_range.length - 1])).toISOString() },
           },

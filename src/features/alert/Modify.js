@@ -88,7 +88,7 @@ export class Modify extends Component {
                 modal={true}
                 tab={this.props.alert.tab}
                 tabs={this.props.alert.tabs}
-                errors={this.props.alert.createOneError}
+                errors={this.props.alert.updateOneError}
                 onSubmit={this.onSubmit}
                 onCancel={this.onCancel}
                 onClose={this.props.onClose}
