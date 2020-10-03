@@ -441,7 +441,7 @@ const useForm = (initialState, initialTab, onSubmit, onCancel, onNavTab, errors,
 
   const handleSubmit = event => {
     if (!values.sending) {
-      values.sending = true;
+      //values.sending = true;
       setValues(explodeReduxModel(values));
       if (event) event.preventDefault();
       onSubmit(values);
@@ -450,7 +450,7 @@ const useForm = (initialState, initialTab, onSubmit, onCancel, onNavTab, errors,
 
   const handleCancel = event => {
     if (!values.sending) {
-      values.sending = true;
+      //values.sending = true;
       setValues(explodeReduxModel(values));
       if (event) event.preventDefault();
       onCancel();
