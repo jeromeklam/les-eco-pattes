@@ -73,7 +73,10 @@ const useForm = (initialState, initialTab, onSubmit, onCancel, onNavTab, errors,
     if (event && event.persist) {
       event.persist();
     }
-    let tType = event.target.type || 'text';
+    let tType = (event.target.dataset && event.target.dataset.type) ? event.target.dataset.type : '';
+    if (tType === '') {
+      tType = event.target.type || 'text';
+    }
     const tName = event.target.name;
     const elems = tName.split('.');
     const first = elems.shift();
@@ -128,6 +131,30 @@ const useForm = (initialState, initialTab, onSubmit, onCancel, onNavTab, errors,
               })
               .catch(err => {
                 values.loadClient = false;
+                setValues(explodeReduxModel(values));
+              });
+          }
+          break;
+        case 'FreeAsso_SiteType':
+          if (!values.loadSiteType) {
+            const id = event.target.value || '0';
+            values.loadSiteType = true;
+            setValues(explodeReduxModel(values));
+            _loadSiteType(id)
+              .then(result => {
+                values.loadSiteType = false;
+                if (result && result.data) {
+                  const lines = jsonApiNormalizer(result.data);
+                  const item = normalizedObjectModeler(lines, 'FreeAsso_SiteType', id, { eager: true });
+                  values[first] = item;
+                  if (afterChange) {
+                    afterChange(event.target.name, values);
+                  }
+                  setValues(explodeReduxModel(values));
+                }
+              })
+              .catch(err => {
+                values.loadSiteType = false;
                 setValues(explodeReduxModel(values));
               });
           }
@@ -190,6 +217,10 @@ const useForm = (initialState, initialTab, onSubmit, onCancel, onNavTab, errors,
       }
     } else {
       datas = values[first];
+      if (!datas) {
+        datas = {};
+        tType =  (event.target.dataset && event.target.dataset.type) ? event.target.dataset.type : '';
+      }
       if (datas.id !== undefined && datas.type) {
         tType = datas.type;
       }

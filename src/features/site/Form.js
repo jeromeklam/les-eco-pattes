@@ -71,7 +71,7 @@ export default function Form(props) {
     handleNavTab,
     getErrorMessage,
   } = useForm(props.item, props.tab, props.onSubmit, props.onCancel, props.onNavTab, props.errors, afterChange);
-  const regexp = values.site_type.sitt_pattern || '';
+  const regexp = (values.site_type ? values.site_type.sitt_pattern : '') || '';
   let validated = true;
   if (regexp !== '') {
     validated = false;
@@ -155,13 +155,13 @@ export default function Form(props) {
             <div className="col-sm-10">
               <InputSelect
                 label="Type"
-                id="site_type.id"
-                name="site_type.id"
+                id="site_type"
+                name="site_type"
+                datas={{type: 'FreeAsso_SiteType'}}
                 required={true}
                 value={values.site_type ? values.site_type.id : null}
                 onChange={handleChange}
                 options={siteTypeAsOptions(props.site_types)}
-                addempty={true}
                 error={getErrorMessage('site_type')}
               />
             </div>
