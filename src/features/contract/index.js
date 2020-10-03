@@ -4,4 +4,6 @@ export { default as List } from './List';
 export { default as Modify } from './Modify';
 export { default as Create } from './Create';
 export { default as InlineDocuments } from './InlineDocuments';
+export { default as InputPicker } from './InputPicker';
+export { default as Search } from './Search';
 
