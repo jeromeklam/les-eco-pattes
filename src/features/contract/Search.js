@@ -37,13 +37,13 @@ export default class Search extends Component {
   onSearch(filters) {
     if (!this.state.loading) {
       const addUrl = objectToQueryString(filters);
-      const doRequest = freeAssoApi.get('/v1/asso/site' + addUrl, {});
+      const doRequest = freeAssoApi.get('/v1/asso/contract' + addUrl, {});
       this.setState({ loading: true, finish: false, list: [] });
       doRequest.then(result => {
         let items = [];
         if (result && result.data) {
           const lines = jsonApiNormalizer(result.data);
-          items = normalizedObjectModeler(lines, 'FreeAsso_Site');
+          items = normalizedObjectModeler(lines, 'FreeAsso_Contract');
         }
         this.setState({ loading: false, finish: true, list: items });
       });
@@ -56,8 +56,7 @@ export default class Search extends Component {
 
   render() {
     const filters = [
-      { name: 'site_name', label: 'Nom', type: 'text', value: this.props.value },
-      { name: 'site_code', label: 'N° EDE', type: 'text' },
+      { name: 'ct_code', label: 'Code', type: 'text', value: this.props.value },
     ];
     return (
       <SearchModal
@@ -69,7 +68,7 @@ export default class Search extends Component {
         onSearch={this.onSearch}
         onSelect={this.props.onSelect}
         list={this.state.list}
-        pickerDisplay="site_name,site_code"
+        pickerDisplay="ct_code"
         filters={filters}
       />
     );

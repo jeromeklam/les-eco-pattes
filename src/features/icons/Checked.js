@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { Icon } from './';
 import { mdiCheckboxMarked as myIcon } from '@mdi/js';
+import { Icon } from './';
 
 export default class Checked extends Component {
   static propTypes = {};
