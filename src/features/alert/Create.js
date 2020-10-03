@@ -48,7 +48,7 @@ export class Create extends Component {
      *  Lorsque fini le store sera modifié
      */
     this.props.actions.loadOne(this.state.alertId).then(result => {
-      const item = this.props.alert.loadOneItem;
+      let item = this.props.alert.loadOneItem;
       item.user = this.props.user || null;
       if (this.props.params) {
         const { params } = this.props;
