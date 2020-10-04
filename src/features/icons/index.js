@@ -92,3 +92,7 @@ export { default as FilterDefault } from './FilterDefault';
 export { default as AddLine } from './AddLine';
 export { default as CloseLines } from './CloseLines';
 export { default as OpenLines } from './OpenLines';
+export { default as Task } from './Task';
+export { default as Critical } from './Critical';
+export { default as Important } from './Important';
+export { default as Recurrent } from './Recurrent';
