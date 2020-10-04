@@ -6,6 +6,7 @@ import useForm from '../ui/useForm';
 import { ResponsiveModalOrForm, InputDate, InputData } from '../ui';
 import { InputPicker as SiteInputPicker } from '../site';
 import { InputPicker as ClientInputPicker } from '../client';
+import { InlineAlerts } from '../alert';
 import { InlineDocuments } from '../contract';
 
 let regPlaceholder = '';
@@ -40,7 +41,7 @@ export default function Form(props) {
       title="Contrat"
       tab={values.currentTab}
       tabs={props.tabs}
-      size="md"
+      size="lg"
       height="480px"
       onSubmit={handleSubmit}
       onCancel={handleCancel}
@@ -230,6 +231,11 @@ export default function Form(props) {
           </div>
         )}
         {values.currentTab === '3' && (
+        <div className="border border-secondary rounded overflow-x-hidden">
+          <InlineAlerts objId={values.id} objName='FreeAsso_Contract' object={values}/>
+        </div>
+        )}
+        {values.currentTab === '4' && (
           <div className="border border-secondary rounded overflow-x-hidden">
             <InlineDocuments ctId={values.id} />
           </div>

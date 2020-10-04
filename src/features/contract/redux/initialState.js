@@ -4,7 +4,8 @@ import { getInitFilters } from './initFilters';
 const tabs = [
   { key: '1', name: 'identification', label: 'Identification', shortcut: 'I' },
   { key: '2', name: 'contact', label: 'Contacts', shortcut: 'C' },
-  { key: '3', name: 'document', label: 'Documents', shortcut: 'D' },
+  { key: '3', name: 'alerts', label: 'Suivi', shortcut: 'S' },
+  { key: '4', name: 'document', label: 'Documents', shortcut: 'D' },
 ];
 
 const initialState = {
