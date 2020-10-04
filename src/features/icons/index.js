@@ -96,3 +96,4 @@ export { default as Task } from './Task';
 export { default as Critical } from './Critical';
 export { default as Important } from './Important';
 export { default as Recurrent } from './Recurrent';
+export { default as Stop } from './Stop';

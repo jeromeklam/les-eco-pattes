@@ -16,6 +16,10 @@ export class PendingSicknesses extends Component {
     causeSickness: PropTypes.object.isRequired,
     actions: PropTypes.object.isRequired,
     layoutSize: PropTypes.string,
+    overlay: PropTypes.bool,
+  };
+  static defaultProps = {
+    overlay: false,
   };
 
   static defaultProps = {
@@ -81,7 +85,7 @@ export class PendingSicknesses extends Component {
       </InlineList>
     );
     return (
-      <DashboardCard title="Maladies à traiter" icon={<SicknessIcon />} size="md" header={header}>
+      <DashboardCard title="Maladies à traiter" icon={<SicknessIcon />} size="md" header={header} overlay={this.props.overlay}>
         <div>
           <div className="cause-movement-pendings text-secondary bg-secondary-light">
             {sicknesses && sicknesses.length > 0 ? (

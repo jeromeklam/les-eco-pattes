@@ -15,6 +15,10 @@ export class PendingAlerts extends Component {
   static propTypes = {
     alert: PropTypes.object.isRequired,
     actions: PropTypes.object.isRequired,
+    overlay: PropTypes.bool,
+  };
+  static defaultProps = {
+    overlay: false,
   };
 
   constructor(props) {
@@ -74,7 +78,7 @@ export class PendingAlerts extends Component {
       </InlineList>
     );
     return (
-      <DashboardCard title="Alertes" icon={<AlertIcon />} size="md" header={header}>
+      <DashboardCard title="Alertes" icon={<AlertIcon />} size="md" header={header} overlay={this.props.overlay}>
         <div className="pending-alerts">
           <div className="alert-pendings text-secondary bg-secondary-light">
             {alerts && alerts.length > 0 ? (

@@ -1,8 +1,21 @@
 import React, { Component } from 'react';
 import { NavLink } from 'react-router-dom';
+import PropTypes from 'prop-types';
+
+const Overlay = () => {
+  return (
+    <div style={{position: 'absolute', top: '40px', left: '0px', right: '0px', bottom: '20px', zIndex: 99999, opacity: 1}}>
+    </div>
+  );
+}
 
 export default class DashboardCard extends Component {
-  static propTypes = {};
+  static propTypes = {
+    overlay: PropTypes.bool,
+  };
+  static defaultProps = {
+    overlay: false,
+  };
 
   render() {
     let counter = null;
@@ -34,6 +47,7 @@ export default class DashboardCard extends Component {
             {this.props.header}
           </div>
           <div className="card-body" style={{ height: '100%' }}>
+            {this.props.overlay && <Overlay />}
             {counter !== null && <h3 className="card-title">{counter}</h3>}
             <div className="custom-scrollbar" style={{ height: '100%', overflowX: 'hidden', overflowY: 'auto' }}>
               {this.props.children !== null && <div>{this.props.children}</div>}

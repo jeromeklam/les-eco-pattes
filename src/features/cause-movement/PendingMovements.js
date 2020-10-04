@@ -19,6 +19,10 @@ export class PendingMovements extends Component {
   static propTypes = {
     causeMovement: PropTypes.object.isRequired,
     actions: PropTypes.object.isRequired,
+    overlay: PropTypes.bool,
+  };
+  static defaultProps = {
+    overlay: false,
   };
 
   constructor(props) {
@@ -87,7 +91,7 @@ export class PendingMovements extends Component {
       </InlineList>
     );
     return (
-      <DashboardCard title="Animaux en attente de mouvement" icon={<MovementIcon />} size="md" header={header} >
+      <DashboardCard title="Animaux en attente de mouvement" icon={<MovementIcon />} size="md" header={header} overlay={this.props.overlay}>
         <div className="pending-movements">
           <div className="cause-movement-pendings text-secondary bg-secondary-light">
             {movements && movements.length > 0 ? (

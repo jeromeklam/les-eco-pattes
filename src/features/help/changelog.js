@@ -23,6 +23,7 @@ export default `
     * Ajout d'une gestion des tâches à effectuer
   * Tableau de bord
     * Affichage des alertes sur les tâches à effectuer
+    * Pour changer le positionnement ou la taille des blocs il faut passer en édition du tableau de bord (icône avec crayon).
   * Agenda 
     * Ajout d'un agenda pour voir les tâches, suivis et autres rendez-vous
     

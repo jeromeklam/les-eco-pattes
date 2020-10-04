@@ -55,11 +55,14 @@ export class DashboardGrid extends Component {
     this.state = {
       breakpoint: 'lg',
       layouts: JSON.parse(JSON.stringify(originalLayouts)),
+      editable: false,
     };
     this.onLayoutChange = this.onLayoutChange.bind(this);
     this.onResizeStop = this.onResizeStop.bind(this);
     this.onBreakpointChange = this.onBreakpointChange.bind(this);
     this.onResetLayout = this.onResetLayout.bind(this);
+    this.onEdit = this.onEdit.bind(this);
+    this.onEditStop = this.onEditStop.bind(this);
   }
 
   componentDidMount() {
@@ -85,12 +88,20 @@ export class DashboardGrid extends Component {
   onResizeStop(param1, param2) {
   }
 
+  onEdit() {
+    this.setState({editable: true});
+  }
+
+  onEditStop() {
+    this.setState({editable: false});
+  }
+
   render() {
     const { layouts, breakpoint } = this.state;
     if (this.props.auth.authenticated && this.props.dashboard.stats) {
       return (
         <div>
-          <DashboardToolbar onResetLayout={this.onResetLayout} />
+          <DashboardToolbar onResetLayout={this.onResetLayout} onEdit={this.onEdit} onEditStop={this.onEditStop} />
           <ResponsiveReactGridLayout
             className="layout p-2"
             cols={{ lg: 36, md: 36, sm: 36, xs: 36, xxs: 36 }}
@@ -102,10 +113,11 @@ export class DashboardGrid extends Component {
             onBreakpointChange={this.onBreakpointChange}
             draggableHandle=".dashboard-card-header"
             layouts={layouts}
-            isDraggable={false}
+            isDraggable={this.state.editable}
+            isResizable={this.state.editable}
           >
             <div key="alerts" data-grid={{ w: 26, h: 6, x: 1, y: 1, minW: 12, minH: 4 }}>
-              <PendingAlerts layoutSize={getLayoutSize(layouts, breakpoint, 'alerts')} />
+              <PendingAlerts overlay={this.state.editable} layoutSize={getLayoutSize(layouts, breakpoint, 'alerts')} />
             </div>
             <div key="contract" data-grid={{ w: 6, h: 4, x: 28, y: 8, minW: 6, maxW: 18, minH: 4 }}>
               <DashboardCard
@@ -113,6 +125,7 @@ export class DashboardGrid extends Component {
                 count={this.props.dashboard.stats.total_contract}
                 icon={<ContractIcon />}
                 url="/contract"
+                overlay={this.state.editable}
                 size={getLayoutSize(layouts, breakpoint, 'contract')}
               />
             </div>
@@ -122,6 +135,7 @@ export class DashboardGrid extends Component {
                 count={this.props.dashboard.stats.total_cause}
                 icon={<CauseIcon />}
                 url="/cause"
+                overlay={this.state.editable}
                 size={getLayoutSize(layouts, breakpoint, 'cause')}
               />
             </div>
@@ -131,6 +145,7 @@ export class DashboardGrid extends Component {
                 count={this.props.dashboard.stats.total_site}
                 icon={<SiteIcon />}
                 url="/site"
+                overlay={this.state.editable}
                 size={getLayoutSize(layouts, breakpoint, 'site')}
               />
             </div>
@@ -140,6 +155,7 @@ export class DashboardGrid extends Component {
                 count={this.props.dashboard.stats.area_site || 0}
                 unit="m2"
                 icon={<AreaIcon />}
+                overlay={this.state.editable}
                 size={getLayoutSize(layouts, breakpoint, 'm2')}
               />
             </div>
@@ -149,14 +165,15 @@ export class DashboardGrid extends Component {
                 count={this.props.dashboard.stats.clot_site || 0}
                 unit="ml"
                 icon={<FenceIcon />}
+                overlay={this.state.editable}
                 size={getLayoutSize(layouts, breakpoint, 'ml')}
               />
             </div>
             <div key="movements" data-grid={{ w: 26, h: 6, x: 1, y: 10, minW: 12, minH: 4 }}>
-              <PendingMovements layoutSize={getLayoutSize(layouts, breakpoint, 'movements')} />
+              <PendingMovements overlay={this.state.editable} layoutSize={getLayoutSize(layouts, breakpoint, 'movements')} />
             </div>
             <div key="sicknesses" data-grid={{ w: 26, h: 6, x: 1, y: 20, minW: 12, minH: 4 }}>
-              <PendingSicknesses layoutSize={getLayoutSize(layouts, breakpoint, 'sicknesses')} />
+              <PendingSicknesses overlay={this.state.editable} layoutSize={getLayoutSize(layouts, breakpoint, 'sicknesses')} />
             </div>
           </ResponsiveReactGridLayout>
         </div>
