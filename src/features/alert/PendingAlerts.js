@@ -65,7 +65,7 @@ export class PendingAlerts extends Component {
           <Col layoutSize={this.props.layoutSize || 'md'} md={8} lg={8} xl={5} col={12}>
             <span>Prévu le</span>
           </Col>
-          <Col layoutSize={this.props.layoutSize || 'md'} md={8} lg={8} xl={5} col={12}>
+          <Col layoutSize={this.props.layoutSize || 'md'} md={8} lg={8} xl={5} col={8}>
             <span>Echéance</span>
           </Col>
           <Col layoutSize={this.props.layoutSize || 'md'} md={4} lg={4} xl={4} col={12}>

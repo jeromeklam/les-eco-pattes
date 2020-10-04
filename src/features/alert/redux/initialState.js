@@ -5,7 +5,7 @@ const initialState = {
   emptyItem: null,
   items: getNewNormalizedObject('FreeFW_Alert'),
   filters: new Filter(),
-  sort: [{ col: 'alert_from', way: 'down' }],
+  sort: [{ col: 'alert_from', way: 'up' }],
   pendings: [],
   page_number: 1,
   page_size: process.env.REACT_APP_PAGE_SIZE,
