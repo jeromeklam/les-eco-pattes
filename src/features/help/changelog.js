@@ -1,5 +1,32 @@
 export default `
 
+# Version 1.4.0 : 04/10/2020
+  * Général
+    * Filtres 
+      * Modification du fonctionnement des filtres 
+      * Suppression du pied de page avec le lien Facebook une fois connecté
+  * Animaux
+    * Affichage de la description (ou motif de sortie) corrigée
+    * Ajout Mâle castré dans la liste M/F
+    * Correction dans la saisie du père ou de la mère
+    * Suppression de la possibilité de déplacer un animal sans mouvement attaché
+    * Dans les filtres ajout du motif de sortie
+  * Sites
+    * Gestion de la suppression d'un site (impossible si des éléments sont déjà saisis dessus)
+    * Suivi
+      * Ajout d'un onglet pour saisir ce qui a été fait su un site et possibilité de créer des tâches récurrentes à effectuer
+  * Mouvement
+    * Correction du changement de statut d'un mouvement qui ne modifiait pas le site des animaux 
+  * Contrats
+    * Ajout d'une gestion des contrats
+  * Tâches
+    * Ajout d'une gestion des tâches à effectuer
+  * Tableau de bord
+    * Affichage des alertes sur les tâches à effectuer
+  * Agenda 
+    * Ajout d'un agenda pour voir les tâches, suivis et autres rendez-vous
+    
+
 # Version 1.3.1 : 10/08/2020
   * Sites
     * Fiche
