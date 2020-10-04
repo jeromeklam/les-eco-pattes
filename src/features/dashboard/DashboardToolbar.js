@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { getJsonApi } from 'jsonapi-front';
+import { HighlightToggler, Highlight } from 'react-bootstrap-front';
 import * as actions from './redux/actions';
 import { updateConfig } from '../auth/redux/actions';
 import {
@@ -86,7 +87,14 @@ export class DashboardToolbar extends Component {
     return (
       <div className="dashboard-dashboard-toolbar">
         <div className="row row-short">
-          <div className="col-36 text-right">
+          <div className="col-18 text-left">
+            <div className="nav justify-content-left">
+              <div className="nav-item">
+                <HighlightToggler className="text-light" theme="DASHBOARD" />
+              </div>
+            </div>
+          </div>
+          <div className="col-18 text-right">
             <div className="nav justify-content-end">
               <div className="nav-item">
                 {!this.state.editable && (
@@ -96,6 +104,7 @@ export class DashboardToolbar extends Component {
                     onClick={this.onRefreshDashboard}
                   >
                     <ReloadIcon />
+                    <Highlight position="bottom" theme="DASHBOARD" title="Recharger sa présentations" />
                   </button>
                 )}
                 {!this.state.editable && (
@@ -105,6 +114,7 @@ export class DashboardToolbar extends Component {
                     onClick={this.onResetDashboard}
                   >
                     <ResetIcon />
+                    <Highlight position="bottom" theme="DASHBOARD" title="Revenir à la présentation par défaut" />
                   </button>
                 )}
                 {!this.state.editable && (
@@ -114,6 +124,7 @@ export class DashboardToolbar extends Component {
                     onClick={this.onSaveDashboard}
                   >
                     <SaveIcon />
+                    <Highlight position="bottom" theme="DASHBOARD" title="Enregistrer la présentation" />
                   </button>
                 )}
                 {!this.state.editable ? (
@@ -123,6 +134,7 @@ export class DashboardToolbar extends Component {
                     onClick={this.onLocalEdit}
                   >
                     <GetOneIcon />
+                    <Highlight position="bottom" theme="DASHBOARD" title="Editer la présentation" />
                   </button>
                 ) : (
                   <button
@@ -131,6 +143,7 @@ export class DashboardToolbar extends Component {
                     onClick={this.onLocalEdit}
                   >
                     <StopIcon />
+                    <Highlight position="bottom" theme="DASHBOARD" title="Arrêter l'édition" />
                   </button>
                 )}
               </div>
