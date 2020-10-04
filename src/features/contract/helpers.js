@@ -1,5 +1,6 @@
 import React from 'react';
 import {
+  Follow as FollowIcon,
   AddOne as AddOneIcon,
   GetOne as GetOneIcon,
   DelOne as DelOneIcon,
@@ -19,8 +20,23 @@ export const getGlobalActions = ({ onClearFilters, onCreate }) => {
   ];
 };
 
-export const getInlineActions = ({ onGetOne, onDelOne }) => {
+export const getInlineActions = ({ 
+  onSelectList, 
+  onGetOne, 
+  onDelOne,
+  state,
+}) => {
   return [
+    {
+      name: 'alerts',
+      label: 'Contrat',
+      onClick: (obj) => {onSelectList(obj, 'alert');},
+      param: 'object',
+      theme: 'secondary',
+      icon: <FollowIcon color="white" />,
+      role: 'DETAIL',
+      active: state.alertsCpontrat > 0,
+    },
     {
       name: 'modify',
       label: 'Modifier',

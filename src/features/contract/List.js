@@ -20,8 +20,10 @@ import {
   Search as SearchIcon,
   Calendar as CalendarIcon,
   DelOne as ClearDateIcon,
+  Close as CloseIcon,
 } from '../icons';
 import { deleteSuccess, showErrors } from '../ui';
+import { InlineAlerts } from '../alert';
 import { getGlobalActions, getInlineActions, getCols } from './';
 import { Create, Modify } from './';
 
@@ -47,6 +49,7 @@ export class List extends Component {
     this.onQuickSearch = this.onQuickSearch.bind(this);
     this.onSetFiltersAndSort = this.onSetFiltersAndSort.bind(this);
     this.onUpdateSort = this.onUpdateSort.bind(this);
+    this.onSelectList = this.onSelectList.bind(this);
     this.itemClassName = this.itemClassName.bind(this);
   }
 
@@ -139,6 +142,18 @@ export class List extends Component {
     this.setState({ timer: timer });
   }
 
+  onSelectList(obj, list) {
+    if (obj) {
+      if (list) {
+        this.setState({ mode: list, item: obj });
+      } else {
+        this.setState({ item: obj });
+      }
+    } else {
+      this.setState({ mode: false, item: null });
+    }
+  }
+
   itemClassName(item) {
     if (item && item.ct_to !== null && item.ct_to !== '') {
       return 'row-line-warning';
@@ -151,6 +166,21 @@ export class List extends Component {
     if (this.props.contract.items.FreeAsso_Contract) {
       items = normalizedObjectModeler(this.props.contract.items, 'FreeAsso_Contract');
     }
+    // Inline Element
+    let inlineComponent = null;
+    let id = null;
+    switch (this.state.mode) {
+      case 'alert':
+        id = this.state.item.id;
+        inlineComponent = (
+          <InlineAlerts mode="contract" objId={id} objName="FreeAsso_Contract" object={this.state.item} />
+        );
+        break;
+      default:
+        id = 0;
+        break;
+    }
+
     const globalActions = getGlobalActions(this);
     const inlineActions = getInlineActions(this);
     const cols = getCols(this);
@@ -185,8 +215,12 @@ export class List extends Component {
           sortNoneIcon={<SortNoneIcon color="secondary" />}
           calIcon={<CalendarIcon className="text-secondary" />}
           clearIcon={<ClearDateIcon className="text-warning" />}
-          inlineActions={inlineActions}
+          closeIcon={<CloseIcon />}
           globalActions={globalActions}
+          inlineActions={inlineActions}
+          inlineOpenedId={id}
+          inlineComponent={inlineComponent}
+          inlineOpenedItem={this.state.item}
           sort={this.props.contract.sort}
           filters={this.props.contract.filters}
           filterFullIcon={<FilterFullIcon color="white" />}
@@ -200,6 +234,7 @@ export class List extends Component {
           onClearFilters={() => this.onFiltersDefault(true)}
           onClearFiltersDefault={() => this.onFiltersDefault(false)}
           onLoadMore={this.onLoadMore}
+          onClick={this.onSelectList}
           loadMorePending={this.props.contract.loadMorePending}
           loadMoreFinish={this.props.contract.loadMoreFinish}
           loadMoreError={this.props.contract.loadMoreError}
