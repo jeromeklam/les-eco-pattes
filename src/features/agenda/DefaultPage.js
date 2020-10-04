@@ -300,6 +300,12 @@ export class DefaultPage extends Component {
                 }
                 return false;
               }}
+              priorityAccessor={data => {
+                if (data && data.alert_priority) {
+                  return data.alert_priority;
+                }
+                return 'NONE';
+              }}
               titleAccessor="alert_title"
               tooltipAccessor="alert_text"
               resourceAccessor="user.id"
@@ -315,7 +321,7 @@ export class DefaultPage extends Component {
               onSelectSlot={this.onSelectSlot}
               onSelecting={this.onSelecting}
               style={{ height: '100%' }}
-              icons={{done : <Checked />}}
+              icons={{done : <Checked />, IMPORTANT: <span>!</span>}}
             />
           ) : (
             <CenteredLoading3Dots />

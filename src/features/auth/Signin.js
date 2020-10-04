@@ -7,7 +7,7 @@ import { withRouter } from 'react-router-dom';
 import { InputEmail, InputPassword, InputCheckbox, Highlight } from 'react-bootstrap-front';
 import { getJsonApi } from 'jsonapi-front';
 import * as actions from './redux/actions';
-import { Copyright, messageError, getFieldErrorMessage } from '../ui';
+import { Copyright, showErrors, getFieldErrorMessage } from '../ui';
 import logo from '../../images/logo-les-eco-pattes.jpg';
 
 export class Signin extends Component {
@@ -58,9 +58,9 @@ export class Signin extends Component {
       props.history.push('/');
     } else {
       if (props.auth.signInError) {
-        return {          
-          username_error: getFieldErrorMessage(props.intl,  props.auth.signInError, 'login'),
-          password_error: getFieldErrorMessage(props.intl,  props.auth.signInError, 'password'),
+        return {
+          username_error: getFieldErrorMessage(props.intl, props.auth.signInError, 'login'),
+          password_error: getFieldErrorMessage(props.intl, props.auth.signInError, 'password'),
         };
       }
     }
@@ -101,9 +101,16 @@ export class Signin extends Component {
         remember: this.state.remember,
       };
       let obj = getJsonApi(datas);
-      this.props.actions.signIn(obj).then(result => {
-        this.props.history.push('/');
-      });
+      this.props.actions
+        .signIn(obj)
+        .then(result => {
+          this.props.history.push('/');
+        })
+        .catch(errors => {
+          // @todo display errors to fields
+          const { intl } = this.props;
+          showErrors(this.props.intl, errors, 'signIn');
+        });
     }
   }
 
@@ -120,14 +127,16 @@ export class Signin extends Component {
         login: this.state.username,
       };
       let obj = getJsonApi(datas);
-      this.props.actions.askPassword(obj).then(result => {
-        this.setState({ username_error: username_error, passwordAsk: false });
-      })
-      .catch(errors => {
-        // @todo display errors to fields
-        const { intl } = this.props;
-        messageError(intl.formatMessage({ id: 'app.features.auth.login.error.askPassword', defaultMessage: 'Error in request !'}));
-      });
+      this.props.actions
+        .askPassword(obj)
+        .then(result => {
+          this.setState({ username_error: username_error, passwordAsk: false });
+        })
+        .catch(errors => {
+          // @todo display errors to fields
+          const { intl } = this.props;
+          showErrors(this.props.intl, errors, 'askPassword');
+        });
     }
   }
 
@@ -139,15 +148,26 @@ export class Signin extends Component {
           <form className="form-signin text-center" onSubmit={this.onSubmitPassword}>
             <img className="mb-4" src={logo} alt="" width="72" height="72" />
             <h1 className="h3 mb-3 font-weight-normal">
-              <FormattedMessage id="app.features.auth.login.lostPassword" defaultMessage="Lost password" />
+              <FormattedMessage
+                id="app.features.auth.login.lostPassword"
+                defaultMessage="Lost password"
+              />
             </h1>
             <div className="card">
               <div className="card-body text-left">
                 <InputEmail
                   id="username"
                   name="username"
-                  label={<FormattedMessage id="app.features.auth.login.username" defaultMessage="Connexion" />}
-                  placeholder={intl.formatMessage({ id: 'app.features.auth.login.username', defaultMessage: 'Email address' })}
+                  label={
+                    <FormattedMessage
+                      id="app.features.auth.login.username"
+                      defaultMessage="Connexion"
+                    />
+                  }
+                  placeholder={intl.formatMessage({
+                    id: 'app.features.auth.login.username',
+                    defaultMessage: 'Email address',
+                  })}
                   required=""
                   autoFocus=""
                   labelInline
@@ -156,9 +176,16 @@ export class Signin extends Component {
                   onChange={this.onChange}
                 />
                 <button className="btn btn-lg btn-primary btn-block mt-3" type="submit">
-                  <FormattedMessage id="app.features.auth.login.askPassword" defaultMessage="Send password reset email" />
+                  <FormattedMessage
+                    id="app.features.auth.login.askPassword"
+                    defaultMessage="Send password reset email"
+                  />
                 </button>
-                <button className="btn btn-lg btn-secondary btn-block mb-2" type="button" onClick={this.onForgotPasswordClose}>
+                <button
+                  className="btn btn-lg btn-secondary btn-block mb-2"
+                  type="button"
+                  onClick={this.onForgotPasswordClose}
+                >
                   <FormattedMessage id="app.features.auth.login.back" defaultMessage="Back" />
                 </button>
               </div>
@@ -176,8 +203,16 @@ export class Signin extends Component {
                 <InputEmail
                   id="username"
                   name="username"
-                  label={<FormattedMessage id="app.features.auth.login.username" defaultMessage="Connexion" />}
-                  placeholder={intl.formatMessage({ id: 'app.features.auth.login.username', defaultMessage: 'Email address' })}
+                  label={
+                    <FormattedMessage
+                      id="app.features.auth.login.username"
+                      defaultMessage="Connexion"
+                    />
+                  }
+                  placeholder={intl.formatMessage({
+                    id: 'app.features.auth.login.username',
+                    defaultMessage: 'Email address',
+                  })}
                   required=""
                   autoFocus=""
                   labelInline
@@ -188,8 +223,16 @@ export class Signin extends Component {
                 <InputPassword
                   id="password"
                   name="password"
-                  label={<FormattedMessage id="app.features.auth.login.password" defaultMessage="Connexion" />}
-                  placeholder={intl.formatMessage({ id: 'app.features.auth.login.password', defaultMessage: 'Password' })}
+                  label={
+                    <FormattedMessage
+                      id="app.features.auth.login.password"
+                      defaultMessage="Connexion"
+                    />
+                  }
+                  placeholder={intl.formatMessage({
+                    id: 'app.features.auth.login.password',
+                    defaultMessage: 'Password',
+                  })}
                   required=""
                   labelInline
                   value={this.state.password}
@@ -200,21 +243,44 @@ export class Signin extends Component {
                   <InputCheckbox
                     name="remember"
                     checked={this.state.remember}
-                    detail={<FormattedMessage id="app.features.auth.login.rememberMe" defaultMessage="Connexion" />}
+                    detail={
+                      <FormattedMessage
+                        id="app.features.auth.login.rememberMe"
+                        defaultMessage="Connexion"
+                      />
+                    }
                     onChange={this.onChange}
                   />
                 </div>
-                <Highlight title={intl.formatMessage({ id: 'app.features.auth.login.help.connexion', defaultMessage: 'Forgot password' })} position="bottom">
+                <Highlight
+                  title={intl.formatMessage({
+                    id: 'app.features.auth.login.help.connexion',
+                    defaultMessage: 'Forgot password',
+                  })}
+                  position="bottom"
+                >
                   <button className="btn btn-lg btn-primary btn-block" type="submit">
-                    <FormattedMessage id="app.features.auth.login.connexion" defaultMessage="Connexion" />
+                    <FormattedMessage
+                      id="app.features.auth.login.connexion"
+                      defaultMessage="Connexion"
+                    />
                   </button>
                 </Highlight>
                 <hr />
                 <div className="text-center">
-                  <Highlight title={intl.formatMessage({ id: 'app.features.auth.login.help.forgotPassword', defaultMessage: 'Forgot password' })} position="bottom">
+                  <Highlight
+                    title={intl.formatMessage({
+                      id: 'app.features.auth.login.help.forgotPassword',
+                      defaultMessage: 'Forgot password',
+                    })}
+                    position="bottom"
+                  >
                     <a href={null} onClick={this.onForgotPasswordAsk}>
                       <span>
-                        <FormattedMessage id="app.features.auth.login.forgotPassword" defaultMessage="Forgot password ?" />
+                        <FormattedMessage
+                          id="app.features.auth.login.forgotPassword"
+                          defaultMessage="Forgot password ?"
+                        />
                       </span>
                     </a>
                   </Highlight>

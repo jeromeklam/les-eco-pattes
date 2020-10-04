@@ -18,7 +18,7 @@ export class InlineDocuments extends Component {
 
   static getDerivedStateFromProps(props, state) {
     if (props.ctId !== state.ct_id) {
-      return({ct_id: props.ctId});
+      return { ct_id: props.ctId };
     }
     return null;
   }
@@ -31,6 +31,7 @@ export class InlineDocuments extends Component {
       ctm_id: 0,
       items: [],
       loading: true,
+      uploading: false,
     };
     this.onDropFiles = this.onDropFiles.bind(this);
     this.onConfirmClose = this.onConfirmClose.bind(this);
@@ -41,12 +42,10 @@ export class InlineDocuments extends Component {
   }
 
   localLoadDocuments() {
-    this.setState({loading: true});
-    getMedias(this.state.ct_id, 'OTHER')
-      .then(result => {
-        this.setState({items: result, loading: false});
-      })
-    ;
+    this.setState({ loading: true });
+    getMedias(this.state.ct_id, 'OTHER').then(result => {
+      this.setState({ items: result, loading: false });
+    });
   }
 
   componentDidMount() {
@@ -60,6 +59,7 @@ export class InlineDocuments extends Component {
   }
 
   onDropFiles(id, acceptedFiles) {
+    this.setState({ uploading: true });
     const promises = acceptedFiles.map(file => {
       return new Promise((resolve, reject) => {
         const reader = new FileReader();
@@ -74,7 +74,13 @@ export class InlineDocuments extends Component {
           const binaryStr = reader.result;
           this.props.actions
             .uploadContractMedia(0, id, binaryStr, file.name)
-            .then(result => resolve(true));
+            .then(result => {
+              resolve(true);
+              this.setState({ uploading: false });
+            })
+            .catch(error => {
+              this.setState({ uploading: false });
+            });
         };
         reader.readAsDataURL(file);
       });
@@ -118,53 +124,54 @@ export class InlineDocuments extends Component {
             <CenteredLoading3Dots />
           ) : (
             <div className="row p-2 row-cols-1 row-cols-sm-2 row-cols-md-2 row-cols-lg-3">
-              {documents && documents.map(document => {
-                let content = <FileIcon type="document" size={80} {...defaultStyles.docx} />;
-                try {
-                  const ext = document.ctm_title.split('.').pop();
-                  let style = defaultStyles[ext];
-                  content = <FileIcon size={80} extension={ext} {...style} />;
-                } catch (ex) {
-                  // @TODO
-                }
-                return (
-                  <div className="col" key={document.id}>
-                    <div className="card mt-2">
-                      <div className="card-header bg-light">
-                        <div className="row">
-                          <div className="col-16"></div>
-                          <div className="col-20 text-right">
-                            <div className="btn-group btn-group-sm" role="group" aria-label="...">
-                              <button type="button" className="btn btn-inline btn-secondary">
-                                <DownloadIcon
-                                  onClick={() => this.onDownload(document)}
-                                  className="text-light inline-action"
-                                />
-                              </button>
-                              <button type="button" className="btn btn-inline btn-warning">
-                                <DelOneIcon
-                                  onClick={() => this.onConfirmDocument(document.id)}
-                                  className="text-light inline-action"
-                                />
-                              </button>
+              {documents &&
+                documents.map(document => {
+                  let content = <FileIcon type="document" size={80} {...defaultStyles.docx} />;
+                  try {
+                    const ext = document.ctm_title.split('.').pop();
+                    let style = defaultStyles[ext];
+                    content = <FileIcon size={80} extension={ext} {...style} />;
+                  } catch (ex) {
+                    // @TODO
+                  }
+                  return (
+                    <div className="col" key={document.id}>
+                      <div className="card mt-2">
+                        <div className="card-header bg-light">
+                          <div className="row">
+                            <div className="col-16"></div>
+                            <div className="col-20 text-right">
+                              <div className="btn-group btn-group-sm" role="group" aria-label="...">
+                                <button type="button" className="btn btn-inline btn-secondary">
+                                  <DownloadIcon
+                                    onClick={() => this.onDownload(document)}
+                                    className="text-light inline-action"
+                                  />
+                                </button>
+                                <button type="button" className="btn btn-inline btn-warning">
+                                  <DelOneIcon
+                                    onClick={() => this.onConfirmDocument(document.id)}
+                                    className="text-light inline-action"
+                                  />
+                                </button>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div className="card-body text-center">
+                          <div className="row">
+                            <div className="col-36">{content}</div>
+                            <div className="col-36">
+                              <small className="text-center text-secondary">
+                                {document.ctm_title}
+                              </small>
                             </div>
                           </div>
                         </div>
                       </div>
-                      <div className="card-body text-center">
-                        <div className="row">
-                          <div className="col-36">{content}</div>
-                          <div className="col-36">
-                            <small className="text-center text-secondary">
-                              {document.ctm_title}
-                            </small>
-                          </div>
-                        </div>
-                      </div>
                     </div>
-                  </div>
-                );
-              })}
+                  );
+                })}
               <div className="col" key={'000'}>
                 <div className="card mt-2">
                   <div className="card-header bg-light text-secondary">
@@ -175,7 +182,7 @@ export class InlineDocuments extends Component {
                     </div>
                   </div>
                   <div className="card-body text-center">
-                    {this.props.contract.uploadDocumentPending ? (
+                    {this.state.uploading ? (
                       <CenteredLoading3Dots />
                     ) : (
                       <Dropzone
@@ -219,11 +226,8 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    actions: bindActionCreators({ ...actions }, dispatch)
+    actions: bindActionCreators({ ...actions }, dispatch),
   };
 }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(InlineDocuments);
+export default connect(mapStateToProps, mapDispatchToProps)(InlineDocuments);

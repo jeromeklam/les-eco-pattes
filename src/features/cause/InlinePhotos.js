@@ -26,7 +26,7 @@ export class InlinePhotos extends Component {
 
   static getDerivedStateFromProps(props, state) {
     if (props.cauId !== state.cause_id) {
-      return({cause_id: props.cauId});
+      return { cause_id: props.cauId };
     }
     return null;
   }
@@ -43,6 +43,7 @@ export class InlinePhotos extends Component {
       items: [],
       loading: true,
       comment: false,
+      uploading: false,
     };
     this.onDropFiles = this.onDropFiles.bind(this);
     this.onConfirmClose = this.onConfirmClose.bind(this);
@@ -52,18 +53,16 @@ export class InlinePhotos extends Component {
     this.onView = this.onView.bind(this);
     this.onCloseView = this.onCloseView.bind(this);
     this.onComment = this.onComment.bind(this);
-    this.onValidComment = this.onValidComment.bind(this); 
+    this.onValidComment = this.onValidComment.bind(this);
     this.onCloseComment = this.onCloseComment.bind(this);
     this.localLoadPhotos = this.localLoadPhotos.bind(this);
   }
 
   localLoadPhotos() {
-    this.setState({loading: true});
-    getMedias(this.state.cause_id, 'PHOTO')
-      .then(result => {
-        this.setState({items: result, loading: false});
-      })
-    ;
+    this.setState({ loading: true });
+    getMedias(this.state.cause_id, 'PHOTO').then(result => {
+      this.setState({ items: result, loading: false });
+    });
   }
 
   componentDidMount() {
@@ -77,6 +76,7 @@ export class InlinePhotos extends Component {
   }
 
   onDropFiles(id, acceptedFiles) {
+    this.setState({ uploading: true });
     const promises = acceptedFiles.map(file => {
       return new Promise((resolve, reject) => {
         const reader = new FileReader();
@@ -91,7 +91,13 @@ export class InlinePhotos extends Component {
           const binaryStr = reader.result;
           this.props.actions
             .uploadCauseMedia(0, id, binaryStr, file.name)
-            .then(result => resolve(true));
+            .then(result => {
+              resolve(true);
+              this.setState({ uploading: false });
+            })
+            .catch(error => {
+              this.setState({ uploading: false });
+            });
         };
         reader.readAsDataURL(file);
       });
@@ -124,7 +130,7 @@ export class InlinePhotos extends Component {
       const bytes = new Uint8Array(result.data);
       const blob = new Blob([bytes], { type: type });
       const url = window.URL.createObjectURL(blob);
-      this.setState({ blob: url, view: true, comment: false ,item: item });
+      this.setState({ blob: url, view: true, comment: false, item: item });
     });
   }
 
@@ -133,7 +139,7 @@ export class InlinePhotos extends Component {
   }
 
   onComment(item) {
-    this.setState({ blob: null, view: false, comment: true , item: item });
+    this.setState({ blob: null, view: false, comment: true, item: item });
   }
 
   onValidComment(comment) {
@@ -148,7 +154,7 @@ export class InlinePhotos extends Component {
       })
       .catch(errors => {
         showErrors(this.props.intl, errors, 'updateOneError');
-     });
+      });
   }
 
   onCloseComment() {
@@ -172,65 +178,68 @@ export class InlinePhotos extends Component {
             <CenteredLoading3Dots />
           ) : (
             <div className="row p-2 row-cols-1 row-cols-sm-2 row-cols-md-2 row-cols-lg-3">
-              {photos && photos.map(photo => {
-                let img = '';
-                try {
-                  if (photo.caum_short_blob) {                    
-                    img = `data:image/jpeg;base64,${photo.caum_short_blob}`;
+              {photos &&
+                photos.map(photo => {
+                  let img = '';
+                  try {
+                    if (photo.caum_short_blob) {
+                      img = `data:image/jpeg;base64,${photo.caum_short_blob}`;
+                    }
+                  } catch (ex) {
+                    console.log(ex);
                   }
-                } catch (ex) {
-                  console.log(ex);
-                }
-                return (
-                  <div className="col" key={photo.id}>
-                    <div className="card mt-2">
-                      <div className="card-header bg-light">
-                        <div className="row">
-                          <div className="col-16"></div>
-                          <div className="col-20 text-right">
-                            <div className="btn-group btn-group-sm" role="group" aria-label="...">
-                              <button type="button" className="btn btn-inline btn-secondary">
-                                <CommentIcon
-                                  className="text-light inline-action"
-                                  onClick={() => this.onComment(photo)}
-                                />
-                              </button>
-                              <button type="button" className="btn btn-inline btn-secondary">
-                                <ViewIcon
-                                  className="text-light inline-action"
-                                  onClick={() => this.onView(photo)}
-                                />
-                              </button>
-                              <button type="button" className="btn btn-inline btn-secondary">
-                                <DownloadIcon
-                                  className="text-light inline-action"
-                                  onClick={() => this.onDownload(photo)}
-                                />
-                              </button>
-                              <button type="button" className="btn btn-inline btn-warning">
-                                <DelOneIcon
-                                  onClick={() => this.onConfirmPhoto(photo.id)}
-                                  className="text-light inline-action"
-                                />
-                              </button>
+                  return (
+                    <div className="col" key={photo.id}>
+                      <div className="card mt-2">
+                        <div className="card-header bg-light">
+                          <div className="row">
+                            <div className="col-16"></div>
+                            <div className="col-20 text-right">
+                              <div className="btn-group btn-group-sm" role="group" aria-label="...">
+                                <button type="button" className="btn btn-inline btn-secondary">
+                                  <CommentIcon
+                                    className="text-light inline-action"
+                                    onClick={() => this.onComment(photo)}
+                                  />
+                                </button>
+                                <button type="button" className="btn btn-inline btn-secondary">
+                                  <ViewIcon
+                                    className="text-light inline-action"
+                                    onClick={() => this.onView(photo)}
+                                  />
+                                </button>
+                                <button type="button" className="btn btn-inline btn-secondary">
+                                  <DownloadIcon
+                                    className="text-light inline-action"
+                                    onClick={() => this.onDownload(photo)}
+                                  />
+                                </button>
+                                <button type="button" className="btn btn-inline btn-warning">
+                                  <DelOneIcon
+                                    onClick={() => this.onConfirmPhoto(photo.id)}
+                                    className="text-light inline-action"
+                                  />
+                                </button>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div className="card-body text-center">
+                          <div className="row">
+                            <div className="col-36">
+                              {img && <img src={img} className="rounded" alt="" />}
+                            </div>
+                            <div className="col-36">
+                              <small className="text-center text-secondary">
+                                {photo.caum_desc}
+                              </small>
                             </div>
                           </div>
                         </div>
                       </div>
-                      <div className="card-body text-center">
-                        <div className="row">
-                          <div className="col-36">
-                            {img && <img src={img} className="rounded" alt="" />}
-                          </div>
-                          <div className="col-36">
-                            <small className="text-center text-secondary">{photo.caum_desc}</small>
-                          </div>
-                        </div>
-                      </div>
                     </div>
-                  </div>
-                );
-              })}
+                  );
+                })}
               <div className="col" key={'000'}>
                 <div className="card mt-2">
                   <div className="card-header bg-light text-secondary">
@@ -241,7 +250,7 @@ export class InlinePhotos extends Component {
                     </div>
                   </div>
                   <div className="card-body text-center">
-                    {this.props.cause.uploadPhotoPending ? (
+                    {this.state.uploading ? (
                       <div className="text-center">
                         <CenteredLoading3Dots />
                       </div>
@@ -252,11 +261,11 @@ export class InlinePhotos extends Component {
                         }}
                       >
                         {({ getRootProps, getInputProps }) => (
-                         <section>
-                           <div {...getRootProps()}>
-                             <input {...getInputProps()} />
-                             <UploadIcon className="text-primary inline-action" size={4} />
-                          </div>
+                          <section>
+                            <div {...getRootProps()}>
+                              <input {...getInputProps()} />
+                              <UploadIcon className="text-primary inline-action" size={4} />
+                            </div>
                           </section>
                         )}
                       </Dropzone>
@@ -280,7 +289,7 @@ export class InlinePhotos extends Component {
             show={this.state.comment}
             onClose={this.onCloseComment}
             comment={this.state.item.caum_desc}
-            onSubmit={(comm) => {
+            onSubmit={comm => {
               this.onValidComment(comm);
             }}
           />
