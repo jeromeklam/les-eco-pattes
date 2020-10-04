@@ -124,5 +124,16 @@ export const getCols = ({ props }) => {
       title: true,
       last: true,
     },
+    {
+      name: 'done',
+      label: 'Réalisée le',
+      col: 'alert_done_ts',
+      size: '6',
+      mob_size: '18',
+      sortable: true,
+      filterable: { type: 'date' },
+      title: false,
+      hidden: true,
+    },
   ];
 };
