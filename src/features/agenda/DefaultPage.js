@@ -7,7 +7,7 @@ import { fr } from 'date-fns/locale';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as actions from './redux/actions';
-import { AddOne as AddOneIcon, Checked, UnChecked } from '../icons';
+import { AddOne as AddOneIcon, Checked, UnChecked, Critical, Important } from '../icons';
 import { CenteredLoading3Dots } from '../ui';
 import { Create as CreateEvent, Modify as ModifyEvent } from '../alert';
 
@@ -300,6 +300,12 @@ export class DefaultPage extends Component {
                 }
                 return false;
               }}
+              priorityAccessor={data => {
+                if (data && data.alert_priority) {
+                  return data.alert_priority;
+                }
+                return 'NONE';
+              }}
               titleAccessor="alert_title"
               tooltipAccessor="alert_text"
               resourceAccessor="user.id"
@@ -315,7 +321,7 @@ export class DefaultPage extends Component {
               onSelectSlot={this.onSelectSlot}
               onSelecting={this.onSelecting}
               style={{ height: '100%' }}
-              icons={{done : <Checked />}}
+              icons={{done : <Checked />, CRITICAL: <Critical />, IMPORTANT: <Important />}}
             />
           ) : (
             <CenteredLoading3Dots />

@@ -27,7 +27,7 @@ export class InlinePhotos extends Component {
 
   static getDerivedStateFromProps(props, state) {
     if (props.siteId !== state.site_id) {
-      return({site_id: props.siteId});
+      return { site_id: props.siteId };
     }
     return null;
   }
@@ -43,6 +43,7 @@ export class InlinePhotos extends Component {
       item: null,
       items: [],
       loading: true,
+      uploading: false,
     };
     this.onDropFiles = this.onDropFiles.bind(this);
     this.onConfirmClose = this.onConfirmClose.bind(this);
@@ -52,18 +53,16 @@ export class InlinePhotos extends Component {
     this.onView = this.onView.bind(this);
     this.onCloseView = this.onCloseView.bind(this);
     this.onComment = this.onComment.bind(this);
-    this.onValidComment = this.onValidComment.bind(this); 
+    this.onValidComment = this.onValidComment.bind(this);
     this.onCloseComment = this.onCloseComment.bind(this);
     this.localLoadPhotos = this.localLoadPhotos.bind(this);
   }
 
   localLoadPhotos() {
-    this.setState({loading: true});
-    getMedias(this.state.site_id, 'PHOTO')
-      .then(result => {
-        this.setState({items: result, loading: false});
-      })
-    ;
+    this.setState({ loading: true });
+    getMedias(this.state.site_id, 'PHOTO').then(result => {
+      this.setState({ items: result, loading: false });
+    });
   }
 
   componentDidMount() {
@@ -77,6 +76,7 @@ export class InlinePhotos extends Component {
   }
 
   onDropFiles(id, acceptedFiles) {
+    this.setState({ uploading: true });
     const promises = acceptedFiles.map(file => {
       return new Promise((resolve, reject) => {
         const reader = new FileReader();
@@ -91,7 +91,13 @@ export class InlinePhotos extends Component {
           const binaryStr = reader.result;
           this.props.actions
             .uploadSiteMedia(0, id, binaryStr, file.name)
-            .then(result => resolve(true));
+            .then(result => {
+              resolve(true);
+              this.setState({ uploading: false });
+            })
+            .catch(error => {
+              this.setState({ uploading: false });
+            });
         };
         reader.readAsDataURL(file);
       });
@@ -133,7 +139,7 @@ export class InlinePhotos extends Component {
   }
 
   onComment(item) {
-    this.setState({ blob: null, view: false, comment: true , item: item });
+    this.setState({ blob: null, view: false, comment: true, item: item });
   }
 
   onValidComment(comment) {
@@ -148,7 +154,7 @@ export class InlinePhotos extends Component {
       })
       .catch(errors => {
         showErrors(this.props.intl, errors, 'updateOneError');
-     });
+      });
   }
 
   onCloseComment() {
@@ -171,7 +177,14 @@ export class InlinePhotos extends Component {
           {this.state.loading ? (
             <CenteredLoading3Dots />
           ) : (
-            <div className={classnames('row p-2', this.props.inline ? 'row-cols-1' : 'row-cols-1 row-cols-sm-2 row-cols-md-2 row-cols-lg-3')}>
+            <div
+              className={classnames(
+                'row p-2',
+                this.props.inline
+                  ? 'row-cols-1'
+                  : 'row-cols-1 row-cols-sm-2 row-cols-md-2 row-cols-lg-3',
+              )}
+            >
               {photos.map(photo => {
                 let img = '';
                 try {
@@ -241,7 +254,7 @@ export class InlinePhotos extends Component {
                     </div>
                   </div>
                   <div className="card-body text-center">
-                    {this.props.site.uploadPhotoPending ? (
+                    {this.state.uploading ? (
                       <div className="text-center">
                         <CenteredLoading3Dots />
                       </div>
@@ -280,7 +293,7 @@ export class InlinePhotos extends Component {
             show={this.state.comment}
             onClose={this.onCloseComment}
             comment={this.state.item.sitm_desc}
-            onSubmit={(comm) => {
+            onSubmit={comm => {
               this.onValidComment(comm);
             }}
           />

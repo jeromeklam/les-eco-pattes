@@ -26,6 +26,14 @@ const objects = [
 
 const afterChange = (name, item) => {
   switch (name) {
+    case 'alert_recur_type':
+      if (item.alert_recur_type !== 'NONE') {
+        item.alert_recur_number = Number(item.alert_recur_number);
+        if (Number.isNaN(item.alert_recur_number) || item.alert_recur_number < 1) {
+          item.alert_recur_number = 1;
+        }
+      }
+      break;
     case 'alert_from':
       const dateFrom1 = new Date(item.alert_from) || null;
       const dateTo1 = new Date(item.alert_to) || null;
@@ -73,6 +81,7 @@ export default function Form(props) {
     values.alert_to = today;
   }
   let libRecur = getAlertRecur(values);
+  const recurDisabled = (values.parent && values.parent.id && parseInt(values.parent.id, 10) > 0) ? true : false;
   return (
     <ResponsiveModalOrForm
       title={values.alert_title}
@@ -263,19 +272,6 @@ export default function Form(props) {
       {values.currentTab === '2' && (
         <div>
           <div className="row">
-            <div className="col-36">
-              <InputTextarea
-                label="Description"
-                name="alert_text"
-                value={values.alert_text}
-                onChange={handleChange}
-                labelTop={true}
-                error={getErrorMessage('alert_text')}
-              />
-            </div>
-          </div>
-          <br />
-          <div className="row">
             <div className="col-26">
               <InputCheckList
                 label=""
@@ -291,6 +287,22 @@ export default function Form(props) {
       {values.currentTab === '3' && (
         <div>
           <div className="row">
+            <div className="col-36">
+              <InputTextarea
+                label="Description"
+                name="alert_text"
+                value={values.alert_text}
+                onChange={handleChange}
+                labelTop={true}
+                error={getErrorMessage('alert_text')}
+              />
+            </div>
+          </div>
+        </div>
+      )}
+      {values.currentTab === '4' && (
+        <div>
+          <div className="row">
             <div className="col-6">
               <InputSelect
                 label="Récurrence"
@@ -300,6 +312,7 @@ export default function Form(props) {
                 defaultValue="NONE"
                 onChange={handleChange}
                 options={alertRecurType}
+                disabled={recurDisabled}
                 error={getErrorMessage('alert_recur_type')}
               />
             </div>
@@ -314,13 +327,12 @@ export default function Form(props) {
                   minValue={0}
                   onChange={handleChange}
                   labelTop={true}
+                  disabled={recurDisabled}
                   error={getErrorMessage('alert_recur_number')}
                 />
               )}
             </div>
-          </div>
-          <div className="row">
-            <div className="col-sm-13">
+            <div className="col-sm-18">
               <InputSelect
                 label="Premier rappel avant échéance"
                 name="alert_email_1"
@@ -331,7 +343,10 @@ export default function Form(props) {
                 error={getErrorMessage('alert_email_1')}
               />
             </div>
-            <div className="col-sm-13">
+          </div>
+          <div className="row">
+            <div className="col-sm-18" />
+            <div className="col-sm-18">
               <InputSelect
                 label="Deuxième rappel avant échéance"
                 name="alert_email_2"

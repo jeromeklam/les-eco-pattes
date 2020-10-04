@@ -11,7 +11,7 @@ export function reducer(state, action) {
     case ALERT_INIT_SORT:
       return {
         ...state,
-        sort: [{col:"alert_from", way:"down"}],
+        sort: [{col:"alert_from", way:"up"}],
       };
 
     default:

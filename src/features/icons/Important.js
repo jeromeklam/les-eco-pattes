@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { mdiAlertCircle as myIcon } from '@mdi/js';
+import { mdiAlert as myIcon } from '@mdi/js';
 import { Icon } from './';
 
 export default class Important extends Component {

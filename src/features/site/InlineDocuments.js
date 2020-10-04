@@ -33,6 +33,7 @@ export class InlineDocuments extends Component {
       sitm_id: 0,
       items: [],
       loading: true,
+      uploading: false,
     };
     this.onDropFiles = this.onDropFiles.bind(this);
     this.onConfirmClose = this.onConfirmClose.bind(this);
@@ -60,6 +61,7 @@ export class InlineDocuments extends Component {
   }
 
   onDropFiles(id, acceptedFiles) {
+    this.setState({ uploading: true });
     const promises = acceptedFiles.map(file => {
       return new Promise((resolve, reject) => {
         const reader = new FileReader();
@@ -74,7 +76,13 @@ export class InlineDocuments extends Component {
           const binaryStr = reader.result;
           this.props.actions
             .uploadSiteMedia(0, id, binaryStr, file.name)
-            .then(result => resolve(true));
+            .then(result => {
+              resolve(true);
+              this.setState({ uploading: false });
+            })
+            .catch(error => {
+              this.setState({ uploading: false });
+            });
         };
         reader.readAsDataURL(file);
       });
@@ -117,7 +125,14 @@ export class InlineDocuments extends Component {
           {this.state.loading ? (
             <CenteredLoading3Dots />
           ) : (
-            <div className={classnames('row p-2', this.props.inline ? 'row-cols-1' : 'row-cols-1 row-cols-sm-2 row-cols-md-2 row-cols-lg-3')}>
+            <div
+              className={classnames(
+                'row p-2',
+                this.props.inline
+                  ? 'row-cols-1'
+                  : 'row-cols-1 row-cols-sm-2 row-cols-md-2 row-cols-lg-3',
+              )}
+            >
               {documents &&
                 documents.map(document => {
                   let content = <FileIcon type="document" size={80} {...defaultStyles.docx} />;
@@ -176,7 +191,7 @@ export class InlineDocuments extends Component {
                     </div>
                   </div>
                   <div className="card-body text-center">
-                    {this.props.site.uploadDocumentPending ? (
+                    {this.state.uploading ? (
                       <div className="text-center">
                         <CenteredLoading3Dots />
                       </div>
