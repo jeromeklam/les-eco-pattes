@@ -1,10 +1,10 @@
 import { getNewNormalizedObject } from 'jsonapi-front';
-import { Filter } from 'react-bootstrap-front';
+import { getInitFilters } from './initFilters';
 
 const initialState = {
   emptyItem: null,
   items: getNewNormalizedObject('FreeFW_Alert'),
-  filters: new Filter(),
+  filters: getInitFilters(),
   sort: [{ col: 'alert_from', way: 'up' }],
   pendings: [],
   page_number: 1,

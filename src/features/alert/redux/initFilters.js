@@ -1,4 +1,4 @@
-import { Filter, FILTER_MODE_AND, FILTER_OPER_GREATER_OR_EQUAL_OR_NULL } from 'react-bootstrap-front';
+import { Filter, FILTER_MODE_AND, FILTER_OPER_EQUAL } from 'react-bootstrap-front';
 import { ALERT_INIT_FILTERS } from './constants';
 
 /**
@@ -6,8 +6,7 @@ import { ALERT_INIT_FILTERS } from './constants';
  */
 export const getInitFilters = (enable = true) => {
   let initFilters = new Filter();
-  const now = new Date().toISOString();
-  initFilters.addFilter('alert_from', now, FILTER_OPER_GREATER_OR_EQUAL_OR_NULL, false, true, enable);
+  initFilters.addFilter('alert_done_ts', '', FILTER_OPER_EQUAL, false, true, enable);
   initFilters.setMode(FILTER_MODE_AND);    
   return initFilters;
 }
