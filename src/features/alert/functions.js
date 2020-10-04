@@ -67,7 +67,7 @@ export const getAlertRecur = (alert) => {
 
 export const getLibStatus = (done_ts, deadline) => {
   const today = new Date().toISOString();
-  let libStatus = "";
+  let libStatus = "En-cours";
   if (done_ts !== "" && done_ts !== null) {
     if (done_ts < today ) {
       libStatus = "effectué le " + intlDateTime(done_ts, true);

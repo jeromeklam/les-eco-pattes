@@ -79,11 +79,11 @@ export class List extends Component {
   }
 
   onCreate(event) {
-    this.setState({ animalsSite: 0, alertsSite: 0 ,photosSite: 0, documentsSite: 0, siteId: 0 });
+    this.setState({ animalsSite: 0, alertsSite: 0, photosSite: 0, documentsSite: 0, siteId: 0 });
   }
 
   onGetOne(id) {
-    this.setState({ animalsSite: 0, alertsSite: 0 ,photosSite: 0, documentsSite: 0, siteId: id });
+    this.setState({ animalsSite: 0, alertsSite: 0, photosSite: 0, documentsSite: 0, siteId: id });
   }
 
   onClose() {
@@ -98,7 +98,7 @@ export class List extends Component {
         deleteSuccess();
       })
       .catch(errors => {
-        showErrors(this.props.intl, this.props.site.delOneError, "", "Suppression impossible ! ");
+        showErrors(this.props.intl, this.props.site.delOneError, '', 'Suppression impossible ! ');
       });
   }
 
@@ -118,9 +118,9 @@ export class List extends Component {
     const { id } = obj;
     const coord = JSON.parse(obj.site_coord);
     if (coord) {
-      this.props.history.push('/pigeon-map/' + id  + "/" + coord.lat + "/" + coord.lon);
+      this.props.history.push('/pigeon-map/' + id + '/' + coord.lat + '/' + coord.lon);
     } else {
-      this.props.history.push('/pigeon-map/' + id) ; 
+      this.props.history.push('/pigeon-map/' + id);
     }
   }
 
@@ -209,15 +209,17 @@ export class List extends Component {
         id = this.state.item.id;
         inlineComponent = <InlineCauses mode="site" siteId={id} />;
         break;
-      case "alert":
+      case 'alert':
         id = this.state.item.id;
-        inlineComponent = <InlineAlerts mode="site" objId={id} objName='FreeAsso_Site' />;
+        inlineComponent = (
+          <InlineAlerts mode="site" objId={id} objName="FreeAsso_Site" object={this.state.item} />
+        );
         break;
-      case "photo":
+      case 'photo':
         id = this.state.item.id;
         inlineComponent = <InlinePhotos siteId={id} />;
         break;
-      case "document":
+      case 'document':
         id = this.state.item.id;
         inlineComponent = <InlineDocuments siteId={id} />;
         break;
@@ -288,9 +290,7 @@ export class List extends Component {
         {this.state.siteId > 0 && (
           <Modify modal={true} siteId={this.state.siteId} onClose={this.onClose} />
         )}
-        {this.state.siteId === 0 && (
-          <Create modal={true} onClose={this.onClose} />
-        )}
+        {this.state.siteId === 0 && <Create modal={true} onClose={this.onClose} />}
       </div>
     );
   }

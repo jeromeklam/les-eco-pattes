@@ -2,9 +2,7 @@ import React, { Component } from 'react';
 import classnames from 'classnames';
 
 export default class Col extends Component {
-  static propTypes = {
-
-  };
+  static propTypes = {};
 
   render() {
     let add = "";
