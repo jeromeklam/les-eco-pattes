@@ -1,8 +1,8 @@
-import { CONTRACT_UPDATE_SORT } from './constants';
+import { ALERT_UPDATE_SORT } from './constants';
 
 export function updateSort(col, way, pos = 99) {
   return {
-    type: CONTRACT_UPDATE_SORT,
+    type: ALERT_UPDATE_SORT,
     col: col,
     way: way,
     pos: pos,
@@ -11,8 +11,8 @@ export function updateSort(col, way, pos = 99) {
 
 export function reducer(state, action) {
   switch (action.type) {
-    case CONTRACT_UPDATE_SORT:
-      let sort = state.sort;
+    case ALERT_UPDATE_SORT:
+    let sort = state.sort;
       let nSort = [];
       sort.forEach(elt => {
         if (elt.col !== action.col) {

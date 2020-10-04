@@ -4,3 +4,8 @@ export { loadOne, dismissLoadOneError } from './loadOne';
 export { updateOne, dismissUpdateOneError } from './updateOne';
 export { delOne, dismissDelOneError } from './delOne';
 export { createOne, dismissCreateOneError } from './createOne';
+export { initSort } from './initSort';
+export { updateSort } from './updateSort';
+export { initFilters } from './initFilters';
+export { setFilters } from './setFilters';
+export { updateQuickSearch } from './updateQuickSearch';

@@ -82,6 +82,7 @@
 	"app.features.home.app.menu.movements": "Mouvements",
 	"app.features.home.app.menu.settings": "Paramètres",
   "app.features.home.app.menu.contracts": "Contrats",
+  "app.features.home.app.menu.alerts": "Tâches",
 	"app.features.home.app.menu.signin": "Connexion",
 	"app.features.home.app.menu.signout": "Déconnexion",
 	"app.features.home.app.menu.stock": "Stock",
