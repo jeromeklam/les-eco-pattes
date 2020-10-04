@@ -65,7 +65,7 @@ export class PendingSicknesses extends Component {
     const header = (
       <InlineList>
         <Line header oddEven={counter}>
-          <Col layoutSize={this.props.layoutSize || 'md'} md={16} lg={9} xl={9} col={16}>
+          <Col layoutSize={this.props.layoutSize || 'md'} md={16} lg={7} xl={7} col={16}>
             <span>Animal</span>
           </Col>
           <Col layoutSize={this.props.layoutSize || 'md'} md={20} lg={9} xl={9} col={20}>

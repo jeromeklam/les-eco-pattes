@@ -157,14 +157,13 @@ export default function Form(props) {
               />
             </div>
             <div className="col-9">
-              <UserInputPicker
-                label="Utilisateur"
-                key="user"
-                name="user"
-                pickerUp={true}
-                item={values.user || null}
+              <InputDatetime
+                label="Réalisée le"
+                name="alert_done_ts"
+                labelTop={true}
+                value={values.alert_done_ts}
                 onChange={handleChange}
-                error={getErrorMessage('user')}
+                error={getErrorMessage('alert_done_ts')}
               />
             </div>
           </div>
@@ -236,13 +235,14 @@ export default function Form(props) {
               }
             </div>
             <div className="col-9">
-              <InputDatetime
-                label="Réalisée le"
-                name="alert_done_ts"
-                labelTop={true}
-                value={values.alert_done_ts}
+              <UserInputPicker
+                label="Utilisateur"
+                key="user"
+                name="user"
+                pickerUp={true}
+                item={values.user || null}
                 onChange={handleChange}
-                error={getErrorMessage('alert_done_ts')}
+                error={getErrorMessage('user')}
               />
             </div>
           </div>

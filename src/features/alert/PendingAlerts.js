@@ -59,7 +59,7 @@ export class PendingAlerts extends Component {
     const header = (
       <InlineList>
         <Line header>
-          <Col layoutSize={this.props.layoutSize || 'md'} md={20} lg={20} xl={12} col={12}>
+          <Col layoutSize={this.props.layoutSize || 'md'} md={16} lg={16} xl={16} col={12}>
             <span>Libellé</span>
           </Col>
           <Col layoutSize={this.props.layoutSize || 'md'} md={8} lg={8} xl={5} col={12}>
@@ -67,6 +67,8 @@ export class PendingAlerts extends Component {
           </Col>
           <Col layoutSize={this.props.layoutSize || 'md'} md={8} lg={8} xl={5} col={12}>
             <span>Echéance</span>
+          </Col>
+          <Col layoutSize={this.props.layoutSize || 'md'} md={4} lg={4} xl={4} col={12}>
           </Col>
         </Line>
       </InlineList>
@@ -89,9 +91,9 @@ export class PendingAlerts extends Component {
                       <Line oddEven={counter++}>
                         <Col
                           layoutSize={this.props.layoutSize || 'md'}
-                          md={20}
-                          lg={20}
-                          xl={12}
+                          md={16}
+                          lg={16}
+                          xl={16}
                           col={12}
                         >
                           {alert.alert_title}
@@ -114,19 +116,21 @@ export class PendingAlerts extends Component {
                         >
                           {intlDateTime(alert.alert_deadline, true)}
                         </Col>
-                        {this.state.flipped && this.state.flipped === alert.id && (
-                          <div className="btn-group btn-group-xs" role="group" aria-label="...">
-                            <button
-                              type="button"
-                              className="btn btn-inline btn-secondary"
-                              onClick={() => {
-                                this.onGetOne(alert.id);
-                              }}
-                            >
-                              <GetOneIcon className="inline-action text-light" />
-                            </button>
-                          </div>
-                        )}
+                        <Col layoutSize={this.props.layoutSize || 'md'} md={4} lg={4} xl={4} col={12}>
+                          {this.state.flipped && this.state.flipped === alert.id && (
+                            <div className="btn-group btn-group-sm float-right" role="group" aria-label="...">
+                              <button
+                                type="button"
+                                className="btn btn-inline btn-secondary"
+                                onClick={() => {
+                                  this.onGetOne(alert.id);
+                                }}
+                              >
+                                <GetOneIcon className="text-light inline-action" />
+                              </button>
+                            </div>
+                          )}
+                        </Col>
                       </Line>
                     </HoverObserver>
                   );
