@@ -1,6 +1,6 @@
 import axios from 'axios';
-import { store } from '../index.js';
 import cookie from 'react-cookies';
+import configureStore from './store';
 
 let instance = axios.create({
   baseURL: process.env.REACT_APP_BO_URL,
@@ -40,7 +40,7 @@ instance.interceptors.response.use(
     if (status === 401 || status === '401') {
       cookie.remove('Authorization', { path: '/' });
       cookie.remove('AutoLogin', { path: '/' });
-      const auth = (store && store.getState().auth.authenticated) || false;
+      const auth = (configureStore && configureStore.getState().auth.authenticated) || false;
       if (auth) {
         window.location.replace("/auth/signin");
       }
@@ -48,11 +48,10 @@ instance.interceptors.response.use(
     return response;
   },
   function(error) {
-    if (!error.response || 401 === error.response.status) {
+    if (!axios.isCancel(error) && (!error.response || (error.response && 401 === error.response.status))) {
       cookie.remove('Authorization', { path: '/' });
       cookie.remove('AutoLogin', { path: '/' });
-      const auth = (store && store.getState().auth.authenticated) || false;
-      console.log(auth, store.getState().auth);
+      const auth = (configureStore && configureStore.getState().auth.authenticated) || false;
       if (auth) {
         window.location.replace("/auth/signin");
       }

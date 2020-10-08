@@ -1,14 +1,19 @@
 /* This is the Root component mainly initializes Redux and React Router. */
 
 import React from 'react';
-import PropTypes from 'prop-types';
 import { Provider } from 'react-redux';
 import { Switch, Route } from 'react-router-dom';
-import { ConnectedRouter } from 'react-router-redux';
-import PrivateRoute from './Components/PrivateRoute';
+import { ConnectedRouter } from 'connected-react-router';
+import { hot, setConfig } from 'react-hot-loader';
+import store from './common/store';
+import routeConfig from './common/routeConfig';
 import history from './common/history';
 
-function renderRouteConfigV3(routes, contextPath, auth) {
+setConfig({
+  logLevel: 'debug',
+});
+
+function renderRouteConfigV3(routes, contextPath) {
   // Resolve route config object in React Router v3.
   const children = []; // children component list
 
@@ -21,23 +26,18 @@ function renderRouteConfigV3(routes, contextPath, auth) {
     }
     newContextPath = newContextPath.replace(/\/+/g, '/');
     if (item.component && item.childRoutes) {
-      if (item.auth) {
-        auth = item.auth;
-      }
-      const childRoutes = renderRouteConfigV3(item.childRoutes, newContextPath, auth);
+      const childRoutes = renderRouteConfigV3(item.childRoutes, newContextPath);
       children.push(
         <Route
           key={newContextPath}
           render={props => <item.component {...props}>{childRoutes}</item.component>}
           path={newContextPath}
-        />
+        />,
       );
     } else if (item.component) {
-      if ((item.auth && item.auth === 'PRIVATE') || (auth && auth === 'PRIVATE')){
-        children.push(<PrivateRoute key={newContextPath} component={item.component} path={newContextPath} exact />);
-      } else {
-        children.push(<Route key={newContextPath} component={item.component} path={newContextPath} exact />);
-      }
+      children.push(
+        <Route key={newContextPath} component={item.component} path={newContextPath} exact />,
+      );
     } else if (item.childRoutes) {
       item.childRoutes.forEach(r => renderRoute(r, newContextPath));
     }
@@ -49,17 +49,13 @@ function renderRouteConfigV3(routes, contextPath, auth) {
   return <Switch>{children}</Switch>;
 }
 
-export default class Root extends React.Component {
-  static propTypes = {
-    store: PropTypes.object.isRequired,
-    routeConfig: PropTypes.array.isRequired,
-  };
-  render() {
-    const children = renderRouteConfigV3(this.props.routeConfig, '/', 'PUBLIC');
-    return (
-      <Provider store={this.props.store}>
-        <ConnectedRouter history={history}>{children}</ConnectedRouter>
-      </Provider>
-    );
-  }
+function Root() {
+  const children = renderRouteConfigV3(routeConfig, '/');
+  return (
+    <Provider store={store}>
+      <ConnectedRouter history={history}>{children}</ConnectedRouter>
+    </Provider>
+  );
 }
+
+export default hot(module)(Root);

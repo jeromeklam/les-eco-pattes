@@ -48,8 +48,12 @@ export class App extends Component {
     this.onNavigate = this.onNavigate.bind(this);
     this.onChangeSettings = this.onChangeSettings.bind(this);
     this.onGeo = this.onGeo.bind(this);
+    let socket = null;
+    if (props.home.socketOn) {
+      let socket = initSocket();
+    }
     this.state = {
-      mySocket: initSocket(),
+      mySocket: null,
     };
     log.getLogger("jsonapi-front.jsonApiNormalizer").setLevel("WARN");
     log.getLogger("react-bootstrap-front.inputMask").setLevel("WARN");

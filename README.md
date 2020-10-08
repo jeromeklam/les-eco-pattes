@@ -24,7 +24,19 @@ Il faut au minimum nodejs et npm pour le développement. Le site a été réalis
 
 ## IDE, ...
 
+Démarrer l'application
+
+```
+   npm start
+```
+
+Démarrer le studio
+
+```
+   npm run studio
+```
+
 Ouvrir un navigateur et navigurer vers :
 
-* http://localhost:6076 pour accéder à l'IDE rekit
-* http://localhost:6075 pour lancer l'application en hot-reload.
+* http://localhost:8176 pour accéder à l'IDE rekit
+* http://localhost:8175 pour lancer l'application en hot-reload.

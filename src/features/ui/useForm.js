@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useIntl } from 'react-intl';
+//import { useIntl } from 'react-intl';
 import { jsonApiNormalizer, normalizedObjectModeler } from 'jsonapi-front';
 import { freeAssoApi } from '../../common';
 
@@ -462,13 +462,13 @@ const useForm = (initialState, initialTab, onSubmit, onCancel, onNavTab, errors,
   };
 
   const getErrorMessage = field => {
-    const intl = useIntl();
+    //const intl = useIntl();
     let message = false;
     
     if (errors && errors.errors) {
       errors.errors.forEach(error => {
         if (error.source && error.source.parameter === field) {
-          message = intl.formatMessage({ id: 'app.errors.code.' + error.code, defaultMessage: 'Unknown error ' + error.code });
+          //message = intl.formatMessage({ id: 'app.errors.code.' + error.code, defaultMessage: 'Unknown error ' + error.code });
           return true;
         }
       })

@@ -7,7 +7,7 @@ import Dropzone from 'react-dropzone';
 import * as actions from './redux/actions';
 import { ResponsiveConfirm } from 'react-bootstrap-front';
 import { CenteredLoading3Dots } from '../ui';
-import FileIcon, { defaultStyles } from 'react-file-icon';
+import { FileIcon, defaultStyles } from 'react-file-icon';
 import { DelOne as DelOneIcon, Download as DownloadIcon, Upload as UploadIcon } from '../icons';
 import { downloadSiteMediaBlob, getMedias } from './';
 import { downloadBlob } from '../ui';

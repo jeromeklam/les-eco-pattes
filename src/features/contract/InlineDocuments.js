@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import Dropzone from 'react-dropzone';
-import FileIcon, { defaultStyles } from 'react-file-icon';
+import { FileIcon, defaultStyles } from 'react-file-icon';
 import * as actions from './redux/actions';
 import { ResponsiveConfirm } from 'react-bootstrap-front';
 import { DelOne as DelOneIcon, Download as DownloadIcon, Upload as UploadIcon } from '../icons';
