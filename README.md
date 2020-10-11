@@ -9,8 +9,8 @@ Développement de l'application destinée aux Eco-Pattes, le tout en ReactJS. Le
 
 Cloner se projet et les 2 projets suivant au même niveau :
 
-* freejsonapi
-* freeassofront
+* jsonapi-front
+* react-bootstrap-front
 
 Se placer dans le répertoire des les-eco-pattes et lancer la commande :
 
@@ -24,6 +24,13 @@ Il faut au minimum nodejs et npm pour le développement. Le site a été réalis
 
 ## IDE, ...
 
+Au préalable
+
+```
+   npm install -g rekit
+   npm install -g rekit-studio
+```
+
 Démarrer l'application
 
 ```
@@ -34,6 +41,8 @@ Démarrer le studio
 
 ```
    npm run studio
+   // Ou
+   rekit-studio -p 8176
 ```
 
 Ouvrir un navigateur et navigurer vers :
