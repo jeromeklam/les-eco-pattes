@@ -8,6 +8,7 @@
         Jérôme KLAM
     </author>
     <content src="index.html" />
+    <hook type="before_prepare" src="scripts/cordova.js" />
     <plugin name="cordova-plugin-whitelist" spec="1" />
     <access origin="*" />
     <allow-intent href="http://*/*" />

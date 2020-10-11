@@ -14,6 +14,7 @@
   "contributors": [
     "Fanny KUSTER <fannykuster@free.fr>"
   ],
+  "homepage": ".",
   "dependencies": {
     "@babel/core": "^7.4.3",
     "@mdi/js": "^5.6.55",
@@ -92,6 +93,7 @@
     "redux-thunk": "^2.3.0",
     "reregexp": "^0.1.8",
     "resolve": "1.8.1",
+    "rimraf": "^3.0.2",
     "sass-loader": "7.1.0",
     "seamless-immutable": "^7.1.4",
     "striptags": "^3.1.1",
@@ -165,5 +167,8 @@
       "ios",
       "android"
     ]
+  },
+  "devDependencies": {
+    "cordova-android": "^9.0.0"
   }
 }
