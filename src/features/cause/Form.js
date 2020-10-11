@@ -1,14 +1,15 @@
 import React from 'react';
-import { InputHidden, InputText, InputSelect, InputMask, InputCheckbox } from 'react-bootstrap-front';
+import { injectIntl } from 'react-intl';
+import {
+  InputHidden,
+  InputText,
+  InputSelect,
+  InputMask,
+  InputCheckbox,
+} from 'react-bootstrap-front';
 import RegexpParser from 'reregexp';
 import { validateRegex } from '../../common';
-import { 
-  ResponsiveModalOrForm, 
-  InputTextarea,
-  InputDate, 
-  InputData, 
-  InputSpin, 
-} from '../ui';
+import { ResponsiveModalOrForm, InputTextarea, InputDate, InputData, InputSpin } from '../ui';
 import useForm from '../ui/useForm';
 import { InputPicker as ClientInputPicker } from '../client';
 import { InputPicker as SiteInputPicker } from '../site';
@@ -35,7 +36,7 @@ const modifyTabs = [
   { key: '8', name: 'photos', label: 'Photos', shortcut: 'E', icon: 'photos' },
 ];
 
-export default function Form(props) {
+function Form(props) {
   const maxYear = new Date().getFullYear() + 1;
   const {
     values,
@@ -44,17 +45,25 @@ export default function Form(props) {
     handleCancel,
     handleNavTab,
     getErrorMessage,
-  } = useForm(props.item, props.tab, props.onSubmit, props.onCancel, props.onNavTab, props.errors);
+  } = useForm(
+    props.item,
+    props.tab,
+    props.onSubmit,
+    props.onCancel,
+    props.onNavTab,
+    props.errors,
+    props.intl,
+  );
   const regexp = values.cause_type.caut_pattern || '';
   let validated = true;
   if (regexp !== '') {
     validated = false;
     if (regPlaceholder === '' || caut_id !== values.cause_type.id) {
-      const parser = new RegexpParser('/' + regexp + '/',
-        {namedGroupConf:{
+      const parser = new RegexpParser('/' + regexp + '/', {
+        namedGroupConf: {
           pays: ['FR'],
-          cpays: ['250']
-        }
+          cpays: ['250'],
+        },
       });
       regPlaceholder = parser.build();
     }
@@ -63,7 +72,7 @@ export default function Form(props) {
     }
     caut_id = values.cause_type.id;
   }
-  return (  
+  return (
     <ResponsiveModalOrForm
       title={values.cau_code}
       tab={values.currentTab}
@@ -88,7 +97,9 @@ export default function Form(props) {
             onChange={handleChange}
             labelTop={true}
             required={true}
-            mask={(values.cause_type && values.cause_type.caut_mask) ? values.cause_type.caut_mask : '[*]'}
+            mask={
+              values.cause_type && values.cause_type.caut_mask ? values.cause_type.caut_mask : '[*]'
+            }
             pattern={regexp}
             error={getErrorMessage('cau_code')}
             help={validated ? false : 'Format : ' + regPlaceholder}
@@ -191,7 +202,7 @@ export default function Form(props) {
                 onChange={handleChange}
                 labelTop={true}
                 error={getErrorMessage('parent1')}
-                filters={{cau_sex: 'M'}}
+                filters={{ cau_sex: 'M' }}
               />
             </div>
             <div className="col-12">
@@ -202,7 +213,7 @@ export default function Form(props) {
                 onChange={handleChange}
                 labelTop={true}
                 error={getErrorMessage('parent2')}
-                filters={{cau_sex: 'F'}}
+                filters={{ cau_sex: 'F' }}
               />
             </div>
           </div>
@@ -239,7 +250,7 @@ export default function Form(props) {
               />
             </div>
             <div className="col-14">
-              {(values.cau_to !== null && values.cau_to !== '') && (
+              {values.cau_to !== null && values.cau_to !== '' && (
                 <InputData
                   name="cau_string_3"
                   labelTop={true}
@@ -262,7 +273,7 @@ export default function Form(props) {
               />
             </div>
             <div className="col-20">
-              {(!values.cau_conform) && (
+              {!values.cau_conform && (
                 <InputText
                   label="Commentaire conformité"
                   key="cau_conform_text"
@@ -331,3 +342,5 @@ export default function Form(props) {
     </ResponsiveModalOrForm>
   );
 }
+
+export default injectIntl(Form);

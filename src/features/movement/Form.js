@@ -1,4 +1,5 @@
 import React from 'react';
+import { injectIntl } from 'react-intl';
 import { InputHidden, InputText, InputSelect, InputCheckbox } from 'react-bootstrap-front';
 import { Movement as MovementIcon, Cause as CauseIcon } from '../icons';
 import { useForm, ResponsiveModalOrForm, InputDatetime } from '../ui';
@@ -23,7 +24,7 @@ const tabsFrom = [
     label: 'Départ',
     shortcut: 'D',
     icon: <MovementIcon />,
-  }
+  },
 ];
 const tabsTo = [
   {
@@ -44,7 +45,7 @@ const tabsEnd = [
   },
 ];
 
-const initItem = (item) => {
+const initItem = item => {
   if (!item.modify) {
     item.move_type = item.param_mode || 'SIMPLE';
     item.move_from = new Date().toISOString();
@@ -67,7 +68,7 @@ const initItem = (item) => {
     item.globalDisabled = true;
   }
   return item;
-}
+};
 
 const afterChange = (name, item) => {
   try {
@@ -89,12 +90,10 @@ const afterChange = (name, item) => {
       default:
         break;
     }
-  } catch (ex) {
-    
-  }
-}
+  } catch (ex) {}
+};
 
-export default function Form(props) {
+function Form(props) {
   const modify = props.modify || false;
   props.item.modify = modify;
   props.item.param_mode = props.mode || 'SIMPLE';
@@ -106,13 +105,23 @@ export default function Form(props) {
     handleCancel,
     getErrorMessage,
     handleNavTab,
-  } = useForm(props.item, props.tab, props.onSubmit, props.onCancel, props.onNavTab, props.errors, afterChange, initItem);
+  } = useForm(
+    props.item,
+    props.tab,
+    props.onSubmit,
+    props.onCancel,
+    props.onNavTab,
+    props.errors,
+    props.intl,
+    afterChange,
+    initItem,
+  );
   //console.log("FK MVT ",values);
   let myTabs = tabs;
   //if (values.move_type !== 'SIMPLE' && values.mode_type !== 'TRANSFER') {
-    myTabs = tabs.concat(tabsFrom, tabsTo); 
+  myTabs = tabs.concat(tabsFrom, tabsTo);
   //}
-  myTabs = myTabs.concat(tabsEnd); 
+  myTabs = myTabs.concat(tabsEnd);
   return (
     <ResponsiveModalOrForm
       className=""
@@ -128,7 +137,7 @@ export default function Form(props) {
     >
       <div className="card-body">
         <InputHidden name="id" id="id" value={values.id} />
-        {(values.currentTab === '1') && (
+        {values.currentTab === '1' && (
           <div>
             <div className="row">
               <div className="col-sm-12">
@@ -156,7 +165,7 @@ export default function Form(props) {
                   options={mvtStatus}
                   addempty={true}
                   disabled={values.globalDisabled}
-                  defaultValue='WAIT'
+                  defaultValue="WAIT"
                   error={getErrorMessage('move_status')}
                 />
               </div>
@@ -397,7 +406,7 @@ export default function Form(props) {
                   error={getErrorMessage('move_to')}
                 />
               </div>
-                <div className="col-12">
+              <div className="col-12">
                 <InputCheckbox
                   label="Camion vide"
                   name="move_to_empty"
@@ -539,7 +548,7 @@ export default function Form(props) {
             </div>
           </div>
         )}
-        {(values.currentTab === '9') && (
+        {values.currentTab === '9' && (
           <div>
             {modify ? (
               <div className="border border-secondary rounded overflow-x-hidden">
@@ -563,3 +572,5 @@ export default function Form(props) {
     </ResponsiveModalOrForm>
   );
 }
+
+export default injectIntl(Form);

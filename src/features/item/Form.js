@@ -1,10 +1,11 @@
 import React from 'react';
+import { injectIntl } from 'react-intl';
 import { InputHidden, InputText, InputSelect, InputCheckbox } from 'react-bootstrap-front';
 import { InputPicker as ClientInputPicker } from '../client';
 import { ResponsiveModalOrForm, useForm, InputDate, InputTextarea } from '../ui';
 import { stockSelect, typeSelect } from './';
 
-export default function Form(props) {
+function Form(props) {
   const { values, handleChange, handleSubmit, handleCancel, getErrorMessage } = useForm(
     props.item,
     '',
@@ -12,6 +13,7 @@ export default function Form(props) {
     props.onCancel,
     null,
     props.errors,
+    props.intl
   );
   return (
     <ResponsiveModalOrForm
@@ -125,4 +127,6 @@ export default function Form(props) {
       </div>
     </ResponsiveModalOrForm>
   );
-}
+};
+
+export default injectIntl(Form);

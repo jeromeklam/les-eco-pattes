@@ -1,8 +1,9 @@
 import React from 'react';
+import { injectIntl } from 'react-intl';
 import { InputHidden, InputText, InputSelect } from 'react-bootstrap-front';
 import { useForm, ResponsiveModalOrForm } from '../ui';
 
-export default function Form(props) {
+function Form(props) {
   const { values, handleChange, handleSubmit, handleCancel, getErrorMessage } = useForm(
     props.item,
     '',
@@ -10,6 +11,7 @@ export default function Form(props) {
     props.onCancel,
     '',
     props.errors,
+    props.intl
   );
   return (
     <ResponsiveModalOrForm
@@ -105,4 +107,6 @@ export default function Form(props) {
       </div>
     </ResponsiveModalOrForm>
   );
-}
+};
+
+export default injectIntl(Form);

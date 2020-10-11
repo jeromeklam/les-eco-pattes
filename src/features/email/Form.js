@@ -1,13 +1,23 @@
 import React from 'react';
-import { InputHidden, InputText, InputSelect, InputTextarea, ResponsiveForm } from 'react-bootstrap-front';
+import { injectIntl } from 'react-intl';
+import {
+  InputHidden,
+  InputText,
+  InputSelect,
+  InputTextarea,
+  ResponsiveForm,
+} from 'react-bootstrap-front';
 import { useForm } from '../ui';
 
-export default function Form(props) {
+function Form(props) {
   const { values, handleChange, handleSubmit, handleCancel } = useForm(
     props.item,
     '',
     props.onSubmit,
     props.onCancel,
+    props.onNavtab,
+    props.errors,
+    props.intl,
   );
   return (
     <ResponsiveForm title="Email" onSubmit={handleSubmit} onCancel={handleCancel}>
@@ -68,3 +78,5 @@ export default function Form(props) {
     </ResponsiveForm>
   );
 }
+
+export default injectIntl(Form);

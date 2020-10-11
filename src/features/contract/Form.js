@@ -1,4 +1,5 @@
 import React from 'react';
+import { injectIntl } from 'react-intl';
 import RegexpParser from 'reregexp';
 import { InputHidden, InputText, InputMonetary, InputMask } from 'react-bootstrap-front';
 import { validateRegex } from '../../common';
@@ -11,7 +12,7 @@ import { InlineDocuments } from '../contract';
 
 let regPlaceholder = '';
 
-export default function Form(props) {
+function Form(props) {
   const {
     values,
     handleChange,
@@ -19,17 +20,25 @@ export default function Form(props) {
     handleCancel,
     handleNavTab,
     getErrorMessage,
-  } = useForm(props.item, props.tab, props.onSubmit, props.onCancel, props.onNavTab, props.errors);
+  } = useForm(
+    props.item,
+    props.tab,
+    props.onSubmit,
+    props.onCancel,
+    props.onNavTab,
+    props.errors,
+    props.intl,
+  );
   let validated = true;
-  const regexp = "(?<year>[0-9]{4})\\.(?<num>[0-9]{3})";
+  const regexp = '(?<year>[0-9]{4})\\.(?<num>[0-9]{3})';
   if (regexp !== '') {
     validated = false;
     if (regPlaceholder === '') {
-      const parser = new RegexpParser('/' + regexp + '/',
-        {namedGroupConf:{
+      const parser = new RegexpParser('/' + regexp + '/', {
+        namedGroupConf: {
           year: ['2020'],
-        }
-      }); 
+        },
+      });
       regPlaceholder = parser.build();
     }
     if (values.ct_code !== '' && validateRegex(values.ct_code, regexp)) {
@@ -59,7 +68,7 @@ export default function Form(props) {
               name="ct_code"
               id="ct_code"
               required={true}
-              mask={"0000.000"}
+              mask={'0000.000'}
               pattern={regexp}
               value={values.ct_code}
               onChange={handleChange}
@@ -139,8 +148,7 @@ export default function Form(props) {
                   value={values.ct_recur_amount}
                 />
               </div>
-              <div className="col-sm-4">
-              </div>
+              <div className="col-sm-4"></div>
               <div className="col-sm-12">
                 <InputDate
                   label="Facturé le"
@@ -213,7 +221,7 @@ export default function Form(props) {
                   error={getErrorMessage('contact1')}
                   typeCodes={['']}
                 />
-             </div>
+              </div>
             </div>
             <div className="row">
               <div className="col-36">
@@ -226,14 +234,14 @@ export default function Form(props) {
                   error={getErrorMessage('contact2')}
                   typeCodes={['']}
                 />
-             </div>
+              </div>
             </div>
           </div>
         )}
         {values.currentTab === '3' && (
-        <div className="border border-secondary rounded overflow-x-hidden">
-          <InlineAlerts objId={values.id} objName='FreeAsso_Contract' object={values}/>
-        </div>
+          <div className="border border-secondary rounded overflow-x-hidden">
+            <InlineAlerts objId={values.id} objName="FreeAsso_Contract" object={values} />
+          </div>
         )}
         {values.currentTab === '4' && (
           <div className="border border-secondary rounded overflow-x-hidden">
@@ -244,3 +252,5 @@ export default function Form(props) {
     </ResponsiveModalOrForm>
   );
 }
+
+export default injectIntl(Form);

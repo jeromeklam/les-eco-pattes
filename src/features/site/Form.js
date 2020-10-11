@@ -1,5 +1,12 @@
 import React from 'react';
-import { InputHidden, InputText, InputSelect, InputMask, InputCheckbox } from 'react-bootstrap-front';
+import { injectIntl } from 'react-intl';
+import {
+  InputHidden,
+  InputText,
+  InputSelect,
+  InputMask,
+  InputCheckbox,
+} from 'react-bootstrap-front';
 import RegexpParser from 'reregexp';
 import classnames from 'classnames';
 import { validateRegex } from '../../common';
@@ -37,14 +44,14 @@ const tabs = [
     label: 'Observations',
     shortcut: 'O',
     icon: <OtherIcon />,
-  }
+  },
 ];
 const modifyTabs = [
   { key: '5', name: 'causes', label: 'Animaux', shortcut: 'E', icon: <SettingsIcon /> },
   { key: '6', name: 'alerts', label: 'Suivi', shortcut: 'S', icon: <SettingsIcon /> },
   { key: '7', name: 'documents', label: 'Documents', shortcut: 'D', icon: <SettingsIcon /> },
   { key: '8', name: 'photos', label: 'Photos', shortcut: 'I', icon: <SettingsIcon /> },
-]
+];
 
 const afterChange = (name, item) => {
   switch (name) {
@@ -52,17 +59,17 @@ const afterChange = (name, item) => {
       if (item.parent_site) {
         if (item.parent_site.site_code) {
           item.site_code = item.parent_site.site_code;
-        } 
+        }
       }
       break;
     }
-    default : {
+    default: {
       break;
     }
   }
-}
+};
 
-export default function Form(props) {
+function Form(props) {
   const {
     values,
     handleChange,
@@ -70,7 +77,16 @@ export default function Form(props) {
     handleCancel,
     handleNavTab,
     getErrorMessage,
-  } = useForm(props.item, props.tab, props.onSubmit, props.onCancel, props.onNavTab, props.errors, afterChange);
+  } = useForm(
+    props.item,
+    props.tab,
+    props.onSubmit,
+    props.onCancel,
+    props.onNavTab,
+    props.errors,
+    props.intl,
+    afterChange,
+  );
   const regexp = (values.site_type ? values.site_type.sitt_pattern : '') || '';
   let validated = true;
   if (regexp !== '') {
@@ -116,7 +132,9 @@ export default function Form(props) {
         </div>
         <div className="col-sm-9">
           <InputMask
-            mask={(values.site_type && values.site_type.sitt_mask) ? values.site_type.sitt_mask : '[*]'}
+            mask={
+              values.site_type && values.site_type.sitt_mask ? values.site_type.sitt_mask : '[*]'
+            }
             label="N° Elevage EDE"
             name="site_code"
             value={values.site_code}
@@ -157,7 +175,7 @@ export default function Form(props) {
                 label="Type"
                 id="site_type"
                 name="site_type"
-                datas={{type: 'FreeAsso_SiteType'}}
+                datas={{ type: 'FreeAsso_SiteType' }}
                 required={true}
                 value={values.site_type ? values.site_type.id : null}
                 onChange={handleChange}
@@ -216,7 +234,6 @@ export default function Form(props) {
                 error={getErrorMessage('site_plots')}
               />
             </div>
-            
           </div>
           <div className="row">
             <div className="col-sm-36">
@@ -291,9 +308,9 @@ export default function Form(props) {
         <div className="row">
           {props.properties.map(oneProp => {
             let nameProp = 'site_' + oneProp;
-            let className = "col-sm-10";
-            if (oneProp.indexOf("bool") >= 0) {
-              className = "col-sm-3";
+            let className = 'col-sm-10';
+            if (oneProp.indexOf('bool') >= 0) {
+              className = 'col-sm-3';
             }
             return (
               <div className={classnames(className)} key={nameProp}>
@@ -331,7 +348,7 @@ export default function Form(props) {
       )}
       {values.currentTab === '6' && (
         <div className="border border-secondary rounded overflow-x-hidden">
-          <InlineAlerts objId={values.id} objName='FreeAsso_Site' object={values}/>
+          <InlineAlerts objId={values.id} objName="FreeAsso_Site" object={values} />
         </div>
       )}
       {values.currentTab === '7' && (
@@ -347,3 +364,5 @@ export default function Form(props) {
     </ResponsiveModalOrForm>
   );
 }
+
+export default injectIntl(Form);

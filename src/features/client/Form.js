@@ -1,4 +1,5 @@
 import React from 'react';
+import { injectIntl } from 'react-intl';
 import {
   InputHidden,
   InputText,
@@ -11,7 +12,7 @@ import { clientCategoryAsOptions } from '../client-category/functions.js';
 import { countryAsOptions } from '../country/functions.js';
 import { ResponsiveModalOrForm, InputTextarea } from '../ui';
 
-export default function Form(props) {
+function Form(props) {
   const {
     values,
     handleChange,
@@ -19,7 +20,7 @@ export default function Form(props) {
     handleCancel,
     handleNavTab,
     getErrorMessage,
-  } = useForm(props.item, props.tab, props.onSubmit, props.onCancel, props.onNavTab, props.errors);
+  } = useForm(props.item, props.tab, props.onSubmit, props.onCancel, props.onNavTab, props.errors, props.intl);
   return (
     <ResponsiveModalOrForm
       title="Personne"
@@ -236,4 +237,6 @@ export default function Form(props) {
       </div>
     </ResponsiveModalOrForm>
   );
-}
+};
+
+export default injectIntl(Form);

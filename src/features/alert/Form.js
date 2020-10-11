@@ -1,4 +1,5 @@
 import React from 'react';
+import { injectIntl } from 'react-intl';
 import { InputText, InputSelect, InputCheckbox } from 'react-bootstrap-front';
 import {
   useForm,
@@ -53,7 +54,7 @@ const afterChange = (name, item) => {
   }
 };
 
-export default function Form(props) {
+function Form(props) {
   if (props.cause) {
     props.item.cause = props.cause;
   }
@@ -71,6 +72,7 @@ export default function Form(props) {
     props.onCancel,
     props.onNavTab,
     props.errors,
+    props.intl,
     afterChange,
   );
   const today = new Date();
@@ -362,4 +364,6 @@ export default function Form(props) {
       )}
     </ResponsiveModalOrForm>
   );
-}
+};
+
+export default injectIntl(Form);

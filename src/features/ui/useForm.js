@@ -1,5 +1,4 @@
 import { useState } from 'react';
-//import { useIntl } from 'react-intl';
 import { jsonApiNormalizer, normalizedObjectModeler } from 'jsonapi-front';
 import { freeAssoApi } from '../../common';
 
@@ -47,7 +46,10 @@ const _loadClient = id => {
   if (!id) {
     id = '0';
   }
-  return freeAssoApi.get('/v1/asso/client/' + id + '?include=lang,country,client_category,client_type', {});
+  return freeAssoApi.get(
+    '/v1/asso/client/' + id + '?include=lang,country,client_category,client_type',
+    {},
+  );
 };
 
 const _loadContract = id => {
@@ -57,7 +59,17 @@ const _loadContract = id => {
   return freeAssoApi.get('/v1/asso/contract/' + id + '?include=', {});
 };
 
-const useForm = (initialState, initialTab, onSubmit, onCancel, onNavTab, errors, afterChange = null, init = null) => {
+const useForm = (
+  initialState,
+  initialTab,
+  onSubmit,
+  onCancel,
+  onNavTab,
+  errors,
+  intl = null,
+  afterChange = null,
+  init = null,
+) => {
   const initial = init ? init(initialState) : initialState;
   const [values, setValues] = useState({
     ...initial,
@@ -78,7 +90,7 @@ const useForm = (initialState, initialTab, onSubmit, onCancel, onNavTab, errors,
       event.persist();
     }
     values.sending = false;
-    let tType = (event.target.dataset && event.target.dataset.type) ? event.target.dataset.type : '';
+    let tType = event.target.dataset && event.target.dataset.type ? event.target.dataset.type : '';
     if (tType === '') {
       tType = event.target.type || 'text';
     }
@@ -102,8 +114,10 @@ const useForm = (initialState, initialTab, onSubmit, onCancel, onNavTab, errors,
                 values.loadCause = false;
                 if (result && result.data) {
                   const lines = jsonApiNormalizer(result.data);
-                  const item = normalizedObjectModeler(lines, 'FreeAsso_Cause', id, { eager: true });
-                  values[first] = item;         
+                  const item = normalizedObjectModeler(lines, 'FreeAsso_Cause', id, {
+                    eager: true,
+                  });
+                  values[first] = item;
                   setValues(explodeReduxModel(values));
                   if (afterChange) {
                     afterChange(event.target.name, values);
@@ -126,7 +140,9 @@ const useForm = (initialState, initialTab, onSubmit, onCancel, onNavTab, errors,
                 values.loadClient = false;
                 if (result && result.data) {
                   const lines = jsonApiNormalizer(result.data);
-                  const item = normalizedObjectModeler(lines, 'FreeAsso_Client', id, { eager: true });
+                  const item = normalizedObjectModeler(lines, 'FreeAsso_Client', id, {
+                    eager: true,
+                  });
                   values[first] = item;
                   if (afterChange) {
                     afterChange(event.target.name, values);
@@ -150,7 +166,9 @@ const useForm = (initialState, initialTab, onSubmit, onCancel, onNavTab, errors,
                 values.loadContract = false;
                 if (result && result.data) {
                   const lines = jsonApiNormalizer(result.data);
-                  const item = normalizedObjectModeler(lines, 'FreeAsso_Contract', id, { eager: true });
+                  const item = normalizedObjectModeler(lines, 'FreeAsso_Contract', id, {
+                    eager: true,
+                  });
                   values[first] = item;
                   if (afterChange) {
                     afterChange(event.target.name, values);
@@ -174,7 +192,9 @@ const useForm = (initialState, initialTab, onSubmit, onCancel, onNavTab, errors,
                 values.loadSiteType = false;
                 if (result && result.data) {
                   const lines = jsonApiNormalizer(result.data);
-                  const item = normalizedObjectModeler(lines, 'FreeAsso_SiteType', id, { eager: true });
+                  const item = normalizedObjectModeler(lines, 'FreeAsso_SiteType', id, {
+                    eager: true,
+                  });
                   values[first] = item;
                   if (afterChange) {
                     afterChange(event.target.name, values);
@@ -222,7 +242,9 @@ const useForm = (initialState, initialTab, onSubmit, onCancel, onNavTab, errors,
                 values.loadSickness = false;
                 if (result && result.data) {
                   const lines = jsonApiNormalizer(result.data);
-                  const item = normalizedObjectModeler(lines, 'FreeAsso_Sickness', id, { eager: true });
+                  const item = normalizedObjectModeler(lines, 'FreeAsso_Sickness', id, {
+                    eager: true,
+                  });
                   values[first] = item;
                   if (afterChange) {
                     afterChange(event.target.name, values);
@@ -248,7 +270,7 @@ const useForm = (initialState, initialTab, onSubmit, onCancel, onNavTab, errors,
       datas = values[first];
       if (!datas) {
         datas = {};
-        tType =  (event.target.dataset && event.target.dataset.type) ? event.target.dataset.type : '';
+        tType = event.target.dataset && event.target.dataset.type ? event.target.dataset.type : '';
       }
       if (datas.id !== undefined && datas.type) {
         tType = datas.type;
@@ -269,7 +291,9 @@ const useForm = (initialState, initialTab, onSubmit, onCancel, onNavTab, errors,
                 values.loadCauseType = false;
                 if (result && result.data) {
                   const lines = jsonApiNormalizer(result.data);
-                  const item = normalizedObjectModeler(lines, 'FreeAsso_CauseType', id, { eager: true });
+                  const item = normalizedObjectModeler(lines, 'FreeAsso_CauseType', id, {
+                    eager: true,
+                  });
                   values[first] = item;
                   if (afterChange) {
                     afterChange(event.target.name, values);
@@ -293,7 +317,9 @@ const useForm = (initialState, initialTab, onSubmit, onCancel, onNavTab, errors,
                 values.loadSiteType = false;
                 if (result && result.data) {
                   const lines = jsonApiNormalizer(result.data);
-                  const item = normalizedObjectModeler(lines, 'FreeAsso_SiteType', id, { eager: true });
+                  const item = normalizedObjectModeler(lines, 'FreeAsso_SiteType', id, {
+                    eager: true,
+                  });
                   values[first] = item;
                   if (afterChange) {
                     afterChange(event.target.name, values);
@@ -317,7 +343,9 @@ const useForm = (initialState, initialTab, onSubmit, onCancel, onNavTab, errors,
                 values.loadCause = false;
                 if (result && result.data) {
                   const lines = jsonApiNormalizer(result.data);
-                  const item = normalizedObjectModeler(lines, 'FreeAsso_Cause', id, { eager: true });
+                  const item = normalizedObjectModeler(lines, 'FreeAsso_Cause', id, {
+                    eager: true,
+                  });
                   values[first] = item;
                   if (afterChange) {
                     afterChange(event.target.name, values);
@@ -341,7 +369,9 @@ const useForm = (initialState, initialTab, onSubmit, onCancel, onNavTab, errors,
                 values.loadClient = false;
                 if (result && result.data) {
                   const lines = jsonApiNormalizer(result.data);
-                  const item = normalizedObjectModeler(lines, 'FreeAsso_Client', id, { eager: true });
+                  const item = normalizedObjectModeler(lines, 'FreeAsso_Client', id, {
+                    eager: true,
+                  });
                   values[first] = item;
                   if (afterChange) {
                     afterChange(event.target.name, values);
@@ -365,7 +395,9 @@ const useForm = (initialState, initialTab, onSubmit, onCancel, onNavTab, errors,
                 values.loadContract = false;
                 if (result && result.data) {
                   const lines = jsonApiNormalizer(result.data);
-                  const item = normalizedObjectModeler(lines, 'FreeAsso_Contract', id, { eager: true });
+                  const item = normalizedObjectModeler(lines, 'FreeAsso_Contract', id, {
+                    eager: true,
+                  });
                   values[first] = item;
                   if (afterChange) {
                     afterChange(event.target.name, values);
@@ -413,7 +445,9 @@ const useForm = (initialState, initialTab, onSubmit, onCancel, onNavTab, errors,
                 values.loadSickness = false;
                 if (result && result.data) {
                   const lines = jsonApiNormalizer(result.data);
-                  const item = normalizedObjectModeler(lines, 'FreeAsso_Sickness', id, { eager: true });
+                  const item = normalizedObjectModeler(lines, 'FreeAsso_Sickness', id, {
+                    eager: true,
+                  });
                   values[first] = item;
                   if (afterChange) {
                     afterChange(event.target.name, values);
@@ -464,17 +498,19 @@ const useForm = (initialState, initialTab, onSubmit, onCancel, onNavTab, errors,
   const getErrorMessage = field => {
     //const intl = useIntl();
     let message = false;
-    
+
     if (errors && errors.errors) {
       errors.errors.forEach(error => {
         if (error.source && error.source.parameter === field) {
-          //message = intl.formatMessage({ id: 'app.errors.code.' + error.code, defaultMessage: 'Unknown error ' + error.code });
+          if (intl) {
+            message = intl.formatMessage({ id: 'app.errors.code.' + error.code, defaultMessage: 'Unknown error ' + error.code });
+          }
           return true;
         }
-      })
+      });
     }
     return message;
-  }
+  };
 
   return {
     values,

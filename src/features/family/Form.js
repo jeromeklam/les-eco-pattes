@@ -1,8 +1,9 @@
 import React from 'react';
+import { injectIntl } from 'react-intl';
 import { InputHidden, InputText } from 'react-bootstrap-front';
 import { ResponsiveModalOrForm, useForm } from '../ui';
 
-export default function Form(props) {
+function Form(props) {
   const { values, handleChange, handleSubmit, handleCancel, getErrorMessage } = useForm(
     props.item,
     '',
@@ -10,11 +11,12 @@ export default function Form(props) {
     props.onCancel,
     null,
     props.errors,
+    props.intl,
   );
   return (
-    <ResponsiveModalOrForm 
-      title="Famille" 
-      onSubmit={handleSubmit} 
+    <ResponsiveModalOrForm
+      title="Famille"
+      onSubmit={handleSubmit}
       onCancel={handleCancel}
       onClose={props.onClose}
       modal
@@ -27,9 +29,11 @@ export default function Form(props) {
           id="fam_name"
           value={values.fam_name}
           onChange={handleChange}
-          error={getErrorMessage("fam_name")}
+          error={getErrorMessage('fam_name')}
         />
       </div>
     </ResponsiveModalOrForm>
   );
 }
+
+export default injectIntl(Form);

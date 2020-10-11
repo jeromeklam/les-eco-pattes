@@ -1,4 +1,5 @@
 import React from 'react';
+import { injectIntl } from 'react-intl';
 import { InputSelect } from 'react-bootstrap-front';
 import { InputTextarea, InputDate, InputData, ResponsiveModalOrForm } from '../ui';
 import useForm from '../ui/useForm';
@@ -6,7 +7,7 @@ import { InputPicker as SicknessInputPicker } from '../sickness';
 import { InputPicker as ClientInputPicker } from '../client';
 import { whereSelect } from './';
 
-export default function Form(props) {
+function Form(props) {
   if (props.cause) {
     props.item.cause = props.cause;
   }
@@ -17,7 +18,7 @@ export default function Form(props) {
     handleCancel,
     handleNavTab,
     getErrorMessage,
-  } = useForm(props.item, props.tab, props.onSubmit, props.onCancel, props.onNavTab, props.errors);
+  } = useForm(props.item, props.tab, props.onSubmit, props.onCancel, props.onNavTab, props.errors, props.intl);
   return (
     <ResponsiveModalOrForm
       title="Santé"
@@ -133,4 +134,6 @@ export default function Form(props) {
       </div>
     </ResponsiveModalOrForm>
   );
-}
+};
+
+export default injectIntl(Form);
