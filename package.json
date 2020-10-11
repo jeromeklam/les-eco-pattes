@@ -110,6 +110,7 @@
     "start": "cross-env PORT=8175 node scripts/start.js",
     "studio": "rekit-studio -p 8176",
     "build": "node scripts/build.js",
+    "cordova": "node scripts/cordova.js",
     "test": "node scripts/test.js"
   },
   "browserslist": [
@@ -165,10 +166,12 @@
     },
     "platforms": [
       "ios",
-      "android"
+      "android",
+      "browser"
     ]
   },
   "devDependencies": {
-    "cordova-android": "^9.0.0"
+    "cordova-android": "^9.0.0",
+    "cordova-browser": "^6.0.0"
   }
 }
