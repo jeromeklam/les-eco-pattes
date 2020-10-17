@@ -1,5 +1,11 @@
 @import '../../styles/mixins';
 
-.auth-simple-form {
+.avatar {
+  display: block;
+  
+}
 
+.avatar .avatar-change {
+  display: inline-block;
+  vertical-align: bottom;
 }
