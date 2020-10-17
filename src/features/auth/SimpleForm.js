@@ -7,10 +7,12 @@ import Avatar from 'react-avatar';
 import { injectIntl, FormattedMessage } from 'react-intl';
 import * as actions from './redux/actions';
 import { getJsonApi } from 'jsonapi-front';
-import { InputText, InputPassword, InputSelect } from 'react-bootstrap-front';
-import { modifySuccess, messageSuccess, showErrors, InputJson } from '../ui';
+import { InputText, InputPassword, InputSelect, Dropdown } from 'react-bootstrap-front';
+import { setModelValue, propagateModel } from '../../common';
+import { modifySuccess, messageSuccess, showErrors, InputJson, DropZone } from '../ui';
+import { Camera as CameraIcon } from '../icons';
 import { langAsOptions } from '../lang';
-import { setModelValue } from '../../common';
+import { getFullName } from '../user';
 import { schema, defaultConfig } from './';
 
 export class SimpleForm extends Component {
@@ -45,6 +47,8 @@ export class SimpleForm extends Component {
       password_error: null,
       password2: '',
       password2_error: null,
+      menuAvatar: false,
+      refAvatar: React.createRef(),
     };
     this.onChange = this.onChange.bind(this);
     this.onChangeUser = this.onChangeUser.bind(this);
@@ -54,6 +58,8 @@ export class SimpleForm extends Component {
     this.onChangeSettings = this.onChangeSettings.bind(this);
     this.onSubmitSettings = this.onSubmitSettings.bind(this);
     this.onChangeActiveTab = this.onChangeActiveTab.bind(this);
+    this.onChangeAvatar = this.onChangeAvatar.bind(this);
+    this.onMenuAvatar = this.onMenuAvatar.bind(this);
   }
 
   onChange(event) {
@@ -75,14 +81,17 @@ export class SimpleForm extends Component {
   }
 
   onSubmitUser(evt) {
+    
     if (evt) {
       evt.preventDefault();
     }
     let obj = getJsonApi(this.state.user, 'FreeSSO_User', this.state.user.id);
+    console.log("FK nouvel avaatar", obj);
     this.props.actions
       .updateOne(this.state.user.id, obj)
       .then(result => {
         modifySuccess();
+        this.props.actions.propagateModel('FreeSSO_User', result);
       })
       .catch(errors => {
         showErrors(this.props.intl, errors, 'updateOneError');
@@ -170,7 +179,6 @@ export class SimpleForm extends Component {
           this.props.history.push('/');
         })
         .catch(errors => {
-          // @todo display errors to fields
           const { intl } = this.props;
           showErrors(intl, this.props.auth.updatePasswordError);
         });
@@ -182,18 +190,124 @@ export class SimpleForm extends Component {
     this.setState({ activeTab: tab });
   }
 
+  onMenuAvatar() {
+    this.setState({ menuAvatar: !this.state.menuAvatar });
+  }
+ 
+  onChangeAvatar(acceptedFiles) {   
+    this.onMenuAvatar();
+    if (acceptedFiles !== null) {
+      
+      const promises = acceptedFiles.map(file => {
+        return new Promise((resolve, reject) => {
+          const reader = new FileReader();
+          reader.onabort = () => {
+            reject();
+          };
+          reader.onerror = error => {
+            reject(error);
+          };
+          
+          reader.onload = () => {
+            const binaryStr = reader.result;
+            const event = {
+                target: {
+                name: 'user_avatar',
+                value: binaryStr,
+              },
+            };
+            this.onChangeUser(event);
+          };
+          reader.readAsDataURL(file);
+        });
+      });
+      const reload = Promise.all(promises);
+      reload.then(result => {
+        //console.log('InputImage result', result);
+      });
+    } else {
+      const event = {
+        target: {
+          name: 'user_avatar',
+          value: null,
+        },
+      };
+      this.onChangeUser(event);
+    }
+  }
+
   render() {
     const { user, activeTab } = this.state;
+    //email={user.user_email}
+    let userAvatar = user.user_avatar || '';
+    if (userAvatar.indexOf('data:') < 0) {
+      userAvatar = `data:image/jpeg;base64,${user.user_avatar}`;
+    }
     if (this.props.auth.authenticated && this.props.home.loadAllFinish) {
       return (
         <div className="row pt-2">
           <div className="col-sm-10 text-center">
+            <div className="avatar">
             <Avatar
               className="rounded-circle"
-              email={user.user_email}
-              name={user.user_first_name + ' ' + user.user_last_name}
+              name={getFullName(user)}
+              src={userAvatar}
               size="150"
             />
+            <button 
+              className="btn text-secondary avatar-change" 
+              ref={this.state.refAvatar}
+              onClick={this.onMenuAvatar}
+            >
+              <CameraIcon />
+            </button>
+            {this.state.menuAvatar && (
+              <Dropdown
+                myRef={this.state.refAvatar}
+                onClose={this.onMenuAvatar}
+                align="bottom-left"
+              >
+                <div
+                  className="bg-light border border-secondary text-secondary"
+                  aria-labelledby="dropdownMenuButton"
+                >
+                  <button
+                    className="btn btn-block text-secondary"
+                  >
+                    <div className='drop-zone'>
+                      <DropZone
+                        onDrop={acceptedFiles => {
+                          this.onChangeAvatar(acceptedFiles);
+                        }}
+                      >
+                        {({ getRootProps, getInputProps }) => (
+                          <section>
+                            <div {...getRootProps()}>
+                              <input {...getInputProps()} />
+                              <FormattedMessage
+                                id="app.features.auth.user.avatar.update"
+                                defaultMessage="Modifier"
+                              />
+                            </div>
+                          </section>
+                        )}
+                      </DropZone>                        
+                    </div>
+                  </button>
+                  <button
+                    type="button"
+                    className="text-secondary dropdown-item"
+                    onClick={() => this.onChangeAvatar(null)}
+                  >
+                    <FormattedMessage
+                      id="app.features.auth.user.avatar.remove"
+                      defaultMessage="Supprimer"
+                    /> 
+                  </button>
+                </div>
+              </Dropdown>
+            )}
+            </div>
             <p className="pt-3">{user.user_login}</p>
           </div>
           <div className="col-20">
@@ -381,7 +495,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    actions: bindActionCreators({ ...actions }, dispatch),
+    actions: bindActionCreators({ ...actions, propagateModel }, dispatch),
   };
 }
 

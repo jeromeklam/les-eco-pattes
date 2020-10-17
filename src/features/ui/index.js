@@ -23,3 +23,4 @@ export { default as InputSpin } from './InputSpin';
 export { default as CommentModal } from './CommentModal';
 export { default as InputImage } from './InputImage';
 export { default as InputCheckList } from './InputCheckList';
+export { default as DropZone } from './DropZone';

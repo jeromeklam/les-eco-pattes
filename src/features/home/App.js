@@ -5,29 +5,16 @@ import { connect } from 'react-redux';
 import { IntlProvider, FormattedMessage } from 'react-intl';
 import * as actions from './redux/actions';
 import * as authActions from '../auth/redux/actions';
-import { ResponsivePage } from 'react-bootstrap-front';
-import {
-  Menu as MenuIcon,
-  AccountDetail,
-  AccountClose,
-  SocketConnected,
-  SocketDisconnected,
-  MenuOpened as MenuOpenedIcon,
-  MenuClosed as MenuClosedIcon,
-} from '../icons';
-import { CenteredLoading9X9 } from '../ui';
-import { SimpleForm } from '../auth';
 import {
   initSocket,
   propagateCreate,
   propagateUpdate,
   propagateDelete,
 } from '../../common';
-import fond from '../../images/fond2.jpg';
 import messages_fr from '../../translations/fr.json';
 import messages_en from '../../translations/en.json';
-import { appMenu } from './';
 import log from 'loglevel';
+import { Page } from './';
 
 const intlMessages = {
   fr: messages_fr,
@@ -45,16 +32,16 @@ export class App extends Component {
 
   constructor(props) {
     super(props);
+       let socket = null;
+    if (props.home.socketOn) {
+      socket = initSocket();
+    }
+    this.state = {
+      mySocket: socket,
+    };
     this.onNavigate = this.onNavigate.bind(this);
     this.onChangeSettings = this.onChangeSettings.bind(this);
     this.onGeo = this.onGeo.bind(this);
-    let socket = null;
-    if (props.home.socketOn) {
-      let socket = initSocket();
-    }
-    this.state = {
-      mySocket: null,
-    };
     log.getLogger("jsonapi-front.jsonApiNormalizer").setLevel("WARN");
     log.getLogger("react-bootstrap-front.inputMask").setLevel("WARN");
     log.getLogger("react-bootstrap-front.inputSelect").setLevel("WARN");
@@ -141,30 +128,6 @@ export class App extends Component {
   render() {
     const locale = this.props.home.locale || 'fr';
     const messages = intlMessages[locale];
-    const icons = [];
-    let footer = true;
-    if (this.props.auth.authenticated) {
-      footer = false;
-    } 
-    if (this.props.home.socketOn && this.props.auth.authenticated) {
-      if (this.props.home.socketConnected) {
-        icons.push(
-          {
-            name: 'socket',
-            label: 'Synchronisation serveur activée',
-            icon: <SocketConnected className="text-success"/>
-          }
-        );
-      } else {
-        icons.push(
-          {
-            name: 'socket',
-            label: 'Erreur de synchronisation serveur',
-            icon: <SocketDisconnected className="text-danger"/>
-          }
-        );
-      }
-    }
     if (this.props.home.loadAllError) {
       return (
         <IntlProvider locale={locale} messages={messages}>
@@ -181,40 +144,7 @@ export class App extends Component {
     } else {
       return (
         <IntlProvider locale={locale} messages={messages}>
-          <img className="fond-site2 d-none d-sm-block" src={fond} alt="" />
-          <ResponsivePage
-            menuIcon={<MenuIcon className="light" />}
-            title={process.env.REACT_APP_APP_NAME}
-            options={appMenu}
-            icons={icons}
-            settings={{ ...this.props.auth.settings.layout }}
-            authenticated={this.props.auth.authenticated}
-            location={this.props.location}
-            onNavigate={this.onNavigate}
-            onChangeSettings={this.onChangeSettings}
-            userForm={<SimpleForm />}
-            userTitle={this.props.auth.user.user_first_name || this.props.auth.user.user_last_name}
-            accountOpened={<AccountClose />}
-            accountClosed={<AccountDetail className="text-primary" />}
-            menuOpened={<MenuOpenedIcon />}
-            menuClosed={<MenuClosedIcon />}
-            footer={footer}
-          >
-            {this.props.auth.firstCheck &&
-            (!this.props.auth.authenticated || this.props.home.loadAllFinish) ? (
-              <div>{this.props.children}</div>
-            ) : (
-              <div className="text-center mt-5 text-secondary">
-                <h4>
-                  <FormattedMessage
-                    id="app.features.home.app.loading"
-                    defaultMessage="... Loading ..."
-                  />
-                </h4>
-                <CenteredLoading9X9 />
-              </div>
-            )}
-          </ResponsivePage>
+          <Page {...this.props} locale={locale} />
         </IntlProvider>
       );
     }
