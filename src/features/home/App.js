@@ -32,15 +32,13 @@ export class App extends Component {
 
   constructor(props) {
     super(props);
-       let socket = null;
+    let socket = null;
     if (props.home.socketOn) {
       socket = initSocket();
     }
     this.state = {
       mySocket: socket,
     };
-    this.onNavigate = this.onNavigate.bind(this);
-    this.onChangeSettings = this.onChangeSettings.bind(this);
     this.onGeo = this.onGeo.bind(this);
     log.getLogger("jsonapi-front.jsonApiNormalizer").setLevel("WARN");
     log.getLogger("react-bootstrap-front.inputMask").setLevel("WARN");
@@ -115,14 +113,6 @@ export class App extends Component {
         lon: position.coords.longitude,
       });
     }
-  }
-
-  onNavigate(url) {
-    this.props.history.push(url);
-  }
-
-  onChangeSettings(setting, value) {
-    this.props.actions.changeSetting('layout', setting, value);
   }
 
   render() {

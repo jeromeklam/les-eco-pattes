@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 import { injectIntl, FormattedMessage } from 'react-intl';
 import Avatar from 'react-avatar';
 import * as actions from './redux/actions';
+import * as authActions from '../auth/redux/actions';
 import { ResponsivePage } from 'react-bootstrap-front';
 import fond from '../../images/fond2.jpg';
 import {
@@ -87,8 +88,7 @@ export class Page extends Component {
           accountOpened={<AccountClose size='38' />}
           accountClosed={this.props.auth.user ? 
             <Avatar 
-              className="rounded-circle avatar-header" 
-              
+              className="rounded-circle avatar-header"    
               name={getFullName(this.props.auth.user)} 
               src={(this.props.auth.user.user_avatar && this.props.auth.user.user_avatar !== '') ? `data:image/jpeg;base64,${this.props.auth.user.user_avatar}` : null} 
               size='38'
@@ -124,12 +124,13 @@ function mapStateToProps(state) {
   return {
     home: state.home,
     auth: state.auth,
+    history: state.history,
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
-    actions: bindActionCreators({ ...actions }, dispatch),
+    actions: bindActionCreators({ ...actions, ...authActions }, dispatch),
   };
 }
 
