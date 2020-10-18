@@ -125,7 +125,7 @@ export class DefaultPage extends Component {
   }
 
   onCloseEvent() {
-    this.setState({ current: null, params: {} });
+    this.setState({ current: -1, params: {} });
   }
 
   onRangeChange(p_range, p_view) {
@@ -197,7 +197,6 @@ export class DefaultPage extends Component {
   }
 
   onSelectUser(id) {
-    console.log(id);
     const { resources } = this.state;
     const idx = resources.findIndex(elem => elem.id === id);
     if (idx !== false) {
@@ -327,10 +326,10 @@ export class DefaultPage extends Component {
             <CenteredLoading3Dots />
           )}
         </div>
-        {this.state.current && this.state.current > 0 && (
+        {(this.state.current && this.state.current > 0) && (
           <ModifyEvent onClose={this.onCloseEvent} alert_id={this.state.current} />
         )}
-        {this.state.current === 0 && (
+        {(this.state.current === 0) && (
           <CreateEvent
             onClose={this.onCloseEvent}
             alert_id={this.state.current}

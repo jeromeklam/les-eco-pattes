@@ -16,8 +16,6 @@ import { ITEM_UPDATE_ONE_UPDATE } from '../features/item/redux/constants';
 import { MOVEMENT_UPDATE_ONE_UPDATE } from '../features/movement/redux/constants';
 import { ALERT_UPDATE_ONE_UPDATE } from '../features/alert/redux/constants';
 import { CONTRACT_UPDATE_ONE_UPDATE } from '../features/contract/redux/constants';
-import { AUTH_UPDATE_ONE_UPDATE } from '../features/auth/redux/constants';
-import { USER_UPDATE_ONE_UPDATE } from '../features/user/redux/constants';
 import { AGENDA_PROPAGATE } from '../features/agenda/redux/constants';
 
 export function propagateCreate(type, id, datas) {

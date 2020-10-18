@@ -6,9 +6,8 @@ import { connect } from 'react-redux';
 import * as actions from './redux/actions';
 import { getJsonApi } from 'jsonapi-front';
 import { propagateModel } from '../../common';
-import { CenteredLoading3Dots, modifySuccess, showErrors} from '../ui';
+import { CenteredLoading3Dots, modifySuccess, showErrors } from '../ui';
 import Form from './Form';
-
 
 export class Modify extends Component {
   static propTypes = {
@@ -38,10 +37,15 @@ export class Modify extends Component {
      *  En async on va demander le chargement des données
      *  Lorsque fini le store sera modifié
      */
-    this.props.actions.loadOne(this.state.alertId).then(result => {
-      const item = this.props.alert.loadOneItem;
-      this.setState({ item: item });
-    });
+    this.props.actions
+      .loadOne(this.state.alertId)
+      .then(result => {
+        const item = this.props.alert.loadOneItem;
+        this.setState({ item: item });
+      })
+      .catch(error => {
+        this.props.onClose();
+      });
   }
 
   /**
@@ -109,7 +113,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    actions: bindActionCreators({ ...actions, propagateModel }, dispatch)
+    actions: bindActionCreators({ ...actions, propagateModel }, dispatch),
   };
 }
 

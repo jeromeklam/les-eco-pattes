@@ -5,7 +5,6 @@ import {
   AUTH_UPDATE_ONE_SUCCESS,
   AUTH_UPDATE_ONE_FAILURE,
   AUTH_UPDATE_ONE_DISMISS_ERROR,
-  AUTH_UPDATE_ONE_UPDATE,
 } from './constants';
 
 export function updateOne(id, args = {}) {
@@ -77,10 +76,6 @@ export function reducer(state, action) {
       return {
         ...state,
         updateOneError: null,
-      };
-
-    case AUTH_UPDATE_ONE_UPDATE:
-      return {
       };
 
     default:

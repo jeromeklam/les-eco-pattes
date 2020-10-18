@@ -44,7 +44,15 @@ instance.interceptors.response.use(
       if (auth) {
         window.location.replace("/auth/signin");
       }
-    }
+    } else {
+      const headers = response.headers;
+      const type = response.headers['content-type'] || 'text/html';
+      const data = response.data || '';
+      if (type.indexOf('text/html') >= 0 && data !== '') {
+        alert('WebService error ??');
+        return Promise.reject('Error');
+      }
+    }   
     return response;
   },
   function(error) {

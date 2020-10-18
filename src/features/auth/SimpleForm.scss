@@ -2,10 +2,16 @@
 
 .avatar {
   display: block;
-  
+  position: relative;
+  width: 150px;
+  height: 150px;
+  margin: 0 auto;
 }
 
 .avatar .avatar-change {
   display: inline-block;
   vertical-align: bottom;
+  position: absolute;
+  bottom: 0px;
+  right: 0px;
 }

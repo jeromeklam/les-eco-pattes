@@ -14,7 +14,7 @@ import {
   MenuClosed as MenuClosedIcon,
   AccountClose,
   SocketConnected,
-  SocketDisconnected
+  SocketDisconnected,
 } from '../icons';
 import { getFullName } from '../user';
 import { SimpleForm } from '../auth';
@@ -26,7 +26,7 @@ export class Page extends Component {
     children: PropTypes.node,
   };
 
-    static defaultProps = {
+  static defaultProps = {
     children: '',
   };
 
@@ -53,21 +53,17 @@ export class Page extends Component {
     const icons = [];
     if (this.props.home.socketOn && this.props.auth.authenticated) {
       if (this.props.home.socketConnected) {
-        icons.push(
-          {
-            name: 'socket',
-            label: 'Synchronisation serveur activée',
-            icon: <SocketConnected className="text-success"/>
-          }
-        );
+        icons.push({
+          name: 'socket',
+          label: 'Synchronisation serveur activée',
+          icon: <SocketConnected className="text-success" />,
+        });
       } else {
-        icons.push(
-          {
-            name: 'socket',
-            label: 'Erreur de synchronisation serveur',
-            icon: <SocketDisconnected className="text-danger"/>
-          }
-        );
+        icons.push({
+          name: 'socket',
+          label: 'Erreur de synchronisation serveur',
+          icon: <SocketDisconnected className="text-danger" />,
+        });
       }
     }
     //email={this.props.auth.user.user_email}
@@ -85,16 +81,20 @@ export class Page extends Component {
           onNavigate={this.onNavigate}
           onChangeSettings={this.onChangeSettings}
           userForm={<SimpleForm />}
-          accountOpened={<AccountClose size='38' />}
-          accountClosed={this.props.auth.user ? 
-            <Avatar 
-              className="rounded-circle avatar-header"    
-              name={getFullName(this.props.auth.user)} 
-              src={(this.props.auth.user.user_avatar && this.props.auth.user.user_avatar !== '') ? `data:image/jpeg;base64,${this.props.auth.user.user_avatar}` : null} 
-              size='38'
-            />
-            : 
-            null
+          accountOpened={<AccountClose size="38" />}
+          accountClosed={
+            this.props.auth.user ? (
+              <Avatar
+                className="rounded-circle avatar-header"
+                name={getFullName(this.props.auth.user)}
+                src={
+                  this.props.auth.user.user_avatar && this.props.auth.user.user_avatar !== ''
+                    ? `data:image/jpeg;base64,${this.props.auth.user.user_avatar}`
+                    : null
+                }
+                size="38"
+              />
+            ) : null
           }
           menuOpened={<MenuOpenedIcon />}
           menuClosed={<MenuClosedIcon />}
@@ -118,13 +118,12 @@ export class Page extends Component {
       </div>
     );
   }
-}       
+}
 
 function mapStateToProps(state) {
   return {
     home: state.home,
     auth: state.auth,
-    history: state.history,
   };
 }
 

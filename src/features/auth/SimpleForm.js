@@ -191,11 +191,10 @@ export class SimpleForm extends Component {
   onMenuAvatar() {
     this.setState({ menuAvatar: !this.state.menuAvatar });
   }
- 
-  onChangeAvatar(acceptedFiles) {   
+
+  onChangeAvatar(acceptedFiles) {
     this.onMenuAvatar();
     if (acceptedFiles !== null) {
-      
       const promises = acceptedFiles.map(file => {
         return new Promise((resolve, reject) => {
           const reader = new FileReader();
@@ -205,11 +204,11 @@ export class SimpleForm extends Component {
           reader.onerror = error => {
             reject(error);
           };
-          
+
           reader.onload = () => {
             const binaryStr = reader.result;
             const event = {
-                target: {
+              target: {
                 name: 'user_avatar',
                 value: binaryStr,
               },
@@ -246,65 +245,63 @@ export class SimpleForm extends Component {
         <div className="row pt-2">
           <div className="col-sm-10 text-center">
             <div className="avatar">
-            <Avatar
-              className="rounded-circle"
-              name={getFullName(user)}
-              src={userAvatar}
-              size="150"
-            />
-            <button 
-              className="btn text-secondary avatar-change" 
-              ref={this.state.refAvatar}
-              onClick={this.onMenuAvatar}
-            >
-              <CameraIcon />
-            </button>
-            {this.state.menuAvatar && (
-              <Dropdown
-                myRef={this.state.refAvatar}
-                onClose={this.onMenuAvatar}
-                align="bottom-left"
+              <Avatar
+                className="rounded-circle"
+                name={getFullName(user)}
+                src={userAvatar}
+                size="150"
+              />
+              <button
+                className="btn text-secondary avatar-change"
+                ref={this.state.refAvatar}
+                onClick={this.onMenuAvatar}
               >
-                <div
-                  className="bg-light border border-secondary text-secondary"
-                  aria-labelledby="dropdownMenuButton"
+                <CameraIcon />
+              </button>
+              {this.state.menuAvatar && (
+                <Dropdown
+                  myRef={this.state.refAvatar}
+                  onClose={this.onMenuAvatar}
+                  align="bottom-left"
                 >
-                  <button
-                    className="btn btn-block text-secondary"
+                  <div
+                    className="bg-light border border-secondary text-secondary"
+                    aria-labelledby="dropdownMenuButton"
                   >
-                    <div className='drop-zone'>
-                      <DropZone
-                        onDrop={acceptedFiles => {
-                          this.onChangeAvatar(acceptedFiles);
-                        }}
-                      >
-                        {({ getRootProps, getInputProps }) => (
-                          <section>
-                            <div {...getRootProps()}>
-                              <input {...getInputProps()} />
-                              <FormattedMessage
-                                id="app.features.auth.user.avatar.update"
-                                defaultMessage="Modifier"
-                              />
-                            </div>
-                          </section>
-                        )}
-                      </DropZone>                        
-                    </div>
-                  </button>
-                  <button
-                    type="button"
-                    className="text-secondary dropdown-item"
-                    onClick={() => this.onChangeAvatar(null)}
-                  >
-                    <FormattedMessage
-                      id="app.features.auth.user.avatar.remove"
-                      defaultMessage="Supprimer"
-                    /> 
-                  </button>
-                </div>
-              </Dropdown>
-            )}
+                    <button className="btn btn-block text-secondary">
+                      <div className="drop-zone">
+                        <DropZone
+                          onDrop={acceptedFiles => {
+                            this.onChangeAvatar(acceptedFiles);
+                          }}
+                        >
+                          {({ getRootProps, getInputProps }) => (
+                            <section>
+                              <div {...getRootProps()}>
+                                <input {...getInputProps()} />
+                                <FormattedMessage
+                                  id="app.features.auth.user.avatar.update"
+                                  defaultMessage="Modifier"
+                                />
+                              </div>
+                            </section>
+                          )}
+                        </DropZone>
+                      </div>
+                    </button>
+                    <button
+                      type="button"
+                      className="text-secondary dropdown-item"
+                      onClick={() => this.onChangeAvatar(null)}
+                    >
+                      <FormattedMessage
+                        id="app.features.auth.user.avatar.remove"
+                        defaultMessage="Supprimer"
+                      />
+                    </button>
+                  </div>
+                </Dropdown>
+              )}
             </div>
             <p className="pt-3">{user.user_login}</p>
           </div>
