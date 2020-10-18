@@ -85,7 +85,6 @@ export class SimpleForm extends Component {
       evt.preventDefault();
     }
     let obj = getJsonApi(this.state.user, 'FreeSSO_User', this.state.user.id);
-    console.log("FK nouvel avaatar", obj);
     this.props.actions
       .updateOne(this.state.user.id, obj)
       .then(result => {

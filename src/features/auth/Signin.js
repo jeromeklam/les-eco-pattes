@@ -108,7 +108,6 @@ export class Signin extends Component {
         })
         .catch(errors => {
           // @todo display errors to fields
-          const { intl } = this.props;
           showErrors(this.props.intl, errors, 'signIn');
         });
     }
@@ -133,8 +132,6 @@ export class Signin extends Component {
           this.setState({ username_error: username_error, passwordAsk: false });
         })
         .catch(errors => {
-          // @todo display errors to fields
-          const { intl } = this.props;
           showErrors(this.props.intl, errors, 'askPassword');
         });
     }

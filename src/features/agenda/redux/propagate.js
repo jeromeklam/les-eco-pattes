@@ -15,7 +15,7 @@ export function reducer(state, action) {
       let object = jsonApiNormalizer(action.data.data);
       let myItems = state.events;
       let news = normalizedObjectUpdate(myItems, 'FreeFW_Alert', object, false);
-      console.log("propagate", news);
+      //console.log("propagate", news);
       return {
         ...state,
         updateOneError: null,
