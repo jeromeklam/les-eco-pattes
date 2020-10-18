@@ -7,3 +7,4 @@ export { updateOne, dismissUpdateOneError } from './updateOne';
 export { updatePassword, dismissUpdatePasswordError } from './updatePassword';
 export { updateConfig, dismissUpdateConfigError } from './updateConfig';
 export { changeSetting, dismissChangeSettingError } from './changeSetting';
+export { propagate } from './propagate';

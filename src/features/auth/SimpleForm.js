@@ -81,7 +81,6 @@ export class SimpleForm extends Component {
   }
 
   onSubmitUser(evt) {
-    
     if (evt) {
       evt.preventDefault();
     }
