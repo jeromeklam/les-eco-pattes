@@ -1,4 +1,5 @@
 import { AUTH_PROPAGATE } from '../features/auth/redux/constants';
+import { USER_PROPAGATE } from '../features/user/redux/constants';
 import { DATA_UPDATE_ONE_UPDATE } from '../features/data/redux/constants';
 import { SITE_TYPE_UPDATE_ONE_UPDATE } from '../features/site-type/redux/constants';
 import { CAUSE_TYPE_UPDATE_ONE_UPDATE } from '../features/cause-type/redux/constants';
@@ -149,6 +150,10 @@ export function propagateModel(type, model) {
         });
         break;
       case 'FreeSSO_User':
+       dispatch({
+          type: USER_PROPAGATE,
+          data: model,
+        });
         dispatch({
           type: AUTH_PROPAGATE,
           data: model,
