@@ -4,10 +4,10 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { FormattedMessage, injectIntl } from 'react-intl';
 import { withRouter } from 'react-router-dom';
-import { InputEmail, InputPassword, InputCheckbox, Highlight } from 'react-bootstrap-front';
+import { InputEmail, InputCheckbox, Highlight } from 'react-bootstrap-front';
 import { getJsonApi } from 'jsonapi-front';
 import * as actions from './redux/actions';
-import { Copyright, showErrors, getFieldErrorMessage } from '../ui';
+import { Copyright, showErrors, getFieldErrorMessage, InputPassword } from '../ui';
 import logo from '../../images/logo-les-eco-pattes.jpg';
 
 export class Signin extends Component {
@@ -107,7 +107,6 @@ export class Signin extends Component {
           this.props.history.push('/');
         })
         .catch(errors => {
-          // @todo display errors to fields
           showErrors(this.props.intl, errors, 'signIn');
         });
     }
@@ -232,6 +231,7 @@ export class Signin extends Component {
                   })}
                   required=""
                   labelInline
+                  security={false}   
                   value={this.state.password}
                   error={this.state.password_error}
                   onChange={this.onChange}

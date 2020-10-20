@@ -5,10 +5,9 @@ import { connect } from 'react-redux';
 import { FormattedMessage, injectIntl } from 'react-intl';
 import * as actions from './redux/actions';
 import logo from '../../images/logo-les-eco-pattes.jpg';
-import { InputPassword } from 'react-bootstrap-front';
 import { getJsonApi, queryStringToObject } from 'jsonapi-front';
 import { withRouter } from 'react-router-dom';
-import { Copyright, messageSuccess, showErrors } from '../ui';
+import { Copyright, messageSuccess, showErrors, InputPassword } from '../ui';
 
 export class AskPassword extends Component {
   static propTypes = {

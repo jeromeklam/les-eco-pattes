@@ -21,6 +21,7 @@ import { reducer as clearItemsReducer } from './clearItems';
 import { reducer as updateQuickSearchReducer } from './updateQuickSearch';
 import { reducer as uploadAvatarReducer } from './uploadAvatar';
 import { reducer as loadTokensReducer } from './loadTokens';
+import { reducer as propagateReducer } from './propagate';
 
 const reducers = [
   loadMoreReducer,
@@ -37,6 +38,7 @@ const reducers = [
   updateQuickSearchReducer,
   uploadAvatarReducer,
   loadTokensReducer,
+  propagateReducer,
 ];
 
 export default function reducer(state = initialState, action) {

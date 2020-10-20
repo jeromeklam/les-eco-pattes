@@ -7,9 +7,9 @@ import Avatar from 'react-avatar';
 import { injectIntl, FormattedMessage } from 'react-intl';
 import * as actions from './redux/actions';
 import { getJsonApi } from 'jsonapi-front';
-import { InputText, InputPassword, InputSelect, Dropdown } from 'react-bootstrap-front';
+import { InputText, InputSelect, Dropdown } from 'react-bootstrap-front';
 import { setModelValue, propagateModel } from '../../common';
-import { modifySuccess, messageSuccess, showErrors, InputJson, DropZone } from '../ui';
+import { modifySuccess, messageSuccess, showErrors, InputJson, DropZone, InputPassword } from '../ui';
 import { Camera as CameraIcon } from '../icons';
 import { langAsOptions } from '../lang';
 import { getFullName } from '../user';
@@ -90,6 +90,7 @@ export class SimpleForm extends Component {
       .then(result => {
         modifySuccess();
         this.props.actions.propagateModel('FreeSSO_User', result);
+        this.props.onClose && this.props.onClose();
       })
       .catch(errors => {
         showErrors(this.props.intl, errors, 'updateOneError');
@@ -110,6 +111,7 @@ export class SimpleForm extends Component {
       .updateConfig(obj)
       .then(result => {
         modifySuccess();
+        this.onChangeActiveTab(1);
       })
       .catch(errors => {
         showErrors(this.props.intl, errors, 'updateOneError');
@@ -174,7 +176,8 @@ export class SimpleForm extends Component {
               defaultMessage: 'Password changed !',
             }),
           );
-          this.props.history.push('/');
+          this.onChangeActiveTab(1);
+          //this.props.history.push('/');
         })
         .catch(errors => {
           const { intl } = this.props;

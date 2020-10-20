@@ -82,16 +82,6 @@ export function reducer(state, action) {
         updateOneError: null,
       };
 
-    case USER_UPDATE_ONE_UPDATE:
-      let object = jsonApiNormalizer(action.data.data);
-      let myItems = state.items;
-      let news = normalizedObjectUpdate(myItems, 'POSSO_User', object, action.ignoreAdd || false);
-      return {
-        ...state,
-        updateOneError: null,
-        items: news,
-      };
-
     default:
       return state;
   }

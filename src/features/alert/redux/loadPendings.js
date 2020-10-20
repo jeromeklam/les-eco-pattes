@@ -8,6 +8,8 @@ import {
 } from './constants';
 
 export function loadPendings(args = {}) {
+  let deadline = new Date();
+  deadline.setDate(deadline.getDate() + 8);
   return (dispatch) => { 
     dispatch({
       type: ALERT_LOAD_PENDINGS_BEGIN,
@@ -15,7 +17,8 @@ export function loadPendings(args = {}) {
     const promise = new Promise((resolve, reject) => {
       const params = {
         filter: {
-          alert_done_ts : {'empty': ''}
+          alert_done_ts : {'empty': ''},
+          alert_deadline: {ltwe: deadline.toISOString()},
         },
         sort : 'alert_from'
       }

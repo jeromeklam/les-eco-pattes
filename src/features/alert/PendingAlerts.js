@@ -7,7 +7,10 @@ import { normalizedObjectModeler } from 'jsonapi-front';
 import { HoverObserver } from 'react-bootstrap-front';
 import { intlDateTime } from '../../common';
 import { DashboardCard } from '../dashboard';
-import { Alert as AlertIcon, GetOne as GetOneIcon } from '../icons';
+import { 
+  Expired as ExpiredIcon, 
+  Alert as AlertIcon, 
+  GetOne as GetOneIcon } from '../icons';
 import { CenteredLoading3Dots, InlineList, Line, Col } from '../ui';
 import { Modify } from './';
 
@@ -60,17 +63,20 @@ export class PendingAlerts extends Component {
     if (this.props.alert.pendings.FreeFW_Alert) {
       alerts = normalizedObjectModeler(this.props.alert.pendings, 'FreeFW_Alert');
     }
+    const today = new Date().toISOString();
     const header = (
       <InlineList>
         <Line header>
           <Col layoutSize={this.props.layoutSize || 'md'} md={16} lg={16} xl={16} col={12}>
             <span>Libellé</span>
           </Col>
-          <Col layoutSize={this.props.layoutSize || 'md'} md={8} lg={8} xl={5} col={12}>
+          <Col layoutSize={this.props.layoutSize || 'md'} md={7} lg={7} xl={5} col={8}>
             <span>Prévu le</span>
           </Col>
-          <Col layoutSize={this.props.layoutSize || 'md'} md={8} lg={8} xl={5} col={8}>
+          <Col layoutSize={this.props.layoutSize || 'md'} md={7} lg={7} xl={5} col={8}>
             <span>Echéance</span>
+          </Col>
+          <Col layoutSize={this.props.layoutSize || 'md'} md={2} lg={2} xl={2} col={2}>
           </Col>
           <Col layoutSize={this.props.layoutSize || 'md'} md={4} lg={4} xl={4} col={12}>
           </Col>
@@ -104,8 +110,8 @@ export class PendingAlerts extends Component {
                         </Col>
                         <Col
                           layoutSize={this.props.layoutSize || 'md'}
-                          md={8}
-                          lg={8}
+                          md={7}
+                          lg={7}
                           xl={5}
                           col={12}
                         >
@@ -113,12 +119,21 @@ export class PendingAlerts extends Component {
                         </Col>
                         <Col
                           layoutSize={this.props.layoutSize || 'md'}
-                          md={8}
-                          lg={8}
+                          md={7}
+                          lg={7}
                           xl={5}
                           col={12}
                         >
                           {intlDateTime(alert.alert_deadline, true)}
+                        </Col>
+                        <Col
+                          layoutSize={this.props.layoutSize || 'md'}
+                          md={2}
+                          lg={2}
+                          xl={2}
+                          col={2}
+                        >
+                          {(alert.alert_deadline <= today) ? <ExpiredIcon className="col-icon"/> : ''}
                         </Col>
                         <Col layoutSize={this.props.layoutSize || 'md'} md={4} lg={4} xl={4} col={12}>
                           {this.state.flipped && this.state.flipped === alert.id && (

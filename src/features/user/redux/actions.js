@@ -12,6 +12,7 @@ export { setFilters } from './setFilters';
 export { updateQuickSearch } from './updateQuickSearch';
 export { uploadAvatar, dismissUploadAvatarError } from './uploadAvatar';
 export { loadTokens, dismissLoadTokensError } from './loadTokens';
+export { propagate } from './propagate';
 
 
 
