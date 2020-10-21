@@ -1,11 +1,10 @@
-import { jsonApiNormalizer, normalizedObjectUpdate } from 'jsonapi-front';
+import { jsonApiNormalizer } from 'jsonapi-front';
 import { freeAssoApi } from '../../../common';
 import {
   USER_UPDATE_ONE_BEGIN,
   USER_UPDATE_ONE_SUCCESS,
   USER_UPDATE_ONE_FAILURE,
   USER_UPDATE_ONE_DISMISS_ERROR,
-  USER_UPDATE_ONE_UPDATE,
 } from './constants';
 
 

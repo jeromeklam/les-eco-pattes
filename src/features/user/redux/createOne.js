@@ -11,8 +11,7 @@ export function createOne(args = {}) {
   return (dispatch) => {
     dispatch({
       type: USER_CREATE_ONE_BEGIN,
-    });
-     console.log("FK create user",args);     
+    }); 
     const promise = new Promise((resolve, reject) => { 
      
       const doRequest = freeAssoApi.post('/v1/sso/user', args);
