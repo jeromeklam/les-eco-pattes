@@ -1,7 +1,7 @@
 import React from 'react';
 import { injectIntl } from 'react-intl';
 import RegexpParser from 'reregexp';
-import { InputHidden, InputText, InputMonetary, InputMask } from 'react-bootstrap-front';
+import { InputHidden, InputText, InputMonetary, InputMask, InputCheckbox } from 'react-bootstrap-front';
 import { validateRegex } from '../../common';
 import useForm from '../ui/useForm';
 import { ResponsiveModalOrForm, InputDate, InputData } from '../ui';
@@ -61,7 +61,7 @@ function Form(props) {
       <div className="card-body">
         <InputHidden name="id" id="id" value={values.id} />
         <div className="row">
-          <div className="col-sm-8">
+          <div className="col-sm-6">
             <InputMask
               labelTop={true}
               label="Numéro"
@@ -88,7 +88,7 @@ function Form(props) {
               error={getErrorMessage('site')}
             />
           </div>
-          <div className="col-8">
+          <div className="col-6">
             <InputData
               name="ct_duration"
               value={values.ct_duration}
@@ -96,6 +96,15 @@ function Form(props) {
               config={props.tab_configs}
               onChange={handleChange}
               labelTop={true}
+            />
+          </div>
+          <div className="col-4">
+            <InputCheckbox
+              label="Sous-traitant"
+              name="ct_subcontractor"
+              labelTop={true}
+              checked={values.ct_subcontractor === true}
+              onChange={handleChange}
             />
           </div>
         </div>

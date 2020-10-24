@@ -1,10 +1,24 @@
 export default `
 
+# Version 1.5.0 : 25/10/2020
+  * Authentification
+    * Correction dans le changement de mot de passe
+    * Correction dans le changement d'avatar
+    * correction dans la modification des préférences
+  * Tableau de bord 
+    * Bloc alertes
+      * Affichage des alertes avec une date d'échéance dépassée avec un icône
+      * Affichage des alertes pour des tâches à effectuer dans les 8 jours
+  * Contrats
+    * Ajout d'une coche sous-traitant
+
 # Version 1.4.0 : 04/10/2020
   * Général
     * Filtres 
       * Modification du fonctionnement des filtres 
       * Suppression du pied de page avec le lien Facebook une fois connecté
+  * Tableau de bord
+    * Ajout d'un bouton pour passer en mode mofification de la taille ou de la position des blocs
   * Animaux
     * Affichage de la description (ou motif de sortie) corrigée
     * Ajout Mâle castré dans la liste M/F

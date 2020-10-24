@@ -150,7 +150,7 @@ export function propagateModel(type, model) {
         });
         break;
       case 'FreeSSO_User':
-       dispatch({
+        dispatch({
           type: USER_PROPAGATE,
           data: model,
         });

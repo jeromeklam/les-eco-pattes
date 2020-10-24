@@ -9,11 +9,11 @@ import * as actions from './redux/actions';
 import { getJsonApi } from 'jsonapi-front';
 import { InputText, InputSelect, Dropdown } from 'react-bootstrap-front';
 import { setModelValue, propagateModel } from '../../common';
-import { modifySuccess, messageSuccess, showErrors, InputJson, DropZone, InputPassword } from '../ui';
+import { modifySuccess, showErrors, DropZone } from '../ui';
 import { Camera as CameraIcon } from '../icons';
 import { langAsOptions } from '../lang';
 import { getFullName } from '../user';
-import { schema, defaultConfig } from './';
+import { PasswordTab, SettingsTab } from './';
 
 export class SimpleForm extends Component {
   static propTypes = {
@@ -30,33 +30,15 @@ export class SimpleForm extends Component {
 
   constructor(props) {
     super(props);
-    let settings = defaultConfig;
-    if (props.auth.settings) {
-      try {
-        settings = props.auth.settings || defaultConfig;
-      } catch (ex) {
-        settings = defaultConfig;
-      }
-    }
     this.state = {
       user: props.auth.user,
-      settings: settings,
       activeTab: 1,
-      old_password: '',
-      password: '',
-      password_error: null,
-      password2: '',
-      password2_error: null,
       menuAvatar: false,
       refAvatar: React.createRef(),
     };
     this.onChange = this.onChange.bind(this);
     this.onChangeUser = this.onChangeUser.bind(this);
     this.onSubmitUser = this.onSubmitUser.bind(this);
-    this.onChangePassword = this.onChangePassword.bind(this);
-    this.onSubmitPassword = this.onSubmitPassword.bind(this);
-    this.onChangeSettings = this.onChangeSettings.bind(this);
-    this.onSubmitSettings = this.onSubmitSettings.bind(this);
     this.onChangeActiveTab = this.onChangeActiveTab.bind(this);
     this.onChangeAvatar = this.onChangeAvatar.bind(this);
     this.onMenuAvatar = this.onMenuAvatar.bind(this);
@@ -70,14 +52,6 @@ export class SimpleForm extends Component {
     let user = this.state.user;
     setModelValue(user, event.target.name, event.target.value);
     this.setState({ user: user });
-  }
-
-  onChangePassword(event) {
-    this.setState({ [event.target.name]: event.target.value });
-  }
-
-  onChangeSettings(event) {
-    this.setState({ settings: event.target.value });
   }
 
   onSubmitUser(evt) {
@@ -95,96 +69,6 @@ export class SimpleForm extends Component {
       .catch(errors => {
         showErrors(this.props.intl, errors, 'updateOneError');
       });
-  }
-
-  onSubmitSettings(evt) {
-    if (evt) {
-      evt.preventDefault();
-    }
-    const datas = {
-      type: 'FreeSSO_ConfigRequest',
-      config: JSON.stringify(this.state.settings),
-      config_type: 'settings',
-    };
-    let obj = getJsonApi(datas);
-    this.props.actions
-      .updateConfig(obj)
-      .then(result => {
-        modifySuccess();
-        this.onChangeActiveTab(1);
-      })
-      .catch(errors => {
-        showErrors(this.props.intl, errors, 'updateOneError');
-      });
-  }
-
-  onSubmitPassword(evt) {
-    if (evt) {
-      evt.preventDefault();
-    }
-    this.setState({ password_error: null, password2_error: null });
-    const { intl } = this.props;
-    let next = true;
-    if (this.state.password === '') {
-      const message1 = intl.formatMessage({
-        id: 'app.features.auth.askPassword.error.emptyPassword',
-        defaultMessage: 'Password is mandatory !',
-      });
-      this.setState({ password_error: message1 });
-      next = false;
-    }
-    if (this.state.password2 === '') {
-      const message2 = intl.formatMessage({
-        id: 'app.features.auth.askPassword.error.emptyPassword2',
-        defaultMessage: 'Password is mandatory !',
-      });
-      this.setState({ password2_error: message2 });
-      next = false;
-    }
-    if (
-      this.state.password !== '' &&
-      this.state.password2 !== '' &&
-      this.state.password !== this.state.password2
-    ) {
-      const message3 = intl.formatMessage({
-        id: 'app.features.auth.askPassword.error.passwordDifferent',
-        defaultMessage: 'Password is mandatory !',
-      });
-      this.setState({ password2_error: message3 });
-      next = false;
-    }
-    if (next) {
-      const datas = {
-        type: 'FreeSSO_ChangePassword',
-        password: this.state.password,
-        password2: this.state.old_password,
-      };
-      let obj = getJsonApi(datas);
-      this.props.actions
-        .updatePassword(obj)
-        .then(result => {
-          this.setState({
-            old_password: '',
-            password: '',
-            password2: '',
-            password_error: null,
-            password2_error: null,
-          });
-          messageSuccess(
-            intl.formatMessage({
-              id: 'app.features.auth.askPassword.changed',
-              defaultMessage: 'Password changed !',
-            }),
-          );
-          this.onChangeActiveTab(1);
-          //this.props.history.push('/');
-        })
-        .catch(errors => {
-          const { intl } = this.props;
-          showErrors(intl, this.props.auth.updatePasswordError);
-        });
-    }
-    return next;
   }
 
   onChangeActiveTab(tab) {
@@ -238,7 +122,6 @@ export class SimpleForm extends Component {
 
   render() {
     const { user, activeTab } = this.state;
-    //email={user.user_email}
     let userAvatar = user.user_avatar || '';
     if (userAvatar.indexOf('data:') < 0) {
       userAvatar = `data:image/jpeg;base64,${user.user_avatar}`;
@@ -251,6 +134,7 @@ export class SimpleForm extends Component {
               <Avatar
                 className="rounded-circle"
                 name={getFullName(user)}
+                email={user.user_email}
                 src={userAvatar}
                 size="150"
               />
@@ -353,88 +237,10 @@ export class SimpleForm extends Component {
                 </form>
               )}
               {activeTab === 2 && (
-                <form onSubmit={this.onSubmitSettings}>
-                  <InputJson
-                    name="user_cache"
-                    value={JSON.parse(user.config.ubrk_config)}
-                    labelTop
-                    onChange={this.onChangeSettings}
-                    schema={schema}
-                  />
-                  <div className="text-right">
-                    <button type="submit" className="btn btn-success btn-submit">
-                      <span>
-                        {
-                          <FormattedMessage
-                            id="app.features.auth.form.save"
-                            defaultMessage="Save"
-                          />
-                        }
-                      </span>
-                    </button>
-                  </div>
-                </form>
+                <SettingsTab onChangeTab={() => this.onChangeActiveTab(1)} onClose={this.props.onClose}/>
               )}
               {activeTab === 3 && (
-                <form
-                  className="auth-simple-form"
-                  style={this.props.style}
-                  onSubmit={this.onSubmitPassword}
-                >
-                  <InputPassword
-                    label={
-                      <FormattedMessage
-                        id="app.features.auth.form.oldPassword"
-                        defaultMessage="Old password"
-                      />
-                    }
-                    name="old_password"
-                    value={this.state.old_password}
-                    labelTop
-                    required
-                    onChange={this.onChangePassword}
-                  />
-                  <InputPassword
-                    label={
-                      <FormattedMessage
-                        id="app.features.auth.form.password"
-                        defaultMessage="Password"
-                      />
-                    }
-                    name="password"
-                    value={this.state.password}
-                    labelTop
-                    required
-                    error={this.state.password_error}
-                    onChange={this.onChangePassword}
-                  />
-                  <InputPassword
-                    label={
-                      <FormattedMessage
-                        id="app.features.auth.form.password2"
-                        defaultMessage="Confirm password"
-                      />
-                    }
-                    name="password2"
-                    value={this.state.password2}
-                    labelTop
-                    required
-                    error={this.state.password2_error}
-                    onChange={this.onChangePassword}
-                  />
-                  <div className="text-right">
-                    <button type="submit" className="btn btn-success btn-submit">
-                      <span>
-                        {
-                          <FormattedMessage
-                            id="app.features.auth.form.save"
-                            defaultMessage="Save"
-                          />
-                        }
-                      </span>
-                    </button>
-                  </div>
-                </form>
+                <PasswordTab onChangeTab={() => this.onChangeActiveTab(1)} onClose={this.props.onClose}/>
               )}
             </div>
           </div>

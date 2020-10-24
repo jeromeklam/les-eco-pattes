@@ -48,6 +48,22 @@ export const saveToLS = (key, value) => {
   }
 };
 
+export const getFieldError = (intl, field, errors) => {
+    let message = false;
+
+    if (errors && errors.errors) {
+      errors.errors.forEach(error => {
+        if (error.source && error.source.parameter === field) {
+          if (intl) {
+            message = intl.formatMessage({ id: 'app.errors.code.' + error.code, defaultMessage: 'Unknown error ' + error.code });
+          }
+          return true;
+        }
+      });
+    }
+    return message;
+};
+
 export function showErrors(intl, error, defCode = "", firstMess = "") {
   if (error) {
     if (!error.errors) {

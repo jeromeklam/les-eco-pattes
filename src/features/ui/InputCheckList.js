@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { InputCheckList as FAInputCheckList } from 'react-bootstrap-front';
+import { InputCheckList as RBFInputCheckList } from 'react-bootstrap-front';
 import { 
   AddOne as AddOneIcon,  
   DelOne as DelOneIcon,  
@@ -13,7 +13,7 @@ import {
 export default class InputCheckList extends Component {
   render() {
     return (
-      <FAInputCheckList
+      <RBFInputCheckList
         {...this.props}
         addIcon={<AddOneIcon />}
         delIcon={<DelOneIcon className="text-warning" size={0.9} />}

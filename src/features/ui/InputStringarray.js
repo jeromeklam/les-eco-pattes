@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
-import { InputStringarray as FAInputStringarray } from 'react-bootstrap-front';
+import { InputStringarray as RBFInputStringarray } from 'react-bootstrap-front';
 import { Plus, Minus } from '../icons';
 
 export default class InputStringarray extends Component {
   render() {
     return (
-      <FAInputStringarray
+      <RBFInputStringarray
         minusIcon={<Minus className="text-warning"/>}
         plusIcon={<Plus className="text-primary" />}
         {...this.props}

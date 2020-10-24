@@ -33,6 +33,8 @@ const afterChange = (name, item) => {
         if (Number.isNaN(item.alert_recur_number) || item.alert_recur_number < 1) {
           item.alert_recur_number = 1;
         }
+      } else {
+        item.alert_recur_number = null;
       }
       break;
     case 'alert_from':
@@ -305,7 +307,7 @@ function Form(props) {
       {values.currentTab === '4' && (
         <div>
           <div className="row">
-            <div className="col-6">
+            <div className="col-5">
               <InputSelect
                 label="Récurrence"
                 id="alert_recur_type"
@@ -318,7 +320,7 @@ function Form(props) {
                 error={getErrorMessage('alert_recur_type')}
               />
             </div>
-            <div className="col-12">
+            <div className="col-5">
               {libRecur !== '' && (
                 <InputSpin
                   label={libRecur}
@@ -326,14 +328,17 @@ function Form(props) {
                   id="alert_recur_number"
                   value={values.alert_recur_number}
                   maxValue={99}
-                  minValue={0}
+                  minValue={1}
                   onChange={handleChange}
                   labelTop={true}
                   disabled={recurDisabled}
+                  clear={false}
                   error={getErrorMessage('alert_recur_number')}
                 />
               )}
             </div>
+          </div>
+          <div className="row">
             <div className="col-sm-18">
               <InputSelect
                 label="Premier rappel avant échéance"
@@ -347,7 +352,6 @@ function Form(props) {
             </div>
           </div>
           <div className="row">
-            <div className="col-sm-18" />
             <div className="col-sm-18">
               <InputSelect
                 label="Deuxième rappel avant échéance"
