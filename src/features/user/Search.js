@@ -44,7 +44,7 @@ export default class Search extends Component {
           let items = [];
           if (result && result.data) {
             const lines = jsonApiNormalizer(result.data);
-            items = normalizedObjectModeler(lines, 'POSSO_User');
+            items = normalizedObjectModeler(lines, 'FreeSSO_User');
           }
           this.setState({ loading: false, finish: true, list: items });
         },

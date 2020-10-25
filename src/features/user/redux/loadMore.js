@@ -82,7 +82,7 @@ export function reducer(state, action) {
         loadMorePending: true,
         loadMoreError: null,
         loadMoreFinish: false,
-        items: getNewNormalizedObject('POSSO_User'),
+        items: getNewNormalizedObject('FreeSSO_User'),
         page_number: 1,
         page_size: process.env.REACT_APP_PAGE_SIZE,
       };

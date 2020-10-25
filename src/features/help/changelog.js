@@ -1,6 +1,6 @@
 export default `
 
-# Version 1.5.0 : 25/10/2020
+# Version 2.0.0 : 25/10/2020
   * Authentification
     * Correction dans le changement de mot de passe
     * Correction dans le changement d'avatar
@@ -11,6 +11,8 @@ export default `
       * Affichage des alertes pour des tâches à effectuer dans les 8 jours
   * Contrats
     * Ajout d'une coche sous-traitant
+  * Technique
+    * Nouvelles versions des librairies de développement 
 
 # Version 1.4.0 : 04/10/2020
   * Général

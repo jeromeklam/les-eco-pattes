@@ -2,7 +2,7 @@ import { getNewNormalizedObject } from 'jsonapi-front';
 import { Filter } from 'react-bootstrap-front';
 
 const initialState = {
-  items: getNewNormalizedObject('POSSO_User'),
+  items: getNewNormalizedObject('FreeSSO_User'),
   page_number: 1,
   page_size: process.env.REACT_APP_PAGE_SIZE,
   tab: "1",

@@ -86,6 +86,7 @@ export class Page extends Component {
             this.props.auth.user ? (
               <Avatar
                 className="rounded-circle avatar-header"
+                email={(!this.props.auth.user.user_avatar || this.props.auth.user.user_avatar === '') && this.props.auth.user.user_email}
                 name={getFullName(this.props.auth.user)}
                 src={
                   this.props.auth.user.user_avatar && this.props.auth.user.user_avatar !== ''

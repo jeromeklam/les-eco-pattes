@@ -21,7 +21,7 @@ export function reducer(state, action) {
     case USER_PROPAGATE:
       let object = jsonApiNormalizer(action.data.data);      
       let myItems = state.items;
-      let news = normalizedObjectUpdate(myItems, 'POSSO_User', object, action.ignoreAdd || false);
+      let news = normalizedObjectUpdate(myItems, 'FreeSSO_User', object, action.ignoreAdd || false);
       return {
         ...state,
         updateOneError: null,

@@ -91,7 +91,7 @@ export default class InputPicker extends Component {
   onClear() {
     this.setState({ autocomplete: false });
     this.props.onChange({
-      target: { name: this.props.name, value: null, type: 'POSSO_User' },
+      target: { name: this.props.name, value: null, type: 'FreeSSO_User' },
     });
   }
 
@@ -99,7 +99,7 @@ export default class InputPicker extends Component {
     this.setState({ search: false, autocomplete: false, list: [] });
     if (item) {
       this.props.onChange({
-        target: { name: this.props.name, value: item.id, type: 'POSSO_User' },
+        target: { name: this.props.name, value: item.id, type: 'FreeSSO_User' },
       });
     }
   }

@@ -123,7 +123,7 @@ export class SimpleForm extends Component {
   render() {
     const { user, activeTab } = this.state;
     let userAvatar = user.user_avatar || '';
-    if (userAvatar.indexOf('data:') < 0) {
+    if (userAvatar !== '' && userAvatar.indexOf('data:') < 0) {
       userAvatar = `data:image/jpeg;base64,${user.user_avatar}`;
     }
     if (this.props.auth.authenticated && this.props.home.loadAllFinish) {
@@ -134,7 +134,7 @@ export class SimpleForm extends Component {
               <Avatar
                 className="rounded-circle"
                 name={getFullName(user)}
-                email={user.user_email}
+                email={userAvatar === '' && user.user_email}
                 src={userAvatar}
                 size="150"
               />
@@ -155,7 +155,7 @@ export class SimpleForm extends Component {
                     className="bg-light border border-secondary text-secondary"
                     aria-labelledby="dropdownMenuButton"
                   >
-                    <button className="btn btn-block text-secondary">
+                    <button className="text-secondary dropdown-item">
                       <div className="drop-zone">
                         <DropZone
                           onDrop={acceptedFiles => {

@@ -59,7 +59,7 @@ export function reducer(state, action) {
       // The request is success
       let item = null;
       let object = jsonApiNormalizer(action.data.data);
-      item = normalizedObjectModeler(object, 'POSSO_User', action.id, { eager: true });
+      item = normalizedObjectModeler(object, 'FreeSSO_User', action.id, { eager: true });
       return {
         ...state,
         loadOnePending: false,

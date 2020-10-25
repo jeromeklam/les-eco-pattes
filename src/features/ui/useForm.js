@@ -7,6 +7,13 @@ const explodeReduxModel = obj => {
   return ret;
 };
 
+const _loadUser = id => {
+  if (!id) {
+    id = '0';
+  }
+  return freeAssoApi.get('/v1/sso/user/' + id + '?include=', {});
+};
+
 const _loadCauseType = id => {
   if (!id) {
     id = '0';
@@ -80,6 +87,7 @@ const useForm = (
     loadContract: false,
     loadCause: false,
     loadSite: false,
+    loadUser: false,
     loadSickness: false,
     errors: errors,
     sending: false,
@@ -103,6 +111,32 @@ const useForm = (
         case 'checkbox':
           datas = event.target.checked || false;
           values[first] = datas;
+          break;
+        case 'FreeSSO_User':
+          if (!values.loadUser) {
+            const id = event.target.value || '0';
+            values.loadUser = true;
+            setValues(explodeReduxModel(values));
+            _loadUser(id)
+              .then(result => {
+                values.loadUser = false;
+                if (result && result.data) {
+                  const lines = jsonApiNormalizer(result.data);
+                  const item = normalizedObjectModeler(lines, 'FreeSSO_User', id, {
+                    eager: true,
+                  });
+                  values[first] = item;
+                  setValues(explodeReduxModel(values));
+                  if (afterChange) {
+                    afterChange(event.target.name, values);
+                  }
+                }
+              })
+              .catch(err => {
+                values.loadUser = false;
+                setValues(explodeReduxModel(values));
+              });
+          }
           break;
         case 'FreeAsso_Cause':
           if (!values.loadCause) {
@@ -280,6 +314,32 @@ const useForm = (
         case 'checkbox':
           datas[second] = event.target.checked || false;
           values[first] = datas;
+          break;
+        case 'FreeSSO_User':
+          if (!values.loadUser) {
+            const id = event.target.value || '0';
+            values.loadUser = true;
+            setValues(explodeReduxModel(values));
+            _loadUser(id)
+              .then(result => {
+                values.loadUser = false;
+                if (result && result.data) {
+                  const lines = jsonApiNormalizer(result.data);
+                  const item = normalizedObjectModeler(lines, 'FreeSSO_User', id, {
+                    eager: true,
+                  });
+                  values[first] = item;
+                  if (afterChange) {
+                    afterChange(event.target.name, values);
+                  }
+                  setValues(explodeReduxModel(values));
+                }
+              })
+              .catch(err => {
+                values.loadUser = false;
+                setValues(explodeReduxModel(values));
+              });
+          }
           break;
         case 'FreeAsso_CauseType':
           if (!values.loadCauseType) {
