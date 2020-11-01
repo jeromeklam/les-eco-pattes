@@ -139,8 +139,8 @@ export class InlineDocuments extends Component {
                       <div className="card mt-2">
                         <div className="card-header bg-light">
                           <div className="row">
-                            <div className="col-16"></div>
-                            <div className="col-20 text-right">
+                            <div className="col-xs-w16"></div>
+                            <div className="col-xs-w20 text-right">
                               <div className="btn-group btn-group-sm" role="group" aria-label="...">
                                 <button type="button" className="btn btn-inline btn-secondary">
                                   <DownloadIcon
@@ -160,8 +160,8 @@ export class InlineDocuments extends Component {
                         </div>
                         <div className="card-body text-center">
                           <div className="row">
-                            <div className="col-36">{content}</div>
-                            <div className="col-36">
+                            <div className="col-xs-w36">{content}</div>
+                            <div className="col-xs-w36">
                               <small className="text-center text-secondary">
                                 {document.caum_title}
                               </small>
@@ -176,7 +176,7 @@ export class InlineDocuments extends Component {
                 <div className="card mt-2">
                   <div className="card-header bg-light text-secondary">
                     <div className="row">
-                      <div className="col-36">
+                      <div className="col-xs-w36">
                         <span className="">Ajouter un document</span>
                       </div>
                     </div>

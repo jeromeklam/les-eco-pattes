@@ -147,19 +147,19 @@ export class InlineMovements extends Component {
           <div className="cause-inline-movements">
             <div className="inline-list">
               <div className={classnames('row row-title row-line', (counter++ % 2 !== 1) ? 'row-odd' : 'row-even')} key="cause-inline-movements">
-                <div className="col-sm-5 col-first">
+                <div className="col-sm-w5 col-first">
                   <span>Date</span>
                 </div>
-                <div className="col-sm-7">
+                <div className="col-sm-w7">
                   <span>Depuis</span>
                 </div>
-                <div className="col-sm-7">
+                <div className="col-sm-w7">
                   <span>Vers</span>
                 </div>
-                <div className="col-sm-7">
+                <div className="col-sm-w7">
                   <span>Notes</span>
                 </div>
-                <div className="col-sm-10">
+                <div className="col-sm-w10">
                   <span>Statut</span>
                 </div>
               </div>
@@ -167,12 +167,12 @@ export class InlineMovements extends Component {
                 return (
                   <HoverObserver onMouseEnter={() => {this.mouseEnter(movement.id)}} onMouseLeave={this.mouseLeave}>
                     <div className={classnames('row row-line', (counter++ % 2 !== 1) ? 'row-odd' : 'row-even')} key={movement.id}>
-                      <div className="col-sm-5 col-first">{intlDateTime(movement.camv_to, true)}</div>
-                      <div className="col-sm-7">{movement.from_site.site_name}</div>
-                      <div className="col-sm-7">{movement.to_site.site_name}</div>
-                      <div className="col-sm-7">{movement.camv_comment}</div>
-                      <div className="col-sm-5">{statusLabel(movement.camv_status)}</div>
-                      <div className="col-sm-5 text-right col-last">
+                      <div className="col-sm-w5 col-first">{intlDateTime(movement.camv_to, true)}</div>
+                      <div className="col-sm-w7">{movement.from_site.site_name}</div>
+                      <div className="col-sm-w7">{movement.to_site.site_name}</div>
+                      <div className="col-sm-w7">{movement.camv_comment}</div>
+                      <div className="col-sm-w5">{statusLabel(movement.camv_status)}</div>
+                      <div className="col-sm-w5 text-right col-last">
                       {this.state.flipped && this.state.flipped === movement.id && 
                         <div className="btn-group btn-group-sm" role="group" aria-label="...">
                           {movement.camv_status === 'WAIT' && (
@@ -217,7 +217,7 @@ export class InlineMovements extends Component {
             </div>
             {emptyItem && (
               <div className="row row-new-movement">
-                <div className="col-36 p-3">
+                <div className="col-xs-w36 p-3">
                   {emptyItem && (
                     <InlineMovementForm
                       cause={this.state.cause}
@@ -236,7 +236,7 @@ export class InlineMovements extends Component {
           <div className="cause-inline-movements">
             {emptyItem ? (
               <div className="row row-new-movement">
-                <div className="col-36 pt-2">
+                <div className="col-xs-w36 pt-2">
                   {emptyItem && (
                     <InlineMovementForm
                       cause={this.state.cause}

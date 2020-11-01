@@ -32,7 +32,7 @@ function Form(props) {
       modal={props.modal || false}
     >
       <div className="row">
-        <div className="col-10">
+        <div className="col-xs-w10">
           <InputDate
             label="Du"
             name="caus_from"
@@ -45,7 +45,7 @@ function Form(props) {
             error={getErrorMessage('caus_from')}
           />
         </div>
-        <div className="col-10">
+        <div className="col-xs-w10">
           <InputDate
             label="Au"
             name="caus_to"
@@ -58,7 +58,7 @@ function Form(props) {
             error={getErrorMessage('caus_to')}
           />
         </div>
-        <div className="col-16">
+        <div className="col-xs-w16">
           <SicknessInputPicker
             label="Maladie"
             name="sickness"
@@ -72,7 +72,7 @@ function Form(props) {
         </div>
       </div>
       <div className="row">
-        <div className="col-10">
+        <div className="col-xs-w10">
           <InputSelect
             label="Lieu"
             name="caus_where"
@@ -85,7 +85,7 @@ function Form(props) {
             options={whereSelect}
           />
         </div>
-        <div className="col-10">
+        <div className="col-xs-w10">
           <InputData
             name="caus_care"
             value={values.caus_care}
@@ -95,7 +95,7 @@ function Form(props) {
             labelTop={true}
           />
         </div>
-        <div className="col-16">
+        <div className="col-xs-w16">
           <ClientInputPicker
             label="Vétérinaire"
             key="sanitary"
@@ -111,7 +111,7 @@ function Form(props) {
         </div>
       </div>
       <div className="row">
-        <div className="col-36">
+        <div className="col-xs-w36">
           <InputTextarea
             label="Description des soins"
             name="caus_care_desc"
@@ -122,7 +122,7 @@ function Form(props) {
         </div>
       </div>
       <div className="row">
-        <div className="col-36">
+        <div className="col-xs-w36">
           <InputTextarea
             label="Commentaires"
             name="caus_desc"

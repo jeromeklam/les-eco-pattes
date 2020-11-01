@@ -7,10 +7,10 @@ export default class Col extends Component {
   render() {
     let add = "";
     if (this.props.layoutSize && this.props[this.props.layoutSize]) {
-      add = `-${this.props[this.props.layoutSize]}`;
+      add = `-${this.props.layoutSize}-w${this.props[this.props.layoutSize]}`;
     } else {
       if (this.props['col']) {
-        add = `-${this.props['col']}`;
+        add = `-xs-w${this.props['col']}`;
       }
     }
     return (

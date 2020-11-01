@@ -16,9 +16,9 @@ function Form(props) {
   return (
     <ResponsiveModalOrForm 
       className="m-5" 
-      size="md"
+      size="xs"
       modal={true} 
-      title="Catégorie de personne" 
+      title="Catégorie de contact" 
       onSubmit={handleSubmit} 
       onCancel={handleCancel}
       onClose={props.onClose}

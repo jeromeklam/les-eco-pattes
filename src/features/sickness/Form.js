@@ -17,7 +17,7 @@ function Form(props) {
   return (
     <ResponsiveModalOrForm
       className=""
-      title="Maladies"
+      title="Maladie"
       size="lg"
       onSubmit={handleSubmit}
       onCancel={handleCancel}
@@ -27,7 +27,7 @@ function Form(props) {
       <div className="card-body">
         <InputHidden name="id" id="id" value={values.id} />
         <div className="row">
-          <div className="col-12">
+          <div className="col-xs-w12">
             <InputText
               label="Nom"
               name="sick_name"
@@ -38,7 +38,7 @@ function Form(props) {
               error={getErrorMessage('sick_name')}
             />
           </div>
-          <div className="col-sm-12">
+          <div className="col-sm-w12">
             <InputSelect
               label="Type"
               id="sick_type"
@@ -51,7 +51,7 @@ function Form(props) {
               error={getErrorMessage('sick_type')}
             />
           </div>
-          <div className="col-sm-4">
+          <div className="col-sm-w4">
             <InputCheckbox
               label="Contagieux"
               name="sick_spread"
@@ -62,7 +62,7 @@ function Form(props) {
           </div>
         </div>
         <div className="row">
-          <div className="col-12">
+          <div className="col-xs-w12">
             <InputText
               label="Durée moyenne (j)"
               name="sick_duration"
@@ -72,7 +72,7 @@ function Form(props) {
               error={getErrorMessage('sick_duration')}
             />
           </div>
-          <div className="col-12">
+          <div className="col-xs-w12">
             <InputText
               label="Fréquence de contrôle (j)"
               name="sick_freq"
@@ -84,7 +84,7 @@ function Form(props) {
           </div>
         </div>
         <div className="row">
-          <div className="col-36">
+          <div className="col-xs-w36">
             <InputTextarea
               label="Description"
               name="sick_desc"

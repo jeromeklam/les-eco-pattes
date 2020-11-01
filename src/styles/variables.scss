@@ -7,19 +7,28 @@ $theme-colors: (
   "secondary-light": lighten(#5a4e4e, 48%),
   "secondary-dark": darken(#5a4e4e, 20%),
   "danger": #ff4136,
+  "danger-light": lighten(#ff4136, 30%),
+  "danger-dark": darken(#ff4136, 10%),
   "warning": #ef8c1d,
   "warning-light": lighten(#ef8c1d, 40%),
   "warning-dark": darken(#ef8c1d, 10%),
   "light": lighten(#5a4e4e, 60%),
   "success": #7ab255,
 );
-
 $grid-breakpoints: (
   xs: 0,
   sm: 768px,
   md: 1024px,
   lg: 1200px,
   xl: 1600px
+);
+$container-breakpoints: (
+  no: 0,
+  xs: 0,
+  sm: 768,
+  md: 1024,
+  lg: 1200,
+  xl: 1600
 );
 $container-max-widths: (
   sm: 640px,
@@ -67,3 +76,6 @@ $desktop-listheader-height: 43px;
 $card-cap-bg: lighten(#5a4e4e, 30%);
 $card-cap-color: #ffffff;
 $nav-tabs-link-active-color: #7ab255;
+
+// Disabled
+$enable-grid-classes: false;

@@ -6,6 +6,7 @@ import {
 } from '../icons';
 import { clientCategoryAsOptions } from '../client-category';
 import { clientTypeAsOptions } from '../client-type';
+import { getFullName } from './';
 
 export const getGlobalActions = ({ onClearFilters, onCreate }) => {
   return [
@@ -59,7 +60,8 @@ export const getCols = ({ props }) => {
       name: 'lastname',
       label: 'Nom',
       col: 'cli_lastname',
-      size: '8',
+      fDisplay: (item) => {return getFullName(item);},
+      size: '7',
       mob_size: '18',
       sortable: true,
       filterable: { type: 'text' },
@@ -70,11 +72,22 @@ export const getCols = ({ props }) => {
       name: 'firstname',
       label: 'Prénom',
       col: 'cli_firstname',
-      size: '5',
+      size: '6',
       mob_size: '18',
+      sortable: false,
+      title: true,
+      hidden: true,
+    },
+     {
+      name: 'parent_cli',
+      label: 'Attaché à',
+      col: 'parent_cli.cli_lastname',
+      fDisplay: (item) => {return getFullName(item.parent_cli);},
+      size: '7',
+      mob_size: '18',
+      title: true,
       sortable: true,
       filterable: { type: 'text' },
-      title: true,
     },
     {
       name: 'adress',
@@ -132,7 +145,7 @@ export const getCols = ({ props }) => {
       mob_size: '0',
       sortable: true,
       filterable: {
-        col: 'client_categery.clic_id',
+        col: 'client_category.clic_id',
         type: 'select',
         options: clientCategoryAsOptions(props.clientCategory.items),
       },

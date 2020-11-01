@@ -18,7 +18,7 @@ export function changeSetting(main, setting, value) {
     const promise = new Promise((resolve, reject) => {
       const settings = getState().auth.settings;
       let config = JSON.parse(JSON.stringify(settings));
-      console.log(config);
+      //console.log(config);
       if (!config[main]) {
         config[main] = {};
       }
@@ -29,7 +29,7 @@ export function changeSetting(main, setting, value) {
         config_type: 'settings',
       };
       let args = getJsonApi(datas);
-      console.log(args);
+      //console.log(args);
       const doRequest = freeAssoApi.post('/v1/sso/update-config', args);
       doRequest.then(
         (res) => {

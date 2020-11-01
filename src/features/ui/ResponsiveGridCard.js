@@ -38,19 +38,19 @@ export default class ResponsiveGridCard extends Component {
     }
     switch (this.props.size) {
       case 'lg': {
-        classname = 'col-36';
+        classname = 'col-xs-w36';
         break;
       }
       case 'md': {
-        classname = 'col-lg-18 col-md-36 col-sm-36';
+        classname = 'col-lg-w18 col-md-w36 col-sm-w36';
         break;
       }
       case 'sm': {
-        classname = 'col-lg-9 col-md-18 col-sm-18';
+        classname = 'col-lg-w9 col-md-w18 col-sm-w18';
         break;
       }
       default: {
-        classname = 'col-lg-9 col-md-18 col-sm-18';
+        classname = 'col-lg-w9 col-md-w18 col-sm-w18';
         break;
       }
     }

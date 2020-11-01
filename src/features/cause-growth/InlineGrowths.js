@@ -121,7 +121,7 @@ export class InlineGrowths extends Component {
       return (
         <div className="cause-inline-growths">
           <div className="row">
-            <div className="col-sm-18">
+            <div className="col-sm-w18">
               <div className="inline-list text-center">
                 <div
                   className={classnames(
@@ -130,22 +130,22 @@ export class InlineGrowths extends Component {
                   )}
                   key="cause-inline-growths"
                 >
-                  <div className="col-16 col-first">
+                  <div className="col-xs-w16 col-first">
                     <span>Date</span>
                   </div>
-                  <div className="col-8">
+                  <div className="col-xs-w8">
                     <span>Poids</span>
                   </div>
-                  <div className="col-8">
+                  <div className="col-xs-w8">
                     <span>Taille</span>
                   </div>
-                  <div className="col-4">
+                  <div className="col-xs-w4">
                     <span></span>
                   </div>
                 </div>
                 {this.state.emptyItem && (
                   <div classname="row">
-                    <div classname="col-sm-36">
+                    <div classname="col-sm-w36">
                       <InlineGrowthForm
                         oddEven={counter++}
                         cause={this.state.cause}
@@ -167,10 +167,10 @@ export class InlineGrowths extends Component {
                         )}
                         key={growth.id}
                       >
-                        <div className="col-16 col-first">{intlDateTime(growth.grow_ts, true)}</div>
-                        <div className="col-8">{growth.grow_weight}</div>
-                        <div className="col-8">{growth.grow_height}</div>
-                        <div className="col-4 text-right">
+                        <div className="col-xs-w16 col-first">{intlDateTime(growth.grow_ts, true)}</div>
+                        <div className="col-xs-w8">{growth.grow_weight}</div>
+                        <div className="col-xs-w8">{growth.grow_height}</div>
+                        <div className="col-xs-w4 text-right">
                         {this.state.flipped && this.state.flipped === growth.id && 
                           <div className="btn-group btn-group-sm" role="group" aria-label="...">
                             <div className="btn-group" role="group" aria-label="First group">

@@ -88,7 +88,7 @@ function Form(props) {
     >
       <InputHidden name="id" id="id" value={values.id} />
       <div className="row">
-        <div className="col-8">
+        <div className="col-xs-w8">
           <InputMask
             label="N° boucle"
             name="cau_code"
@@ -105,7 +105,7 @@ function Form(props) {
             help={validated ? false : 'Format : ' + regPlaceholder}
           />
         </div>
-        <div className="col-10">
+        <div className="col-xs-w10">
           <InputSelect
             label="Race"
             name="cause_type.id"
@@ -118,7 +118,7 @@ function Form(props) {
             error={getErrorMessage('cause_type')}
           />
         </div>
-        <div className="col-18">
+        <div className="col-xs-w18">
           <SiteInputPicker
             label="Site"
             key="site"
@@ -135,7 +135,7 @@ function Form(props) {
       {values.currentTab === '1' && (
         <div>
           <div className="row">
-            <div className="col-12">
+            <div className="col-xs-w12">
               <InputText
                 label="Nom"
                 key="cau_name"
@@ -146,7 +146,7 @@ function Form(props) {
                 error={getErrorMessage('cau_name')}
               />
             </div>
-            <div className="col-8">
+            <div className="col-xs-w8">
               <InputSelect
                 label="M/F"
                 name="cau_sex"
@@ -158,7 +158,7 @@ function Form(props) {
                 error={getErrorMessage('cau_sex')}
               />
             </div>
-            <div className="col-16">
+            <div className="col-xs-w16">
               <ClientInputPicker
                 label="Eleveur"
                 key="raiser"
@@ -171,7 +171,7 @@ function Form(props) {
             </div>
           </div>
           <div className="row">
-            <div className="col-6">
+            <div className="col-xs-w6">
               <InputSpin
                 label="Année de naissance"
                 name="cau_year"
@@ -184,7 +184,7 @@ function Form(props) {
                 error={getErrorMessage('cau_year')}
               />
             </div>
-            <div className="col-6">
+            <div className="col-xs-w6">
               <InputData
                 name="cau_string_1"
                 value={values.cau_string_1}
@@ -194,7 +194,7 @@ function Form(props) {
                 labelTop={true}
               />
             </div>
-            <div className="col-12">
+            <div className="col-xs-w12">
               <CauseInputPicker
                 label="Père"
                 name="parent1"
@@ -205,7 +205,7 @@ function Form(props) {
                 filters={{ cau_sex: 'M' }}
               />
             </div>
-            <div className="col-12">
+            <div className="col-xs-w12">
               <CauseInputPicker
                 label="Mère"
                 name="parent2"
@@ -218,7 +218,7 @@ function Form(props) {
             </div>
           </div>
           <div className="row">
-            <div className="col-sm-2">
+            <div className="col-sm-w2">
               <InputCheckbox
                 label="Attente"
                 name="cau_waiting"
@@ -227,7 +227,7 @@ function Form(props) {
                 onChange={handleChange}
               />
             </div>
-            <div className="col-10">
+            <div className="col-xs-w10">
               <InputDate
                 label="Entrée"
                 name="cau_from"
@@ -238,7 +238,7 @@ function Form(props) {
                 position="top-start"
               />
             </div>
-            <div className="col-10">
+            <div className="col-xs-w10">
               <InputDate
                 label="Sortie"
                 name="cau_to"
@@ -249,7 +249,7 @@ function Form(props) {
                 position="top-start"
               />
             </div>
-            <div className="col-14">
+            <div className="col-xs-w14">
               {values.cau_to !== null && values.cau_to !== '' && (
                 <InputData
                   name="cau_string_3"
@@ -263,7 +263,7 @@ function Form(props) {
             </div>
           </div>
           <div className="row">
-            <div className="col-sm-2">
+            <div className="col-sm-w2">
               <InputCheckbox
                 label="Conforme"
                 name="cau_conform"
@@ -272,7 +272,7 @@ function Form(props) {
                 onChange={handleChange}
               />
             </div>
-            <div className="col-20">
+            <div className="col-xs-w20">
               {!values.cau_conform && (
                 <InputText
                   label="Commentaire conformité"

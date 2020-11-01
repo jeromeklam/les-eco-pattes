@@ -8,7 +8,7 @@ export default class PageNotFound extends Component {
       <div className="ui-page-not-found text-center mt-5">
         <div class="container">
           <div class="row">
-            <div class="col-md-36 text-center">
+            <div class="col-md-w36 text-center">
               <div class="error-template">
                 <h1>Oops!</h1>
                 <h2>404 Page non trouvée !</h2>

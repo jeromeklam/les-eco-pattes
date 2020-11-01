@@ -25,7 +25,7 @@ function Form(props) {
     >
       <InputHidden name="id" id="id" value={values.id} />
       <div className="row">
-        <div className="col-sm-36">
+        <div className="col-sm-w36">
           <InputText
             label="Nom"
             name="sitt_name"
@@ -38,7 +38,7 @@ function Form(props) {
         </div>
       </div>
       <div className="row">
-        <div className="col-sm-36">
+        <div className="col-sm-w36">
           <InputText
             label="Format de saisie N° EDE"
             name="sitt_pattern"
@@ -50,7 +50,7 @@ function Form(props) {
         </div>
       </div>
       <div className="row">
-        <div className="col-sm-36">
+        <div className="col-sm-w36">
           <InputText
             label="Masque de saisie"
             name="sitt_mask"

@@ -186,7 +186,7 @@ export class InputPicker extends Component {
           <Modify loader={false} modal={true} cliId={this.state.item.id} onClose={this.onClose} />
         )}
         {this.state.add && (
-          <Create loader={false} modal={true} cliId={this.state.item.id} onClose={this.onClose} onCreate={this.onCreate} />
+          <Create loader={false} modal={true} onClose={this.onClose} onCreate={this.onCreate} />
         )}
       </div>
     );

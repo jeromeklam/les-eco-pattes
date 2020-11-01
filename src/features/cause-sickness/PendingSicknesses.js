@@ -160,7 +160,7 @@ export class PendingSicknesses extends Component {
             {this.props.causeSickness.loadPendingsPending && (
               <div className="inline-list">
                 <div className="row row-line">
-                  <div className="col-36 text-center">
+                  <div className="col-xs-w36 text-center">
                     <CenteredLoading3Dots />
                   </div>
                 </div>

@@ -87,14 +87,14 @@ export class DashboardToolbar extends Component {
     return (
       <div className="dashboard-dashboard-toolbar">
         <div className="row row-short">
-          <div className="col-18 text-left">
+          <div className="col-xs-w18 text-left">
             <div className="nav justify-content-left">
               <div className="nav-item">
                 <HighlightToggler className="text-light" theme="DASHBOARD" />
               </div>
             </div>
           </div>
-          <div className="col-18 text-right">
+          <div className="col-xs-w18 text-right">
             <div className="nav justify-content-end">
               <div className="nav-item">
                 {!this.state.editable && (

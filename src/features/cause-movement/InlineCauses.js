@@ -157,19 +157,19 @@ export class InlineCauses extends Component {
           <div className="cause-inline-movements">
             <div className="inline-list">
               <div className={classnames('row row-title row-line', (counter++ % 2 !== 1) ? 'row-odd' : 'row-even')} key="cause-inline-movements">
-                <div className="col-sm-7 col-first">
+                <div className="col-sm-w7 col-first">
                   <span>N° boucle</span>
                 </div>
-                <div className="col-sm-7">
+                <div className="col-sm-w7">
                   <span>Race</span>
                 </div>
-                <div className="col-sm-3">
+                <div className="col-sm-w3">
                   <span>Sexe</span>
                 </div>
-                <div className="col-sm-9">
+                <div className="col-sm-w9">
                   <span>Notes</span>
                 </div>
-                <div className="col-sm-10">
+                <div className="col-sm-w10">
                   <span>Statut</span>
                 </div>
               </div>
@@ -177,12 +177,12 @@ export class InlineCauses extends Component {
                 return (
                   <HoverObserver onMouseEnter={() => {this.mouseEnter(movement.id)}} onMouseLeave={this.mouseLeave}>
                     <div className={classnames('row row-line', (counter++ % 2 !== 1) ? 'row-odd' : 'row-even')} key={movement.id}>
-                      <div className="col-sm-7 col-first">{movement.cause.cau_code}</div>
-                      <div className="col-sm-7">{getCauseTypeLabel(this.props.causeType.items, movement.cause.cause_type.id)}</div>
-                      <div className="col-sm-3">{getSexlabel(movement.cause.cau_sex)}</div>
-                      <div className="col-sm-9">{movement.camv_comment}</div>
-                      <div className="col-sm-5">{statusLabel(movement.camv_status)}</div>
-                      <div className="col-sm-5 text-right col-last">
+                      <div className="col-sm-w7 col-first">{movement.cause.cau_code}</div>
+                      <div className="col-sm-w7">{getCauseTypeLabel(this.props.causeType.items, movement.cause.cause_type.id)}</div>
+                      <div className="col-sm-w3">{getSexlabel(movement.cause.cau_sex)}</div>
+                      <div className="col-sm-w9">{movement.camv_comment}</div>
+                      <div className="col-sm-w5">{statusLabel(movement.camv_status)}</div>
+                      <div className="col-sm-w5 text-right col-last">
                       {this.state.flipped && this.state.flipped === movement.id && 
                         <div className="btn-group btn-group-sm" role="group" aria-label="...">
                           {movement.camv_status === 'WAIT' && (
@@ -225,7 +225,7 @@ export class InlineCauses extends Component {
               </ResponsiveConfirm>
             </div>
             <div className="row row-new-movement">
-              <div className="col-36 p-3">
+              <div className="col-xs-w36 p-3">
                 {emptyItem && (
                   <InlineCauseForm
                     movement={this.state.movement}
@@ -242,7 +242,7 @@ export class InlineCauses extends Component {
         return (
           <div className="cause-inline-movements">
             <div className="row row-new-movement">
-              <div className="col-36 pt-2">
+              <div className="col-xs-w36 pt-2">
                 {emptyItem && (
                   <InlineCauseForm
                     movement={this.props.causeMovement.movement}

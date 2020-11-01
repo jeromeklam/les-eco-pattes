@@ -115,7 +115,7 @@ export class List extends Component {
     return (
       <div>
         <ResponsiveList
-          title="Types de personne"
+          title="Types de contact"
           cols={cols}
           items={items}
           mainCol="clit_name"

@@ -27,7 +27,7 @@ function Form(props) {
       <InputHidden name="id" id="id" value={values.id} />
       <div className="card-body">
         <div className="row">
-          <div className="col-sm-14">
+          <div className="col-sm-w14">
             <InputText
               label="Nom"
               name="item_name"
@@ -37,7 +37,7 @@ function Form(props) {
               error={getErrorMessage('item_name')}
             />
           </div>
-          <div className="col-sm-8">
+          <div className="col-sm-w8">
             <InputSelect
               label="Type"
               name="item_stock"
@@ -48,7 +48,7 @@ function Form(props) {
               error={getErrorMessage('item_stock')}
             />
           </div>
-          <div className="col-sm-8">
+          <div className="col-sm-w8">
             <InputSelect
               label="Type"
               name="item_type"
@@ -59,7 +59,7 @@ function Form(props) {
               error={getErrorMessage('item_type')}
             />
           </div>
-          <div className="col-sm-6">
+          <div className="col-sm-w6">
             <InputText
               label="Code"
               name="item_code"
@@ -71,7 +71,7 @@ function Form(props) {
           </div>
         </div>
         <div className="row">
-          <div className="col-14">
+          <div className="col-xs-w14">
             <ClientInputPicker
               label="Fournisseur par défaut"
               key="default_provider"
@@ -81,7 +81,7 @@ function Form(props) {
               error={getErrorMessage('default_provider')}
             />
           </div>
-          <div className="col-8">
+          <div className="col-xs-w8">
             <InputDate
               label="Entrée"
               name="item_from"
@@ -91,7 +91,7 @@ function Form(props) {
               error={getErrorMessage('item_from')}
             />
           </div>
-          <div className="col-8">
+          <div className="col-xs-w8">
             <InputDate
               label="Sortie"
               name="item_to"
@@ -101,7 +101,7 @@ function Form(props) {
               labelTop={true}
             />
           </div>
-          <div className="col-6">
+          <div className="col-xs-w6">
             <InputCheckbox
               label="Dangereux"
               name="item_dangerous"
@@ -113,7 +113,7 @@ function Form(props) {
           </div>
         </div>
         <div className="row">
-          <div className="col-sm-36">
+          <div className="col-sm-w36">
             <InputTextarea
               label="Description"
               name="item_desc"

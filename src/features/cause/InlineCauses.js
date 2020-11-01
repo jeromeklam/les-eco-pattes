@@ -114,7 +114,7 @@ export default class InlineCauses extends Component {
               )}
               key="cause-inline-causes"
             >
-              <div className="col-sm-1 col-first">
+              <div className="col-sm-w1 col-first">
                 <div
                   className={classnames(
                     'inline-select-line border border-secondary mr-2',
@@ -125,32 +125,32 @@ export default class InlineCauses extends Component {
                   <div className="inline-select-line-inner bg-secondary" />
                 </div>
               </div>
-              <div className="col-sm-6">
+              <div className="col-sm-w6">
                 <span>N° boucle</span>
               </div>
-              <div className="col-sm-6">
+              <div className="col-sm-w6">
                 <span>Race</span>
               </div>
-              <div className="col-sm-4">
+              <div className="col-sm-w4">
                 <span>Année</span>
               </div>
-              <div className="col-sm-3">
+              <div className="col-sm-w3">
                 <span className="pr-2">Sexe</span>
               </div>
               {(this.state.mode === 'site' ||
                 (this.state.mode === 'cause' && this.state.item.cau_sex === 'M')) && (
-                <div className="col-sm-6">
+                <div className="col-sm-w6">
                   <span className="pr-2">Mère</span>
                 </div>
               )}
               {(this.state.mode === 'site' ||
                 (this.state.mode === 'cause' && this.state.item.cau_sex === 'F')) && (
-                <div className="col-sm-6">
+                <div className="col-sm-w6">
                   <span className="pr-2">Père</span>
                 </div>
               )}
               {this.state.mode === 'site' &&
-                <div className="col-sm-4 text-right">
+                <div className="col-sm-w4 text-right">
                   <div className="dropdown">
                     <button
                       className="btn btn-inline text-secondary"
@@ -233,7 +233,7 @@ export default class InlineCauses extends Component {
                 className={classnames('row row-line', counter++ % 2 !== 1 ? 'row-odd' : 'row-even')}
                 key={cause.id}
               >
-                <div className="col-sm-1 col-first">
+                <div className="col-sm-w1 col-first">
                   <div
                     className={classnames(
                       'inline-select-line border border-secondary mr-2',
@@ -244,27 +244,27 @@ export default class InlineCauses extends Component {
                     <div className="inline-select-line-inner bg-secondary" />
                   </div>
                 </div>
-                <div className="col-sm-6">
+                <div className="col-sm-w6">
                   <span>{cause.cau_code}</span>
                 </div>
-                <div className="col-sm-6">
+                <div className="col-sm-w6">
                   <span>{cause.cause_type.caut_name}</span>
                 </div>
-                <div className="col-sm-4">
+                <div className="col-sm-w4">
                   <span>{cause.cau_year}</span>
                 </div>
-                <div className="col-sm-3">
+                <div className="col-sm-w3">
                   <span className="pr-2">{getSexlabel(cause.cau_sex, true, 'text-secondary')}</span>
                 </div>
                 {(this.state.mode === 'site' ||
                   (this.state.mode === 'cause' && this.state.item.cau_sex === 'M')) && (
-                  <div className="col-sm-6">
+                  <div className="col-sm-w6">
                     <span className="pr-2">{cause.parent2 && cause.parent2.cau_code}</span>
                   </div>
                 )}
                 {(this.state.mode === 'site' ||
                   (this.state.mode === 'cause' && this.state.item.cau_sex === 'F')) && (
-                  <div className="col-sm-6">
+                  <div className="col-sm-w6">
                     <span className="pr-2">{cause.parent1 && cause.parent1.cau_code}</span>
                   </div>
                 )}

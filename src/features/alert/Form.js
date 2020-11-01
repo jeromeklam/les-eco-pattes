@@ -99,7 +99,7 @@ function Form(props) {
       modal={props.modal || false}
     >
       <div className="row">
-        <div className="col-9">
+        <div className="col-xs-w9">
           <InputDatetime
             label="Du"
             name="alert_from"
@@ -110,7 +110,7 @@ function Form(props) {
             error={getErrorMessage('alert_from')}
           />
         </div>
-        <div className="col-9">
+        <div className="col-xs-w9">
           <InputDatetime
             label="au"
             name="alert_to"
@@ -121,7 +121,7 @@ function Form(props) {
             error={getErrorMessage('alert_to')}
           />
         </div>
-        <div className="col-6">
+        <div className="col-xs-w6">
           <InputSelect
             label="Priorité"
             id="alert_priority"
@@ -133,7 +133,7 @@ function Form(props) {
             error={getErrorMessage('alert_priority')}
           />
         </div>
-        <div className="col-3">
+        <div className="col-xs-w3">
           <InputCheckbox
             label="Actif"
             name="alert_activ"
@@ -142,7 +142,7 @@ function Form(props) {
             onChange={handleChange}
           />
         </div>
-        <div className="col-9">
+        <div className="col-xs-w9">
           <InputDate
             label="Echéance"
             name="alert_deadline"
@@ -157,7 +157,7 @@ function Form(props) {
       {values.currentTab === '1' && (
         <div>
           <div className="row">
-            <div className="col-27">
+            <div className="col-xs-w27">
               <InputText
                 label="Libellé"
                 name="alert_title"
@@ -169,7 +169,7 @@ function Form(props) {
                 error={getErrorMessage('alert_title')}
               />
             </div>
-            <div className="col-9">
+            <div className="col-xs-w9">
               <InputDatetime
                 label="Réalisée le"
                 name="alert_done_ts"
@@ -181,7 +181,7 @@ function Form(props) {
             </div>
           </div>
           <div className="row">
-            <div className="col-7">
+            <div className="col-xs-w7">
               <InputSelect
                 label="Elément lié"
                 id="alert_object_name"
@@ -193,7 +193,7 @@ function Form(props) {
                 error={getErrorMessage('alert_object_name')}
               />
             </div>
-            <div className="col-20">
+            <div className="col-xs-w20">
               {
                 {
                   FreeAsso_Cause: (
@@ -247,7 +247,7 @@ function Form(props) {
                 }[values.alert_object_name]
               }
             </div>
-            <div className="col-9">
+            <div className="col-xs-w9">
               <UserInputPicker
                 label="Utilisateur"
                 key="user"
@@ -260,7 +260,7 @@ function Form(props) {
             </div>
           </div>
           <div className="row">
-            <div className="col-36">
+            <div className="col-xs-w36">
               <InputTextarea
                 label="Commentaires"
                 name="alert_done_text"
@@ -276,7 +276,7 @@ function Form(props) {
       {values.currentTab === '2' && (
         <div>
           <div className="row">
-            <div className="col-26">
+            <div className="col-xs-w26">
               <InputCheckList
                 label=""
                 name="alert_checklist"
@@ -291,7 +291,7 @@ function Form(props) {
       {values.currentTab === '3' && (
         <div>
           <div className="row">
-            <div className="col-36">
+            <div className="col-xs-w36">
               <InputTextarea
                 label="Description"
                 name="alert_text"
@@ -307,7 +307,7 @@ function Form(props) {
       {values.currentTab === '4' && (
         <div>
           <div className="row">
-            <div className="col-5">
+            <div className="col-xs-w5">
               <InputSelect
                 label="Récurrence"
                 id="alert_recur_type"
@@ -320,7 +320,7 @@ function Form(props) {
                 error={getErrorMessage('alert_recur_type')}
               />
             </div>
-            <div className="col-5">
+            <div className="col-xs-w5">
               {libRecur !== '' && (
                 <InputSpin
                   label={libRecur}
@@ -339,7 +339,7 @@ function Form(props) {
             </div>
           </div>
           <div className="row">
-            <div className="col-sm-18">
+            <div className="col-sm-w18">
               <InputSelect
                 label="Premier rappel avant échéance"
                 name="alert_email_1"
@@ -352,7 +352,7 @@ function Form(props) {
             </div>
           </div>
           <div className="row">
-            <div className="col-sm-18">
+            <div className="col-sm-w18">
               <InputSelect
                 label="Deuxième rappel avant échéance"
                 name="alert_email_2"

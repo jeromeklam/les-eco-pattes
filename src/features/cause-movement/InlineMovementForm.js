@@ -22,7 +22,7 @@ export default function InlineMovementForm(props) {
   return (
     <form className="inline-form">
       <div className="row">
-        <div className="col-10 col-first">
+        <div className="col-xs-w10 col-first">
           <InputPickerSite
             label="De"
             key="from_site"
@@ -37,7 +37,7 @@ export default function InlineMovementForm(props) {
             error={getErrorMessage('camv_site_from_id')}
           />
         </div>
-        <div className="col-10">
+        <div className="col-xs-w10">
           <InputDate
             label="Départ"
             name="camv_start"
@@ -51,7 +51,7 @@ export default function InlineMovementForm(props) {
             error={getErrorMessage('camv_start')}
           />
         </div>
-        <div className="col-13">
+        <div className="col-xs-w13">
           <InputText
             label="Notes"
             name="camv_comment"
@@ -64,12 +64,12 @@ export default function InlineMovementForm(props) {
             onChange={handleChange}
           />
         </div>
-        <div className="col-3 my-auto text-right">
+        <div className="col-xs-w3 my-auto text-right">
           <button type="button" className="btn btn-inline btn-primary" onClick={handleSubmit}>
             <SimpleValidIcon className="inline-action text-light" />
           </button>
         </div>
-        <div className="col-10 col-first">
+        <div className="col-xs-w10 col-first">
           <InputPickerSite
             label="Vers"
             key="to_site"
@@ -84,7 +84,7 @@ export default function InlineMovementForm(props) {
             error={getErrorMessage('camv_site_to_id')}
           />
         </div>
-        <div className="col-10">
+        <div className="col-xs-w10">
           <InputDate
             label="Arrivée"
             name="camv_to"
@@ -98,7 +98,7 @@ export default function InlineMovementForm(props) {
             error={getErrorMessage('camv_to')}
           />
         </div>
-        <div className="col-13">
+        <div className="col-xs-w13">
           <InputSelect
             label="Statut"
             name="camv_status"

@@ -16,7 +16,7 @@ function Form(props) {
   return (
     <ResponsiveModalOrForm
       className="m-5"
-      size="lg"
+      size="md"
       modal={true}
       title="Race"
       onSubmit={handleSubmit}
@@ -26,7 +26,7 @@ function Form(props) {
       <div className="card-body">
         <InputHidden name="id" id="id" value={values.id} />
         <div className="row">
-          <div className="col-sm-18">
+          <div className="col-sm-w18">
             <InputText
               label="Nom"
               name="caut_name"
@@ -37,7 +37,7 @@ function Form(props) {
               error={getErrorMessage('caut_name')}
             />
           </div>
-          <div className="col-sm-18">
+          <div className="col-sm-w18">
             <InputSelect
               label="Espèce"
               name="cause_main_type.id"
@@ -49,7 +49,7 @@ function Form(props) {
           </div>
         </div>
         <div className="row">
-          <div className="col-sm-36">
+          <div className="col-sm-w36">
             <InputText
               label="Expression de saisie du n° de boucle"
               name="caut_pattern"
@@ -61,7 +61,7 @@ function Form(props) {
           </div>
         </div>
         <div className="row">
-          <div className="col-sm-36">
+          <div className="col-sm-w36">
             <InputText
               label="Masque de saisie du n° de boucle"
               name="caut_mask"
@@ -73,7 +73,7 @@ function Form(props) {
           </div>
         </div>
         <div className="row">
-          <div className="col-sm-12">
+          <div className="col-sm-w12">
             <InputText
               label="Poids maximum (kg)"
               name="caut_max_weight"
@@ -83,7 +83,7 @@ function Form(props) {
               error={getErrorMessage('caut_max_weight')}
             />
           </div>
-          <div className="col-sm-12">
+          <div className="col-sm-w12">
             <InputText
               label="Taille maximum (cm)"
               name="caut_max_height"
@@ -93,7 +93,7 @@ function Form(props) {
               error={getErrorMessage('caut_max_height')}
             />
           </div>
-          <div className="col-sm-12">
+          <div className="col-sm-w12">
             <InputText
               label="Fréquence de contrôle (mois)"
               name="caut_growth_freq"

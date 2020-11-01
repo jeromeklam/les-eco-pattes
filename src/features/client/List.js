@@ -152,7 +152,7 @@ export class List extends Component {
     const quickSearch = (
       <ResponsiveQuickSearch
         name="quickSearch"
-        label="Recherche nom, prénom"
+        label="Recherche Nom, Type, Catégorie"
         quickSearch={search}
         onSubmit={this.onQuickSearch}
         onChange={this.onSearchChange}
@@ -162,7 +162,7 @@ export class List extends Component {
     return (
       <div>
         <ResponsiveList
-          title="Personnes"
+          title="Contacts" 
           cols={cols}
           items={items}
           quickSearch={quickSearch}

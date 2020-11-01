@@ -87,10 +87,10 @@ export default class InputImage extends Component {
             <div className="card-header">
               {imgOk ? (
                 <div className="row">
-                  <div className="col-20">
+                  <div className="col-xs-w20">
                     <span>{this.props.title}</span>
                   </div>
-                  <div className="col-16 text-right">
+                  <div className="col-xs-w16 text-right">
                     <div className="btn-group-sm">
                       <button type="button" className="btn btn-inline btn-secondary">
                         <Dropzone

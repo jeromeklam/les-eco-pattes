@@ -217,7 +217,7 @@ export class DefaultPage extends Component {
       <div>
         <div className="agenda-default-page-header">
           <div className="row row-short">
-            <div className="col-18 text-left">
+            <div className="col-xs-w18 text-left">
               <div className="nav justify-content-left">
                 <div className="nav-item">
                   <button
@@ -264,7 +264,7 @@ export class DefaultPage extends Component {
                 </div>
               </div>
             </div>
-            <div className="col-18 text-right">
+            <div className="col-xs-w18 text-right">
               <div className="nav justify-content-end">
                 <div className="nav-item">
                   <button className="btn btn-primary text-light" onClick={this.onAddEvent}>

@@ -20,7 +20,7 @@ export default function InlineGrowthForm(props) {
   );
   return (
     <div className={classnames('row row-line row-new', props.oddEven % 2 !== 1 ? 'row-odd' : 'row-even')}>
-      <div className="col-16 my-auto col-first">
+      <div className="col-xs-w16 my-auto col-first">
         <InputDate
           label=""
           name="grow_ts"
@@ -34,7 +34,7 @@ export default function InlineGrowthForm(props) {
           error={getErrorMessage('grow_ts')}
         />
       </div>
-      <div className="col-8 my-auto">
+      <div className="col-xs-w8 my-auto">
         <InputText
           label=""
           name="grow_weight"
@@ -47,7 +47,7 @@ export default function InlineGrowthForm(props) {
           onChange={handleChange}
         />
       </div>
-      <div className="col-8 my-auto">
+      <div className="col-xs-w8 my-auto">
         <InputText
           label=""
           name="grow_height"
@@ -60,7 +60,7 @@ export default function InlineGrowthForm(props) {
           onChange={handleChange}
         />
       </div>
-      <div className="col-4 my-auto text-right">
+      <div className="col-xs-w4 my-auto text-right">
         <button type="button" className="btn btn-inline btn-primary" onClick={handleSubmit}>
           <SimpleValidIcon className="inline-action text-light" />
         </button>

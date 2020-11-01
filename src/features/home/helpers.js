@@ -176,14 +176,14 @@ export const appMenu = [
       },
       {
         icon: null,
-        label: 'Catégories de personne',
+        label: 'Catégories de contact',
         url: '/client-category',
         role: 'NAV',
         position: 5,
       },
       {
         icon: null,
-        label: 'Types de personne',
+        label: 'Types de contact',
         url: '/client-type',
         role: 'NAV',
         position: 6,

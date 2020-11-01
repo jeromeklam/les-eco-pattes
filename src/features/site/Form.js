@@ -119,7 +119,7 @@ function Form(props) {
     >
       <InputHidden name="id" id="id" value={values.id} />
       <div className="row">
-        <div className="col-sm-12">
+        <div className="col-sm-w12">
           <InputText
             label="Nom"
             required={true}
@@ -130,7 +130,7 @@ function Form(props) {
             error={getErrorMessage('site_name')}
           />
         </div>
-        <div className="col-sm-9">
+        <div className="col-sm-w9">
           <InputMask
             mask={
               values.site_type && values.site_type.sitt_mask ? values.site_type.sitt_mask : '[*]'
@@ -144,7 +144,7 @@ function Form(props) {
             help={validated ? false : 'Format : ' + regPlaceholder}
           />
         </div>
-        <div className="col-15">
+        <div className="col-xs-w15">
           <SiteInputPicker
             label="Site principal"
             key="parent_site"
@@ -160,7 +160,7 @@ function Form(props) {
       {values.currentTab === '1' && (
         <div>
           <div className="row">
-            <div className="col-sm-24">
+            <div className="col-sm-w24">
               <InputText
                 label="Adresse"
                 name="site_address1"
@@ -170,7 +170,7 @@ function Form(props) {
                 error={getErrorMessage('site_address1')}
               />
             </div>
-            <div className="col-sm-10">
+            <div className="col-sm-w10">
               <InputSelect
                 label="Type"
                 id="site_type"
@@ -183,7 +183,7 @@ function Form(props) {
                 error={getErrorMessage('site_type')}
               />
             </div>
-            <div className="col-sm-2">
+            <div className="col-sm-w2">
               <InputCheckbox
                 label="Externe"
                 name="site_extern"
@@ -194,7 +194,7 @@ function Form(props) {
             </div>
           </div>
           <div className="row">
-            <div className="col-sm-6">
+            <div className="col-sm-w6">
               <InputText
                 label="CP"
                 name="site_cp"
@@ -204,7 +204,7 @@ function Form(props) {
                 error={getErrorMessage('site_cp')}
               />
             </div>
-            <div className="col-sm-18">
+            <div className="col-sm-w18">
               <InputText
                 label="Commune"
                 name="site_town"
@@ -216,7 +216,7 @@ function Form(props) {
             </div>
           </div>
           <div className="row">
-            <div className="col-sm-6">
+            <div className="col-sm-w6">
               <InputText
                 label="Surface"
                 name="site_area"
@@ -225,7 +225,7 @@ function Form(props) {
                 error={getErrorMessage('site_area')}
               />
             </div>
-            <div className="col-sm-18">
+            <div className="col-sm-w18">
               <InputText
                 label="Parcelles"
                 name="site_plots"
@@ -236,7 +236,7 @@ function Form(props) {
             </div>
           </div>
           <div className="row">
-            <div className="col-sm-36">
+            <div className="col-sm-w36">
               <ClientInputPicker
                 label="Propriétaire"
                 key="owner"
@@ -254,7 +254,7 @@ function Form(props) {
       {values.currentTab === '2' && (
         <div>
           <div className="row">
-            <div className="col-sm-18">
+            <div className="col-sm-w18">
               <InputDate
                 label="Début"
                 name="site_from"
@@ -265,7 +265,7 @@ function Form(props) {
                 position="top-start"
               />
             </div>
-            <div className="col-sm-18">
+            <div className="col-sm-w18">
               <InputDate
                 label="Fin"
                 name="site_to"
@@ -278,7 +278,7 @@ function Form(props) {
             </div>
           </div>
           <div className="row">
-            <div className="col-sm-36">
+            <div className="col-sm-w36">
               <InputTextarea
                 label="Complément de conformité"
                 name="site_conform_text"
@@ -289,7 +289,7 @@ function Form(props) {
             </div>
           </div>
           <div className="row">
-            <div className="col-sm-36">
+            <div className="col-sm-w36">
               <ClientInputPicker
                 label="Vétérinaire"
                 key="sanitary"
@@ -308,9 +308,9 @@ function Form(props) {
         <div className="row">
           {props.properties.map(oneProp => {
             let nameProp = 'site_' + oneProp;
-            let className = 'col-sm-10';
+            let className = 'col-sm-w10';
             if (oneProp.indexOf('bool') >= 0) {
-              className = 'col-sm-3';
+              className = 'col-sm-w3';
             }
             return (
               <div className={classnames(className)} key={nameProp}>
@@ -330,7 +330,7 @@ function Form(props) {
       )}
       {values.currentTab === '4' && (
         <div className="row">
-          <div className="col-sm-36">
+          <div className="col-sm-w36">
             <InputTextarea
               label="Observations"
               name="site_desc"

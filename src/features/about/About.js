@@ -14,7 +14,7 @@ class About extends Component {
       <ResponsiveContent className="about-about">
         <div className="container pt-5">
           <div className="jumbotron p-9 p-md-15 text-white rounded bg-primary">
-            <div className="col-md-36 px-0">
+            <div className="col-md-w36 px-0">
               <h1 className="display-32 font-italic">
                 <FormattedMessage
                   id="app.features.about.about.application"
@@ -32,8 +32,8 @@ class About extends Component {
             </div>
           </div>
           <div className="row mb-2">
-            <div className="col-md-18"><img src={logo} alt="" /></div>
-            <div className="col-md-18">
+            <div className="col-md-w18"><img src={logo} alt="" /></div>
+            <div className="col-md-w18">
               <div className="card flex-md-row mb-4 box-shadow h-md-250">
                 <div className="card-body d-flex flex-column align-items-start">
                   <strong className="d-inline-block mb-2 text-primary">
@@ -66,7 +66,7 @@ class About extends Component {
                     />
                   </p>
                   <div className="row">
-                    <div classNale="col-26"> 
+                    <div classNale="col-xs-w26"> 
                       <p className="card-text mb-auto">
                         <a href={"mailto:" + intl.formatMessage({ id: 'app.contact.email', defaultMessage: 'jeromeklam@free.fr' })}>
                           <FormattedMessage
@@ -82,7 +82,7 @@ class About extends Component {
                         />
                       </a>
                     </div>
-                    <div className="col-10">
+                    <div className="col-xs-w10">
                       <SocialIcon url="https://facebook.com/Les-éco-pattes-140387953308320/" />
                     </div>
                   </div>

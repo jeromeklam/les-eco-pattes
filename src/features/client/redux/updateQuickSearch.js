@@ -15,7 +15,8 @@ export function reducer(state, action) {
       filters.init(FILTER_MODE_OR, FILTER_OPER_LIKE);
       filters.setSearch(FILTER_SEARCH_QUICK)
       filters.addFilter('cli_firstname', action.value);
-      filters.addFilter('cli_lastname', action.value);
+      filters.addFilter('client_type.clit_name', action.value);
+      filters.addFilter('client_category.clic_name', action.value);
       return {
         ...state,
         filters: filters

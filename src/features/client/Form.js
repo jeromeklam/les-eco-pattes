@@ -1,18 +1,86 @@
 import React from 'react';
 import { injectIntl } from 'react-intl';
-import {
-  InputHidden,
-  InputText,
-  InputSelect,
-  InputCheckbox,
-} from 'react-bootstrap-front';
+import { normalizedObjectModeler } from 'jsonapi-front';
+import { InputHidden, InputText, InputSelect, InputCheckbox } from 'react-bootstrap-front';
 import useForm from '../ui/useForm';
 import { clientTypeAsOptions } from '../client-type/functions.js';
 import { clientCategoryAsOptions } from '../client-category/functions.js';
 import { countryAsOptions } from '../country/functions.js';
+import { InputPicker as ClientInputPicker } from '../client';
 import { ResponsiveModalOrForm, InputTextarea } from '../ui';
 
+const afterChange = (name, item) => {
+  switch (name) {
+    case 'client_type.id': {
+      item._veto = false;
+      if (item.client_type.id) {
+        if (findTypeCode(item.client_type.id, item._types) === 'VETERINAIRE') {
+          item._veto = true;
+        } else {
+          item.cli_sanit = false;
+          item.parent_cli = null;
+        }
+      }
+      break;
+    }
+    case 'client_category.id': {
+      item._private = false;
+      if (item.client_category) {
+        if (findCategoryCode(item.client_category.id, item._categories) === 'PARTICULIER') {
+          item._private = true;
+        }
+      }
+      break;
+    }
+    default: {
+      break;
+    }
+  }
+};
+
+const findTypeCode = (id, types) => {
+  if (!types) {
+    return '';
+  }
+  let code = '';
+  types.forEach(elem => {
+    if (elem.id === id) {
+      code = elem.clit_code;
+      return true;
+    }
+  });
+  return code;
+};
+
+const findCategoryCode = (id, categories) => {
+  if (!categories) {
+    return '';
+  }
+  let code = '';
+  categories.forEach(elem => {
+    if (elem.id === id) {
+      code = elem.clic_code;
+      return true;
+    }
+  });
+  return code;
+};
+
 function Form(props) {
+  props.item._types = normalizedObjectModeler(props.client_types, 'FreeAsso_ClientType');
+  props.item._veto = false;
+  if (props.item.client_type) {
+    if (findTypeCode(props.item.client_type.id, props.item._types) === 'VETERINAIRE') {
+      props.item._veto = true;
+    }
+  }
+  props.item._categories = normalizedObjectModeler(props.client_categories, 'FreeAsso_ClientCategory');
+  props.item._private = false;
+  if (props.item.client_category) {
+    if (findCategoryCode(props.item.client_category.id, props.item._categories) === 'PARTICULIER') {
+      props.item._private = true;
+    }
+  }
   const {
     values,
     handleChange,
@@ -20,10 +88,28 @@ function Form(props) {
     handleCancel,
     handleNavTab,
     getErrorMessage,
-  } = useForm(props.item, props.tab, props.onSubmit, props.onCancel, props.onNavTab, props.errors, props.intl);
+  } = useForm(
+    props.item,
+    props.tab,
+    props.onSubmit,
+    props.onCancel,
+    props.onNavTab,
+    props.errors,
+    props.intl,
+    afterChange,
+  );
+  let parent = '';
+  if (values.cli_sanit || values._private) {
+    if (values.cli_sanit) {
+      parent = 'Clinique';
+    } else {
+      parent = 'Famille';
+    } 
+  }
+  console.log('FK contact', values);
   return (
     <ResponsiveModalOrForm
-      title="Personne"
+      title="Contact"
       tab={values.currentTab}
       tabs={props.tabs}
       size="lg"
@@ -36,7 +122,7 @@ function Form(props) {
       <div className="card-body">
         <InputHidden name="id" id="id" value={values.id} />
         <div className="row">
-          <div className="col-sm-5">
+          <div className="col-sm-w5">
             <InputSelect
               label="Civilité"
               name="cli_gender"
@@ -48,11 +134,10 @@ function Form(props) {
                 { label: '', value: 'OTHER' },
                 { label: 'M.', value: 'MISTER' },
                 { label: 'Mme', value: 'MADAM' },
-                
               ]}
             />
           </div>
-          <div className="col-sm-9">
+          <div className="col-sm-w9">
             <InputText
               label="Nom"
               name="cli_lastname"
@@ -63,7 +148,7 @@ function Form(props) {
               error={getErrorMessage('cli_lastname')}
             />
           </div>
-          <div className="col-sm-9">
+          <div className="col-sm-w9">
             <InputText
               label="Prénom"
               name="cli_firstname"
@@ -73,7 +158,7 @@ function Form(props) {
               error={getErrorMessage('cli_firstname')}
             />
           </div>
-          <div className="col-md-9">
+          <div className="col-md-w7">
             <InputSelect
               label="Type"
               name="client_type.id"
@@ -83,13 +168,24 @@ function Form(props) {
               error={getErrorMessage('client_type')}
             />
           </div>
-          <div className="col-sm-1"></div>
-          <div className="col-sm-3">
+          <div className="col-md-w2">
+            {values._veto && (
+              <InputCheckbox
+                label="Sanitaire"
+                name="cli_sanit"
+                labelTop={true}
+                checked={values.cli_sanit === true}
+                onChange={handleChange}
+              />
+            )}
+          </div>
+          <div className="col-sm-w1"></div>
+          <div className="col-sm-w3">
             <InputCheckbox
               label="Actif"
-              name="cli_active"
+              name="cli_actif"
               labelTop={true}
-              checked={values.cli_active === true}
+              checked={values.cli_actif === true}
               onChange={handleChange}
             />
           </div>
@@ -98,7 +194,7 @@ function Form(props) {
         {values.currentTab === '1' && (
           <div>
             <div className="row">
-              <div className="col-sm-8">
+              <div className="col-sm-w8">
                 <InputText
                   label="Portable"
                   name="cli_phone_gsm"
@@ -107,7 +203,7 @@ function Form(props) {
                   onChange={handleChange}
                 />
               </div>
-              <div className="col-sm-15">
+              <div className="col-sm-w15">
                 <InputText
                   label="Email"
                   name="cli_email"
@@ -116,7 +212,7 @@ function Form(props) {
                   onChange={handleChange}
                 />
               </div>
-              <div className="col-md-9">
+              <div className="col-md-w9">
                 <InputSelect
                   label="Catégorie"
                   name="client_category.id"
@@ -128,7 +224,7 @@ function Form(props) {
               </div>
             </div>
             <div className="row">
-              <div className="col-md-36">
+              <div className="col-md-w36">
                 <InputText
                   label="Adresse"
                   name="cli_address1"
@@ -137,7 +233,7 @@ function Form(props) {
                   error={getErrorMessage('cli_address1')}
                 />
               </div>
-              <div className="col-md-36">
+              <div className="col-md-w36">
                 <InputText
                   label=""
                   name="cli_address2"
@@ -148,7 +244,7 @@ function Form(props) {
               </div>
             </div>
             <div className="row">
-              <div className="col-sm-8">
+              <div className="col-sm-w8">
                 <InputText
                   label="CP"
                   name="cli_cp"
@@ -157,7 +253,7 @@ function Form(props) {
                   error={getErrorMessage('cli_cp')}
                 />
               </div>
-              <div className="col-sm-17">
+              <div className="col-sm-w17">
                 <InputText
                   label="Commune"
                   name="cli_town"
@@ -166,7 +262,7 @@ function Form(props) {
                   error={getErrorMessage('cli_town')}
                 />
               </div>
-              <div className="col-sm-11">
+              <div className="col-sm-w11">
                 <InputSelect
                   label="Pays"
                   name="country.id"
@@ -177,12 +273,32 @@ function Form(props) {
                 />
               </div>
             </div>
+            <div>
+              {(parent !== '') && (
+                <div>
+                  <hr />
+                  <div className="row">
+                    <div className="col-md-w16">
+                      <ClientInputPicker
+                        label={parent}
+                        key="parent_cli"
+                        name="parent_cli"
+                        item={values.parent_cli || null}
+                        onChange={handleChange}
+                        error={getErrorMessage('parent_cli')}
+                        typeCodes={[parent.toUpperCase()]}
+                      />
+                    </div>
+                  </div>
+                </div>
+              )}
+            </div>
           </div>
         )}
         {values.currentTab === '2' && (
           <div>
             <div className="row">
-              <div className="col-md-8">
+              <div className="col-md-w8">
                 <InputText
                   label="Téléphone"
                   name="cli_phone_home"
@@ -191,7 +307,7 @@ function Form(props) {
                   error={getErrorMessage('cli_phone_home')}
                 />
               </div>
-              <div className="col-sm-15">
+              <div className="col-sm-w15">
                 <InputText
                   label="Email 2"
                   name="cli_email_2"
@@ -202,7 +318,7 @@ function Form(props) {
               </div>
             </div>
             <div className="row">
-              <div className="col-md-18">
+              <div className="col-md-w18">
                 <InputText
                   label="SIRET"
                   name="cli_siret"
@@ -211,7 +327,7 @@ function Form(props) {
                   onChange={handleChange}
                 />
               </div>
-              <div className="col-md-18">
+              <div className="col-md-w18">
                 <InputText
                   label="SIREN"
                   name="cli_siren"
@@ -222,7 +338,7 @@ function Form(props) {
               </div>
             </div>
             <div className="row">
-              <div className="col-md-36">
+              <div className="col-md-w36">
                 <InputTextarea
                   label="Commentaires"
                   name="cli_desc"
@@ -237,6 +353,6 @@ function Form(props) {
       </div>
     </ResponsiveModalOrForm>
   );
-};
+}
 
 export default injectIntl(Form);

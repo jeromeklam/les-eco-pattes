@@ -140,7 +140,7 @@ function Form(props) {
         {values.currentTab === '1' && (
           <div>
             <div className="row">
-              <div className="col-sm-12">
+              <div className="col-sm-w12">
                 <InputSelect
                   label="Type"
                   id="move_type"
@@ -154,7 +154,7 @@ function Form(props) {
                   error={getErrorMessage('move_type')}
                 />
               </div>
-              <div className="col-sm-8">
+              <div className="col-sm-w8">
                 <InputSelect
                   label="Statut"
                   id="move_status"
@@ -171,7 +171,7 @@ function Form(props) {
               </div>
             </div>
             <div className="row">
-              <div className="col-12">
+              <div className="col-xs-w12">
                 <InputText
                   label="Nom transporteur"
                   name="move_tr_name"
@@ -183,7 +183,7 @@ function Form(props) {
                   error={getErrorMessage('move_tr_name')}
                 />
               </div>
-              <div className="col-sm-12">
+              <div className="col-sm-w12">
                 <InputText
                   label="N° transporteur"
                   name="move_tr_num"
@@ -195,7 +195,7 @@ function Form(props) {
                   error={getErrorMessage('move_tr_num')}
                 />
               </div>
-              <div className="col-sm-12">
+              <div className="col-sm-w12">
                 <InputText
                   label="N° véhicule"
                   name="move_tr_num2"
@@ -213,7 +213,7 @@ function Form(props) {
         {values.currentTab === '3' && (
           <div>
             <div className="row">
-              <div className="col-sm-12">
+              <div className="col-sm-w12">
                 <SiteInputPicker
                   label="Site de départ"
                   key="from_site"
@@ -225,7 +225,7 @@ function Form(props) {
                   error={getErrorMessage('from_site')}
                 />
               </div>
-              <div className="col-sm-8">
+              <div className="col-sm-w8">
                 <InputDatetime
                   label="Date"
                   name="move_from"
@@ -237,7 +237,7 @@ function Form(props) {
                   error={getErrorMessage('move_from')}
                 />
               </div>
-              <div className="col-4">
+              <div className="col-xs-w4">
                 <InputCheckbox
                   label="Camion vide"
                   name="move_from_empty"
@@ -250,7 +250,7 @@ function Form(props) {
               </div>
             </div>
             <div className="row">
-              <div className="col-12">
+              <div className="col-xs-w12">
                 <InputSelect
                   label="Type"
                   id="move_from_type"
@@ -264,7 +264,7 @@ function Form(props) {
                   error={getErrorMessage('move_from_type')}
                 />
               </div>
-              <div className="col-sm-12">
+              <div className="col-sm-w12">
                 <InputText
                   label="N° exploitation / SIREN"
                   name="move_from_num"
@@ -276,7 +276,7 @@ function Form(props) {
                   error={getErrorMessage('move_from_num')}
                 />
               </div>
-              <div className="col-sm-12">
+              <div className="col-sm-w12">
                 <InputText
                   label="Nom"
                   name="move_from_name"
@@ -290,7 +290,7 @@ function Form(props) {
               </div>
             </div>
             <div className="row">
-              <div className="col-sm-12">
+              <div className="col-sm-w12">
                 <InputText
                   label="Adresse"
                   name="move_from_address"
@@ -302,7 +302,7 @@ function Form(props) {
                   error={getErrorMessage('move_from_address')}
                 />
               </div>
-              <div className="col-sm-12">
+              <div className="col-sm-w12">
                 <InputText
                   label="Code postal"
                   name="move_from_cp"
@@ -314,7 +314,7 @@ function Form(props) {
                   error={getErrorMessage('move_from_cp')}
                 />
               </div>
-              <div className="col-sm-12">
+              <div className="col-sm-w12">
                 <InputText
                   label="Ville"
                   name="move_from_town"
@@ -328,7 +328,7 @@ function Form(props) {
               </div>
             </div>
             <div className="row">
-              <div className="col-sm-9">
+              <div className="col-sm-w9">
                 <InputText
                   label="Nb Ovins (boucherie)"
                   name="move_from_number_1"
@@ -340,7 +340,7 @@ function Form(props) {
                   error={getErrorMessage('move_from_number_1')}
                 />
               </div>
-              <div className="col-sm-9">
+              <div className="col-sm-w9">
                 <InputText
                   label="Nb Ovins (reproducteur)"
                   name="move_from_number_2"
@@ -352,7 +352,7 @@ function Form(props) {
                   error={getErrorMessage('move_from_number_2')}
                 />
               </div>
-              <div className="col-sm-9">
+              <div className="col-sm-w9">
                 <InputText
                   label="Nb Caprins (boucherie)"
                   name="move_from_number_3"
@@ -364,7 +364,7 @@ function Form(props) {
                   error={getErrorMessage('move_from_number_3')}
                 />
               </div>
-              <div className="col-sm-9">
+              <div className="col-sm-w9">
                 <InputText
                   label="Nb Caprins (reproducteur)"
                   name="move_from_number_4"
@@ -382,7 +382,7 @@ function Form(props) {
         {values.currentTab === '4' && (
           <div>
             <div className="row">
-              <div className="col-sm-12">
+              <div className="col-sm-w12">
                 <SiteInputPicker
                   label="Site d'arrivée"
                   key="to_site"
@@ -394,7 +394,7 @@ function Form(props) {
                   error={getErrorMessage('to_site')}
                 />
               </div>
-              <div className="col-sm-8">
+              <div className="col-sm-w8">
                 <InputDatetime
                   label="Date"
                   name="move_to"
@@ -406,7 +406,7 @@ function Form(props) {
                   error={getErrorMessage('move_to')}
                 />
               </div>
-              <div className="col-12">
+              <div className="col-xs-w12">
                 <InputCheckbox
                   label="Camion vide"
                   name="move_to_empty"
@@ -419,7 +419,7 @@ function Form(props) {
               </div>
             </div>
             <div className="row">
-              <div className="col-12">
+              <div className="col-xs-w12">
                 <InputSelect
                   label="Type"
                   id="move_to_type"
@@ -433,7 +433,7 @@ function Form(props) {
                   error={getErrorMessage('move_to_type')}
                 />
               </div>
-              <div className="col-sm-12">
+              <div className="col-sm-w12">
                 <InputText
                   label="N° exploitation / SIREN"
                   name="move_to_num"
@@ -445,7 +445,7 @@ function Form(props) {
                   error={getErrorMessage('move_to_num')}
                 />
               </div>
-              <div className="col-sm-12">
+              <div className="col-sm-w12">
                 <InputText
                   label="Nom"
                   name="move_to_name"
@@ -459,7 +459,7 @@ function Form(props) {
               </div>
             </div>
             <div className="row">
-              <div className="col-sm-12">
+              <div className="col-sm-w12">
                 <InputText
                   label="Adresse"
                   name="move_to_address"
@@ -471,7 +471,7 @@ function Form(props) {
                   error={getErrorMessage('move_to_address')}
                 />
               </div>
-              <div className="col-sm-12">
+              <div className="col-sm-w12">
                 <InputText
                   label="Code postal"
                   name="move_to_cp"
@@ -483,7 +483,7 @@ function Form(props) {
                   error={getErrorMessage('move_to_cp')}
                 />
               </div>
-              <div className="col-sm-12">
+              <div className="col-sm-w12">
                 <InputText
                   label="Ville"
                   name="move_to_town"
@@ -497,7 +497,7 @@ function Form(props) {
               </div>
             </div>
             <div className="row">
-              <div className="col-sm-9">
+              <div className="col-sm-w9">
                 <InputText
                   label="Nb Ovins (boucherie)"
                   name="move_to_number_1"
@@ -509,7 +509,7 @@ function Form(props) {
                   error={getErrorMessage('move_to_number_1')}
                 />
               </div>
-              <div className="col-sm-9">
+              <div className="col-sm-w9">
                 <InputText
                   label="Nb Ovins (reproducteur)"
                   name="move_to_number_2"
@@ -521,7 +521,7 @@ function Form(props) {
                   error={getErrorMessage('move_to_number_2')}
                 />
               </div>
-              <div className="col-sm-9">
+              <div className="col-sm-w9">
                 <InputText
                   label="Nb Caprins (boucherie)"
                   name="move_to_number_3"
@@ -533,7 +533,7 @@ function Form(props) {
                   error={getErrorMessage('move_to_number_3')}
                 />
               </div>
-              <div className="col-sm-9">
+              <div className="col-sm-w9">
                 <InputText
                   label="Nb Caprins (reproducteur)"
                   name="move_to_number_4"

@@ -61,7 +61,7 @@ function Form(props) {
       <div className="card-body">
         <InputHidden name="id" id="id" value={values.id} />
         <div className="row">
-          <div className="col-sm-6">
+          <div className="col-sm-w6">
             <InputMask
               labelTop={true}
               label="Numéro"
@@ -76,7 +76,7 @@ function Form(props) {
               help={validated ? false : 'Format : ' + regPlaceholder}
             />
           </div>
-          <div className="col-sm-20">
+          <div className="col-sm-w20">
             <SiteInputPicker
               label="Site"
               key="site"
@@ -88,7 +88,7 @@ function Form(props) {
               error={getErrorMessage('site')}
             />
           </div>
-          <div className="col-6">
+          <div className="col-sm-w6">
             <InputData
               name="ct_duration"
               value={values.ct_duration}
@@ -98,7 +98,7 @@ function Form(props) {
               labelTop={true}
             />
           </div>
-          <div className="col-4">
+          <div className="col-sm-w4">
             <InputCheckbox
               label="Sous-traitant"
               name="ct_subcontractor"
@@ -112,7 +112,7 @@ function Form(props) {
         {values.currentTab === '1' && (
           <div>
             <div className="row">
-              <div className="col-sm-12">
+              <div className="col-sm-w12">
                 <InputDate
                   label="Début"
                   name="ct_from"
@@ -123,7 +123,7 @@ function Form(props) {
                   error={getErrorMessage('ct_from')}
                 />
               </div>
-              <div className="col-sm-12">
+              <div className="col-sm-w12">
                 <InputDate
                   label="Fin"
                   name="ct_to"
@@ -135,7 +135,7 @@ function Form(props) {
               </div>
             </div>
             <div className="row">
-              <div className="col-sm-10">
+              <div className="col-sm-w10">
                 <InputMonetary
                   label="Montant à l'installation"
                   labelTop={true}
@@ -146,7 +146,7 @@ function Form(props) {
                   value={values.ct_install_amount}
                 />
               </div>
-              <div className="col-sm-10">
+              <div className="col-sm-w10">
                 <InputMonetary
                   label="Montant récurrent"
                   labelTop={true}
@@ -157,8 +157,8 @@ function Form(props) {
                   value={values.ct_recur_amount}
                 />
               </div>
-              <div className="col-sm-4"></div>
-              <div className="col-sm-12">
+              <div className="col-sm-w4"></div>
+              <div className="col-sm-w12">
                 <InputDate
                   label="Facturé le"
                   name="ct_next_bill"
@@ -170,7 +170,7 @@ function Form(props) {
               </div>
             </div>
             <div className="row">
-              <div className="col-sm-24">
+              <div className="col-sm-w24">
                 <InputText
                   label="Adresse"
                   name="ct_address_1"
@@ -182,7 +182,7 @@ function Form(props) {
               </div>
             </div>
             <div className="row">
-              <div className="col-sm-24">
+              <div className="col-sm-w24">
                 <InputText
                   label=""
                   name="ct_address_2"
@@ -194,7 +194,7 @@ function Form(props) {
               </div>
             </div>
             <div className="row">
-              <div className="col-sm-6">
+              <div className="col-sm-w6">
                 <InputText
                   label="CP"
                   name="ct_cp"
@@ -204,7 +204,7 @@ function Form(props) {
                   error={getErrorMessage('ct_cp')}
                 />
               </div>
-              <div className="col-sm-18">
+              <div className="col-sm-w18">
                 <InputText
                   label="Commune"
                   name="ct_town"
@@ -220,7 +220,7 @@ function Form(props) {
         {values.currentTab === '2' && (
           <div>
             <div className="row">
-              <div className="col-36">
+              <div className="col-xs-w36">
                 <ClientInputPicker
                   label="Contact 1"
                   key="contact1"
@@ -233,7 +233,7 @@ function Form(props) {
               </div>
             </div>
             <div className="row">
-              <div className="col-36">
+              <div className="col-xs-w36">
                 <ClientInputPicker
                   label="Contact 2"
                   key="contact2"

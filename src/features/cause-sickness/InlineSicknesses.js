@@ -119,22 +119,22 @@ export class InlineSicknesses extends Component {
         <div className="cause-inline-sicknesses">
           <div className="inline-list">
             <div className={classnames('row row-title row-line', (counter++ % 2 !== 1) ? 'row-odd' : 'row-even')} key="cause-inline-sicknesses">
-              <div className="col-6 col-first">
+              <div className="col-xs-w6 col-first">
                 <span>Du</span>
               </div>
-              <div className="col-6">
+              <div className="col-xs-w6">
                 <span>Au</span>
               </div>
-              <div className="col-6">
+              <div className="col-xs-w6">
                 <span>Lieu</span>
               </div>
-              <div className="col-6">
+              <div className="col-xs-w6">
                 <span>Soins</span>
               </div>
-              <div className="col-8">
+              <div className="col-xs-w8">
                 <span>Maladie</span>
               </div>
-              <div className="col-4 text-right col-last">
+              <div className="col-xs-w4 text-right col-last">
                 <div className="btn-group btn-group-xs" role="group" aria-label="...">
                   <button
                     type="button"
@@ -151,12 +151,12 @@ export class InlineSicknesses extends Component {
               sicknesses.map(sickness => (
                 <HoverObserver onMouseEnter={() => {this.mouseEnter(sickness.id)}} onMouseLeave={this.mouseLeave}>
                   <div className={classnames('row row-line', (counter++ % 2 !== 1) ? 'row-odd' : 'row-even')} key={sickness.id}>
-                    <div className="col-6 col-first">{intlDateTime(sickness.caus_from, true)}</div>
-                    <div className="col-6">{intlDateTime(sickness.caus_to, true)}</div>
-                    <div className="col-6">{getWhereLabel(sickness.caus_where)}</div>
-                    <div className="col-6">{getDataLabel(this.props.data.models,"SOINS",sickness.caus_care)}</div>
-                    <div className="col-8">{sickness.sickness && sickness.sickness.sick_name}</div>
-                    <div className="col-4 text-right col-last">
+                    <div className="col-xs-w6 col-first">{intlDateTime(sickness.caus_from, true)}</div>
+                    <div className="col-xs-w6">{intlDateTime(sickness.caus_to, true)}</div>
+                    <div className="col-xs-w6">{getWhereLabel(sickness.caus_where)}</div>
+                    <div className="col-xs-w6">{getDataLabel(this.props.data.models,"SOINS",sickness.caus_care)}</div>
+                    <div className="col-xs-w8">{sickness.sickness && sickness.sickness.sick_name}</div>
+                    <div className="col-xs-w4 text-right col-last">
                     {this.state.flipped && this.state.flipped === sickness.id && 
                       <div className="btn-group btn-group-xs" role="group" aria-label="...">
                         <button

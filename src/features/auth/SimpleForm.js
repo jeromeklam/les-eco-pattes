@@ -129,7 +129,7 @@ export class SimpleForm extends Component {
     if (this.props.auth.authenticated && this.props.home.loadAllFinish) {
       return (
         <div className="row pt-2">
-          <div className="col-sm-10 text-center">
+          <div className="col-sm-w10 text-center">
             <div className="avatar">
               <Avatar
                 className="rounded-circle"
@@ -192,7 +192,7 @@ export class SimpleForm extends Component {
             </div>
             <p className="pt-3">{user.user_login}</p>
           </div>
-          <div className="col-20">
+          <div className="col-xs-w20">
             <div className="tab-content pl-5 pr-5" id="v-pills-tabContent">
               {activeTab === 1 && (
                 <form
@@ -244,7 +244,7 @@ export class SimpleForm extends Component {
               )}
             </div>
           </div>
-          <div className="col-6" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+          <div className="col-xs-w6" id="v-pills-tab" role="tablist" aria-orientation="vertical">
             <button
               className={classnames(
                 'btn btn-block',

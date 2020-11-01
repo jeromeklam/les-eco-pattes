@@ -21,7 +21,7 @@ export default function InlineCauseForm(props) {
   return (
     <form className="inline-form">
       <div className="row">
-        <div className="col-10 col-first">
+        <div className="col-xs-w10 col-first">
           <InputPickerCause
             label="Animal"
             key="cause"
@@ -36,7 +36,7 @@ export default function InlineCauseForm(props) {
             error={getErrorMessage('cau_id')}
           />
         </div>
-        <div className="col-14">
+        <div className="col-xs-w14">
           <InputText
             label="Notes"
             name="camv_comment"
@@ -49,7 +49,7 @@ export default function InlineCauseForm(props) {
             onChange={handleChange}
           />
         </div>
-        <div className="col-10">
+        <div className="col-xs-w10">
           <InputSelect
             label="Statut"
             name="camv_status"
@@ -64,7 +64,7 @@ export default function InlineCauseForm(props) {
             error={getErrorMessage('camv_status')}
           />
         </div>
-        <div className="col-2 my-auto text-right">
+        <div className="col-xs-w2 my-auto text-right">
           <button type="button" className="btn btn-inline btn-primary" onClick={handleSubmit}>
             <SimpleValidIcon className="inline-action text-light" />
           </button>

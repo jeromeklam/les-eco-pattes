@@ -136,19 +136,19 @@ export class InlineAlerts extends Component {
               )}
               key="alert-inline-alerts"
             >
-              <div className="col-6 col-first">
+              <div className="col-xs-w6 col-first">
                 <span>Date début</span>
               </div>
-              <div className="col-6">
+              <div className="col-xs-w6">
                 <span>Date fin</span>
               </div>
-              <div className="col-11">
+              <div className="col-xs-w11">
                 <span>Libellé</span>
               </div>
-              <div className="col-9">
+              <div className="col-xs-w9">
                 <span>Etat</span>
               </div>
-              <div className="col-4 text-right col-last">
+              <div className="col-xs-w4 text-right col-last">
                 <div className="btn-group btn-group-xs" role="group" aria-label="...">
                   <button
                     type="button"
@@ -176,13 +176,13 @@ export class InlineAlerts extends Component {
                     )}
                     key={alert.id}
                   >
-                    <div className="col-6 col-first">{intlDateTime(alert.alert_from)}</div>
-                    <div className="col-6">{intlDateTime(alert.alert_to)}</div>
-                    <div className="col-11">{alert.alert_title}</div>
-                    <div className="col-9">
+                    <div className="col-xs-w6 col-first">{intlDateTime(alert.alert_from)}</div>
+                    <div className="col-xs-w6">{intlDateTime(alert.alert_to)}</div>
+                    <div className="col-xs-w11">{alert.alert_title}</div>
+                    <div className="col-xs-w9">
                       {getLibStatus(alert.alert_done_ts, alert.alert_deadline)}
                     </div>
-                    <div className="col-4 text-right col-last">
+                    <div className="col-xs-w4 text-right col-last">
                       {this.state.flipped && this.state.flipped === alert.id && (
                         <div className="btn-group btn-group-xs" role="group" aria-label="...">
                           <button

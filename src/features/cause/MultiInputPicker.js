@@ -211,7 +211,7 @@ export default class MultiInputPicker extends Component {
           );
         })}
         {!this.props.disabled &&
-          <div className="col-9">
+          <div className="col-xs-w9">
             <button className="btn btn-primary" onClick={this.addOne}>
               <AddOneIcon />
             </button>

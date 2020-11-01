@@ -9,7 +9,7 @@ import { propagateModel } from '../../common';
 import {
   messageSuccess,
   showErrors,
-  getFieldError,
+  getFieldErrorMessage,
   InputPassword,
 } from '../ui';
 
@@ -17,6 +17,8 @@ export class PasswordTab extends Component {
   static propTypes = {
     auth: PropTypes.object.isRequired,
     actions: PropTypes.object.isRequired,
+    onChangeTab : PropTypes.func,
+    onClose: PropTypes.func,
   };
 
   constructor(props) {
@@ -98,7 +100,6 @@ export class PasswordTab extends Component {
           this.props.onClose && this.props.onClose();
         })
         .catch(errors => {
-          const { intl } = this.props;
           showErrors(intl, errors, 'updatePasswordError');
         });
     }
@@ -119,10 +120,11 @@ export class PasswordTab extends Component {
           value={this.state.old_password}
           labelTop
           required
-          error={getFieldError(
+          security={false}
+          error={getFieldErrorMessage(
             this.props.intl,
-            'old_password',
             this.props.auth.updatePasswordError,
+            'old_password',
           )}
           onChange={this.onChangePassword}
         />

@@ -125,7 +125,7 @@ export default class InputPickerEnhanced extends Component {
     return (
       <div className="cause-input-picker">
         <div className="row">
-          <div className="col-sm-10">
+          <div className="col-sm-w10">
             <DefaultInputPicker
               {...this.props}
               code={this.props.code}
@@ -158,7 +158,7 @@ export default class InputPickerEnhanced extends Component {
               onSelect={this.onSelect}
             />
           </div>
-          <div className="col-sm-10">
+          <div className="col-sm-w10">
             <InputSelect
               name="cause_type.id"
               value={this.state.item.cause_type ? this.state.item.cause_type.id : null}
@@ -170,7 +170,7 @@ export default class InputPickerEnhanced extends Component {
               required={true}
             />
           </div>
-          <div className="col-sm-8">
+          <div className="col-sm-w8">
             <InputSelect
               name="cau_sex"
               id="cau_sex"
@@ -181,7 +181,7 @@ export default class InputPickerEnhanced extends Component {
               labelTop={false}
             />
           </div>
-          <div className="col-sm-4">
+          <div className="col-sm-w4">
             {!this.props.disabled &&
               <button className="btn btn-warning" onClick={this.props.onDelOne}>
                 <DelOne className="text-light"/>
