@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { getJsonApi } from 'jsonapi-front';
-import { HighlightToggler, Highlight } from 'react-bootstrap-front';
+import { Highlight } from 'react-bootstrap-front';
 import * as actions from './redux/actions';
 import { updateConfig } from '../auth/redux/actions';
 import {
@@ -90,7 +90,7 @@ export class DashboardToolbar extends Component {
           <div className="col-xs-w18 text-left">
             <div className="nav justify-content-left">
               <div className="nav-item">
-                <HighlightToggler className="text-light" theme="DASHBOARD" />
+                <Highlight toggler={true} className="text-light" theme="DASHBOARD" />
               </div>
             </div>
           </div>

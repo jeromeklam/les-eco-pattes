@@ -5,10 +5,8 @@
 @import "../../node_modules/bootstrap/scss/bootstrap";
 @import "../../node_modules/react-grid-layout/css/styles.css";
 @import "../../node_modules/react-resizable/css/styles.css";
-@import '../../node_modules/react-bootstrap-front/sass/calendar/styles';
-@import '../../node_modules/react-bootstrap-front/sass/base/mixins';
-@import '../../node_modules/react-bootstrap-front/sass/base/container';
-@import '../../node_modules/react-bootstrap-front/sass/base/global';
+@import '../../node_modules/react-bootstrap-front/sass/calendar/styles.scss';
+@import '../../node_modules/react-bootstrap-front/src/styles/index.scss';
 
 @import './global';
 @import './form';
