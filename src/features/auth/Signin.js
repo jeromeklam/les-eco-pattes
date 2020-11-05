@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { FormattedMessage, injectIntl } from 'react-intl';
 import { withRouter } from 'react-router-dom';
-import { InputEmail, InputCheckbox, Highlight } from 'react-bootstrap-front';
+import { InputEmail, InputCheckbox, Highlight, HighlightButton } from 'react-bootstrap-front';
 import { getJsonApi } from 'jsonapi-front';
 import * as actions from './redux/actions';
 import { Copyright, showErrors, getFieldErrorMessage, InputPassword } from '../ui';
@@ -195,66 +195,97 @@ export class Signin extends Component {
               <FormattedMessage id="app.features.auth.login.title" defaultMessage="Login" />
             </h1>
             <div className="card">
+              <div className="highlight-toggler">
+                <HighlightButton theme="SIGNIN" />
+              </div>
               <div className="card-body text-left">
-                <InputEmail
-                  id="username"
-                  name="username"
-                  label={
-                    <FormattedMessage
-                      id="app.features.auth.login.username"
-                      defaultMessage="Connexion"
-                    />
-                  }
-                  placeholder={intl.formatMessage({
-                    id: 'app.features.auth.login.username',
-                    defaultMessage: 'Email address',
+                <Highlight
+                  title={intl.formatMessage({
+                    id: 'app.features.auth.login.help.username',
+                    defaultMessage: 'Your email address for login',
                   })}
-                  required=""
-                  autoFocus=""
-                  labelInline
-                  value={this.state.username}
-                  error={this.state.username_error}
-                  onChange={this.onChange}
-                />
-                <InputPassword
-                  id="password"
-                  name="password"
-                  label={
-                    <FormattedMessage
-                      id="app.features.auth.login.password"
-                      defaultMessage="Connexion"
-                    />
-                  }
-                  placeholder={intl.formatMessage({
-                    id: 'app.features.auth.login.password',
-                    defaultMessage: 'Password',
-                  })}
-                  required=""
-                  labelInline
-                  security={false}   
-                  value={this.state.password}
-                  error={this.state.password_error}
-                  onChange={this.onChange}
-                />
-                <div className="checkbox mb-3 mt-2">
-                  <InputCheckbox
-                    name="remember"
-                    checked={this.state.remember}
-                    detail={
+                  position="bottom"
+                  theme="SIGNIN"
+                >
+                  <InputEmail
+                    id="username"
+                    name="username"
+                    label={
                       <FormattedMessage
-                        id="app.features.auth.login.rememberMe"
+                        id="app.features.auth.login.username"
                         defaultMessage="Connexion"
                       />
                     }
+                    placeholder={intl.formatMessage({
+                      id: 'app.features.auth.login.username',
+                      defaultMessage: 'Email address',
+                    })}
+                    required=""
+                    autoFocus=""
+                    labelInline
+                    value={this.state.username}
+                    error={this.state.username_error}
                     onChange={this.onChange}
                   />
-                </div>
+                </Highlight>
+                <Highlight
+                  title={intl.formatMessage({
+                    id: 'app.features.auth.login.help.password',
+                    defaultMessage: 'Your password',
+                  })}
+                  position="bottom"
+                  theme="SIGNIN"
+                >
+                  <InputPassword
+                    id="password"
+                    name="password"
+                    label={
+                      <FormattedMessage
+                        id="app.features.auth.login.password"
+                        defaultMessage="Connexion"
+                      />
+                    }
+                    placeholder={intl.formatMessage({
+                      id: 'app.features.auth.login.password',
+                      defaultMessage: 'Password',
+                    })}
+                    required=""
+                    labelInline
+                    security={false}
+                    value={this.state.password}
+                    error={this.state.password_error}
+                    onChange={this.onChange}
+                  />
+                </Highlight>
+                <Highlight
+                  title={intl.formatMessage({
+                    id: 'app.features.auth.login.help.remember',
+                    defaultMessage: 'Check to remember connexion (use cookies)',
+                  })}
+                  position="bottom"
+                  theme="SIGNIN"
+                >
+                  <div className="checkbox mb-3 mt-2">
+                    <InputCheckbox
+                      name="remember"
+                      checked={this.state.remember}
+                      detail={
+                        <FormattedMessage
+                          id="app.features.auth.login.rememberMe"
+                          defaultMessage="Connexion"
+                        />
+                      }
+                      onChange={this.onChange}
+                    />
+                  </div>
+                </Highlight>
                 <Highlight
                   title={intl.formatMessage({
                     id: 'app.features.auth.login.help.connexion',
                     defaultMessage: 'Forgot password',
                   })}
                   position="bottom"
+                  theme="SIGNIN"
                 >
                   <button className="btn btn-lg btn-primary btn-block" type="submit">
                     <FormattedMessage
@@ -271,6 +302,7 @@ export class Signin extends Component {
                       defaultMessage: 'Forgot password',
                     })}
                     position="bottom"
+                    theme="SIGNIN"
                   >
                     <a href={null} onClick={this.onForgotPasswordAsk}>
                       <span>
@@ -304,4 +336,11 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default withRouter(injectIntl(connect(mapStateToProps, mapDispatchToProps)(Signin)));
+export default withRouter(
+  injectIntl(
+    connect(
+      mapStateToProps,
+      mapDispatchToProps,
+    )(Signin),
+  ),
+);
