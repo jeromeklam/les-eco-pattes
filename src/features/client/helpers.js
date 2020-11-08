@@ -1,12 +1,8 @@
 import React from 'react';
-import {
-  AddOne as AddOneIcon,
-  GetOne as GetOneIcon,
-  DelOne as DelOneIcon,
-} from '../icons';
+import { AddOne as AddOneIcon, GetOne as GetOneIcon, DelOne as DelOneIcon } from '../icons';
 import { clientCategoryAsOptions } from '../client-category';
 import { clientTypeAsOptions } from '../client-type';
-import { getFullName } from './';
+import { getFullName, searchClient as searchParentClient } from './';
 
 export const getGlobalActions = ({ onClearFilters, onCreate }) => {
   return [
@@ -52,15 +48,17 @@ export const getCols = ({ props }) => {
       mob_size: '36',
       sortable: true,
       filterable: false,
-      title: true, 
+      title: true,
       first: true,
-      hidden: true,           
+      hidden: true,
     },
     {
       name: 'lastname',
       label: 'Nom',
       col: 'cli_lastname',
-      fDisplay: (item) => {return getFullName(item);},
+      fDisplay: item => {
+        return getFullName(item);
+      },
       size: '7',
       mob_size: '18',
       sortable: true,
@@ -78,16 +76,24 @@ export const getCols = ({ props }) => {
       title: true,
       hidden: true,
     },
-     {
-      name: 'parent_cli',
+    {
+      name: 'parent_client',
       label: 'Attaché à',
-      col: 'parent_cli.cli_lastname',
-      fDisplay: (item) => {return getFullName(item.parent_cli);},
+      col: 'parent_client.id',
+      fDisplay: item => {
+        return getFullName(item.parent_client);
+      },
       size: '7',
       mob_size: '18',
       title: true,
       sortable: true,
-      filterable: { type: 'text' },
+      filterable: {
+        type: 'picker',
+        display: item => {
+          return getFullName(item);
+        },
+        onSearch: searchParentClient,
+      },
     },
     {
       name: 'adress',

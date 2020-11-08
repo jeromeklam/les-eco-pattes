@@ -15,6 +15,7 @@ import {
   Wait as WaitIcon,
 } from '../icons';
 import { causeTypeAsOptions } from '../cause-type/functions';
+import { searchSite } from '../site';
 
 export const sexSelect = [
   { label: 'Femelle', value: 'F', icon: <FemaleIcon className="col-icon" /> },
@@ -257,13 +258,11 @@ export const getCols = ({ props }) => {
     {
       name: 'site',
       label: 'Site',
-      col: 'site.site_name',
+      col: 'site.id',
       size: '0',
       mob_size: '0',
       hidden: true,
-      filterable: {
-        type: 'text',
-      },
+      filterable: { type: 'picker', display: 'site_name', onSearch: searchSite },
     },
     {
       name: 'sep1',

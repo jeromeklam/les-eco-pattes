@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
-import { ResponsiveModal, FILTER_OPER_LIKE, FILTER_MODE_AND } from 'react-bootstrap-front';
+import { ResponsiveModal, FILTER_OPER_LIKE, FILTER_OPER_IN, FILTER_MODE_AND } from 'react-bootstrap-front';
 import { CenteredLoading3Dots } from './';
 
 export default class SearchModal extends Component {
@@ -100,7 +100,7 @@ export default class SearchModal extends Component {
         item.options.forEach(elem => {
           values.push(elem.value);
         });
-        params.filter[this.state.condition][item.name] = {[FILTER_OPER_LIKE]: values};
+        params.filter[this.state.condition][item.name] = {[FILTER_OPER_IN]: values};
       } else {
         if (item.value !== '') {
           if (params === false) {

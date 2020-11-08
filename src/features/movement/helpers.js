@@ -5,6 +5,7 @@ import {
   DelOne as DelOneIcon,
   Movement as MovementIcon,
 } from '../icons';
+import { searchSite } from '../site';
 
 export const mvtFromType = [
   { label: 'Autre', value: 'OTHER' },
@@ -137,12 +138,15 @@ export const getCols = ({ props }) => {
     {
       name: 'move_from_name',
       label: 'Site départ',
-      col: 'move_from_name',
+      col: 'from_site.id',
+      fDisplay: item => {
+        return item.from_site && item.from_site.site_name;
+      },
       size: '6',
       mob_size: '36',
       title: true,
       sortable: true,
-      filterable: { type: 'text' },
+      filterable: { type: 'picker', display: 'site_name', onSearch: searchSite },
     },
     {
       name: 'move_to',
@@ -158,12 +162,15 @@ export const getCols = ({ props }) => {
     {
       name: 'move_to_name',
       label: 'Site arrivée',
-      col: 'move_to_name',
+      col: 'to_site.id',
+      fDisplay: item => {
+        return item.to_site && item.to_site.site_name;
+      },
       size: '6',
       mob_size: '36',
       title: true,
       sortable: true,
-      filterable: { type: 'text' },
+      filterable: { type: 'picker', display: 'site_name', onSearch: searchSite },
     },
     {
       name: 'status',

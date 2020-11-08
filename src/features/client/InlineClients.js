@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import classnames from 'classnames';
 import { CenteredLoading3Dots } from '../ui';
-import { getClients } from './';
+import { getFullName, getClients } from './';
 
 export default class InlineClients extends Component {
   static propTypes = {
@@ -9,8 +9,8 @@ export default class InlineClients extends Component {
   };
 
   static getDerivedStateFromProps(props, state) {
-    if (props.parentId !== state.parent_id || props.client !== state.item) {
-      return { parent_id: props.parentId, parent: props.parent, item: props.client };
+    if (props.parentId !== state.parent_id ) {
+      return { parent_id: props.client.id };
     }
     return null;
   }
@@ -18,10 +18,8 @@ export default class InlineClients extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      parent: props.parent || null,
-      parent_id: props.parent_id || 0,
+      parent_id: props.parentId || 0,
       loading: true,
-      item: props.client || null,
       items: [],
     };
     this.localLoadClients = this.localLoadClients.bind(this);
@@ -29,7 +27,7 @@ export default class InlineClients extends Component {
 
   localLoadClients() {
     this.setState({ loading: true });
-    getClients(this.state.parent_id, this.state.item).then(result => {
+    getClients(this.state.parent_id).then(result => {
       this.setState({ loading: false, items: result });
     });
   } 
@@ -61,8 +59,14 @@ export default class InlineClients extends Component {
               )}
               key="client-inline-clients"
             >
-              <div className="col-sm-w6 col-first">
+              <div className="col-sm-w10 col-first">
                 <span>Nom</span>
+              </div>
+              <div className="col-sm-w6">
+                <span>Portable</span>
+              </div>
+              <div className="col-sm-w6">
+                <span>Mail</span>
               </div>
             </div>
             {clients.map(client => (
@@ -70,15 +74,21 @@ export default class InlineClients extends Component {
                 className={classnames('row row-line', counter++ % 2 !== 1 ? 'row-odd' : 'row-even')}
                 key={client.id}
               >
-                <div className="col-sm-w6 col-first">
-                  <span>{client.cli_lastname}</span>
+                <div className="col-sm-w10 col-first">
+                  <span>{getFullName(client)}</span>
+                </div>
+                <div className="col-sm-w6">
+                  <span>{client.cli_phone_gsm}</span>
+                </div>
+                <div className="col-sm-w6">
+                  <span>{client.cli_email}</span>
                 </div>
               </div>
             ))}
           </div>
         ) : (
           <div className="text-center p-3">
-            <span className="text-secondary">Aucun contact attaché</span>
+            <span className="text-secondary">Aucun vétérinaire attaché</span>
           </div>
         )}
       </div>

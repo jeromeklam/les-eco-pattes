@@ -14,7 +14,7 @@ import { Location as LocationIcon, Settings as SettingsIcon, Other as OtherIcon 
 import { ResponsiveModalOrForm, InputTextarea, InputDate, InputData } from '../ui';
 import useForm from '../ui/useForm';
 import { siteTypeAsOptions } from '../site-type/functions.js';
-import { InputPicker as ClientInputPicker } from '../client';
+import { InputPicker as ClientInputPicker, InlineClients } from '../client';
 import { InputPicker as SiteInputPicker, InlinePhotos, InlineDocuments } from '../site';
 import { InlineCauses } from '../cause';
 import { InlineAlerts } from '../alert';
@@ -104,6 +104,7 @@ function Form(props) {
     }
     sitt_id = values.site_type.id;
   }
+console.log("FK",values.sanitary );
   return (
     <ResponsiveModalOrForm
       className=""
@@ -291,17 +292,24 @@ function Form(props) {
           <div className="row">
             <div className="col-sm-w36">
               <ClientInputPicker
-                label="Vétérinaire"
+                label="Vétérinaire / Clinique"
                 key="sanitary"
                 name="sanitary"
                 pickerUp={true}
                 item={values.sanitary || null}
                 onChange={handleChange}
                 error={getErrorMessage('sanitary')}
-                typeCodes={['VETERINAIRE']}
+                typeCodes={['VETERINAIRE','CLINIQUE']}
               />
             </div>
           </div>
+          {values.sanitary && values.sanitary.id > 0  && (
+            <div className="row">
+              <div className="col-sm-w36">
+                <InlineClients parentId={values.sanitary.id}/>
+              </div>
+            </div>
+          )}
         </div>
       )}
       {values.currentTab === '3' && (

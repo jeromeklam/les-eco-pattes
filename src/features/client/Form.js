@@ -6,8 +6,13 @@ import useForm from '../ui/useForm';
 import { clientTypeAsOptions } from '../client-type/functions.js';
 import { clientCategoryAsOptions } from '../client-category/functions.js';
 import { countryAsOptions } from '../country/functions.js';
-import { InputPicker as ClientInputPicker } from '../client';
 import { ResponsiveModalOrForm, InputTextarea } from '../ui';
+import {
+  InputPicker as ClientInputPicker,
+  InlineClients,
+  findTypeCode,
+  findCategoryCode,
+} from './';
 
 const afterChange = (name, item) => {
   switch (name) {
@@ -18,7 +23,7 @@ const afterChange = (name, item) => {
           item._veto = true;
         } else {
           item.cli_sanit = false;
-          item.parent_cli = null;
+          item.parent_client = null;
         }
       }
       break;
@@ -38,43 +43,21 @@ const afterChange = (name, item) => {
   }
 };
 
-const findTypeCode = (id, types) => {
-  if (!types) {
-    return '';
-  }
-  let code = '';
-  types.forEach(elem => {
-    if (elem.id === id) {
-      code = elem.clit_code;
-      return true;
-    }
-  });
-  return code;
-};
-
-const findCategoryCode = (id, categories) => {
-  if (!categories) {
-    return '';
-  }
-  let code = '';
-  categories.forEach(elem => {
-    if (elem.id === id) {
-      code = elem.clic_code;
-      return true;
-    }
-  });
-  return code;
-};
-
 function Form(props) {
   props.item._types = normalizedObjectModeler(props.client_types, 'FreeAsso_ClientType');
   props.item._veto = false;
+  props.item._clinique = false;
   if (props.item.client_type) {
     if (findTypeCode(props.item.client_type.id, props.item._types) === 'VETERINAIRE') {
       props.item._veto = true;
+    } else if (findTypeCode(props.item.client_type.id, props.item._types) === 'CLINIQUE') {
+      props.item._clinique = true;
     }
   }
-  props.item._categories = normalizedObjectModeler(props.client_categories, 'FreeAsso_ClientCategory');
+  props.item._categories = normalizedObjectModeler(
+    props.client_categories,
+    'FreeAsso_ClientCategory',
+  );
   props.item._private = false;
   if (props.item.client_category) {
     if (findCategoryCode(props.item.client_category.id, props.item._categories) === 'PARTICULIER') {
@@ -104,14 +87,16 @@ function Form(props) {
       parent = 'Clinique';
     } else {
       parent = 'Famille';
-    } 
+    }
   }
-  console.log('FK contact', values);
+  const tabsPlus = [
+    { key: '3', name: 'children', label: 'Vétérinaires', shortcut: 'S', icon: 'misc' },
+  ];
   return (
     <ResponsiveModalOrForm
       title="Contact"
       tab={values.currentTab}
-      tabs={props.tabs}
+      tabs={values._clinique ? props.tabs.concat(tabsPlus) : props.tabs}
       size="lg"
       onSubmit={handleSubmit}
       onCancel={handleCancel}
@@ -274,18 +259,18 @@ function Form(props) {
               </div>
             </div>
             <div>
-              {(parent !== '') && (
+              {parent !== '' && (
                 <div>
                   <hr />
                   <div className="row">
                     <div className="col-md-w16">
                       <ClientInputPicker
                         label={parent}
-                        key="parent_cli"
-                        name="parent_cli"
-                        item={values.parent_cli || null}
+                        key="parent_client"
+                        name="parent_client"
+                        item={values.parent_client || null}
                         onChange={handleChange}
-                        error={getErrorMessage('parent_cli')}
+                        error={getErrorMessage('parent_client')}
                         typeCodes={[parent.toUpperCase()]}
                       />
                     </div>
@@ -348,6 +333,11 @@ function Form(props) {
                 />
               </div>
             </div>
+          </div>
+        )}
+        {values.currentTab === '3' && (
+          <div className="border border-secondary rounded overflow-x-hidden">
+            <InlineClients parentId={values.id} />
           </div>
         )}
       </div>

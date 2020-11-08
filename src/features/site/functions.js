@@ -1,4 +1,5 @@
 import { normalizedObjectModeler, objectToQueryString, jsonApiNormalizer } from 'jsonapi-front';
+import axios from 'axios';
 import { freeAssoApi } from '../../common';
 
 /**
@@ -103,4 +104,41 @@ export const siteAsOptions = object => {
     return 0;
   });
   return arr;
+};
+
+let siteCancelToken = null;
+
+export const searchSite = search => {
+  const promise = new Promise((resolve, reject) => {
+    if (siteCancelToken) {
+      siteCancelToken.cancel();
+    }
+    siteCancelToken = axios.CancelToken.source();
+    const headers = {
+      'Content-Type': 'application/json',
+      Accept: 'application/json',
+    };
+    const doRequest = freeAssoApi.get(
+      process.env.REACT_APP_BO_URL + '/v1/asso/site/autocomplete/' + search,
+      {
+        headers: headers,
+        cancelToken: siteCancelToken.token,
+      },
+    );
+    doRequest.then(
+      res => {
+        let list = [];
+        if (res.data && res.data.length > 0) {
+          res.data.map(item =>
+            list.push({ item: item }),
+          );
+        }
+        resolve(list);
+      },
+      err => {
+        reject(err);
+      },
+    );
+  });
+  return promise;
 };

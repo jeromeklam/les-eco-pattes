@@ -1,4 +1,5 @@
 import { normalizedObjectModeler, objectToQueryString, jsonApiNormalizer } from 'jsonapi-front';
+import axios from 'axios';
 import { freeAssoApi } from '../../common';
 
 export function raiserAsOptions(object) {
@@ -36,16 +37,42 @@ export const getFullName = client => {
   return fullname.trim();
 };
 
+export const findTypeCode = (id, types) => {
+  if (!types) {
+    return '';
+  }
+  let code = '';
+  types.forEach(elem => {
+    if (elem.id === id) {
+      code = elem.clit_code;
+      return true;
+    }
+  });
+  return code;
+};
+
+export const findCategoryCode = (id, categories) => {
+  if (!categories) {
+    return '';
+  }
+  let code = '';
+  categories.forEach(elem => {
+    if (elem.id === id) {
+      code = elem.clic_code;
+      return true;
+    }
+  });
+  return code;
+};
 /**
  *
  */
-export const getClients = (parent_id, client ) => {
+export const getClients = ( parent_id ) => {
   const promise = new Promise((resolve, reject) => {
-    const filter = {
-      filter: {}
+    const params = {
+      filter: { 'parent_client.id' : {eq : parent_id}}
     };
-    filter.filter.parent_cli_id = parent_id;
-    const addUrl = objectToQueryString(filter);
+    const addUrl = objectToQueryString(params);
     const doRequest = freeAssoApi.get('/v1/asso/client' + addUrl, {});
     doRequest.then(
       res => {
@@ -56,6 +83,43 @@ export const getClients = (parent_id, client ) => {
         } else {
           resolve([]);
         }
+      },
+      err => {
+        reject(err);
+      },
+    );
+  });
+  return promise;
+};
+
+let clientCancelToken = null;
+
+export const searchClient = search => {
+  const promise = new Promise((resolve, reject) => {
+    if (clientCancelToken) {
+      clientCancelToken.cancel();
+    }
+    clientCancelToken = axios.CancelToken.source();
+    const headers = {
+      'Content-Type': 'application/json',
+      Accept: 'application/json',
+    };
+    const doRequest = freeAssoApi.get(
+      process.env.REACT_APP_BO_URL + '/v1/asso/client/autocomplete/' + search,
+      {
+        headers: headers,
+        cancelToken: clientCancelToken.token,
+      },
+    );
+    doRequest.then(
+      res => {
+        let list = [];
+        if (res.data && res.data.length > 0) {
+          res.data.map(item =>
+            list.push({ item: item }),
+          );
+        }
+        resolve(list);
       },
       err => {
         reject(err);

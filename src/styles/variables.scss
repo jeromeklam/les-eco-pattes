@@ -14,6 +14,7 @@ $theme-colors: (
   "warning-dark": darken(#ef8c1d, 10%),
   "light": lighten(#5a4e4e, 60%),
   "success": #7ab255,
+  "inactive": lighten(#6c757d,20%),
 );
 $grid-breakpoints: (
   xs: 0,

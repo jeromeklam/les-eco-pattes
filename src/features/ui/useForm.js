@@ -54,7 +54,7 @@ const _loadClient = id => {
     id = '0';
   }
   return freeAssoApi.get(
-    '/v1/asso/client/' + id + '?include=lang,country,client_category,client_type,parent_cli', {},
+    '/v1/asso/client/' + id + '?include=lang,country,client_category,client_type,parent_client', {},
   );
 };
 

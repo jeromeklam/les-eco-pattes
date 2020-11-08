@@ -11,6 +11,7 @@ import {
   SiteExtern as SiteExternIcon,
 } from '../icons';
 import { siteTypeAsOptions } from '../site-type/functions';
+import { searchSite } from './';
 
 const townCol = (item) => {
   let cpTown = '';
@@ -27,7 +28,6 @@ const externCol = [
   { value: true, label: 'Externe', icon: <SiteExternIcon className="col-icon"/> },
   { value: false, label: '' },
 ];
-
 
 export const getGlobalActions = ({ onClearFilters, onCreate }) => {
   return [
@@ -183,12 +183,15 @@ export const getCols = ({ props }) => {
     {
       name: 'parent_site',
       label: 'Site principal',
-      col: 'parent_site.site_name',
+      col: 'parent_site.id',
+      fDisplay: item => {
+        return item.parent_site && item.parent_site.site_name;
+      },
       size: '6',
       mob_size: '26',
       title: true,
       sortable: true,
-      filterable: { type: 'text' },
+      filterable: { type: 'picker', display: 'site_name', onSearch: searchSite },
     },
     {
       name: 'site_count_cause',

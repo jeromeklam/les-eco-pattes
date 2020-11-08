@@ -16,6 +16,7 @@ import {
   SortUp as SortUpIcon,
   Sort as SortNoneIcon,
   Search as SearchIcon,
+  DelOne as ClearIcon,
 } from '../icons';
 import { deleteSuccess, showErrors } from '../ui';
 import { getGlobalActions, getInlineActions, getCols } from './';
@@ -172,6 +173,7 @@ export class List extends Component {
           sortDownIcon={<SortDownIcon color="secondary" />}
           sortUpIcon={<SortUpIcon color="secondary" />}
           sortNoneIcon={<SortNoneIcon color="secondary" />}
+          clearIcon={<ClearIcon className="text-warning" />}
           inlineActions={inlineActions}
           globalActions={globalActions}
           sort={this.props.client.sort}
