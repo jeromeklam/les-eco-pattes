@@ -3,6 +3,7 @@ import classnames from 'classnames';
 import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import { push } from 'connected-react-router';
 import Avatar from 'react-avatar';
 import { injectIntl, FormattedMessage } from 'react-intl';
 import * as actions from './redux/actions';
@@ -42,6 +43,7 @@ export class SimpleForm extends Component {
     this.onChangeActiveTab = this.onChangeActiveTab.bind(this);
     this.onChangeAvatar = this.onChangeAvatar.bind(this);
     this.onMenuAvatar = this.onMenuAvatar.bind(this);
+    this.onSignout = this.onSignout.bind(this);
   }
 
   onChange(event) {
@@ -118,6 +120,12 @@ export class SimpleForm extends Component {
       };
       this.onChangeUser(event);
     }
+  }
+
+  onSignout() {
+    this.props.actions.signOut().then(result => {
+      this.props.push('/');
+    });
   }
 
   render() {
@@ -281,6 +289,12 @@ export class SimpleForm extends Component {
             >
               <FormattedMessage id="app.features.auth.form.tabSettings" defaultMessage="Settings" />
             </button>
+            <button
+              className='btn btn-block text-secondary'
+              onClick={this.onSignout}
+            >
+              <FormattedMessage id="app.features.auth.form.signout" defaultMessage="Sign out" />
+            </button>
           </div>
         </div>
       );
@@ -300,6 +314,7 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return {
     actions: bindActionCreators({ ...actions, propagateModel }, dispatch),
+    push: push,
   };
 }
 

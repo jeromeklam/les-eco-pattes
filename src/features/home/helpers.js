@@ -41,7 +41,7 @@ export const appMenu = [
     icon: <LogoutIcon />,
     label: <FormattedMessage id="app.features.home.app.menu.signout" defaultMessage="Sign out" />,
     url: '/auth/signout',
-    role: 'SIGNOUT',
+    role: '-SIGNOUT-',
     help: <FormattedMessage id="app.features.home.app.menu.help.signout" defaultMessage="Sign out" />,
     public: false,
   },

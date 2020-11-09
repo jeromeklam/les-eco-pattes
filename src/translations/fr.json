@@ -62,6 +62,7 @@
 	"app.features.auth.form.tabPassword": "Modifier le mot de passe",
 	"app.features.auth.form.tabSettings": "Préférences",
 	"app.features.auth.login.askPassword": "Email de réinitialisation",
+	"app.features.auth.form.signout": "Déconnexion",
 	"app.features.auth.login.back": "Retour",
 	"app.features.auth.login.connexion": "Connexion",
 	"app.features.auth.login.error.askPassword": "Erreur lors de la demande !",
