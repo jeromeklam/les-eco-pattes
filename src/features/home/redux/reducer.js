@@ -5,6 +5,7 @@ import { reducer as initSocketReducer } from './initSocket';
 import { reducer as closeSocketReducer } from './closeSocket';
 import { reducer as socketConnectedReducer } from './socketConnected';
 import { reducer as socketDisconnectedReducer } from './socketDisconnected';
+import { reducer as loadPublicReducer } from './loadPublic';
 
 const reducers = [
   loadAllReducer,
@@ -13,6 +14,7 @@ const reducers = [
   closeSocketReducer,
   socketConnectedReducer,
   socketDisconnectedReducer,
+  loadPublicReducer,
 ];
 
 export default function reducer(state = initialState, action) {

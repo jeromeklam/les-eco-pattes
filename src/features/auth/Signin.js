@@ -186,7 +186,7 @@ export class Signin extends Component {
                 </button>
               </div>
             </div>
-            <Copyright />
+            <Copyright className="bg-white" />
           </form>
         ) : (
           <form className="form-signin text-center" onSubmit={this.onSubmit}>
@@ -316,7 +316,7 @@ export class Signin extends Component {
                 </div>
               </div>
             </div>
-            <Copyright />
+            <Copyright className="bg-white" />
           </form>
         )}
       </div>

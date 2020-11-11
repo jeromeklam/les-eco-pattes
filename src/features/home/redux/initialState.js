@@ -8,6 +8,8 @@ const initialState = {
   socketOn: false,
   socketConnected: false,
   socketMessage: null,
+  loadPublicPending: false,
+  loadPublicError: null,
 };
 
 export default initialState;

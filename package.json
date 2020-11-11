@@ -1,6 +1,6 @@
 {
   "name": "les-eco-pattes",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "private": true,
   "description": "Les Eco-Pattes",
   "keywords": [
@@ -74,7 +74,7 @@
     "react": "^16.8.6",
     "react-app-polyfill": "^0.2.0",
     "react-avatar": "^3.9.7",
-    "react-bootstrap-front": "^2.1.0",
+    "react-bootstrap-front": "^3.0.2",
     "react-cookies": "^0.1.1",
     "react-dev-utils": "^7.0.1",
     "react-dom": "^16.8.6",

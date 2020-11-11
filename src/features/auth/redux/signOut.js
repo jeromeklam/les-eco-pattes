@@ -5,6 +5,7 @@ import {
   AUTH_SIGN_OUT_DISMISS_ERROR,
 } from './constants';
 import cookie from 'react-cookies';
+import { defaultConfig } from '../';
 
 export function signOut(args = {}) {
   return (dispatch) => {
@@ -62,6 +63,7 @@ export function reducer(state, action) {
         user: false,
         signOutPending: false,
         signOutError: null,
+        settings: defaultConfig,
       };
 
     case AUTH_SIGN_OUT_FAILURE:
@@ -74,6 +76,7 @@ export function reducer(state, action) {
         user: false,
         signOutPending: false,
         signOutError: action.data.error,
+        settings: defaultConfig,
       };
 
     case AUTH_SIGN_OUT_DISMISS_ERROR:

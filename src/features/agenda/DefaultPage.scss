@@ -22,15 +22,5 @@
     padding-right: 5px;
     background-color: theme-color('secondary');
     color: theme-color('light');
-
-    .rbc-btn-group button {
-      background-color: theme-color('primary');
-      color: theme-color('light');
-      border: 1px solid theme-color('light');
-      padding: 0.375rem 0.75rem;
-      font-size: 1rem;
-      line-height: 1.5;
-      border-radius: 0.25rem;
-    }
   }
 }

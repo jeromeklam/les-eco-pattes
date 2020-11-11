@@ -230,6 +230,16 @@ export const getCols = ({ props }) => {
       mob_size: '36',
       title: true,
       sortable: true,
+      filterable: { type: 'text' }
+    },
+    {
+      name: 'site2',
+      label: 'Site (sélecteur)',
+      col: 'site.id',
+      size: '0',
+      mob_size: '0',
+      hidden: true,
+      filterable: { type: 'picker', display: 'site_name', onSearch: searchSite },
     },
     {
       name: 'waiting',
@@ -254,15 +264,6 @@ export const getCols = ({ props }) => {
         type: 'select',
         options: causeTypeAsOptions(props.causeType.items),
       },
-    },
-    {
-      name: 'site',
-      label: 'Site',
-      col: 'site.id',
-      size: '0',
-      mob_size: '0',
-      hidden: true,
-      filterable: { type: 'picker', display: 'site_name', onSearch: searchSite },
     },
     {
       name: 'sep1',

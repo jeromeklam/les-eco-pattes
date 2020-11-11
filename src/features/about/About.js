@@ -27,25 +27,21 @@ class About extends Component {
                   defaultMessage="Only for les-eco-pattes"
                 />
               </p>
-              <p className="lead mb-0">
-              </p>
+              <p className="lead mb-0" />
             </div>
           </div>
           <div className="row mb-2">
-            <div className="col-md-w18"><img src={logo} alt="" /></div>
             <div className="col-md-w18">
-              <div className="card flex-md-row mb-4 box-shadow h-md-250">
-                <div className="card-body d-flex flex-column align-items-start">
+              <img src={logo} alt="" />
+            </div>
+            <div className="col-md-w18">
+              <div className="card mb-4 box-shadow h-md-250">
+                <div className="card-body lign-items-start">
                   <strong className="d-inline-block mb-2 text-primary">
-                    <FormattedMessage
-                      id="app.contact.name"
-                      defaultMessage="KLAM Jérôme"
-                    />
-                    </strong>
+                    <FormattedMessage id="app.contact.name" defaultMessage="KLAM Jérôme" />
+                  </strong>
                   <h3 className="mb-0">
-                    <a className="text-dark">
-                      Contact
-                    </a>
+                    <a className="text-dark">Contact</a>
                   </h3>
                   <p className="card-text mb-auto">
                     <FormattedMessage
@@ -60,22 +56,34 @@ class About extends Component {
                     />
                   </p>
                   <p className="card-text mb-auto">
-                    <FormattedMessage
-                      id="app.contact.tel"
-                      defaultMessage="00 33 6 51 81 70 28"
-                    />
+                    <FormattedMessage id="app.contact.tel" defaultMessage="00 33 6 51 81 70 28" />
                   </p>
                   <div className="row">
-                    <div classNale="col-xs-w26"> 
+                    <div className="col-xs-w26">
                       <p className="card-text mb-auto">
-                        <a href={"mailto:" + intl.formatMessage({ id: 'app.contact.email', defaultMessage: 'jeromeklam@free.fr' })}>
+                        <a
+                          href={
+                            'mailto:' +
+                            intl.formatMessage({
+                              id: 'app.contact.email',
+                              defaultMessage: 'jeromeklam@free.fr',
+                            })
+                          }
+                        >
                           <FormattedMessage
                             id="app.contact.email"
                             defaultMessage="jeromeklam@free.fr"
                           />
                         </a>
                       </p>
-                      <a href={intl.formatMessage({ id: 'app.contact.site', defaultMessage: 'https://freeasso.fr' })} target="_blank" rel="noopener noreferrer">
+                      <a
+                        href={intl.formatMessage({
+                          id: 'app.contact.site',
+                          defaultMessage: 'https://freeasso.fr',
+                        })}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
                         <FormattedMessage
                           id="app.contact.site"
                           defaultMessage="https://freeasso.fr"
@@ -91,7 +99,7 @@ class About extends Component {
             </div>
           </div>
           <hr />
-          <Copyright />
+          <Copyright className="bg-white" />
         </div>
       </ResponsiveContent>
     );

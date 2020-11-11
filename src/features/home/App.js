@@ -50,6 +50,7 @@ export class App extends Component {
       this.props.actions.loadAll();
     } else {
       // Check auth...
+      this.props.actions.loadPublic();
       this.props.actions.checkIsAuthenticated();
     }
     if (navigator.geolocation) {

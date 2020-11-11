@@ -99,7 +99,7 @@ export class DashboardToolbar extends Component {
               <div className="nav-item">
                 {!this.state.editable && (
                   <button
-                    className="btn btn-primary text-light"
+                    className="btn btn-secondary text-light"
                     title="Recharger votre présentation personnalisée"
                     onClick={this.onRefreshDashboard}
                   >
@@ -109,7 +109,7 @@ export class DashboardToolbar extends Component {
                 )}
                 {!this.state.editable && (
                   <button
-                    className="btn btn-primary text-light"
+                    className="btn btn-warning text-light"
                     title="Revenir à la présentation initiale"
                     onClick={this.onResetDashboard}
                   >
@@ -117,7 +117,7 @@ export class DashboardToolbar extends Component {
                     <Highlight position="bottom" theme="DASHBOARD" title="Revenir à la présentation par défaut" />
                   </button>
                 )}
-                {!this.state.editable && (
+                {this.state.editable && (
                   <button
                     className="btn btn-primary text-light"
                     title="Enregistrer cette présentation personnalisée"
@@ -129,7 +129,7 @@ export class DashboardToolbar extends Component {
                 )}
                 {!this.state.editable ? (
                   <button
-                    className="btn btn-primary text-light"
+                    className="btn btn-secondary text-light"
                     title="Modifier la disposition"
                     onClick={this.onLocalEdit}
                   >
@@ -138,7 +138,7 @@ export class DashboardToolbar extends Component {
                   </button>
                 ) : (
                   <button
-                    className="btn btn-primary text-light"
+                    className="btn btn-warning text-light"
                     title="Stop"
                     onClick={this.onLocalEdit}
                   >

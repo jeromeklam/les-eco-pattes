@@ -221,7 +221,7 @@ export class DefaultPage extends Component {
               <div className="nav justify-content-left">
                 <div className="nav-item">
                   <button
-                    className="btn btn-primary text-light"
+                    className="btn btn-secondary text-light"
                     onClick={this.onSelectUsers}
                     ref={this.state.userRef}
                   >
@@ -246,7 +246,7 @@ export class DefaultPage extends Component {
                 </div>
                 <div className="nav-item">
                   <button
-                    className="btn btn-primary text-light"
+                    className="btn btn-secondary text-light"
                     onClick={this.onSelectCategories}
                     ref={this.state.categoryRef}
                   >

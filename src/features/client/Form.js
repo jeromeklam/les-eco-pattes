@@ -84,7 +84,7 @@ function Form(props) {
   let parent = '';
   if (values.cli_sanit || values._private) {
     if (values.cli_sanit) {
-      parent = 'Clinique';
+      parent = 'Clinique de rattachement';
     } else {
       parent = 'Famille';
     }

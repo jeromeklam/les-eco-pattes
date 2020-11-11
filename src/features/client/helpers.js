@@ -79,7 +79,7 @@ export const getCols = ({ props }) => {
     {
       name: 'parent_client',
       label: 'Attaché à',
-      col: 'parent_client.id',
+      col: 'parent_client.lastname',
       fDisplay: item => {
         return getFullName(item.parent_client);
       },
@@ -87,6 +87,17 @@ export const getCols = ({ props }) => {
       mob_size: '18',
       title: true,
       sortable: true,
+      filterable: {
+        type: 'text',
+      },
+    },
+    {
+      name: 'parent_client2',
+      label: 'Attaché à (sélecteur)',
+      col: 'parent_client.id',
+      size: '7',
+      mob_size: '18',
+      hidden: true,
       filterable: {
         type: 'picker',
         display: item => {

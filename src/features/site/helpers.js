@@ -183,14 +183,20 @@ export const getCols = ({ props }) => {
     {
       name: 'parent_site',
       label: 'Site principal',
-      col: 'parent_site.id',
-      fDisplay: item => {
-        return item.parent_site && item.parent_site.site_name;
-      },
+      col: 'parent_site.site_name',
       size: '6',
       mob_size: '26',
       title: true,
       sortable: true,
+      filterable: { type: 'text' },
+    },
+    {
+      name: 'parent_site2',
+      label: 'Site principal (sélecteur)',
+      col: 'parent_site.id',
+      size: '0',
+      mob_size: '0',
+      hidden: true,
       filterable: { type: 'picker', display: 'site_name', onSearch: searchSite },
     },
     {
@@ -201,7 +207,7 @@ export const getCols = ({ props }) => {
       mob_size: 10,
       title : true,
       sortable: true,
-      filterable: true,
+      filterable: false,
     },
     {
       name: 'sep2',

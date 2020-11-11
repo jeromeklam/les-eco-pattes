@@ -138,14 +138,20 @@ export const getCols = ({ props }) => {
     {
       name: 'move_from_name',
       label: 'Site départ',
-      col: 'from_site.id',
-      fDisplay: item => {
-        return item.from_site && item.from_site.site_name;
-      },
+      col: 'from_site.site_name',
       size: '6',
       mob_size: '36',
       title: true,
       sortable: true,
+      filterable: { type: 'text' },
+    },
+    {
+      name: 'move_from_name2',
+      label: 'Site départ (sélecteur)',
+      col: 'from_site.id',
+      size: '6',
+      mob_size: '36',
+      hidden: true,
       filterable: { type: 'picker', display: 'site_name', onSearch: searchSite },
     },
     {
@@ -162,14 +168,20 @@ export const getCols = ({ props }) => {
     {
       name: 'move_to_name',
       label: 'Site arrivée',
-      col: 'to_site.id',
-      fDisplay: item => {
-        return item.to_site && item.to_site.site_name;
-      },
+      col: 'to_site.site_name',
       size: '6',
       mob_size: '36',
       title: true,
       sortable: true,
+      filterable: { type: 'text' },
+    },
+    {
+      name: 'move_to_name2',
+      label: 'Site arrivée (sélecteur)',
+      col: 'to_site.id',
+      size: '6',
+      mob_size: '36',
+      hidden: true,
       filterable: { type: 'picker', display: 'site_name', onSearch: searchSite },
     },
     {

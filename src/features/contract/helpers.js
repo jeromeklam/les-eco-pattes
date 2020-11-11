@@ -108,14 +108,22 @@ export const getCols = ({ props }) => {
     {
       name: 'site.site_name',
       label: 'Site',
-      col: 'site.id',
-      fDisplay: item => {
-        return item.site && item.site.site_name;
-      },
+      col: 'site.site_name',
       size: '10',
       mob_size: '36',
       title: true,
       sortable: true,
+      filterable: { type: 'text' },
+    },
+    {
+      name: 'site.site_name2',
+      label: 'Site (sélecteur)',
+      col: 'site.id',
+      size: '10',
+      mob_size: '36',
+      title: true,
+      sortable: true,
+      hidden: true,
       filterable: { type: 'picker', display: 'site_name', onSearch: searchSite },
     },
     {

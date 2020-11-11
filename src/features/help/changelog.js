@@ -2,14 +2,18 @@ export default `
 
 # Version 2.0.1 : 11/11/2020
   * Général
-    * Déconnexion dans Mon compte
+    * Déconnexion depuis le menu "Mon compte", accessible depuis l'avatar.
     * Correction dans la recherche sous forme de liste dans les filtres
-    * Aide à la recherche pour les sous-élements dans les filtres (auto-complétion)
+    * Aide à la recherche pour les sous-élements dans les filtres (sélecteur)
+    * Ajout de la gestion des cookies (RGPD)
+    * Page publique complétée
   * Personnes > Contacts
     * Possibilité pour les vétérinaires d'être attaché à une clinique avec une coche Sanitaire
     * Depuis les cliniques affichage de la listes de vétérinaires attachés
+    * Début de la gestion des familles (structure) pour les particuliers
   * Site
     * Si site attacché à une clinique, affichage de la liste des vétérinaires liés
+
 # Version 2.0.0 : 25/10/2020
   * Authentification
     * Correction dans le changement de mot de passe

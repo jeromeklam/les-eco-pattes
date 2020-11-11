@@ -20,50 +20,63 @@ import {
   Task as TaskIcon,
 } from '../icons';
 
-export const appMenu = [
-  {
+export const globalMenu = (authCookie = false) => {
+  let appMenu = [];
+  appMenu.push({
     icon: <HomeIcon />,
     label: <FormattedMessage id="app.features.home.app.menu.home" defaultMessage="Home" />,
     url: '/',
     role: 'HOME',
     help: <FormattedMessage id="app.features.home.app.menu.help.home" defaultMessage="Back home" />,
     public: true,
-  },
-  {
-    icon: <LoginIcon />,
-    label: <FormattedMessage id="app.features.home.app.menu.signin" defaultMessage="Sign in" />,
-    url: '/auth/signin',
-    role: 'SIGNIN',
-    help: <FormattedMessage id="app.features.home.app.menu.help.signin" defaultMessage="Sign in" />,
-    public: true,
-  },
-  {
+  });
+  if (authCookie) {
+    appMenu.push({
+      icon: <LoginIcon />,
+      label: <FormattedMessage id="app.features.home.app.menu.signin" defaultMessage="Sign in" />,
+      url: '/auth/signin',
+      role: 'SIGNIN',
+      help: (
+        <FormattedMessage id="app.features.home.app.menu.help.signin" defaultMessage="Sign in" />
+      ),
+      public: true,
+    });
+  }
+  appMenu.push({
     icon: <LogoutIcon />,
     label: <FormattedMessage id="app.features.home.app.menu.signout" defaultMessage="Sign out" />,
     url: '/auth/signout',
     role: '-SIGNOUT-',
-    help: <FormattedMessage id="app.features.home.app.menu.help.signout" defaultMessage="Sign out" />,
+    help: (
+      <FormattedMessage id="app.features.home.app.menu.help.signout" defaultMessage="Sign out" />
+    ),
     public: false,
-  },
-  {
+  });
+  appMenu.push({
     icon: <SocialIcon url="https://facebook.com/Les-éco-pattes-140387953308320/" />,
     label: <FormattedMessage id="app.features.home.app.menu.facebook" defaultMessage="Facebook" />,
     url: null,
     role: 'SOCIAL',
     position: 1,
-    help: <FormattedMessage id="app.features.home.app.menu.help.facebook" defaultMessage="Facebook" />,
+    help: (
+      <FormattedMessage id="app.features.home.app.menu.help.facebook" defaultMessage="Facebook" />
+    ),
     public: true,
-  },
-  {
+  });
+  appMenu.push({
     icon: <DashboardIcon />,
-    label: <FormattedMessage id="app.features.home.app.menu.dashboard" defaultMessage="Dashboard" />,
+    label: (
+      <FormattedMessage id="app.features.home.app.menu.dashboard" defaultMessage="Dashboard" />
+    ),
     url: '/dashboard',
     role: 'NAV',
     position: 2,
-    help: <FormattedMessage id="app.features.home.app.menu.help.dashboard" defaultMessage="Dashboard" />,
+    help: (
+      <FormattedMessage id="app.features.home.app.menu.help.dashboard" defaultMessage="Dashboard" />
+    ),
     public: false,
-  },
-  {
+  });
+  appMenu.push({
     icon: <MapIcon />,
     label: <FormattedMessage id="app.features.home.app.menu.map" defaultMessage="Map" />,
     url: '/pigeon-map',
@@ -71,8 +84,8 @@ export const appMenu = [
     position: 3,
     help: <FormattedMessage id="app.features.home.app.menu.help.map" defaultMessage="Map" />,
     public: false,
-  },
-  {
+  });
+  appMenu.push({
     icon: <AgendaIcon />,
     label: <FormattedMessage id="app.features.home.app.menu.agenda" defaultMessage="Agenda" />,
     url: '/agenda',
@@ -80,8 +93,8 @@ export const appMenu = [
     position: 4,
     help: <FormattedMessage id="app.features.home.app.menu.help.agenda" defaultMessage="Agenda" />,
     public: false,
-  },
-  {
+  });
+  appMenu.push({
     icon: <TaskIcon />,
     label: <FormattedMessage id="app.features.home.app.menu.alerts" defaultMessage="Tâches" />,
     url: '/alert',
@@ -89,26 +102,34 @@ export const appMenu = [
     position: 5,
     help: <FormattedMessage id="app.features.home.app.menu.help.alerts" defaultMessage="Tâches" />,
     public: false,
-  },
-  {
+  });
+  appMenu.push({
     icon: <ContractIcon />,
-    label: <FormattedMessage id="app.features.home.app.menu.contracts" defaultMessage="Contracts" />,
+    label: (
+      <FormattedMessage id="app.features.home.app.menu.contracts" defaultMessage="Contracts" />
+    ),
     url: '/contract',
     role: 'NAV',
     position: 6,
-    help: <FormattedMessage id="app.features.home.app.menu.help.contracts" defaultMessage="Contracts" />,
+    help: (
+      <FormattedMessage id="app.features.home.app.menu.help.contracts" defaultMessage="Contracts" />
+    ),
     public: false,
-  },
-  {
+  });
+  appMenu.push({
     icon: <SiteIcon />,
-    label: <FormattedMessage id="app.features.home.app.menu.locations" defaultMessage="Locations" />,
+    label: (
+      <FormattedMessage id="app.features.home.app.menu.locations" defaultMessage="Locations" />
+    ),
     url: '/site',
     role: 'NAV',
     position: 7,
-    help: <FormattedMessage id="app.features.home.app.menu.help.locations" defaultMessage="Locations" />,
+    help: (
+      <FormattedMessage id="app.features.home.app.menu.help.locations" defaultMessage="Locations" />
+    ),
     public: false,
-  },
-  {
+  });
+  appMenu.push({
     icon: <CauseIcon />,
     label: <FormattedMessage id="app.features.home.app.menu.causes" defaultMessage="Animals" />,
     url: '/cause',
@@ -116,8 +137,8 @@ export const appMenu = [
     position: 8,
     help: <FormattedMessage id="app.features.home.app.menu.help.causes" defaultMessage="Animals" />,
     public: false,
-  },
-  {
+  });
+  appMenu.push({
     icon: <PersonIcon />,
     label: <FormattedMessage id="app.features.home.app.menu.clients" defaultMessage="People" />,
     url: '/client',
@@ -125,17 +146,21 @@ export const appMenu = [
     position: 9,
     help: <FormattedMessage id="app.features.home.app.menu.help.clients" defaultMessage="People" />,
     public: false,
-  },
-  {
+  });
+  appMenu.push({
     icon: <MovementIcon />,
-    label: <FormattedMessage id="app.features.home.app.menu.movements" defaultMessage="Movements" />,
+    label: (
+      <FormattedMessage id="app.features.home.app.menu.movements" defaultMessage="Movements" />
+    ),
     url: '/movement',
     role: 'NAV',
     position: 10,
-    help: <FormattedMessage id="app.features.home.app.menu.help.movements" defaultMessage="Movements" />,
+    help: (
+      <FormattedMessage id="app.features.home.app.menu.help.movements" defaultMessage="Movements" />
+    ),
     public: false,
-  },
-  {
+  });
+  appMenu.push({
     icon: <StockIcon />,
     label: <FormattedMessage id="app.features.home.app.menu.stock" defaultMessage="Stock" />,
     url: '/stock',
@@ -143,15 +168,17 @@ export const appMenu = [
     position: 11,
     help: <FormattedMessage id="app.features.home.app.menu.help.stock" defaultMessage="Stock" />,
     public: false,
-  },
-  {
+  });
+  appMenu.push({
     icon: <SettingsIcon />,
     label: <FormattedMessage id="app.features.home.app.menu.settings" defaultMessage="Settings" />,
     url: null,
     role: 'MENU',
     position: 20,
     public: false,
-    help: <FormattedMessage id="app.features.home.app.menu.help.settings" defaultMessage="Settings" />,
+    help: (
+      <FormattedMessage id="app.features.home.app.menu.help.settings" defaultMessage="Settings" />
+    ),
     options: [
       {
         icon: null,
@@ -203,23 +230,35 @@ export const appMenu = [
         position: 99,
       },
     ],
-  },
-  {
+  });
+  appMenu.push({
     icon: <VersionIcon />,
-    label: <FormattedMessage id="app.features.home.app.menu.changelog" defaultMessage="Changelog" />,
+    label: (
+      <FormattedMessage id="app.features.home.app.menu.changelog" defaultMessage="Changelog" />
+    ),
     url: '/version',
     role: 'NAV',
     position: 98,
-    help: <FormattedMessage id="app.features.home.app.menu.help.changelog" defaultMessage="Changelog" />,
+    help: (
+      <FormattedMessage id="app.features.home.app.menu.help.changelog" defaultMessage="Changelog" />
+    ),
     public: true,
-  },
-  {
+  });
+  appMenu.push({
     icon: <AboutIcon />,
-    label: <FormattedMessage id="app.features.home.app.menu.whoAreWe" defaultMessage="Who are we ?" />,
+    label: (
+      <FormattedMessage id="app.features.home.app.menu.whoAreWe" defaultMessage="Who are we ?" />
+    ),
     url: '/about',
     role: 'ABOUT',
     position: 99,
-    help: <FormattedMessage id="app.features.home.app.menu.help.whoAreWe" defaultMessage="Who are we ?" />,
+    help: (
+      <FormattedMessage
+        id="app.features.home.app.menu.help.whoAreWe"
+        defaultMessage="Who are we ?"
+      />
+    ),
     public: true,
-  },
-];
+  });
+  return appMenu;
+};
