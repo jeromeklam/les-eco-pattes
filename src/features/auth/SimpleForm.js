@@ -124,7 +124,7 @@ export class SimpleForm extends Component {
 
   onSignout() {
     this.props.actions.signOut().then(result => {
-      this.props.push('/');
+      this.props.actions.push('/');
     });
   }
 
@@ -313,8 +313,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    actions: bindActionCreators({ ...actions, propagateModel }, dispatch),
-    push: push,
+    actions: bindActionCreators({ ...actions, propagateModel, push }, dispatch),
   };
 }
 

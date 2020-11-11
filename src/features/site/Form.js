@@ -306,7 +306,9 @@ console.log("FK",values.sanitary );
           {values.sanitary && values.sanitary.id > 0  && (
             <div className="row">
               <div className="col-sm-w36">
-                <InlineClients parentId={values.sanitary.id}/>
+                <div className="border border-secondary rounded overflow-x-hidden">
+                  <InlineClients parentId={values.sanitary.id}/>
+                </div>
               </div>
             </div>
           )}
