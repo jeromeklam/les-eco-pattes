@@ -1,23 +1,33 @@
 export default `
 
+# Version 2.0.1 : 11/11/2020
+  * Général
+    * Déconnexion dans Mon compte
+    * Correction dans la recherche sous forme de liste dans les filtres
+    * Aide à la recherche pour les sous-élements dans les filtres (auto-complétion)
+  * Personnes > Contacts
+    * Possibilité pour les vétérinaires d'être attaché à une clinique avec une coche Sanitaire
+    * Depuis les cliniques affichage de la listes de vétérinaires attachés
+  * Site
+    * Si site attacché à une clinique, affichage de la liste des vétérinaires liés
 # Version 2.0.0 : 25/10/2020
   * Authentification
     * Correction dans le changement de mot de passe
     * Correction dans le changement d'avatar
-    * correction dans la modification des préférences
-  * Tableau de bord 
+    * Correction dans la modification des préférences
+  * Tableau de bord
     * Bloc alertes
       * Affichage des alertes avec une date d'échéance dépassée avec un icône
       * Affichage des alertes pour des tâches à effectuer dans les 8 jours
   * Contrats
     * Ajout d'une coche sous-traitant
   * Technique
-    * Nouvelles versions des librairies de développement 
+    * Nouvelles versions des librairies de développement
 
 # Version 1.4.0 : 04/10/2020
   * Général
-    * Filtres 
-      * Modification du fonctionnement des filtres 
+    * Filtres
+      * Modification du fonctionnement des filtres
       * Suppression du pied de page avec le lien Facebook une fois connecté
   * Tableau de bord
     * Ajout d'un bouton pour passer en mode mofification de la taille ou de la position des blocs
@@ -32,7 +42,7 @@ export default `
     * Suivi
       * Ajout d'un onglet pour saisir ce qui a été fait su un site et possibilité de créer des tâches récurrentes à effectuer
   * Mouvement
-    * Correction du changement de statut d'un mouvement qui ne modifiait pas le site des animaux 
+    * Correction du changement de statut d'un mouvement qui ne modifiait pas le site des animaux
   * Contrats
     * Ajout d'une gestion des contrats
   * Tâches
@@ -40,9 +50,9 @@ export default `
   * Tableau de bord
     * Affichage des alertes sur les tâches à effectuer
     * Pour changer le positionnement ou la taille des blocs il faut passer en édition du tableau de bord (icône avec crayon).
-  * Agenda 
+  * Agenda
     * Ajout d'un agenda pour voir les tâches, suivis et autres rendez-vous
-    
+
 
 # Version 1.3.1 : 10/08/2020
   * Sites
@@ -61,44 +71,44 @@ export default `
       * Si animal sorti,  dans la colonne description, on voit le motif de sortie et plus le commentaire
 
 # Version 1.2.2 : 31/07/2020
-  * Général 
+  * Général
     * Modification de la taille des fenêtres pour quelles soient mieux affichées sur une plus petite résolution
     * Ajout d'un trait autour des boutons
-  * Tableau de bord 
+  * Tableau de bord
     * Nombre de sites Actifs
     * Nombre d'animaux Actifs
-    * Linéaire des clôtures posées 
+    * Linéaire des clôtures posées
   * Sites
     * Liste
-      * Ajout de la colonne Type 
+      * Ajout de la colonne Type
       * Ajout de la colonne Nombre d'animaux
-      * Par défaut, on n'a dans la liste que les sites qui n'ont pas de date de fin de validité 
+      * Par défaut, on n'a dans la liste que les sites qui n'ont pas de date de fin de validité
         ou une date supérieure à la date du jour
     * Fiche
       * Suppression de la coche "Conforme"
       * N° EDE devient obligatoire
   * Animaux
     * Liste
-      * Correction sur l'option "Tout sélectionner" 
+      * Correction sur l'option "Tout sélectionner"
       * La première colonne est le numéro de boucle
       * Ajout de la colonne "En attente", si l'animal est en attente, il y a dans la colonne une montre
-      * Par défaut, on a dans la liste tous les animaux qui n'ont pas de date de fin de validité 
-        ou une date supérieure à la date du jour 
+      * Par défaut, on a dans la liste tous les animaux qui n'ont pas de date de fin de validité
+        ou une date supérieure à la date du jour
         et donc, les animaux en attente seront dans la liste si leur date de fin de validité est ok
       * La recherche d'un éleveur s'ouvre directement avec la liste de tous les éleveurs
       * De même la recherche d'un vétérinaire dans la saisie d'une ligne de maladie s'ouvre directement sur la liste des vétérinaires
     * Fiche
       * Le N° de boucle devient obligatoire et plus le nom
-      * Modification de la taille des vignettes des images et des documents liés 
-        car dans certains cas la visualisation et la suppression ne fonctionnait pas 
+      * Modification de la taille des vignettes des images et des documents liés
+        car dans certains cas la visualisation et la suppression ne fonctionnait pas
       * Ajout de la coche "En attente"
   * Mouvement
     * Création depuis une liste d'animaux d'un site
-      * Si des animaux sont sélectionnés, on peut créer un mouvement ou une sortie 
+      * Si des animaux sont sélectionnés, on peut créer un mouvement ou une sortie
         Le site de départ est pré-rempli et non modifiable
       * Si aucun animal n'est sélectionné, on peut juste créer une entrée
         Le site d'arrivée est pré-rempli et non modifiable
-    * Fiche 
+    * Fiche
       * Suppression de l'en-tête du mouvement, les informations sont seulement dans les onglets
       * Ajout d'un état "archivé" qui empêche toute modification
       * Suppression impossible d'un mouvement validé ou archivé
@@ -200,7 +210,7 @@ export default `
     * Ajout d'actions sur les différents éléments
 * Stock
     * Début de gestion des familles
-    * Correction de bugs d'affichage 
+    * Correction de bugs d'affichage
 
 # Version 1.0.2 : 23/02/2020
 
@@ -226,7 +236,7 @@ export default `
 
 * Reprise de données
     * Gestion provenance et éleveur
-    * Formatage n° EDE 
+    * Formatage n° EDE
     * Formatage n° Boucle
 * Général
     * Ajout des champs composant le tri dans l'en-tête de la recherche
@@ -260,5 +270,5 @@ export default `
         * Formatage du numéro de boucle en &lt;code pays : 2 lettres&gt;.&lt;code exploitation : 6 chiffres&gt;.&lt;numéro d'ordre : 5 chiffres&gt;
 * Personnes
     * Liste
-        * Membres renommé en Personnes  
+        * Membres renommé en Personnes
 `;
