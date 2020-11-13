@@ -95,8 +95,6 @@ export const getCols = ({ props }) => {
       name: 'parent_client2',
       label: 'Attaché à (sélecteur)',
       col: 'parent_client.id',
-      size: '7',
-      mob_size: '18',
       hidden: true,
       filterable: {
         type: 'picker',

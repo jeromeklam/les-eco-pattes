@@ -236,8 +236,6 @@ export const getCols = ({ props }) => {
       name: 'site2',
       label: 'Site (sélecteur)',
       col: 'site.id',
-      size: '0',
-      mob_size: '0',
       hidden: true,
       filterable: { type: 'picker', display: 'site_name', onSearch: searchSite },
     },

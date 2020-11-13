@@ -161,7 +161,7 @@ export class DashboardGrid extends Component {
             </div>
             <div key="ml" data-grid={{ w: 6, h: 4, x: 28, y: 22, minW: 6, maxW: 18, minH: 4 }}>
               <DashboardCard
-                title="Clôtures posées"
+                title="Clôtures"
                 count={this.props.dashboard.stats.clot_site || 0}
                 unit="ml"
                 icon={<FenceIcon />}
