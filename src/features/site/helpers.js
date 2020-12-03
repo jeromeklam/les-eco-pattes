@@ -194,8 +194,6 @@ export const getCols = ({ props }) => {
       name: 'parent_site2',
       label: 'Site principal (sélecteur)',
       col: 'parent_site.id',
-      size: '0',
-      mob_size: '0',
       hidden: true,
       filterable: { type: 'picker', display: 'site_name', onSearch: searchSite },
     },
