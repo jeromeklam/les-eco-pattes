@@ -5,6 +5,7 @@
 	"app.contact.name": "Les Eco-Pattes",
 	"app.contact.site": "http://lesecopattes.fr",
 	"app.contact.tel": "00 33 6 29 33 52 12",
+	"rbf.page.footer.followUs" : "Follow us",
 	"app.errors.code.10300002": "Invalid password !",
 	"app.errors.code.10300016": "Invalid or expired token !",
 	"app.features.about.about.application": "Management application for les Eco-Pattes",

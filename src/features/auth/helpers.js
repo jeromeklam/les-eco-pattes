@@ -25,6 +25,11 @@ export const schema = {
             "type": "boolean",
             "default": true 
           },
+          "listdetails": {
+            "title": 'Affichage des détails',
+            "enum": ['right', 'inline'],
+            "default": 'right',
+          },
         },
         "required": [ "savemenu", "menuposition" ],
         "default" : {"savemenu": true, "menuposition" : true}

@@ -5,27 +5,14 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as actions from './redux/actions';
 import { normalizedObjectModeler } from 'jsonapi-front';
-import { ResponsiveList, ResponsiveQuickSearch } from 'react-bootstrap-front';
+import { ResponsiveQuickSearch } from 'react-bootstrap-front';
 import { loadMovements } from '../cause-movement/redux/actions';
 import { loadGrowths } from '../cause-growth/redux/actions';
 import { loadSicknesses } from '../cause-sickness/redux/actions';
 import {
-  FilterEmpty as FilterEmptyIcon,
-  FilterFull as FilterFullIcon,
-  FilterClear as FilterClearIcon,
-  FilterDefault as FilterDefaultIcon,
-  FilterClearDefault as FilterClearDefaultIcon,
-  SimpleCancel as CancelPanelIcon,
-  SimpleCheck as ValidPanelIcon,
-  SortDown as SortDownIcon,
-  SortUp as SortUpIcon,
-  Sort as SortNoneIcon,
   Search as SearchIcon,
-  DelOne as ClearIcon,
-  Calendar as CalendarIcon,
-  Close as CloseIcon,
 } from '../icons';
-import { deleteSuccess, showErrors } from '../ui';
+import { deleteSuccess, showErrors, List as UiList } from '../ui';
 import { InlineMovements } from '../cause-movement';
 import { InlineSicknesses } from '../cause-sickness';
 import { InlineGrowths } from '../cause-growth';
@@ -207,6 +194,8 @@ export class List extends Component {
     if (this.props.cause.items.FreeAsso_Cause) {
       items = normalizedObjectModeler(this.props.cause.items, 'FreeAsso_Cause');
     }
+    const counter = this.props.cause.items.length + ' / ' + this.props.cause.totalItems;
+
     const globalActions = getGlobalActions(this);
     const inlineActions = getInlineActions(this);
     const selectActions = getSelectActions(this);
@@ -261,45 +250,33 @@ export class List extends Component {
     const { selected } = this.props.cause;
     return (
       <div>
-        <ResponsiveList
+        <UiList
           title="Animaux"
           cols={cols}
           items={items}
-          selected={selected}
-          selectMenu={selectActions}
           quickSearch={quickSearch}
           mainCol="cau_code"
-          cancelPanelIcon={<CancelPanelIcon />}
-          validPanelIcon={<ValidPanelIcon />}
-          sortDownIcon={<SortDownIcon color="secondary" />}
-          sortUpIcon={<SortUpIcon color="secondary" />}
-          sortNoneIcon={<SortNoneIcon color="secondary" />}
-          calIcon={<CalendarIcon className="text-secondary" />}
-          clearIcon={<ClearIcon className="text-warning" />}
-          closeIcon={<CloseIcon />}
-          inlineActions={inlineActions}
-          inlineOpenedId={id}
           inlineOpenedItem={this.state.item}
+          onClick={this.onSelectList}
+          currentItem={this.state.item}
           inlineComponent={inlineComponent}
+          inlineActions={inlineActions}
           globalActions={globalActions}
           sort={this.props.cause.sort}
           filters={this.props.cause.filters}
-          filterFullIcon={<FilterFullIcon color="white" />}
-          filterEmptyIcon={<FilterEmptyIcon color="white" />}
-          filterClearIcon={<FilterClearIcon color="white" />}
-          filterDefaultIcon={<FilterDefaultIcon color="white" />}
-          filterClearDefaultIcon={<FilterClearDefaultIcon color="white" />}
-          onSearch={this.onQuickSearch}
+          onSearch={this.onQuickSearch} 
           onSort={this.onUpdateSort}
           onSetFiltersAndSort={this.onSetFiltersAndSort}
           onClearFilters={() => this.onFiltersDefault(true)}
           onClearFiltersDefault={() => this.onFiltersDefault(false)}
           onLoadMore={this.onLoadMore}
-          onSelect={this.onSelect}
-          onClick={this.onSelectList}
           loadMorePending={this.props.cause.loadMorePending}
           loadMoreFinish={this.props.cause.loadMoreFinish}
           loadMoreError={this.props.cause.loadMoreError}
+          counter={counter}
+          selected={selected}
+          selectMenu={selectActions}
+          onSelect={this.onSelect}
           fClassName={this.itemClassName}
         />
         {this.state.cauId > 0 && (

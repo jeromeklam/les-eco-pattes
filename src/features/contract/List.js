@@ -38,6 +38,7 @@ export class List extends Component {
     this.state = {
       timer: null,
       ctId : -1,
+      mode: null,
     };
     this.onCreate = this.onCreate.bind(this);
     this.onGetOne = this.onGetOne.bind(this);

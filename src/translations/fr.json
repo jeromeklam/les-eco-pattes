@@ -5,6 +5,7 @@
 	"app.contact.name": "Les Eco-Pattes",
 	"app.contact.site": "http://lesecopattes.fr",
 	"app.contact.tel": "00 33 6 29 33 52 12",
+	"rbf.page.footer.followUs" : "Suivez-nous",
   "app.errors.code.404": "Non trouvé !",
   "app.errors.code.10300000": "Erreur générale !",
 	"app.errors.code.10300001": "Erreur d'api !",

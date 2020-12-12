@@ -36,7 +36,7 @@ export const getInlineActions = ({
       theme: 'secondary',
       icon: <FollowIcon color="white" />,
       role: 'DETAIL',
-      active: state.alertsCpontrat > 0,
+      active: state.mode === 'alert',
     },
     {
       name: 'modify',

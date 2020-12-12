@@ -24,7 +24,7 @@ export class Home extends Component {
           <div className="home-home-inner text-center">
             <br />
             <h2 className="home-title">
-              Bienvenue sur l'application de gestion de l'éco pâtturage
+              Bienvenue sur l'application de gestion de l'éco-pâturage
             </h2>
             <br />
             <br />

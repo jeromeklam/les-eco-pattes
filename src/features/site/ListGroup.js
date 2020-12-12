@@ -101,7 +101,6 @@ export class ListGroup extends Component {
   }
 
   static getDerivedStateFromProps(props, state) {
-    //console.log("FK GDSFP",props.selected, state.selected,state.causes);
     if (props.selected !== state.selected) {
       let documents = 0;
       if (props.selected === state.documents) {

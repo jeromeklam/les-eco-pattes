@@ -144,6 +144,7 @@ export class Page extends Component {
           menuOpened={<MenuOpenedIcon />}
           menuClosed={<MenuClosedIcon />}
           footer={!this.props.auth.authenticated}
+          t={this.props.intl.formatMessage}
         >
           {this.props.auth.firstCheck &&
           (!this.props.auth.authenticated || this.props.home.loadAllFinish) ? (
