@@ -3,6 +3,7 @@ import { getInitFilters } from './initFilters';
 
 const initialState = {
   items: getNewNormalizedObject('FreeAsso_Cause'),
+  totalItems: 0,
   selected: [],
   movements: [],
   documents: [],

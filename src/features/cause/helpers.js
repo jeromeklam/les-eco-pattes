@@ -212,6 +212,7 @@ export const getCols = ({ props }) => {
       filterable: { type: 'text' },
       selectable: true,
       first: true,
+      card: { role: 'TITLE' },
     },
     {
       name: 'type',
@@ -221,6 +222,7 @@ export const getCols = ({ props }) => {
       mob_size: '36',
       title: true,
       sortable: true,
+      card: { role: 'FIELD' },
     },
     {
       name: 'site',
@@ -230,7 +232,8 @@ export const getCols = ({ props }) => {
       mob_size: '36',
       title: true,
       sortable: true,
-      filterable: { type: 'text' }
+      filterable: { type: 'text' },
+      card: { role: 'FIELD' },
     },
     {
       name: 'site2',
@@ -314,6 +317,7 @@ export const getCols = ({ props }) => {
       values: sexSelect,
       sortable: false,
       filterable: false,
+      card: { role: 'FIELD' },
     },
     {
       name: 'year',
