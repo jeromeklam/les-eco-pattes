@@ -121,7 +121,7 @@ export class InlineGrowths extends Component {
       return (
         <div className="cause-inline-growths">
           <div className="row">
-            <div className="col-sm-w18">
+            <div className="col-md-w22 col-xl-w18 ">
               <div className="inline-list text-center">
                 <div
                   className={classnames(
@@ -130,7 +130,7 @@ export class InlineGrowths extends Component {
                   )}
                   key="cause-inline-growths"
                 >
-                  <div className="col-xs-w16 col-first">
+                  <div className="col-xs-w16  col-first">
                     <span>Date</span>
                   </div>
                   <div className="col-xs-w8">

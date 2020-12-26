@@ -5,24 +5,9 @@ import { connect } from 'react-redux';
 import { injectIntl } from 'react-intl';
 import * as actions from './redux/actions';
 import { normalizedObjectModeler } from 'jsonapi-front';
-import { ResponsiveList, ResponsiveQuickSearch } from 'react-bootstrap-front';
-import {
-  Close as CloseIcon,
-  FilterEmpty as FilterEmptyIcon,
-  FilterFull as FilterFullIcon,
-  FilterClear as FilterClearIcon,
-  FilterDefault as FilterDefaultIcon,
-  FilterClearDefault as FilterClearDefaultIcon,
-  SimpleCancel as CancelPanelIcon,
-  SimpleCheck as ValidPanelIcon,
-  SortDown as SortDownIcon,
-  SortUp as SortUpIcon,
-  Sort as SortNoneIcon,
-  Search as SearchIcon,
-  DelOne as ClearIcon,
-  Calendar as CalendarIcon,
-} from '../icons';
-import { deleteSuccess, showErrors } from '../ui';
+import { ResponsiveQuickSearch } from 'react-bootstrap-front';
+import { Search as SearchIcon } from '../icons';
+import { deleteSuccess, showErrors, List as UiList } from '../ui';
 import { InlineCauses } from '../cause';
 import { InlineAlerts } from '../alert';
 import {
@@ -201,30 +186,31 @@ export class List extends Component {
     if (this.props.site.items.FreeAsso_Site) {
       items = normalizedObjectModeler(this.props.site.items, 'FreeAsso_Site');
     }
+    const counter = this.props.site.items.length + ' / ' + this.props.site.totalItems;
+
     // Inline Element
     let inlineComponent = null;
-    let id = null;
     switch (this.state.mode) {
       case 'animal':
-        id = this.state.item.id;
-        inlineComponent = <InlineCauses mode="site" siteId={id} />;
+        inlineComponent = <InlineCauses mode="site" siteId={this.state.item.id} />;
         break;
       case 'alert':
-        id = this.state.item.id;
         inlineComponent = (
-          <InlineAlerts mode="site" objId={id} objName="FreeAsso_Site" object={this.state.item} />
+          <InlineAlerts
+            mode="site"
+            objId={this.state.item.id}
+            objName="FreeAsso_Site"
+            object={this.state.item}
+          />
         );
         break;
       case 'photo':
-        id = this.state.item.id;
-        inlineComponent = <InlinePhotos siteId={id} />;
+        inlineComponent = <InlinePhotos siteId={this.state.item.id} />;
         break;
       case 'document':
-        id = this.state.item.id;
-        inlineComponent = <InlineDocuments siteId={id} />;
+        inlineComponent = <InlineDocuments siteId={this.state.item.id} />;
         break;
       default:
-        id = 0;
         break;
     }
     // Toolsbars and lists
@@ -249,42 +235,31 @@ export class List extends Component {
     );
     return (
       <div>
-        <ResponsiveList
+        <UiList
           title="Sites"
           cols={cols}
-          items={items || []}
+          items={items}
           quickSearch={quickSearch}
           mainCol="site_name"
-          cancelPanelIcon={<CancelPanelIcon />}
-          validPanelIcon={<ValidPanelIcon />}
-          sortDownIcon={<SortDownIcon color="secondary" />}
-          sortUpIcon={<SortUpIcon color="secondary" />}
-          sortNoneIcon={<SortNoneIcon color="secondary" />}
-          calIcon={<CalendarIcon className="text-secondary" />}
-          clearIcon={<ClearIcon className="text-warning" />}
-          closeIcon={<CloseIcon />}
-          inlineActions={inlineActions}
-          inlineOpenedId={id}
-          inlineComponent={inlineComponent}
           inlineOpenedItem={this.state.item}
+          onClick={this.onSelectList}
+          currentItem={this.state.item}
+          currentInline={this.state.mode}
+          inlineComponent={inlineComponent}
+          inlineActions={inlineActions}
           globalActions={globalActions}
           sort={this.props.site.sort}
           filters={this.props.site.filters}
-          filterFullIcon={<FilterFullIcon color="white" />}
-          filterEmptyIcon={<FilterEmptyIcon color="white" />}
-          filterClearIcon={<FilterClearIcon color="white" />}
-          filterDefaultIcon={<FilterDefaultIcon color="white" />}
-          filterClearDefaultIcon={<FilterClearDefaultIcon color="white" />}
           onSearch={this.onQuickSearch}
           onSort={this.onUpdateSort}
           onSetFiltersAndSort={this.onSetFiltersAndSort}
           onClearFilters={() => this.onFiltersDefault(true)}
           onClearFiltersDefault={() => this.onFiltersDefault(false)}
           onLoadMore={this.onLoadMore}
-          onClick={this.onSelectList}
           loadMorePending={this.props.site.loadMorePending}
           loadMoreFinish={this.props.site.loadMoreFinish}
           loadMoreError={this.props.site.loadMoreError}
+          counter={counter}
           fClassName={this.itemClassName}
         />
         {this.state.siteId > 0 && (

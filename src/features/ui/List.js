@@ -95,6 +95,8 @@ export class List extends Component {
         filterDefaultIcon={<FilterDefaultIcon color="white" />}
         filterClearDefaultIcon={<FilterClearDefaultIcon color="white" />}
         globalActions={this.props.globalActions}
+        currentItem={this.props.currentItem}
+        currentInline={this.props.currentInline}
         inlineOpenedId={
           this.props.currentItem && this.props.inlineComponent && this.props.currentItem.id
         }

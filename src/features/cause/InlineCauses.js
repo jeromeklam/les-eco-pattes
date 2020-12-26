@@ -125,16 +125,16 @@ export default class InlineCauses extends Component {
                   <div className="inline-select-line-inner bg-secondary" />
                 </div>
               </div>
-              <div className="col-sm-w6">
+              <div className="col-xs-w9 col-lg-w6">
                 <span>N° boucle</span>
               </div>
-              <div className="col-sm-w6">
+              <div className="col-xs-w10 col-lg-w6">
                 <span>Race</span>
               </div>
-              <div className="col-sm-w4">
+              <div className="col-xs-none col-lg-w4">
                 <span>Année</span>
               </div>
-              <div className="col-sm-w3">
+              <div className="col-xs-none col-lg-w3">
                 <span className="pr-2">Sexe</span>
               </div>
               {(this.state.mode === 'site' ||
@@ -244,16 +244,16 @@ export default class InlineCauses extends Component {
                     <div className="inline-select-line-inner bg-secondary" />
                   </div>
                 </div>
-                <div className="col-sm-w6">
+                <div className="col-xs-w9 col-lg-w6">
                   <span>{cause.cau_code}</span>
                 </div>
-                <div className="col-sm-w6">
+                <div className="col-xs-w10 col-lg-w6">
                   <span>{cause.cause_type.caut_name}</span>
                 </div>
-                <div className="col-sm-w4">
+                <div className="col-xs-none col-lg-w4">
                   <span>{cause.cau_year}</span>
                 </div>
-                <div className="col-sm-w3">
+                <div className="col-xs-none col-lg-w3">
                   <span className="pr-2">{getSexlabel(cause.cau_sex, true, 'text-secondary')}</span>
                 </div>
                 {(this.state.mode === 'site' ||

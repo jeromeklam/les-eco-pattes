@@ -100,3 +100,4 @@ export { default as Stop } from './Stop';
 export { default as Camera } from './Camera';
 export { default as Security } from './Security';
 export { default as Expired } from './Expired';
+export { default as User } from './User';

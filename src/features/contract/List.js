@@ -5,27 +5,11 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as actions from './redux/actions';
 import { normalizedObjectModeler } from 'jsonapi-front';
-import { ResponsiveList, ResponsiveQuickSearch } from 'react-bootstrap-front';
-import {
-  FilterEmpty as FilterEmptyIcon,
-  FilterFull as FilterFullIcon,
-  FilterClear as FilterClearIcon,
-  FilterDefault as FilterDefaultIcon,
-  FilterClearDefault as FilterClearDefaultIcon,
-  SimpleCancel as CancelPanelIcon,
-  SimpleCheck as ValidPanelIcon,
-  SortDown as SortDownIcon,
-  SortUp as SortUpIcon,
-  Sort as SortNoneIcon,
-  Search as SearchIcon,
-  Calendar as CalendarIcon,
-  DelOne as ClearDateIcon,
-  Close as CloseIcon,
-} from '../icons';
-import { deleteSuccess, showErrors } from '../ui';
+import { ResponsiveQuickSearch } from 'react-bootstrap-front';
+import { Search as SearchIcon } from '../icons';
+import { deleteSuccess, showErrors, List as UiList } from '../ui';
 import { InlineAlerts } from '../alert';
-import { getGlobalActions, getInlineActions, getCols } from './';
-import { Create, Modify } from './';
+import { getGlobalActions, getInlineActions, getCols, Create, Modify } from './';
 
 export class List extends Component {
   static propTypes = {
@@ -37,7 +21,7 @@ export class List extends Component {
     super(props);
     this.state = {
       timer: null,
-      ctId : -1,
+      ctId: -1,
       mode: null,
     };
     this.onCreate = this.onCreate.bind(this);
@@ -78,7 +62,7 @@ export class List extends Component {
         deleteSuccess();
       })
       .catch(errors => {
-        showErrors(this.props.intl, errors, "", "Suppression impossible ! ");
+        showErrors(this.props.intl, errors, '', 'Suppression impossible ! ');
       });
   }
 
@@ -169,16 +153,18 @@ export class List extends Component {
     }
     // Inline Element
     let inlineComponent = null;
-    let id = null;
     switch (this.state.mode) {
       case 'alert':
-        id = this.state.item.id;
         inlineComponent = (
-          <InlineAlerts mode="contract" objId={id} objName="FreeAsso_Contract" object={this.state.item} />
+          <InlineAlerts
+            mode="contract"
+            objId={this.state.item.id}
+            objName="FreeAsso_Contract"
+            object={this.state.item}
+          />
         );
         break;
       default:
-        id = 0;
         break;
     }
 
@@ -203,50 +189,33 @@ export class List extends Component {
     );
     return (
       <div>
-        <ResponsiveList
+        <UiList
           title="Contrats"
           cols={cols}
           items={items}
           quickSearch={quickSearch}
           mainCol="ct_code"
-          cancelPanelIcon={<CancelPanelIcon color="light" />}
-          validPanelIcon={<ValidPanelIcon color="light" />}
-          sortDownIcon={<SortDownIcon color="secondary" />}
-          sortUpIcon={<SortUpIcon color="secondary" />}
-          sortNoneIcon={<SortNoneIcon color="secondary" />}
-          calIcon={<CalendarIcon className="text-secondary" />}
-          clearIcon={<ClearDateIcon className="text-warning" />}
-          closeIcon={<CloseIcon />}
-          globalActions={globalActions}
-          inlineActions={inlineActions}
-          inlineOpenedId={id}
+          onClick={this.onSelectList}
+          currentItem={this.state.item}
+          currentInline={this.state.mode}
           inlineComponent={inlineComponent}
-          inlineOpenedItem={this.state.item}
+          inlineActions={inlineActions}
+          globalActions={globalActions}
           sort={this.props.contract.sort}
           filters={this.props.contract.filters}
-          filterFullIcon={<FilterFullIcon color="white" />}
-          filterEmptyIcon={<FilterEmptyIcon color="white" />}
-          filterClearIcon={<FilterClearIcon color="white" />}
-          filterDefaultIcon={<FilterDefaultIcon color="white" />}
-          filterClearDefaultIcon={<FilterClearDefaultIcon color="white" />}
           onSearch={this.onQuickSearch}
           onSort={this.onUpdateSort}
           onSetFiltersAndSort={this.onSetFiltersAndSort}
-          onClearFilters={() => this.onFiltersDefault(true)}
-          onClearFiltersDefault={() => this.onFiltersDefault(false)}
+          onClearFilters={this.onClearFilters}
           onLoadMore={this.onLoadMore}
-          onClick={this.onSelectList}
           loadMorePending={this.props.contract.loadMorePending}
           loadMoreFinish={this.props.contract.loadMoreFinish}
           loadMoreError={this.props.contract.loadMoreError}
-          fClassName={this.itemClassName}
         />
         {this.state.ctId > 0 && (
           <Modify modal={true} ctId={this.state.ctId} onClose={this.onClose} />
         )}
-        {this.state.ctId === 0 && (
-          <Create modal={true} onClose={this.onClose} />
-        )}
+        {this.state.ctId === 0 && <Create modal={true} onClose={this.onClose} />}
       </div>
     );
   }
@@ -261,11 +230,8 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    actions: bindActionCreators({ ...actions }, dispatch)
+    actions: bindActionCreators({ ...actions }, dispatch),
   };
 }
 
-export default injectIntl(connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(List));
+export default injectIntl(connect(mapStateToProps, mapDispatchToProps)(List));

@@ -217,34 +217,26 @@ export class List extends Component {
       />
     );
     let inlineComponent = null;
-    let id = null;
     switch (this.state.mode) {
       case 'document':
-        id = this.state.item.id;
         inlineComponent = <InlineDocuments cauId={this.state.item.id} />;
         break;
       case 'photo':
-        id = this.state.item.id;
         inlineComponent = <InlinePhotos cauId={this.state.item.id} />;
         break;
       case 'movement':
-        id = this.state.item.id;
         inlineComponent = <InlineMovements cause={this.state.item} />;
         break;
       case 'growth':
-        id = this.state.item.id;
         inlineComponent = <InlineGrowths cause={this.state.item} />;
         break;
       case 'descendant':
-        id = this.state.item.id;
         inlineComponent = <InlineCauses mode="cause" cause={this.state.item} />;
         break;
       case 'sickness':
-        id = this.state.item.id;
         inlineComponent = <InlineSicknesses cause={this.state.item} />;
         break;
       default:
-        id = 0;
         break;
     }
     const { selected } = this.props.cause;
@@ -259,6 +251,7 @@ export class List extends Component {
           inlineOpenedItem={this.state.item}
           onClick={this.onSelectList}
           currentItem={this.state.item}
+          currentInline={this.state.mode}
           inlineComponent={inlineComponent}
           inlineActions={inlineActions}
           globalActions={globalActions}

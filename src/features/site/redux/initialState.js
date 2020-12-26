@@ -3,6 +3,7 @@ import { getInitFilters } from './initFilters';
 
 const initialState = {
   items: getNewNormalizedObject('FreeAsso_Site'),
+  totalItems: 0,
   causes: [],
   causesModels: [],
   photos: [],

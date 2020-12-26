@@ -4,23 +4,12 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as actions from './redux/actions';
 import { normalizedObjectModeler } from 'jsonapi-front';
-import { ResponsiveList, ResponsiveQuickSearch } from 'react-bootstrap-front';
+import { ResponsiveQuickSearch } from 'react-bootstrap-front';
 import { InlineCauses } from '../cause-movement';
 import {
-  FilterEmpty as FilterEmptyIcon,
-  FilterFull as FilterFullIcon,
-  FilterClear as FilterClearIcon,
-  SimpleCancel as CancelPanelIcon,
-  SimpleCheck as ValidPanelIcon,
-  SortDown as SortDownIcon,
-  SortUp as SortUpIcon,
-  Sort as SortNoneIcon,
   Search as SearchIcon,
-  Calendar as CalendarIcon,
-  DelOne as ClearDateIcon,
-  Close as CloseIcon,
 } from '../icons';
-import { deleteSuccess, deleteError } from '../ui';
+import { deleteSuccess, deleteError, List as UiList } from '../ui';
 import { getGlobalActions, getInlineActions, getCols, Create, Modify } from './';
 
 /**
@@ -162,9 +151,7 @@ export class List extends Component {
    */
   render() {
     let inlineComponent = null;
-    let id = null;
-    if (this.state.mode === 'movement') {
-      id = this.state.item.id;
+    if (this.state.mode === 'cause') {
       inlineComponent = <InlineCauses movement={this.state.item} />;
     }
     // Les des items à afficher avec remplissage progressif
@@ -194,34 +181,24 @@ export class List extends Component {
     );
     return (
       <div>
-        <ResponsiveList
+        <UiList
           title="Mouvements"
           cols={cols}
-          items={items || []}
+          items={items}
           quickSearch={quickSearch}
           mainCol="move_from"
-          cancelPanelIcon={<CancelPanelIcon />}
-          validPanelIcon={<ValidPanelIcon />}
-          sortDownIcon={<SortDownIcon color="secondary" />}
-          sortUpIcon={<SortUpIcon color="secondary" />}
-          sortNoneIcon={<SortNoneIcon color="secondary" />}
-          calIcon={<CalendarIcon className="text-secondary" />}
-          clearIcon={<ClearDateIcon className="text-warning" />}
-          closeIcon={<CloseIcon />}
-          inlineActions={inlineActions}
-          inlineOpenedId={id}
+          onClick={this.onSelectList}
+          currentItem={this.state.item}
+          currentInline={this.state.mode}
           inlineComponent={inlineComponent}
+          inlineActions={inlineActions}
           globalActions={globalActions}
           sort={this.props.movement.sort}
           filters={this.props.movement.filters}
-          filterFullIcon={<FilterFullIcon color="white" />}
-          filterEmptyIcon={<FilterEmptyIcon color="white" />}
-          filterClearIcon={<FilterClearIcon color="white" />}
           onSearch={this.onQuickSearch}
-          onClearFilters={this.onClearFilters}
           onSort={this.onUpdateSort}
           onSetFiltersAndSort={this.onSetFiltersAndSort}
-          onClick={this.onSelectList}
+          onClearFilters={this.onClearFilters}
           onLoadMore={this.onLoadMore}
           loadMorePending={this.props.movement.loadMorePending}
           loadMoreFinish={this.props.movement.loadMoreFinish}

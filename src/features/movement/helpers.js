@@ -3,7 +3,7 @@ import {
   AddOne as AddOneIcon,
   GetOne as GetOneIcon,
   DelOne as DelOneIcon,
-  Movement as MovementIcon,
+  Cause as CauseIcon
 } from '../icons';
 import { searchSite } from '../site';
 
@@ -70,14 +70,14 @@ export const getInlineActions = ({
 }) => {
   return [
     {
-      name: 'move',
-      label: 'Mouvements',
-      onClick: (obj) => {onSelectList(obj, 'movement');},
+      name: 'cause',
+      label: 'Animaux',
+      onClick: (obj) => {onSelectList(obj, 'cause');},
       param: 'object',
       theme: 'secondary',
-      icon: <MovementIcon color="white" />,
+      icon: <CauseIcon color="white" />,
       role: 'OTHER',
-      active: state.mode === 'movement',
+      active: state.mode === 'cause',
     },
     {
       name: 'modify',
@@ -123,6 +123,7 @@ export const getCols = ({ props }) => {
       values: mvtTypes,
       sortable: true,
       filterable: { type: 'select', options: mvtTypes },
+      card: { role: 'FIELD' },
     },
     {
       name: 'move_from',
@@ -134,6 +135,7 @@ export const getCols = ({ props }) => {
       sortable: true,
       type: 'date',
       filterable: { type: 'date' },
+      card: { role: 'TITLE' },
     },
     {
       name: 'move_from_name',
@@ -144,6 +146,7 @@ export const getCols = ({ props }) => {
       title: true,
       sortable: true,
       filterable: { type: 'text' },
+      card: { role: 'FIELD' },
     },
     {
       name: 'move_from_name2',
@@ -172,6 +175,7 @@ export const getCols = ({ props }) => {
       title: true,
       sortable: true,
       filterable: { type: 'text' },
+      card: { role: 'FIELD' },
     },
     {
       name: 'move_to_name2',

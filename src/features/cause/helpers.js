@@ -121,7 +121,7 @@ export const getInlineActions = ({
 }) => {
   return [
     {
-      name: 'move',
+      name: 'movement',
       label: 'Mouvements',
       onClick: (obj) => {onSelectList(obj, 'movement');},
       param: 'object',
@@ -131,7 +131,7 @@ export const getInlineActions = ({
       active: state.mode === 'movement',
     },
     {
-      name: 'medical',
+      name: 'sickness',
       label: 'Santé',
       onClick: (obj) => {onSelectList(obj, 'sickness');},
       param: 'object',
@@ -161,7 +161,7 @@ export const getInlineActions = ({
       active: state.mode === 'descendant',
     },
     {
-      name: 'documents',
+      name: 'document',
       label: 'Documents',
       onClick: (obj) => {onSelectList(obj, 'document');},
       param: 'object',
@@ -171,7 +171,7 @@ export const getInlineActions = ({
       active: state.mode === 'document',
     },
     {
-      name: 'photos',
+      name: 'photo',
       label: 'Photos',
       onClick: (obj) => {onSelectList(obj, 'photo');},
       param: 'object',

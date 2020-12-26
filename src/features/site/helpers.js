@@ -51,7 +51,7 @@ export const getInlineActions = ({
 }) => {
   return [
     {
-      name: 'animals',
+      name: 'animal',
       label: 'Animaux',
       onClick: (obj) => {onSelectList(obj, 'animal');},
       param: 'object',
@@ -61,7 +61,7 @@ export const getInlineActions = ({
       active: state.animalsSite > 0,
     },
     {
-      name: 'alerts',
+      name: 'alert',
       label: 'Suivi',
       onClick: (obj) => {onSelectList(obj, 'alert');},
       param: 'object',
@@ -71,7 +71,7 @@ export const getInlineActions = ({
       active: state.alertsSite > 0,
     },
     {
-      name: 'documents',
+      name: 'document',
       label: 'Documents',
       onClick: (obj) => {onSelectList(obj, 'document');},
       param: 'object',
@@ -81,7 +81,7 @@ export const getInlineActions = ({
       active: state.documentsSite > 0,
     },
     {
-      name: 'photos',
+      name: 'photo',
       label: 'Photos',
       onClick: (obj) => {onSelectList(obj, 'photo');},
       param: 'object',
@@ -138,6 +138,7 @@ export const getCols = ({ props }) => {
       sortable: true,
       filterable: { type: 'text' }, 
       first: true,
+      card: { role: 'TITLE' },
     },
     {
       name: 'site_address1',
@@ -158,6 +159,7 @@ export const getCols = ({ props }) => {
       title: true,
       sortable: true,
       filterable: { type: 'text' },
+      card: { role: 'FIELD' },
     },
     {
       name: 'type',
@@ -167,6 +169,7 @@ export const getCols = ({ props }) => {
       mob_size: '36',
       title: true,
       sortable: true, 
+      card: { role: 'FIELD' },
     },
     {
       name: 'type',
@@ -228,6 +231,7 @@ export const getCols = ({ props }) => {
       filterable: false,
       last: true,
       fDisplay: townCol,
+      card: { role: 'FIELD' },
     },
     {
       name: 'site_to',

@@ -7,9 +7,10 @@ import { fr } from 'date-fns/locale';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as actions from './redux/actions';
-import { AddOne as AddOneIcon, Checked, UnChecked, Critical, Important } from '../icons';
+import { AddOne as AddOneIcon, Checked, UnChecked, Critical, Important, User } from '../icons';
 import { CenteredLoading3Dots } from '../ui';
 import { Create as CreateEvent, Modify as ModifyEvent } from '../alert';
+import { getFullName } from '../user';
 
 const locales = { fr: fr };
 const localizer = dateFnsLocalizer({
@@ -217,56 +218,34 @@ export class DefaultPage extends Component {
       <div>
         <div className="agenda-default-page-header">
           <div className="row row-short">
-            <div className="col-xs-w18 text-left">
-              <div className="nav justify-content-left">
+            <div className="col-xs-w18" />
+            <div className="col-xs-w18 text-right">
+              <div className="nav justify-content-end">
                 <div className="nav-item">
                   <button
                     className="btn btn-secondary text-light"
                     onClick={this.onSelectUsers}
                     ref={this.state.userRef}
                   >
-                    <span>Utilisateurs</span>
+                    <User />
                   </button>
                   {this.state.userSelect && (
                     <Dropdown
                       myRef={this.state.userRef}
                       onClose={this.onCloseDropdown}
                       className="bg-light text-secondary"
+                      align='bottom-right'
                     >
                       {this.state.resources.map(user => 
-                        <div key={`dropuser-` + user.id} className="dropdown-item" onClick={() => this.onSelectUser(user.id)}>
+                        <div key={`dropuser-` + user.id} className="dropdown-item text-secondary" onClick={() => this.onSelectUser(user.id)}> 
                           <span className="pr-2">
                             {user.selected !== false ? <Checked /> : <UnChecked />}
-                          </span>
-                          <span style={{position: 'relative', top: '2px'}}>{user.user_first_name}</span>
+                          </span>   
+                          <span style={{position: 'relative', top: '2px'}}>{getFullName(user)}</span>
                         </div>
                       )}
                     </Dropdown>
                   )}
-                </div>
-                <div className="nav-item">
-                  <button
-                    className="btn btn-secondary text-light"
-                    onClick={this.onSelectCategories}
-                    ref={this.state.categoryRef}
-                  >
-                    <span>Catégories</span>
-                  </button>
-                  {this.state.categorySelect && (
-                    <Dropdown
-                      myRef={this.state.categoryRef}
-                      onClose={this.onCloseDropdown}
-                      className="bg-light text-secondary"
-                    >
-                      <span>Test</span>
-                    </Dropdown>
-                  )}
-                </div>
-              </div>
-            </div>
-            <div className="col-xs-w18 text-right">
-              <div className="nav justify-content-end">
-                <div className="nav-item">
                   <button className="btn btn-primary text-light" onClick={this.onAddEvent}>
                     <AddOneIcon />
                   </button>

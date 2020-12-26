@@ -21,17 +21,14 @@ export const getGlobalActions = ({ onClearFilters, onCreate }) => {
   ];
 };
 
-export const getInlineActions = ({ 
-  onSelectList, 
-  onGetOne, 
-  onDelOne,
-  state,
-}) => {
+export const getInlineActions = ({ onSelectList, onGetOne, onDelOne, state }) => {
   return [
     {
-      name: 'alerts',
-      label: 'Contrat',
-      onClick: (obj) => {onSelectList(obj, 'alert');},
+      name: 'alert',
+      label: 'Suivi',
+      onClick: obj => {
+        onSelectList(obj, 'alert');
+      },
       param: 'object',
       theme: 'secondary',
       icon: <FollowIcon color="white" />,
@@ -81,6 +78,7 @@ export const getCols = ({ props }) => {
       filterable: { type: 'text' },
       title: true,
       first: true,
+      card: { role: 'TITLE' },
     },
     {
       name: 'ct_from',
@@ -92,6 +90,7 @@ export const getCols = ({ props }) => {
       sortable: true,
       type: 'date',
       filterable: { type: 'date' },
+      card: { role: 'FIELD' },
     },
     {
       name: 'ct_to',
@@ -104,6 +103,7 @@ export const getCols = ({ props }) => {
       hidden: true,
       type: 'date',
       filterable: { type: 'date' },
+      card: { role: 'FIELD' },
     },
     {
       name: 'site.site_name',
@@ -114,6 +114,7 @@ export const getCols = ({ props }) => {
       title: true,
       sortable: true,
       filterable: { type: 'text' },
+      card: { role: 'FIELD' },
     },
     {
       name: 'site.site_name2',
@@ -131,7 +132,10 @@ export const getCols = ({ props }) => {
       title: true,
       sortable: false,
       filterable: false,
-      fDisplay: (item, newContent) => {return getDataLabel(props.data.models, "DUREECONTRAT", item.ct_duration)},
+      fDisplay: (item, newContent) => {
+        return getDataLabel(props.data.models, 'DUREECONTRAT', item.ct_duration);
+      },
+      card: { role: 'FIELD' },
     },
     {
       name: 'ct_next_bill',
