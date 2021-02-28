@@ -146,7 +146,7 @@ export class PigeonMap extends Component {
   }
 
   onDragEnd(anchor, item) {
-    console.log("DragEnd");
+    //console.log("DragEnd");
     item.site_coord = JSON.stringify({
       lat: anchor[0],
       lon: anchor[1],
@@ -168,8 +168,7 @@ export class PigeonMap extends Component {
   }
 
   onClick({ event, latLng, pixel }) {
-    //console.log("onClick")
-    //console.log("FK click",latLng,pixel)
+    //console.log("FK onClick",latLng,pixel)
     this.props.history.push('/pigeon-map/' + this.state.selected  + "/" + latLng[0] + "/" + latLng[1]);
   }
 
@@ -205,12 +204,11 @@ export class PigeonMap extends Component {
       this.setState({ moved: item });
     }
     this.props.history.push('/pigeon-map/' + id  + "/" + coord[0] + "/" + coord[1]);
-    
     //this.setState({ selected: id, center: coord, moved: item });
   }
 
   onSitePose(id, item) {
-    //console.log("FK SitePOse",id,item.id);
+    //console.log("FK onSitePose",id,item.id);
     let coord = this.state.center || [49.096306, 6.160053];
     this.setState({
       dragging: true,

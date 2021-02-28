@@ -108,7 +108,7 @@ export class Modify extends Component {
             {item && (
               <Form
                 item={item}
-                modify={true}
+                modify
                 modal={true}
                 datas={this.props.data.items}
                 config={this.props.config.items}

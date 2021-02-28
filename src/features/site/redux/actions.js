@@ -17,3 +17,6 @@ export { uploadSiteMedia, dismissUploadSiteMediaError } from './uploadSiteMedia'
 export { delSiteMedia, dismissDelSiteMediaError } from './delSiteMedia';
 export { loadDocuments, dismissLoadDocumentsError } from './loadDocuments';
 export { updateSiteMediaDesc, dismissUpdateSiteMediaDescError } from './updateSiteMediaDesc';
+export { onSelect } from './onSelect';
+export { selectAll } from './selectAll';
+export { selectNone } from './selectNone';

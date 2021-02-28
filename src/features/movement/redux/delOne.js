@@ -13,7 +13,7 @@ export function delOne(args = {}) {
     });
     const promise = new Promise((resolve, reject) => {
       const id = args;
-      const doRequest = freeAssoApi.delete('/v1/asso/site/' + id);
+      const doRequest = freeAssoApi.delete('/v1/asso/movement/' + id);
       doRequest.then(
         (res) => {
           dispatch({

@@ -142,7 +142,7 @@ export class Signin extends Component {
       <div className="auth-signin">
         {this.state.passwordAsk ? (
           <form className="form-signin text-center" onSubmit={this.onSubmitPassword}>
-            <img className="mb-4" src={logo} alt="" width="72" height="72" />
+            <img className="mb-4" src={logo} alt=""  height="72" />
             <h1 className="h3 mb-3 font-weight-normal">
               <FormattedMessage
                 id="app.features.auth.login.lostPassword"
@@ -190,7 +190,7 @@ export class Signin extends Component {
           </form>
         ) : (
           <form className="form-signin text-center" onSubmit={this.onSubmit}>
-            <img className="mb-4" src={logo} alt="" width="72" height="72" />
+            <img className="mb-4" src={logo} alt="" height="72" />
             <h1 className="h3 mb-3 font-weight-normal">
               <FormattedMessage id="app.features.auth.login.title" defaultMessage="Login" />
             </h1>

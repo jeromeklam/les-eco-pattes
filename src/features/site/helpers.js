@@ -29,6 +29,35 @@ const externCol = [
   { value: false, label: '' },
 ];
 
+export const getSelectActions = ({ props, onSelectMenu }) => {
+  const arrOne = [
+    {
+      name: 'selectAll',
+      label: 'Tout sélectionner',
+      onClick: () => {onSelectMenu('selectAll');}
+    }
+  ];
+  const arrAppend = [
+    {
+      name: 'selectNone',
+      label: 'Tout désélectionner',
+      onClick: () => {onSelectMenu('selectNone');}
+    },
+    {
+      name: 'divider',
+    },
+    {
+      name: 'selectNone',
+      label: 'Tout désélectionner',
+      onClick: () => {onSelectMenu('selectNone');}
+    },
+  ];
+  if (props.site.selected.length > 0) {
+    return arrOne.concat(arrAppend);
+  }
+  return arrOne;
+};
+
 export const getGlobalActions = ({ onClearFilters, onCreate }) => {
   return [
     {
@@ -136,6 +165,7 @@ export const getCols = ({ props }) => {
       mob_size: '36',
       title: true,
       sortable: true,
+      selectable: true,
       filterable: { type: 'text' }, 
       first: true,
       card: { role: 'TITLE' },

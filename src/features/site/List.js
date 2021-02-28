@@ -13,6 +13,7 @@ import { InlineAlerts } from '../alert';
 import {
   InlinePhotos,
   InlineDocuments,
+  getSelectActions,
   getGlobalActions,
   getInlineActions,
   getCols,
@@ -48,6 +49,7 @@ export class List extends Component {
     this.onGetOne = this.onGetOne.bind(this);
     this.onDelOne = this.onDelOne.bind(this);
     this.onReload = this.onReload.bind(this);
+    this.onSelect = this.onSelect.bind(this);
     this.onClose = this.onClose.bind(this);
     this.onLoadMore = this.onLoadMore.bind(this);
     this.onSelectList = this.onSelectList.bind(this);
@@ -56,6 +58,7 @@ export class List extends Component {
     this.onSetFiltersAndSort = this.onSetFiltersAndSort.bind(this);
     this.onUpdateSort = this.onUpdateSort.bind(this);
     this.onZoomMap = this.onZoomMap.bind(this);
+    this.onSelectMenu = this.onSelectMenu.bind(this);
     this.itemClassName = this.itemClassName.bind(this);
   }
 
@@ -85,6 +88,10 @@ export class List extends Component {
       .catch(errors => {
         showErrors(this.props.intl, this.props.site.delOneError, '', 'Suppression impossible ! ');
       });
+  }
+
+  onSelect(id) {
+    this.props.actions.onSelect(id);
   }
 
   onSelectList(obj, list) {
@@ -170,6 +177,22 @@ export class List extends Component {
     this.props.actions.loadMore();
   }
 
+  onSelectMenu(option) {
+    switch (option) {
+      case 'selectAll':
+        this.setState({ menu: null, siteId: -1 });
+        this.props.actions.selectAll();
+        break;
+      case 'selectNone':
+        this.setState({ menu: null, siteId: -1 });
+        this.props.actions.selectNone();
+        break;
+      default:
+        this.setState({ menu: 'movement', menuOption: option, siteId: -1 });
+        break;
+    }
+  }
+
   itemClassName(item) {
     if (item && item.site_to !== null && item.site_to !== '') {
       return 'row-line-warning';
@@ -216,6 +239,7 @@ export class List extends Component {
     // Toolsbars and lists
     const globalActions = getGlobalActions(this);
     const inlineActions = getInlineActions(this);
+    const selectActions = getSelectActions(this);
     const cols = getCols(this);
     // L'affichage, items, loading, loadMoreError
     let search = '';
@@ -233,6 +257,7 @@ export class List extends Component {
         icon={<SearchIcon className="text-secondary" />}
       />
     );
+    const { selected } = this.props.site;
     return (
       <div>
         <UiList
@@ -260,6 +285,9 @@ export class List extends Component {
           loadMoreFinish={this.props.site.loadMoreFinish}
           loadMoreError={this.props.site.loadMoreError}
           counter={counter}
+          selected={selected}
+          selectMenu={selectActions}
+          onSelect={this.onSelect}
           fClassName={this.itemClassName}
         />
         {this.state.siteId > 0 && (

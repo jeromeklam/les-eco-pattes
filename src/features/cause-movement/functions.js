@@ -14,7 +14,7 @@ export const getMovements = (cau_id = null, move_id = null) => {
   const promise = new Promise((resolve, reject) => {
     let filter = {
       filter: {},
-      sort: '-camv_ts'
+      sort: 'cause.cau_code'
     }
     if (cau_id) {
       filter.filter.cau_id = cau_id;

@@ -92,7 +92,13 @@ export const getSelectActions = ({ props, onSelectMenu }) => {
       name: 'OUTPUT',
       label: 'Sortie avec notification',
       onClick: () => {onSelectMenu('OUTPUT');}
-    }
+    },
+    {
+      name: 'divider',
+    },
+    {
+
+    },
   ];
   if (props.cause.selected.length > 0) {
     return arrOne.concat(arrAppend);

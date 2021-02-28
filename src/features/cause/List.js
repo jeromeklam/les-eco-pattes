@@ -169,15 +169,15 @@ export class List extends Component {
   onSelectMenu(option) {
     switch (option) {
       case 'selectAll':
-        this.setState({ menu: null, cauid: -1 });
+        this.setState({ menu: null, cauId: -1 });
         this.props.actions.selectAll();
         break;
       case 'selectNone':
-        this.setState({ menu: null, cauid: -1 });
+        this.setState({ menu: null, cauId: -1 });
         this.props.actions.selectNone();
         break;
       default:
-        this.setState({ menu: 'movement', menuOption: option, cauid: -1 });
+        this.setState({ menu: 'movement', menuOption: option, cauId: -1 });
         break;
     }
   }

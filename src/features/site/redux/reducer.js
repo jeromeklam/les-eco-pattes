@@ -26,6 +26,9 @@ import { reducer as uploadSiteMediaReducer } from './uploadSiteMedia';
 import { reducer as delSiteMediaReducer } from './delSiteMedia';
 import { reducer as loadDocumentsReducer } from './loadDocuments';
 import { reducer as updateSiteMediaDescReducer } from './updateSiteMediaDesc';
+import { reducer as onSelectReducer } from './onSelect';
+import { reducer as selectAllReducer } from './selectAll';
+import { reducer as selectNoneReducer } from './selectNone';
 
 const reducers = [
   loadMoreReducer,
@@ -47,6 +50,9 @@ const reducers = [
   delSiteMediaReducer,
   loadDocumentsReducer,
   updateSiteMediaDescReducer,
+  onSelectReducer,
+  selectAllReducer,
+  selectNoneReducer,
 ];
 
 export default function reducer(state = initialState, action) {

@@ -122,6 +122,16 @@ function Form(props) {
   myTabs = tabs.concat(tabsFrom, tabsTo);
   //}
   myTabs = myTabs.concat(tabsEnd);
+  let disableSiteFrom = values.globalDisabled;
+  let disableSiteTo = values.globalDisabled;
+  if (!values.globalDisabled  && modify) {
+    if (values.from_site) {
+      disableSiteFrom = true;
+    }
+    if (values.to_site) {
+      disableSiteTo = true;
+    }
+  }
   return (
     <ResponsiveModalOrForm
       className=""
@@ -221,7 +231,7 @@ function Form(props) {
                   labelTop={true}
                   item={values.from_site || null}
                   onChange={handleChange}
-                  disabled={values.globalDisabled}
+                  disabled={disableSiteFrom}
                   error={getErrorMessage('from_site')}
                 />
               </div>
@@ -272,7 +282,7 @@ function Form(props) {
                   required={values.fromRequired}
                   value={values.move_from_num}
                   onChange={handleChange}
-                  disabled={values.globalDisabled}
+                  disabled={disableSiteFrom}
                   error={getErrorMessage('move_from_num')}
                 />
               </div>
@@ -284,7 +294,7 @@ function Form(props) {
                   required={values.fromRequired}
                   value={values.move_from_name}
                   onChange={handleChange}
-                  disabled={values.globalDisabled}
+                  disabled={disableSiteFrom}
                   error={getErrorMessage('move_from_name')}
                 />
               </div>
@@ -298,7 +308,7 @@ function Form(props) {
                   required={values.fromRequired}
                   value={values.move_from_address}
                   onChange={handleChange}
-                  disabled={values.globalDisabled}
+                  disabled={disableSiteFrom}
                   error={getErrorMessage('move_from_address')}
                 />
               </div>
@@ -310,7 +320,7 @@ function Form(props) {
                   required={values.fromRequired}
                   value={values.move_from_cp}
                   onChange={handleChange}
-                  disabled={values.globalDisabled}
+                  disabled={disableSiteFrom}
                   error={getErrorMessage('move_from_cp')}
                 />
               </div>
@@ -322,7 +332,7 @@ function Form(props) {
                   required={values.fromRequired}
                   value={values.move_from_town}
                   onChange={handleChange}
-                  disabled={values.globalDisabled}
+                  disabled={disableSiteFrom}
                   error={getErrorMessage('move_from_town')}
                 />
               </div>
@@ -390,7 +400,7 @@ function Form(props) {
                   labelTop={true}
                   item={values.to_site || null}
                   onChange={handleChange}
-                  disabled={values.globalDisabled}
+                  disabled={disableSiteTo}
                   error={getErrorMessage('to_site')}
                 />
               </div>
@@ -441,7 +451,7 @@ function Form(props) {
                   required={values.toRequired}
                   value={values.move_to_num}
                   onChange={handleChange}
-                  disabled={values.globalDisabled}
+                  disabled={disableSiteTo}
                   error={getErrorMessage('move_to_num')}
                 />
               </div>
@@ -453,7 +463,7 @@ function Form(props) {
                   required={values.toRequired}
                   value={values.move_to_name}
                   onChange={handleChange}
-                  disabled={values.globalDisabled}
+                  disabled={disableSiteTo}
                   error={getErrorMessage('move_to_name')}
                 />
               </div>
@@ -467,7 +477,7 @@ function Form(props) {
                   required={values.toRequired}
                   value={values.move_to_address}
                   onChange={handleChange}
-                  disabled={values.globalDisabled}
+                  disabled={disableSiteTo}
                   error={getErrorMessage('move_to_address')}
                 />
               </div>
@@ -479,7 +489,7 @@ function Form(props) {
                   required={values.toRequired}
                   value={values.move_to_cp}
                   onChange={handleChange}
-                  disabled={values.globalDisabled}
+                  disabled={disableSiteTo}
                   error={getErrorMessage('move_to_cp')}
                 />
               </div>
@@ -491,7 +501,7 @@ function Form(props) {
                   required={values.toRequired}
                   value={values.move_to_town}
                   onChange={handleChange}
-                  disabled={values.globalDisabled}
+                  disabled={disableSiteTo}
                   error={getErrorMessage('move_to_town')}
                 />
               </div>

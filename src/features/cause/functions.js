@@ -61,23 +61,24 @@ export const getCause = (cau_id, eager = true) => {
  */
 export const getCauses = (mode, site_id, cause, ids = []) => {
   const promise = new Promise((resolve, reject) => {
-    const filter = {
+    let params = {
       filter: {}
     };
     if (mode === 'site') {
-      filter.filter.site_id = site_id;
+      params.filter.site_id = site_id;
     } else {
       if (mode === 'list') {
-        filter.filter.cau_id = {in: ids};
+        params.filter.cau_id = {in: ids};
       } else {
         if (cause.cau_sex === 'M') {
-          filter.filter['parent1.cau_id'] = cause.id;
+          params.filter['parent1.cau_id'] = cause.id;
         } else {
-          filter.filter['parent2.cau_id'] = cause.id;
+          params.filter['parent2.cau_id'] = cause.id;
         }
       }
     }
-    const addUrl = objectToQueryString(filter);
+    params.sort = 'cau_code';
+    const addUrl = objectToQueryString(params);
     const doRequest = freeAssoApi.get('/v1/asso/cause' + addUrl, {});
     doRequest.then(
       res => {

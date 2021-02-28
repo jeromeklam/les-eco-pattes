@@ -64,6 +64,9 @@ export class Create extends Component {
    */
   onSubmit(datas = {}) {
     // Conversion des données en objet pour le service web
+    if (datas.cau_name === null) {
+      datas.cau_name = datas.cau_code;
+    }
     let obj = getJsonApi(datas, 'FreeAsso_Cause', this.state.causeId);
     this.props.actions
       .createOne(obj)

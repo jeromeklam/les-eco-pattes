@@ -6,6 +6,7 @@ import { connect } from 'react-redux';
 import * as actions from './redux/actions';
 import { withRouter } from 'react-router-dom';
 import { getJsonApi } from 'jsonapi-front';
+import { propagateModel } from '../../common';
 import { getCauses } from '../cause';
 import { CenteredLoading9X9, createSuccess, showErrors } from '../ui';
 import Form from './Form';
@@ -83,7 +84,8 @@ export class Create extends Component {
       .createOne(obj)
       .then(result => {
         createSuccess();
-        this.props.actions.clearItems();
+        this.props.actions.propagateModel('FreeAsso_Movement', result);
+        //this.props.actions.clearItems();
         if (!this.props.modal) {
           this.props.history.push('/movement');
         } else {
@@ -140,7 +142,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    actions: bindActionCreators({ ...actions }, dispatch),
+    actions: bindActionCreators({ ...actions, propagateModel }, dispatch),
   };
 }
 
