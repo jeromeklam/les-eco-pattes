@@ -6,8 +6,13 @@ import Dropzone from 'react-dropzone';
 import { FileIcon, defaultStyles } from 'react-file-icon';
 import * as actions from './redux/actions';
 import { ResponsiveConfirm } from 'react-bootstrap-front';
-import { DelOne as DelOneIcon, Download as DownloadIcon, Upload as UploadIcon } from '../icons';
-import { CenteredLoading3Dots, downloadBlob } from '../ui';
+import {
+  DelOne as DelOneIcon,
+  Download as DownloadIcon,
+  Upload as UploadIcon,
+  Comment as CommentIcon,
+} from '../icons';
+import { CenteredLoading3Dots, downloadBlob, CommentModal, modifySuccess, showErrors } from '../ui';
 import { downloadContractMediaBlob, getMedias } from './';
 
 export class InlineDocuments extends Component {
@@ -32,13 +37,18 @@ export class InlineDocuments extends Component {
       items: [],
       loading: true,
       uploading: false,
+      comment: false,
     };
+    console.log("FK ctdoc props", props);
     this.onDropFiles = this.onDropFiles.bind(this);
     this.onConfirmClose = this.onConfirmClose.bind(this);
     this.onConfirmDocument = this.onConfirmDocument.bind(this);
     this.onConfirm = this.onConfirm.bind(this);
     this.onDownload = this.onDownload.bind(this);
     this.localLoadDocuments = this.localLoadDocuments.bind(this);
+    this.onComment = this.onComment.bind(this);
+    this.onValidComment = this.onValidComment.bind(this);
+    this.onCloseComment = this.onCloseComment.bind(this);
   }
 
   localLoadDocuments() {
@@ -115,6 +125,28 @@ export class InlineDocuments extends Component {
     });
   }
 
+  onComment(item) {
+    this.setState({ comment: true, item: item });
+  }
+
+  onValidComment(comment) {
+    let document = this.state.item;
+    this.props.actions
+      .updateContractMediaDesc(document.id, this.state.ct_id, comment)
+      .then(result => {
+        modifySuccess();
+        this.localLoadDocuments();
+        this.setState({ comment: false, item: null });
+      })
+      .catch(errors => {
+        showErrors(this.props.intl, errors, 'updateOneError');
+      });
+  }
+
+  onCloseComment() {
+    this.setState({ comment: false, item: null });
+  }
+
   render() {
     let documents = this.state.items;
     return (
@@ -139,9 +171,17 @@ export class InlineDocuments extends Component {
                       <div className="card mt-2">
                         <div className="card-header bg-light">
                           <div className="row">
-                            <div className="col-xs-w16"></div>
+                            <div className="col-xs-w16 text-left text-secondary">
+                              {document.ctm_desc}
+                            </div>
                             <div className="col-xs-w20 text-right">
                               <div className="btn-group btn-group-sm" role="group" aria-label="...">
+                                <button type="button" className="btn btn-inline btn-secondary">
+                                  <CommentIcon
+                                    className="text-light inline-action"
+                                    onClick={() => this.onComment(document)}
+                                  />
+                                </button>
                                 <button type="button" className="btn btn-inline btn-secondary">
                                   <DownloadIcon
                                     onClick={() => this.onDownload(document)}
@@ -206,6 +246,17 @@ export class InlineDocuments extends Component {
             </div>
           )}
         </div>
+        {this.state.comment && (
+          <CommentModal
+            title='Nom document'
+            show={this.state.comment}
+            onClose={this.onCloseComment}
+            comment={this.state.item.ctm_desc}
+            onSubmit={comm => {
+              this.onValidComment(comm);
+            }}
+          />
+        )}
         <ResponsiveConfirm
           show={this.state.confirm}
           onClose={this.onConfirmClose}

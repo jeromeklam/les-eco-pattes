@@ -5,7 +5,6 @@ import {
   SITE_UPDATE_SITE_MEDIA_DESC_SUCCESS,
   SITE_UPDATE_SITE_MEDIA_DESC_FAILURE,
   SITE_UPDATE_SITE_MEDIA_DESC_DISMISS_ERROR,
-  SITE_UPDATE_SITE_MEDIA_DESC_UPDATE,
 } from './constants';
 
 export function updateSiteMediaDesc(sitm_id, site_id, desc) {
@@ -83,16 +82,6 @@ export function reducer(state, action) {
       return {
         ...state,
         updateSiteMediaDescError: null,
-      };
-
-    case SITE_UPDATE_SITE_MEDIA_DESC_UPDATE:
-      let object = jsonApiNormalizer(action.data.data);
-      let myItems = state.items;      
-      let news = normalizedObjectUpdate(myItems, 'FreeAsso_SiteMediaBlob', object);
-      return {
-        ...state,
-        updateOneError: null,
-        items: news,
       };
 
     default:

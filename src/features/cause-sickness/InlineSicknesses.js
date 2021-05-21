@@ -9,7 +9,7 @@ import { intlDateTime } from '../../common';
 import { GetOne as GetOneIcon, DelOne as DelOneIcon, AddOne as AddOneIcon } from '../icons';
 import { CenteredLoading3Dots } from '../ui';
 import { getLabel as getDataLabel } from '../data';
-import { Create, Modify, getWhereLabel, getSicknesses } from './';
+import { Input, getWhereLabel, getSicknesses } from './';
 
 export class InlineSicknesses extends Component {
   static propTypes = {
@@ -187,9 +187,9 @@ export class InlineSicknesses extends Component {
               }}
             />
           </div>
-          {!this.state.confirm && this.state.caus_id === 0 && <Create onClose={this.onClose} cause={this.state.cause} />}
+          {!this.state.confirm && this.state.caus_id === 0 && <Input onClose={this.onClose} cause={this.state.cause} />}
           {!this.state.confirm && this.state.caus_id > 0 && (
-            <Modify onClose={this.onClose} caus_id={this.state.caus_id} cause={this.state.cause} />
+            <Input onClose={this.onClose} caus_id={this.state.caus_id} cause={this.state.cause} />
           )}
         </div>
       );

@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import { InputPicker as DefaultInputPicker } from 'react-bootstrap-front';
 import axios from 'axios';
 import { freeAssoApi } from '../../common';
-import { Search, Modify } from './';
 import { More, DelOne, Zoom } from '../icons';
+import { Search, Input } from './';
 
 export default class InputPicker extends Component {
   static propTypes = {
@@ -138,7 +138,7 @@ export default class InputPicker extends Component {
           onSelect={this.onSelect}
         />
         {this.state.zoom && (
-          <Modify loader={false} modal={true} sickId={this.state.item.id} onClose={this.onCloseMore} />
+          <Input loader={false} modal={true} sickId={this.state.item.id} onClose={this.onCloseMore} />
         )}
       </div>
     );

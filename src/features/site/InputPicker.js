@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { InputPicker as DefaultInputPicker } from 'react-bootstrap-front';
-import { Search, Modify } from './';
 import axios from 'axios';
 import { freeAssoApi } from '../../common';
 import { More, DelOne, Zoom } from '../icons';
+import { Search, Input } from './';
 
 export default class InputPicker extends Component {
   static propTypes = {
@@ -144,7 +144,7 @@ export default class InputPicker extends Component {
           categoryCodes={this.props.categoryCodes || []}
         />
         {this.state.zoom && (
-          <Modify loader={false} modal={true} siteId={this.state.item.id} onClose={this.onCloseMore} />
+          <Input loader={false} modal={true} siteId={this.state.item.id} onClose={this.onCloseMore} />
         )}
       </div>
     );

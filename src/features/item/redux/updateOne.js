@@ -8,13 +8,12 @@ import {
 } from './constants';
 import { freeAssoApi } from '../../../common';
 
-export function updateOne(args = {}) {
+export function updateOne(id, args = {}) {
   return (dispatch) => {
     dispatch({
       type: ITEM_UPDATE_ONE_BEGIN,
     });
     const promise = new Promise((resolve, reject) => {
-      const id = args.data.id;
       const doRequest = freeAssoApi.put('/v1/asso/item/' + id, args);
       doRequest.then(
         (res) => {

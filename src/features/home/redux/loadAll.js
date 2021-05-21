@@ -8,6 +8,7 @@ import { loadMore as loadMoreLang } from '../../lang/redux/loadMore';
 import { loadMore as loadMoreData } from '../../data/redux/loadMore';
 import { loadMore as loadMoreConfig } from '../../config/redux/loadMore';
 import { loadMore as loadMoreCountry } from '../../country/redux/loadMore';
+import { loadMore as loadMoreEdition } from '../../edition/redux/loadMore';
 import { loadMore as loadMoreSiteType } from '../../site-type/redux/loadMore';
 import { loadMore as loadMoreCauseType } from '../../cause-type/redux/loadMore';
 import { loadMore as loadMoreCauseMainType } from '../../cause-main-type/redux/loadMore';
@@ -28,6 +29,7 @@ export function loadAll(args = {}) {
       dispatch(loadMoreData()),
       dispatch(loadMoreConfig()),
       dispatch(loadMoreCountry()),
+      dispatch(loadMoreEdition()),
       dispatch(loadMoreSiteType()),
       dispatch(loadMoreCauseType()),
       dispatch(loadMoreCauseMainType()),

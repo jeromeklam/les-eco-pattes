@@ -13,8 +13,7 @@ import {
   Sort as SortNoneIcon,
 } from '../icons';
 import { deleteError, deleteSuccess } from '../ui';
-import { getGlobalActions, getInlineActions, getCols } from './';
-import { Create, Modify } from './';
+import { getGlobalActions, getInlineActions, getCols, Input } from './';
 
 export class List extends Component {
   static propTypes = {
@@ -133,9 +132,9 @@ export class List extends Component {
           loadMoreError={this.props.causeMainType.loadMoreError}
         />
         {this.state.camtId > 0 && (
-          <Modify modal={true} camtId={this.state.camtId} onClose={this.onClose} />
+          <Input modal={true} camtId={this.state.camtId} onClose={this.onClose} />
         )}
-        {this.state.camtId === 0 && <Create modal={true} onClose={this.onClose} />}
+        {this.state.camtId === 0 && <Input modal={true} onClose={this.onClose} />}
       </div>
     );
   }

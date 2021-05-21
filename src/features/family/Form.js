@@ -20,6 +20,7 @@ function Form(props) {
       onCancel={handleCancel}
       onClose={props.onClose}
       modal
+      size="md"
     >
       <div className="card-body">
         <InputHidden name="id" id="id" value={values.id} />

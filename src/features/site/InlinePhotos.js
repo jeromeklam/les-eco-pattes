@@ -170,6 +170,11 @@ export class InlinePhotos extends Component {
   }
 
   render() {
+    /**
+     *  <div className="col-xs-w36">
+          <small className="text-center text-secondary">{photo.sitm_desc}</small>
+        </div>
+     */
     let photos = this.state.items;
     return (
       <div>
@@ -199,7 +204,7 @@ export class InlinePhotos extends Component {
                     <div className="card mt-2">
                       <div className="card-header bg-light">
                         <div className="row">
-                          <div className="col-xs-w16"></div>
+                          <div className="col-xs-w16 text-left text-secondary">{photo.sitm_desc}</div>
                           <div className="col-xs-w20 text-right">
                             <div className="btn-group btn-group-sm" role="group" aria-label="...">
                               <button type="button" className="btn btn-inline btn-secondary">
@@ -234,9 +239,6 @@ export class InlinePhotos extends Component {
                         <div className="row">
                           <div className="col-xs-w36">
                             {img && <img src={img} className="rounded" alt="" />}
-                          </div>
-                          <div className="col-xs-w36">
-                            <small className="text-center text-secondary">{photo.sitm_desc}</small>
                           </div>
                         </div>
                       </div>
@@ -290,6 +292,7 @@ export class InlinePhotos extends Component {
         )}
         {this.state.comment && (
           <CommentModal
+            title='Description'
             show={this.state.comment}
             onClose={this.onCloseComment}
             comment={this.state.item.sitm_desc}

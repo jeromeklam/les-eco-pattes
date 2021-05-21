@@ -6,8 +6,8 @@ import { connect } from 'react-redux';
 import axios from 'axios';
 import { freeAssoApi } from '../../common';
 import * as actions from './redux/actions';
-import { Search, Create, Modify } from './';
 import { More, DelOne, Zoom, AddOne } from '../icons';
+import { Search, Input } from './';
 
 export class InputPicker extends Component {
   static propTypes = {
@@ -183,10 +183,10 @@ export class InputPicker extends Component {
           categoryCodes={this.props.categoryCodes || []}
         />
         {this.state.zoom && (
-          <Modify loader={false} modal={true} cliId={this.state.item.id} onClose={this.onClose} />
+          <Input loader={false} modal={true} cliId={this.state.item.id} onClose={this.onClose} />
         )}
         {this.state.add && (
-          <Create loader={false} modal={true} onClose={this.onClose} onCreate={this.onCreate} />
+          <Input loader={false} modal={true} onClose={this.onClose} onCreate={this.onCreate} />
         )}
       </div>
     );

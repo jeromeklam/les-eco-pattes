@@ -14,7 +14,7 @@ import {
 } from '../icons';
 import { deleteError, deleteSuccess } from '../ui';
 import { getGlobalActions, getInlineActions, getCols } from './';
-import { Create, Modify } from './';
+import { Input } from './';
 
 export class List extends Component {
   static propTypes = {
@@ -134,9 +134,9 @@ export class List extends Component {
           loadMoreError={this.props.siteType.loadMoreError}
         />
         {this.state.sittId > 0 && (
-          <Modify modal={true} sittId={this.state.sittId} onClose={this.onClose} />
+          <Input modal={true} sittId={this.state.sittId} onClose={this.onClose} />
         )}
-        {this.state.sittId === 0 && <Create modal={true} onClose={this.onClose} />}
+        {this.state.sittId === 0 && <Input modal={true} onClose={this.onClose} />}
       </div>
     );
   }

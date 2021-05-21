@@ -7,32 +7,44 @@ import {
   ALERT_LOAD_PENDINGS_DISMISS_ERROR,
 } from './constants';
 
-export function loadPendings(args = {}) {
+export function loadPendings(mode, args = {}) {
   let deadline = new Date();
-  deadline.setDate(deadline.getDate() + 8);
-  return (dispatch) => { 
+  let deadlineStart = new Date();
+  let deadlineEnd = deadline;
+  if (mode !== 'danger') {
+    deadline.setDate(deadline.getDate() + 8);
+    if (mode === 'warning') {
+      deadlineStart = new Date();
+      deadlineEnd = deadline;
+    }
+  }
+  return dispatch => {
     dispatch({
       type: ALERT_LOAD_PENDINGS_BEGIN,
     });
     const promise = new Promise((resolve, reject) => {
-      const params = {
-        filter: {
-          alert_done_ts : {'empty': ''},
-          alert_deadline: {ltwe: deadline.toISOString()},
-        },
-        sort : 'alert_from'
+      let filter = {
+        alert_done_ts: { empty: '' },
+        alert_deadline: { ltwen: deadline.toISOString() },
+      };
+      if (mode === 'warning') {
+        filter.alert_deadline = { between: [deadlineStart , deadlineEnd ] };
       }
+      const params = {
+        filter: filter,
+        sort: 'alert_from',
+      };
       const addUrl = objectToQueryString(params);
       const doRequest = freeAssoApi.get('/v1/core/alert' + addUrl, {});
       doRequest.then(
-        (res) => {
+        res => {
           dispatch({
             type: ALERT_LOAD_PENDINGS_SUCCESS,
             data: res,
           });
           resolve(res);
         },
-        (err) => {
+        err => {
           dispatch({
             type: ALERT_LOAD_PENDINGS_FAILURE,
             data: { error: err },

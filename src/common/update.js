@@ -1,23 +1,24 @@
+import { AGENDA_PROPAGATE } from '../features/agenda/redux/constants';
+import { ALERT_UPDATE_ONE_UPDATE } from '../features/alert/redux/constants';
 import { AUTH_PROPAGATE } from '../features/auth/redux/constants';
-import { USER_PROPAGATE } from '../features/user/redux/constants';
-import { DATA_UPDATE_ONE_UPDATE } from '../features/data/redux/constants';
-import { SITE_TYPE_UPDATE_ONE_UPDATE } from '../features/site-type/redux/constants';
-import { CAUSE_TYPE_UPDATE_ONE_UPDATE } from '../features/cause-type/redux/constants';
-import { SITE_UPDATE_ONE_UPDATE } from '../features/site/redux/constants';
-import { CAUSE_MAIN_TYPE_UPDATE_ONE_UPDATE } from '../features/cause-main-type/redux/constants';
-import { EMAIL_UPDATE_ONE_UPDATE } from '../features/email/redux/constants';
 import { CAUSE_UPDATE_ONE_UPDATE } from '../features/cause/redux/constants';
-import { CLIENT_UPDATE_ONE_UPDATE } from '../features/client/redux/constants';
-import { CLIENT_TYPE_UPDATE_ONE_UPDATE } from '../features/client-type/redux/constants';
-import { CLIENT_CATEGORY_UPDATE_ONE_UPDATE } from '../features/client-category/redux/constants';
+import { CAUSE_MAIN_TYPE_UPDATE_ONE_UPDATE } from '../features/cause-main-type/redux/constants';
 import { CAUSE_MOVEMENT_UPDATE_MODEL } from '../features/cause-movement/redux/constants';
 import { CAUSE_SICKNESS_UPDATE_ONE_UPDATE } from '../features/cause-sickness/redux/constants';
-import { SICKNESS_UPDATE_ONE_UPDATE } from '../features/sickness/redux/constants';
+import { CAUSE_TYPE_UPDATE_ONE_UPDATE } from '../features/cause-type/redux/constants';
+import { CLIENT_UPDATE_ONE_UPDATE } from '../features/client/redux/constants';
+import { CLIENT_CATEGORY_UPDATE_ONE_UPDATE } from '../features/client-category/redux/constants';
+import { CLIENT_TYPE_UPDATE_ONE_UPDATE } from '../features/client-type/redux/constants';
+import { CONTRACT_UPDATE_ONE_UPDATE } from '../features/contract/redux/constants';
+import { DATA_UPDATE_ONE_UPDATE } from '../features/data/redux/constants';
+import { EDITION_PROPAGATE } from '../features/edition/redux/constants';
+import { EMAIL_UPDATE_ONE_UPDATE } from '../features/email/redux/constants';
 import { ITEM_UPDATE_ONE_UPDATE } from '../features/item/redux/constants';
 import { MOVEMENT_UPDATE_ONE_UPDATE } from '../features/movement/redux/constants';
-import { ALERT_UPDATE_ONE_UPDATE } from '../features/alert/redux/constants';
-import { CONTRACT_UPDATE_ONE_UPDATE } from '../features/contract/redux/constants';
-import { AGENDA_PROPAGATE } from '../features/agenda/redux/constants';
+import { SICKNESS_UPDATE_ONE_UPDATE } from '../features/sickness/redux/constants';
+import { SITE_UPDATE_ONE_UPDATE } from '../features/site/redux/constants';
+import { SITE_TYPE_UPDATE_ONE_UPDATE } from '../features/site-type/redux/constants';
+import { USER_PROPAGATE } from '../features/user/redux/constants';
 
 export function propagateCreate(type, id, datas) {
   return propagateModel(type, {data: datas });
@@ -110,6 +111,12 @@ export function propagateModel(type, model) {
       case 'FreeAsso_Data':
         dispatch({
           type: DATA_UPDATE_ONE_UPDATE,
+          data: model,
+        });
+        break;
+      case 'FreeFW_Edition':
+        dispatch({
+          type: EDITION_PROPAGATE,
           data: model,
         });
         break;

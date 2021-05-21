@@ -32,6 +32,8 @@ const initialState = {
   uploadContractMediaError: null,
   delContractMediaPending: false,
   delContractMediaError: null,
+  updateContractMediaDescPending: false,
+  updateContractMediaDescError: null,
 };
 
 export default initialState;

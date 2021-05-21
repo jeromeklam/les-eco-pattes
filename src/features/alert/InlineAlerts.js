@@ -8,7 +8,7 @@ import classnames from 'classnames';
 import { intlDateTime } from '../../common';
 import { GetOne as GetOneIcon, DelOne as DelOneIcon, AddOne as AddOneIcon } from '../icons';
 import { CenteredLoading3Dots } from '../ui';
-import { Create, Modify, getAlerts, getLibStatus } from './';
+import { Input, getAlerts, getLibStatus } from './';
 
 export class InlineAlerts extends Component {
   static propTypes = {
@@ -217,7 +217,7 @@ export class InlineAlerts extends Component {
           </div>
           <div>
             {!this.state.confirm && this.state.alert_id === 0 && (
-              <Create
+              <Input
                 onClose={this.onClose}
                 object={this.state.object}
                 objName={this.state.obj_name}
@@ -225,7 +225,7 @@ export class InlineAlerts extends Component {
               />
             )}
             {!this.state.confirm && this.state.alert_id > 0 && (
-              <Modify onClose={this.onClose} alert_id={this.state.alert_id} />
+              <Input onClose={this.onClose} alert_id={this.state.alert_id} />
             )}
           </div>
         </div>

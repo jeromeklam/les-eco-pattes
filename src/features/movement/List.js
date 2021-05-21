@@ -10,7 +10,7 @@ import {
   Search as SearchIcon,
 } from '../icons';
 import { deleteSuccess, deleteError, List as UiList } from '../ui';
-import { getGlobalActions, getInlineActions, getCols, Create, Modify } from './';
+import { getGlobalActions, getInlineActions, getCols, Input } from './';
 
 /**
  * Liste des movements
@@ -205,9 +205,9 @@ export class List extends Component {
           loadMoreError={this.props.movement.loadMoreError}
         />
         {this.state.movementId > 0 && (
-          <Modify modal={true} movementId={this.state.movementId} onClose={this.onClose} />
+          <Input modal={true} move_id={this.state.movementId} onClose={this.onClose} />
         )}
-        {this.state.movementId === 0 && <Create modal={true} onClose={this.onClose} />}
+        {this.state.movementId === 0 && <Input modal={true} onClose={this.onClose} />}
       </div>
     );
   }

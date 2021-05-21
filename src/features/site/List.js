@@ -17,8 +17,7 @@ import {
   getGlobalActions,
   getInlineActions,
   getCols,
-  Create,
-  Modify,
+  Input
 } from './';
 
 /**
@@ -231,7 +230,7 @@ export class List extends Component {
         inlineComponent = <InlinePhotos siteId={this.state.item.id} />;
         break;
       case 'document':
-        inlineComponent = <InlineDocuments siteId={this.state.item.id} />;
+        inlineComponent = <InlineDocuments  siteId={this.state.item.id} />;
         break;
       default:
         break;
@@ -291,9 +290,9 @@ export class List extends Component {
           fClassName={this.itemClassName}
         />
         {this.state.siteId > 0 && (
-          <Modify modal={true} siteId={this.state.siteId} onClose={this.onClose} />
+          <Input modal={true} siteId={this.state.siteId} onClose={this.onClose} />
         )}
-        {this.state.siteId === 0 && <Create modal={true} onClose={this.onClose} />}
+        {this.state.siteId === 0 && <Input modal={true} onClose={this.onClose} />}
       </div>
     );
   }

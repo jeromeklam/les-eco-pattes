@@ -4,9 +4,20 @@ import {
   AddOne as AddOneIcon,
   GetOne as GetOneIcon,
   DelOne as DelOneIcon,
+  Bill as BillIcon,
+  Document as DocumentIcon,
 } from '../icons';
 import { getLabel as getDataLabel } from '../data';
+import { Deadline } from '../ui';
 import { searchSite } from '../site';
+
+export const getAmount = item => {
+  let amount = 0;
+  if (item) {
+    amount = parseFloat(item.ct_install_amount) + parseFloat(item.ct_recur_amount);
+  }
+  return amount;
+};
 
 export const getGlobalActions = ({ onClearFilters, onCreate }) => {
   return [
@@ -34,6 +45,28 @@ export const getInlineActions = ({ onSelectList, onGetOne, onDelOne, state }) =>
       icon: <FollowIcon color="white" />,
       role: 'DETAIL',
       active: state.mode === 'alert',
+    },
+    {
+      name: 'bill',
+      label: 'Factures',
+      onClick: obj => {
+        onSelectList(obj, 'bill');
+      },
+      param: 'object',
+      theme: 'secondary',
+      icon: <BillIcon color="white" />,
+      role: 'DETAIL',
+      disabled: true,
+    },
+    {
+      name: 'document',
+      label: '3',
+      onClick: (obj) => {onSelectList(obj, 'document');},
+      param: 'object',
+      theme: 'secondary',
+      icon: <DocumentIcon color="white" />,
+      role: 'DETAIL',
+      active: state.documents > 0,
     },
     {
       name: 'modify',
@@ -84,23 +117,10 @@ export const getCols = ({ props }) => {
       name: 'ct_from',
       label: 'Date début',
       col: 'ct_from',
-      size: '5',
+      size: '4',
       mob_size: '36',
       title: true,
       sortable: true,
-      type: 'date',
-      filterable: { type: 'date' },
-      card: { role: 'FIELD' },
-    },
-    {
-      name: 'ct_to',
-      label: 'Date fin',
-      col: 'ct_to',
-      size: '0',
-      mob_size: '0',
-      title: false,
-      sortable: false,
-      hidden: true,
       type: 'date',
       filterable: { type: 'date' },
       card: { role: 'FIELD' },
@@ -127,7 +147,7 @@ export const getCols = ({ props }) => {
       name: 'duration',
       label: 'Durée',
       col: 'ct_duration',
-      size: '6',
+      size: '2',
       mob_size: '18',
       title: true,
       sortable: false,
@@ -138,15 +158,44 @@ export const getCols = ({ props }) => {
       card: { role: 'FIELD' },
     },
     {
+      name: 'ct_amount',
+      label: 'Montant',
+      col: 'ct_amount',
+      size: '3',
+      mob_size: '36',
+      title: true,
+      sortable: true,
+      type: 'monetary',
+      fContent: (item) => {
+        return getAmount(item);
+      },
+      filterable: { type: 'text' },
+    },
+    {
       name: 'ct_next_bill',
-      label: 'Date facturation',
+      label: 'Date prochaine facturation',
       col: 'ct_next_bill',
-      size: '5',
+      size: '6',
+      mob_size: '36',
+      title: true,
+      sortable: true,
+      type: 'date',
+      fDisplay: item => {
+        return <Deadline deadline={item.ct_next_bill} bold={true} />;
+      },
+      filterable: { type: 'date' },
+    },
+    {
+      name: 'ct_to',
+      label: 'Date fin',
+      col: 'ct_to',
+      size: '4',
       mob_size: '36',
       title: true,
       sortable: true,
       type: 'date',
       filterable: { type: 'date' },
+      card: { role: 'FIELD' },
     },
   ];
 };

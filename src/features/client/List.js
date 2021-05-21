@@ -18,9 +18,8 @@ import {
   Search as SearchIcon,
   DelOne as ClearIcon,
 } from '../icons';
-import { deleteSuccess, showErrors } from '../ui';
-import { getGlobalActions, getInlineActions, getCols } from './';
-import { Create, Modify } from './';
+import { deleteSuccess, showErrors, List as UiList } from '../ui';
+import { getGlobalActions, getInlineActions, getCols, Input } from './';
 
 export class List extends Component {
   static propTypes = {
@@ -32,7 +31,7 @@ export class List extends Component {
     super(props);
     this.state = {
       timer: null,
-      cliId : -1,
+      cliId: -1,
     };
     this.onCreate = this.onCreate.bind(this);
     this.onGetOne = this.onGetOne.bind(this);
@@ -70,7 +69,7 @@ export class List extends Component {
         deleteSuccess();
       })
       .catch(errors => {
-        showErrors(this.props.intl, errors, "", "Suppression impossible ! ");
+        showErrors(this.props.intl, errors, '', 'Suppression impossible ! ');
       });
   }
 
@@ -162,25 +161,19 @@ export class List extends Component {
     );
     return (
       <div>
-        <ResponsiveList
-          title="Contacts" 
+        <UiList
+          title="Contacts"
           cols={cols}
           items={items}
           quickSearch={quickSearch}
           mainCol="cli_firstname"
-          cancelPanelIcon={<CancelPanelIcon color="light" />}
-          validPanelIcon={<ValidPanelIcon color="light" />}
-          sortDownIcon={<SortDownIcon color="secondary" />}
-          sortUpIcon={<SortUpIcon color="secondary" />}
-          sortNoneIcon={<SortNoneIcon color="secondary" />}
-          clearIcon={<ClearIcon className="text-warning" />}
+          onClick={this.onSelectList}
+          currentItem={this.state.item}
+          currentInline={this.state.mode}
           inlineActions={inlineActions}
           globalActions={globalActions}
           sort={this.props.client.sort}
           filters={this.props.client.filters}
-          filterFullIcon={<FilterFullIcon color="white" />}
-          filterEmptyIcon={<FilterEmptyIcon color="white" />}
-          filterClearIcon={<FilterClearIcon color="white" />}
           onSearch={this.onQuickSearch}
           onSort={this.onUpdateSort}
           onSetFiltersAndSort={this.onSetFiltersAndSort}
@@ -191,11 +184,9 @@ export class List extends Component {
           loadMoreError={this.props.client.loadMoreError}
         />
         {this.state.cliId > 0 && (
-          <Modify modal={true} cliId={this.state.cliId} onClose={this.onClose} />
+          <Input modal={true} cliId={this.state.cliId} onClose={this.onClose} />
         )}
-        {this.state.cliId === 0 && (
-          <Create modal={true} onClose={this.onClose} />
-        )}
+        {this.state.cliId === 0 && <Input modal={true} onClose={this.onClose} />}
       </div>
     );
   }

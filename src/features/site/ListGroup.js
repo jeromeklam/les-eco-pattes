@@ -18,8 +18,8 @@ import {
   GetOne as GetOneIcon,
   MapPose as MapPoseIcon,
 } from '../icons';
+import { Input as ModifySite } from '../site';
 import { InlinePhotos, InlineDocuments } from './';
-import { Modify as ModifySite } from '../site';
 
 export class ListGroup extends Component {
   static propTypes = {

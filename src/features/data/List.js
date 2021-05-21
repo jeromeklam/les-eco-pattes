@@ -12,8 +12,7 @@ import {
   SortUp as SortUpIcon,
   Sort as SortNoneIcon,
 } from '../icons';
-import { getGlobalActions, getInlineActions, getCols } from './';
-import { Create, Modify } from './';
+import { getGlobalActions, getInlineActions, getCols, Input } from './';
 
 /**
  * Liste des données
@@ -130,9 +129,9 @@ export class List extends Component {
           loadMoreError={this.props.data.loadMoreError}
         />
         {this.state.dataId > 0 && (
-          <Modify modal={true} dataId={this.state.dataId} onClose={this.onClose} />
+          <Input modal={true} dataId={this.state.dataId} onClose={this.onClose} />
         )}
-        {this.state.dataId === 0 && <Create modal={true} onClose={this.onClose} />}
+        {this.state.dataId === 0 && <Input modal={true} onClose={this.onClose} />}
       </div>
     );
   }

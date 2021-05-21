@@ -62,6 +62,7 @@ function Form(props) {
           <SicknessInputPicker
             label="Maladie"
             name="sickness"
+            required={true}
             item={values.sickness || null}
             onChange={handleChange}
             labelTop={true}

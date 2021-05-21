@@ -85,7 +85,7 @@ export function reducer(state, action) {
       // Dismiss the request failure error
       let object = jsonApiNormalizer(action.data.data);
       let myItems = state.items;
-      let news = normalizedObjectUpdate(myItems, 'FreeFW_Alert', object);
+      let news = normalizedObjectUpdate(myItems, 'FreeFW_Alert', object, action.ignoreAdd || false);
       return {
         ...state,
         updateOneError: null,

@@ -18,6 +18,7 @@ import {
   Agenda as AgendaIcon,
   Contract as ContractIcon,
   Task as TaskIcon,
+  Print as PrintIcon,
 } from '../icons';
 
 export const globalMenu = (authCookie = false) => {
@@ -221,6 +222,12 @@ export const globalMenu = (authCookie = false) => {
         url: '/sickness',
         role: 'NAV',
         position: 7,
+      },
+      {
+        label: "Modèles d'éditions",
+        url: '/edition',
+        role: 'NAV',
+        position: 8,
       },
       {
         icon: null,
