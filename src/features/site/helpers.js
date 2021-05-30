@@ -9,47 +9,54 @@ import {
   Document as DocumentIcon,
   MapPose as ZoomMapIcon,
   SiteExtern as SiteExternIcon,
+  Print as PrintIcon,
 } from '../icons';
 import { siteTypeAsOptions } from '../site-type/functions';
 import { searchSite } from './';
 
-const townCol = (item) => {
+const townCol = item => {
   let cpTown = '';
   if (item.site_cp) {
-    cpTown = item.site_cp + " "
+    cpTown = item.site_cp + ' ';
   }
   if (item.site_town) {
-    cpTown = cpTown + item.site_town
+    cpTown = cpTown + item.site_town;
   }
   return cpTown;
-}
+};
 
 const externCol = [
-  { value: true, label: 'Externe', icon: <SiteExternIcon className="col-icon"/> },
+  { value: true, label: 'Externe', icon: <SiteExternIcon className="col-icon" /> },
   { value: false, label: '' },
 ];
 
-export const getSelectActions = ({ props, onSelectMenu }) => {
+export const getSelectActions = ({ props, onSelectMenu, onPrint }) => {
   const arrOne = [
     {
       name: 'selectAll',
       label: 'Tout sélectionner',
-      onClick: () => {onSelectMenu('selectAll');}
-    }
+      onClick: () => {
+        onSelectMenu('selectAll');
+      },
+    },
   ];
   const arrAppend = [
     {
       name: 'selectNone',
       label: 'Tout désélectionner',
-      onClick: () => {onSelectMenu('selectNone');}
+      onClick: () => {
+        onSelectMenu('selectNone');
+      },
     },
     {
       name: 'divider',
     },
     {
-      name: 'selectNone',
-      label: 'Tout désélectionner',
-      onClick: () => {onSelectMenu('selectNone');}
+      name: 'print',
+      label: 'Imprimer',
+      onClick: () => {
+        onPrint();
+      },
     },
   ];
   if (props.site.selected.length > 0) {
@@ -76,13 +83,21 @@ export const getInlineActions = ({
   onZoomMap,
   onGetOne,
   onDelOne,
+  onPrint,
   state,
 }) => {
+  const { editions } = state;
+  let myEditions = [];
+  editions.forEach(edition => {
+    myEditions.push({ label: edition.edi_name, onClick: item => onPrint(edition.id, item) });
+  });
   return [
     {
       name: 'animal',
       label: 'Animaux',
-      onClick: (obj) => {onSelectList(obj, 'animal');},
+      onClick: obj => {
+        onSelectList(obj, 'animal');
+      },
       param: 'object',
       theme: 'secondary',
       icon: <CauseIcon color="white" />,
@@ -92,7 +107,9 @@ export const getInlineActions = ({
     {
       name: 'alert',
       label: 'Suivi',
-      onClick: (obj) => {onSelectList(obj, 'alert');},
+      onClick: obj => {
+        onSelectList(obj, 'alert');
+      },
       param: 'object',
       theme: 'secondary',
       icon: <FollowIcon color="white" />,
@@ -102,7 +119,9 @@ export const getInlineActions = ({
     {
       name: 'document',
       label: 'Documents',
-      onClick: (obj) => {onSelectList(obj, 'document');},
+      onClick: obj => {
+        onSelectList(obj, 'document');
+      },
       param: 'object',
       theme: 'secondary',
       icon: <DocumentIcon color="white" />,
@@ -112,7 +131,9 @@ export const getInlineActions = ({
     {
       name: 'photo',
       label: 'Photos',
-      onClick: (obj) => {onSelectList(obj, 'photo');},
+      onClick: obj => {
+        onSelectList(obj, 'photo');
+      },
       param: 'object',
       theme: 'secondary',
       icon: <PhotoIcon color="white" />,
@@ -127,6 +148,16 @@ export const getInlineActions = ({
       theme: 'secondary',
       icon: <ZoomMapIcon color="white" />,
       role: 'DETAIL',
+    },
+    {
+      name: 'printOne',
+      label: 'Imprimer',
+      onClick: onPrint,
+      theme: 'secondary',
+      icon: <PrintIcon color="white" />,
+      role: 'PRINT',
+      active: myEditions.length > 0,
+      options: myEditions,
     },
     {
       name: 'modify',
@@ -166,7 +197,7 @@ export const getCols = ({ props }) => {
       title: true,
       sortable: true,
       selectable: true,
-      filterable: { type: 'text' }, 
+      filterable: { type: 'text' },
       first: true,
       card: { role: 'TITLE' },
     },
@@ -198,7 +229,7 @@ export const getCols = ({ props }) => {
       size: '5',
       mob_size: '36',
       title: true,
-      sortable: true, 
+      sortable: true,
       card: { role: 'FIELD' },
     },
     {
@@ -236,7 +267,7 @@ export const getCols = ({ props }) => {
       col: 'site_count_cause',
       size: '4',
       mob_size: 10,
-      title : true,
+      title: true,
       sortable: true,
       filterable: false,
     },

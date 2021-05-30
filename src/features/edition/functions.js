@@ -47,10 +47,10 @@ export const getEditionObjectNames = intl => {
 /**
  * Retourne la liste des éditions d'un type d'object
  *
- * @param [POFW_Edition] p_editions
+ * @param [FreeFW_Edition] p_editions
  * @param string         p_object_name
  *
- * @return [POFW_Edition]
+ * @return [FreeW_Edition]
  */
 export const getEditions = (p_editions, p_object_name) => {
   return p_editions.filter(

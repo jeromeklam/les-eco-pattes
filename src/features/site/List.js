@@ -8,6 +8,7 @@ import { normalizedObjectModeler } from 'jsonapi-front';
 import { ResponsiveQuickSearch } from 'react-bootstrap-front';
 import { Search as SearchIcon } from '../icons';
 import { deleteSuccess, showErrors, List as UiList } from '../ui';
+import { getEditions } from '../edition';
 import { InlineCauses } from '../cause';
 import { InlineAlerts } from '../alert';
 import {
@@ -43,6 +44,8 @@ export class List extends Component {
       siteId: -1,
       mode: false,
       item: null,
+      models: props.edition.models,
+      editions: getEditions(props.edition.models, 'FreeAsso_Site'),
     };
     this.onCreate = this.onCreate.bind(this);
     this.onGetOne = this.onGetOne.bind(this);
@@ -59,6 +62,7 @@ export class List extends Component {
     this.onZoomMap = this.onZoomMap.bind(this);
     this.onSelectMenu = this.onSelectMenu.bind(this);
     this.itemClassName = this.itemClassName.bind(this);
+    this.onPrint = this.onPrint.bind(this);
   }
 
   componentDidMount() {
@@ -199,6 +203,12 @@ export class List extends Component {
     return '';
   }
 
+  onPrint(ediId, siteId) {
+    if (siteId) {
+      this.props.actions.printOne(siteId, ediId);
+    }
+  }
+
   /**
    * Génération du contenu
    */
@@ -302,6 +312,7 @@ function mapStateToProps(state) {
   return {
     site: state.site,
     siteType: state.siteType,
+    edition: state.edition,
   };
 }
 

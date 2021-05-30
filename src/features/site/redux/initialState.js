@@ -65,6 +65,8 @@ const initialState = {
   loadDocumentsError: null,
   updateSiteMediaDescPending: false,
   updateSiteMediaDescError: null,
+  printOnePending: false,
+  printOneError: null,
 };
 
 export default initialState;

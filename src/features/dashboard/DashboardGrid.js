@@ -16,6 +16,7 @@ import {
   Area as AreaIcon,
   Fence as FenceIcon,
 } from '../icons';
+import { DashboardHistory } from '../history';
 import { DashboardCard, DashboardToolbar } from './';
 import { getFromLS, saveToLS, modifySuccess, showErrors } from '../ui';
 
@@ -156,19 +157,37 @@ export class DashboardGrid extends Component {
             isDraggable={this.state.editable}
             isResizable={this.state.editable}
           >
-            <div key="alerts-warning" data-grid={{ w: 26, h: 6, x: 1, y: 1, minW: 12, minH: 4 }}>
+            <div key="alerts-warning" data-grid={{ w: 26, h: 5, x: 1, y: 1, minW: 12, minH: 4 }}>
               <PendingAlerts
                 overlay={this.state.editable}
                 layoutSize={getLayoutSize(layouts, breakpoint, 'alerts')}
                 mode="warning"
               />
             </div>
-            <div key="alerts-danger" data-grid={{ w: 26, h: 6, x: 1, y: 7, minW: 12, minH: 4 }}>
+            <div key="alerts-danger" data-grid={{ w: 26, h: 5, x: 1, y: 7, minW: 12, minH: 4 }}>
               <PendingAlerts
                 overlay={this.state.editable}
                 layoutSize={getLayoutSize(layouts, breakpoint, 'alerts')}
                 mode="danger"
               />
+            </div>
+            <div key="movements" data-grid={{ w: 26, h: 8, x: 1, y: 12, minW: 12, minH: 4 }}>
+              <PendingMovements
+                overlay={this.state.editable}
+                layoutSize={getLayoutSize(layouts, breakpoint, 'movements')}
+              />
+            </div>
+            <div key="sicknesses" data-grid={{ w: 26, h: 5, x: 1, y: 20, minW: 12, minH: 4 }}>
+              <PendingSicknesses
+                overlay={this.state.editable}
+                layoutSize={getLayoutSize(layouts, breakpoint, 'sicknesses')}
+              />
+            </div>
+            <div
+              key="history"
+              data-grid={{ w: 26, h: 6, x: 1, y: 25, minW: 9, maxW: 36, minH: 5, maxH: 18 }}
+            >
+              <DashboardHistory overlay={this.state.editable} />
             </div>
             <div key="contract" data-grid={{ w: 6, h: 4, x: 28, y: 8, minW: 6, maxW: 18, minH: 4 }}>
               <DashboardCard
@@ -218,18 +237,6 @@ export class DashboardGrid extends Component {
                 icon={<FenceIcon />}
                 overlay={this.state.editable}
                 size={getLayoutSize(layouts, breakpoint, 'ml')}
-              />
-            </div>
-            <div key="movements" data-grid={{ w: 26, h: 6, x: 1, y: 10, minW: 12, minH: 4 }}>
-              <PendingMovements
-                overlay={this.state.editable}
-                layoutSize={getLayoutSize(layouts, breakpoint, 'movements')}
-              />
-            </div>
-            <div key="sicknesses" data-grid={{ w: 26, h: 6, x: 1, y: 20, minW: 12, minH: 4 }}>
-              <PendingSicknesses
-                overlay={this.state.editable}
-                layoutSize={getLayoutSize(layouts, breakpoint, 'sicknesses')}
               />
             </div>
           </ResponsiveReactGridLayout>
