@@ -13,3 +13,4 @@ export { default as InlineDocuments } from './InlineDocuments';
 export { default as MultiInputPicker } from './MultiInputPicker';
 export { default as InlinePhotos } from './InlinePhotos';
 export { default as InputPickerEnhanced } from './InputPickerEnhanced';
+export { default as Input } from './Input';

@@ -11,3 +11,7 @@ export { uploadContractMedia, dismissUploadContractMediaError } from './uploadCo
 export { delContractMedia, dismissDelContractMediaError } from './delContractMedia';
 export { updateQuickSearch } from './updateQuickSearch';
 export { updateSort } from './updateSort';
+export {
+  updateContractMediaDesc,
+  dismissUpdateContractMediaDescError,
+} from './updateContractMediaDesc';

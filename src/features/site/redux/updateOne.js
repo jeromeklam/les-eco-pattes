@@ -8,13 +8,12 @@ import {
 } from './constants';
 import { freeAssoApi } from '../../../common';
 
-export function updateOne(args = {}) {
+export function updateOne(id, args = {}) {
   return dispatch => {
     dispatch({
       type: SITE_UPDATE_ONE_BEGIN,
     });
     const promise = new Promise((resolve, reject) => {
-      const id = args.data.id;
       const doRequest = freeAssoApi.put('/v1/asso/site/' + id, args);
       doRequest.then(
         res => {
@@ -83,7 +82,7 @@ export function reducer(state, action) {
     case SITE_UPDATE_ONE_UPDATE:
       let object = jsonApiNormalizer(action.data.data);
       let myItems = state.items;
-      let news = normalizedObjectUpdate(myItems, 'FreeAsso_Site', object);
+      let news = normalizedObjectUpdate(myItems, 'FreeAsso_Site', object, action.ignoreAdd || false);
       return {
         ...state,
         updateOneError: null,

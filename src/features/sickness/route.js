@@ -1,4 +1,4 @@
-import { List, Create, Modify } from './';
+import { List, Input } from './';
 
 export default {
   path: '',
@@ -6,7 +6,7 @@ export default {
   isIndex: true,
   childRoutes: [
     { path: 'sickness', name: 'List', component: List, auth: 'PRIVATE' },
-    { path: 'sickness/create', name: 'Create', component: Create, auth: 'PRIVATE' },
-    { path: 'sickness/modify/:sickId', name: 'Modify', component: Modify, auth: 'PRIVATE' },
+    { path: 'sickness/create', name: 'Create', component: Input, auth: 'PRIVATE' },
+    { path: 'sickness/modify/:id', name: 'Modify', component: Input, auth: 'PRIVATE' },
   ],
 };

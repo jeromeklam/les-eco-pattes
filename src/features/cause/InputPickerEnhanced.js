@@ -5,8 +5,8 @@ import { freeAssoApi } from '../../common';
 import { InputPicker as DefaultInputPicker, InputSelect } from 'react-bootstrap-front';
 import { causeTypeAsOptions } from '../cause-type/functions.js';
 import { sexSelect } from '../cause';
-import { Search, Modify } from './';
 import { More, DelOne, Zoom } from '../icons';
+import { Search, Input } from './';
 
 export default class InputPickerEnhanced extends Component {
   static propTypes = {
@@ -190,7 +190,7 @@ export default class InputPickerEnhanced extends Component {
           </div>
         </div>
         {this.state.zoom && (
-          <Modify
+          <Input
             loader={false}
             modal={true}
             cauId={this.state.item.id}

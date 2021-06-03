@@ -8,14 +8,13 @@ import {
   FAMILY_UPDATE_ONE_DISMISS_ERROR,
 } from './constants';
 
-export function updateOne(args = {}) {
+export function updateOne(id, args = {}) {
   return dispatch => {
     // optionally you can have getState as the second argument
     dispatch({
       type: FAMILY_UPDATE_ONE_BEGIN,
     });
     const promise = new Promise((resolve, reject) => {
-      const id = args.data.id;
       const doRequest = freeAssoApi.put('/v1/asso/family/' + id, args);
       doRequest.then(
         res => {

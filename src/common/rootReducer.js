@@ -38,6 +38,8 @@ import stockReducer from '../features/stock/redux/reducer';
 import uiReducer from '../features/ui/redux/reducer';
 import unitReducer from '../features/unit/redux/reducer';
 import userReducer from '../features/user/redux/reducer';
+import editionReducer from '../features/edition/redux/reducer';
+import historyReducer from '../features/history/redux/reducer';
 
 // NOTE 1: DO NOT CHANGE the 'reducerMap' name and the declaration pattern.
 // This is used for Rekit cmds to register new features, remove features, etc.
@@ -82,6 +84,8 @@ const reducerMap = {
   ui: uiReducer,
   unit: unitReducer,
   user: userReducer,
+  edition: editionReducer,
+  history: historyReducer,
 };
 
 export default combineReducers(reducerMap);

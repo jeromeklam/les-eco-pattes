@@ -84,7 +84,7 @@ export function reducer(state, action) {
     case CLIENT_TYPE_UPDATE_ONE_UPDATE:
       let object = jsonApiNormalizer(action.data.data);
       let myItems = state.items;
-      let news = normalizedObjectUpdate(myItems, 'FreeAsso_ClientType', object);
+      let news = normalizedObjectUpdate(myItems, 'FreeAsso_ClientType', object, action.ignoreAdd || false);
       return {
         ...state,
         updateOneError: null,

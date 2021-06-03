@@ -20,8 +20,7 @@ import { Create as CreateMovement } from '../movement';
 import {
   InlineCauses,
   InlinePhotos,
-  Create,
-  Modify,
+  Input,
   InlineDocuments,
   getSelectActions,
   getGlobalActions,
@@ -273,9 +272,9 @@ export class List extends Component {
           fClassName={this.itemClassName}
         />
         {this.state.cauId > 0 && (
-          <Modify modal={true} cauId={this.state.cauId} onClose={this.onClose} loader={false} />
+          <Input modal={true} cauId={this.state.cauId} onClose={this.onClose} loader={false} />
         )}
-        {this.state.cauId === 0 && <Create modal={true} onClose={this.onClose} loader={false} />}
+        {this.state.cauId === 0 && <Input modal={true} onClose={this.onClose} loader={false} />}
         {this.state.menu === 'movement' && <CreateMovement loader={false} modal={true} mode={this.state.menuOption} onClose={this.onClose} selected={selected} />}
       </div>
     );

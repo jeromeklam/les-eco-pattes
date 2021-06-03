@@ -12,16 +12,18 @@ import {
   Alert as AlertIcon, 
   GetOne as GetOneIcon } from '../icons';
 import { CenteredLoading3Dots, InlineList, Line, Col } from '../ui';
-import { Modify } from './';
+import { Input } from './';
 
 export class PendingAlerts extends Component {
   static propTypes = {
     alert: PropTypes.object.isRequired,
     actions: PropTypes.object.isRequired,
     overlay: PropTypes.bool,
+    mode: PropTypes.string,
   };
   static defaultProps = {
     overlay: false,
+    mode: '',
   };
 
   constructor(props) {
@@ -37,7 +39,7 @@ export class PendingAlerts extends Component {
   }
 
   componentDidMount() {
-    this.props.actions.loadPendings();
+    this.props.actions.loadPendings(this.props.mode);
   }
 
   mouseLeave() {
@@ -54,7 +56,7 @@ export class PendingAlerts extends Component {
 
   onClose() {
     this.setState({ alert_id: -1 });
-    this.props.actions.loadPendings();
+    this.props.actions.loadPendings(this.props.mode);
   }
 
   render() {
@@ -78,13 +80,27 @@ export class PendingAlerts extends Component {
           </Col>
           <Col layoutSize={this.props.layoutSize || 'md'} md={2} lg={2} xl={2} col={2}>
           </Col>
-          <Col layoutSize={this.props.layoutSize || 'md'} md={4} lg={4} xl={4} col={12}>
+          <Col layoutSize={this.props.layoutSize || 'md'} md={4} lg={4} xl={4} col={6}>
           </Col>
         </Line>
       </InlineList>
     );
+    // Titre
+    let title = 'Alertes';
+    if (this.props.mode !== '') {
+      switch (this.props.mode) {
+        case 'warning':
+          title = 'Alertes à échéances proches'
+          break;
+        case 'danger':
+          title = 'Alertes à échéances dépassées'
+          break;
+        default:
+          break;
+      }
+    }
     return (
-      <DashboardCard title="Alertes" icon={<AlertIcon />} size="md" header={header} overlay={this.props.overlay}>
+      <DashboardCard title={title} icon={<AlertIcon />} size="md" header={header} overlay={this.props.overlay}>
         <div className="pending-alerts">
           <div className="alert-pendings text-secondary bg-secondary-light">
             {alerts && alerts.length > 0 ? (
@@ -113,7 +129,7 @@ export class PendingAlerts extends Component {
                           md={7}
                           lg={7}
                           xl={5}
-                          col={12}
+                          col={8}
                         >
                           {intlDateTime(alert.alert_from, true)}
                         </Col>
@@ -122,7 +138,7 @@ export class PendingAlerts extends Component {
                           md={7}
                           lg={7}
                           xl={5}
-                          col={12}
+                          col={8}
                         >
                           {intlDateTime(alert.alert_deadline, true)}
                         </Col>
@@ -135,7 +151,7 @@ export class PendingAlerts extends Component {
                         >
                           {(alert.alert_deadline <= today) ? <ExpiredIcon className="col-icon"/> : ''}
                         </Col>
-                        <Col layoutSize={this.props.layoutSize || 'md'} md={4} lg={4} xl={4} col={12}>
+                        <Col layoutSize={this.props.layoutSize || 'md'} md={4} lg={4} xl={4} col={6}>
                           {this.state.flipped && this.state.flipped === alert.id && (
                             <div className="btn-group btn-group-sm float-right" role="group" aria-label="...">
                               <button
@@ -172,7 +188,7 @@ export class PendingAlerts extends Component {
           </div>
         </div>
         {parseInt(this.state.alert_id, 10) > 0 && (
-          <Modify alert_id={this.state.alert_id} onClose={this.onClose} loader={false} />
+          <Input alert_id={this.state.alert_id} onClose={this.onClose} loader={false} />
         )}
       </DashboardCard>
     );

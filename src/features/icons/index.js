@@ -101,3 +101,6 @@ export { default as Camera } from './Camera';
 export { default as Security } from './Security';
 export { default as Expired } from './Expired';
 export { default as User } from './User';
+export { default as Print } from './Print';
+export { default as Bill } from './Bill';
+export { default as History } from './History';

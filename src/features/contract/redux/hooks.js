@@ -1,0 +1,1 @@
+export { useUpdateContractMediaDesc } from './updateContractMediaDesc';

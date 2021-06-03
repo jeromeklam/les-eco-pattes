@@ -211,6 +211,17 @@ function Form(props) {
             <div className="row">
               <div className="col-md-w36">
                 <InputText
+                  label="Raison sociale"
+                  name="cli_social_reason"
+                  value={values.cli_social_reason}
+                  onChange={handleChange}
+                  error={getErrorMessage('cli_social_reason')}
+                />
+              </div>
+            </div>
+            <div className="row">
+              <div className="col-md-w36">
+                <InputText
                   label="Adresse"
                   name="cli_address1"
                   value={values.cli_address1}
@@ -309,15 +320,6 @@ function Form(props) {
                   name="cli_siret"
                   labelTop={true}
                   value={values.cli_siret}
-                  onChange={handleChange}
-                />
-              </div>
-              <div className="col-md-w18">
-                <InputText
-                  label="SIREN"
-                  name="cli_siren"
-                  labelTop={true}
-                  value={values.cli_siren}
                   onChange={handleChange}
                 />
               </div>

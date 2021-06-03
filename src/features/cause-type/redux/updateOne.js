@@ -84,7 +84,7 @@ export function reducer(state, action) {
     case CAUSE_TYPE_UPDATE_ONE_UPDATE:
       let object = jsonApiNormalizer(action.data.data);
       let myItems = state.items;
-      let news = normalizedObjectUpdate(myItems, 'FreeAsso_CauseType', object);
+      let news = normalizedObjectUpdate(myItems, 'FreeAsso_CauseType', object, action.ignoreAdd || false);
       return {
         ...state,
         updateOneError: null,

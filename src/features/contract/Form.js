@@ -1,7 +1,13 @@
 import React from 'react';
 import { injectIntl } from 'react-intl';
 import RegexpParser from 'reregexp';
-import { InputHidden, InputText, InputMonetary, InputMask, InputCheckbox } from 'react-bootstrap-front';
+import {
+  InputHidden,
+  InputText,
+  InputMonetary,
+  InputMask,
+  InputCheckbox,
+} from 'react-bootstrap-front';
 import { validateRegex } from '../../common';
 import useForm from '../ui/useForm';
 import { ResponsiveModalOrForm, InputDate, InputData } from '../ui';
@@ -11,6 +17,43 @@ import { InlineAlerts } from '../alert';
 import { InlineDocuments } from '../contract';
 
 let regPlaceholder = '';
+
+const afterChange = (name, item) => {
+  switch (name) {
+    case 'ct_duration':
+    case 'ct_from':
+      let ctStart = new Date(Date.parse(item.ct_from));
+      let duration = item.ct_duration;
+      let end = '';
+      let year = ctStart.getFullYear();
+      switch (duration) {
+        case 'PONCTUEL':
+          end = ctStart;
+          break;
+        case 'ANNUEL':
+          end = ctStart;
+          end.setYear(year + 1);
+          break;
+        case '3ANS':
+          end = ctStart;
+          end.setYear(year + 3);
+          break;
+        case '5ANS':
+          end = ctStart;
+          end.setYear(year + 5);
+          break;
+        default:
+          break;
+      }
+      let ctEnd = item.ct_to;
+      if (end !== '' && (ctEnd === null || ctEnd === 0 )) {
+        item.ct_to = end;
+      }
+      break;
+    default:
+      break;
+  }
+};
 
 function Form(props) {
   const {
@@ -28,6 +71,7 @@ function Form(props) {
     props.onNavTab,
     props.errors,
     props.intl,
+    afterChange,
   );
   let validated = true;
   const regexp = '(?<year>[0-9]{4})\\.(?<num>[0-9]{3})';
@@ -143,24 +187,26 @@ function Form(props) {
                   id="ct_install_amount"
                   inputMoney="EUR"
                   dbMoney="EUR"
+                  onChange={handleChange}
                   value={values.ct_install_amount}
                 />
               </div>
               <div className="col-sm-w10">
                 <InputMonetary
-                  label="Montant récurrent"
+                  label="Montant annuel"
                   labelTop={true}
                   name="ct_recur_amount"
                   id="ct_recur_amount"
                   inputMoney="EUR"
                   dbMoney="EUR"
+                  onChange={handleChange}
                   value={values.ct_recur_amount}
                 />
               </div>
               <div className="col-sm-w4"></div>
               <div className="col-sm-w12">
                 <InputDate
-                  label="Facturé le"
+                  label="Prochaine facturation"
                   name="ct_next_bill"
                   id="ct_next_bill"
                   value={values.ct_next_bill}

@@ -4,25 +4,17 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as actions from './redux/actions';
 import { normalizedObjectModeler } from 'jsonapi-front';
-import { ResponsiveList, ResponsiveQuickSearch } from 'react-bootstrap-front';
+import { ResponsiveQuickSearch } from 'react-bootstrap-front';
 import {
   FilterEmpty as FilterEmptyIcon,
   FilterFull as FilterFullIcon,
   FilterClear as FilterClearIcon,
   FilterDefault as FilterDefaultIcon,
   FilterClearDefault as FilterClearDefaultIcon,
-  SimpleCancel as CancelPanelIcon,
-  SimpleCheck as ValidPanelIcon,
-  SortDown as SortDownIcon,
-  SortUp as SortUpIcon,
-  Sort as SortNoneIcon,
   Search as SearchIcon,
-  Calendar as CalendarIcon,
-  DelOne as ClearDateIcon,
 } from '../icons';
-import { deleteSuccess, showErrors } from '../ui';
-import { getGlobalActions, getInlineActions, getCols } from './';
-import { Create, Modify } from './';
+import { deleteSuccess, showErrors, List as UiList } from '../ui';
+import { getGlobalActions, getInlineActions, getCols, Input } from './';
 
 export class List extends Component {
   static propTypes = {
@@ -48,7 +40,7 @@ export class List extends Component {
     this.onUpdateSort = this.onUpdateSort.bind(this);
   }
 
-   componentDidMount() {
+  componentDidMount() {
     this.props.actions.loadMore();
   }
 
@@ -163,19 +155,12 @@ export class List extends Component {
     );
     return (
       <div>
-        <ResponsiveList
+        <UiList
           title="Tâches"
           cols={cols}
           items={items}
           quickSearch={quickSearch}
           mainCol="alert_title"
-          cancelPanelIcon={<CancelPanelIcon color="light" />}
-          validPanelIcon={<ValidPanelIcon color="light" />}
-          sortDownIcon={<SortDownIcon color="secondary" />}
-          sortUpIcon={<SortUpIcon color="secondary" />}
-          sortNoneIcon={<SortNoneIcon color="secondary" />}
-          calIcon={<CalendarIcon className="text-secondary" />}
-          clearIcon={<ClearDateIcon className="text-warning" />}
           inlineActions={inlineActions}
           globalActions={globalActions}
           sort={this.props.alert.sort}
@@ -194,12 +179,17 @@ export class List extends Component {
           loadMorePending={this.props.alert.loadMorePending}
           loadMoreFinish={this.props.alert.loadMoreFinish}
           loadMoreError={this.props.alert.loadMoreError}
+          inlineOpenedItem={this.state.item}
+          onClick={this.onSelectList}
+          currentItem={this.state.item}
+          currentInline={this.state.mode}  
+          fClassName={this.itemClassName}
         />
         {this.state.alertId > 0 && (
-          <Modify modal={true} alert_id={this.state.alertId} onClose={this.onClose} />
+          <Input modal={true} alert_id={this.state.alertId} onClose={this.onClose} />
         )}
         {this.state.alertId === 0 && (
-          <Create modal={true} onClose={this.onClose} />
+          <Input modal={true} onClose={this.onClose} />
         )}
       </div>
     );

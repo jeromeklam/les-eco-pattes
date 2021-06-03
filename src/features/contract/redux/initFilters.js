@@ -8,7 +8,7 @@ export const getInitFilters = (enable = true) => {
   let initFilters = new Filter();
   const now = new Date().toISOString();
   initFilters.addFilter('ct_to', now, FILTER_OPER_GREATER_OR_EQUAL_OR_NULL, false, true, enable);
-  initFilters.setMode(FILTER_MODE_AND);    
+  initFilters.setMode(FILTER_MODE_AND);      
   return initFilters;
 }
 

@@ -320,7 +320,7 @@ console.log("FK",values.sanitary );
             let nameProp = 'site_' + oneProp;
             let className = 'col-sm-w10';
             if (oneProp.indexOf('bool') >= 0) {
-              className = 'col-sm-w3';
+              className = 'col-sm-w4';
             }
             return (
               <div className={classnames(className)} key={nameProp}>

@@ -12,7 +12,7 @@ import {
 } from '../icons';
 import { CenteredLoading3Dots, InlineList, Line, Col } from '../ui';
 import { DashboardCard } from '../dashboard';
-import { Modify } from '../movement';
+import { Input } from '../movement';
 import { statusLabel } from './';
 
 export class PendingMovements extends Component {
@@ -161,7 +161,7 @@ export class PendingMovements extends Component {
             )}
           </div>
           {parseInt(this.state.move_id, 10) > 0 && 
-            <Modify move_id={this.state.move_id} loader={false} onClose={this.onClose} />
+            <Input move_id={this.state.move_id} loader={false} onClose={this.onClose} />
           }
         </div>
       </DashboardCard>

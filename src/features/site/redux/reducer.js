@@ -29,6 +29,7 @@ import { reducer as updateSiteMediaDescReducer } from './updateSiteMediaDesc';
 import { reducer as onSelectReducer } from './onSelect';
 import { reducer as selectAllReducer } from './selectAll';
 import { reducer as selectNoneReducer } from './selectNone';
+import { reducer as printOneReducer } from './printOne';
 
 const reducers = [
   loadMoreReducer,
@@ -53,6 +54,7 @@ const reducers = [
   onSelectReducer,
   selectAllReducer,
   selectNoneReducer,
+  printOneReducer,
 ];
 
 export default function reducer(state = initialState, action) {

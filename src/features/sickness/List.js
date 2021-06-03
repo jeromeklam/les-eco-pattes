@@ -13,7 +13,7 @@ import {
   Sort as SortNoneIcon,
 } from '../icons';
 import { deleteSuccess, deleteError } from '../ui';
-import { getGlobalActions, getInlineActions, getCols, Create, Modify } from './';
+import { getGlobalActions, getInlineActions, getCols, Input } from './';
 
 /**
  * Liste des maladies
@@ -145,10 +145,10 @@ export class List extends Component {
           loadMoreError={this.props.sickness.loadMoreError}
         />
         {this.state.sickId > 0 && (
-          <Modify modal={true} sickId={this.state.sickId} onClose={this.onClose} />
+          <Input modal={true} sickId={this.state.sickId} onClose={this.onClose} />
         )}
         {this.state.sickId === 0 && (
-          <Create modal={true} onClose={this.onClose} />
+          <Input modal={true} onClose={this.onClose} />
         )}
       </div>
     );

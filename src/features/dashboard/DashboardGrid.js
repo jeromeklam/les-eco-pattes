@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { Responsive, WidthProvider } from 'react-grid-layout';
+import { getJsonApi } from 'jsonapi-front';
+import { updateConfig } from '../auth/redux/actions';
 import { PendingMovements } from '../cause-movement';
 import { PendingSicknesses } from '../cause-sickness';
 import { PendingAlerts } from '../alert';
@@ -14,8 +16,9 @@ import {
   Area as AreaIcon,
   Fence as FenceIcon,
 } from '../icons';
+import { DashboardHistory } from '../history';
 import { DashboardCard, DashboardToolbar } from './';
-import { getFromLS, saveToLS } from '../ui';
+import { getFromLS, saveToLS, modifySuccess, showErrors } from '../ui';
 
 const getLayoutSize = (layouts, breakpoint, key) => {
   let size = 'sm';
@@ -61,8 +64,10 @@ export class DashboardGrid extends Component {
     this.onResizeStop = this.onResizeStop.bind(this);
     this.onBreakpointChange = this.onBreakpointChange.bind(this);
     this.onResetLayout = this.onResetLayout.bind(this);
-    this.onEdit = this.onEdit.bind(this);
+    this.onEditStart = this.onEditStart.bind(this);
     this.onEditStop = this.onEditStop.bind(this);
+    this.onRefresh = this.onRefresh.bind(this);
+    this.onSaveLayout = this.onSaveLayout.bind(this);
   }
 
   componentDidMount() {
@@ -80,20 +85,48 @@ export class DashboardGrid extends Component {
 
   onResetLayout() {
     const originalLayouts = {};
-    const layouts =  JSON.parse(JSON.stringify(originalLayouts));
+    const layouts = JSON.parse(JSON.stringify(originalLayouts));
     saveToLS('layouts', layouts);
     this.setState({ layouts });
   }
 
-  onResizeStop(param1, param2) {
-  }
+  onResizeStop(param1, param2) {}
 
-  onEdit() {
-    this.setState({editable: true});
+  onEditStart() {
+    this.setState({ editable: true, savedLayouts: this.state.layouts });
   }
 
   onEditStop() {
-    this.setState({editable: false});
+    this.setState({ editable: false, layouts: this.state.savedLayouts });
+  }
+
+  onRefresh(evt) {
+    if (evt) {
+      evt.preventDefault();
+    }
+    this.props.actions.loadMore();
+  }
+
+  onSaveLayout(evt) {
+    if (evt) {
+      evt.preventDefault();
+    }
+    saveToLS('layouts', this.state.layouts);
+    this.setState({ editable: false });
+    const datas = {
+      type: 'FreeSSO_ConfigRequest',
+      config: JSON.stringify(this.state.layouts),
+      config_type: 'cache',
+    };
+    let obj = getJsonApi(datas);
+    this.props.actions
+      .updateConfig(obj)
+      .then(result => {
+        modifySuccess();
+      })
+      .catch(errors => {
+        showErrors(this.props.intl, errors, 'updateOneError');
+      });
   }
 
   render() {
@@ -101,7 +134,15 @@ export class DashboardGrid extends Component {
     if (this.props.auth.authenticated && this.props.dashboard.stats) {
       return (
         <div>
-          <DashboardToolbar onResetLayout={this.onResetLayout} onEdit={this.onEdit} onEditStop={this.onEditStop} />
+          <DashboardToolbar
+            editable={this.state.editable}
+            onRefresh={this.onRefresh}
+            onReset={this.onResetLayout}
+            onSave={this.onSaveLayout}
+            onResetLayout={this.onResetLayout}
+            onEditStart={this.onEditStart}
+            onEditCancel={this.onEditStop}
+          />
           <ResponsiveReactGridLayout
             className="layout p-2"
             cols={{ lg: 36, md: 36, sm: 36, xs: 36, xxs: 36 }}
@@ -116,8 +157,37 @@ export class DashboardGrid extends Component {
             isDraggable={this.state.editable}
             isResizable={this.state.editable}
           >
-            <div key="alerts" data-grid={{ w: 26, h: 6, x: 1, y: 1, minW: 12, minH: 4 }}>
-              <PendingAlerts overlay={this.state.editable} layoutSize={getLayoutSize(layouts, breakpoint, 'alerts')} />
+            <div key="alerts-warning" data-grid={{ w: 26, h: 5, x: 1, y: 1, minW: 12, minH: 4 }}>
+              <PendingAlerts
+                overlay={this.state.editable}
+                layoutSize={getLayoutSize(layouts, breakpoint, 'alerts')}
+                mode="warning"
+              />
+            </div>
+            <div key="alerts-danger" data-grid={{ w: 26, h: 5, x: 1, y: 7, minW: 12, minH: 4 }}>
+              <PendingAlerts
+                overlay={this.state.editable}
+                layoutSize={getLayoutSize(layouts, breakpoint, 'alerts')}
+                mode="danger"
+              />
+            </div>
+            <div key="movements" data-grid={{ w: 26, h: 8, x: 1, y: 12, minW: 12, minH: 4 }}>
+              <PendingMovements
+                overlay={this.state.editable}
+                layoutSize={getLayoutSize(layouts, breakpoint, 'movements')}
+              />
+            </div>
+            <div key="sicknesses" data-grid={{ w: 26, h: 5, x: 1, y: 20, minW: 12, minH: 4 }}>
+              <PendingSicknesses
+                overlay={this.state.editable}
+                layoutSize={getLayoutSize(layouts, breakpoint, 'sicknesses')}
+              />
+            </div>
+            <div
+              key="history"
+              data-grid={{ w: 26, h: 6, x: 1, y: 25, minW: 9, maxW: 36, minH: 5, maxH: 18 }}
+            >
+              <DashboardHistory overlay={this.state.editable} />
             </div>
             <div key="contract" data-grid={{ w: 6, h: 4, x: 28, y: 8, minW: 6, maxW: 18, minH: 4 }}>
               <DashboardCard
@@ -169,12 +239,6 @@ export class DashboardGrid extends Component {
                 size={getLayoutSize(layouts, breakpoint, 'ml')}
               />
             </div>
-            <div key="movements" data-grid={{ w: 26, h: 6, x: 1, y: 10, minW: 12, minH: 4 }}>
-              <PendingMovements overlay={this.state.editable} layoutSize={getLayoutSize(layouts, breakpoint, 'movements')} />
-            </div>
-            <div key="sicknesses" data-grid={{ w: 26, h: 6, x: 1, y: 20, minW: 12, minH: 4 }}>
-              <PendingSicknesses overlay={this.state.editable} layoutSize={getLayoutSize(layouts, breakpoint, 'sicknesses')} />
-            </div>
           </ResponsiveReactGridLayout>
         </div>
       );
@@ -192,7 +256,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    actions: bindActionCreators({ ...actions }, dispatch),
+    actions: bindActionCreators({ ...actions, updateConfig }, dispatch),
   };
 }
 

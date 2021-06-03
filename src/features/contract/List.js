@@ -7,9 +7,9 @@ import * as actions from './redux/actions';
 import { normalizedObjectModeler } from 'jsonapi-front';
 import { ResponsiveQuickSearch } from 'react-bootstrap-front';
 import { Search as SearchIcon } from '../icons';
-import { deleteSuccess, showErrors, List as UiList } from '../ui';
 import { InlineAlerts } from '../alert';
-import { getGlobalActions, getInlineActions, getCols, Create, Modify } from './';
+import { deleteSuccess, showErrors, List as UiList } from '../ui';
+import { getGlobalActions, getInlineActions, getCols, Input, InlineDocuments } from './';
 
 export class List extends Component {
   static propTypes = {
@@ -23,6 +23,7 @@ export class List extends Component {
       timer: null,
       ctId: -1,
       mode: null,
+      documents: 0,
     };
     this.onCreate = this.onCreate.bind(this);
     this.onGetOne = this.onGetOne.bind(this);
@@ -43,11 +44,11 @@ export class List extends Component {
   }
 
   onCreate(event) {
-    this.setState({ ctId: 0 });
+    this.setState({ ctId: 0, documents: 0 });
   }
 
   onGetOne(id) {
-    this.setState({ ctId: id });
+    this.setState({ ctId: id, documents: 0 });
   }
 
   onClose() {
@@ -140,7 +141,8 @@ export class List extends Component {
   }
 
   itemClassName(item) {
-    if (item && item.ct_to !== null && item.ct_to !== '') {
+    const now = new Date().toISOString();
+    if (item && item.ct_to !== null && item.ct_to !== '' && item.ct_to < now ) {
       return 'row-line-warning';
     }
     return '';
@@ -163,6 +165,11 @@ export class List extends Component {
             object={this.state.item}
           />
         );
+        break;
+      case 'bill':
+        break;
+      case 'document':
+        inlineComponent = <InlineDocuments ctId={this.state.item.id} />;
         break;
       default:
         break;
@@ -206,16 +213,18 @@ export class List extends Component {
           onSearch={this.onQuickSearch}
           onSort={this.onUpdateSort}
           onSetFiltersAndSort={this.onSetFiltersAndSort}
-          onClearFilters={this.onClearFilters}
+          onClearFilters={() => this.onFiltersDefault(true)}
+          onClearFiltersDefault={() => this.onFiltersDefault(false)}
           onLoadMore={this.onLoadMore}
           loadMorePending={this.props.contract.loadMorePending}
           loadMoreFinish={this.props.contract.loadMoreFinish}
           loadMoreError={this.props.contract.loadMoreError}
+          fClassName={this.itemClassName}
         />
         {this.state.ctId > 0 && (
-          <Modify modal={true} ctId={this.state.ctId} onClose={this.onClose} />
+          <Input modal={true} ctId={this.state.ctId} onClose={this.onClose} />
         )}
-        {this.state.ctId === 0 && <Create modal={true} onClose={this.onClose} />}
+        {this.state.ctId === 0 && <Input modal={true} onClose={this.onClose} />}
       </div>
     );
   }

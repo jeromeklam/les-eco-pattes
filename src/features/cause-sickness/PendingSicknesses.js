@@ -9,7 +9,7 @@ import * as actions from './redux/actions';
 import { DashboardCard } from '../dashboard';
 import { Medical as SicknessIcon, GetOne as GetOneIcon } from '../icons';
 import { CenteredLoading3Dots, InlineList, Line, Col } from '../ui';
-import { Modify as ModifyCauseSickness } from '../cause-sickness';
+import { Input as ModifyCauseSickness } from '../cause-sickness';
 
 export class PendingSicknesses extends Component {
   static propTypes = {
