@@ -12,7 +12,7 @@ export function selectAll() {
 export function reducer(state, action) {
   switch (action.type) {
     case CAUSE_SELECT_ALL:
-      let selected = state.selected;
+      let selected = [];
       if (state.items.FreeAsso_Cause) {
         const items = normalizedObjectModeler(state.items, 'FreeAsso_Cause');
         items.forEach(elem => selected.push(elem.id));
