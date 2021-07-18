@@ -111,6 +111,7 @@
     "start": "cross-env PORT=8175 node scripts/start.js",
     "studio": "rekit-studio -p 8176",
     "build": "node scripts/build.js",
+    "build-beta": "cross-env NODE_ENV=beta node scripts/build.js",
     "cordova": "node scripts/cordova.js",
     "test": "node scripts/test.js"
   },
