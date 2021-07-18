@@ -14,6 +14,7 @@
   "contributors": [
     "Fanny KUSTER <fannykuster@free.fr>"
   ],
+  "homepage": "./",
   "dependencies": {
     "@babel/core": "^7.4.3",
     "@mdi/js": "^5.6.55",
@@ -110,6 +111,7 @@
     "start": "cross-env PORT=8175 node scripts/start.js",
     "studio": "rekit-studio -p 8176",
     "build": "node scripts/build.js",
+    "build-beta": "cross-env NODE_ENV=beta node scripts/build.js",
     "cordova": "node scripts/cordova.js",
     "test": "node scripts/test.js"
   },

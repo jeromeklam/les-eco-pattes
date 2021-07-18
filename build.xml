@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project name="admin" default="help" basedir=".">
+
+    <!--  all properties are in build.properties -->
+    <property file="project.properties" />
+    <property name="basedir" value="." />
+    <property name="pdepend" value="${basedir}/vendor/bin/pdepend" />
+    <property name="phpcpd" value="${basedir}/vendor/bin/phpcpd" />
+    <property name="phpcs" value="${basedir}/vendor/bin/phpcs" />
+    <property name="phpdox" value="${basedir}/vendor/bin/phpdox" />
+    <property name="phploc" value="${basedir}/vendor/bin/phploc" />
+    <property name="phpmd" value="${basedir}/vendor/bin/phpmd" />
+    <property name="phpunit" value="${basedir}/vendor/bin/phpunit" />
+
+    <!--
+        Help
+    -->
+    <target name="help" description="Display help">
+        <exec command="${phing.bin} -l" passthru="true" />
+        <exec executable="env" passthru="true" />
+    </target>
+
+    <!--
+        Infos
+    -->
+    <target name="infos" description="Display infos">
+        <echo message="env : ${env}" />
+        <echo message="host : ${hostname}" />
+    </target>
+    
+    <!--
+        Install
+    -->
+    <target name="install">
+        <exec command="npm install" />
+    </target>
+    
+    <!--
+        Build
+    -->
+    <target name="build-beta">
+        <exec command="npm run build-beta" />
+    </target>
+    
+    <!--
+        Build
+    -->
+    <target name="build">
+        <exec command="npm run build" />
+    </target>
+
+    <!--
+        Links
+    -->
+    <target name="link-dev">
+        <delete dir="${basedir}/node_modules/react-bootstrap-front" />
+        <delete dir="${basedir}/node_modules/jsonapi-front" />
+        <delete dir="${basedir}/node_modules/react" />
+        <delete dir="${basedir}/node_modules/react-dom" />
+        <symlink target="../../react-bootstrap-front" link="${basedir}/node_modules/react-bootstrap-front" overwrite="true" relative="true" />
+        <symlink target="../../react-bootstrap-front/node_modules/react" link="${basedir}/node_modules/react" overwrite="true" relative="true" />
+        <symlink target="../../react-bootstrap-front/node_modules/react-dom" link="${basedir}/node_modules/react-dom" overwrite="true" relative="true" />
+        <symlink target="../../jsonapi-front" link="${basedir}/node_modules/jsonapi-front" overwrite="true" relative="true" />
+    </target>
+                    
+    <!--
+        Création du fichier tgz à partir du répertoire dist
+    -->
+    <target name="create-tgz-generic">
+        <delete dir="${project.deploy}"/>
+        <mkdir dir="${project.deploy}" mode="0775" />
+        <copy file="${project.basedir}/src/serviceWorker.js" tofile="${project.dist}/serviceWorker.js" overwrite="true"/>
+        <copy file="${project.basedir}/public/.htaccess" tofile="${project.dist}/.htaccess" overwrite="true"/>
+        <copy file="${project.basedir}/public/manifest.json" tofile="${project.dist}/manifest.json" overwrite="true"/>
+        <copy file="${project.basedir}/public/favicon.ico" tofile="${project.dist}/favicon.ico" overwrite="true"/>
+        <copy file="${project.basedir}/public/lesecopattes_48_48.png" tofile="${project.dist}/lesecopattes_48_48.png" overwrite="true"/>
+        <copy file="${project.basedir}/public/lesecopattes_96_96.png" tofile="${project.dist}/lesecopattes_96_96.png" overwrite="true"/>
+        <copy file="${project.basedir}/public/lesecopattes_192_192.png" tofile="${project.dist}/lesecopattes_192_192.png" overwrite="true"/>
+        <copy file="${project.basedir}/public/lesecopattes_512_512.png" tofile="${project.dist}/lesecopattes_512_512.png" overwrite="true"/>
+        <tar destfile="${project.deploy}/${project.short}-${deploy.version}.tar.gz" basedir="${project.dist}" compression="gzip"/>
+        <copy file="${project.basedir}/install/install.sh" tofile="${project.deploy}/install-${deploy.version}.sh" overwrite="true"/>
+        <exec command="md5sum ${project.short}-${deploy.version}.tar.gz > ${project.short}-${deploy.version}.tar.gz.checksum" dir="${project.deploy}" />
+        <exec command="md5sum install-${deploy.version}.sh > install-${deploy.version}.sh.checksum" dir="${project.deploy}" />
+    </target>
+
+    <!--
+        Copie générique
+    -->
+    <target name="host-copy-generic">
+        <echo message="copy to ${host}" />
+        <ssh username="${deploy.user}" pubkeyfile="${deploy.pubkeyfile}" privkeyfile="${deploy.prvkeyfile}"
+             host="${host}" command="mkdir -p ${deploy.basedir}" />
+        <ssh username="${deploy.user}" pubkeyfile="${deploy.pubkeyfile}" privkeyfile="${deploy.prvkeyfile}"
+             host="${host}" command="mkdir -p ${deploy.basedir}/${deploy.appfolder}" />
+        <ssh username="${deploy.user}" pubkeyfile="${deploy.pubkeyfile}" privkeyfile="${deploy.prvkeyfile}"
+             host="${host}" command="mkdir -p ${deploy.basedir}/${deploy.appfolder}/front" />
+        <ssh username="${deploy.user}" pubkeyfile="${deploy.pubkeyfile}" privkeyfile="${deploy.prvkeyfile}"
+             host="${host}" command="chmod -R g+w ${deploy.basedir}/${deploy.appfolder}" />
+        <echo message="copy files" />
+        <scp username="${deploy.user}" pubkeyfile="${deploy.pubkeyfile}" privkeyfile="${deploy.prvkeyfile}"
+             host="${host}" todir="${deploy.basedir}/${deploy.appfolder}/front">
+            <fileset dir="${project.deploy}">
+                <include name="*-${deploy.version}.*" />
+            </fileset>
+        </scp>
+        <ssh username="${deploy.user}" pubkeyfile="${deploy.pubkeyfile}" privkeyfile="${deploy.prvkeyfile}"
+             host="${host}" command="chmod -R 775 ${deploy.basedir}/${deploy.appfolder}/front/install-${deploy.version}.sh" />
+    </target>
+
+    <!--
+        Installation générique
+    -->
+    <target name="host-install-generic">
+        <echo message="running install script on ${host} : ${deploy.basedir}/${deploy.appfolder}/front/install-${deploy.version}.sh ${project.short}-${deploy.version}" />
+        <ssh username="${deploy.user}" pubkeyfile="${deploy.pubkeyfile}" privkeyfile="${deploy.prvkeyfile}"
+             host="${host}" command="cd ${deploy.basedir}/${deploy.appfolder}/front; ./install-${deploy.version}.sh ${project.short}-${deploy.version} ${deploy.appfolder}.txt" />
+        <ssh username="${deploy.user}" pubkeyfile="${deploy.pubkeyfile}" privkeyfile="${deploy.prvkeyfile}"
+             host="${host}" command="chmod -R g+w ${deploy.basedir}/${deploy.appfolder}/front" />
+    </target>
+
+    <!--
+        Déploiement en beta / dev
+    -->
+    <target name="create-beta">
+        <phingcall target="create-tgz-generic">
+            <property name="deploy.appfolder" value="lesecopattes-dev" />
+            <property name="deploy.version" value="beta" />
+        </phingcall>
+    </target>
+    <target name="execute-deploy-beta-lesecopattes">
+        <property name="deploy.appfolder" value="lesecopattes-dev" />
+        <property name="deploy.version" value="beta" />
+        <foreach list="${deploy.hosts-beta}" param="host" target="host-copy-generic" />
+        <foreach list="${deploy.hosts-beta}" param="host" target="host-install-generic" />
+        <echo message="that's all folks..." />
+    </target>
+
+</project>
