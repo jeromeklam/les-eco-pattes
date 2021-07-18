@@ -124,16 +124,9 @@
     -->
     <target name="create-beta">
         <phingcall target="create-tgz-generic">
-            <property name="deploy.appfolder" value="les-eco-pattes-dev" />
+            <property name="deploy.appfolder" value="lesecopattes-dev" />
             <property name="deploy.version" value="beta" />
         </phingcall>
-    </target>
-    <target name="execute-deploy-beta-les-eco-pattes">
-        <property name="deploy.appfolder" value="les-eco-pattes-dev" />
-        <property name="deploy.version" value="beta" />
-        <foreach list="${deploy.hosts-beta}" param="host" target="host-copy-generic" />
-        <foreach list="${deploy.hosts-beta}" param="host" target="host-install-generic" />
-        <echo message="that's all folks..." />
     </target>
     <target name="execute-deploy-beta-lesecopattes">
         <property name="deploy.appfolder" value="lesecopattes-dev" />
