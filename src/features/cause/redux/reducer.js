@@ -28,6 +28,7 @@ import { reducer as loadPhotosReducer } from './loadPhotos';
 import { reducer as selectNoneReducer } from './selectNone';
 import { reducer as selectAllReducer } from './selectAll';
 import { reducer as updateCauseMediaDescReducer } from './updateCauseMediaDesc';
+import { reducer as exportAsTabReducer } from './exportAsTab';
 
 const reducers = [
   loadMoreReducer,
@@ -51,6 +52,7 @@ const reducers = [
   selectNoneReducer,
   selectAllReducer,
   updateCauseMediaDescReducer,
+  exportAsTabReducer,
 ];
 
 export default function reducer(state = initialState, action) {

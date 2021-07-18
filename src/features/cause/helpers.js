@@ -19,34 +19,34 @@ import { searchSite } from '../site';
 
 export const sexSelect = [
   { label: 'Femelle', value: 'F', icon: <FemaleIcon className="col-icon" /> },
-  { label: 'Mâle', value: 'M', icon: <MaleIcon className="col-icon" />  },
-  { label: 'Mâle castré', value: 'C', icon: <MaleIcon className="col-icon" />  },
+  { label: 'Mâle', value: 'M', icon: <MaleIcon className="col-icon" /> },
+  { label: 'Mâle castré', value: 'C', icon: <MaleIcon className="col-icon" /> },
   { label: 'Indéfini', value: 'OTHER' },
 ];
 
 export const waitingSelect = [
-  { value: true, label: 'En attente', icon: <WaitIcon className="col-icon"/> },
+  { value: true, label: 'En attente', icon: <WaitIcon className="col-icon" /> },
   { value: false, label: '' },
 ];
 
-export const getSexlabel = (p_code, p_icon = true, p_className = "" ) => {
+export const getSexlabel = (p_code, p_icon = true, p_className = '') => {
   const found = sexSelect.find(elem => elem.value === p_code);
   if (found) {
     if (p_icon) {
       if (p_className) {
-        if (found.value === "F") {
-          return <FemaleIcon className={classnames(p_className)} /> 
-        } else if (found.value === "M") {
-          return <MaleIcon className={classnames(p_className)} /> 
+        if (found.value === 'F') {
+          return <FemaleIcon className={classnames(p_className)} />;
+        } else if (found.value === 'M') {
+          return <MaleIcon className={classnames(p_className)} />;
         }
       } else if (found.icon) {
-         return found.icon;
+        return found.icon;
       }
-    }  
+    }
     return found.label;
   }
   return '';
-}
+};
 
 const getComm = (item, content) => {
   if (item.cau_to === '' || item.cau_to === null) {
@@ -54,21 +54,25 @@ const getComm = (item, content) => {
   } else {
     return item.cau_string_3;
   }
-}
+};
 
 export const getSelectActions = ({ props, onSelectMenu }) => {
-  const arrOne = [
+  let arrOne = [
     {
       name: 'selectAll',
       label: 'Tout sélectionner',
-      onClick: () => {onSelectMenu('selectAll');}
-    }
+      onClick: () => {
+        onSelectMenu('selectAll');
+      },
+    },
   ];
   const arrAppend = [
     {
       name: 'selectNone',
       label: 'Tout désélectionner',
-      onClick: () => {onSelectMenu('selectNone');}
+      onClick: () => {
+        onSelectMenu('selectNone');
+      },
     },
     {
       name: 'divider',
@@ -76,33 +80,58 @@ export const getSelectActions = ({ props, onSelectMenu }) => {
     {
       name: 'SIMPLE',
       label: 'Mvt interne sans notification',
-      onClick: () => {onSelectMenu('SIMPLE');}
+      onClick: () => {
+        onSelectMenu('SIMPLE');
+      },
     },
     {
       name: 'TRANSFER',
       label: 'Mvt interne avec notification',
-      onClick: () => {onSelectMenu('TRANSFER');}
+      onClick: () => {
+        onSelectMenu('TRANSFER');
+      },
     },
     {
       name: 'INPUT',
       label: 'Entrée notification',
-      onClick: () => {onSelectMenu('INPUT');}
+      onClick: () => {
+        onSelectMenu('INPUT');
+      },
     },
     {
       name: 'OUTPUT',
       label: 'Sortie avec notification',
-      onClick: () => {onSelectMenu('OUTPUT');}
+      onClick: () => {
+        onSelectMenu('OUTPUT');
+      },
     },
     {
       name: 'divider',
     },
     {
-
+      name: 'exportSelect',
+      label: 'Exporter la sélection',
+      onClick: () => {
+        onSelectMenu('exportSelection');
+      },
     },
   ];
   if (props.cause.selected.length > 0) {
-    return arrOne.concat(arrAppend);
+    arrOne = arrOne.concat(arrAppend);
   }
+  const arrStandard = [
+    {
+      name: 'divider',
+    },
+    {
+      name: 'exportAll',
+      label: 'Tout exporter',
+      onClick: () => {
+        onSelectMenu('exportAll');
+      },
+    },
+  ];
+  arrOne = arrOne.concat(arrStandard);
   return arrOne;
 };
 
@@ -119,17 +148,14 @@ export const getGlobalActions = ({ onClearFilters, onCreate }) => {
   ];
 };
 
-export const getInlineActions = ({
-  onSelectList,
-  onGetOne,
-  onDelOne,
-  state,
-}) => {
+export const getInlineActions = ({ onSelectList, onGetOne, onDelOne, state }) => {
   return [
     {
       name: 'movement',
       label: 'Mouvements',
-      onClick: (obj) => {onSelectList(obj, 'movement');},
+      onClick: obj => {
+        onSelectList(obj, 'movement');
+      },
       param: 'object',
       theme: 'secondary',
       icon: <MovementIcon color="white" />,
@@ -139,7 +165,9 @@ export const getInlineActions = ({
     {
       name: 'sickness',
       label: 'Santé',
-      onClick: (obj) => {onSelectList(obj, 'sickness');},
+      onClick: obj => {
+        onSelectList(obj, 'sickness');
+      },
       param: 'object',
       theme: 'secondary',
       icon: <MedicalIcon color="white" />,
@@ -149,7 +177,9 @@ export const getInlineActions = ({
     {
       name: 'growth',
       label: 'Croissances',
-      onClick: (obj) => {onSelectList(obj, 'growth');},
+      onClick: obj => {
+        onSelectList(obj, 'growth');
+      },
       param: 'object',
       theme: 'secondary',
       icon: <GrowthIcon color="white" />,
@@ -159,7 +189,9 @@ export const getInlineActions = ({
     {
       name: 'descendant',
       label: 'Descendance',
-      onClick: (obj) => {onSelectList(obj, 'descendant');},
+      onClick: obj => {
+        onSelectList(obj, 'descendant');
+      },
       param: 'object',
       theme: 'secondary',
       icon: <DescendantIcon color="white" />,
@@ -169,7 +201,9 @@ export const getInlineActions = ({
     {
       name: 'document',
       label: 'Documents',
-      onClick: (obj) => {onSelectList(obj, 'document');},
+      onClick: obj => {
+        onSelectList(obj, 'document');
+      },
       param: 'object',
       theme: 'secondary',
       icon: <DocumentIcon color="white" />,
@@ -179,7 +213,9 @@ export const getInlineActions = ({
     {
       name: 'photo',
       label: 'Photos',
-      onClick: (obj) => {onSelectList(obj, 'photo');},
+      onClick: obj => {
+        onSelectList(obj, 'photo');
+      },
       param: 'object',
       theme: 'secondary',
       icon: <PhotoIcon color="white" />,
@@ -299,8 +335,8 @@ export const getCols = ({ props }) => {
       col: 'cau_name',
       size: '5',
       mob_size: '10',
-      title: false,      
-      filterable: { type: 'text' },      
+      title: false,
+      filterable: { type: 'text' },
     },
     {
       name: 'color',
@@ -334,7 +370,7 @@ export const getCols = ({ props }) => {
       mob_size: '18',
       title: false,
       sortable: true,
-      filterable: { type: 'text'},
+      filterable: { type: 'text' },
     },
     {
       name: 'desc',

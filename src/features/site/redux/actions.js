@@ -21,3 +21,4 @@ export { onSelect } from './onSelect';
 export { selectAll } from './selectAll';
 export { selectNone } from './selectNone';
 export { printOne, dismissPrintOneError } from './printOne';
+export { exportAsTab, dismissExportAsTabError } from './exportAsTab';

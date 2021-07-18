@@ -67,6 +67,8 @@ const initialState = {
   updateSiteMediaDescError: null,
   printOnePending: false,
   printOneError: null,
+  exportAsTabPending: false,
+  exportAsTabError: null,
 };
 
 export default initialState;

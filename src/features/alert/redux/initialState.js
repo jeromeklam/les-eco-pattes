@@ -29,6 +29,12 @@ const initialState = {
   delOneError: null,
   createOnePending: false,
   createOneError: null,
+  loadAlertsWarningPending: false,
+  loadAlertsWarningError: null,
+  alertsWarning: [],
+  loadAlertsDangerPending: false,
+  loadAlertsDangerError: null,
+  alertsDanger: [],
 };
 
 export default initialState;

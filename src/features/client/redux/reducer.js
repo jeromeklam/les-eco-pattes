@@ -20,6 +20,10 @@ import { reducer as setSortReducer } from './setSort';
 import { reducer as updateQuickSearchReducer } from './updateQuickSearch';
 import { reducer as updateSortReducer } from './updateSort';
 import { reducer as loadCliSpecReducer } from './loadCliSpec';
+import { reducer as onSelectReducer } from './onSelect';
+import { reducer as selectAllReducer } from './selectAll';
+import { reducer as selectNoneReducer } from './selectNone';
+import { reducer as exportAsTabReducer } from './exportAsTab';
 
 const reducers = [
   loadMoreReducer,
@@ -35,6 +39,10 @@ const reducers = [
   updateQuickSearchReducer,
   updateSortReducer,
   loadCliSpecReducer,
+  onSelectReducer,
+  selectAllReducer,
+  selectNoneReducer,
+  exportAsTabReducer,
 ];
 
 export default function reducer(state = initialState, action) {

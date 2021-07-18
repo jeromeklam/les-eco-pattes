@@ -10,6 +10,8 @@ const initialState = {
   socketMessage: null,
   loadPublicPending: false,
   loadPublicError: null,
+  loadTimersPending: false,
+  loadTimersError: null,
 };
 
 export default initialState;

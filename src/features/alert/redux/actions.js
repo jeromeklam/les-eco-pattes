@@ -10,3 +10,5 @@ export { initFilters } from './initFilters';
 export { setFilters } from './setFilters';
 export { updateQuickSearch } from './updateQuickSearch';
 export { setSort } from './setSort';
+export { loadAlertsWarning, dismissLoadAlertsWarningError } from './loadAlertsWarning';
+export { loadAlertsDanger, dismissLoadAlertsDangerError } from './loadAlertsDanger';

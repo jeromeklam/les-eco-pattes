@@ -40,6 +40,7 @@ export class App extends Component {
       mySocket: socket,
     };
     this.onGeo = this.onGeo.bind(this);
+    this.timers = this.timers.bind(this);
     log.getLogger("jsonapi-front.jsonApiNormalizer").setLevel("WARN");
     log.getLogger("react-bootstrap-front.inputMask").setLevel("WARN");
     log.getLogger("react-bootstrap-front.inputSelect").setLevel("WARN");
@@ -48,6 +49,7 @@ export class App extends Component {
   componentDidMount() {
     if (this.props.auth.authenticated) {
       this.props.actions.loadAll();
+      this.timers();
     } else {
       // Check auth...
       this.props.actions.loadPublic();
@@ -61,6 +63,7 @@ export class App extends Component {
   componentDidUpdate(prevProps, prevState) {
     const { propagateCreate, propagateUpdate, propagateDelete } = this.props.actions;
     if (prevProps.auth.authenticated !== this.props.auth.authenticated || prevProps.home.socketOn !== this.props.home.socketOn) {
+      this.timers();
       if (
         this.props.auth.authenticated &&
         !this.props.home.loadAllFinish &&
@@ -114,6 +117,18 @@ export class App extends Component {
         lon: position.coords.longitude,
       });
     }
+  }
+
+  timers() {
+    const { timer } = this.state;
+    if (timer) {
+      clearTimeout(timer);
+    }
+    if (this.props.auth.authenticated) {
+      this.props.actions.loadTimers();
+    }
+    const newTimer = setTimeout(this.timers, 55000);
+    this.setState({ timer: newTimer });
   }
 
   render() {

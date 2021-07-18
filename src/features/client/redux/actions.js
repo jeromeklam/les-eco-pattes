@@ -11,3 +11,7 @@ export { setSort } from './setSort';
 export { updateQuickSearch } from './updateQuickSearch';
 export { updateSort } from './updateSort';
 export { loadCliSpec, dismissLoadCliSpecError } from './loadCliSpec';
+export { onSelect } from './onSelect';
+export { selectAll } from './selectAll';
+export { selectNone } from './selectNone';
+export { exportAsTab, dismissExportAsTabError } from './exportAsTab';

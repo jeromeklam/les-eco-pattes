@@ -28,7 +28,8 @@ export function loadPendings(mode, args = {}) {
         alert_deadline: { ltwen: deadline.toISOString() },
       };
       if (mode === 'warning') {
-        filter.alert_deadline = { between: [deadlineStart , deadlineEnd ] };
+        filter.alert_deadline = { 
+          between: [deadlineStart.toISOString() , deadlineEnd.toISOString() ] };
       }
       const params = {
         filter: filter,

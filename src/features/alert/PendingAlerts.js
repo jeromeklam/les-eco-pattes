@@ -7,10 +7,12 @@ import { normalizedObjectModeler } from 'jsonapi-front';
 import { HoverObserver } from 'react-bootstrap-front';
 import { intlDateTime } from '../../common';
 import { DashboardCard } from '../dashboard';
-import { 
-  Expired as ExpiredIcon, 
-  Alert as AlertIcon, 
-  GetOne as GetOneIcon } from '../icons';
+import {
+  Expired as ExpiredIcon,
+  AlertWarning as AlertWarningIcon,
+  AlertDanger as AlertDangerIcon,
+  GetOne as GetOneIcon,
+} from '../icons';
 import { CenteredLoading3Dots, InlineList, Line, Col } from '../ui';
 import { Input } from './';
 
@@ -39,7 +41,11 @@ export class PendingAlerts extends Component {
   }
 
   componentDidMount() {
-    this.props.actions.loadPendings(this.props.mode);
+    if (this.props.mode === 'warning') {
+      this.props.actions.loadAlertsWarning();
+    } else {
+      this.props.actions.loadAlertsDanger();
+    }
   }
 
   mouseLeave() {
@@ -56,14 +62,24 @@ export class PendingAlerts extends Component {
 
   onClose() {
     this.setState({ alert_id: -1 });
-    this.props.actions.loadPendings(this.props.mode);
+    if (this.props.mode === 'warning') {
+      this.props.actions.loadAlertsWarning();
+    } else {
+      this.props.actions.loadAlertsDanger();
+    }
   }
 
   render() {
     let counter = 0;
     let alerts = [];
-    if (this.props.alert.pendings.FreeFW_Alert) {
-      alerts = normalizedObjectModeler(this.props.alert.pendings, 'FreeFW_Alert');
+    if (this.props.mode === 'warning') {
+      if (this.props.alert.alertsWarning.FreeFW_Alert) {
+        alerts = normalizedObjectModeler(this.props.alert.alertsWarning, 'FreeFW_Alert');
+      }
+    } else {
+      if (this.props.alert.alertsDanger.FreeFW_Alert) {
+        alerts = normalizedObjectModeler(this.props.alert.alertsDanger, 'FreeFW_Alert');
+      }
     }
     const today = new Date().toISOString();
     const header = (
@@ -78,10 +94,8 @@ export class PendingAlerts extends Component {
           <Col layoutSize={this.props.layoutSize || 'md'} md={7} lg={7} xl={5} col={8}>
             <span>Echéance</span>
           </Col>
-          <Col layoutSize={this.props.layoutSize || 'md'} md={2} lg={2} xl={2} col={2}>
-          </Col>
-          <Col layoutSize={this.props.layoutSize || 'md'} md={4} lg={4} xl={4} col={6}>
-          </Col>
+          <Col layoutSize={this.props.layoutSize || 'md'} md={2} lg={2} xl={2} col={2}></Col>
+          <Col layoutSize={this.props.layoutSize || 'md'} md={4} lg={4} xl={4} col={6}></Col>
         </Line>
       </InlineList>
     );
@@ -90,17 +104,23 @@ export class PendingAlerts extends Component {
     if (this.props.mode !== '') {
       switch (this.props.mode) {
         case 'warning':
-          title = 'Alertes à échéances proches'
+          title = 'Alertes à échéances proches';
           break;
         case 'danger':
-          title = 'Alertes à échéances dépassées'
+          title = 'Alertes à échéances dépassées';
           break;
         default:
           break;
       }
     }
     return (
-      <DashboardCard title={title} icon={<AlertIcon />} size="md" header={header} overlay={this.props.overlay}>
+      <DashboardCard
+        title={title}
+        icon={this.props.mode === 'warning' ? <AlertWarningIcon /> : <AlertDangerIcon />}
+        size="md"
+        header={header}
+        overlay={this.props.overlay}
+      >
         <div className="pending-alerts">
           <div className="alert-pendings text-secondary bg-secondary-light">
             {alerts && alerts.length > 0 ? (
@@ -149,11 +169,25 @@ export class PendingAlerts extends Component {
                           xl={2}
                           col={2}
                         >
-                          {(alert.alert_deadline <= today) ? <ExpiredIcon className="col-icon"/> : ''}
+                          {alert.alert_deadline <= today ? (
+                            <ExpiredIcon className="col-icon" />
+                          ) : (
+                            ''
+                          )}
                         </Col>
-                        <Col layoutSize={this.props.layoutSize || 'md'} md={4} lg={4} xl={4} col={6}>
+                        <Col
+                          layoutSize={this.props.layoutSize || 'md'}
+                          md={4}
+                          lg={4}
+                          xl={4}
+                          col={6}
+                        >
                           {this.state.flipped && this.state.flipped === alert.id && (
-                            <div className="btn-group btn-group-sm float-right" role="group" aria-label="...">
+                            <div
+                              className="btn-group btn-group-sm float-right"
+                              role="group"
+                              aria-label="..."
+                            >
                               <button
                                 type="button"
                                 className="btn btn-inline btn-secondary"
@@ -176,7 +210,8 @@ export class PendingAlerts extends Component {
                 <span className="p-3">Aucune alerte</span>
               </div>
             )}
-            {this.props.alert.loadPendingsPending && (
+            {((this.props.mode === 'warning' && this.props.alert.loadAlertsWarningPending) ||
+              (this.props.mode === 'warning' && this.props.alert.loadAlertsDangerPending)) && (
               <div className="inline-list">
                 <div className="row row-line">
                   <div className="col-xs-w36 text-center">

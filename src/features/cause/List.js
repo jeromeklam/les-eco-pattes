@@ -9,10 +9,8 @@ import { ResponsiveQuickSearch } from 'react-bootstrap-front';
 import { loadMovements } from '../cause-movement/redux/actions';
 import { loadGrowths } from '../cause-growth/redux/actions';
 import { loadSicknesses } from '../cause-sickness/redux/actions';
-import {
-  Search as SearchIcon,
-} from '../icons';
-import { deleteSuccess, showErrors, List as UiList } from '../ui';
+import { Search as SearchIcon } from '../icons';
+import { List as UiList, deleteSuccess, showErrors, messageSuccess } from '../ui';
 import { InlineMovements } from '../cause-movement';
 import { InlineSicknesses } from '../cause-sickness';
 import { InlineGrowths } from '../cause-growth';
@@ -69,7 +67,7 @@ export class List extends Component {
   }
 
   onGetOne(id) {
-    this.setState({ cauId: id, mode: false, item: null, menu: null, });
+    this.setState({ cauId: id, mode: false, item: null, menu: null });
   }
 
   onClose() {
@@ -84,7 +82,7 @@ export class List extends Component {
         deleteSuccess();
       })
       .catch(errors => {
-        showErrors(this.props.intl, errors, "", "Suppression impossible ! ");
+        showErrors(this.props.intl, errors, '', 'Suppression impossible ! ');
       });
   }
 
@@ -175,6 +173,20 @@ export class List extends Component {
         this.setState({ menu: null, cauId: -1 });
         this.props.actions.selectNone();
         break;
+      case 'exportAll':
+        this.props.actions.exportAsTab('all').then(res => {
+          if (!res) {
+            messageSuccess('Export demandé');
+          }
+        });
+        break;
+      case 'exportSelection':
+        this.props.actions.exportAsTab('selection').then(res => {
+          if (!res) {
+            messageSuccess('Export demandé');
+          }
+        });
+        break;
       default:
         this.setState({ menu: 'movement', menuOption: option, cauId: -1 });
         break;
@@ -256,7 +268,7 @@ export class List extends Component {
           globalActions={globalActions}
           sort={this.props.cause.sort}
           filters={this.props.cause.filters}
-          onSearch={this.onQuickSearch} 
+          onSearch={this.onQuickSearch}
           onSort={this.onUpdateSort}
           onSetFiltersAndSort={this.onSetFiltersAndSort}
           onClearFilters={() => this.onFiltersDefault(true)}
@@ -275,7 +287,15 @@ export class List extends Component {
           <Input modal={true} cauId={this.state.cauId} onClose={this.onClose} loader={false} />
         )}
         {this.state.cauId === 0 && <Input modal={true} onClose={this.onClose} loader={false} />}
-        {this.state.menu === 'movement' && <CreateMovement loader={false} modal={true} mode={this.state.menuOption} onClose={this.onClose} selected={selected} />}
+        {this.state.menu === 'movement' && (
+          <CreateMovement
+            loader={false}
+            modal={true}
+            mode={this.state.menuOption}
+            onClose={this.onClose}
+            selected={selected}
+          />
+        )}
       </div>
     );
   }
@@ -292,7 +312,10 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    actions: bindActionCreators({ ...actions, loadMovements, loadGrowths, loadSicknesses }, dispatch),
+    actions: bindActionCreators(
+      { ...actions, loadMovements, loadGrowths, loadSicknesses },
+      dispatch,
+    ),
   };
 }
 

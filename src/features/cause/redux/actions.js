@@ -19,3 +19,4 @@ export { loadPhotos, dismissLoadPhotosError } from './loadPhotos';
 export { selectNone } from './selectNone';
 export { selectAll } from './selectAll';
 export { updateCauseMediaDesc, dismissUpdateCauseMediaDescError } from './updateCauseMediaDesc';
+export { exportAsTab, dismissExportAsTabError } from './exportAsTab';

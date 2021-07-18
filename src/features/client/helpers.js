@@ -4,6 +4,55 @@ import { clientCategoryAsOptions } from '../client-category';
 import { clientTypeAsOptions } from '../client-type';
 import { getFullName, searchClient as searchParentClient } from './';
 
+export const getSelectActions = ({ props, onSelectMenu, onPrint }) => {
+  let arrOne = [
+    {
+      name: 'selectAll',
+      label: 'Tout sélectionner',
+      onClick: () => {
+        onSelectMenu('selectAll');
+      },
+    },
+  ];
+  const arrAppend = [
+    {
+      name: 'selectNone',
+      label: 'Tout désélectionner',
+      onClick: () => {
+        onSelectMenu('selectNone');
+      },
+    },
+    {
+      name: 'divider',
+    },
+    {
+      name: 'exportSelect',
+      label: 'Exporter la sélection',
+      onClick: () => {
+        onSelectMenu('exportSelection');
+      },
+    },
+  ];
+  if (props.client.selected.length > 0) {
+    arrOne = arrOne.concat(arrAppend);
+  }
+  const arrStandard = [
+    {
+      name: 'divider',
+    },
+    {
+      name: 'exportAll',
+      label: 'Tout exporter',
+      onClick: () => {
+        onSelectMenu('exportAll');
+      },
+    },
+  ];
+  arrOne = arrOne.concat(arrStandard);
+  return arrOne;
+};
+
+
 export const getGlobalActions = ({ onClearFilters, onCreate }) => {
   return [
     {
@@ -63,6 +112,7 @@ export const getCols = ({ props }) => {
       mob_size: '18',
       sortable: true,
       filterable: { type: 'text' },
+      selectable: true,
       first: true,
       title: true,
     },

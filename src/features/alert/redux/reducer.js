@@ -19,6 +19,8 @@ import { reducer as initFiltersReducer } from './initFilters';
 import { reducer as setFiltersReducer } from './setFilters';
 import { reducer as updateQuickSearchReducer } from './updateQuickSearch';
 import { reducer as setSortReducer } from './setSort';
+import { reducer as loadAlertsWarningReducer } from './loadAlertsWarning';
+import { reducer as loadAlertsDangerReducer } from './loadAlertsDanger';
 
 const reducers = [
   loadMoreReducer,
@@ -33,6 +35,8 @@ const reducers = [
   setFiltersReducer,
   updateQuickSearchReducer,
   setSortReducer,
+  loadAlertsWarningReducer,
+  loadAlertsDangerReducer,
 ];
 
 export default function reducer(state = initialState, action) {

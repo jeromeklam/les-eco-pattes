@@ -9,7 +9,7 @@ import { connect } from 'react-redux';
 import * as actions from './redux/actions';
 import { AddOne as AddOneIcon, Checked, UnChecked, Critical, Important, User } from '../icons';
 import { CenteredLoading3Dots } from '../ui';
-import { Create as CreateEvent, Modify as ModifyEvent } from '../alert';
+import { Input as InputEvent } from '../alert';
 import { getFullName } from '../user';
 
 const locales = { fr: fr };
@@ -43,7 +43,7 @@ export class DefaultPage extends Component {
 
   static getDerivedStateFromProps(props, state) {
     if (props.agenda.resources !== state.resources) {
-      return {resources: props.agenda.resources};
+      return { resources: props.agenda.resources };
     }
     return null;
   }
@@ -81,7 +81,7 @@ export class DefaultPage extends Component {
   componentDidMount() {
     const now = new Date();
     this.setState({
-      date: now
+      date: now,
     });
     this.props.actions.loadResources().then(result => {
       this.setState({
@@ -111,7 +111,10 @@ export class DefaultPage extends Component {
           user = found;
         }
       }
-      this.setState({ current: 0, params: { alert_task: true, alert_from: start, alert_to: end, user: user } });
+      this.setState({
+        current: 0,
+        params: { alert_task: true, alert_from: start, alert_to: end, user: user },
+      });
     }
   }
 
@@ -203,7 +206,7 @@ export class DefaultPage extends Component {
     if (idx !== false) {
       resources[idx].selected = !(resources[idx].selected === true || false);
     }
-    this.setState({resources: resources});
+    this.setState({ resources: resources });
   }
 
   render() {
@@ -234,16 +237,22 @@ export class DefaultPage extends Component {
                       myRef={this.state.userRef}
                       onClose={this.onCloseDropdown}
                       className="bg-light text-secondary"
-                      align='bottom-right'
+                      align="bottom-right"
                     >
-                      {this.state.resources.map(user => 
-                        <div key={`dropuser-` + user.id} className="dropdown-item text-secondary" onClick={() => this.onSelectUser(user.id)}> 
+                      {this.state.resources.map(user => (
+                        <div
+                          key={`dropuser-` + user.id}
+                          className="dropdown-item text-secondary"
+                          onClick={() => this.onSelectUser(user.id)}
+                        >
                           <span className="pr-2">
                             {user.selected !== false ? <Checked /> : <UnChecked />}
-                          </span>   
-                          <span style={{position: 'relative', top: '2px'}}>{getFullName(user)}</span>
+                          </span>
+                          <span style={{ position: 'relative', top: '2px' }}>
+                            {getFullName(user)}
+                          </span>
                         </div>
-                      )}
+                      ))}
                     </Dropdown>
                   )}
                   <button className="btn btn-primary text-light" onClick={this.onAddEvent}>
@@ -299,21 +308,17 @@ export class DefaultPage extends Component {
               onSelectSlot={this.onSelectSlot}
               onSelecting={this.onSelecting}
               style={{ height: '100%' }}
-              icons={{done : <Checked />, CRITICAL: <Critical />, IMPORTANT: <Important />}}
+              icons={{ done: <Checked />, CRITICAL: <Critical />, IMPORTANT: <Important /> }}
             />
           ) : (
             <CenteredLoading3Dots />
           )}
         </div>
-        {(this.state.current && this.state.current > 0) && (
-          <ModifyEvent onClose={this.onCloseEvent} alert_id={this.state.current} />
+        {this.state.current && this.state.current > 0 && (
+          <InputEvent onClose={this.onCloseEvent} alert_id={this.state.current} />
         )}
-        {(this.state.current === 0) && (
-          <CreateEvent
-            onClose={this.onCloseEvent}
-            alert_id={this.state.current}
-            params={this.state.params}
-          />
+        {this.state.current === 0 && (
+          <InputEvent onClose={this.onCloseEvent} params={this.state.params} />
         )}
       </div>
     );

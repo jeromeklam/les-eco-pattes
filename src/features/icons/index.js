@@ -104,3 +104,7 @@ export { default as User } from './User';
 export { default as Print } from './Print';
 export { default as Bill } from './Bill';
 export { default as History } from './History';
+export { default as AlertDanger } from './AlertDanger';
+export { default as AlertWarning } from './AlertWarning';
+export { default as InboxEmpty } from './InboxEmpty';
+export { default as InboxFull } from './InboxFull';

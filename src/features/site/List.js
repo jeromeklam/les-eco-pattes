@@ -7,7 +7,7 @@ import * as actions from './redux/actions';
 import { normalizedObjectModeler } from 'jsonapi-front';
 import { ResponsiveQuickSearch } from 'react-bootstrap-front';
 import { Search as SearchIcon } from '../icons';
-import { deleteSuccess, showErrors, List as UiList } from '../ui';
+import { List as UiList, deleteSuccess, showErrors, messageSuccess } from '../ui';
 import { getEditions } from '../edition';
 import { InlineCauses } from '../cause';
 import { InlineAlerts } from '../alert';
@@ -18,7 +18,7 @@ import {
   getGlobalActions,
   getInlineActions,
   getCols,
-  Input
+  Input,
 } from './';
 
 /**
@@ -190,6 +190,20 @@ export class List extends Component {
         this.setState({ menu: null, siteId: -1 });
         this.props.actions.selectNone();
         break;
+      case 'exportAll':
+        this.props.actions.exportAsTab('all').then(res => {
+          if (!res) {
+            messageSuccess('Export demandé');
+          }
+        });
+        break;
+      case 'exportSelection':
+        this.props.actions.exportAsTab('selection').then(res => {
+          if (!res) {
+            messageSuccess('Export demandé');
+          }
+        });
+        break;
       default:
         this.setState({ menu: 'movement', menuOption: option, siteId: -1 });
         break;
@@ -240,7 +254,7 @@ export class List extends Component {
         inlineComponent = <InlinePhotos siteId={this.state.item.id} />;
         break;
       case 'document':
-        inlineComponent = <InlineDocuments  siteId={this.state.item.id} />;
+        inlineComponent = <InlineDocuments siteId={this.state.item.id} />;
         break;
       default:
         break;

@@ -3,6 +3,7 @@ import { Filter } from 'react-bootstrap-front';
 
 const initialState = {
   items: getNewNormalizedObject('FreeAsso_Client'),
+  selected: [],
   page_number: 1,
   page_size: process.env.REACT_APP_PAGE_SIZE,
   tab: "1",
@@ -26,6 +27,8 @@ const initialState = {
   createOneError: null,
   loadCliSpecPending: false,
   loadCliSpecError: null,
+  exportAsTabPending: false,
+  exportAsTabError: null,
 };
 
 export default initialState;

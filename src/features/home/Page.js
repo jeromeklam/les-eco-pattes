@@ -8,6 +8,7 @@ import Avatar from 'react-avatar';
 import { push } from 'connected-react-router';
 import cookie from 'react-cookies';
 import { ResponsivePage, CookieConsent } from 'react-bootstrap-front';
+import { HeaderBadge as InboxBadge } from '../inbox';
 
 import { globalMenu } from './';
 import * as actions from './redux/actions';
@@ -82,25 +83,31 @@ export class Page extends Component {
   render() {
     const { authCookie } = this.state;
     const icons = [];
-    const appMenu = globalMenu(authCookie);
-    if (this.props.home.socketOn && this.props.auth.authenticated) {
-      if (this.props.home.socketConnected) {
-        icons.push({
+    let globalBadges = [];
+    if (this.props.auth.authenticated) {
+      globalBadges = [
+        {
           name: 'socket',
-          label: 'Synchronisation serveur activée',
-          icon: <SocketConnected className="text-success" />,
-        });
-      } else {
-        icons.push({
-          name: 'socket',
-          label: 'Erreur de synchronisation serveur',
-          icon: <SocketDisconnected className="text-danger" />,
-        });
+          component: <InboxBadge />
+        },
+      ];
+      if (this.props.home.socketOn) {
+        if (this.props.home.socketConnected) {
+          icons.push({
+            name: 'socket',
+            label: 'Synchronisation serveur activée',
+            icon: <SocketConnected className="text-success" />,
+          });
+        } else {
+          icons.push({
+            name: 'socket',
+            label: 'Erreur de synchronisation serveur',
+            icon: <SocketDisconnected className="text-danger" />,
+          });
+        }
       }
     }
-    if (!authCookie) {
-      
-    }
+    const appMenu = globalMenu(authCookie);
     return (
       <div className="home-page">
         <img
@@ -116,6 +123,8 @@ export class Page extends Component {
           title={process.env.REACT_APP_APP_NAME}
           options={appMenu}
           icons={icons}
+          scope={this.props.auth.user ? this.props.auth.user.user_scope : ''}
+          badges={globalBadges}
           settings={{ ...this.props.auth.settings.layout }}
           authenticated={this.props.auth.authenticated}
           location={this.props.location}

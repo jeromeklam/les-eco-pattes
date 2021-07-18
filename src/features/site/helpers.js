@@ -31,7 +31,7 @@ const externCol = [
 ];
 
 export const getSelectActions = ({ props, onSelectMenu, onPrint }) => {
-  const arrOne = [
+  let arrOne = [
     {
       name: 'selectAll',
       label: 'Tout sélectionner',
@@ -52,16 +52,29 @@ export const getSelectActions = ({ props, onSelectMenu, onPrint }) => {
       name: 'divider',
     },
     {
-      name: 'print',
-      label: 'Imprimer',
+      name: 'exportSelect',
+      label: 'Exporter la sélection',
       onClick: () => {
-        onPrint();
+        onSelectMenu('exportSelection');
       },
     },
   ];
   if (props.site.selected.length > 0) {
-    return arrOne.concat(arrAppend);
+    arrOne = arrOne.concat(arrAppend);
   }
+  const arrStandard = [
+    {
+      name: 'divider',
+    },
+    {
+      name: 'exportAll',
+      label: 'Tout exporter',
+      onClick: () => {
+        onSelectMenu('exportAll');
+      },
+    },
+  ];
+  arrOne = arrOne.concat(arrStandard);
   return arrOne;
 };
 

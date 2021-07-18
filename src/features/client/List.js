@@ -5,21 +5,12 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as actions from './redux/actions';
 import { normalizedObjectModeler } from 'jsonapi-front';
-import { ResponsiveList, ResponsiveQuickSearch } from 'react-bootstrap-front';
+import { ResponsiveQuickSearch } from 'react-bootstrap-front';
 import {
-  FilterEmpty as FilterEmptyIcon,
-  FilterFull as FilterFullIcon,
-  FilterClear as FilterClearIcon,
-  SimpleCancel as CancelPanelIcon,
-  SimpleCheck as ValidPanelIcon,
-  SortDown as SortDownIcon,
-  SortUp as SortUpIcon,
-  Sort as SortNoneIcon,
   Search as SearchIcon,
-  DelOne as ClearIcon,
 } from '../icons';
-import { deleteSuccess, showErrors, List as UiList } from '../ui';
-import { getGlobalActions, getInlineActions, getCols, Input } from './';
+import { List as UiList, deleteSuccess, showErrors, messageSuccess } from '../ui';
+import { getGlobalActions, getInlineActions, getSelectActions, getCols, Input } from './';
 
 export class List extends Component {
   static propTypes = {
@@ -43,6 +34,9 @@ export class List extends Component {
     this.onQuickSearch = this.onQuickSearch.bind(this);
     this.onSetFiltersAndSort = this.onSetFiltersAndSort.bind(this);
     this.onUpdateSort = this.onUpdateSort.bind(this);
+    this.onSelect = this.onSelect.bind(this);
+    this.onSelectList = this.onSelectList.bind(this);
+    this.onSelectMenu = this.onSelectMenu.bind(this);
   }
 
   componentDidMount() {
@@ -134,6 +128,52 @@ export class List extends Component {
     this.setState({ timer: timer });
   }
 
+  onSelect(id) {
+    this.props.actions.onSelect(id);
+  }
+
+  onSelectList(obj, list) {
+    if (obj) {
+      if (list) {
+        this.setState({ mode: list, item: obj });
+      } else {
+        this.setState({ item: obj });
+      }
+    } else {
+      this.setState({ mode: false, item: null });
+    }
+  }
+
+  onSelectMenu(option) {
+    switch (option) {
+      case 'selectAll':
+        this.setState({ menu: null, cliId: -1 });
+        this.props.actions.selectAll();
+        break;
+      case 'selectNone':
+        this.setState({ menu: null, cliId: -1 });
+        this.props.actions.selectNone();
+        break;
+      case 'exportAll':
+        this.props.actions.exportAsTab('all').then(res => {
+          if (!res) {
+            messageSuccess('Export demandé');
+          }
+        });
+        break;
+      case 'exportSelection':
+        this.props.actions.exportAsTab('selection').then(res => {
+          if (!res) {
+            messageSuccess('Export demandé');
+          }
+        });
+        break;
+      default:
+        this.setState({ menu: 'movement', menuOption: option, cliId: -1 });
+        break;
+    }
+  }
+
   render() {
     // Les des items à afficher avec remplissage progressif
     let items = [];
@@ -142,6 +182,7 @@ export class List extends Component {
     }
     const globalActions = getGlobalActions(this);
     const inlineActions = getInlineActions(this);
+    const selectActions = getSelectActions(this);
     const cols = getCols(this);
     // L'affichage, items, loading, loadMoreError
     let search = '';
@@ -159,6 +200,7 @@ export class List extends Component {
         icon={<SearchIcon className="text-secondary" />}
       />
     );
+    const { selected } = this.props.client;
     return (
       <div>
         <UiList
@@ -182,6 +224,9 @@ export class List extends Component {
           loadMorePending={this.props.client.loadMorePending}
           loadMoreFinish={this.props.client.loadMoreFinish}
           loadMoreError={this.props.client.loadMoreError}
+          selected={selected}
+          selectMenu={selectActions}
+          onSelect={this.onSelect}
         />
         {this.state.cliId > 0 && (
           <Input modal={true} cliId={this.state.cliId} onClose={this.onClose} />

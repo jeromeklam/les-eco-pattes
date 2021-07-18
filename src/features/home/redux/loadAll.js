@@ -20,7 +20,6 @@ import { loadCliSpec } from '../../client/redux/loadCliSpec';
 
 export function loadAll(args = {}) {
   return dispatch => {
-    // optionally you can have getState as the second argument
     dispatch({
       type: HOME_LOAD_ALL_BEGIN,
     });
