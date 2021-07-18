@@ -74,9 +74,10 @@
         <copy file="${project.basedir}/public/.htaccess" tofile="${project.dist}/.htaccess" overwrite="true"/>
         <copy file="${project.basedir}/public/manifest.json" tofile="${project.dist}/manifest.json" overwrite="true"/>
         <copy file="${project.basedir}/public/favicon.ico" tofile="${project.dist}/favicon.ico" overwrite="true"/>
-        <copy file="${project.basedir}/public/les-eco-pattes_48_48.png" tofile="${project.dist}/les-eco-pattes_48_48.png" overwrite="true"/>
-        <copy file="${project.basedir}/public/les-eco-pattes_96_96.png" tofile="${project.dist}/les-eco-pattes_96_96.png" overwrite="true"/>
-        <copy file="${project.basedir}/public/les-eco-pattes_192_192.png" tofile="${project.dist}/les-eco-pattes_192_192.png" overwrite="true"/>
+        <copy file="${project.basedir}/public/lesecopattes_48_48.png" tofile="${project.dist}/lesecopattes_48_48.png" overwrite="true"/>
+        <copy file="${project.basedir}/public/lesecopattes_96_96.png" tofile="${project.dist}/lesecopattes_96_96.png" overwrite="true"/>
+        <copy file="${project.basedir}/public/lesecopattes_192_192.png" tofile="${project.dist}/lesecopattes_192_192.png" overwrite="true"/>
+        <copy file="${project.basedir}/public/lesecopattes_512_512.png" tofile="${project.dist}/lesecopattes_512_512.png" overwrite="true"/>
         <tar destfile="${project.deploy}/${project.short}-${deploy.version}.tar.gz" basedir="${project.dist}" compression="gzip"/>
         <copy file="${project.basedir}/install/install.sh" tofile="${project.deploy}/install-${deploy.version}.sh" overwrite="true"/>
         <exec command="md5sum ${project.short}-${deploy.version}.tar.gz > ${project.short}-${deploy.version}.tar.gz.checksum" dir="${project.deploy}" />
