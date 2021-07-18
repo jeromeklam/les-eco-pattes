@@ -1,15 +1,32 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "Admin Les-Eco-Pattes",
+  "name": "Administration Les Eco Pattes",
+  "theme_color": "#eb5252",
+  "background_color": "#ffffff",
+  "display": "fullscreen",
+  "Scope": "/",
+  "orientation": "landscape",
   "icons": [
     {
-      "src": "favicon.ico",
-      "sizes": "64x64 32x32 24x24 16x16",
-      "type": "image/x-icon"
+      "src": "lesecopattes_48_48.png",
+      "type": "image/png",
+      "sizes": "48x48"
+    },
+    {
+      "src": "lesecopattes_96_96.png",
+      "type": "image/png",
+      "sizes": "96x96"
+    },
+    {
+      "src": "lesecopattes_192_192.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "lesecopattes_512_512.png",
+      "type": "image/png",
+      "sizes": "512x512"
     }
   ],
-  "start_url": "./index.html",
-  "display": "standalone",
-  "theme_color": "#000000",
-  "background_color": "#ffffff"
+  "start_url": "index.html"
 }
