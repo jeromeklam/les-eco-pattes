@@ -11,7 +11,6 @@ export default class Dashboard extends Component {
   render() {
     return (
       <div className="content-fixed">
-        <img className="fond-site" src={fond} alt="" />
         <Responsive displayIn={['Mobile']}>
           <div className="text-center">
             <br />

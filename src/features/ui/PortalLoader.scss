@@ -1,0 +1,17 @@
+@import '../../styles/mixins';
+
+.ui-portal-loader-inner {
+  opacity: 0.5;
+  position: fixed;
+  left: 0px;
+  top: 0px;
+  right: 0px;
+  bottom: 0px;
+  vertical-align: middle;
+  text-align: center;
+  margin: auto;
+}
+
+.ui-portal-loader-loader {
+  margin-top: 200px;
+}

@@ -1,4 +1,4 @@
-import { useEffect, useCallback } from 'react';
+import { useCallback } from 'react';
 import { useDispatch, useSelector, shallowEqual } from 'react-redux';
 import mime from 'mime-types';
 import {
@@ -11,7 +11,7 @@ import { downloadBlob } from '../../ui';
 import { freeAssoApi } from '../../../common';
 
 export function downloadOne(elem) {
-  return (dispatch) => {
+  return dispatch => {
     dispatch({
       type: INBOX_DOWNLOAD_ONE_BEGIN,
     });
@@ -19,7 +19,7 @@ export function downloadOne(elem) {
     const promise = new Promise((resolve, reject) => {
       const doRequest = freeAssoApi.get('/v1/core/inbox/download/' + elem.id, {responseType: 'arraybuffer'});
       doRequest.then(
-        (res) => {
+        res => {
           const type = res.headers['content-type'] || 'application/octet-stream';
           const extension = mime.extension(type);
           downloadBlob(res.data, 'application/octet-stream', elem.inbox_filename);
@@ -29,7 +29,7 @@ export function downloadOne(elem) {
           });
           resolve(res);
         },
-        (err) => {
+        err => {
           dispatch({
             type: INBOX_DOWNLOAD_ONE_FAILURE,
             data: { error: err },
@@ -60,9 +60,12 @@ export function useDownloadOne() {
     shallowEqual,
   );
 
-  const boundAction = useCallback((...args) => {
-    return dispatch(downloadOne(...args));
-  }, [dispatch]);
+  const boundAction = useCallback(
+    (...args) => {
+      return dispatch(downloadOne(...args));
+    },
+    [dispatch],
+  );
 
   const boundDismissError = useCallback(() => {
     return dispatch(dismissDownloadOneError());

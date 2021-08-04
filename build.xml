@@ -120,15 +120,32 @@
     </target>
 
     <!--
+        Déploiement en production
+    -->
+    <target name="create-lesecopattes">
+        <phingcall target="create-tgz-generic">
+            <property name="deploy.appfolder" value="lesecopattes" />
+            <property name="deploy.version" value="production" />
+        </phingcall>
+    </target>
+    <target name="execute-deploy-lesecopattes">
+        <property name="deploy.appfolder" value="lesecopattes" />
+        <property name="deploy.version" value="production" />
+        <foreach list="${deploy.hosts-beta}" param="host" target="host-copy-generic" />
+        <foreach list="${deploy.hosts-beta}" param="host" target="host-install-generic" />
+        <echo message="that's all folks..." />
+    </target>
+    
+    <!--
         Déploiement en beta / dev
     -->
-    <target name="create-beta">
+    <target name="create-lesecopattes-beta">
         <phingcall target="create-tgz-generic">
             <property name="deploy.appfolder" value="lesecopattes-dev" />
             <property name="deploy.version" value="beta" />
         </phingcall>
     </target>
-    <target name="execute-deploy-beta-lesecopattes">
+    <target name="execute-deploy-lesecopattes-beta">
         <property name="deploy.appfolder" value="lesecopattes-dev" />
         <property name="deploy.version" value="beta" />
         <foreach list="${deploy.hosts-beta}" param="host" target="host-copy-generic" />

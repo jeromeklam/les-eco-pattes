@@ -12,8 +12,8 @@ import { HeaderBadge as InboxBadge } from '../inbox';
 
 import { globalMenu } from './';
 import * as actions from './redux/actions';
-
 import * as authActions from '../auth/redux/actions';
+import * as commonActions from '../common/redux/actions';
 import {
   Menu as MenuIcon,
   MenuOpened as MenuOpenedIcon,
@@ -25,7 +25,7 @@ import {
 import { getFullName } from '../user';
 import { SimpleForm } from '../auth';
 import { CenteredLoading9X9 } from '../ui';
-
+import { RightPanel } from '../common';
 import fondAuth from '../../images/fond2.jpg';
 import fond from '../../images/fondAccueil.jpg';
 
@@ -77,7 +77,7 @@ export class Page extends Component {
   }
 
   onDecline() {
-    window.location = "https://www.lilo.org"; 
+    window.location = 'https://www.lilo.org';
   }
 
   render() {
@@ -85,12 +85,7 @@ export class Page extends Component {
     const icons = [];
     let globalBadges = [];
     if (this.props.auth.authenticated) {
-      globalBadges = [
-        {
-          name: 'socket',
-          component: <InboxBadge />
-        },
-      ];
+      globalBadges = [];
       if (this.props.home.socketOn) {
         if (this.props.home.socketConnected) {
           icons.push({
@@ -112,7 +107,7 @@ export class Page extends Component {
       <div className="home-page">
         <img
           className={classnames(
-            'd-none d-sm-block',
+            'd-none',
             this.props.auth.authenticated ? 'fond-siteAuth' : 'fond-site',
           )}
           src={this.props.auth.authenticated ? fondAuth : fond}
@@ -152,6 +147,9 @@ export class Page extends Component {
           }
           menuOpened={<MenuOpenedIcon />}
           menuClosed={<MenuClosedIcon />}
+          rightPanel={this.props.auth.authenticated ? <RightPanel /> : null}
+          onRightPanelToggle={this.props.actions.toggleRightPanel}
+          rightPanelOpened={this.props.common.rightPanelOpened}
           footer={!this.props.auth.authenticated}
           t={this.props.intl.formatMessage}
         >
@@ -207,14 +205,17 @@ export class Page extends Component {
 
 function mapStateToProps(state) {
   return {
-    home: state.home,
     auth: state.auth,
+    common: state.common,
+    causeTypes: state.causeType.items || [],
+    home: state.home,
+    inbox: state.inbox,
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
-    actions: bindActionCreators({ ...actions, ...authActions, push }, dispatch),
+    actions: bindActionCreators({ ...actions, ...authActions, ...commonActions, push }, dispatch),
   };
 }
 

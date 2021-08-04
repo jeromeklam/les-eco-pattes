@@ -40,6 +40,7 @@ import editionRoute from '../features/edition/route';
 import historyRoute from '../features/history/route';
 import inboxRoute from '../features/inbox/route';
 import jobqueueRoute from '../features/jobqueue/route';
+import commonRoute from '../features/common/route';
 
 // NOTE: DO NOT CHANGE the 'childRoutes' name and the declaration pattern.
 // This is used for Rekit cmds to register routes config for new features, and remove config when remove features, etc.
@@ -83,6 +84,7 @@ const childRoutes = [
   historyRoute,
   inboxRoute,
   jobqueueRoute,
+  commonRoute,
 ];
 
 const routes = [
