@@ -168,9 +168,9 @@ function Form(props) {
           <div className="col-sm-w3">
             <InputCheckbox
               label="Actif"
-              name="cli_actif"
+              name="cli_active"
               labelTop={true}
-              checked={values.cli_actif === true}
+              checked={values.cli_active === true}
               onChange={handleChange}
             />
           </div>

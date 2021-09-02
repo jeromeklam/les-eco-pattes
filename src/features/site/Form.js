@@ -104,7 +104,7 @@ function Form(props) {
     }
     sitt_id = values.site_type.id;
   }
-console.log("FK",values.sanitary );
+  console.log('FK', values);
   return (
     <ResponsiveModalOrForm
       className=""
@@ -299,19 +299,23 @@ console.log("FK",values.sanitary );
                 item={values.sanitary || null}
                 onChange={handleChange}
                 error={getErrorMessage('sanitary')}
-                typeCodes={['VETERINAIRE','CLINIQUE']}
+                typeCodes={['VETERINAIRE', 'CLINIQUE']}
               />
             </div>
           </div>
-          {values.sanitary && values.sanitary.id > 0  && (
-            <div className="row">
-              <div className="col-sm-w36">
-                <div className="border border-secondary rounded overflow-x-hidden">
-                  <InlineClients parentId={values.sanitary.id}/>
+          {values.sanitary &&
+            values.sanitary.id > 0 &&
+            values.sanitary.client_type &&
+            values.sanitary.client_type.id > 0 &&
+            values.sanitary.client_type.clit_code === "CLINIQUE" && (
+              <div className="row">
+                <div className="col-sm-w36">
+                  <div className="border border-secondary rounded overflow-x-hidden">
+                    <InlineClients parentId={values.sanitary.id} />
+                  </div>
                 </div>
               </div>
-            </div>
-          )}
+            )}
         </div>
       )}
       {values.currentTab === '3' && (

@@ -9,7 +9,7 @@ export default class InlineListGroup extends Component {
 
   render() {
     return (
-      <div className="cause-inline-list-group">
+      <div className="cause-inline-list-group text-secondary">
         { ( this.props.list && this.props.list.length > 0 ) ? (
           <div>
             <p>Animaux :</p>

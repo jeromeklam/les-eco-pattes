@@ -34,9 +34,17 @@ const afterChange = (name, item) => {
           end = ctStart;
           end.setYear(year + 1);
           break;
+        case '2ANS':
+          end = ctStart;
+          end.setYear(year + 2);
+          break;
         case '3ANS':
           end = ctStart;
           end.setYear(year + 3);
+          break;
+        case '4ANS':
+          end = ctStart;
+          end.setYear(year + 4);
           break;
         case '5ANS':
           end = ctStart;
