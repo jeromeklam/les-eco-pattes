@@ -1,7 +1,7 @@
-import { useEffect, useCallback } from 'react';
-import { useDispatch, useSelector, shallowEqual } from 'react-redux';
 import { freeAssoApi } from '../../../common';
 import { jsonApiNormalizer, normalizedObjectModeler, objectToQueryString } from 'jsonapi-front';
+import { useCallback } from 'react';
+import { useDispatch, useSelector, shallowEqual } from 'react-redux';
 import {
   INBOX_LOAD_MORE_BEGIN,
   INBOX_LOAD_MORE_SUCCESS,
@@ -10,26 +10,27 @@ import {
 } from './constants';
 
 export function loadMore(args = {}) {
-  return (dispatch) => { 
+  return dispatch => {
     dispatch({
       type: INBOX_LOAD_MORE_BEGIN,
     });
 
     const promise = new Promise((resolve, reject) => {
       const params = {
-        fields: '-inbox_params,-inbox_content'
+        fields: '-inbox_params,-inbox_content',
+        sort: '-inbox_ts'
       }
       const addUrl = objectToQueryString(params);
       const doRequest = freeAssoApi.get('/v1/core/inbox'+ addUrl, {});
       doRequest.then(
-        (res) => {
+        res => {
           dispatch({
             type: INBOX_LOAD_MORE_SUCCESS,
             data: res,
           });
           resolve(res);
         },
-        (err) => {
+        err => {
           dispatch({
             type: INBOX_LOAD_MORE_FAILURE,
             data: { error: err },
@@ -49,7 +50,7 @@ export function dismissLoadMoreError() {
   };
 }
 
-export function useLoadMore(params) {
+export function useLoadMore() {
   const dispatch = useDispatch();
 
   const { loadMorePending, loadMoreError } = useSelector(
@@ -60,13 +61,12 @@ export function useLoadMore(params) {
     shallowEqual,
   );
 
-  const boundAction = useCallback((...args) => {
-    return dispatch(loadMore(...args));
-  }, [dispatch]);
-
-  useEffect(() => {
-    if (params) boundAction(...(params || []));
-  }, [...(params || []), boundAction]); // eslint-disable-line
+  const boundAction = useCallback(
+    (...args) => {
+      return dispatch(loadMore(...args));
+    },
+    [dispatch],
+  );
 
   const boundDismissError = useCallback(() => {
     return dispatch(dismissLoadMoreError());

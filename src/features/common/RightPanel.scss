@@ -1,0 +1,16 @@
+@import '../../styles/mixins';
+
+.common-right-panel {
+  .common-right-panel-header {
+    position: relative;
+    height: 50px;
+    /*border-bottom: 1px solid theme-color('secondary-light');*/
+  }
+  .common-right-panel-content {
+    position: absolute;
+    top: 50px;
+    left: 0px;
+    right: 0px;
+    bottom: 0px;
+  }
+}

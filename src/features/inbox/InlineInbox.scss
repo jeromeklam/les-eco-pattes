@@ -1,0 +1,8 @@
+@import '../../styles/mixins';
+
+.inbox-inline-inbox {
+  .list-group .card:hover {
+    background-color: theme-color('primary-light');
+    cursor: pointer;
+  }
+}

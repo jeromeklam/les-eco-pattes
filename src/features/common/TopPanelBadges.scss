@@ -1,0 +1,10 @@
+@import '../../styles/mixins';
+
+.common-top-panel-badges {
+  position: absolute;
+  bottom: 0px;
+
+  .nav-link {
+    color: theme-color('secondary');
+  }
+}

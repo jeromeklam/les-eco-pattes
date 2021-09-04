@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import * as actions from '../common/redux/actions';
+import { injectIntl } from 'react-intl';
 import { ResponsiveList, Filter } from 'react-bootstrap-front';
-
+import { PortalLoader } from './';
 import {
   FilterEmpty as FilterEmptyIcon,
   FilterFull as FilterFullIcon,
@@ -18,7 +21,23 @@ import {
   DelOne as ClearIcon,
   More as MoreIcon,
   Close as CloseIcon,
+  MenuDropDown as MenuDownIcon,
+  Previous as PreviousIcon,
+  Next as NextIcon,
 } from '../icons';
+
+function selectMenu(selected) {
+  let nbSel = 0;
+  if (selected && Array.isArray(selected)) {
+    nbSel = selected.length;
+  }
+  return (
+    <>
+      <span>{nbSel}</span>
+      <MenuDownIcon color="white" />
+    </>
+  );
+}
 
 export class List extends Component {
   static propTypes = {
@@ -30,6 +49,7 @@ export class List extends Component {
     inlineActions: PropTypes.array,
     inlineComponent: PropTypes.element,
     currentItem: PropTypes.object,
+    icon: PropTypes.element,
     items: PropTypes.array.isRequired,
     loadMoreError: PropTypes.element,
     loadMoreFinish: PropTypes.bool,
@@ -39,6 +59,8 @@ export class List extends Component {
     onClearFiltersDefault: PropTypes.func,
     onClick: PropTypes.func,
     onLoadMore: PropTypes.func,
+    onNext: PropTypes.func,
+    onPrevious: PropTypes.func,
     onSearch: PropTypes.func,
     onSetFiltersAndSort: PropTypes.func,
     onSort: PropTypes.func,
@@ -46,15 +68,13 @@ export class List extends Component {
     sort: PropTypes.array,
     title: PropTypes.string.isRequired,
     titleMultiline: PropTypes.bool,
-    selected: PropTypes.object,
-    selectMenu: PropTypes.array,
-    onSelect: PropTypes.func,
   };
   static defaultProps = {
     counter: null,
     fClassName: () => {},
     filters: new Filter(),
     globalActions: [],
+    icon: null,
     inlineActions: [],
     inlineComponent: null,
     currentItem: null,
@@ -66,25 +86,64 @@ export class List extends Component {
     onClearFiltersDefault: () => {},
     onClick: () => {},
     onLoadMore: () => {},
+    onNext: null,
+    onPrevious: null,
     onSearch: () => {},
     onSetFiltersAndSort: () => {},
     onSort: () => {},
     quickSearch: null,
     sort: [],
     titleMultiline: false,
-    selected: {},
-    selectMenu: [],
-    onSelect: () => {},
   };
+
+  constructor(props) {
+    super(props);
+    this.onFilters = this.onFilters.bind(this);
+  }
+
+  componentDidMount() {
+    this.props.actions.setFiltersCols(
+      this.props.cols,
+      this.props.filters,
+      this.props.sort,
+      this.props.onSetFiltersAndSort,
+    );
+  }
+
+  componentDidUpdate(prevProps) {
+    if (
+      prevProps.cols !== this.props.cols ||
+      prevProps.filters !== this.props.filters ||
+      prevProps.sort !== this.props.sort
+    ) {
+      this.props.actions.setFiltersCols(
+        this.props.cols,
+        this.props.filters,
+        this.props.sort,
+        this.props.onSetFiltersAndSort,
+      );
+    }
+  }
+
+  componentWillUnmount() {
+    this.props.actions.setFiltersCols(null, null);
+  }
+
+  onFilters() {
+    this.props.actions.setPanel('filter');
+  }
 
   render() {
     return (
       <ResponsiveList
         title={this.props.title}
+        icon={this.props.icon}
         calIcon={<CalendarIcon className="text-secondary" />}
         cancelPanelIcon={<CancelPanelIcon />}
         clearIcon={<ClearIcon className="text-warning" />}
         closeIcon={<CloseIcon />}
+        previousIcon={<PreviousIcon />}
+        nextIcon={<NextIcon />}
         counter={this.props.counter}
         cols={this.props.cols}
         fClassName={this.props.fClassName}
@@ -104,6 +163,7 @@ export class List extends Component {
         inlineComponent={this.props.inlineComponent}
         inlineActions={this.props.inlineActions}
         items={this.props.items}
+        loader={<PortalLoader />}
         loadMoreError={this.props.loadMoreError}
         loadMoreFinish={this.props.loadMoreFinish}
         loadMorePending={this.props.loadMorePending}
@@ -116,9 +176,14 @@ export class List extends Component {
         moreIcon={<MoreIcon className="text-secondary" />}
         onSearch={this.props.onSearch}
         onSort={this.props.onSort}
+        onFilters={this.onFilters}
         onSetFiltersAndSort={this.props.onSetFiltersAndSort}
-        onClearFilters={this.props.onClearFilters}
-        onClearFiltersDefault={this.props.onClearFiltersDefault}
+        onClearFilters={() => {
+          this.props.onClearFilters(false);
+        }}
+        onClearFiltersDefault={() => {
+          this.props.onClearFilters(true);
+        }}
         onLoadMore={this.props.onLoadMore}
         onClick={this.props.onClick}
         quickSearch={this.props.quickSearch}
@@ -129,8 +194,12 @@ export class List extends Component {
         titleMultiline={this.props.titleMultiline}
         validPanelIcon={<ValidPanelIcon />}
         selected={this.props.selected}
+        selectMenuIcon={selectMenu(this.props.selected)}
         selectMenu={this.props.selectMenu}
         onSelect={this.props.onSelect}
+        onPrevious={this.props.onPrevious}
+        onNext={this.props.onNext}
+        t={this.props.intl.formatMessage}
       />
     );
   }
@@ -138,15 +207,16 @@ export class List extends Component {
 
 function mapStateToProps(state) {
   return {
+    common: state.common,
     auth: state.auth,
   };
 }
 
+/* istanbul ignore next */
 function mapDispatchToProps(dispatch) {
-  return {};
+  return {
+    actions: bindActionCreators({ ...actions }, dispatch),
+  };
 }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(List);
+export default injectIntl(connect(mapStateToProps, mapDispatchToProps)(List));

@@ -42,6 +42,7 @@ import editionReducer from '../features/edition/redux/reducer';
 import historyReducer from '../features/history/redux/reducer';
 import inboxReducer from '../features/inbox/redux/reducer';
 import jobqueueReducer from '../features/jobqueue/redux/reducer';
+import commonReducer from '../features/common/redux/reducer';
 
 // NOTE 1: DO NOT CHANGE the 'reducerMap' name and the declaration pattern.
 // This is used for Rekit cmds to register new features, remove features, etc.
@@ -90,6 +91,7 @@ const reducerMap = {
   history: historyReducer,
   inbox: inboxReducer,
   jobqueue: jobqueueReducer,
+  common: commonReducer,
 };
 
 export default combineReducers(reducerMap);

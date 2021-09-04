@@ -29,3 +29,5 @@ export { default as List } from './List';
 export { default as InputFileContent } from './InputFileContent';
 export { default as Deadline } from './Deadline';
 export { default as Avatar } from './Avatar';
+export { default as RedPoint } from './RedPoint';
+export { default as PortalLoader } from './PortalLoader';

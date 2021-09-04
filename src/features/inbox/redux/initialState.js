@@ -1,6 +1,4 @@
 const initialState = {
-  downloadOnePending: false,
-  downloadOneError: null,
   loadMorePending: false,
   loadMoreError: null,
   items: [],
@@ -8,6 +6,8 @@ const initialState = {
   count: 0,
   not_downloaded: 0,
   page_number: 0,
+  downloadOnePending: false,
+  downloadOneError: null,
 };
 
 export default initialState;
