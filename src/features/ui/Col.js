@@ -1,22 +1,10 @@
-import React, { Component } from 'react';
-import classnames from 'classnames';
+import React from 'react';
+// import PropTypes from 'prop-types';
+import { Col as UICol } from 'react-bootstrap-front';
 
-export default class Col extends Component {
-  static propTypes = {};
+export default function Col(props) {
+  return <UICol {...props} />;
+};
 
-  render() {
-    let add = "";
-    if (this.props.layoutSize && this.props[this.props.layoutSize]) {
-      add = `-${this.props.layoutSize}-w${this.props[this.props.layoutSize]}`;
-    } else {
-      if (this.props['col']) {
-        add = `-xs-w${this.props['col']}`;
-      }
-    }
-    return (
-      <div className={classnames("col" + add)}>
-        {this.props.children}
-      </div>
-    );
-  }
-}
+Col.propTypes = {};
+Col.defaultProps = {};

@@ -33,8 +33,8 @@ function selectMenu(selected) {
   }
   return (
     <>
-      <span>{nbSel}</span>
-      <MenuDownIcon color="white" />
+      <span className="no-selector">{nbSel}</span>
+      <MenuDownIcon />
     </>
   );
 }
@@ -98,30 +98,20 @@ export class List extends Component {
 
   constructor(props) {
     super(props);
+    this.state = {
+      mode: 'list',
+    };
     this.onFilters = this.onFilters.bind(this);
+    this.onSelectView = this.onSelectView.bind(this);
   }
 
   componentDidMount() {
-    this.props.actions.setFiltersCols(
-      this.props.cols,
-      this.props.filters,
-      this.props.sort,
-      this.props.onSetFiltersAndSort,
-    );
+    this.props.actions.setPanelObj(this.props.panelObject);
   }
 
   componentDidUpdate(prevProps) {
-    if (
-      prevProps.cols !== this.props.cols ||
-      prevProps.filters !== this.props.filters ||
-      prevProps.sort !== this.props.sort
-    ) {
-      this.props.actions.setFiltersCols(
-        this.props.cols,
-        this.props.filters,
-        this.props.sort,
-        this.props.onSetFiltersAndSort,
-      );
+    if (prevProps.panelObject !== this.props.panelObject) {
+      this.props.actions.setPanelObj(this.props.panelObject);
     }
   }
 
@@ -129,8 +119,12 @@ export class List extends Component {
     this.props.actions.setFiltersCols(null, null);
   }
 
+  onSelectView(view) {
+    this.setState({ mode: view });
+  }
+
   onFilters() {
-    this.props.actions.setPanel('filter');
+    this.props.actions.setPanel('filter', this.props.panelObject);
   }
 
   render() {
@@ -148,11 +142,11 @@ export class List extends Component {
         cols={this.props.cols}
         fClassName={this.props.fClassName}
         filters={this.props.filters}
-        filterFullIcon={<FilterFullIcon color="white" />}
-        filterEmptyIcon={<FilterEmptyIcon color="white" />}
-        filterClearIcon={<FilterClearIcon color="white" />}
-        filterDefaultIcon={<FilterDefaultIcon color="white" />}
-        filterClearDefaultIcon={<FilterClearDefaultIcon color="white" />}
+        filterFullIcon={<FilterFullIcon />}
+        filterEmptyIcon={<FilterEmptyIcon />}
+        filterClearIcon={<FilterClearIcon />}
+        filterDefaultIcon={<FilterDefaultIcon />}
+        filterClearDefaultIcon={<FilterClearDefaultIcon />}
         globalActions={this.props.globalActions}
         currentItem={this.props.currentItem}
         currentInline={this.props.currentInline}
@@ -173,7 +167,7 @@ export class List extends Component {
             ? this.props.auth.settings.layout.listdetails
             : 'right'
         }
-        moreIcon={<MoreIcon className="text-secondary" />}
+        moreIcon={<MoreIcon />}
         onSearch={this.props.onSearch}
         onSort={this.props.onSort}
         onFilters={this.onFilters}
@@ -189,7 +183,7 @@ export class List extends Component {
         quickSearch={this.props.quickSearch}
         sort={this.props.sort}
         sortDownIcon={<SortDownIcon color="secondary" />}
-        sortNoneIcon={<SortNoneIcon color="secondary" />}
+        sortNoneIcon={<SortNoneIcon />}
         sortUpIcon={<SortUpIcon color="secondary" />}
         titleMultiline={this.props.titleMultiline}
         validPanelIcon={<ValidPanelIcon />}

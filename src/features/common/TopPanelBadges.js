@@ -17,14 +17,14 @@ export class TopPanelBadges extends Component {
     return (
       <div className="common-top-panel-badges w-100">
         <ul className="nav nav-tabs">
-          {Array.isArray(this.props.common.filtersCols) && (
+          {this.props.common.panelObj !== '' && (
             <li className="nav-item">
-              <div
+              <button
                 className={classnames('nav-link', this.props.common.panel === 'filter' && 'active')}
                 onClick={ev => this.props.actions.setPanel('filter')}
               >
                 <FilterIcon />
-              </div>
+              </button>
             </li>
           )}
           <li className="nav-item">
@@ -33,29 +33,27 @@ export class TopPanelBadges extends Component {
               onClick={ev => this.props.actions.setPanel('inbox')}
             />
           </li>
-          <li className="nav-item">
-            <button
-              className="btn btn-humburger"
-              onClick={this.props.actions.toggleRightPanel}
-              id="menu-toggle"
-            >
-              <MenuIcon className="secondary" />
-            </button>
-          </li>
         </ul>
+        <div className="btn-humburger-wrapper">
+          <button
+            className="btn btn-humburger"
+            onClick={this.props.actions.toggleRightPanel}
+            id="menu-toggle"
+          >
+            <MenuIcon className="secondary" />
+          </button>
+        </div>
       </div>
     );
   }
 }
 
-/* istanbul ignore next */
 function mapStateToProps(state) {
   return {
     common: state.common,
   };
 }
 
-/* istanbul ignore next */
 function mapDispatchToProps(dispatch) {
   return {
     actions: bindActionCreators({ ...actions }, dispatch),

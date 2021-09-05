@@ -9,7 +9,15 @@ import {
 } from 'react-bootstrap-front';
 import RegexpParser from 'reregexp';
 import { validateRegex } from '../../common';
-import { ResponsiveModalOrForm, InputTextarea, InputDate, InputData, InputSpin } from '../ui';
+import {
+  ResponsiveModalOrForm,
+  InputTextarea,
+  InputDate,
+  InputData,
+  InputSpin,
+  Row,
+  Col,
+} from '../ui';
 import useForm from '../ui/useForm';
 import { InputPicker as ClientInputPicker } from '../client';
 import { InputPicker as SiteInputPicker } from '../site';
@@ -87,8 +95,8 @@ function Form(props) {
       modal={props.modal || false}
     >
       <InputHidden name="id" id="id" value={values.id} />
-      <div className="row">
-        <div className="col-xs-w8">
+      <Row>
+        <Col size={{ xxs: 8 }}>
           <InputMask
             label="N° boucle"
             name="cau_code"
@@ -104,8 +112,8 @@ function Form(props) {
             error={getErrorMessage('cau_code')}
             help={validated ? false : 'Format : ' + regPlaceholder}
           />
-        </div>
-        <div className="col-xs-w10">
+        </Col>
+        <Col size={{ xxs: 10 }}>
           <InputSelect
             label="Race"
             name="cause_type.id"
@@ -117,8 +125,8 @@ function Form(props) {
             required={true}
             error={getErrorMessage('cause_type')}
           />
-        </div>
-        <div className="col-xs-w18">
+        </Col>
+        <Col size={{ xxs: 18 }}>
           <SiteInputPicker
             label="Site"
             key="site"
@@ -129,13 +137,13 @@ function Form(props) {
             required={true}
             error={getErrorMessage('site')}
           />
-        </div>
-      </div>
+        </Col>
+      </Row>
       <hr />
       {values.currentTab === '1' && (
-        <div>
-          <div className="row">
-            <div className="col-xs-w12">
+        <>
+          <Row>
+            <Col size={{ xxs: 12 }}>
               <InputText
                 label="Nom"
                 key="cau_name"
@@ -145,8 +153,8 @@ function Form(props) {
                 onChange={handleChange}
                 error={getErrorMessage('cau_name')}
               />
-            </div>
-            <div className="col-xs-w8">
+            </Col>
+            <Col size={{ xxs: 8 }}>
               <InputSelect
                 label="M/F"
                 name="cau_sex"
@@ -157,8 +165,8 @@ function Form(props) {
                 labelTop={true}
                 error={getErrorMessage('cau_sex')}
               />
-            </div>
-            <div className="col-xs-w16">
+            </Col>
+            <Col size={{ xxs: 16 }}>
               <ClientInputPicker
                 label="Eleveur"
                 key="raiser"
@@ -168,10 +176,10 @@ function Form(props) {
                 error={getErrorMessage('raiser')}
                 typeCodes={['ELEVEUR']}
               />
-            </div>
-          </div>
-          <div className="row">
-            <div className="col-xs-w6">
+            </Col>
+          </Row>
+          <Row>
+            <Col size={{ xxs: 6 }}>
               <InputSpin
                 label="Année de naissance"
                 name="cau_year"
@@ -183,8 +191,8 @@ function Form(props) {
                 labelTop={true}
                 error={getErrorMessage('cau_year')}
               />
-            </div>
-            <div className="col-xs-w6">
+            </Col>
+            <Col size={{ xxs: 6 }}>
               <InputData
                 name="cau_string_1"
                 value={values.cau_string_1}
@@ -193,8 +201,8 @@ function Form(props) {
                 onChange={handleChange}
                 labelTop={true}
               />
-            </div>
-            <div className="col-xs-w12">
+            </Col>
+            <Col size={{ xxs: 12 }}>
               <CauseInputPicker
                 label="Père"
                 name="parent1"
@@ -204,8 +212,8 @@ function Form(props) {
                 error={getErrorMessage('parent1')}
                 filters={{ cau_sex: 'M' }}
               />
-            </div>
-            <div className="col-xs-w12">
+            </Col>
+            <Col size={{ xxs: 12 }}>
               <CauseInputPicker
                 label="Mère"
                 name="parent2"
@@ -215,9 +223,9 @@ function Form(props) {
                 error={getErrorMessage('parent2')}
                 filters={{ cau_sex: 'F' }}
               />
-            </div>
-          </div>
-          <div className="row">
+            </Col>
+          </Row>
+          <Row>
             <div className="col-sm-w2">
               <InputCheckbox
                 label="Attente"
@@ -261,8 +269,8 @@ function Form(props) {
                 />
               )}
             </div>
-          </div>
-          <div className="row">
+          </Row>
+          <Row>
             <div className="col-sm-w2">
               <InputCheckbox
                 label="Conforme"
@@ -285,8 +293,8 @@ function Form(props) {
                 />
               )}
             </div>
-          </div>
-        </div>
+          </Row>
+        </>
       )}
       {values.currentTab === '2' && (
         <div>

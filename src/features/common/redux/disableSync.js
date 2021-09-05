@@ -19,6 +19,7 @@ export function useDisableSync() {
 export function reducer(state, action) {
   switch (action.type) {
     case COMMON_DISABLE_SYNC:
+      window.localStorage.setItem('proxy_on', 'no');
       return {
         ...state,
         syncEnabled: false,

@@ -9,7 +9,7 @@ import { ResponsiveQuickSearch } from 'react-bootstrap-front';
 import { loadMovements } from '../cause-movement/redux/actions';
 import { loadGrowths } from '../cause-growth/redux/actions';
 import { loadSicknesses } from '../cause-sickness/redux/actions';
-import { Search as SearchIcon } from '../icons';
+import { Search as SearchIcon, Cause as CauseIcon } from '../icons';
 import { List as UiList, deleteSuccess, showErrors, messageSuccess } from '../ui';
 import { InlineMovements } from '../cause-movement';
 import { InlineSicknesses } from '../cause-sickness';
@@ -255,6 +255,7 @@ export class List extends Component {
       <div>
         <UiList
           title="Animaux"
+          icon=<CauseIcon />
           cols={cols}
           items={items}
           quickSearch={quickSearch}
@@ -268,6 +269,7 @@ export class List extends Component {
           globalActions={globalActions}
           sort={this.props.cause.sort}
           filters={this.props.cause.filters}
+          panelObject="cause"
           onSearch={this.onQuickSearch}
           onSort={this.onUpdateSort}
           onSetFiltersAndSort={this.onSetFiltersAndSort}
@@ -319,4 +321,9 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default injectIntl(connect(mapStateToProps, mapDispatchToProps)(List));
+export default injectIntl(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps,
+  )(List),
+);

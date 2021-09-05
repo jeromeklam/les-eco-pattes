@@ -17,7 +17,8 @@ $theme-colors: (
   "inactive": lighten(#6c757d,20%),
 );
 $grid-breakpoints: (
-  xs: 0,
+  xxs: 0,
+  xs: 512px,
   sm: 768px,
   md: 1024px,
   lg: 1200px,
@@ -25,13 +26,15 @@ $grid-breakpoints: (
 );
 $container-breakpoints: (
   no: 0,
-  xs: 0,
+  xxs: 0,
+  xs: 512px,
   sm: 768,
   md: 1024,
   lg: 1200,
   xl: 1600
 );
 $container-max-widths: (
+  xs: 512px,
   sm: 640px,
   md: 840px,
   lg: 1140px,
@@ -44,6 +47,10 @@ $modal-xl: 1440px !default;
 $modal-lg: 1200px !default;
 $modal-md:  800px !default;
 $modal-sm:  500px !default;
+
+// Default sizes
+$font-size-base: 0.8rem;
+$line-height-base: 1.2;
 
 // Menu gauche
 $left-menu-width: 250px;

@@ -19,6 +19,7 @@ export function useEnableSync() {
 export function reducer(state, action) {
   switch (action.type) {
     case COMMON_ENABLE_SYNC:
+      window.localStorage.setItem('proxy_on', 'yes');
       return {
         ...state,
         syncEnabled: true,

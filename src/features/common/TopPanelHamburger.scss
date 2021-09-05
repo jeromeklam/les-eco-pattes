@@ -1,5 +1,12 @@
 @import '../../styles/mixins';
 
-.common-top-panel-hamburger {
-
+.common-top-panel-badges-2 {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  .btn-humburger-wrapper-2 {
+    position: absolute;
+    top: 9px;
+    left: 0px;
+  }
 }

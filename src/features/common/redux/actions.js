@@ -14,3 +14,6 @@ export { socketOff } from './socketOff';
 export { toggleRightPanel } from './toggleRightPanel';
 export { setFiltersCols } from './setFiltersCols';
 export { setPanel } from './setPanel';
+export { syncReady } from './syncReady';
+export { syncPending } from './syncPending';
+export { setPanelObj } from './setPanelObj';

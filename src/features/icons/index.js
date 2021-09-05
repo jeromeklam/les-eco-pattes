@@ -110,3 +110,4 @@ export { default as InboxEmpty } from './InboxEmpty';
 export { default as InboxFull } from './InboxFull';
 export { default as Filter } from './Filter';
 export { default as MenuDropDown } from './MenuDropDown';
+export { default as Help } from './Help';

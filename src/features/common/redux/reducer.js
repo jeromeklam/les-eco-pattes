@@ -23,6 +23,9 @@ import { reducer as socketOffReducer } from './socketOff';
 import { reducer as toggleRightPanelReducer } from './toggleRightPanel';
 import { reducer as setFiltersColsReducer } from './setFiltersCols';
 import { reducer as setPanelReducer } from './setPanel';
+import { reducer as syncReadyReducer } from './syncReady';
+import { reducer as syncPendingReducer } from './syncPending';
+import { reducer as setPanelObjReducer } from './setPanelObj';
 
 const reducers = [
   toggleSidebarReducer,
@@ -41,6 +44,9 @@ const reducers = [
   toggleRightPanelReducer,
   setFiltersColsReducer,
   setPanelReducer,
+  syncReadyReducer,
+  syncPendingReducer,
+  setPanelObjReducer,
 ];
 
 export default function reducer(state = initialState, action) {
@@ -51,6 +57,5 @@ export default function reducer(state = initialState, action) {
       newState = state;
       break;
   }
-  /* istanbul ignore next */
   return reducers.reduce((s, r) => r(s, action), newState);
 }

@@ -4,10 +4,11 @@ import {
   COMMON_SET_PANEL,
 } from './constants';
 
-export function setPanel(panel = 'none') {
+export function setPanel(panel = 'none', obj = false) {
   return {
     type: COMMON_SET_PANEL,
     panel: panel,
+    obj: obj,
   };
 }
 
@@ -23,6 +24,7 @@ export function reducer(state, action) {
       return {
         ...state,
         panel: action.panel,
+        panelObj: action.obj ? action.obj : state.panelObj,
         rightPanelOpened: true,
       };
 

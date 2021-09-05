@@ -8,7 +8,7 @@ import {
   CLIENT_LOAD_MORE_DISMISS_ERROR,
 } from './constants';
 
-export function loadMore(args = {}, reload = false) {
+export function loadMore(reload = false) {
   return (dispatch, getState) => { 
     const loaded = getState().client.loadMoreFinish;
     const loading = getState().client.loadMorePending;

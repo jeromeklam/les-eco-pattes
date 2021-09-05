@@ -4,7 +4,27 @@
   position: absolute;
   bottom: 0px;
 
+  .nav-tabs {
+    padding-left: 6px;
+  }
   .nav-link {
     color: theme-color('secondary');
+    padding: 0.6rem 1rem;
+    border: 1px solid theme-color('secondary-light');
+    background-color: transparent;
+  }
+  .nav-link.active, .nav-link.show {
+    background-color: theme-color('light');
+    border-bottom: 1px solid theme-color('light');
+    border-top: 1px solid theme-color('secondary-light');
+    border-left: 1px solid theme-color('secondary-light');
+    border-right: 1px solid theme-color('secondary-light');
+    color: theme-color('secondary');
+  }
+
+  .btn-humburger-wrapper {
+    position: absolute;
+    right: 5px;
+    top: 0px;
   }
 }

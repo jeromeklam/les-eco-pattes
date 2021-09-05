@@ -4,7 +4,8 @@ const initialState = {
   locale: 'fr',
   online: true,
   syncing: false,
-  syncEnabled: true,
+  syncEnabled: window.localStorage.getItem('proxy_on') === 'yes' ? true : false,
+  syncReady: false,
   socket: null,
   socketEnabled: false,
   rightPanelOpened: false,
@@ -13,6 +14,7 @@ const initialState = {
   sort: null,
   onFilter: null,
   panel: 'none',
+  panelObj: '',
 };
 
 export default initialState;

@@ -1,23 +1,15 @@
 import React, { Component } from 'react';
+import classnames from 'classnames';
 import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { injectIntl } from 'react-intl';
-import { FilterPanel, Filter } from 'react-bootstrap-front';
+import { Filter } from 'react-bootstrap-front';
 import * as actions from './redux/actions';
 import { RightPanelBadges, TopPanelBadges, TopPanelHamburger } from './';
-import {
-  FilterEmpty as FilterEmptyIcon,
-  FilterFull as FilterFullIcon,
-  FilterClear as FilterClearIcon,
-  FilterDefault as FilterDefaultIcon,
-  FilterClearDefault as FilterClearDefaultIcon,
-  SimpleCancel as CancelPanelIcon,
-  SimpleValid as ValidPanelIcon,
-  Calendar as CalendarIcon,
-  DelOne as ClearIcon,
-} from '../icons';
 import { InlineInbox } from '../inbox';
+import { FilterPanel as CauseFilter } from '../cause';
+import { FilterPanel as ClientFilter } from '../client';
 
 export class RightPanel extends Component {
   static propTypes = {
@@ -64,7 +56,12 @@ export class RightPanel extends Component {
   render() {
     return (
       <div className="common-right-panel">
-        <div className="common-right-panel-header">
+        <div
+          className={classnames(
+            'common-right-panel-header',
+            this.state.displayContent && 'bg-white',
+          )}
+        >
           {this.state.displayContent ? (
             <TopPanelBadges />
           ) : (
@@ -74,25 +71,10 @@ export class RightPanel extends Component {
         <div className="common-right-panel-content custom-scrollbar">
           {this.state.displayContent ? (
             {
-              filter: Array.isArray(this.props.common.filtersCols) && (
-                <FilterPanel
-                  filterFullIcon={<FilterFullIcon color="white" />}
-                  filterEmptyIcon={<FilterEmptyIcon color="white" />}
-                  filterClearIcon={<FilterClearIcon color="white" />}
-                  filterDefaultIcon={<FilterDefaultIcon color="white" />}
-                  filterClearDefaultIcon={<FilterClearDefaultIcon color="white" />}
-                  calIcon={<CalendarIcon className="text-secondary" />}
-                  clearIcon={<ClearIcon className="text-warning" />}
-                  validPanelIcon={<ValidPanelIcon />}
-                  cancelPanelIcon={<CancelPanelIcon />}
-                  cols={this.props.common.filtersCols}
-                  filters={this.props.common.filters}
-                  sort={this.props.common.sort}
-                  onToggleFilter={this.toggleFilter}
-                  t={this.props.intl.formatMessage}
-                  simpleMode={true}
-                />
-              ),
+              filter: {
+                cause: <CauseFilter onToggleRightPanel={this.props.actions.toggleRightPanel} />,
+                client: <ClientFilter onToggleRightPanel={this.props.actions.toggleRightPanel} />,
+              }[this.props.common.panelObj],
               inbox: <InlineInbox />,
             }[this.props.common.panel]
           ) : (
@@ -104,14 +86,12 @@ export class RightPanel extends Component {
   }
 }
 
-/* istanbul ignore next */
 function mapStateToProps(state) {
   return {
     common: state.common,
   };
 }
 
-/* istanbul ignore next */
 function mapDispatchToProps(dispatch) {
   return {
     actions: bindActionCreators({ ...actions }, dispatch),

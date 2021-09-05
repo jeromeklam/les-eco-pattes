@@ -8,6 +8,7 @@ import { normalizedObjectModeler } from 'jsonapi-front';
 import { ResponsiveQuickSearch } from 'react-bootstrap-front';
 import {
   Search as SearchIcon,
+  Person as ClientIcon
 } from '../icons';
 import { List as UiList, deleteSuccess, showErrors, messageSuccess } from '../ui';
 import { getGlobalActions, getInlineActions, getSelectActions, getCols, Input } from './';
@@ -205,6 +206,7 @@ export class List extends Component {
       <div>
         <UiList
           title="Contacts"
+          icon=<ClientIcon />
           cols={cols}
           items={items}
           quickSearch={quickSearch}
@@ -216,6 +218,7 @@ export class List extends Component {
           globalActions={globalActions}
           sort={this.props.client.sort}
           filters={this.props.client.filters}
+          panelObject="client"
           onSearch={this.onQuickSearch}
           onSort={this.onUpdateSort}
           onSetFiltersAndSort={this.onSetFiltersAndSort}
