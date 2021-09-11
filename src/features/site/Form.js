@@ -111,7 +111,7 @@ function Form(props) {
       title="Sites"
       tab={values.currentTab}
       tabs={props.modify ? tabs.concat(modifyTabs) : tabs}
-      size="xl"
+      size="lg"
       onSubmit={handleSubmit}
       onCancel={handleCancel}
       onNavTab={handleNavTab}
@@ -171,7 +171,7 @@ function Form(props) {
                 error={getErrorMessage('site_address1')}
               />
             </div>
-            <div className="col-sm-w10">
+            <div className="col-sm-w8">
               <InputSelect
                 label="Type"
                 id="site_type"
@@ -184,7 +184,7 @@ function Form(props) {
                 error={getErrorMessage('site_type')}
               />
             </div>
-            <div className="col-sm-w2">
+            <div className="col-sm-w4">
               <InputCheckbox
                 label="Externe"
                 name="site_extern"

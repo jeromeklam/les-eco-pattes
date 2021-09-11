@@ -6,6 +6,7 @@ import { injectIntl } from 'react-intl';
 import * as actions from './redux/actions';
 import { getJsonApi } from 'jsonapi-front';
 import { propagateModel } from '../../common';
+import { getCauses } from '../cause';
 import { CenteredLoading9X9, createSuccess, modifySuccess, showErrors } from '../ui';
 import Form from './Form';
 
@@ -14,9 +15,11 @@ export class Input extends Component {
     movement: PropTypes.object.isRequired,
     actions: PropTypes.object.isRequired,
     loader: PropTypes.bool,
+    selected: PropTypes.element,
   };
   static defaultProps = {
     loader: true,
+    selected: [],
   };
 
   constructor(props) {
@@ -43,7 +46,14 @@ export class Input extends Component {
      */
     this.props.actions.loadOne(this.state.movementId).then(result => {
       const item = this.props.movement.loadOneItem;
-      this.setState({ item: item });
+      if (Array.isArray(this.props.selected) && this.props.selected.length > 0) {
+        getCauses('list', null, null, this.props.selected).then(result => {
+          item.causes = result;
+          this.setState({ item: item, loading: false });
+        });
+      } else {
+        this.setState({ item: item, loading: false });
+      }
     });
   }
 
@@ -126,8 +136,10 @@ export class Input extends Component {
             {item && (
               <Form
                 item={item}
-                modify
+                modify={this.props.movementId > 0}
                 modal={true}
+                mode={this.props.mode}
+                fromSite={this.props.site}
                 datas={this.props.data.items}
                 config={this.props.config.items}
                 properties={this.props.movement.properties}
@@ -166,4 +178,9 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default injectIntl(connect(mapStateToProps, mapDispatchToProps)(Input));
+export default injectIntl(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps,
+  )(Input),
+);

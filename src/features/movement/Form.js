@@ -138,7 +138,7 @@ function Form(props) {
       title={getTypeLabel(values.move_type)}
       tab={values.currentTab}
       tabs={myTabs}
-      size="xl"
+      size="lg"
       onSubmit={handleSubmit}
       onCancel={handleCancel}
       onNavTab={handleNavTab}

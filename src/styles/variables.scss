@@ -15,6 +15,8 @@ $theme-colors: (
   "light": lighten(#5a4e4e, 60%),
   "success": #7ab255,
   "inactive": lighten(#6c757d,20%),
+  "selected": lighten(#95c11e, 40%),
+  "picker": lighten(#5a4e4e, 54%),
 );
 $grid-breakpoints: (
   xxs: 0,

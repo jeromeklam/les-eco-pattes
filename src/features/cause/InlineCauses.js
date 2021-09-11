@@ -3,7 +3,7 @@ import classnames from 'classnames';
 import { Dropdown } from 'react-bootstrap-front';
 import { CenteredLoading3Dots } from '../ui';
 import { Movement as MovementIcon, MenuDown as MenuDownIcon } from '../icons';
-import { Create as CreateMovement } from '../movement';
+import { Input as InputMovement } from '../movement';
 import { getOne as getOneSite } from '../site';
 import { getSexlabel, getCauses } from './';
 
@@ -46,7 +46,7 @@ export default class InlineCauses extends Component {
       if (this.state.mode === 'site') {
         getOneSite(this.state.site_id).then(otherResult => {
           this.setState({ loading: false, items: result, site: otherResult });
-        })
+        });
       } else {
         this.setState({ loading: false, items: result });
       }
@@ -74,10 +74,7 @@ export default class InlineCauses extends Component {
   onSelect(id) {
     const causes_selected = this.state.selected;
     if (causes_selected.includes(id)) {
-      causes_selected.splice(
-        causes_selected.findIndex(elem => elem === id),
-        1,
-      );
+      causes_selected.splice(causes_selected.findIndex(elem => elem === id), 1);
     } else {
       causes_selected.push(id);
     }
@@ -118,7 +115,7 @@ export default class InlineCauses extends Component {
                 <div
                   className={classnames(
                     'inline-select-line border border-secondary mr-2',
-                    this.state.selectAll && 'selected'
+                    this.state.selectAll && 'selected',
                   )}
                   onClick={this.onSelectAll}
                 >
@@ -149,7 +146,7 @@ export default class InlineCauses extends Component {
                   <span className="pr-2">Père</span>
                 </div>
               )}
-              {this.state.mode === 'site' &&
+              {this.state.mode === 'site' && (
                 <div className="col-sm-w4 text-right">
                   <div className="dropdown">
                     <button
@@ -171,7 +168,7 @@ export default class InlineCauses extends Component {
                           className="bg-light border border-secondary text-secondary"
                           aria-labelledby="dropdownMenuButton"
                         >
-                          {(selected.length > 0) && (
+                          {selected.length > 0 && (
                             <button
                               type="button"
                               className="text-secondary dropdown-item"
@@ -181,7 +178,7 @@ export default class InlineCauses extends Component {
                               Mvt sans notification
                             </button>
                           )}
-                          {(selected.length > 0) && (
+                          {selected.length > 0 && (
                             <button
                               type="button"
                               className="text-secondary dropdown-item"
@@ -191,7 +188,7 @@ export default class InlineCauses extends Component {
                               Mvt avec notification
                             </button>
                           )}
-                          {(selected.length === 0) && (
+                          {selected.length === 0 && (
                             <button
                               type="button"
                               className="text-secondary dropdown-item"
@@ -201,7 +198,7 @@ export default class InlineCauses extends Component {
                               Entrée
                             </button>
                           )}
-                          {(selected.length > 0) && (
+                          {selected.length > 0 && (
                             <button
                               type="button"
                               className="text-secondary dropdown-item"
@@ -216,18 +213,8 @@ export default class InlineCauses extends Component {
                     )}
                   </div>
                 </div>
-              }
+              )}
             </div>
-            {(this.state.typeMvt !== '') && 
-              <CreateMovement
-                loader={false}
-                modal={true}
-                mode={this.state.typeMvt}
-                site={this.state.site}
-                onClose={this.onCloseMvt}
-                selected={selected}
-              />
-            }
             {causes.map(cause => (
               <div
                 className={classnames('row row-line', counter++ % 2 !== 1 ? 'row-odd' : 'row-even')}
@@ -237,7 +224,7 @@ export default class InlineCauses extends Component {
                   <div
                     className={classnames(
                       'inline-select-line border border-secondary mr-2',
-                      selected.includes(cause.id) && 'selected'
+                      selected.includes(cause.id) && 'selected',
                     )}
                     onClick={() => this.onSelect(cause.id)}
                   >
@@ -275,6 +262,16 @@ export default class InlineCauses extends Component {
           <div className="text-center p-3">
             <span className="text-secondary">Aucun animal</span>
           </div>
+        )}
+        {this.state.typeMvt !== '' && (
+          <InputMovement
+            loader={false}
+            modal={true}
+            mode={this.state.typeMvt}
+            site={this.state.site}
+            onClose={this.onCloseMvt}
+            selected={selected}
+          />
         )}
       </div>
     );

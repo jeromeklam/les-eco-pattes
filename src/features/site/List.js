@@ -6,7 +6,7 @@ import { injectIntl } from 'react-intl';
 import * as actions from './redux/actions';
 import { normalizedObjectModeler } from 'jsonapi-front';
 import { ResponsiveQuickSearch } from 'react-bootstrap-front';
-import { Search as SearchIcon } from '../icons';
+import { Search as SearchIcon, Site as SiteIcon } from '../icons';
 import { List as UiList, deleteSuccess, showErrors, messageSuccess } from '../ui';
 import { getEditions } from '../edition';
 import { InlineCauses } from '../cause';
@@ -282,10 +282,12 @@ export class List extends Component {
     );
     const { selected } = this.props.site;
     return (
-      <div>
+      <>
         <UiList
           title="Sites"
           cols={cols}
+          icon=<SiteIcon />
+          panelObject="site"
           items={items}
           quickSearch={quickSearch}
           mainCol="site_name"
@@ -317,7 +319,7 @@ export class List extends Component {
           <Input modal={true} siteId={this.state.siteId} onClose={this.onClose} />
         )}
         {this.state.siteId === 0 && <Input modal={true} onClose={this.onClose} />}
-      </div>
+      </>
     );
   }
 }
