@@ -1,7 +1,21 @@
 export default `
 ^
 # Version 2.1.0 : 15/09/2021
-  * 
+  * Général
+    * Diminution de la taille de tous les textes
+  * Variables de type liste
+    * Gestion des valeurs par défaut supprimées : elles n'apparaissent plus dans les listes déroulantes
+  * Carte
+    * Correction de la déplacement d'un site
+  * Sites
+    * Ne sont visibles dans la liste des animaux que ceux qui ne sont pas sortis
+    * Ne sont comptabilisés sur le compteur animaux dans la liste des sites que les animaux qui ne sont pas sortis
+    * Loirs de la suppression d'un site, suppression en cascade des images et des documents
+  * Contrats
+    * Correction sur l'affichage de la coche 'Actif' des contrats
+  * Mouvements
+    * Correction dans la création de mouvements
+  
 
 # Version 2.0.1 : 11/11/2020
   * Général

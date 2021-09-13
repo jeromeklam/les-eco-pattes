@@ -60,7 +60,7 @@ export class SimpleForm extends Component {
     if (evt) {
       evt.preventDefault();
     }
-    let obj = getJsonApi(this.state.user, 'FreeSSO_User', this.state.user.id);
+    let obj = getJsonApi(this.state.user, 'FreeSSO_User');
     this.props.actions
       .updateOne(this.state.user.id, obj)
       .then(result => {

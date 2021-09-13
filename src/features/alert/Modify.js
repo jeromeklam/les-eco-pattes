@@ -64,7 +64,7 @@ export class Modify extends Component {
    */
   onSubmit(datas = {}) {
     // Conversion des données en objet pour le service web
-    let obj = getJsonApi(datas, 'FreeFW_Alert', this.state.alertId);
+    let obj = getJsonApi(datas, 'FreeFW_Alert');
     this.props.actions
       .updateOne(this.state.alertId, obj)
       .then(result => {

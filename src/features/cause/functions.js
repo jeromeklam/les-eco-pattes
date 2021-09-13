@@ -70,6 +70,7 @@ export const getCauses = (mode, site_id, cause, ids = []) => {
       params = {
         filter: {
           site_id: { eq: site_id },
+          cau_to: { 'empty': null }
         },
       };
     } else {

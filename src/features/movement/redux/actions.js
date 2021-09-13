@@ -11,3 +11,5 @@ export { setFilters } from './setFilters';
 export { setSort } from './setSort';
 export { updateQuickSearch } from './updateQuickSearch';
 export { updateSort } from './updateSort';
+export { loadPendings, dismissLoadPendingsError } from './loadPendings';
+export { validateOne, dismissValidateOneError } from './validateOne';

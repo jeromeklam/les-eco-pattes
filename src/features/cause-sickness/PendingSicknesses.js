@@ -63,29 +63,38 @@ export class PendingSicknesses extends Component {
     let counter = 0;
     let sicknesses = [];
     if (this.props.causeSickness.pendings.FreeAsso_CauseSickness) {
-      sicknesses = normalizedObjectModeler(this.props.causeSickness.pendings, 'FreeAsso_CauseSickness');
+      sicknesses = normalizedObjectModeler(
+        this.props.causeSickness.pendings,
+        'FreeAsso_CauseSickness',
+      );
     }
     //console.log("FK sickness", this.props.causeSickness);
     const header = (
       <InlineList>
         <Line header oddEven={counter}>
-          <Col layoutSize={this.props.layoutSize || 'md'} md={16} lg={7} xl={7} col={16}>
+          <Col size={{ xs: 16, lg: 7 }}>
             <span>Animal</span>
           </Col>
-          <Col layoutSize={this.props.layoutSize || 'md'} md={20} lg={9} xl={9} col={20}>
+          <Col size={{ xs: 20, lg: 9 }}>
             <span>Maladie</span>
           </Col>
-          <Col layoutSize={this.props.layoutSize || 'md'} md={16} lg={9} xl={9} col={16}>
+          <Col size={{ xs: 16, lg: 9 }}>
             <span>Lieu</span>
           </Col>
-          <Col layoutSize={this.props.layoutSize || 'md'} md={20} lg={9} xl={9} col={20}>
+          <Col size={{ xs: 20, lg: 9 }}>
             <span>Description</span>
           </Col>
         </Line>
       </InlineList>
     );
     return (
-      <DashboardCard title="Maladies à traiter" icon={<SicknessIcon />} size="md" header={header} overlay={this.props.overlay}>
+      <DashboardCard
+        title="Maladies à traiter"
+        icon={<SicknessIcon />}
+        size="md"
+        header={header}
+        overlay={this.props.overlay}
+      >
         <div>
           <div className="cause-movement-pendings text-secondary bg-secondary-light">
             {sicknesses && sicknesses.length > 0 ? (
@@ -97,57 +106,33 @@ export class PendingSicknesses extends Component {
                       onMouseEnter={() => {
                         this.mouseEnter(sickness.id);
                       }}
-                      onMouseLeave={this.mouseLeave}       
+                      onMouseLeave={this.mouseLeave}
                     >
-                    <Line oddEven={counter++}>
-                      <Col
-                        layoutSize={this.props.layoutSize || 'md'}
-                        md={16}
-                        lg={7}
-                        xl={7}
-                        col={16}
-                      >
-                        {sickness.cause.cau_code}
-                      </Col>
-                      <Col
-                        layoutSize={this.props.layoutSize || 'md'}
-                        md={20}
-                        lg={9}
-                        xl={9}
-                        col={20}
-                      >
-                        {sickness.sickness.sick_name}
-                      </Col>
-                      <Col
-                        layoutSize={this.props.layoutSize || 'md'}
-                        md={16}
-                        lg={9}
-                        xl={9}
-                        col={16}
-                      >
-                        {sickness.cause.site && sickness.cause.site.site_name}
-                      </Col>
-                      <Col
-                        layoutSize={this.props.layoutSize || 'md'}
-                        md={20}
-                        lg={9}
-                        xl={9}
-                        col={20}
-                      >
-                        {striptags(sickness.caus_care_desc)}
-                        {this.state.flipped && this.state.flipped === sickness.id && (
-                          <div className="btn-group btn-group-sm float-right" role="group" aria-label="...">
-                            <button
-                              type="button"
-                              className="btn btn-inline btn-secondary"
-                              onClick={() => this.onGetOne(sickness.id)}
+                      <Line oddEven={counter++}>
+                        <Col size={{ xs: 16, lg: 7 }}>{sickness.cause.cau_code}</Col>
+                        <Col size={{ xs: 20, lg: 9 }}>{sickness.sickness.sick_name}</Col>
+                        <Col size={{ xs: 16, lg: 9 }}>
+                          {sickness.cause.site && sickness.cause.site.site_name}
+                        </Col>
+                        <Col size={{ xs: 20, lg: 9 }}>
+                          {striptags(sickness.caus_care_desc)}
+                          {this.state.flipped && this.state.flipped === sickness.id && (
+                            <div
+                              className="btn-group btn-group-sm float-right"
+                              role="group"
+                              aria-label="..."
                             >
-                              <GetOneIcon className="text-light inline-action" />
-                            </button>
-                          </div>
-                        )}
-                      </Col>
-                    </Line>
+                              <button
+                                type="button"
+                                className="btn btn-inline btn-secondary"
+                                onClick={() => this.onGetOne(sickness.id)}
+                              >
+                                <GetOneIcon className="text-light inline-action" />
+                              </button>
+                            </div>
+                          )}
+                        </Col>
+                      </Line>
                     </HoverObserver>
                   );
                 })}
@@ -169,7 +154,11 @@ export class PendingSicknesses extends Component {
           </div>
         </div>
         {this.state.caus_id > 0 && (
-          <ModifyCauseSickness caus_id={this.state.caus_id} onClose={this.onCloseForm} loader={false} />
+          <ModifyCauseSickness
+            caus_id={this.state.caus_id}
+            onClose={this.onCloseForm}
+            loader={false}
+          />
         )}
       </DashboardCard>
     );
