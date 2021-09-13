@@ -1,4 +1,7 @@
 export default `
+^
+# Version 2.1.0 : 15/09/2021
+  * 
 
 # Version 2.0.1 : 11/11/2020
   * Général
