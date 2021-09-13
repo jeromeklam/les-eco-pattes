@@ -36,7 +36,9 @@ export function dataAsOptions(object) {
   let arr = [];
   let items = normalizedObjectModeler(object, 'FreeAsso_Data');
   items.forEach(item => {
-    arr.push({ value: item.id, label: item.data_name });
+    if (!item.deleted) {
+      arr.push({ value: item.id, label: item.data_name });
+    }
   });
   arr.sort(function(a, b) {
     if (a.label > b.label) {
@@ -62,6 +64,6 @@ export function getLabel(model, code, value) {
         }
       });
     }
-  })
+  });
   return label;
 }

@@ -207,6 +207,7 @@ export default class MultiInputPicker extends Component {
                 this.delOne(i);
               }}
               disabled={this.props.disabled}
+              filters={this.props.filters || {}}
             />
           );
         })}

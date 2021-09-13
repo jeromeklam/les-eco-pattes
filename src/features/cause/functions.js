@@ -1,5 +1,7 @@
 import { normalizedObjectModeler, objectToQueryString, jsonApiNormalizer } from 'jsonapi-front';
+import { FILTER_MODE_AND, FILTER_OPER_EQUAL } from 'react-bootstrap-front';
 import { freeAssoApi } from '../../common';
+import { getInitFilters } from './redux/initFilters';
 
 /**
  *
@@ -8,10 +10,10 @@ export const getMedias = (cause_id, caum_type) => {
   const promise = new Promise((resolve, reject) => {
     const filter = {
       filter: {
-        cau_id: {eq: cause_id},
-        caum_type: {eq: caum_type},
-      }
-    }
+        cau_id: { eq: cause_id },
+        caum_type: { eq: caum_type },
+      },
+    };
     const addUrl = objectToQueryString(filter);
     const doRequest = freeAssoApi.get('/v1/asso/cause_media' + addUrl, {});
     doRequest.then(
@@ -41,8 +43,8 @@ export const getCause = (cau_id, eager = true) => {
     doRequest.then(
       res => {
         if (res.data && res.data.data) {
-          const list  = jsonApiNormalizer(res.data);
-          const model = normalizedObjectModeler(list, 'FreeAsso_Cause', cau_id, {eager: eager});
+          const list = jsonApiNormalizer(res.data);
+          const model = normalizedObjectModeler(list, 'FreeAsso_Cause', cau_id, { eager: eager });
           resolve(model);
         } else {
           resolve([]);
@@ -54,7 +56,7 @@ export const getCause = (cau_id, eager = true) => {
     );
   });
   return promise;
-}
+};
 
 /**
  *
@@ -62,13 +64,17 @@ export const getCause = (cau_id, eager = true) => {
 export const getCauses = (mode, site_id, cause, ids = []) => {
   const promise = new Promise((resolve, reject) => {
     let params = {
-      filter: {}
+      filter: {},
     };
     if (mode === 'site') {
-      params.filter.site_id = site_id;
+      params = {
+        filter: {
+          site_id: { eq: site_id },
+        },
+      };
     } else {
       if (mode === 'list') {
-        params.filter.cau_id = {in: ids};
+        params.filter.cau_id = { in: ids };
       } else {
         if (cause.cau_sex === 'M') {
           params.filter['parent1.cau_id'] = cause.id;
@@ -79,6 +85,7 @@ export const getCauses = (mode, site_id, cause, ids = []) => {
     }
     params.sort = 'cau_code';
     const addUrl = objectToQueryString(params);
+    console.log('FK filtre linlinecause params', params);
     const doRequest = freeAssoApi.get('/v1/asso/cause' + addUrl, {});
     doRequest.then(
       res => {
@@ -128,17 +135,17 @@ export const downloadCauseMediaBlob = caum_id => {
 export function causeGroup(causeList) {
   let causeGroup = [];
   let find;
-  let nbGrp = 0 ;
-  if ( causeList ) {
-    causeList.forEach((item) => {
+  let nbGrp = 0;
+  if (causeList) {
+    causeList.forEach(item => {
       find = false;
-      causeGroup.forEach((group) => {
-        if (item.cau_sex === group.sex && item.cause_type.caut_name === group.typ ) {
+      causeGroup.forEach(group => {
+        if (item.cau_sex === group.sex && item.cause_type.caut_name === group.typ) {
           find = true;
           group.nb = group.nb + 1;
         }
-      })
-      if ( find === false) {
+      });
+      if (find === false) {
         nbGrp = nbGrp + 1;
         causeGroup.push({ id: nbGrp, nb: 1, sex: item.cau_sex, typ: item.cause_type.caut_name });
       }

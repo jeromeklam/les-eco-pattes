@@ -136,7 +136,7 @@ export class Input extends Component {
             {item && (
               <Form
                 item={item}
-                modify={this.props.movementId > 0}
+                modify={this.props.move_id > 0}
                 modal={true}
                 mode={this.props.mode}
                 fromSite={this.props.site}

@@ -210,7 +210,7 @@ function Form(props) {
                 onChange={handleChange}
                 labelTop={true}
                 error={getErrorMessage('parent1')}
-                filters={{ cau_sex: 'M' }}
+                filterSex={'M'}
               />
             </Col>
             <Col size={{ xxs: 12 }}>
@@ -221,7 +221,7 @@ function Form(props) {
                 onChange={handleChange}
                 labelTop={true}
                 error={getErrorMessage('parent2')}
-                filters={{ cau_sex: 'F' }}
+                filterSex={'F'}
               />
             </Col>
           </Row>
