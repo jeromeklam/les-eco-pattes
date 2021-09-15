@@ -77,9 +77,6 @@ export class Input extends Component {
    * Sur enregistrement, sauvegarde, update store et retour à la liste
    */
   onSubmit(datas = {}) {
-    if (datas.cau_name === null || datas.cau_name === '') {
-      datas.cau_name = datas.cau_code;
-    }
     let obj = getJsonApi(datas);
     if (this.state.causeId > 0) {
       this.props.actions

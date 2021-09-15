@@ -152,6 +152,14 @@ export const deleteError = (message = null) => {
   cogoToast.error(message ? message : 'Erreur lors de la suppression ! !');
 };
 
+export const validateSuccess = (message = null) => {
+  cogoToast.success(message ? message : 'Validation effectuée');
+};
+
+export const validateError = (message = null) => {
+  cogoToast.error(message ? message : 'Erreur lors de la validation ! !');
+};
+
 export const downloadBlob = (data, type, filename) => {
   const bytes = new Uint8Array(data); 
   const blob = new Blob([bytes], {type: type});

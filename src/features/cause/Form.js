@@ -226,7 +226,7 @@ function Form(props) {
             </Col>
           </Row>
           <Row>
-            <div className="col-sm-w2">
+            <div className="col-sm-w3">
               <InputCheckbox
                 label="Attente"
                 name="cau_waiting"
@@ -235,7 +235,7 @@ function Form(props) {
                 onChange={handleChange}
               />
             </div>
-            <div className="col-xs-w10">
+            <div className="col-xs-w9">
               <InputDate
                 label="Entrée"
                 name="cau_from"
@@ -246,7 +246,7 @@ function Form(props) {
                 position="top-start"
               />
             </div>
-            <div className="col-xs-w10">
+            <div className="col-xs-w9">
               <InputDate
                 label="Sortie"
                 name="cau_to"
@@ -257,7 +257,7 @@ function Form(props) {
                 position="top-start"
               />
             </div>
-            <div className="col-xs-w14">
+            <div className="col-xs-w15">
               {values.cau_to !== null && values.cau_to !== '' && (
                 <InputData
                   name="cau_string_3"
@@ -271,7 +271,7 @@ function Form(props) {
             </div>
           </Row>
           <Row>
-            <div className="col-sm-w2">
+            <div className="col-sm-w3">
               <InputCheckbox
                 label="Conforme"
                 name="cau_conform"
@@ -280,7 +280,7 @@ function Form(props) {
                 onChange={handleChange}
               />
             </div>
-            <div className="col-xs-w20">
+            <div className="col-xs-w18">
               {!values.cau_conform && (
                 <InputText
                   label="Commentaire conformité"

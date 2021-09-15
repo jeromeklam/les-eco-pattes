@@ -1,4 +1,4 @@
-import { jsonApiNormalizer, normalizedObjectUpdate } from 'jsonapi-front';
+import { jsonApiNormalizer } from 'jsonapi-front';
 import { freeAssoApi } from '../../../common';
 import {
   AUTH_UPDATE_ONE_BEGIN,

@@ -7,17 +7,27 @@ import * as actions from './redux/actions';
 import { getJsonApi } from 'jsonapi-front';
 import { propagateModel } from '../../common';
 import { getCauses } from '../cause';
-import { CenteredLoading9X9, createSuccess, modifySuccess, showErrors } from '../ui';
+import {
+  CenteredLoading9X9,
+  createSuccess,
+  modifySuccess,
+  validateSuccess,
+  validateError,
+  showErrors,
+} from '../ui';
 import Form from './Form';
+import { getActionsButtons } from './';
 
 export class Input extends Component {
   static propTypes = {
     movement: PropTypes.object.isRequired,
     actions: PropTypes.object.isRequired,
+    onValid: PropTypes.func,
     loader: PropTypes.bool,
     selected: PropTypes.element,
   };
   static defaultProps = {
+    onValid: null,
     loader: true,
     selected: [],
   };
@@ -37,6 +47,7 @@ export class Input extends Component {
      */
     this.onSubmit = this.onSubmit.bind(this);
     this.onCancel = this.onCancel.bind(this);
+    this.onValid = this.onValid.bind(this);
   }
 
   componentDidMount() {
@@ -125,6 +136,24 @@ export class Input extends Component {
     }
   }
 
+  onValid() {
+    if (this.state.movementId > 0) {
+      this.props.actions
+        .validateOne(this.state.movementId)
+        .then(result => {
+          validateSuccess();
+          this.props.actions.propagateModel('FreeAsso_Movement', result);
+          if (this.props.onClose) {
+            this.props.onClose();
+          }
+        })
+        .catch(errors => {
+          validateError();
+          showErrors(this.props.intl, errors, 'validOneError');
+        });
+    }
+  }
+
   render() {
     const item = this.state.item;
     return (
@@ -147,6 +176,11 @@ export class Input extends Component {
                   this.state.movementId > 0
                     ? this.props.movement.updateOneError
                     : this.props.movement.createOneError
+                }
+                actionsButtons={
+                  this.props.move_id > 0 && item.move_status === 'WAIT'
+                    ? getActionsButtons(this)
+                    : []
                 }
                 tab={this.props.movement.tab}
                 tabs={this.props.movement.tabs}
@@ -178,9 +212,4 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default injectIntl(
-  connect(
-    mapStateToProps,
-    mapDispatchToProps,
-  )(Input),
-);
+export default injectIntl(connect(mapStateToProps, mapDispatchToProps)(Input));

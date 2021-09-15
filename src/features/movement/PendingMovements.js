@@ -5,13 +5,21 @@ import { connect } from 'react-redux';
 import * as actions from './redux/actions';
 import { normalizedObjectModeler } from 'jsonapi-front';
 import { HoverObserver, ResponsiveConfirm } from 'react-bootstrap-front';
-import { intlDateTime } from '../../common';
+import { intlDateTime, propagateModel } from '../../common';
 import {
   GetOne as GetOneIcon,
   Movement as MovementIcon,
   SimpleCheck as SimpleCheckIcon,
 } from '../icons';
-import { CenteredLoading3Dots, InlineList, Line, Col } from '../ui';
+import {
+  CenteredLoading3Dots,
+  InlineList,
+  Line,
+  Col,
+  validateSuccess,
+  validateError,
+  showErrors,
+} from '../ui';
 import { DashboardCard } from '../dashboard';
 import { statusLabel } from '../cause-movement';
 import { Input } from './';
@@ -37,6 +45,7 @@ export class PendingMovements extends Component {
     this.onGetOne = this.onGetOne.bind(this);
     this.onValid = this.onValid.bind(this);
     this.onConfirmValidation = this.onConfirmValidation.bind(this);
+    this.onConfirmClose = this.onConfirmClose.bind(this);
   }
 
   componentDidMount() {
@@ -55,14 +64,25 @@ export class PendingMovements extends Component {
   onValid() {
     const { move_id } = this.state;
     this.setState({ valid: false, move_id: null });
-    this.props.actions.validateOne(move_id).then(result => {
-      this.props.actions.propagateModel('FreeAsso_Movement', result);
-      this.props.actions.loadPendings();
-    });
+    this.props.actions
+      .validateOne(move_id)
+      .then(result => {
+        validateSuccess();
+        this.props.actions.propagateModel('FreeAsso_Movement', result);
+        this.props.actions.loadPendings();
+      })
+      .catch(errors => {
+        validateError();
+        showErrors(this.props.intl, errors, 'validOneError');
+      });
   }
 
   onConfirmValidation(id) {
-    this.setState({ valid: !this.state.valid, move_id: id });
+    this.setState({ valid: true, move_id: id });
+  }
+
+  onConfirmClose() {
+    this.setState({ valid: false, move_id: -1 });
   }
 
   mouseLeave() {
@@ -168,19 +188,21 @@ export class PendingMovements extends Component {
               </div>
             )}
           </div>
-          {parseInt(this.state.move_id, 10) > 0 && (
-            <Input move_id={this.state.move_id} loader={false} onClose={this.onClose} />
-          )}
-          <ResponsiveConfirm
-            show={this.state.valid}
-            theme="success"
-            onClose={this.onConfirmClose}
-            onConfirm={() => {
-              this.onValid();
-            }}
-          >
-            <p>Confirmez-vous la validation du mouvement ?</p>
-          </ResponsiveConfirm>
+          {parseInt(this.state.move_id, 10) > 0 &&
+            (this.state.valid ? (
+              <ResponsiveConfirm
+                show={this.state.valid}
+                theme="success"
+                onClose={this.onConfirmClose}
+                onConfirm={() => {
+                  this.onValid();
+                }}
+              >
+                <p>Confirmez-vous la validation du mouvement ?</p>
+              </ResponsiveConfirm>
+            ) : (
+              <Input move_id={this.state.move_id} loader={false} onClose={this.onClose} />
+            ))}
         </div>
       </DashboardCard>
     );
@@ -195,7 +217,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    actions: bindActionCreators({ ...actions }, dispatch),
+    actions: bindActionCreators({ ...actions, propagateModel }, dispatch),
   };
 }
 
