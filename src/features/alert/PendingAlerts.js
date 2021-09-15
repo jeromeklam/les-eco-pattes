@@ -85,17 +85,17 @@ export class PendingAlerts extends Component {
     const header = (
       <InlineList>
         <Line header>
-          <Col layoutSize={this.props.layoutSize || 'md'} md={16} lg={16} xl={16} col={12}>
+          <Col size={{ xs: 16 }}>
             <span>Libellé</span>
           </Col>
-          <Col layoutSize={this.props.layoutSize || 'md'} md={7} lg={7} xl={5} col={8}>
+          <Col size={{ xs: 8, md: 7 }}>
             <span>Prévu le</span>
           </Col>
-          <Col layoutSize={this.props.layoutSize || 'md'} md={7} lg={7} xl={5} col={8}>
+          <Col size={{ xs: 8, md: 7 }}>
             <span>Echéance</span>
           </Col>
-          <Col layoutSize={this.props.layoutSize || 'md'} md={2} lg={2} xl={2} col={2}></Col>
-          <Col layoutSize={this.props.layoutSize || 'md'} md={4} lg={4} xl={4} col={6}></Col>
+          <Col size={{ xs: 2 }} />
+          <Col size={{ xs: 4 }} />
         </Line>
       </InlineList>
     );
@@ -135,53 +135,21 @@ export class PendingAlerts extends Component {
                       onMouseLeave={this.mouseLeave}
                     >
                       <Line oddEven={counter++}>
-                        <Col
-                          layoutSize={this.props.layoutSize || 'md'}
-                          md={16}
-                          lg={16}
-                          xl={16}
-                          col={12}
-                        >
-                          {alert.alert_title}
-                        </Col>
-                        <Col
-                          layoutSize={this.props.layoutSize || 'md'}
-                          md={7}
-                          lg={7}
-                          xl={5}
-                          col={8}
-                        >
+                        <Col size={{ xs: 16 }}>{alert.alert_title}</Col>
+                        <Col size={{ xs: 8, md: 7 }}>
                           {intlDateTime(alert.alert_from, true)}
                         </Col>
-                        <Col
-                          layoutSize={this.props.layoutSize || 'md'}
-                          md={7}
-                          lg={7}
-                          xl={5}
-                          col={8}
-                        >
+                        <Col size={{ xs: 8, md: 7 }}>
                           {intlDateTime(alert.alert_deadline, true)}
                         </Col>
-                        <Col
-                          layoutSize={this.props.layoutSize || 'md'}
-                          md={2}
-                          lg={2}
-                          xl={2}
-                          col={2}
-                        >
+                        <Col size={{ xs: 2 }}>
                           {alert.alert_deadline <= today ? (
                             <ExpiredIcon className="col-icon" />
                           ) : (
                             ''
                           )}
                         </Col>
-                        <Col
-                          layoutSize={this.props.layoutSize || 'md'}
-                          md={4}
-                          lg={4}
-                          xl={4}
-                          col={6}
-                        >
+                        <Col size={{ xs: 4 }}>
                           {this.state.flipped && this.state.flipped === alert.id && (
                             <div
                               className="btn-group btn-group-sm float-right"

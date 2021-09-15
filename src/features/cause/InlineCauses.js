@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import classnames from 'classnames';
-import { Dropdown } from 'react-bootstrap-front';
+import { Dropdown, displayDate } from 'react-bootstrap-front';
 import { CenteredLoading3Dots } from '../ui';
 import { Movement as MovementIcon, MenuDown as MenuDownIcon } from '../icons';
 import { Input as InputMovement } from '../movement';
@@ -129,7 +129,7 @@ export default class InlineCauses extends Component {
                 <span>Race</span>
               </div>
               <div className="col-xs-none col-lg-w4">
-                <span>Année</span>
+                <span>Entrée</span>
               </div>
               <div className="col-xs-none col-lg-w3">
                 <span className="pr-2">Sexe</span>
@@ -175,7 +175,7 @@ export default class InlineCauses extends Component {
                               key={'SIMPLE'}
                               onClick={() => this.onSelectMvt('SIMPLE')}
                             >
-                              Mvt sans notification
+                              Mouvement sans notification
                             </button>
                           )}
                           {selected.length > 0 && (
@@ -185,7 +185,7 @@ export default class InlineCauses extends Component {
                               key={'TRANSFER'}
                               onClick={() => this.onSelectMvt('TRANSFER')}
                             >
-                              Mvt avec notification
+                              Mouvemenent avec notification
                             </button>
                           )}
                           {selected.length === 0 && (
@@ -238,7 +238,7 @@ export default class InlineCauses extends Component {
                   <span>{cause.cause_type.caut_name}</span>
                 </div>
                 <div className="col-xs-none col-lg-w4">
-                  <span>{cause.cau_year}</span>
+                  <span>{displayDate(cause.cau_from)}</span>
                 </div>
                 <div className="col-xs-none col-lg-w3">
                   <span className="pr-2">{getSexlabel(cause.cau_sex, true, 'text-secondary')}</span>

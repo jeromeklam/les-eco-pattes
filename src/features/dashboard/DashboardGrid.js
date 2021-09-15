@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { Responsive, WidthProvider } from 'react-grid-layout';
 import { getJsonApi } from 'jsonapi-front';
 import { updateConfig } from '../auth/redux/actions';
-import { PendingMovements } from '../cause-movement';
+import { PendingMovements } from '../movement';
 import { PendingSicknesses } from '../cause-sickness';
 import { PendingAlerts } from '../alert';
 import * as actions from './redux/actions';

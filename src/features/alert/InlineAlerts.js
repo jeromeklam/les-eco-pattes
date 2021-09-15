@@ -75,7 +75,7 @@ export class InlineAlerts extends Component {
 
   componentDidUpdate(prevProps, prevState) {
     if (prevState.obj_name !== this.state.obj_name || prevState.obj_id !== this.state.obj_id) {
-      this.localLoadAlert();
+      this.localLoadAlerts();
     }
   }
 

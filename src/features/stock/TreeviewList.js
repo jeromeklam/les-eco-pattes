@@ -14,10 +14,7 @@ import {
   Create as CreateItem,
   Modify as ModifyItem,
 } from '../item';
-import {
-  Create as CreateFamily,
-  Modify as ModifyFamily,
-} from '../family';
+import { Input as InputFamily } from '../family';
 import {
   FilterEmpty as FilterEmptyIcon,
   FilterFull as FilterFullIcon,
@@ -127,7 +124,7 @@ export class TreeviewList extends Component {
   }
 
   onCloseModal() {
-    const { family } = this.state
+    const { family } = this.state;
     this.setState({ item_id: -1, fam_id: -1 });
     if (family && family.id) {
       this.props.actions.loadChildren({ parent_id: family.id });
@@ -184,16 +181,30 @@ export class TreeviewList extends Component {
           loadMoreError={this.props.item.loadMoreError}
         />
         {this.state.item_id > 0 && (
-          <ModifyItem modal={true} parentFamily={this.state.family} itemId={this.state.item_id} onClose={this.onCloseModal} />
+          <ModifyItem
+            modal={true}
+            parentFamily={this.state.family}
+            itemId={this.state.item_id}
+            onClose={this.onCloseModal}
+          />
         )}
         {this.state.item_id === 0 && (
           <CreateItem modal={true} parentFamily={this.state.family} onClose={this.onCloseModal} />
         )}
         {this.state.fam_id > 0 && (
-          <ModifyFamily modal={true} parentFamily={this.state.currentFamily} famId={this.state.fam_id} onClose={this.onCloseModal} />
+          <InputFamily
+            modal={true}
+            parentFamily={this.state.currentFamily}
+            famId={this.state.fam_id}
+            onClose={this.onCloseModal}
+          />
         )}
         {this.state.fam_id === 0 && (
-          <CreateFamily modal={true} parentFamily={this.state.currentFamily} onClose={this.onCloseModal} />
+          <InputFamily
+            modal={true}
+            parentFamily={this.state.currentFamily}
+            onClose={this.onCloseModal}
+          />
         )}
       </div>
     );
@@ -210,7 +221,10 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    actions: bindActionCreators({ ...actions, loadChildren, select, toggle, loadItems, delOneItem, delOneFamily }, dispatch),
+    actions: bindActionCreators(
+      { ...actions, loadChildren, select, toggle, loadItems, delOneItem, delOneFamily },
+      dispatch,
+    ),
   };
 }
 

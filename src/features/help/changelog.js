@@ -1,5 +1,23 @@
 export default `
 
+# Version 2.1.0 : 15/09/2021
+  * Général
+    * Diminution de la taille de tous les textes
+  * Variables de type liste
+    * Gestion des valeurs par défaut supprimées : elles n'apparaissent plus dans les listes déroulantes
+  * Carte
+    * Correction du déplacement d'un site
+  * Sites
+    * Ne sont visibles dans la liste des animaux que ceux qui ne sont pas sortis
+    * Ne sont comptabilisés sur le compteur 'animaux' dans la liste des sites que les animaux qui ne sont pas sortis
+    * Lors de la suppression d'un site, suppression en cascade des images et des documents
+  * Contrats
+    * Correction sur l'affichage de la coche 'Actif' des contrats
+  * Mouvements
+    * Correction dans la création de mouvements
+    * Dans mle tableau de bord, seuls les mouvements sont affichés et pas tous les animaux en attente
+    * Ajout d'un bouton validation de mouvement dans la liste des mouvements et sur la fiche d'un mouvement
+
 # Version 2.0.1 : 11/11/2020
   * Général
     * Déconnexion depuis le menu "Mon compte", accessible depuis l'avatar.
@@ -9,7 +27,7 @@ export default `
     * Page publique complétée
   * Personnes > Contacts
     * Possibilité pour les vétérinaires d'être attaché à une clinique avec une coche Sanitaire
-    * Depuis les cliniques affichage de la listes de vétérinaires attachés
+    * Depuis les cliniques affichage de la liste des vétérinaires attachés
     * Début de la gestion des familles (structure) pour les particuliers
   * Site
     * Si site attacché à une clinique, affichage de la liste des vétérinaires liés
@@ -72,7 +90,7 @@ export default `
       * Ajout d'une coche conformité + saisie d'un commentaire si l'animal n'est pas conforme
       * La liste déroulante des soins donne sur une variable dans les paramètres (possibilité d'en ajouter)
     * Liste
-      * Si animal sorti,  dans la colonne description, on voit le motif de sortie et plus le commentaire
+      * Si animal sorti, dans la colonne description, on voit le motif de sortie et plus le commentaire
 
 # Version 1.2.2 : 31/07/2020
   * Général
@@ -120,7 +138,7 @@ export default `
 # Version 1.2.1 : 15/06/2020
 * Général
     * Les listes avec filtres par défaut passent en mode ET,
-    * La recherche via la loupe ne fonctionnait plus sur les fiche, fenêtre modifiée en look,
+    * La recherche via la loupe ne fonctionnait plus sur les fiches, fenêtres modifiées en look,
     * Adaptation de fenêtres de validation
     * Ajustement des critères de recherche pour les chargements
     * Changement de certains éléments graphiques
@@ -172,7 +190,7 @@ export default `
 * Maladies
     * Gestion possible sous forme de sélecteur
 * Variables
-    * Blocage de la suppression le temps de mieux gérer celà.
+    * Blocage de la suppression le temps de mieux gérer cela.
 * Tableau de bord
     * Bouton permettant de sauvegarder la position des blocs pour l'utilisateur connecté
 * Carte
@@ -244,7 +262,7 @@ export default `
     * Formatage n° Boucle
 * Général
     * Ajout des champs composant le tri dans l'en-tête de la recherche
-    * Lignes des listes séparée par un trait horizontal
+    * Lignes des listes séparées par un trait horizontal
     * Look des sélecteurs adapté
     * Affichage de plusieurs informations pour les résultats des sélecteurs
     * Affichage de plusieurs informations pour les saisies assistées
@@ -258,7 +276,7 @@ export default `
     * Fiche
         * Ajout de la gestion d'un site principal
         * Ajout d'un flag conformité et d'un champ texte dédié
-        * Formatage du numéro d'élevage en &lt;code pays : 2 lettres&gt;.&lt;code Inseee : 5 chiffres&gt;.&lt;code exploitation : 3 chiffres&gt;
+        * Formatage du numéro d'élevage en <code pays : 2 lettres>.<code Inseee : 5 chiffres>.<code exploitation : 3 chiffres>
     * Sélecteur
         * Possibilité de filtrer par n° EDE
 * Animaux
@@ -271,7 +289,7 @@ export default `
         * Sélecteur père avec Male par défaut
         * Champ provenance simple supprimé
         * Ajout Provenance et Eleveur via Personnes
-        * Formatage du numéro de boucle en &lt;code pays : 2 lettres&gt;.&lt;code exploitation : 6 chiffres&gt;.&lt;numéro d'ordre : 5 chiffres&gt;
+        * Formatage du numéro de boucle en <code pays : 2 lettres>.<code exploitation : 6 chiffres>.<numéro d'ordre : 5 chiffres>
 * Personnes
     * Liste
         * Membres renommé en Personnes

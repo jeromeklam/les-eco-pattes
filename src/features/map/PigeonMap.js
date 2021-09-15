@@ -155,9 +155,9 @@ export class PigeonMap extends Component {
       dragging: false,
       moved: 0,
     });
-    let obj = getJsonApi(item, 'FreeAsso_Site', item.id);
+    let obj = getJsonApi(item, 'FreeAsso_Site');
     this.props.actions
-      .updateOneSite(obj)
+      .updateOneSite(item.id,obj)
       .then(result => {
         modifySuccess();
         this.props.actions.propagateModel('FreeAsso_Site', result);

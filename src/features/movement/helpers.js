@@ -3,7 +3,8 @@ import {
   AddOne as AddOneIcon,
   GetOne as GetOneIcon,
   DelOne as DelOneIcon,
-  Cause as CauseIcon
+  Cause as CauseIcon,
+  Valid as ValidIcon,
 } from '../icons';
 import { searchSite } from '../site';
 
@@ -13,7 +14,7 @@ export const mvtFromType = [
   { label: 'Op Commerciaux', value: 'COMMERCIAL' },
   { label: 'Centre rassemblement', value: 'ASSEMBLY' },
   { label: 'Marché', value: 'MARKET' },
-]
+];
 
 export const mvtToType = [
   { label: 'Autre', value: 'OTHER' },
@@ -23,7 +24,7 @@ export const mvtToType = [
   { label: 'Marché', value: 'MARKET' },
   { label: 'Abattoir', value: 'SLAUGHTERHOUSE' },
   { label: 'Particulier', value: 'PRIVATE' },
-]
+];
 
 export const mvtStatus = [
   { label: 'Validé', value: 'OK' },
@@ -40,13 +41,23 @@ export const mvtTypes = [
   { label: 'Autre', value: 'OTHER' },
 ];
 
-export const getTypeLabel = (p_type) => {
+export const getTypeLabel = p_type => {
   const found = mvtTypes.find(elem => elem.value === p_type);
   if (found) {
     return found.label;
   }
   return '';
-}
+};
+
+export const getActionsButtons = ({ onValid, state }) => {
+  return [
+    {
+      theme: 'primary',
+      function: () => onValid(state.move_id),
+      icon: <ValidIcon />,
+    },
+  ];
+};
 
 export const getGlobalActions = ({ onClearFilters, onCreate }) => {
   return [
@@ -66,13 +77,35 @@ export const getInlineActions = ({
   onListCause,
   onGetOne,
   onDelOne,
+  onValid,
   state,
 }) => {
   return [
     {
+      name: 'valid',
+      label: 'Validation',
+      onClick: obj => {
+        onValid(obj.id);
+      },
+      param: 'object',
+      theme: 'primary',
+      icon: <ValidIcon color="white" />,
+      role: 'OTHER',
+      fShow: item => {
+        if (item && item.move_status === 'WAIT') {
+          return true;
+        } else {
+          return false;
+        }
+      },
+      confirm: "Confirmez-vous la validation du mouvement ?",
+    },
+    {
       name: 'cause',
       label: 'Animaux',
-      onClick: (obj) => {onSelectList(obj, 'cause');},
+      onClick: obj => {
+        onSelectList(obj, 'cause');
+      },
       param: 'object',
       theme: 'secondary',
       icon: <CauseIcon color="white" />,
@@ -196,6 +229,6 @@ export const getCols = ({ props }) => {
       type: 'switch',
       values: mvtStatus,
       filterable: { type: 'select', options: mvtStatus },
-    },  
+    },
   ];
 };

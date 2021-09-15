@@ -37,10 +37,19 @@ export default class InputData extends Component {
   }
 
   render() {
+    let datas = [];
     let list = [];
     if (this.state.data.data_type === 'LIST') {
       try {
-        list = JSON.parse(this.state.data.data_content);
+        datas = JSON.parse(this.state.data.data_content);
+        console.log("FK liste data", datas);
+        if (datas.length > 0) {
+          datas.forEach(data => {
+            if (!data.deleted) {
+              list.push(data);
+            }
+          });
+        }
       } catch (ex) {
         // @todo
       }

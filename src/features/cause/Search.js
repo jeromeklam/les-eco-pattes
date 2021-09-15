@@ -57,14 +57,13 @@ export default class Search extends Component {
   }
 
   render() {
-    //console.log("FK search cause",this.props);
-    const filters = [
+    let filters = [
       { name: 'cau_code', label: 'N° boucle', type: 'text', value: this.props.value },      
       {
         name: 'cau_sex',
         label: 'Sexe',
         type: 'select',
-        value: this.props.filters.cau_sex || '',
+        value: this.props.filterSex || '',
         options: sexSelect,
       },
       {
@@ -74,6 +73,7 @@ export default class Search extends Component {
         options: causeTypeAsOptions(this.props.types),
       },
     ];
+    filters = filters.concat(this.props.filters);
     return (
       <SearchModal
         title={this.props.title}

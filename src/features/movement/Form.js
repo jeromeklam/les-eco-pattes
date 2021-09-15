@@ -1,6 +1,6 @@
 import React from 'react';
 import { injectIntl } from 'react-intl';
-import { InputHidden, InputText, InputSelect, InputCheckbox } from 'react-bootstrap-front';
+import { InputHidden, InputText, InputSelect, InputCheckbox, FILTER_OPER_EQUAL } from 'react-bootstrap-front';
 import { Movement as MovementIcon, Cause as CauseIcon } from '../icons';
 import { useForm, ResponsiveModalOrForm, InputDatetime } from '../ui';
 import { MultiInputPicker as CauseMultiInputPicker } from '../cause';
@@ -144,6 +144,7 @@ function Form(props) {
       onNavTab={handleNavTab}
       onClose={props.onClose}
       modal={props.modal || false}
+      actionsButtons={props.actionsButtons}
     >
       <div className="card-body">
         <InputHidden name="id" id="id" value={values.id} />
@@ -574,6 +575,7 @@ function Form(props) {
                 cause_types={props.cause_types}
                 onChange={handleChange}
                 disabled={values.globalDisabled}
+                filters={[{ name: 'site_id', value: values.from_site.id, oper: FILTER_OPER_EQUAL }]}
               />
             )}
           </div>

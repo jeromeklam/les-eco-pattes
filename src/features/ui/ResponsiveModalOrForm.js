@@ -1,24 +1,64 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { ResponsiveForm, ResponsiveModal } from 'react-bootstrap-front';
+import {
+  Save as SaveIcon,
+  Valid as ValidIcon,
+  Cancel as CancelIcon,
+} from '../icons';
 
-export default class ResponsiveModalOrForm extends Component {
-  static propTypes = {};
-
-  render() {
-    if (this.props.modal) {
-      const buttons = [
-        { name: 'Enregistrer', function: this.props.onSubmit, theme: 'primary', icon: 'valid' },
-        { name: 'Annuler', function: this.props.onClose, theme: 'secondary', icon: 'close' },
-      ];
-      return (
-        <ResponsiveModal
-          {...this.props}
-          size={this.props.size || 'fullscreen'}
-          show={true}
-          buttons={buttons}
-        />
-      );
+export default function ResponsiveModalOrForm(props) {
+  if (props.modal) {
+    let buttons = [];
+    if (props.onSave) {
+      buttons.push({
+        function: props.onSave,
+        theme: 'primary',
+        icon: <SaveIcon title="Sauvegarder" />,
+      });
     }
-    return <ResponsiveForm {...this.props} />;
+    console.log("FK action buttons",props);
+    if (props.actionsButtons) {
+      
+      props.actionsButtons.forEach(btnAction => {
+        if (!btnAction.hidden) {
+          buttons.push(btnAction);
+        }
+      });
+    }
+    if (props.onSave || props.actionsButtons) {
+      buttons.push({
+        name: '',
+        icon: '',
+      });
+    }
+    if (props.onSubmit) {
+      buttons.push({
+        name: 'Enregistrer',
+        function: props.onSubmit,
+        theme: 'primary',
+        icon: <ValidIcon />,
+      });
+    }
+    if (props.onClose) {
+      buttons.push({
+        name: 'Annuler',
+        function: ev => {
+          props.onClose();
+        },
+        theme: 'secondary-dark',
+        icon: <CancelIcon />,
+      });
+    }
+    return (
+      <ResponsiveModal
+        {...props}
+        size={props.size || 'fullscreen'}
+        show={true}
+        buttons={buttons}
+      >
+         {props.children}
+      </ResponsiveModal>
+    );
   }
+  return <ResponsiveForm {...props} />;
 }

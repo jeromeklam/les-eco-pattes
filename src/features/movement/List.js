@@ -6,10 +6,15 @@ import * as actions from './redux/actions';
 import { normalizedObjectModeler } from 'jsonapi-front';
 import { ResponsiveQuickSearch } from 'react-bootstrap-front';
 import { InlineCauses } from '../cause-movement';
+import { Search as SearchIcon } from '../icons';
 import {
-  Search as SearchIcon,
-} from '../icons';
-import { deleteSuccess, deleteError, List as UiList } from '../ui';
+  deleteSuccess,
+  deleteError,
+  validateSuccess,
+  validateError,
+  List as UiList,
+  showErrors,
+} from '../ui';
 import { getGlobalActions, getInlineActions, getCols, Input } from './';
 
 /**
@@ -31,6 +36,7 @@ export class List extends Component {
       movementId: -1,
       item: null,
       mode: null,
+      status: '',
     };
     this.onCreate = this.onCreate.bind(this);
     this.onGetOne = this.onGetOne.bind(this);
@@ -43,6 +49,7 @@ export class List extends Component {
     this.onSetFiltersAndSort = this.onSetFiltersAndSort.bind(this);
     this.onUpdateSort = this.onUpdateSort.bind(this);
     this.onSelectList = this.onSelectList.bind(this);
+    this.onValid = this.onValid.bind(this);
   }
 
   componentDidMount() {
@@ -144,6 +151,19 @@ export class List extends Component {
 
   onLoadMore(event) {
     this.props.actions.loadMore();
+  }
+
+  onValid(id) {
+    this.props.actions
+      .validateOne(id)
+      .then(result => {
+        validateSuccess();
+        this.props.actions.loadMore({}, true);
+      })
+      .catch(errors => {
+        validateError();
+        showErrors(this.props.intl, errors, 'validOneError');
+      });
   }
 
   /**
