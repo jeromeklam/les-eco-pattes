@@ -13,11 +13,13 @@ export function clientCategoryAsOptions(object, restrictedCodes = []) {
     object,
     'FreeAsso_ClientCategory',
   );
-  items.forEach((item) => {
-    if (restrictedCodes.length === 0 || restrictedCodes.indexOf(elem => {console.log(elem); return elem === item.clic_code}) >= 0) {
-      arr.push({value: item.id, label: item.clic_name});
-    }
-  });
+  if (items) {
+    items.forEach((item) => {
+      if (restrictedCodes.length === 0 || restrictedCodes.indexOf(elem => {console.log(elem); return elem === item.clic_code}) >= 0) {
+        arr.push({value: item.id, label: item.clic_name});
+      }
+    });
+  }
   arr.sort(function (a, b) {
     if (a.label > b.label) {
       return 1;

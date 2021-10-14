@@ -6,7 +6,7 @@ import useForm from '../ui/useForm';
 import { clientTypeAsOptions } from '../client-type/functions.js';
 import { clientCategoryAsOptions } from '../client-category/functions.js';
 import { countryAsOptions } from '../country/functions.js';
-import { ResponsiveModalOrForm, InputTextarea, InputEmail, InputPhone } from '../ui';
+import { ResponsiveModalOrForm, InputTextarea, InputEmail, InputPhone, Row, Col } from '../ui';
 import {
   InputPicker as ClientInputPicker,
   InlineClients,
@@ -17,10 +17,10 @@ import {
 const afterChange = (name, item) => {
   switch (name) {
     case 'client_type.id': {
-      item._veto = false;
+      item.__veto = false;
       if (item.client_type.id) {
-        if (findTypeCode(item.client_type.id, item._types) === 'VETERINAIRE') {
-          item._veto = true;
+        if (findTypeCode(item.client_type.id, item.__types) === 'VETERINAIRE') {
+          item.__veto = true;
         } else {
           item.cli_sanit = false;
           item.parent_client = null;
@@ -29,10 +29,10 @@ const afterChange = (name, item) => {
       break;
     }
     case 'client_category.id': {
-      item._private = false;
+      item.__private = false;
       if (item.client_category) {
-        if (findCategoryCode(item.client_category.id, item._categories) === 'PARTICULIER') {
-          item._private = true;
+        if (findCategoryCode(item.client_category.id, item.__categories) === 'PARTICULIER') {
+          item.__private = true;
         }
       }
       break;
@@ -44,24 +44,26 @@ const afterChange = (name, item) => {
 };
 
 function Form(props) {
-  props.item._types = normalizedObjectModeler(props.client_types, 'FreeAsso_ClientType');
-  props.item._veto = false;
-  props.item._clinique = false;
+  props.item.__types = normalizedObjectModeler(props.client_types, 'FreeAsso_ClientType');
+  props.item.__veto = false;
+  props.item.__clinique = false;
   if (props.item.client_type) {
-    if (findTypeCode(props.item.client_type.id, props.item._types) === 'VETERINAIRE') {
-      props.item._veto = true;
-    } else if (findTypeCode(props.item.client_type.id, props.item._types) === 'CLINIQUE') {
-      props.item._clinique = true;
+    if (findTypeCode(props.item.client_type.id, props.item.__types) === 'VETERINAIRE') {
+      props.item.__veto = true;
+    } else if (findTypeCode(props.item.client_type.id, props.item.__types) === 'CLINIQUE') {
+      props.item.__clinique = true;
     }
   }
-  props.item._categories = normalizedObjectModeler(
+  props.item.__categories = normalizedObjectModeler(
     props.client_categories,
     'FreeAsso_ClientCategory',
   );
-  props.item._private = false;
+  props.item.__private = false;
   if (props.item.client_category) {
-    if (findCategoryCode(props.item.client_category.id, props.item._categories) === 'PARTICULIER') {
-      props.item._private = true;
+    if (
+      findCategoryCode(props.item.client_category.id, props.item.__categories) === 'PARTICULIER'
+    ) {
+      props.item.__private = true;
     }
   }
   const {
@@ -82,7 +84,7 @@ function Form(props) {
     afterChange,
   );
   let parent = '';
-  if (values.cli_sanit || values._private) {
+  if (values.cli_sanit || values.__private) {
     if (values.cli_sanit) {
       parent = 'Clinique de rattachement';
     } else {
@@ -96,7 +98,7 @@ function Form(props) {
     <ResponsiveModalOrForm
       title="Contact"
       tab={values.__currentTab}
-      tabs={values._clinique ? props.tabs.concat(tabsPlus) : props.tabs}
+      tabs={values.__clinique ? props.tabs.concat(tabsPlus) : props.tabs}
       size="lg"
       onSubmit={handleSubmit}
       onCancel={handleCancel}
@@ -106,8 +108,8 @@ function Form(props) {
     >
       <div className="card-body">
         <InputHidden name="id" id="id" value={values.id} />
-        <div className="row">
-          <div className="col-sm-w5">
+        <Row>
+          <Col size={{xxs: 36, sm: 5}}>
             <InputSelect
               label="Civilité"
               name="cli_gender"
@@ -121,8 +123,8 @@ function Form(props) {
                 { label: 'Mme', value: 'MADAM' },
               ]}
             />
-          </div>
-          <div className="col-sm-w8">
+          </Col>
+          <Col size={{xxs: 36, sm: 8}}>
             <InputText
               label="Nom"
               name="cli_lastname"
@@ -132,8 +134,8 @@ function Form(props) {
               onChange={handleChange}
               error={getErrorMessage('cli_lastname')}
             />
-          </div>
-          <div className="col-sm-w8">
+          </Col>
+          <Col size={{xxs: 36, sm: 8}}>
             <InputText
               label="Prénom"
               name="cli_firstname"
@@ -142,8 +144,8 @@ function Form(props) {
               onChange={handleChange}
               error={getErrorMessage('cli_firstname')}
             />
-          </div>
-          <div className="col-md-w7">
+          </Col>
+          <Col size={{xxs: 36, sm: 7}}>
             <InputSelect
               label="Type"
               name="client_type.id"
@@ -152,9 +154,9 @@ function Form(props) {
               options={clientTypeAsOptions(props.client_types)}
               error={getErrorMessage('client_type')}
             />
-          </div>
-          <div className="col-md-w3">
-            {values._veto && (
+          </Col>
+          <Col size={{xxs: 36, sm: 3}}>
+            {values.__veto && (
               <InputCheckbox
                 label="Sanitaire"
                 name="cli_sanit"
@@ -163,8 +165,8 @@ function Form(props) {
                 onChange={handleChange}
               />
             )}
-          </div>
-          <div className="col-sm-w3">
+          </Col>
+          <Col size={{xxs: 36, sm: 3}}>
             <InputCheckbox
               label="Actif"
               name="cli_active"
@@ -172,13 +174,13 @@ function Form(props) {
               checked={values.cli_active === true}
               onChange={handleChange}
             />
-          </div>
-        </div>
+          </Col>
+        </Row>
         <hr />
         {values.__currentTab === '1' && (
           <div>
-            <div className="row">
-              <div className="col-sm-w8">
+            <Row>
+              <Col size={{xxs: 36, sm: 8}}>
                 <InputPhone
                   label="Portable"
                   name="cli_phone_gsm"
@@ -186,8 +188,8 @@ function Form(props) {
                   value={values.cli_phone_gsm}
                   onChange={handleChange}
                 />
-              </div>
-              <div className="col-sm-w15">
+              </Col>
+              <Col size={{xxs: 36, sm: 15}}>
                 <InputEmail
                   label="Email"
                   name="cli_email"
@@ -195,8 +197,8 @@ function Form(props) {
                   value={values.cli_email}
                   onChange={handleChange}
                 />
-              </div>
-              <div className="col-md-w9">
+              </Col>
+              <Col size={{xxs: 36, sm: 9}}>
                 <InputSelect
                   label="Catégorie"
                   name="client_category.id"
@@ -205,10 +207,8 @@ function Form(props) {
                   options={clientCategoryAsOptions(props.client_categories)}
                   error={getErrorMessage('client_category')}
                 />
-              </div>
-            </div>
-            <div className="row">
-              <div className="col-md-w36">
+              </Col>
+              <Col size={{xxs: 36, sm: 36}}>
                 <InputText
                   label="Raison sociale"
                   name="cli_social_reason"
@@ -216,10 +216,8 @@ function Form(props) {
                   onChange={handleChange}
                   error={getErrorMessage('cli_social_reason')}
                 />
-              </div>
-            </div>
-            <div className="row">
-              <div className="col-md-w36">
+              </Col>
+              <Col size={{xxs: 36, sm: 36}}>
                 <InputText
                   label="Adresse"
                   name="cli_address1"
@@ -227,8 +225,8 @@ function Form(props) {
                   onChange={handleChange}
                   error={getErrorMessage('cli_address1')}
                 />
-              </div>
-              <div className="col-md-w36">
+              </Col>
+              <Col size={{xxs: 36, sm: 36}}>
                 <InputText
                   label=""
                   name="cli_address2"
@@ -236,10 +234,8 @@ function Form(props) {
                   onChange={handleChange}
                   error={getErrorMessage('cli_address2')}
                 />
-              </div>
-            </div>
-            <div className="row">
-              <div className="col-sm-w8">
+              </Col>
+              <Col size={{xxs: 36, sm: 8}}>
                 <InputText
                   label="CP"
                   name="cli_cp"
@@ -247,8 +243,8 @@ function Form(props) {
                   onChange={handleChange}
                   error={getErrorMessage('cli_cp')}
                 />
-              </div>
-              <div className="col-sm-w17">
+              </Col>
+              <Col size={{xxs: 36, sm: 17}}>
                 <InputText
                   label="Commune"
                   name="cli_town"
@@ -256,8 +252,8 @@ function Form(props) {
                   onChange={handleChange}
                   error={getErrorMessage('cli_town')}
                 />
-              </div>
-              <div className="col-sm-w11">
+              </Col>
+              <Col size={{xxs: 36, sm: 11}}>
                 <InputSelect
                   label="Pays"
                   name="country.id"
@@ -266,14 +262,14 @@ function Form(props) {
                   onChange={handleChange}
                   options={countryAsOptions(props.countries)}
                 />
-              </div>
-            </div>
+              </Col>
+            </Row>
             <div>
               {parent !== '' && (
                 <div>
                   <hr />
-                  <div className="row">
-                    <div className="col-md-w16">
+                  <Row>
+                  <Col size={{xxs: 36, sm: 16}}>
                       <ClientInputPicker
                         label={parent}
                         key="parent_client"
@@ -283,58 +279,52 @@ function Form(props) {
                         error={getErrorMessage('parent_client')}
                         typeCodes={[parent.toUpperCase()]}
                       />
-                    </div>
-                  </div>
+                    </Col>
+                  </Row>
                 </div>
               )}
             </div>
           </div>
         )}
         {values.__currentTab === '2' && (
-          <div>
-            <div className="row">
-              <div className="col-md-w8">
-                <InputPhone
-                  label="Téléphone"
-                  name="cli_phone_home"
-                  value={values.cli_phone_home}
-                  onChange={handleChange}
-                  error={getErrorMessage('cli_phone_home')}
-                />
-              </div>
-              <div className="col-sm-w15">
-                <InputEmail
-                  label="Email 2"
-                  name="cli_email_2"
-                  labelTop={true}
-                  value={values.cli_email_2}
-                  onChange={handleChange}
-                />
-              </div>
-            </div>
-            <div className="row">
-              <div className="col-md-w18">
-                <InputText
-                  label="SIRET"
-                  name="cli_siret"
-                  labelTop={true}
-                  value={values.cli_siret}
-                  onChange={handleChange}
-                />
-              </div>
-            </div>
-            <div className="row">
-              <div className="col-md-w36">
-                <InputTextarea
-                  label="Commentaires"
-                  name="cli_desc"
-                  value={values.cli_desc}
-                  onChange={handleChange}
-                  error={getErrorMessage('cli_desc')}
-                />
-              </div>
-            </div>
-          </div>
+          <Row>
+            <Col size={{xxs: 36, sm: 8}}>
+              <InputPhone
+                label="Téléphone"
+                name="cli_phone_home"
+                value={values.cli_phone_home}
+                onChange={handleChange}
+                error={getErrorMessage('cli_phone_home')}
+              />
+            </Col>
+            <Col size={{xxs: 36, sm: 15}}>
+              <InputEmail
+                label="Email 2"
+                name="cli_email_2"
+                labelTop={true}
+                value={values.cli_email_2}
+                onChange={handleChange}
+              />
+            </Col>
+            <Col size={{xxs: 36, sm: 18}}>
+              <InputText
+                label="SIRET"
+                name="cli_siret"
+                labelTop={true}
+                value={values.cli_siret}
+                onChange={handleChange}
+              />
+            </Col>
+            <Col size={{xxs: 36, sm: 36}}>
+              <InputTextarea
+                label="Commentaires"
+                name="cli_desc"
+                value={values.cli_desc}
+                onChange={handleChange}
+                error={getErrorMessage('cli_desc')}
+              />
+            </Col>
+          </Row>
         )}
         {values.__currentTab === '3' && (
           <div className="border border-secondary rounded overflow-x-hidden">

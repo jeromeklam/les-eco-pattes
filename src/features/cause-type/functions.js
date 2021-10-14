@@ -65,7 +65,7 @@ export const getCauseTypeLabel = (store, id) => {
 export function causeTypeAsOptions(object) {
   let arr = [];
   if (object) {
-    let items = normalizedObjectModeler(object, 'FreeAsso_CauseType');
+    const items = normalizedObjectModeler(object, 'FreeAsso_CauseType');
     if (items) {
       items.forEach(item => {
         arr.push({ value: item.id, label: item.caut_name });
@@ -83,4 +83,15 @@ export function causeTypeAsOptions(object) {
     }
   }
   return arr;
+}
+
+export function findCauseType(object, id) {
+  let elem = null;
+  if (object) {
+    const items = normalizedObjectModeler(object, 'FreeAsso_CauseType');
+    if (Array.isArray(items)) {
+      elem = items.find(cType => cType.id === id);
+    }
+  }
+  return elem;
 }

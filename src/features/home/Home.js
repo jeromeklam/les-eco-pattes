@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { Container, Row, Col } from 'react-bootstrap-front';
+import { ResponsiveContent, Row, Col } from 'react-bootstrap-front';
 import * as actions from './redux/actions';
 import { HomeTimeline, Statistics } from './';
 import { Signin } from '../auth';
@@ -19,7 +19,7 @@ export class Home extends Component {
 
   render() {
     return (
-      <div className="home-home h-100">
+      <ResponsiveContent className="home-home h-100">
         {this.props.auth.authenticated ? (
           <div className="home-home-inner text-center">
             <br />
@@ -67,7 +67,7 @@ export class Home extends Component {
             </Row>
           </div>
         )}
-      </div>
+      </ResponsiveContent>
     );
   }
 }

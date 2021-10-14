@@ -8,6 +8,8 @@ export default `
     * Uniformisation des listes
   * Tableau de bord 
     * Couleurs plus soft
+  * Animaux
+    * Correction de la gestion du masque
  
 # Version 2.1.0 : 15/09/2021
   * Général

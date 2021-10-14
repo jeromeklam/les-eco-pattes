@@ -23,7 +23,7 @@ export default class Dashboard extends Component {
           </div>
         </Responsive>
         <Responsive displayIn={['Laptop', 'Tablet']}>
-          <ResponsiveContent>
+          <ResponsiveContent header={false}>
             <DashboardGrid />
           </ResponsiveContent>
         </Responsive>

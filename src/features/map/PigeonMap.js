@@ -11,7 +11,7 @@ import { normalizedObjectModeler, getJsonApi } from 'jsonapi-front';
 import { propagateModel } from '../../common';
 import { loadMore as loadMoreSite, updateOne as updateOneSite } from '../site/redux/actions';
 import Icon from '@mdi/react';
-import { Responsive } from 'react-bootstrap-front';
+import { Responsive, ResponsiveContent } from 'react-bootstrap-front';
 import { mdiMagnifyMinus, mdiMagnifyPlus, mdiCrosshairsGps } from '@mdi/js';
 import mapselect from '../../images/mapselect.png';
 import { ListGroup } from '../site';
@@ -228,73 +228,75 @@ export class PigeonMap extends Component {
     return (
       <div className="map-pigeon-map bg-light">
         <Responsive displayIn={['Laptop', 'Tablet']}>
-          <div className={classnames('map-content')}>
-            <Map
-              provider={providers[this.state.provider]}
-              center={this.state.center}
-              zoom={this.state.zoom}
-              animate={this.state.animate}
-              onClick={this.onClick}
-            >
-              {items &&
-                items.map(item => {
-                  const json = JSON.parse(item.site_coord);
-                  if (json) {
-                    const coord = [json.lat, json.lon];
-                    return (
-                      <SiteMarker
-                        key={item.id}
-                        title={item.site_name}
-                        anchor={coord}
-                        payload={item.id}
-                        onClick={this.onMarkerClick}
-                        hover={this.state.selected === item.id}
-                      />
-                    );
-                  }
-                  return null;
-                })}
-              {this.state.moved && parseInt(this.state.moved.id, 10) === this.state.selected && (
-                <Draggable
-                  anchor={this.state.center}
-                  offset={[14, 30]}
-                  onDragStart={this.onDragStart}
-                  onDragEnd={anchor => {
-                    this.onDragEnd(anchor, this.state.moved);
-                  }}
-                >
-                  <img className="map-selector" src={mapselect} alt="" />
-                </Draggable>
-              )}
-            </Map>
-          </div>
-          <div className="map-list-header">
-            <button className="btn btn-primary btn-sm" onClick={this.zoomIn}>
-              <Icon path={mdiMagnifyPlus} size={1} color="white" />
-            </button>
-            <button className="btn btn-primary btn-sm" onClick={this.zoomOut}>
-              <Icon path={mdiMagnifyMinus} size={1} color="white" />
-            </button>
-            <button className="btn btn-primary btn-sm" onClick={this.localize}>
-              <Icon path={mdiCrosshairsGps} size={1} color="white" />
-            </button>
-            <br />
-            <p>
-              Position : {Math.round(this.state.center[0] * 10000) / 10000},{' '}
-              {Math.round(this.state.center[1] * 10000) / 10000} /{' '}
-              {Math.round(this.state.zoom * 100) / 100}
-            </p>
-          </div>
-          <div className="custom-scrollbar map-list-scroll" style={{overflowX: 'hidden', overflowY: 'auto'}}>
-            <div>
-              <ListGroup
-                selected={this.state.selected}
-                onSiteClick={this.onSiteClick}
-                onSiteMove={this.onSiteMove}
-                onSitePose={this.onSitePose}
-              />
+          <ResponsiveContent>
+            <div className={classnames('map-content')}>
+              <Map
+                provider={providers[this.state.provider]}
+                center={this.state.center}
+                zoom={this.state.zoom}
+                animate={this.state.animate}
+                onClick={this.onClick}
+              >
+                {items &&
+                  items.map(item => {
+                    const json = JSON.parse(item.site_coord);
+                    if (json) {
+                      const coord = [json.lat, json.lon];
+                      return (
+                        <SiteMarker
+                          key={item.id}
+                          title={item.site_name}
+                          anchor={coord}
+                          payload={item.id}
+                          onClick={this.onMarkerClick}
+                          hover={this.state.selected === item.id}
+                        />
+                      );
+                    }
+                    return null;
+                  })}
+                {this.state.moved && parseInt(this.state.moved.id, 10) === this.state.selected && (
+                  <Draggable
+                    anchor={this.state.center}
+                    offset={[14, 30]}
+                    onDragStart={this.onDragStart}
+                    onDragEnd={anchor => {
+                      this.onDragEnd(anchor, this.state.moved);
+                    }}
+                  >
+                    <img className="map-selector" src={mapselect} alt="" />
+                  </Draggable>
+                )}
+              </Map>
             </div>
-          </div>
+            <div className="map-list-header">
+              <button className="btn btn-primary btn-sm" onClick={this.zoomIn}>
+                <Icon path={mdiMagnifyPlus} size={1} color="white" />
+              </button>
+              <button className="btn btn-primary btn-sm" onClick={this.zoomOut}>
+                <Icon path={mdiMagnifyMinus} size={1} color="white" />
+              </button>
+              <button className="btn btn-primary btn-sm" onClick={this.localize}>
+                <Icon path={mdiCrosshairsGps} size={1} color="white" />
+              </button>
+              <br />
+              <p>
+                Position : {Math.round(this.state.center[0] * 10000) / 10000},{' '}
+                {Math.round(this.state.center[1] * 10000) / 10000} /{' '}
+                {Math.round(this.state.zoom * 100) / 100}
+              </p>
+            </div>
+            <div className="custom-scrollbar map-list-scroll" style={{overflowX: 'hidden', overflowY: 'auto'}}>
+              <div>
+                <ListGroup
+                  selected={this.state.selected}
+                  onSiteClick={this.onSiteClick}
+                  onSiteMove={this.onSiteMove}
+                  onSitePose={this.onSitePose}
+                />
+              </div>
+            </div>
+          </ResponsiveContent>
         </Responsive>
         <Responsive displayIn={['Mobile']}>
           <div className={classnames('map-content-mobile')}>

@@ -27,6 +27,7 @@ import { InlineDocuments, InlinePhotos, InlineCauses } from '../cause';
 import { InlineGrowths } from '../cause-growth';
 import { InlineMovements } from '../cause-movement';
 import { InlineSicknesses } from '../cause-sickness';
+import { findCauseType } from '../cause-type';
 
 let regPlaceholder = '';
 let caut_id = 0;
@@ -62,29 +63,36 @@ function Form(props) {
     props.errors,
     props.intl,
   );
-  const regexp = values.cause_type.caut_pattern || '';
+  let mask = '';
+  let regexp = '';
   let validated = true;
-  if (regexp !== '') {
-    validated = false;
-    if (regPlaceholder === '' || caut_id !== values.cause_type.id) {
-      const parser = new RegexpParser('/' + regexp + '/', {
-        namedGroupConf: {
-          pays: ['FR'],
-          cpays: ['250'],
-        },
-      });
-      regPlaceholder = parser.build();
+  const cause_type = findCauseType(props.cause_types, values.cause_type.id);
+  if (cause_type) {
+    regexp = cause_type.caut_pattern || '';
+    console.log('JKJK', regexp, values.cause_type);
+    if (regexp !== '') {
+      validated = false;
+      if (regPlaceholder === '' || caut_id !== values.cause_type.id) {
+        const parser = new RegexpParser('/' + regexp + '/', {
+          namedGroupConf: {
+            pays: ['FR'],
+            cpays: ['250'],
+          },
+        });
+        regPlaceholder = parser.build();
+      }
+      if (values.cau_code !== '' && validateRegex(values.cau_code, regexp)) {
+        validated = true;
+      }
+      caut_id = values.cause_type.id;
+      mask = cause_type.caut_mask ? cause_type.caut_mask : '[*]';
     }
-    if (values.cau_code !== '' && validateRegex(values.cau_code, regexp)) {
-      validated = true;
-    }
-    caut_id = values.cause_type.id;
   }
   return (
     <ResponsiveModalOrForm
       title={values.cau_code}
       tab={values.__currentTab}
-      tabs={props.modify ? tabs.concat(modifyTabs) : tabs}
+      tabs={values.__modify ? tabs.concat(modifyTabs) : tabs}
       size="xl"
       onSubmit={handleSubmit}
       onCancel={handleCancel}
@@ -96,7 +104,7 @@ function Form(props) {
     >
       <InputHidden name="id" id="id" value={values.id} />
       <Row>
-        <Col size={{ xxs: 8 }}>
+        <Col size={{ xxs: 36, sm: 8 }}>
           <InputMask
             label="N° boucle"
             name="cau_code"
@@ -105,15 +113,13 @@ function Form(props) {
             onChange={handleChange}
             labelTop={true}
             required={true}
-            mask={
-              values.cause_type && values.cause_type.caut_mask ? values.cause_type.caut_mask : '[*]'
-            }
+            mask={mask}
             pattern={regexp}
             error={getErrorMessage('cau_code')}
             help={validated ? false : 'Format : ' + regPlaceholder}
           />
         </Col>
-        <Col size={{ xxs: 10 }}>
+        <Col size={{ xxs: 36, sm: 10 }}>
           <InputSelect
             label="Race"
             name="cause_type.id"
@@ -126,7 +132,7 @@ function Form(props) {
             error={getErrorMessage('cause_type')}
           />
         </Col>
-        <Col size={{ xxs: 18 }}>
+        <Col size={{ xxs: 36, sm: 18 }}>
           <SiteInputPicker
             label="Site"
             key="site"
@@ -143,7 +149,7 @@ function Form(props) {
       {values.__currentTab === '1' && (
         <>
           <Row>
-            <Col size={{ xxs: 12 }}>
+            <Col size={{ xxs: 36, sm: 12 }}>
               <InputText
                 label="Nom"
                 key="cau_name"
@@ -154,7 +160,7 @@ function Form(props) {
                 error={getErrorMessage('cau_name')}
               />
             </Col>
-            <Col size={{ xxs: 8 }}>
+            <Col size={{ xxs: 36, sm: 8 }}>
               <InputSelect
                 label="M/F"
                 name="cau_sex"
@@ -166,7 +172,7 @@ function Form(props) {
                 error={getErrorMessage('cau_sex')}
               />
             </Col>
-            <Col size={{ xxs: 16 }}>
+            <Col size={{ xxs: 36, sm: 16 }}>
               <ClientInputPicker
                 label="Eleveur"
                 key="raiser"
@@ -179,7 +185,7 @@ function Form(props) {
             </Col>
           </Row>
           <Row>
-            <Col size={{ xxs: 6 }}>
+            <Col size={{ xxs: 36, sm: 6 }}>
               <InputSpin
                 label="Année de naissance"
                 name="cau_year"
@@ -192,7 +198,7 @@ function Form(props) {
                 error={getErrorMessage('cau_year')}
               />
             </Col>
-            <Col size={{ xxs: 6 }}>
+            <Col size={{ xxs: 36, sm: 6 }}>
               <InputData
                 name="cau_string_1"
                 value={values.cau_string_1}
@@ -202,7 +208,7 @@ function Form(props) {
                 labelTop={true}
               />
             </Col>
-            <Col size={{ xxs: 12 }}>
+            <Col size={{ xxs: 36, sm: 12 }}>
               <CauseInputPicker
                 label="Père"
                 name="parent1"
@@ -213,7 +219,7 @@ function Form(props) {
                 filterSex={'M'}
               />
             </Col>
-            <Col size={{ xxs: 12 }}>
+            <Col size={{ xxs: 36, sm: 12 }}>
               <CauseInputPicker
                 label="Mère"
                 name="parent2"
