@@ -100,7 +100,7 @@ function Form(props) {
   return (
     <ResponsiveModalOrForm
       title="Contrat"
-      tab={values.currentTab}
+      tab={values.__currentTab}
       tabs={props.tabs}
       size="lg"
       height="480px"
@@ -161,7 +161,7 @@ function Form(props) {
           </div>
         </div>
         <hr />
-        {values.currentTab === '1' && (
+        {values.__currentTab === '1' && (
           <div>
             <div className="row">
               <div className="col-sm-w12">
@@ -271,7 +271,7 @@ function Form(props) {
             </div>
           </div>
         )}
-        {values.currentTab === '2' && (
+        {values.__currentTab === '2' && (
           <div>
             <div className="row">
               <div className="col-xs-w36">
@@ -301,12 +301,12 @@ function Form(props) {
             </div>
           </div>
         )}
-        {values.currentTab === '3' && (
+        {values.__currentTab === '3' && (
           <div className="border border-secondary rounded overflow-x-hidden">
             <InlineAlerts objId={values.id} objName="FreeAsso_Contract" object={values} />
           </div>
         )}
-        {values.currentTab === '4' && (
+        {values.__currentTab === '4' && (
           <div className="border border-secondary rounded overflow-x-hidden">
             <InlineDocuments ctId={values.id} />
           </div>

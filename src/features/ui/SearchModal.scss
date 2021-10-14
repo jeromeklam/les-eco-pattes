@@ -1,9 +1,39 @@
 @import '../../styles/mixins';
 
-.search-modal {
-  min-height: 300px;
+.ui-search-modal {
+  position: absolute;
+  left: 0px;
+  right: 0px;
+  top: 0px;
+  bottom: 0px;
+
+  .custom-scrollbar {
+    overflow-x: hidden !important;
+    overflow-y: auto;
+  }
+  .ui-search-modal-left-height {
+    height: 124px;
+  }
+  .ui-search-modal-left-bottom {
+    position: absolute;
+    left: 0px;
+    right: 0px;
+    top: 125px;
+    bottom: 0px;
+  }
 }
-.list-group-item-action:hover {
-  cursor: pointer;
-  background-color: theme-color('primary-light');
+
+.ui-search-modal-left {
+  height: 100%;
+}
+.ui-search-modal-right {
+  height: 100%;
+}
+@media (max-width: 768px) {
+  .ui-search-modal-left {
+    height: 50%;
+  }
+  .ui-search-modal-right {
+    height: 50%;
+  }
 }

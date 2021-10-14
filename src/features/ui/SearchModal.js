@@ -1,84 +1,117 @@
 import React, { Component } from 'react';
+import { injectIntl } from 'react-intl';
 import PropTypes from 'prop-types';
-import classnames from 'classnames';
-import { ResponsiveModal, FILTER_OPER_LIKE, FILTER_OPER_IN, FILTER_MODE_AND } from 'react-bootstrap-front';
-import { CenteredLoading3Dots } from './';
+import {
+  ResponsiveModal,
+  FILTER_MODE_AND,
+  FILTER_OPER_EQUAL,
+  FILTER_SEARCH_SIMPLE,
+  Row,
+  Col,
+  FilterBuilder,
+  FilterHeader,
+  Filter,
+} from 'react-bootstrap-front';
+import {
+  Calendar as CalendarIcon,
+  DelOne as ClearIcon,
+  Filter as FilterIcon,
+  FilterEmpty as FilterEmptyIcon,
+  FilterFull as FilterFullIcon,
+  FilterClear as FilterClearIcon,
+  FilterDefault as FilterDefaultIcon,
+  FilterClearDefault as FilterClearDefaultIcon,
+  SimpleCancel as CancelPanelIcon,
+  Search as ValidPanelIcon,
+  Cancel as CancelIcon
+} from '../icons';
 
-export default class SearchModal extends Component {
+class SearchModal extends Component {
   static propTypes = {
-    title: PropTypes.string.isRequired,
+    title: PropTypes.string,
     show: PropTypes.bool.isRequired,
-    loading: PropTypes.bool.isRequired,
     onClear: PropTypes.func.isRequired,
     onSearch: PropTypes.func.isRequired,
     onClose: PropTypes.func.isRequired,
     onSelect: PropTypes.func.isRequired,
-    list: PropTypes.array,
-    pickerDisplay: PropTypes.string.isRequired,
-    filters: PropTypes.array,
+    list: PropTypes.element,
+    pickerDisplay: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
+    conditions: PropTypes.array,
   };
   static defaultProps = {
-    list: [],
+    list: null,
+    pickerDisplay: '',
+    title: '',
   };
 
   static getDerivedStateFromProps(props, state) {
-    state.fields.forEach(field => {
-      const found = props.filters.find(filter => filter.name === field.name);
-      if (found) {
-        if (found.value !== field.origin) {
-          field.origin = found.value ;
-          field.value = found.value ;
-        }
+    if (props.conditions !== state.conditions) {
+      let filters = new Filter();
+      filters.init(FILTER_MODE_AND, FILTER_OPER_EQUAL);
+      if (Array.isArray(props.conditions)) {
+        props.conditions.forEach(elem => filters.addFilter(elem.field, elem.value, elem.oper));
       }
-    })
-    return false;
+      return { conditions: props.conditions, filters: filters };
+    }
+    return null;
   }
 
   constructor(props) {
     super(props);
-    let filters = this.props.filters;
-    filters.forEach(item => {
-      item.origin = item.value || '';
-      item.value = item.value || '';
-    });
+    let filters = new Filter();
+    filters.init(FILTER_MODE_AND, FILTER_OPER_EQUAL);
+    if (Array.isArray(props.conditions)) {
+      props.conditions.forEach(elem => filters.addFilter(elem.field, elem.value, elem.oper));
+    }
     this.state = {
-      fields: filters,
       condition: FILTER_MODE_AND,
+      filters: filters,
+      conditions: props.conditions,
+      local: false,
     };
-    this.onChange = this.onChange.bind(this);
+    this.onFilterChange = this.onFilterChange.bind(this);
+    this.onFilterMode = this.onFilterMode.bind(this);
+    this.onOperator = this.onOperator.bind(this);
+    this.onFilterOperator = this.onFilterOperator.bind(this);
     this.onClear = this.onClear.bind(this);
     this.onSearch = this.onSearch.bind(this);
     this.handleKeyUp = this.handleKeyUp.bind(this);
   }
 
-  componentDidMount() {
-    let load = false;
-    this.state.fields.forEach(item => {
-      if (item.filtered) {
-        load = true;
-      }
-    });
-    if (load) {
-      this.onSearch();
-    }
+  componentDidMount() {}
+
+  onFilterChange(event, oper = false) {
+    let { filters } = this.state;
+    filters.addFilter(event.target.name, event.target.value, oper);
+    filters.setSearch(FILTER_SEARCH_SIMPLE);
+    this.setState({ filters, local: true });
   }
 
-  onChange(event) {
-    let filters = this.state.fields;
-    filters.forEach(item => {
-      if (item.name === event.target.name) {
-        item.value = event.target.value;
-      }
-    });
-    this.setState({ fields: filters });
+  onFilterMode(event) {
+    let { filters } = this.state;
+    filters.setMode(event.target.value);
+    filters.setSearch(FILTER_SEARCH_SIMPLE);
+    this.setState({ filters, local: true });
+  }
+
+  onOperator(event) {
+    let { filters } = this.state;
+    filters.setOperator(event.target.value);
+    filters.setSearch(FILTER_SEARCH_SIMPLE);
+    this.setState({ filters, local: true });
+  }
+
+  onFilterOperator(event) {
+    let { filters } = this.state;
+    const col = event.target.name;
+    const oper = event.target.value;
+    filters.updateFilterOperator(col.replace('oper-', ''), oper);
+    this.setState({ filters, local: true });
   }
 
   onClear(event) {
-    let filters = this.state.fields;
-    filters.forEach(item => {
-      item.value = '';
-    });
-    this.setState({ fields: filters });
+    let filters = this.state.filters;
+    this.setState({ filters });
     this.props.onClear();
   }
 
@@ -90,86 +123,39 @@ export default class SearchModal extends Component {
   }
 
   onSearch(event) {
-    let params = false;
-    this.state.fields.forEach(item => {
-      if (item.filtered) {
-        if (params === false) {
-          params = { filter: { [this.state.condition]: {} } };
-        }
-        let values = [];
-        item.options.forEach(elem => {
-          values.push(elem.value);
-        });
-        params.filter[this.state.condition][item.name] = {[FILTER_OPER_IN]: values};
-      } else {
-        if (item.value !== '') {
-          if (params === false) {
-            params = { filter: { [this.state.condition]: {} } };
-          }
-          params.filter[this.state.condition][item.name] = {[FILTER_OPER_LIKE]: item.value};
-        }
-      }
-    });
-    const filters = params || {};
-    this.props.onSearch(filters);
+    this.props.onSearch(this.state.filters);
   }
 
   render() {
-    const fields = this.props.pickerDisplay.split(',');
     const buttons = [
-      { name: 'Filtrer', function: this.onSearch, theme: 'primary', icon: 'filter' },
-      { name: 'Effacer', function: this.onClear, theme: 'warning', icon: 'delete' },
-      { name: 'Annuler', function: this.props.onClose, theme: 'secondary', icon: 'close' },
+      {
+        name: this.props.intl.formatMessage({
+          id: 'app.features.ui.searchModal.filter',
+          defaultMessage: 'Filter',
+        }),
+        function: this.onSearch,
+        theme: 'primary',
+        icon: <FilterIcon />,
+      },
+      {
+        name: this.props.intl.formatMessage({
+          id: 'app.features.ui.searchModal.delete',
+          defaultMessage: 'Delete',
+        }),
+        function: this.onClear,
+        theme: 'warning',
+        icon: <ClearIcon />,
+      },
+      {
+        name: this.props.intl.formatMessage({
+          id: 'app.features.ui.searchModal.cancel',
+          defaultMessage: 'Cancel',
+        }),
+        function: this.props.onClose,
+        theme: 'secondary',
+        icon: <CancelIcon />,
+      },
     ];
-    const searchArea = (
-      <div onKeyUp={this.handleKeyUp}>
-        <h6 className="text-secondary">Critères de recherche :</h6>
-        <div className="search-filters row">
-          {this.state.fields &&
-            this.state.fields.map((item, i) => {
-              if (item.filtered) {
-                return null;
-              }
-              if (item.type === 'select') {
-                return (
-                  <div
-                    className={classnames('col-sm-w' + (item.size || '18'))}
-                    key={`${item.name}-${i}`}
-                  >
-                    <select
-                      className="form-control"
-                      value={item.value}
-                      name={item.name}
-                      placeholder={item.label}
-                      onChange={this.onChange}
-                    >
-                      <option value="">{item.label}</option>
-                      {item.options.map(option => (
-                        <option key={option.value} value={option.value}>
-                          {option.label}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
-                );
-              } else {
-                return (
-                  <div className="col-sm-w18" key={`${item.name}-${i}`}>
-                    <input
-                      className="form-control"
-                      value={item.value}
-                      name={item.name}
-                      placeholder={item.label}
-                      type="text"
-                      onChange={this.onChange}
-                    />
-                  </div>
-                );
-              }
-            })}
-        </div>
-      </div>
-    );
     return (
       <ResponsiveModal
         size="lg"
@@ -177,45 +163,58 @@ export default class SearchModal extends Component {
         show={this.props.show}
         onClose={this.props.onClose}
         buttons={buttons}
-        header={searchArea}
-        height="400px"
-        modalClassName="bg-primary-light text-primary"
-        closeClassName="text-primary"
+        height="500px"
+        scroll={false}
+        modalClassName="bg-light text-secondary"
+        closeClassName="text-light"
       >
-        <div className="search-modal">
-          <div className="search-results pt-2">
-            {this.props.loading ? (
-              <CenteredLoading3Dots />
-            ) : (
-              <div>
-                <h6 className="text-secondary">Résultats :</h6>
-                <ul className="list-group">
-                  {this.props.list &&
-                    this.props.list.map(item => {
-                      return (
-                        <li
-                          key={item.id}
-                          className="list-group-item list-group-item-action"
-                          onClick={() => {
-                            this.props.onSelect(item);
-                          }}
-                        >
-                          <p>
-                            {fields.map((elem, i) => (
-                              <span className="mr-2" key={`key-${i}`}>
-                                {item[elem] ? item[elem] : elem}
-                              </span>
-                            ))}
-                          </p>
-                        </li>
-                      );
-                    })}
-                </ul>
-              </div>
-            )}
-          </div>
-        </div>
+        <Row className="ui-search-modal h-100 overflow-hidden no-gutters">
+          <Col
+            className="ui-search-modal-right border border-secondary-light p-0"
+            size={{ xxs: 36, sm: 22 }}
+          >
+            <div className="h-100 custom-scrollbar">{this.props.list}</div>
+          </Col>
+          <Col className="ui-search-modal-left p-0 bg-light" size={{ xxs: 36, sm: 14 }}>
+            <div className="ui-search-modal-left-top p-2">
+              <h3>
+                {this.props.intl.formatMessage({
+                  id: 'app.search.filters.title',
+                  defaultMessage: 'Mes critères',
+                })}
+              </h3>
+              <FilterHeader
+                filters={this.state.filters}
+                onMode={this.onFilterMode}
+                onOperator={this.onOperator}
+                onFilterOperator={this.onFilterOperator}
+              />
+            </div>
+            <div className="ui-search-modal-left-bottom custom-scrollbar p-2">
+              <FilterBuilder
+                {...this.props}
+                calIcon={<CalendarIcon className="text-secondary" />}
+                clearIcon={<ClearIcon className="text-warning" />}
+                filterFullIcon={<FilterFullIcon color="white" />}
+                filterEmptyIcon={<FilterEmptyIcon color="white" />}
+                filterClearIcon={<FilterClearIcon color="white" />}
+                filterDefaultIcon={<FilterDefaultIcon color="white" />}
+                filterClearDefaultIcon={<FilterClearDefaultIcon color="white" />}
+                validPanelIcon={<ValidPanelIcon />}
+                cancelPanelIcon={<CancelPanelIcon />}
+                filters={this.state.filters}
+                onChange={this.onFilterChange}
+                onMode={this.onFilterMode}
+                onOperator={this.onOperator}
+                onFilterOperator={this.onFilterOperator}
+                withHeader={false}
+              />
+            </div>
+          </Col>
+        </Row>
       </ResponsiveModal>
     );
   }
 }
+
+export default injectIntl(SearchModal);

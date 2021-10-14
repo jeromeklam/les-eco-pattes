@@ -83,7 +83,7 @@ function Form(props) {
   return (
     <ResponsiveModalOrForm
       title={values.cau_code}
-      tab={values.currentTab}
+      tab={values.__currentTab}
       tabs={props.modify ? tabs.concat(modifyTabs) : tabs}
       size="xl"
       onSubmit={handleSubmit}
@@ -140,7 +140,7 @@ function Form(props) {
         </Col>
       </Row>
       <hr />
-      {values.currentTab === '1' && (
+      {values.__currentTab === '1' && (
         <>
           <Row>
             <Col size={{ xxs: 12 }}>
@@ -296,7 +296,7 @@ function Form(props) {
           </Row>
         </>
       )}
-      {values.currentTab === '2' && (
+      {values.__currentTab === '2' && (
         <div>
           <ClientInputPicker
             label="Provenance"
@@ -317,32 +317,32 @@ function Form(props) {
           />
         </div>
       )}
-      {values.currentTab === '3' && (
+      {values.__currentTab === '3' && (
         <div className="border border-secondary rounded overflow-x-hidden">
           <InlineMovements cause={values} />
         </div>
       )}
-      {values.currentTab === '4' && (
+      {values.__currentTab === '4' && (
         <div className="border border-secondary rounded overflow-x-hidden">
           <InlineSicknesses cause={values} />
         </div>
       )}
-      {values.currentTab === '5' && (
+      {values.__currentTab === '5' && (
         <div className="border border-secondary rounded overflow-x-hidden">
           <InlineGrowths cause={values} />
         </div>
       )}
-      {values.currentTab === '6' && (
+      {values.__currentTab === '6' && (
         <div className="border border-secondary rounded overflow-x-hidden">
           <InlineCauses mode="cause" cause={values} />
         </div>
       )}
-      {values.currentTab === '7' && (
+      {values.__currentTab === '7' && (
         <div className="border border-secondary rounded overflow-x-hidden">
           <InlineDocuments cauId={values.id} />
         </div>
       )}
-      {values.currentTab === '8' && (
+      {values.__currentTab === '8' && (
         <div className="border border-secondary rounded overflow-x-hidden">
           <InlinePhotos cauId={values.id} />
         </div>

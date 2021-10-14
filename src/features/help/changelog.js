@@ -1,5 +1,14 @@
 export default `
 
+# Version 2.2.0 : 14/10/2021
+  * Général
+    * Nouvelle animation de chargement
+    * Les sélecteurs, si remplis, se transforment au bouton pour accéder au zoom
+    * Les critères de sélections sur les sélecteurs ont été améliorés
+    * Uniformisation des listes
+  * Tableau de bord 
+    * Couleurs plus soft
+ 
 # Version 2.1.0 : 15/09/2021
   * Général
     * Diminution de la taille de tous les textes

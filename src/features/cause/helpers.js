@@ -29,6 +29,32 @@ export const waitingSelect = [
   { value: false, label: '' },
 ];
 
+export const displayItemPicker = item => {
+  if (item && item.id) {
+    return (
+      <>
+        <span>
+          {item.cau_code}
+        </span>
+      </>
+    );
+  }
+  return null;
+};
+
+export const getPickerDisplay = item => {
+  if (item && item.id) {
+    return (
+      <>
+        <span>
+          {item.cau_code}
+        </span>
+      </>
+    );
+  }
+  return null;
+};
+
 export const getSexlabel = (p_code, p_icon = true, p_className = '') => {
   const found = sexSelect.find(elem => elem.value === p_code);
   if (found) {
@@ -158,7 +184,7 @@ export const getInlineActions = ({ onSelectList, onGetOne, onDelOne, state }) =>
       },
       param: 'object',
       theme: 'secondary',
-      icon: <MovementIcon color="white" />,
+      icon: <MovementIcon />,
       role: 'OTHER',
       active: state.mode === 'movement',
     },
@@ -170,7 +196,7 @@ export const getInlineActions = ({ onSelectList, onGetOne, onDelOne, state }) =>
       },
       param: 'object',
       theme: 'secondary',
-      icon: <MedicalIcon color="white" />,
+      icon: <MedicalIcon />,
       role: 'OTHER',
       active: state.mode === 'sickness',
     },
@@ -182,7 +208,7 @@ export const getInlineActions = ({ onSelectList, onGetOne, onDelOne, state }) =>
       },
       param: 'object',
       theme: 'secondary',
-      icon: <GrowthIcon color="white" />,
+      icon: <GrowthIcon />,
       role: 'OTHER',
       active: state.mode === 'growth',
     },
@@ -194,7 +220,7 @@ export const getInlineActions = ({ onSelectList, onGetOne, onDelOne, state }) =>
       },
       param: 'object',
       theme: 'secondary',
-      icon: <DescendantIcon color="white" />,
+      icon: <DescendantIcon />,
       role: 'OTHER',
       active: state.mode === 'descendant',
     },
@@ -206,8 +232,8 @@ export const getInlineActions = ({ onSelectList, onGetOne, onDelOne, state }) =>
       },
       param: 'object',
       theme: 'secondary',
-      icon: <DocumentIcon color="white" />,
-      role: 'DETAIL',
+      icon: <DocumentIcon />,
+      role: 'OTHER',
       active: state.mode === 'document',
     },
     {
@@ -218,8 +244,8 @@ export const getInlineActions = ({ onSelectList, onGetOne, onDelOne, state }) =>
       },
       param: 'object',
       theme: 'secondary',
-      icon: <PhotoIcon color="white" />,
-      role: 'DETAIL',
+      icon: <PhotoIcon />,
+      role: 'OTHER',
       active: state.mode === 'photo',
     },
     {
@@ -227,7 +253,7 @@ export const getInlineActions = ({ onSelectList, onGetOne, onDelOne, state }) =>
       label: 'Modifier',
       onClick: onGetOne,
       theme: 'secondary',
-      icon: <GetOneIcon color="white" />,
+      icon: <GetOneIcon />,
       role: 'MODIFY',
     },
     {
@@ -235,7 +261,7 @@ export const getInlineActions = ({ onSelectList, onGetOne, onDelOne, state }) =>
       label: 'Supprimer',
       onClick: onDelOne,
       theme: 'warning',
-      icon: <DelOneIcon color="white" />,
+      icon: <DelOneIcon />,
       role: 'DELETE',
     },
   ];

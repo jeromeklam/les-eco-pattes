@@ -1,43 +1,101 @@
 import React, { Component } from 'react';
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
-import * as actions from './redux/actions';
+import PropTypes from 'prop-types';
 import axios from 'axios';
 import { freeAssoApi } from '../../common';
-import PropTypes from 'prop-types';
-import { InputPicker as DefaultInputPicker } from 'react-bootstrap-front';
-import { More, DelOne, Zoom } from '../icons';
-import { Search, Input } from './';
+import { More, Zoom, DelOne } from '../icons';
+import { InputPicker as DefaultInputPicker, ButtonPicker as DefaultButtonPicker } from '../ui';
+import { Search, Input, displayItemPicker, getPickerDisplay } from './';
 
-export class InputPicker extends Component {
+/**
+ * Gestion du champ de saisie assisté
+ * avec recherche
+ * auto-complète
+ * suppression
+ * et zoom
+ * Pour le moment, il n'y a pas de création depuis ce champ
+ */
+export default class InputPicker extends Component {
   static propTypes = {
-    code: PropTypes.string.isRequired,
+    conditions: PropTypes.array,
+    name: PropTypes.string.isRequired,
     item: PropTypes.object,
+    label: PropTypes.string.isRequired,
+    labelTop: PropTypes.bool,
+    required: PropTypes.bool,
+    disabled: PropTypes.bool,
+    list: PropTypes.element.isRequired,
     onChange: PropTypes.func.isRequired,
-    multi: PropTypes.bool,
+    onAdd: PropTypes.func,
+    addIcon: PropTypes.element,
+    error: PropTypes.element,
+    pickerButton: PropTypes.bool,
   };
-
   static defaultProps = {
-    multi: false,
+    conditions: [],
+    item: null,
+    required: false,
+    disabled: false,
+    labelTop: true,
+    onAdd: null,
+    addIcon: null,
+    error: false,
+    pickerButton: true,
   };
 
+  /**
+   * Met à jour le champ en fonction d'un changement dans le store par rapport au modèle affiché
+   */
+  static getDerivedStateFromProps(props, state) {
+    if (props.item !== state.item || props.conditions !== state.conditions) {
+      let value = null;
+      let display = '';
+      let zoomBtn = false;
+      if (props.item) {
+        value = props.item.id || '';
+        display = getPickerDisplay(props.item);
+        if (props.pickerButton && props.item.id > 0) {
+          zoomBtn = true;
+        }
+      }
+      return {
+        item: props.item,
+        value: value,
+        display: display,
+        zoomButton: zoomBtn,
+        conditions: props.conditions
+      };
+    }
+    return null;
+  }
+  
+  /**
+   * Constructor
+   
+   * @param {Object} props
+   */
   constructor(props) {
     super(props);
     let value = '';
     let display = '';
-    if (this.props.item) {
+    let zoomBtn = false;
+    if (props.item) {
       value = props.item.id || '';
-      display = (props.item.type !== '' && props.item.cau_code) || (props.multi && props.item.id);
+      display = getPickerDisplay(props.item);
+      if (props.pickerButton && props.item.id > 0) {
+        zoomBtn = true;
+      }
     }
     this.state = {
       search: false,
       item: props.item || null,
+      conditions: props.conditions,
       list: [],
       value: value,
       display: display,
       autocomplete: false,
       source: false,
       zoom: false,
+      zoomButton: zoomBtn,
     };
     this.onMore = this.onMore.bind(this);
     this.onZoom = this.onZoom.bind(this);
@@ -48,50 +106,64 @@ export class InputPicker extends Component {
     this.onCloseMore = this.onCloseMore.bind(this);
   }
 
-  static getDerivedStateFromProps(props, state) {
-    if (props.item !== state.item) {
-      let value = null;
-      let display = '';
-      if (props.item) {
-        value = props.item.id || '';
-        display = (props.item.type !== '' && props.item.cau_code) || (props.multi && props.item.id);
-      }
-      return { item: props.item, value: value, display: display };
-    }
-    return null;
-  }
-
+  /**
+   * Changement de valeurs du champ
+   */
   onChange(event) {
     if (this.state.source) {
       this.state.source.cancel();
     }
-    const source = axios.CancelToken.source();
+    const CancelToken = axios.CancelToken;
+    const source = CancelToken.source();
     const headers = {
       'Content-Type': 'application/json',
       Accept: 'application/json',
+      cancelToken: source.token,
     };
     const search = '' + event.target.value;
     this.setState({ display: search, loading: true, cancel: source });
     if (search.length >= 2) {
       freeAssoApi
-        .get(process.env.REACT_APP_BO_URL + '/v1/asso/cause/autocomplete/' + event.target.value, {
+        .get(process.env.REACT_APP_BO_URL + '/v1/asso/cause/autocomplete/' + search, {
           headers: headers,
-          cancelToken: source.token,
         })
         .then(result => {
-          this.setState({ list: result.data, loading: false });
-        }).catch (err => {this.setState({ list: [], loading: false });});
+          if (result && result.data && result.data.data) {
+            const list = result.data.data;
+            if (Array.isArray(list) && list.length === 1) {
+              this.props.onChange({
+                target: { name: this.props.name, value: list[0].id, type: 'FreeAsso_Cause' },
+              });
+            } else {
+              this.setState({ list: list, loading: false });
+            }
+          } else {
+            this.setState({ list: [], loading: false });
+          }
+        })
+        .catch(err => {
+          this.setState({ list: [], loading: false });
+        });
     }
   }
 
+  /**
+   * Ouverture de la recherche
+   */
   onMore() {
     this.setState({ search: true, autocomplete: false });
   }
 
+  /**
+   * Quand on a un modèle on peut zoomer
+   */
   onZoom() {
     this.setState({ zoom: true });
   }
 
+  /**
+   * Le champ est vidé
+   */
   onClear() {
     this.setState({ autocomplete: false });
     this.props.onChange({
@@ -99,7 +171,11 @@ export class InputPicker extends Component {
     });
   }
 
+  /**
+   * Gestion de la sélection d'un modèle depuis la recherche
+   */
   onSelect(item) {
+    console.log(item);
     this.setState({ search: false, autocomplete: false, list: [] });
     if (item) {
       this.props.onChange({
@@ -108,63 +184,74 @@ export class InputPicker extends Component {
     }
   }
 
+  /**
+   * Gestion de la fermeture de la recherche sans sélection
+   */
   onCloseMore() {
     this.setState({ search: false, zoom: false });
   }
 
   render() {
     return (
-      <div className="cause-input-picker">
-        <DefaultInputPicker 
-          {...this.props}
-          code={this.props.code}
-          label={this.props.label}
-          labelTop={this.props.labelTop || false}
-          value={this.state.value || ''}
-          list={this.props.list || this.state.list}
-          display={this.state.display}
-          onChange={this.props.onFineChange || this.onChange}
-          onClear={this.onClear}
-          onMore={this.onMore}
-          onZoom={this.onZoom}
-          error={this.props.error}
-          onSelect={this.onSelect}
-          required={this.props.required || false}
-          pickerId="cau_id"
-          pickerDisplay="cau_code"
-          filters={this.props.filters || {}}
-          disabled={this.props.disabled || false}
-          clearIcon={<DelOne className="text-warning" size={0.9 } />}
-          moreIcon={<More className="text-secondary" size={0.9 } />}
-          zoomIcon={<Zoom className="text-secondary" size={0.9 } />}
-        />
-        <Search
-          title={this.props.label}
-          value={this.state.display}
-          show={this.state.search}
-          filters={this.props.filters || {}}
-          types={this.props.causeType.items}
-          onClose={this.onCloseMore}
-          onSelect={this.onSelect}
-        />
+      <div className=".cause-picker">
+        {!this.state.zoomButton ? (
+          <div className=".cause-input-picker">
+            <DefaultInputPicker
+              {...this.props}
+              name={this.props.name}
+              label={this.props.label}
+              labelTop={this.props.labelTop || false}
+              value={this.state.value || ''}
+              list={this.props.list || this.state.list}
+              display={this.state.display}
+              onChange={this.props.onFineChange || this.onChange}
+              onMore={this.onMore}
+              error={this.props.error}
+              onSelect={this.onSelect}
+              required={this.props.required || false}
+              pickerId="cau_id"
+              pickerDisplay={displayItemPicker}
+              conditions={this.state.conditions || {}}
+              moreIcon={<More className="text-secondary" size={0.8} />}
+              zoomIcon={<Zoom className="text-secondary" size={0.8} />}
+              clearIcon={<DelOne className="text-warning" size={0.8} />}
+              onZoom={this.props.simple && !this.props.disabled ? null : this.onZoom}
+              onClear={this.props.simple && this.props.disabled ? null : this.onClear}
+              pickerUp={this.props.pickerButton ? false : true}
+            />
+            <Search
+              title={this.props.label}
+              show={this.state.search}
+              conditions={this.state.conditions || {}}
+              onSelect={this.onSelect}
+              onClose={this.onCloseMore}
+            />
+          </div>
+        ) : (
+          <div className=".cause-button-picker">
+            <DefaultButtonPicker
+              label={this.props.label}
+              labelTop={this.props.labelTop || false}
+              value={this.state.value}
+              display={this.state.display}
+              disabled={this.props.disabled || false}
+              required={this.props.required || false}
+              clearIcon={<DelOne className="text-warning" size={0.8} />}
+              onZoom={this.onZoom}
+              onClear={this.onClear}
+            />
+          </div>
+        )}
         {this.state.zoom && (
-          <Input loader={false} modal={true} cauId={this.state.item.id} onClose={this.onCloseMore} />
+          <Input
+            loader={false}
+            modal={true}
+            id={this.state.item.id}
+            onClose={this.onCloseMore}
+            picker={true}
+          />
         )}
       </div>
     );
   }
 }
-
-function mapStateToProps(state) {
-  return {
-    causeType: state.causeType,
-  };
-}
-
-function mapDispatchToProps(dispatch) {
-  return {
-    actions: bindActionCreators({ ...actions }, dispatch),
-  };
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(InputPicker);

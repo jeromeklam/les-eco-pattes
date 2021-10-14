@@ -10,6 +10,7 @@ import { RightPanelBadges, TopPanelBadges, TopPanelHamburger } from './';
 import { InlineInbox } from '../inbox';
 import { FilterPanel as CauseFilter } from '../cause';
 import { FilterPanel as ClientFilter } from '../client';
+import { FilterPanel as ContractFilter } from '../contract';
 import { FilterPanel as SiteFilter } from '../site';
 
 export class RightPanel extends Component {
@@ -75,6 +76,7 @@ export class RightPanel extends Component {
               filter: {
                 cause: <CauseFilter onToggleRightPanel={this.props.actions.toggleRightPanel} />,
                 client: <ClientFilter onToggleRightPanel={this.props.actions.toggleRightPanel} />,
+                contract: <ContractFilter onToggleRightPanel={this.props.actions.toggleRightPanel} />,
                 site: <SiteFilter onToggleRightPanel={this.props.actions.toggleRightPanel} />,
               }[this.props.common.panelObj],
               inbox: <InlineInbox />,

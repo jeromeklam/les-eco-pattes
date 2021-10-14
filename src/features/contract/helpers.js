@@ -19,6 +19,32 @@ export const getAmount = item => {
   return amount;
 };
 
+export const displayItemPicker = item => {
+  if (item && item.id) {
+    return (
+      <>
+        <span>
+          {item.ct_code}
+        </span>
+      </>
+    );
+  }
+  return null;
+};
+
+export const getPickerDisplay = item => {
+  if (item && item.id) {
+    return (
+      <>
+        <span>
+          {item.ct_code}
+        </span>
+      </>
+    );
+  }
+  return null;
+};
+
 export const getGlobalActions = ({ onClearFilters, onCreate }) => {
   return [
     {
@@ -42,8 +68,8 @@ export const getInlineActions = ({ onSelectList, onGetOne, onDelOne, state }) =>
       },
       param: 'object',
       theme: 'secondary',
-      icon: <FollowIcon color="white" />,
-      role: 'DETAIL',
+      icon: <FollowIcon />,
+      role: 'OTHER',
       active: state.mode === 'alert',
     },
     {
@@ -54,8 +80,8 @@ export const getInlineActions = ({ onSelectList, onGetOne, onDelOne, state }) =>
       },
       param: 'object',
       theme: 'secondary',
-      icon: <BillIcon color="white" />,
-      role: 'DETAIL',
+      icon: <BillIcon />,
+      role: 'OTHER',
       disabled: true,
     },
     {
@@ -64,8 +90,8 @@ export const getInlineActions = ({ onSelectList, onGetOne, onDelOne, state }) =>
       onClick: (obj) => {onSelectList(obj, 'document');},
       param: 'object',
       theme: 'secondary',
-      icon: <DocumentIcon color="white" />,
-      role: 'DETAIL',
+      icon: <DocumentIcon />,
+      role: 'OTHER',
       active: state.documents > 0,
     },
     {

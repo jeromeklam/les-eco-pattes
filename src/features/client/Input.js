@@ -7,7 +7,7 @@ import { injectIntl } from 'react-intl';
 import { getJsonApi } from 'jsonapi-front';
 import { propagateModel } from '../../common';
 import { changeSetting } from '../auth/redux/actions';
-import { CenteredLoading3Dots, createSuccess, modifySuccess, showErrors } from '../ui';
+import { PortalLoader, createSuccess, modifySuccess, showErrors } from '../ui';
 import Form from './Form';
 
 export class Input extends Component {
@@ -26,7 +26,7 @@ export class Input extends Component {
      * On récupère l'id et l'élément à afficher
      */
     this.state = {
-      cliId: props.cliId || 0,
+      cliId: props.id || props.cliId || 0,
       modal: props.modal || false,
       item: false,
     };
@@ -124,7 +124,7 @@ export class Input extends Component {
     return (
       <div className="client-input global-card">
         {!item ? (
-          <CenteredLoading3Dots show={this.props.loader} />
+          <PortalLoader show={this.props.loader} />
         ) : (
           <div>
             {item && (

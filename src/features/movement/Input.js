@@ -8,7 +8,7 @@ import { getJsonApi } from 'jsonapi-front';
 import { propagateModel } from '../../common';
 import { getCauses } from '../cause';
 import {
-  CenteredLoading9X9,
+  PortalLoader,
   createSuccess,
   modifySuccess,
   validateSuccess,
@@ -38,7 +38,7 @@ export class Input extends Component {
      * On récupère l'id et l'élément à afficher
      */
     this.state = {
-      movementId: props.move_id || 0,
+      movementId: props.id || props.move_id || 0,
       item: false,
       modal: this.props.modal || false,
     };
@@ -159,7 +159,7 @@ export class Input extends Component {
     return (
       <div className="movement-input global-card">
         {this.props.movement.loadOnePending ? (
-          <CenteredLoading9X9 />
+          <PortalLoader />
         ) : (
           <div>
             {item && (

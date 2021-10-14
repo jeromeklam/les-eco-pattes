@@ -73,7 +73,7 @@ export function showErrors(intl, error, defCode = "", firstMess = "") {
           } else {
             if (oneError.status) {
               const code = `app.errors.code.${oneError.status}`;
-              const message = firstMess +  intl.formatMessage({
+              const message = firstMess + intl.formatMessage({
                 id: code,
                 defaultMessage: oneError.title,
               });
@@ -83,7 +83,7 @@ export function showErrors(intl, error, defCode = "", firstMess = "") {
         }
       });
       if (displayDefaultError) {
-        const message = firstMess +  intl.formatMessage({
+        const message = firstMess + intl.formatMessage({
           id: `app.errors.default.${defCode}`,
           defaultMessage: 'Unknown error !',
         });

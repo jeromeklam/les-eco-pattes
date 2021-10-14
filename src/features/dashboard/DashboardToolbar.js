@@ -14,11 +14,6 @@ export function DashboardToolbar(props) {
       <div className="dashboard-dashboard-toolbar">
         <Row className="row-short">
           <div className="col-xs-w6 text-center">
-            <HighlightButton className="text-light" theme="DASHBOARD">
-              <div title="Aide">
-                <button className="btn btn-secondary">?</button>
-              </div>
-            </HighlightButton>
           </div>
           <div className="col-xs-w10 text-center"/>
           <div className="col-xs-w20 text-right">

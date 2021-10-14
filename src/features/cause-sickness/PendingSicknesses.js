@@ -60,7 +60,7 @@ export class PendingSicknesses extends Component {
   }
 
   render() {
-    let counter = 0;
+    let counter = 1;
     let sicknesses = [];
     if (this.props.causeSickness.pendings.FreeAsso_CauseSickness) {
       sicknesses = normalizedObjectModeler(
@@ -138,9 +138,13 @@ export class PendingSicknesses extends Component {
                 })}
               </InlineList>
             ) : (
-              <div>
-                <span className="p-3">Aucun animal malade</span>
-              </div>
+              <InlineList>
+                <Line oddEven={counter++}>
+                  <Col size={{ xs: 36 }}>
+                    <span className="p-3">Aucun animal malade</span>
+                  </Col>
+                </Line>
+              </InlineList>
             )}
             {this.props.causeSickness.loadPendingsPending && (
               <div className="inline-list">

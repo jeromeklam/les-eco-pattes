@@ -109,7 +109,7 @@ function Form(props) {
     <ResponsiveModalOrForm
       className=""
       title="Sites"
-      tab={values.currentTab}
+      tab={values.__currentTab}
       tabs={props.modify ? tabs.concat(modifyTabs) : tabs}
       size="lg"
       onSubmit={handleSubmit}
@@ -158,7 +158,7 @@ function Form(props) {
         </div>
       </div>
       <hr />
-      {values.currentTab === '1' && (
+      {values.__currentTab === '1' && (
         <div>
           <div className="row">
             <div className="col-sm-w24">
@@ -252,7 +252,7 @@ function Form(props) {
           </div>
         </div>
       )}
-      {values.currentTab === '2' && (
+      {values.__currentTab === '2' && (
         <div>
           <div className="row">
             <div className="col-sm-w18">
@@ -318,7 +318,7 @@ function Form(props) {
             )}
         </div>
       )}
-      {values.currentTab === '3' && (
+      {values.__currentTab === '3' && (
         <div className="row">
           {props.properties.map(oneProp => {
             let nameProp = 'site_' + oneProp;
@@ -342,7 +342,7 @@ function Form(props) {
           })}
         </div>
       )}
-      {values.currentTab === '4' && (
+      {values.__currentTab === '4' && (
         <div className="row">
           <div className="col-sm-w36">
             <InputTextarea
@@ -355,22 +355,22 @@ function Form(props) {
           </div>
         </div>
       )}
-      {values.currentTab === '5' && (
+      {values.__currentTab === '5' && (
         <div className="border border-secondary rounded overflow-x-hidden">
           <InlineCauses mode="site" siteId={values.id} />
         </div>
       )}
-      {values.currentTab === '6' && (
+      {values.__currentTab === '6' && (
         <div className="border border-secondary rounded overflow-x-hidden">
           <InlineAlerts objId={values.id} objName="FreeAsso_Site" object={values} />
         </div>
       )}
-      {values.currentTab === '7' && (
+      {values.__currentTab === '7' && (
         <div className="border border-secondary rounded overflow-x-hidden">
           <InlineDocuments siteId={values.id} />
         </div>
       )}
-      {values.currentTab === '8' && (
+      {values.__currentTab === '8' && (
         <div className="border border-secondary rounded overflow-x-hidden">
           <InlinePhotos siteId={values.id} />
         </div>

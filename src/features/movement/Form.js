@@ -46,7 +46,7 @@ const tabsEnd = [
 ];
 
 const initItem = item => {
-  if (!item.modify) {
+  if (!item.__modify) {
     item.move_type = item.param_mode || 'SIMPLE';
     item.move_from = new Date().toISOString();
     item.move_to = new Date().toISOString();
@@ -64,10 +64,9 @@ const initItem = item => {
   item.fromRequired = false;
   item.toRequired = false;
   item.globalDisabled = false;
-  if (item.modify && item.move_status === 'ARCHIVE') {
+  if (item.__modify && item.move_status === 'ARCHIVE') {
     item.globalDisabled = true;
   }
-  return item;
 };
 
 const afterChange = (name, item) => {
@@ -94,8 +93,6 @@ const afterChange = (name, item) => {
 };
 
 function Form(props) {
-  const modify = props.modify || false;
-  props.item.modify = modify;
   props.item.param_mode = props.mode || 'SIMPLE';
   props.item.param_site = props.fromSite || null;
   const {
@@ -116,15 +113,12 @@ function Form(props) {
     afterChange,
     initItem,
   );
-  //console.log("FK MVT ",values);
   let myTabs = tabs;
-  //if (values.move_type !== 'SIMPLE' && values.mode_type !== 'TRANSFER') {
   myTabs = tabs.concat(tabsFrom, tabsTo);
-  //}
   myTabs = myTabs.concat(tabsEnd);
   let disableSiteFrom = values.globalDisabled;
   let disableSiteTo = values.globalDisabled;
-  if (!values.globalDisabled  && modify) {
+  if (!values.globalDisabled  && values.__modify) {
     if (values.from_site) {
       disableSiteFrom = true;
     }
@@ -136,7 +130,7 @@ function Form(props) {
     <ResponsiveModalOrForm
       className=""
       title={getTypeLabel(values.move_type)}
-      tab={values.currentTab}
+      tab={values.__currentTab}
       tabs={myTabs}
       size="lg"
       onSubmit={handleSubmit}
@@ -148,7 +142,7 @@ function Form(props) {
     >
       <div className="card-body">
         <InputHidden name="id" id="id" value={values.id} />
-        {values.currentTab === '1' && (
+        {values.__currentTab === '1' && (
           <div>
             <div className="row">
               <div className="col-sm-w12">
@@ -221,7 +215,7 @@ function Form(props) {
             </div>
           </div>
         )}
-        {values.currentTab === '3' && (
+        {values.__currentTab === '3' && (
           <div>
             <div className="row">
               <div className="col-sm-w12">
@@ -390,7 +384,7 @@ function Form(props) {
             </div>
           </div>
         )}
-        {values.currentTab === '4' && (
+        {values.__currentTab === '4' && (
           <div>
             <div className="row">
               <div className="col-sm-w12">
@@ -559,9 +553,9 @@ function Form(props) {
             </div>
           </div>
         )}
-        {values.currentTab === '9' && (
+        {values.__currentTab === '9' && (
           <div>
-            {modify ? (
+            {values.__modify ? (
               <div className="border border-secondary rounded overflow-x-hidden">
                 <InlineCauses movement={values} />
               </div>

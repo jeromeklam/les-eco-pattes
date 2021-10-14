@@ -158,12 +158,6 @@ export class Page extends Component {
             <div>{this.props.children}</div>
           ) : (
             <div className="text-center mt-5 text-secondary">
-              <h4>
-                <FormattedMessage
-                  id="app.features.home.app.loading"
-                  defaultMessage="... Loading ..."
-                />
-              </h4>
               <CenteredLoading9X9 />
             </div>
           )}

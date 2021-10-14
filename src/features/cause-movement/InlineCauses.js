@@ -22,8 +22,8 @@ export class InlineCauses extends Component {
   };
 
   static getDerivedStateFromProps(props, state) {
-    if (props.cause !== state.cause) {
-      return { cause: props.cause, camv_id: 0, confirm: false };
+    if (props.cause !== state.cause || props.movement !== state.movement) {
+      return { cause: props.cause, movement: props.movement, camv_id: 0, confirm: false };
     }
     return null;
   }
@@ -71,7 +71,7 @@ export class InlineCauses extends Component {
     this.localLoadMovements();
     if (!this.state.emptyItem) {
       this.props.actions.loadOne(0).then(result => {
-         this.setState({emptyItem: this.props.causeMovement.emptyItem});
+        this.setState({ emptyItem: this.props.causeMovement.emptyItem });
       });
     }
   }
@@ -156,7 +156,13 @@ export class InlineCauses extends Component {
         return (
           <div className="cause-inline-movements">
             <div className="inline-list">
-              <div className={classnames('row row-title row-line', (counter++ % 2 !== 1) ? 'row-odd' : 'row-even')} key="cause-inline-movements">
+              <div
+                className={classnames(
+                  'row row-title row-line',
+                  counter++ % 2 !== 1 ? 'row-odd' : 'row-even',
+                )}
+                key="cause-inline-movements"
+              >
                 <div className="col-sm-w7 col-first">
                   <span>N° boucle</span>
                 </div>
@@ -175,32 +181,48 @@ export class InlineCauses extends Component {
               </div>
               {movements.map(movement => {
                 return (
-                  <HoverObserver onMouseEnter={() => {this.mouseEnter(movement.id)}} onMouseLeave={this.mouseLeave}>
-                    <div className={classnames('row row-line', (counter++ % 2 !== 1) ? 'row-odd' : 'row-even')} key={movement.id}>
+                  <HoverObserver
+                    onMouseEnter={() => {
+                      this.mouseEnter(movement.id);
+                    }}
+                    onMouseLeave={this.mouseLeave}
+                  >
+                    <div
+                      className={classnames(
+                        'row row-line',
+                        counter++ % 2 !== 1 ? 'row-odd' : 'row-even',
+                      )}
+                      key={movement.id}
+                    >
                       <div className="col-sm-w7 col-first">{movement.cause.cau_code}</div>
-                      <div className="col-sm-w7">{getCauseTypeLabel(this.props.causeType.items, movement.cause.cause_type.id)}</div>
+                      <div className="col-sm-w7">
+                        {getCauseTypeLabel(
+                          this.props.causeType.items,
+                          movement.cause.cause_type.id,
+                        )}
+                      </div>
                       <div className="col-sm-w3">{getSexlabel(movement.cause.cau_sex)}</div>
                       <div className="col-sm-w9">{movement.camv_comment}</div>
                       <div className="col-sm-w5">{statusLabel(movement.camv_status)}</div>
                       <div className="col-sm-w5 text-right col-last">
-                      {this.state.flipped && this.state.flipped === movement.id && 
-                        <div className="btn-group btn-group-sm" role="group" aria-label="...">
-                          {movement.camv_status === 'WAIT' && (
-                            <div className="btn btn-inline btn-primary">
-                              <SimpleCheckIcon
-                                onClick={() => this.onConfirmValidation(movement.id)}
+                        {this.state.flipped && this.state.flipped === movement.id && (
+                          <div className="btn-group btn-group-sm" role="group" aria-label="...">
+                            {movement.camv_status === 'WAIT' && (
+                              <div className="btn btn-inline btn-primary">
+                                <SimpleCheckIcon
+                                  onClick={() => this.onConfirmValidation(movement.id)}
+                                  className="text-light inline-action"
+                                />
+                              </div>
+                            )}
+                            <div className="btn btn-inline btn-warning">
+                              <DelOneIcon
+                                onClick={() => this.onConfirmMovement(movement.id)}
                                 className="text-light inline-action"
                               />
                             </div>
-                          )}
-                          <div className="btn btn-inline btn-warning">
-                            <DelOneIcon
-                              onClick={() => this.onConfirmMovement(movement.id)}
-                              className="text-light inline-action"
-                            />
                           </div>
-                        </div>
-                      }
+                        )}
                       </div>
                     </div>
                   </HoverObserver>
@@ -273,4 +295,9 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default injectIntl(connect(mapStateToProps, mapDispatchToProps)(InlineCauses));
+export default injectIntl(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps,
+  )(InlineCauses),
+);

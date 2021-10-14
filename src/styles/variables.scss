@@ -17,6 +17,9 @@ $theme-colors: (
   "inactive": lighten(#6c757d,20%),
   "selected": lighten(#95c11e, 40%),
   "picker": lighten(#5a4e4e, 54%),
+  "alternative": #951b81,
+  "gray": #aaaaaa,
+  "gray-light": #dee2e6
 );
 $grid-breakpoints: (
   xxs: 0,
@@ -89,3 +92,4 @@ $nav-tabs-link-active-color: #7ab255;
 
 // Disabled
 $enable-grid-classes: false;
+$input-disabled-bg: lighten(#5a4e4e, 65%);

@@ -6,7 +6,7 @@ import useForm from '../ui/useForm';
 import { clientTypeAsOptions } from '../client-type/functions.js';
 import { clientCategoryAsOptions } from '../client-category/functions.js';
 import { countryAsOptions } from '../country/functions.js';
-import { ResponsiveModalOrForm, InputTextarea } from '../ui';
+import { ResponsiveModalOrForm, InputTextarea, InputEmail, InputPhone } from '../ui';
 import {
   InputPicker as ClientInputPicker,
   InlineClients,
@@ -95,7 +95,7 @@ function Form(props) {
   return (
     <ResponsiveModalOrForm
       title="Contact"
-      tab={values.currentTab}
+      tab={values.__currentTab}
       tabs={values._clinique ? props.tabs.concat(tabsPlus) : props.tabs}
       size="lg"
       onSubmit={handleSubmit}
@@ -122,7 +122,7 @@ function Form(props) {
               ]}
             />
           </div>
-          <div className="col-sm-w9">
+          <div className="col-sm-w8">
             <InputText
               label="Nom"
               name="cli_lastname"
@@ -133,7 +133,7 @@ function Form(props) {
               error={getErrorMessage('cli_lastname')}
             />
           </div>
-          <div className="col-sm-w9">
+          <div className="col-sm-w8">
             <InputText
               label="Prénom"
               name="cli_firstname"
@@ -153,7 +153,7 @@ function Form(props) {
               error={getErrorMessage('client_type')}
             />
           </div>
-          <div className="col-md-w2">
+          <div className="col-md-w3">
             {values._veto && (
               <InputCheckbox
                 label="Sanitaire"
@@ -164,7 +164,6 @@ function Form(props) {
               />
             )}
           </div>
-          <div className="col-sm-w1"></div>
           <div className="col-sm-w3">
             <InputCheckbox
               label="Actif"
@@ -176,11 +175,11 @@ function Form(props) {
           </div>
         </div>
         <hr />
-        {values.currentTab === '1' && (
+        {values.__currentTab === '1' && (
           <div>
             <div className="row">
               <div className="col-sm-w8">
-                <InputText
+                <InputPhone
                   label="Portable"
                   name="cli_phone_gsm"
                   labelTop={true}
@@ -189,7 +188,7 @@ function Form(props) {
                 />
               </div>
               <div className="col-sm-w15">
-                <InputText
+                <InputEmail
                   label="Email"
                   name="cli_email"
                   labelTop={true}
@@ -291,11 +290,11 @@ function Form(props) {
             </div>
           </div>
         )}
-        {values.currentTab === '2' && (
+        {values.__currentTab === '2' && (
           <div>
             <div className="row">
               <div className="col-md-w8">
-                <InputText
+                <InputPhone
                   label="Téléphone"
                   name="cli_phone_home"
                   value={values.cli_phone_home}
@@ -304,7 +303,7 @@ function Form(props) {
                 />
               </div>
               <div className="col-sm-w15">
-                <InputText
+                <InputEmail
                   label="Email 2"
                   name="cli_email_2"
                   labelTop={true}
@@ -337,7 +336,7 @@ function Form(props) {
             </div>
           </div>
         )}
-        {values.currentTab === '3' && (
+        {values.__currentTab === '3' && (
           <div className="border border-secondary rounded overflow-x-hidden">
             <InlineClients parentId={values.id} />
           </div>

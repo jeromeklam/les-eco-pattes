@@ -89,7 +89,7 @@ function Form(props) {
   return (
     <ResponsiveModalOrForm
       title={values.alert_title}
-      tab={values.currentTab}
+      tab={values.__currentTab}
       tabs={props.tabs}
       size="lg"
       onSubmit={handleSubmit}
@@ -154,7 +154,7 @@ function Form(props) {
         </div>
       </div>
       <hr />
-      {values.currentTab === '1' && (
+      {values.__currentTab === '1' && (
         <div>
           <div className="row">
             <div className="col-xs-w27">
@@ -273,7 +273,7 @@ function Form(props) {
           </div>
         </div>
       )}
-      {values.currentTab === '2' && (
+      {values.__currentTab === '2' && (
         <div>
           <div className="row">
             <div className="col-xs-w26">
@@ -288,7 +288,7 @@ function Form(props) {
           </div>
         </div>
       )}
-      {values.currentTab === '3' && (
+      {values.__currentTab === '3' && (
         <div>
           <div className="row">
             <div className="col-xs-w36">
@@ -304,7 +304,7 @@ function Form(props) {
           </div>
         </div>
       )}
-      {values.currentTab === '4' && (
+      {values.__currentTab === '4' && (
         <div>
           <div className="row">
             <div className="col-xs-w5">

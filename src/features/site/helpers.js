@@ -30,6 +30,20 @@ const externCol = [
   { value: false, label: '' },
 ];
 
+export const displayItemPicker = (item) => {
+  if (item && item.id) {
+    return <span>{item.site_name}</span>
+  }
+  return null;
+}
+
+export const getPickerDisplay = (item) => {
+  if (item && item.id) {
+    return <span>{item.site_name}</span>
+  }
+  return null;
+}
+
 export const getSelectActions = ({ props, onSelectMenu, onPrint }) => {
   let arrOne = [
     {
@@ -113,8 +127,8 @@ export const getInlineActions = ({
       },
       param: 'object',
       theme: 'secondary',
-      icon: <CauseIcon color="white" />,
-      role: 'DETAIL',
+      icon: <CauseIcon />,
+      role: 'OTHER',
       active: state.animalsSite > 0,
     },
     {
@@ -125,8 +139,8 @@ export const getInlineActions = ({
       },
       param: 'object',
       theme: 'secondary',
-      icon: <FollowIcon color="white" />,
-      role: 'DETAIL',
+      icon: <FollowIcon />,
+      role: 'OTHER',
       active: state.alertsSite > 0,
     },
     {
@@ -137,8 +151,8 @@ export const getInlineActions = ({
       },
       param: 'object',
       theme: 'secondary',
-      icon: <DocumentIcon color="white" />,
-      role: 'DETAIL',
+      icon: <DocumentIcon />,
+      role: 'OTHER',
       active: state.documentsSite > 0,
     },
     {
@@ -149,8 +163,8 @@ export const getInlineActions = ({
       },
       param: 'object',
       theme: 'secondary',
-      icon: <PhotoIcon color="white" />,
-      role: 'DETAIL',
+      icon: <PhotoIcon />,
+      role: 'OTHER',
       active: state.photosSite > 0,
     },
     {
@@ -159,7 +173,7 @@ export const getInlineActions = ({
       onClick: onZoomMap,
       param: 'object',
       theme: 'secondary',
-      icon: <ZoomMapIcon color="white" />,
+      icon: <ZoomMapIcon />,
       role: 'DETAIL',
     },
     {

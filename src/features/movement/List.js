@@ -6,7 +6,7 @@ import * as actions from './redux/actions';
 import { normalizedObjectModeler } from 'jsonapi-front';
 import { ResponsiveQuickSearch } from 'react-bootstrap-front';
 import { InlineCauses } from '../cause-movement';
-import { Search as SearchIcon } from '../icons';
+import { Search as SearchIcon, Movement as Movementicon } from '../icons';
 import {
   deleteSuccess,
   deleteError,
@@ -189,6 +189,7 @@ export class List extends Component {
     if (crit) {
       search = crit.getFilterCrit();
     }
+    const counter = this.props.movement.items.length + ' / ' + this.props.movement.totalItems;
     const quickSearch = (
       <ResponsiveQuickSearch
         name="quickSearch"
@@ -204,7 +205,9 @@ export class List extends Component {
         <UiList
           title="Mouvements"
           cols={cols}
+          icon={<Movementicon />}
           items={items}
+          counter={counter}
           quickSearch={quickSearch}
           mainCol="move_from"
           onClick={this.onSelectList}

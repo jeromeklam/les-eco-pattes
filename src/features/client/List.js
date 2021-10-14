@@ -201,14 +201,16 @@ export class List extends Component {
         icon={<SearchIcon className="text-secondary" />}
       />
     );
+    const counter = this.props.client.items.length + ' / ' + this.props.client.totalItems;
     const { selected } = this.props.client;
     return (
       <div>
         <UiList
           title="Contacts"
-          icon=<ClientIcon />
+          icon={<ClientIcon />}
           cols={cols}
           items={items}
+          counter={counter}
           quickSearch={quickSearch}
           mainCol="cli_firstname"
           onClick={this.onSelectList}

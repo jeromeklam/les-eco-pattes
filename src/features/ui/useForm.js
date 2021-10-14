@@ -1,10 +1,10 @@
 import { useState } from 'react';
 import { jsonApiNormalizer, normalizedObjectModeler } from 'jsonapi-front';
 import { freeAssoApi } from '../../common';
+import cloneDeep from 'lodash/cloneDeep';
 
 const explodeReduxModel = obj => {
-  let ret = { ...obj };
-  return ret;
+  return cloneDeep(obj);
 };
 
 const _loadUser = id => {
@@ -54,7 +54,8 @@ const _loadClient = id => {
     id = '0';
   }
   return freeAssoApi.get(
-    '/v1/asso/client/' + id + '?include=lang,country,client_category,client_type,parent_client', {},
+    '/v1/asso/client/' + id + '?include=lang,country,client_category,client_type',
+    {},
   );
 };
 
@@ -75,466 +76,308 @@ const useForm = (
   intl = null,
   afterChange = null,
   init = null,
+  locked = [],
+  rates = {},
+  inputMoney = 'EUR',
+  dbMoney = 'EUR',
 ) => {
-  const initial = init ? init(initialState) : initialState;
   const [values, setValues] = useState({
-    ...initial,
-    currentTab: initialTab,
-    loadCauseType: false,
-    loadSiteType: false,
-    loadClient: false,
-    loadContract: false,
-    loadCause: false,
-    loadSite: false,
-    loadUser: false,
-    loadSickness: false,
-    errors: errors,
-    sending: false,
+    ...initialState,
+    __currentTab: initialTab || '1',
+    __create: parseInt(initialState.id, 10) <= 0 ? true : false,
+    __modify: parseInt(initialState.id, 10) > 0 ? true : false,
+    __loadCauseType: false,
+    __loadSiteType: false,
+    __loadClient: false,
+    __loadContract: false,
+    __loadCause: false,
+    __loadSite: false,
+    __loadUser: false,
+    __loadSickness: false,
+    __sending: false,
+    __locked: locked,
+    __currentMoney: inputMoney,
+    __rates: rates,
+    __dbMoney: dbMoney,
+    __inputMoney: inputMoney,
+    __getRate: (from, to) => {
+      const idx = rates.find(elem => elem.rate_money_from === from && elem.rate_money_to === to);
+      if (idx) {
+        return idx.rate_change;
+      }
+      return 1;
+    },
   });
+  if (init && !values.__initiated) {
+    init(values, setValues);
+  }
+  values.__initiated = true;
+  if (values && initialState && values.__ts && initialState.__ts && values.__ts !== initialState.__ts) {
+    setValues({
+      ...values,
+      ...initialState,
+      __create: parseInt(initialState.id, 10) <= 0 ? true : false,
+      __modify: parseInt(initialState.id, 10) > 0 ? true : false,
+    });
+  }
+
+  const handleSave = event => {
+    if (event) event.preventDefault();
+    onSubmit(values, false);
+  };
 
   const handleChange = event => {
     if (event && event.persist) {
       event.persist();
     }
-    values.sending = false;
+    values.__sending = false;
     let tType = event.target.dataset && event.target.dataset.type ? event.target.dataset.type : '';
     if (tType === '') {
       tType = event.target.type || 'text';
     }
     const tName = event.target.name;
-    const elems = tName.split('.');
-    const first = elems.shift();
     let datas = null;
-    if (elems.length <= 0) {
-      switch (tType) {
-        case 'checkbox':
-          datas = event.target.checked || false;
-          values[first] = datas;
-          break;
-        case 'FreeSSO_User':
-          if (!values.loadUser) {
-            const id = event.target.value || '0';
-            values.loadUser = true;
-            setValues(explodeReduxModel(values));
-            _loadUser(id)
-              .then(result => {
-                values.loadUser = false;
-                if (result && result.data) {
-                  const lines = jsonApiNormalizer(result.data);
-                  const item = normalizedObjectModeler(lines, 'FreeSSO_User', id, {
-                    eager: true,
-                  });
-                  values[first] = item;
-                  setValues(explodeReduxModel(values));
-                  if (afterChange) {
-                    afterChange(event.target.name, values);
-                  }
-                }
-              })
-              .catch(err => {
-                values.loadUser = false;
-                setValues(explodeReduxModel(values));
-              });
-          }
-          break;
-        case 'FreeAsso_Cause':
-          if (!values.loadCause) {
-            const id = event.target.value || '0';
-            values.loadCause = true;
-            setValues(explodeReduxModel(values));
-            _loadCause(id)
-              .then(result => {
-                values.loadCause = false;
-                if (result && result.data) {
-                  const lines = jsonApiNormalizer(result.data);
-                  const item = normalizedObjectModeler(lines, 'FreeAsso_Cause', id, {
-                    eager: true,
-                  });
-                  values[first] = item;
-                  setValues(explodeReduxModel(values));
-                  if (afterChange) {
-                    afterChange(event.target.name, values);
-                  }
-                }
-              })
-              .catch(err => {
-                values.loadCause = false;
-                setValues(explodeReduxModel(values));
-              });
-          }
-          break;
-        case 'FreeAsso_Client':
-          if (!values.loadClient) {
-            const id = event.target.value || '0';
-            values.loadClient = true;
-            setValues(explodeReduxModel(values));
-            _loadClient(id)
-              .then(result => {
-                values.loadClient = false;
-                if (result && result.data) {
-                  const lines = jsonApiNormalizer(result.data);
-                  const item = normalizedObjectModeler(lines, 'FreeAsso_Client', id, {
-                    eager: true,
-                  });
-                  values[first] = item;
-                  if (afterChange) {
-                    afterChange(event.target.name, values);
-                  }
-                  setValues(explodeReduxModel(values));
-                }
-              })
-              .catch(err => {
-                values.loadClient = false;
-                setValues(explodeReduxModel(values));
-              });
-          }
-          break;
-        case 'FreeAsso_Contract':
-          if (!values.loadContract) {
-            const id = event.target.value || '0';
-            values.loadContract = true;
-            setValues(explodeReduxModel(values));
-            _loadContract(id)
-              .then(result => {
-                values.loadContract = false;
-                if (result && result.data) {
-                  const lines = jsonApiNormalizer(result.data);
-                  const item = normalizedObjectModeler(lines, 'FreeAsso_Contract', id, {
-                    eager: true,
-                  });
-                  values[first] = item;
-                  if (afterChange) {
-                    afterChange(event.target.name, values);
-                  }
-                  setValues(explodeReduxModel(values));
-                }
-              })
-              .catch(err => {
-                values.loadContract = false;
-                setValues(explodeReduxModel(values));
-              });
-          }
-          break;
-        case 'FreeAsso_SiteType':
-          if (!values.loadSiteType) {
-            const id = event.target.value || '0';
-            values.loadSiteType = true;
-            setValues(explodeReduxModel(values));
-            _loadSiteType(id)
-              .then(result => {
-                values.loadSiteType = false;
-                if (result && result.data) {
-                  const lines = jsonApiNormalizer(result.data);
-                  const item = normalizedObjectModeler(lines, 'FreeAsso_SiteType', id, {
-                    eager: true,
-                  });
-                  values[first] = item;
-                  if (afterChange) {
-                    afterChange(event.target.name, values);
-                  }
-                  setValues(explodeReduxModel(values));
-                }
-              })
-              .catch(err => {
-                values.loadSiteType = false;
-                setValues(explodeReduxModel(values));
-              });
-          }
-          break;
-        case 'FreeAsso_Site':
-          if (!values.loadSite) {
-            const id = event.target.value || '0';
-            values.loadSite = true;
-            setValues(explodeReduxModel(values));
-            _loadSite(id)
-              .then(result => {
-                values.loadSite = false;
-                if (result && result.data) {
-                  const lines = jsonApiNormalizer(result.data);
-                  const item = normalizedObjectModeler(lines, 'FreeAsso_Site', id, { eager: true });
-                  values[first] = item;
-                  if (afterChange) {
-                    afterChange(event.target.name, values);
-                  }
-                  setValues(explodeReduxModel(values));
-                }
-              })
-              .catch(err => {
-                values.loadSite = false;
-                setValues(explodeReduxModel(values));
-              });
-          }
-          break;
-        case 'FreeAsso_Sickness':
-          if (!values.loadSickness) {
-            const id = event.target.value || '0';
-            values.loadSickness = true;
-            setValues(explodeReduxModel(values));
-            _loadSickness(id)
-              .then(result => {
-                values.loadSickness = false;
-                if (result && result.data) {
-                  const lines = jsonApiNormalizer(result.data);
-                  const item = normalizedObjectModeler(lines, 'FreeAsso_Sickness', id, {
-                    eager: true,
-                  });
-                  values[first] = item;
-                  if (afterChange) {
-                    afterChange(event.target.name, values);
-                  }
-                  setValues(explodeReduxModel(values));
-                }
-              })
-              .catch(err => {
-                values.loadSickness = false;
-                setValues(explodeReduxModel(values));
-              });
-          }
-          break;
-        default:
-          datas = event.target.value;
-          values[first] = datas;
-          if (afterChange) {
-            afterChange(event.target.name, values);
-          }
-          break;
+    let fromObj = values;
+    let elems = tName.split('.');
+    let first = null;
+    while (elems.length > 0) {
+      if (first !== null) {
+        fromObj = fromObj[first];
       }
+      first = elems.shift();
+    }
+    if (tType === 'checkbox') {
+      datas = event.target.checked || false;
+      fromObj[first] = datas;
     } else {
-      datas = values[first];
-      if (!datas) {
-        datas = {};
-        tType = event.target.dataset && event.target.dataset.type ? event.target.dataset.type : '';
-      }
-      if (datas.id !== undefined && datas.type) {
-        tType = datas.type;
-      }
-      const second = elems.shift();
-      switch (tType) {
-        case 'checkbox':
-          datas[second] = event.target.checked || false;
-          values[first] = datas;
-          break;
-        case 'FreeSSO_User':
-          if (!values.loadUser) {
-            const id = event.target.value || '0';
-            values.loadUser = true;
-            setValues(explodeReduxModel(values));
-            _loadUser(id)
-              .then(result => {
-                values.loadUser = false;
-                if (result && result.data) {
-                  const lines = jsonApiNormalizer(result.data);
-                  const item = normalizedObjectModeler(lines, 'FreeSSO_User', id, {
-                    eager: true,
-                  });
-                  values[first] = item;
-                  if (afterChange) {
-                    afterChange(event.target.name, values);
+      if (event.target.value === null) {
+        fromObj[first] = null;
+      } else {
+        switch (tType) {
+          case 'FreeSSO_User':
+            if (!values.__loadUser) {
+              const id = event.target.value || '0';
+              values.__loadUser = true;
+              setValues(explodeReduxModel(values));
+              _loadUser(id)
+                .then(result => {
+                  values.__loadUser = false;
+                  if (result && result.data) {
+                    const lines = jsonApiNormalizer(result.data);
+                    const item = normalizedObjectModeler(lines, 'FreeSSO_User', id, {
+                      eager: true,
+                    });
+                    fromObj[first] = item;
+                    if (afterChange) {
+                      afterChange(event.target.name, values);
+                    }
+                    setValues(explodeReduxModel(values));
                   }
+                })
+                .catch(err => {
+                  values.__loadUser = false;
                   setValues(explodeReduxModel(values));
-                }
-              })
-              .catch(err => {
-                values.loadUser = false;
-                setValues(explodeReduxModel(values));
-              });
-          }
-          break;
-        case 'FreeAsso_CauseType':
-          if (!values.loadCauseType) {
-            const id = event.target.value || '0';
-            values.loadCauseType = true;
-            setValues(explodeReduxModel(values));
-            _loadCauseType(id)
-              .then(result => {
-                values.loadCauseType = false;
-                if (result && result.data) {
-                  const lines = jsonApiNormalizer(result.data);
-                  const item = normalizedObjectModeler(lines, 'FreeAsso_CauseType', id, {
-                    eager: true,
-                  });
-                  values[first] = item;
-                  if (afterChange) {
-                    afterChange(event.target.name, values);
+                });
+            }
+            break;
+          case 'FreeAsso_Cause':
+            if (!values.__loadCause) {
+              const id = event.target.value || '0';
+              values.__loadCause = true;
+              setValues(explodeReduxModel(values));
+              _loadCause(id)
+                .then(result => {
+                  values.__loadCause = false;
+                  if (result && result.data) {
+                    const lines = jsonApiNormalizer(result.data);
+                    const item = normalizedObjectModeler(lines, 'FreeAsso_Cause', id, {
+                      eager: true,
+                    });
+                    fromObj[first] = item;
+                    if (afterChange) {
+                      afterChange(event.target.name, values);
+                    }
+                    setValues(explodeReduxModel(values));
                   }
+                })
+                .catch(err => {
+                  values.__loadCause = false;
                   setValues(explodeReduxModel(values));
-                }
-              })
-              .catch(err => {
-                values.loadCauseType = false;
-                setValues(explodeReduxModel(values));
-              });
-          }
-          break;
-        case 'FreeAsso_SiteType':
-          if (!values.loadSiteType) {
-            const id = event.target.value || '0';
-            values.loadSiteType = true;
-            setValues(explodeReduxModel(values));
-            _loadSiteType(id)
-              .then(result => {
-                values.loadSiteType = false;
-                if (result && result.data) {
-                  const lines = jsonApiNormalizer(result.data);
-                  const item = normalizedObjectModeler(lines, 'FreeAsso_SiteType', id, {
-                    eager: true,
-                  });
-                  values[first] = item;
-                  if (afterChange) {
-                    afterChange(event.target.name, values);
+                });
+            }
+            break;
+          case 'FreeAsso_CauseType':
+            if (!values.__loadCauseType) {
+              const id = event.target.value || '0';
+              values.__loadCauseType = true;
+              setValues(explodeReduxModel(values));
+              _loadCauseType(id)
+                .then(result => {
+                  values.__loadCauseType = false;
+                  if (result && result.data) {
+                    const lines = jsonApiNormalizer(result.data);
+                    const item = normalizedObjectModeler(lines, 'FreeAsso_CauseType', id, {
+                      eager: true,
+                    });
+                    fromObj[first] = item;
+                    if (afterChange) {
+                      afterChange(event.target.name, values);
+                    }
+                    setValues(explodeReduxModel(values));
                   }
+                })
+                .catch(err => {
+                  values.__loadCauseType = false;
                   setValues(explodeReduxModel(values));
-                }
-              })
-              .catch(err => {
-                values.loadSiteType = false;
-                setValues(explodeReduxModel(values));
-              });
-          }
-          break;
-        case 'FreeAsso_Cause':
-          if (!values.loadCause) {
-            const id = event.target.value || '0';
-            values.loadCause = true;
-            setValues(explodeReduxModel(values));
-            _loadCause(id)
-              .then(result => {
-                values.loadCause = false;
-                if (result && result.data) {
-                  const lines = jsonApiNormalizer(result.data);
-                  const item = normalizedObjectModeler(lines, 'FreeAsso_Cause', id, {
-                    eager: true,
-                  });
-                  values[first] = item;
-                  if (afterChange) {
-                    afterChange(event.target.name, values);
+                });
+            }
+            break;
+          case 'FreeAsso_Client':
+            if (!values.__loadClient) {
+              const id = event.target.value || '0';
+              values.__loadClient = true;
+              setValues(explodeReduxModel(values));
+              _loadClient(id)
+                .then(result => {
+                  values.__loadClient = false;
+                  if (result && result.data) {
+                    const lines = jsonApiNormalizer(result.data);
+                    const item = normalizedObjectModeler(lines, 'FreeAsso_Client', id, {
+                      eager: true,
+                    });
+                    fromObj[first] = item;
+                    if (afterChange) {
+                      afterChange(event.target.name, values);
+                    }
+                    setValues(explodeReduxModel(values));
                   }
+                })
+                .catch(err => {
+                  values.__loadClient = false;
                   setValues(explodeReduxModel(values));
-                }
-              })
-              .catch(err => {
-                values.loadCause = false;
-                setValues(explodeReduxModel(values));
-              });
-          }
-          break;
-        case 'FreeAsso_Client':
-          if (!values.loadClient) {
-            const id = event.target.value || '0';
-            values.loadClient = true;
-            setValues(explodeReduxModel(values));
-            _loadClient(id)
-              .then(result => {
-                values.loadClient = false;
-                if (result && result.data) {
-                  const lines = jsonApiNormalizer(result.data);
-                  const item = normalizedObjectModeler(lines, 'FreeAsso_Client', id, {
-                    eager: true,
-                  });
-                  values[first] = item;
-                  if (afterChange) {
-                    afterChange(event.target.name, values);
+                });
+            }
+            break;
+          case 'FreeAsso_Contract':
+            if (!values.__loadContract) {
+              const id = event.target.value || '0';
+              values.__loadContract = true;
+              setValues(explodeReduxModel(values));
+              _loadContract(id)
+                .then(result => {
+                  values.__loadContract = false;
+                  if (result && result.data) {
+                    const lines = jsonApiNormalizer(result.data);
+                    const item = normalizedObjectModeler(lines, 'FreeAsso_Contract', id, {
+                      eager: true,
+                    });
+                    fromObj[first] = item;
+                    if (afterChange) {
+                      afterChange(event.target.name, values);
+                    }
+                    setValues(explodeReduxModel(values));
                   }
+                })
+                .catch(err => {
+                  values.__loadContract = false;
                   setValues(explodeReduxModel(values));
-                }
-              })
-              .catch(err => {
-                values.loadClient = false;
-                setValues(explodeReduxModel(values));
-              });
-          }
-          break;
-        case 'FreeAsso_Contract':
-          if (!values.loadContract) {
-            const id = event.target.value || '0';
-            values.loadContract = true;
-            setValues(explodeReduxModel(values));
-            _loadContract(id)
-              .then(result => {
-                values.loadContract = false;
-                if (result && result.data) {
-                  const lines = jsonApiNormalizer(result.data);
-                  const item = normalizedObjectModeler(lines, 'FreeAsso_Contract', id, {
-                    eager: true,
-                  });
-                  values[first] = item;
-                  if (afterChange) {
-                    afterChange(event.target.name, values);
+                });
+            }
+            break;
+          case 'FreeAsso_SiteType':
+            if (!values.__loadSiteType) {
+              const id = event.target.value || '0';
+              values.__loadSiteType = true;
+              setValues(explodeReduxModel(values));
+              _loadSiteType(id)
+                .then(result => {
+                  values.__loadSiteType = false;
+                  if (result && result.data) {
+                    const lines = jsonApiNormalizer(result.data);
+                    const item = normalizedObjectModeler(lines, 'FreeAsso_SiteType', id, {
+                      eager: true,
+                    });
+                    fromObj[first] = item;
+                    if (afterChange) {
+                      afterChange(event.target.name, values);
+                    }
+                    setValues(explodeReduxModel(values));
                   }
+                })
+                .catch(err => {
+                  values.__loadSiteType = false;
                   setValues(explodeReduxModel(values));
-                }
-              })
-              .catch(err => {
-                values.loadContract = false;
-                setValues(explodeReduxModel(values));
-              });
-          }
-          break;
-        case 'FreeAsso_Site':
-          if (!values.loadSite) {
-            const id = event.target.value || '0';
-            values.loadSite = true;
-            setValues(explodeReduxModel(values));
-            _loadSite(id)
-              .then(result => {
-                values.loadSite = false;
-                if (result && result.data) {
-                  const lines = jsonApiNormalizer(result.data);
-                  const item = normalizedObjectModeler(lines, 'FreeAsso_Site', id, { eager: true });
-                  values[first] = item;
-                  if (afterChange) {
-                    afterChange(event.target.name, values);
+                });
+            }
+            break;
+          case 'FreeAsso_Site':
+            if (!values.__loadSite) {
+              const id = event.target.value || '0';
+              values.__loadSite = true;
+              setValues(explodeReduxModel(values));
+              _loadSite(id)
+                .then(result => {
+                  values.__loadSite = false;
+                  if (result && result.data) {
+                    const lines = jsonApiNormalizer(result.data);
+                    const item = normalizedObjectModeler(lines, 'FreeAsso_Site', id, {
+                      eager: true,
+                    });
+                    fromObj[first] = item;
+                    if (afterChange) {
+                      afterChange(event.target.name, values);
+                    }
+                    setValues(explodeReduxModel(values));
                   }
+                })
+                .catch(err => {
+                  values.__loadSite = false;
                   setValues(explodeReduxModel(values));
-                }
-              })
-              .catch(err => {
-                values.loadSite = false;
-                setValues(explodeReduxModel(values));
-              });
-          }
-          break;
-        case 'FreeAsso_Sickness':
-          if (!values.loadSickness) {
-            const id = event.target.value || '0';
-            values.loadSickness = true;
-            setValues(explodeReduxModel(values));
-            _loadSickness(id)
-              .then(result => {
-                values.loadSickness = false;
-                if (result && result.data) {
-                  const lines = jsonApiNormalizer(result.data);
-                  const item = normalizedObjectModeler(lines, 'FreeAsso_Sickness', id, {
-                    eager: true,
-                  });
-                  values[first] = item;
-                  if (afterChange) {
-                    afterChange(event.target.name, values);
+                });
+            }
+            break;
+          case 'FreeAsso_Sickness':
+            if (!values.__loadSickness) {
+              const id = event.target.value || '0';
+              values.__loadSickness = true;
+              setValues(explodeReduxModel(values));
+              _loadSickness(id)
+                .then(result => {
+                  values.__loadSickness = false;
+                  if (result && result.data) {
+                    const lines = jsonApiNormalizer(result.data);
+                    const item = normalizedObjectModeler(lines, 'FreeAsso_Sickness', id, {
+                      eager: true,
+                    });
+                    fromObj[first] = item;
+                    if (afterChange) {
+                      afterChange(event.target.name, values);
+                    }
+                    setValues(explodeReduxModel(values));
                   }
+                })
+                .catch(err => {
+                  values.__loadSickness = false;
                   setValues(explodeReduxModel(values));
-                }
-              })
-              .catch(err => {
-                values.loadSickness = false;
-                setValues(explodeReduxModel(values));
-              });
-          }
-          break;
-        default:
-          datas[second] = event.target.value;
-          values[first] = datas;
-          if (afterChange) {
-            afterChange(event.target.name, values);
-          }
-          break;
+                });
+            }
+            break;
+          default:
+            datas = event.target.value;
+            fromObj[first] = datas;
+            if (afterChange) {
+              afterChange(event.target.name, values);
+            }
+            break;
+        }
       }
     }
     setValues(explodeReduxModel(values));
   };
 
   const handleSubmit = event => {
-    if (!values.sending) {
-      //values.sending = true;
+    if (!values.__sending) {
+      //values.__sending = true;
       setValues(explodeReduxModel(values));
       if (event) event.preventDefault();
       onSubmit(values);
@@ -542,8 +385,8 @@ const useForm = (
   };
 
   const handleCancel = event => {
-    if (!values.sending) {
-      //values.sending = true;
+    if (!values.__sending) {
+      //values.__sending = true;
       setValues(explodeReduxModel(values));
       if (event) event.preventDefault();
       onCancel();
@@ -551,19 +394,70 @@ const useForm = (
   };
 
   const handleNavTab = keyTab => {
-    setValues({ ...values, currentTab: keyTab });
+    setValues({ ...values, __currentTab: `${keyTab}` });
+  };
+
+  const getCurrentTab = () => {
+    return values.__currentTab;
+  };
+
+  const getCurrentMoney = () => {
+    return values.__currentMoney;
+  };
+
+  const isLocked = p_field => {
+    const found = values.__locked.find(elem => elem.field === p_field);
+    if (found) {
+      return found.locked;
+    }
+    return null;
+  };
+
+  const toggleLockOn = p_field => {
+    const found = values.__locked.findIndex(elem => elem.field === p_field);
+    if (found >= 0) {
+      values.__locked[found].locked = true;
+    }
+    setValues({ ...values });
+  };
+
+  const toggleLockOff = p_field => {
+    const found = values.__locked.findIndex(elem => elem.field === p_field);
+    if (found >= 0) {
+      values.__locked[found].locked = false;
+    }
+    setValues({ ...values });
+  };
+
+  const switchMoney = () => {
+    if (afterChange) {
+      if (values.__currentMoney === values.__dbMoney) {
+        values.__currentMoney = values.__inputMoney;
+      } else {
+        values.__currentMoney = values.__dbMoney;
+      }
+      afterChange('currentMoney', values);
+    }
+    setValues({ ...values });
   };
 
   const getErrorMessage = field => {
-    //const intl = useIntl();
     let message = false;
     if (errors && errors.errors) {
       errors.errors.forEach(error => {
-        if (error.source && error.source.parameter === field) {
-          if (intl) {
-            message = intl.formatMessage({ id: 'app.errors.code.' + error.code, defaultMessage: 'Unknown error ' + error.code });
-          }
-          return true;
+        if (error.source) {
+          const params = error.source.parameter.split(',');
+          params.forEach(param => {
+            if (param === field) {
+              if (intl) {
+                message = intl.formatMessage({
+                  id: 'app.errors.code.' + error.code,
+                  defaultMessage: 'Unknown error ' + error.code,
+                });
+              }
+              return true;
+            }
+          });
         }
       });
     }
@@ -573,10 +467,17 @@ const useForm = (
   return {
     values,
     handleChange,
+    handleSave,
     handleSubmit,
     handleCancel,
     handleNavTab,
     getErrorMessage,
+    getCurrentTab,
+    getCurrentMoney,
+    isLocked,
+    toggleLockOn,
+    toggleLockOff,
+    switchMoney,
   };
 };
 

@@ -82,6 +82,18 @@ export const getInlineActions = ({
 }) => {
   return [
     {
+      name: 'cause',
+      label: 'Animaux',
+      onClick: obj => {
+        onSelectList(obj, 'cause');
+      },
+      param: 'object',
+      theme: 'secondary',
+      icon: <CauseIcon />,
+      role: 'OTHER',
+      active: state.mode === 'cause',
+    },
+    {
       name: 'valid',
       label: 'Validation',
       onClick: obj => {
@@ -89,8 +101,8 @@ export const getInlineActions = ({
       },
       param: 'object',
       theme: 'primary',
-      icon: <ValidIcon color="white" />,
-      role: 'OTHER',
+      icon: <ValidIcon />,
+      role: 'ACTION',
       fShow: item => {
         if (item && item.move_status === 'WAIT') {
           return true;
@@ -99,18 +111,6 @@ export const getInlineActions = ({
         }
       },
       confirm: "Confirmez-vous la validation du mouvement ?",
-    },
-    {
-      name: 'cause',
-      label: 'Animaux',
-      onClick: obj => {
-        onSelectList(obj, 'cause');
-      },
-      param: 'object',
-      theme: 'secondary',
-      icon: <CauseIcon color="white" />,
-      role: 'OTHER',
-      active: state.mode === 'cause',
     },
     {
       name: 'modify',

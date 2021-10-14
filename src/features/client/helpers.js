@@ -52,6 +52,39 @@ export const getSelectActions = ({ props, onSelectMenu, onPrint }) => {
   return arrOne;
 };
 
+export const displayItemPicker = item => {
+  if (item && item.id) {
+    return (
+      <>
+        <span>
+          {item.cli_lastname} {item.cli_firstname}
+        </span>
+        <br />
+        <span>
+          {item.cli_cp} {item.cli_town}
+        </span>
+      </>
+    );
+  }
+  return null;
+};
+
+export const getPickerDisplay = item => {
+  if (item && item.id) {
+    return (
+      <>
+        <span>
+          {item.cli_lastname} {item.cli_firstname}
+        </span>
+        <br />
+        <span>
+          {item.cli_cp} {item.cli_town}
+        </span>
+      </>
+    );
+  }
+  return null;
+};
 
 export const getGlobalActions = ({ onClearFilters, onCreate }) => {
   return [
@@ -100,6 +133,7 @@ export const getCols = ({ props }) => {
       title: true,
       first: true,
       hidden: true,
+      card: { role: 'ID'},
     },
     {
       name: 'lastname',
@@ -115,6 +149,7 @@ export const getCols = ({ props }) => {
       selectable: true,
       first: true,
       title: true,
+      card: { role: 'TITLE'},
     },
     {
       name: 'firstname',
@@ -122,7 +157,8 @@ export const getCols = ({ props }) => {
       col: 'cli_firstname',
       size: '6',
       mob_size: '18',
-      sortable: false,
+      sortable: true,
+      filterable: { type: 'text' },
       title: true,
       hidden: true,
     },
@@ -164,6 +200,7 @@ export const getCols = ({ props }) => {
       hidden: false,
       filterable: { type: 'text' },
       title: true,
+      card: { role: 'FIELD', position: 10 },
     },
     {
       name: 'town',
@@ -174,6 +211,7 @@ export const getCols = ({ props }) => {
       sortable: true,
       filterable: { type: 'text' },
       title: true,
+      card: { role: 'FIELD', position: 20 },
     },
     {
       name: 'email',
@@ -186,6 +224,7 @@ export const getCols = ({ props }) => {
       title: false,
       hidden: true,
       last: true,
+      card: { role: 'FIELD', position: 30 },
     },
     {
       name: 'type',

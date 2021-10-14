@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import { injectIntl } from 'react-intl';
 import * as actions from './redux/actions';
 import { normalizedObjectModeler } from 'jsonapi-front';
 import { HoverObserver, ResponsiveConfirm } from 'react-bootstrap-front';
@@ -94,7 +95,7 @@ export class PendingMovements extends Component {
   }
 
   render() {
-    let counter = 0;
+    let counter = 1;
     let movements = [];
     if (this.props.movement.pendings && this.props.movement.pendings.FreeAsso_Movement) {
       movements = normalizedObjectModeler(this.props.movement.pendings, 'FreeAsso_Movement');
@@ -221,4 +222,4 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(PendingMovements);
+export default injectIntl(connect(mapStateToProps, mapDispatchToProps)(PendingMovements));

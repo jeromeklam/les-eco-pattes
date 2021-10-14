@@ -1,104 +1,215 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { jsonApiNormalizer, objectToQueryString, normalizedObjectModeler } from 'jsonapi-front';
+import { injectIntl } from 'react-intl';
+import { connect } from 'react-redux';
+import {
+  jsonApiNormalizer,
+  normalizedObjectModeler,
+  objectToQueryString,
+  getNewNormalizedObject,
+} from 'jsonapi-front';
+import { Filter } from 'react-bootstrap-front';
+import { SearchModal, ResponsiveInlineList } from '../ui';
 import { freeAssoApi } from '../../common';
-import { SearchModal } from '../ui';
-import { clientTypeAsOptions } from '../client-type/functions.js';
-import { clientCategoryAsOptions } from '../client-category/functions.js';
+import { displayItemPicker, getCols } from './';
 
-export default class Search extends Component {
+/**
+ * Recherche liée au champ de saisie assistée du modèle (picker)
+ */
+export class Search extends Component {
   static propTypes = {
+    conditions: PropTypes.array,
     title: PropTypes.string.isRequired,
     show: PropTypes.bool.isRequired,
+    onSelect: PropTypes.func.isRequired,
     onClose: PropTypes.func.isRequired,
-    filters: PropTypes.object,
-    typeCodes: PropTypes.array,
-    categoryCodes: PropTypes.array,
   };
   static defaultProps = {
-    filters: {},
-    typeCodes: [],
-    categoryCodes: [],
+    conditions: [],
+  };
+
+  /**
+   * Param update ??
+   *
+   * @param {Object} props
+   * @param {Object} state
+   */
+  static getDerivedStateFromProps(props, state) {
+    if (props.conditions !== state.conditions) {
+      return { conditions: props.conditions };
+    }
+    return null;
   }
 
+  /**
+   * Constructeur
+   */
   constructor(props) {
     super(props);
     this.state = {
       search: '',
       list: [],
+      lines: getNewNormalizedObject('FreeAsso_Client'),
       loading: false,
       finish: false,
-      filters: this.props.filters,
-      typeCodes: this.props.typeCodes,
-      categoryCodes: this.props.categoryCodes,
+      page: 1,
+      size: 10,
+      total: 0,
+      conditions: props.conditions,
+      filters: new Filter(),
     };
     this.onChange = this.onChange.bind(this);
     this.onSearch = this.onSearch.bind(this);
     this.onClear = this.onClear.bind(this);
-    this.onClose = this.onClose.bind(this);
+    this.onMore = this.onMore.bind(this);
   }
 
+  /**
+   * Suppression des critères de sélection
+   */
   onClear() {
     this.setState({ loading: false, finish: true, list: [] });
   }
 
-  onClose() {
-    this.onClear();
-    this.props.onClose();
+  /**
+   * Page suivante
+   */
+  onMore() {
+    this.onSearch(this.state.filters, this.state.page + 1);
   }
 
-  onSearch(filters) {
+  /**
+   * Lancement de la recherche en fonction de critères
+   *
+   * On utilise loading pour avoir l'état du chargement et items pour stocker les résultats
+   * Ce sera paginé...
+   *
+   * @param {Filter} filters
+   * @param {Number} page
+   */
+  onSearch(filters, page = null) {
+    console.log(filters, page);
+    if (!page) {
+      page = 1;
+    }
     if (!this.state.loading) {
-      const addUrl = objectToQueryString(filters);
-      const doRequest = freeAssoApi.get('/v1/asso/client' + addUrl, {});
-      this.setState({ loading: true, finish: false, list: [] });
-      doRequest.then(result => {
-        let items = [];
-        if (result && result.data) {
-          const lines = jsonApiNormalizer(result.data);
-          items = normalizedObjectModeler(lines, 'FreeAsso_Client');
+      this.state.conditions.forEach(cond => filters.addFilter(cond.field, cond.value, cond.oper));
+      const crits = filters.asJsonApiObject();
+      const dSort = [
+        { col: 'cli_lastname', way: 'up' },
+        { col: 'cli_firstname', way: 'up' },
+        { col: 'cli_email', way: 'up' },
+      ];
+      let sort = '';
+      dSort.forEach(elt => {
+        let add = elt.col;
+        if (elt.way === 'down') {
+          add = '-' + add;
         }
-        this.setState({ loading: false, finish: true, list: items });
+        if (sort === '') {
+          sort = add;
+        } else {
+          sort = sort + ',' + add;
+        }
       });
+      let params = {
+        ...crits,
+        page: { number: page, size: this.state.size },
+      };
+      if (sort !== '') {
+        params.sort = sort;
+      }
+      const addUrl = objectToQueryString(params);
+      const doRequest = freeAssoApi.get('/v1/asso/client' + addUrl, {});
+      this.setState({ loading: true, finish: false, filters: filters, page: page + 1 });
+      doRequest
+        .then(result => {
+          let items = [];
+          let lines = getNewNormalizedObject('FreeAsso_Client');
+          if (result && result.data) {
+            if (page > 1) {
+              lines = jsonApiNormalizer(result.data, this.state.lines);
+            } else {
+              lines = jsonApiNormalizer(result.data);
+            }
+            items = normalizedObjectModeler(lines, 'FreeAsso_Client');
+          }
+          this.setState({
+            loading: false,
+            finish: true,
+            list: items,
+            lines: lines,
+            total: lines.TOTAL,
+          });
+        })
+        .catch(err => {
+          this.setState({
+            loading: false,
+            finish: true,
+            list: [],
+            lines: getNewNormalizedObject('FreeAsso_Client'),
+            total: 0,
+          });
+        });
     }
   }
 
+  /**
+   * Prise en compte des changements de critères
+   *    Nom du critère + valeur
+   */
   onChange(event) {
     this.setState({ [event.target.name]: event.target.value });
   }
 
+  /**
+   * Render
+   */
   render() {
-    const filters = [
-      { name: 'cli_lastname', label: 'Nom', type: 'text', value: this.props.value },
-      { name: 'cli_firstname', label: 'Prénom', type: 'text' },
-      {
-        name: 'clit_id',
-        label: 'Type',
-        type: 'select',
-        options: clientTypeAsOptions(this.props.types, this.props.typeCodes),
-        filtered: this.props.typeCodes.length > 0
-      },
-      {
-        name: 'clic_id',
-        label: 'Catégorie',
-        type: 'select',
-        options: clientCategoryAsOptions(this.props.categories, this.props.categoryCodes),
-        filtered: this.props.categoryCodes.length > 0
-      },
-    ];
+    let filters = this.state.filters;
+    this.state.conditions.forEach(cond => filters.addFilter(cond.field, cond.value, cond.oper));
+    const cols = getCols(this);
     return (
       <SearchModal
-        title={this.props.title}
+        title={this.props.intl.formatMessage({
+          id: 'app.features.client.search.title',
+          defaultMessage: 'Rechercher',
+        })}
         show={this.props.show}
         loading={this.state.loading}
-        onClose={this.onClose}
+        onClose={this.props.onClose}
         onClear={this.onClear}
         onSearch={this.onSearch}
         onSelect={this.props.onSelect}
-        list={this.state.list}
-        pickerDisplay="cli_lastname"
+        list={
+          <ResponsiveInlineList
+            cols={cols}
+            {...this.props}
+            items={this.state.list}
+            onMore={this.onMore}
+            total={this.state.total}
+            loading={this.state.loading}
+          />
+        }
+        pickerDisplay={displayItemPicker}
         filters={filters}
+        cols={cols}
+        t={this.props.intl.formatMessage}
       />
     );
   }
 }
+
+function mapStateToProps(state) {
+  return {
+    client: state.client,
+    clientCategory: state.clientCategory,
+    clientType: state.clientType,
+  };
+}
+
+function mapDispatchToProps(dispatch) {
+  return {};
+}
+
+export default injectIntl(connect(mapStateToProps, mapDispatchToProps)(Search));

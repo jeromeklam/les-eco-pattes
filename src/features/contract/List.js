@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import * as actions from './redux/actions';
 import { normalizedObjectModeler } from 'jsonapi-front';
 import { ResponsiveQuickSearch } from 'react-bootstrap-front';
-import { Search as SearchIcon } from '../icons';
+import { Search as SearchIcon, Contract as ContractIcon } from '../icons';
 import { InlineAlerts } from '../alert';
 import { deleteSuccess, showErrors, List as UiList } from '../ui';
 import { getGlobalActions, getInlineActions, getCols, Input, InlineDocuments } from './';
@@ -194,12 +194,15 @@ export class List extends Component {
         icon={<SearchIcon className="text-secondary" />}
       />
     );
+    const counter = this.props.contract.items.length + ' / ' + this.props.contract.totalItems;
     return (
       <div>
         <UiList
           title="Contrats"
+          icon={<ContractIcon />}
           cols={cols}
           items={items}
+          counter={counter}
           quickSearch={quickSearch}
           mainCol="ct_code"
           onClick={this.onSelectList}
@@ -209,6 +212,7 @@ export class List extends Component {
           inlineActions={inlineActions}
           globalActions={globalActions}
           sort={this.props.contract.sort}
+          panelObject="contract"
           filters={this.props.contract.filters}
           onSearch={this.onQuickSearch}
           onSort={this.onUpdateSort}

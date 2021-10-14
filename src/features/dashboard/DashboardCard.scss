@@ -6,13 +6,11 @@
   height: 100%;
   padding-top: 20px;
   .card {
-    background-color: theme-color('secondary');
-    border: 0;
+    background-color: theme-color('secondary-light');
+    border: 1px solid theme-color('secondary');
     margin-bottom: 30px;
-    /*margin-top: 30px;*/
-    border-radius: 6px;
-    color: #333;
-    background: #fff;
+    color:theme-color('secondary');
+    background: white;
     width: 100%;
     height: 100%;
   }
@@ -23,12 +21,10 @@
     padding-left: 50px;
   }
   .card-body {
-    background-color: theme-color('secondary');
-    color: theme-color('light');
+    background-color: white;
+    color: theme-color('secondary');
     overflow: hidden;
-    padding-left: 0.5rem;
-    padding-right: 0.5rem;
-    padding-top: 0.1rem;
+    padding: 0;
   }
   .card-title {
     margin-bottom: 0px;
@@ -47,7 +43,8 @@
     background-color: darken(theme-color('primary'), 10%);
   }
   .card-header {
-    background-color: $header-background-color;
+    background-color: theme-color('secondary-light');
+    color: theme-color('secondary');
     padding-bottom: 0px;
     margin-bottom: 0px;
     padding-left: 0.5rem;
@@ -62,14 +59,16 @@
       overflow: hidden;
       
       .row-title {
-        background-color: theme-color('secondary');
-        color: theme-color('light');
+        background-color: theme-color('secondary-light');
+        color: theme-color('secondary');
         overflow: hidden,
       }
     }
   }
-  .card-footer .nav-link {
+  .card-footer {
     padding: 0px;
+    height: 10px;
+    background-color: theme-color('secondary-light');
   }
   .link {
     height:0px !important;

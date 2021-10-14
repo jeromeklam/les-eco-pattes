@@ -70,7 +70,7 @@ export class PendingAlerts extends Component {
   }
 
   render() {
-    let counter = 0;
+    let counter = 1;
     let alerts = [];
     if (this.props.mode === 'warning') {
       if (this.props.alert.alertsWarning.FreeFW_Alert) {
@@ -136,9 +136,7 @@ export class PendingAlerts extends Component {
                     >
                       <Line oddEven={counter++}>
                         <Col size={{ xs: 16 }}>{alert.alert_title}</Col>
-                        <Col size={{ xs: 8, md: 7 }}>
-                          {intlDateTime(alert.alert_from, true)}
-                        </Col>
+                        <Col size={{ xs: 8, md: 7 }}>{intlDateTime(alert.alert_from, true)}</Col>
                         <Col size={{ xs: 8, md: 7 }}>
                           {intlDateTime(alert.alert_deadline, true)}
                         </Col>
@@ -174,9 +172,13 @@ export class PendingAlerts extends Component {
                 })}
               </InlineList>
             ) : (
-              <div>
-                <span className="p-3">Aucune alerte</span>
-              </div>
+              <InlineList>
+                <Line oddEven={counter++}>
+                  <Col size={{ xs: 36 }}>
+                    <span className="p-3">Aucune alerte</span>
+                  </Col>
+                </Line>
+              </InlineList>
             )}
             {((this.props.mode === 'warning' && this.props.alert.loadAlertsWarningPending) ||
               (this.props.mode === 'warning' && this.props.alert.loadAlertsDangerPending)) && (

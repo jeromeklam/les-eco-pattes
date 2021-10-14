@@ -3,6 +3,7 @@ import { Filter } from 'react-bootstrap-front';
 
 const initialState = {
   items: getNewNormalizedObject('FreeAsso_Movement'),
+  totalItems: 0,
   pendings: [],
   page_number: 1,
   page_size: process.env.REACT_APP_PAGE_SIZE,
