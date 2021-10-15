@@ -12,6 +12,32 @@ export const sicknessTypeSelect = [
   { label: 'Blessure', value: 'B' },
 ];
 
+export const displayItemPicker = item => {
+  if (item && item.id) {
+    return (
+      <>
+        <span>
+          {item.sick_name}
+        </span>
+      </>
+    );
+  }
+  return null;
+};
+
+export const getPickerDisplay = item => {
+  if (item && item.id) {
+    return (
+      <>
+        <span>
+          {item.sick_name}
+        </span>
+      </>
+    );
+  }
+  return null;
+};
+
 export const getGlobalActions = ({ onClearFilters, onCreate }) => {
   return [
     {
@@ -63,6 +89,7 @@ export const getCols = ({ props }) => {
       first: true,
       sortable: true,
       filterable: { type: 'text' },
+      card: { role: 'TITLE'},
     },
     {
       name: 'sick_type',

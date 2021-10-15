@@ -129,6 +129,7 @@ export class List extends Component {
           cols={cols}
           items={items || []}
           mainCol="sick_name"
+          panelObject="sickness"
           cancelPanelIcon={<CancelPanelIcon />}
           validPanelIcon={<ValidPanelIcon />}
           sortDownIcon={<SortDownIcon color="secondary" />}

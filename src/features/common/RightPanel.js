@@ -12,6 +12,7 @@ import { FilterPanel as CauseFilter } from '../cause';
 import { FilterPanel as ClientFilter } from '../client';
 import { FilterPanel as ContractFilter } from '../contract';
 import { FilterPanel as SiteFilter } from '../site';
+import { FilterPanel as SicknessFilter } from '../sickness';
 
 export class RightPanel extends Component {
   static propTypes = {
@@ -77,6 +78,7 @@ export class RightPanel extends Component {
                 cause: <CauseFilter onToggleRightPanel={this.props.actions.toggleRightPanel} />,
                 client: <ClientFilter onToggleRightPanel={this.props.actions.toggleRightPanel} />,
                 contract: <ContractFilter onToggleRightPanel={this.props.actions.toggleRightPanel} />,
+                sickness: <SicknessFilter onToggleRightPanel={this.props.actions.toggleRightPanel} />,
                 site: <SiteFilter onToggleRightPanel={this.props.actions.toggleRightPanel} />,
               }[this.props.common.panelObj],
               inbox: <InlineInbox />,
