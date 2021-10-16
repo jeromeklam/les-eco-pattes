@@ -1,6 +1,26 @@
 import cogoToast from 'cogo-toast';
 import { jsonApiNormalizer } from 'jsonapi-front';
 
+export const sortAsJsonApiObject = sort => {
+  let res = {};
+  let tmp = '';
+  sort.forEach(elt => {
+    let add = elt.col;
+    if (elt.way === 'down') {
+      add = '-' + add;
+    }
+    if (tmp === '') {
+      tmp = add;
+    } else {
+      tmp = tmp + ',' + add;
+    }
+  });
+  if (tmp !== '') {
+    res.sort = tmp;
+  }
+  return res;
+};
+
 export const isNull = value => {
   let ret = true ;
   if (value > 0) {

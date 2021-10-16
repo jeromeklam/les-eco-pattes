@@ -40,6 +40,32 @@ export const displayDeadlint = item => {
   let textColor = 'text-warning';
 }
 
+export const displayItemPicker = item => {
+  if (item && item.id) {
+    return (
+      <>
+        <span>
+          {item.alert_title}
+        </span>
+      </>
+    );
+  }
+  return null;
+};
+
+export const getPickerDisplay = item => {
+  if (item && item.id) {
+    return (
+      <>
+        <span>
+          {item.alert_title}
+        </span>
+      </>
+    );
+  }
+  return null;
+};
+
 export const displayPriority = item => {
   let textColor = 'text-warning';
   switch (item.alert_priority) {
