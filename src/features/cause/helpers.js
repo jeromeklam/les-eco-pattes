@@ -18,14 +18,14 @@ import { causeTypeAsOptions } from '../cause-type/functions';
 import { searchSite } from '../site';
 
 export const sexSelect = [
-  { label: 'Femelle', value: 'F', icon: <FemaleIcon className="col-icon" /> },
-  { label: 'Mâle', value: 'M', icon: <MaleIcon className="col-icon" /> },
-  { label: 'Mâle castré', value: 'C', icon: <MaleIcon className="col-icon" /> },
+  { label: 'Femelle', value: 'F', icon: <FemaleIcon className="col-icon text-secondary" /> },
+  { label: 'Mâle', value: 'M', icon: <MaleIcon className="col-icon text-secondary" /> },
+  { label: 'Mâle castré', value: 'C', icon: <MaleIcon className="col-icon texte-secondary" /> },
   { label: 'Indéfini', value: 'OTHER' },
 ];
 
 export const waitingSelect = [
-  { value: true, label: 'En attente', icon: <WaitIcon className="col-icon" /> },
+  { value: true, label: 'En attente', icon: <WaitIcon className="col-icon text-secondary" /> },
   { value: false, label: '' },
 ];
 

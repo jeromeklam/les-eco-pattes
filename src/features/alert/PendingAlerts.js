@@ -8,13 +8,12 @@ import { HoverObserver } from 'react-bootstrap-front';
 import { intlDateTime } from '../../common';
 import { DashboardCard } from '../dashboard';
 import {
-  Expired as ExpiredIcon,
   AlertWarning as AlertWarningIcon,
   AlertDanger as AlertDangerIcon,
   GetOne as GetOneIcon,
 } from '../icons';
 import { CenteredLoading3Dots, InlineList, Line, Col } from '../ui';
-import { Input } from './';
+import { Input, displayExpired, displayPriority } from './';
 
 export class PendingAlerts extends Component {
   static propTypes = {
@@ -81,7 +80,6 @@ export class PendingAlerts extends Component {
         alerts = normalizedObjectModeler(this.props.alert.alertsDanger, 'FreeFW_Alert');
       }
     }
-    const today = new Date().toISOString();
     const header = (
       <InlineList>
         <Line header>
@@ -140,13 +138,10 @@ export class PendingAlerts extends Component {
                           {intlDateTime(alert.alert_deadline, true)}
                         </Col>
                         <Col size={{ xs: 2 }}>
-                          {alert.alert_deadline <= today ? (
-                            <ExpiredIcon className="col-icon" />
-                          ) : (
-                            ''
-                          )}
+                          {displayExpired(alert)}
                         </Col>
                         <Col size={{ xs: 2 }}>
+                          {displayPriority(alert)}
                         </Col>
                         <Col size={{ xs: 2 }}>
                           {this.state.flipped && this.state.flipped === alert.id && (

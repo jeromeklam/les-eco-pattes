@@ -86,7 +86,7 @@ export const getInlineActions = ({ onSelectList, onGetOne, onDelOne, state }) =>
     },
     {
       name: 'document',
-      label: '3',
+      label: 'Documents',
       onClick: (obj) => {onSelectList(obj, 'document');},
       param: 'object',
       theme: 'secondary',

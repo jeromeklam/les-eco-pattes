@@ -7,6 +7,7 @@ import {
   Critical as CriticalIcon,
   Important as ImportantIcon,
   Information as InformationIcon,
+  Expired as ExpiredIcon,
 } from '../icons';
 
 export const alertPriority = [
@@ -36,8 +37,33 @@ export const alertRemind = [
   { label: '2 jours', value: '2D' },
 ]
 
-export const displayDeadlint = item => {
-  let textColor = 'text-warning';
+export const displayPriority = item => {
+  switch (item.alert_priority) {
+    case 'IMPORTANT':
+      return (
+        <ImportantIcon className='col-icon text-warning' />
+      );
+    case 'CRITICAL':
+      return (
+        <CriticalIcon className='col-icon text-warning' />
+      );
+    case 'INFORMATION':
+      return (
+        <InformationIcon className={classnames('col-icon text-secondary-light')} />
+      );
+    default: return null;
+  }
+}
+
+export const displayExpired = item => {
+  const today = new Date().toISOString();
+  if (item.alert_deadline <= today) {
+    return (
+      <ExpiredIcon className="col-icon text-warning" />
+    );
+  } else {
+    return null;
+  }
 }
 
 export const displayItemPicker = item => {
@@ -65,25 +91,6 @@ export const getPickerDisplay = item => {
   }
   return null;
 };
-
-export const displayPriority = item => {
-  let textColor = 'text-warning';
-  switch (item.alert_priority) {
-    case 'IMPORTANT':
-      return (
-        <ImportantIcon className={classnames('col-icon', textColor)} />
-      );
-    case 'CRITICAL':
-      return (
-        <CriticalIcon className={classnames('col-icon', textColor)} />
-      );
-    case 'INFORMATION':
-      return (
-        <InformationIcon className={classnames('col-icon text-secondary')} />
-      );
-    default: return null;
-  }
-}
 
 export const getGlobalActions = ({ onClearFilters, onCreate }) => {
   return [

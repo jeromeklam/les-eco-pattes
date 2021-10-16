@@ -162,15 +162,6 @@ export const globalMenu = (authCookie = false) => {
     public: false,
   });
   appMenu.push({
-    icon: <StockIcon />,
-    label: <FormattedMessage id="app.features.home.app.menu.stock" defaultMessage="Stock" />,
-    url: '/stock',
-    role: 'NAV',
-    position: 11,
-    help: <FormattedMessage id="app.features.home.app.menu.help.stock" defaultMessage="Stock" />,
-    public: false,
-  });
-  appMenu.push({
     icon: <SettingsIcon />,
     label: <FormattedMessage id="app.features.home.app.menu.settings" defaultMessage="Settings" />,
     url: null,
@@ -269,3 +260,15 @@ export const globalMenu = (authCookie = false) => {
   });
   return appMenu;
 };
+
+/**
+ * appMenu.push({
+    icon: <StockIcon />,
+    label: <FormattedMessage id="app.features.home.app.menu.stock" defaultMessage="Stock" />,
+    url: '/stock',
+    role: 'NAV',
+    position: 30,
+    help: <FormattedMessage id="app.features.home.app.menu.help.stock" defaultMessage="Stock" />,
+    public: false,
+  });
+ */

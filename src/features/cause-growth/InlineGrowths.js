@@ -173,14 +173,12 @@ export class InlineGrowths extends Component {
                         <div className="col-xs-w4 text-right">
                         {this.state.flipped && this.state.flipped === growth.id && 
                           <div className="btn-group btn-group-sm" role="group" aria-label="...">
-                            <div className="btn-group" role="group" aria-label="First group">
                               <button className="btn btn-inline btn-warning">
                                 <DelOneIcon
                                   onClick={() => this.onConfirmOpen(growth.id)}
                                   className="text-light inline-action"
                                 />
                               </button>
-                            </div>
                           </div>
                         }
                         </div>
