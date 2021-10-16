@@ -96,7 +96,7 @@ export class PendingSicknesses extends Component {
         overlay={this.props.overlay}
       >
         <div>
-          <div className="cause-movement-pendings text-secondary bg-secondary-light">
+          <div className="cause-movement-pendings text-secondary">
             {sicknesses && sicknesses.length > 0 ? (
               <InlineList>
                 {sicknesses.map(sickness => {

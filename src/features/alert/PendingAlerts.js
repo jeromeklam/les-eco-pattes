@@ -122,7 +122,7 @@ export class PendingAlerts extends Component {
         overlay={this.props.overlay}
       >
         <div className="pending-alerts">
-          <div className="alert-pendings text-secondary bg-secondary-light">
+          <div className="alert-pendings text-secondary">
             {alerts && alerts.length > 0 ? (
               <InlineList>
                 {alerts.map(alert => {
