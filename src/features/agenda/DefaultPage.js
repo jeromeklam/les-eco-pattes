@@ -7,7 +7,7 @@ import { fr } from 'date-fns/locale';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as actions from './redux/actions';
-import { AddOne as AddOneIcon, Checked, UnChecked, Critical, Important, User } from '../icons';
+import { AddOne as AddOneIcon, Checked, UnChecked, Critical, Important, Information, User } from '../icons';
 import { CenteredLoading3Dots } from '../ui';
 import { Input as InputEvent } from '../alert';
 import { getFullName } from '../user';
@@ -308,7 +308,7 @@ export class DefaultPage extends Component {
               onSelectSlot={this.onSelectSlot}
               onSelecting={this.onSelecting}
               style={{ height: '100%' }}
-              icons={{ done: <Checked />, CRITICAL: <Critical />, IMPORTANT: <Important /> }}
+              icons={{ done: <Checked />, CRITICAL: <Critical />, IMPORTANT: <Important />, INFORMATION: <Information /> }}
             />
           ) : (
             <CenteredLoading3Dots />

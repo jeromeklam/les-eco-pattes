@@ -115,3 +115,4 @@ export { default as Valid } from './Valid';
 export { default as Email } from './Email';
 export { default as Fax } from './Fax';
 export { default as Phone } from './Phone';
+export { default as Information } from './Information';

@@ -94,8 +94,7 @@ export class PendingAlerts extends Component {
           <Col size={{ xs: 8, md: 7 }}>
             <span>Echéance</span>
           </Col>
-          <Col size={{ xs: 2 }} />
-          <Col size={{ xs: 4 }} />
+          <Col size={{ xs: 6 }} />
         </Line>
       </InlineList>
     );
@@ -147,7 +146,9 @@ export class PendingAlerts extends Component {
                             ''
                           )}
                         </Col>
-                        <Col size={{ xs: 4 }}>
+                        <Col size={{ xs: 2 }}>
+                        </Col>
+                        <Col size={{ xs: 2 }}>
                           {this.state.flipped && this.state.flipped === alert.id && (
                             <div
                               className="btn-group btn-group-sm float-right"
