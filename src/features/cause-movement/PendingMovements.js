@@ -62,7 +62,7 @@ export class PendingMovements extends Component {
   }
 
   render() {
-    let counter = 0;
+    let counter = 1;
     let movements = [];
     if (this.props.causeMovement.pendings.FreeAsso_CauseMovement) {
       movements = normalizedObjectModeler(this.props.causeMovement.pendings, 'FreeAsso_CauseMovement');
@@ -93,7 +93,7 @@ export class PendingMovements extends Component {
     return (
       <DashboardCard title="Animaux en attente de mouvement" icon={<MovementIcon />} size="md" header={header} overlay={this.props.overlay}>
         <div className="pending-movements">
-          <div className="cause-movement-pendings text-secondary bg-secondary-light">
+          <div className="cause-movement-pendings text-secondary">
             {movements && movements.length > 0 ? (
               <InlineList>
                 {movements.map(movement => {

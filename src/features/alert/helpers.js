@@ -1,8 +1,12 @@
 import React from 'react';
+import classnames from 'classnames';
 import {
   AddOne as AddOneIcon,
   GetOne as GetOneIcon,
   DelOne as DelOneIcon,
+  Critical as CriticalIcon,
+  Important as ImportantIcon,
+  Information as InformationIcon,
 } from '../icons';
 
 export const alertPriority = [
@@ -32,6 +36,28 @@ export const alertRemind = [
   { label: '2 jours', value: '2D' },
 ]
 
+export const displayDeadlint = item => {
+  let textColor = 'text-warning';
+}
+
+export const displayPriority = item => {
+  let textColor = 'text-warning';
+  switch (item.alert_priority) {
+    case 'IMPORTANT':
+      return (
+        <ImportantIcon className={classnames('col-icon', textColor)} />
+      );
+    case 'CRITICAL':
+      return (
+        <CriticalIcon className={classnames('col-icon', textColor)} />
+      );
+    case 'INFORMATION':
+      return (
+        <InformationIcon className={classnames('col-icon text-secondary')} />
+      );
+    default: return null;
+  }
+}
 
 export const getGlobalActions = ({ onClearFilters, onCreate }) => {
   return [
@@ -84,7 +110,7 @@ export const getCols = ({ props }) => {
       name: 'alert_from',
       label: 'Prévu le',
       col: 'alert_from',
-      size: '5',
+      size: '4',
       mob_size: '36',
       title: true,
       sortable: true,
@@ -92,11 +118,11 @@ export const getCols = ({ props }) => {
       filterable: { type: 'date' },
       first: true,
     },
-       {
+    {
       name: 'alert_deadline',
       label: 'Echéance',
       col: 'alert_deadline',
-      size: '5',
+      size: '4',
       mob_size: '36',
       title: true,
       sortable: true,
@@ -107,7 +133,7 @@ export const getCols = ({ props }) => {
       name: 'title',
       label: 'Libellé',
       col: 'alert_title',
-      size: '6',
+      size: '8',
       mob_size: '18',
       sortable: true,
       filterable: { type: 'text' },
@@ -117,7 +143,7 @@ export const getCols = ({ props }) => {
       name: 'desc',
       label: 'Description',
       col: 'alert_text',
-      size: '6',
+      size: '13',
       mob_size: '18',
       sortable: true,
       filterable: { type: 'text' },
@@ -128,12 +154,24 @@ export const getCols = ({ props }) => {
       name: 'done',
       label: 'Réalisée le',
       col: 'alert_done_ts',
-      size: '6',
+      size: '4',
       mob_size: '18',
       sortable: true,
       filterable: { type: 'date' },
+      title: true,
+    },
+    {
+      name: 'priority',
+      label: 'Priorité',
+      col: 'alert_priority',
+      size: '3',
+      mob_size: '18',
+      fDisplay: item => {
+        return displayPriority(item);
+      },
+      sortable: true,
+      filterable: { type: 'date' },
       title: false,
-      hidden: true,
     },
   ];
 };
