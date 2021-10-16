@@ -26,7 +26,7 @@ const townCol = item => {
 };
 
 const externCol = [
-  { value: true, label: 'Externe', icon: <SiteExternIcon className="col-icon" /> },
+  { value: true, label: 'Externe', icon: <SiteExternIcon className="col-icon text-secondary" /> },
   { value: false, label: '' },
 ];
 

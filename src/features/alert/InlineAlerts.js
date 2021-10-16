@@ -8,7 +8,7 @@ import classnames from 'classnames';
 import { intlDateTime } from '../../common';
 import { GetOne as GetOneIcon, DelOne as DelOneIcon, AddOne as AddOneIcon } from '../icons';
 import { CenteredLoading3Dots } from '../ui';
-import { Input, getAlerts, getLibStatus } from './';
+import { Input, getAlerts, getLibStatus, displayPriority } from './';
 
 export class InlineAlerts extends Component {
   static propTypes = {
@@ -145,10 +145,10 @@ export class InlineAlerts extends Component {
               <div className="col-xs-w11">
                 <span>Libellé</span>
               </div>
-              <div className="col-xs-w9">
+              <div className="col-xs-w7">
                 <span>Etat</span>
               </div>
-              <div className="col-xs-w4 text-right col-last">
+              <div className="col-xs-w6 text-right col-last">
                 <div className="btn-group btn-group-xs" role="group" aria-label="...">
                   <button
                     type="button"
@@ -179,10 +179,13 @@ export class InlineAlerts extends Component {
                     <div className="col-xs-w6 col-first">{intlDateTime(alert.alert_from)}</div>
                     <div className="col-xs-w6">{intlDateTime(alert.alert_to)}</div>
                     <div className="col-xs-w11">{alert.alert_title}</div>
-                    <div className="col-xs-w9">
+                    <div className="col-xs-w8">
                       {getLibStatus(alert.alert_done_ts, alert.alert_deadline)}
                     </div>
-                    <div className="col-xs-w4 text-right col-last">
+                    <div className="col-xs-w2">
+                      {displayPriority(alert)}
+                    </div>
+                    <div className="col-xs-w3 text-right col-last">
                       {this.state.flipped && this.state.flipped === alert.id && (
                         <div className="btn-group btn-group-xs" role="group" aria-label="...">
                           <button
