@@ -22,7 +22,7 @@ export class DashboardHistory extends Component {
   }
 
   render() {
-    let counter = 0;
+    let counter = 1;
     let history = [];
     if (this.props.history.items.POFW_History) {
       history = normalizedObjectModeler(this.props.history.items, 'FreeFW_History');
@@ -53,13 +53,12 @@ export class DashboardHistory extends Component {
         size="lg"
         header={header}
       >
-        <div className="history text-secondary bg-secondary-light">
+        <div className="history text-secondary">
           {history && history.length > 0 ? (
             <InlineList>
               {history.map(hist => {
-                counter++;
                 return (
-                  <Line oddEven={counter} key={`pending-${hist.id}`}>
+                  <Line oddEven={counter++} key={`pending-${hist.id}`}>
                     <Col size={{ xs: 18, sm: 10 }}>
                       <span>{displayDatetime(hist.hist_ts)}</span>
                     </Col>

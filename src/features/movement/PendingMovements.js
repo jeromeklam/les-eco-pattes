@@ -128,7 +128,7 @@ export class PendingMovements extends Component {
         overlay={this.props.overlay}
       >
         <div className="movement-pending-movements">
-          <div className="movement-pendings text-secondary bg-secondary-light">
+          <div className="movement-pendings text-secondarys">
             {movements && movements.length > 0 ? (
               <InlineList>
                 {movements.map(movement => {
