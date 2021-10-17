@@ -286,7 +286,7 @@ export class List extends Component {
         <UiList
           title="Sites"
           cols={cols}
-          icon=<SiteIcon />
+          icon={<SiteIcon />}
           panelObject="site"
           items={items}
           quickSearch={quickSearch}

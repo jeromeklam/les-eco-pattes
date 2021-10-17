@@ -98,6 +98,7 @@ export function reducer(state, action) {
       let list = {};
       let nbre = 0;
       let result = false;
+      let totalItems = state.totalItems;
       if (action.data && action.data.data) {
         result = action.data.data;
       }
@@ -110,6 +111,7 @@ export function reducer(state, action) {
         } else {
           list = jsonApiNormalizer(result);
         }
+        totalItems = list.TOTAL || false;
       } else {
         list = state.items;
       }
@@ -118,6 +120,7 @@ export function reducer(state, action) {
         loadMorePending: false,
         loadMoreError: null,
         items: list,
+        totalItems,
         page_number: state.page_number+1
       };
 

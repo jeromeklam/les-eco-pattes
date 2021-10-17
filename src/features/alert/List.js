@@ -6,12 +6,8 @@ import * as actions from './redux/actions';
 import { normalizedObjectModeler } from 'jsonapi-front';
 import { ResponsiveQuickSearch } from 'react-bootstrap-front';
 import {
-  FilterEmpty as FilterEmptyIcon,
-  FilterFull as FilterFullIcon,
-  FilterClear as FilterClearIcon,
-  FilterDefault as FilterDefaultIcon,
-  FilterClearDefault as FilterClearDefaultIcon,
   Search as SearchIcon,
+  Alert as AlertIcon,
 } from '../icons';
 import { deleteSuccess, showErrors, List as UiList } from '../ui';
 import { getGlobalActions, getInlineActions, getCols, Input } from './';
@@ -130,10 +126,12 @@ export class List extends Component {
   }
 
   render() {
-     let items = [];
+    let items = [];
     if (this.props.alert.items.FreeFW_Alert) {
       items = normalizedObjectModeler(this.props.alert.items, 'FreeFW_Alert');
     }
+    const counter = this.props.alert.items.length + ' / ' + this.props.alert.totalItems;
+
     const globalActions = getGlobalActions(this);
     const inlineActions = getInlineActions(this);
     const cols = getCols(this);
@@ -158,6 +156,7 @@ export class List extends Component {
         <UiList
           title="Tâches"
           cols={cols}
+          icon={<AlertIcon />}
           items={items}
           quickSearch={quickSearch}
           mainCol="alert_title"
@@ -165,11 +164,6 @@ export class List extends Component {
           globalActions={globalActions}
           sort={this.props.alert.sort}
           filters={this.props.alert.filters}
-          filterFullIcon={<FilterFullIcon color="white" />}
-          filterEmptyIcon={<FilterEmptyIcon color="white" />}
-          filterClearIcon={<FilterClearIcon color="white" />}
-          filterDefaultIcon={<FilterDefaultIcon color="white" />}
-          filterClearDefaultIcon={<FilterClearDefaultIcon color="white" />}
           onSearch={this.onQuickSearch}
           onSort={this.onUpdateSort}
           onSetFiltersAndSort={this.onSetFiltersAndSort}
@@ -182,7 +176,8 @@ export class List extends Component {
           inlineOpenedItem={this.state.item}
           onClick={this.onSelectList}
           currentItem={this.state.item}
-          currentInline={this.state.mode}  
+          currentInline={this.state.mode} 
+          counter={counter}
           fClassName={this.itemClassName}
         />
         {this.state.alertId > 0 && (

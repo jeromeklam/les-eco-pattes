@@ -255,7 +255,7 @@ export class List extends Component {
       <div>
         <UiList
           title="Animaux"
-          icon=<CauseIcon />
+          icon={<CauseIcon />}
           cols={cols}
           items={items}
           quickSearch={quickSearch}
