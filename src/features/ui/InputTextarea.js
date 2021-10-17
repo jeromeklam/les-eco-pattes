@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { InputTextarea as RBFInputTextarea } from 'react-bootstrap-front';
+import { InputTextareaHtml as RBFInputTextarea } from 'react-bootstrap-front';
 import { Toolbar as ToolbarIcon, DelOne as DelOneIcon } from '../icons';
 
 export default class InputTextarea extends Component {

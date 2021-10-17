@@ -7,7 +7,7 @@ import {
   LANG_LOAD_MORE_DISMISS_ERROR,
 } from './constants';
 
-export function loadMore(args = {}) {
+export function loadMore(reload = true) {
   return (dispatch, getState) => {
     const loaded = getState().lang.LoadMoreFinish;
     const loading = getState().lang.LoadMorePending;

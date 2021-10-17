@@ -8,7 +8,7 @@ import {
   CAUSE_MAIN_TYPE_LOAD_MORE_DISMISS_ERROR,
 } from './constants';
 
-export function loadMore(args = {}, reload = false) {
+export function loadMore(reload = false) {
   return (dispatch, getState) => {
     const loaded =  getState().causeMainType.loadMoreFinish;
     const loading =  getState().causeMainType.loadMorePending;

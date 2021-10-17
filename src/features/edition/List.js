@@ -59,7 +59,7 @@ export class List extends Component {
       .delOne(id)
       .then(result => {
         deleteSuccess();
-        this.props.actions.loadMore({}, true)
+        this.props.actions.loadMore(true)
       })
       .catch(errors => {
         showErrors(this.props.intl, errors);
@@ -70,7 +70,7 @@ export class List extends Component {
     if (event) {
       event.preventDefault();
     }
-    this.props.actions.loadMore({}, true);
+    this.props.actions.loadMore(true);
   }
 
   onLoadMore(event) {
@@ -84,7 +84,7 @@ export class List extends Component {
       clearTimeout(timer);
     }
     timer = setTimeout(() => {
-      this.props.actions.loadMore({}, true);
+      this.props.actions.loadMore(true);
     }, 2000);
     this.setState({ timer: timer });
   }
@@ -96,7 +96,7 @@ export class List extends Component {
       clearTimeout(timer);
     }
     timer = setTimeout(() => {
-      this.props.actions.loadMore({}, true);
+      this.props.actions.loadMore(true);
     }, 2000);
     this.setState({ timer: timer });
   }
@@ -109,7 +109,7 @@ export class List extends Component {
       clearTimeout(timer);
     }
     timer = setTimeout(() => {
-      this.props.actions.loadMore({}, true);
+      this.props.actions.loadMore(true);
     }, 2000);
     this.setState({ timer: timer });
   }
@@ -122,7 +122,7 @@ export class List extends Component {
       clearTimeout(timer);
     }
     timer = setTimeout(() => {
-      this.props.actions.loadMore({}, true);
+      this.props.actions.loadMore(true);
     }, 2000);
     this.setState({ timer: timer });
   }

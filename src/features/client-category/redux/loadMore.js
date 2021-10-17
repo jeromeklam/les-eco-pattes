@@ -8,7 +8,7 @@ import {
   CLIENT_CATEGORY_LOAD_MORE_DISMISS_ERROR,
 } from './constants';
 
-export function loadMore(args = {}, reload = false) {
+export function loadMore(reload = false) {
   return (dispatch, getState) => {
     // optionally you can have getState as the second argument
     const loaded = getState().clientCategory.loadMoreFinish;

@@ -8,7 +8,7 @@ import {
   MOVEMENT_LOAD_MORE_DISMISS_ERROR,
 } from './constants';
 
-export function loadMore(args = {}, reload = false) {
+export function loadMore(reload = false) {
   return (dispatch, getState) => {
     const loaded = getState().movement.loadMoreFinish;
     const loading = getState().movement.loadMorePending;

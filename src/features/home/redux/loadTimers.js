@@ -15,8 +15,8 @@ export function loadTimers(args = {}) {
       type: HOME_LOAD_TIMERS_BEGIN,
     });
     const promise = Promise.all([
-      dispatch(loadMoreJobqueue({}, true)),
-      dispatch(loadMoreInbox({}, true)),
+      dispatch(loadMoreJobqueue(true)),
+      dispatch(loadMoreInbox(true)),
     ]);
     return promise.then(
       res => {

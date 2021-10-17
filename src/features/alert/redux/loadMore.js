@@ -9,7 +9,7 @@ import {
   ALERT_LOAD_MORE_DISMISS_ERROR,
 } from './constants';
 
-export function loadMore(args = false, reload = false) {
+export function loadMore(reload = false) {
   return (dispatch, getState) => {
     const loaded =  getState().alert.loadMoreFinish;
     if (!loaded || reload) {

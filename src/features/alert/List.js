@@ -34,7 +34,7 @@ export class List extends Component {
     this.onReload = this.onReload.bind(this);
     this.onClose = this.onClose.bind(this);
     this.onLoadMore = this.onLoadMore.bind(this);
-    this.onFiltersDefault = this.onFiltersDefault.bind(this);
+    this.onClearFilters = this.onClearFilters.bind(this);
     this.onQuickSearch = this.onQuickSearch.bind(this);
     this.onSetFiltersAndSort = this.onSetFiltersAndSort.bind(this);
     this.onUpdateSort = this.onUpdateSort.bind(this);
@@ -60,7 +60,7 @@ export class List extends Component {
     this.props.actions
       .delOne(id)
       .then(result => {
-        this.props.actions.loadMore({}, true);
+        this.props.actions.loadMore(true);
         deleteSuccess();
       })
       .catch(errors => {
@@ -72,7 +72,7 @@ export class List extends Component {
     if (event) {
       event.preventDefault();
     }
-    this.props.actions.loadMore({}, true);
+    this.props.actions.loadMore(true);
   }
 
  onLoadMore(event) {
@@ -86,7 +86,7 @@ export class List extends Component {
       clearTimeout(timer);
     }
     timer = setTimeout(() => {
-      this.props.actions.loadMore({}, true);
+      this.props.actions.loadMore(true);
     }, 2000);
     this.setState({ timer: timer });
   }
@@ -98,7 +98,7 @@ export class List extends Component {
       clearTimeout(timer);
     }
     timer = setTimeout(() => {
-      this.props.actions.loadMore({}, true);
+      this.props.actions.loadMore(true);
     }, 2000);
     this.setState({ timer: timer });
   }
@@ -111,12 +111,12 @@ export class List extends Component {
       clearTimeout(timer);
     }
     timer = setTimeout(() => {
-      this.props.actions.loadMore({}, true);
+      this.props.actions.loadMore(true);
     }, 2000);
     this.setState({ timer: timer });
   }
 
-  onFiltersDefault(enable) {
+  onClearFilters(enable) {
     this.props.actions.initFilters(enable);
     this.props.actions.initSort();
     let timer = this.state.timer;
@@ -124,7 +124,7 @@ export class List extends Component {
       clearTimeout(timer);
     }
     timer = setTimeout(() => {
-      this.props.actions.loadMore({}, true);
+      this.props.actions.loadMore(true);
     }, 2000);
     this.setState({ timer: timer });
   }
@@ -173,8 +173,7 @@ export class List extends Component {
           onSearch={this.onQuickSearch}
           onSort={this.onUpdateSort}
           onSetFiltersAndSort={this.onSetFiltersAndSort}
-          onClearFilters={() => this.onFiltersDefault(true)}
-          onClearFiltersDefault={() => this.onFiltersDefault(false)}
+          onClearFilters={this.onClearFilters}
           onLoadMore={this.onLoadMore}
           loadMorePending={this.props.alert.loadMorePending}
           loadMoreFinish={this.props.alert.loadMoreFinish}

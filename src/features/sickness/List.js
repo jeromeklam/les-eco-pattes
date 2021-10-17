@@ -63,7 +63,7 @@ export class List extends Component {
     this.props.actions
       .delOne(id)
       .then(result => {
-        this.props.actions.loadMore({}, true);
+        this.props.actions.loadMore(true);
         deleteSuccess();
       })
       .catch(errors => {
@@ -76,7 +76,7 @@ export class List extends Component {
     if (event) {
       event.preventDefault();
     }
-    this.props.actions.loadMore({}, true);
+    this.props.actions.loadMore(true);
   }
 
   onUpdateSort(col, way, pos = 99) {
@@ -86,7 +86,7 @@ export class List extends Component {
       clearTimeout(timer);
     }
     timer = setTimeout(() => {
-      this.props.actions.loadMore({}, true);
+      this.props.actions.loadMore(true);
     }, 2000);
     this.setState({ timer: timer });
   }
@@ -99,7 +99,7 @@ export class List extends Component {
       clearTimeout(timer);
     }
     timer = setTimeout(() => {
-      this.props.actions.loadMore({}, true);
+      this.props.actions.loadMore(true);
     }, 2000);
     this.setState({ timer: timer });
   }

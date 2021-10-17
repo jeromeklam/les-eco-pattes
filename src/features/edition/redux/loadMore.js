@@ -13,7 +13,7 @@ import {
 } from './constants';
 import { freeAssoApi } from '../../../common';
 
-export function loadMore(args = {}) {
+export function loadMore(reload = true) {
   return dispatch => {
     dispatch({
       type: EDITION_LOAD_MORE_BEGIN,

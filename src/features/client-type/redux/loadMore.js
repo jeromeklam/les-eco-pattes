@@ -8,7 +8,7 @@ import {
   CLIENT_TYPE_LOAD_MORE_DISMISS_ERROR,
 } from './constants';
 
-export function loadMore(args = {}, reload = false) {
+export function loadMore(reload = false) {
   return (dispatch, getState) => {
     const loaded = getState().clientType.loadMoreFinish;
     const loading = getState().clientType.loadMorePending;
@@ -23,15 +23,7 @@ export function loadMore(args = {}, reload = false) {
         });
       }
       const promise = new Promise((resolve, reject) => {
-        let params = {
-        };
-        if (args && Object.keys(args).length > 0 && args !== '') {
-          params.filter = {
-            and: {
-              clit_name: {eq: args},
-            },
-          };
-        }
+        let params = {};
         const addUrl = objectToQueryString(params);
         const doRequest = freeAssoApi.get('/v1/asso/client_type' + addUrl, {});
         doRequest.then(

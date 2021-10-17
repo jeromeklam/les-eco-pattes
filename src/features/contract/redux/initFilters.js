@@ -12,20 +12,32 @@ export const getInitFilters = (enable = true) => {
   return initFilters;
 }
 
-export function initFilters(enable) {
+export function initFilters(def) {
   return {
     type: CONTRACT_INIT_FILTERS,
-    enable: enable,
+    def: def,
   };
 }
 
-export function reducer(state, action) {
+/**
+ * Reducer
+ * 
+ * @param {Object} state  Etat courant de la mémoire (store)
+ * @param {Object} action Action à réaliser sur cet état avec options
+ */
+ export function reducer(state, action) {
   switch (action.type) {
     case CONTRACT_INIT_FILTERS:
-      let newFilters = getInitFilters(action.enable);   
+      let initialFilters = getInitFilters();
+      initialFilters.setMode(FILTER_MODE_AND);
+      if (action.def) { 
+        initialFilters.disableDefaults();
+      } else {
+        initialFilters.enableDefaults();
+      }
       return {
         ...state,
-        filters: newFilters,
+        filters: initialFilters,
       };
 
     default:

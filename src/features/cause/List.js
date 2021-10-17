@@ -49,13 +49,13 @@ export class List extends Component {
     this.onSelect = this.onSelect.bind(this);
     this.onLoadMore = this.onLoadMore.bind(this);
     this.onQuickSearch = this.onQuickSearch.bind(this);
-    this.onFiltersDefault = this.onFiltersDefault.bind(this);
     this.onSetFiltersAndSort = this.onSetFiltersAndSort.bind(this);
     this.onUpdateSort = this.onUpdateSort.bind(this);
     this.onSelectList = this.onSelectList.bind(this);
     this.onClose = this.onClose.bind(this);
     this.onSelectMenu = this.onSelectMenu.bind(this);
     this.itemClassName = this.itemClassName.bind(this);
+    this.onClearFilters = this.onClearFilters.bind(this);
   }
 
   componentDidMount() {
@@ -78,7 +78,7 @@ export class List extends Component {
     this.props.actions
       .delOne(id)
       .then(result => {
-        this.props.actions.loadMore({}, true);
+        this.props.actions.loadMore(true);
         deleteSuccess();
       })
       .catch(errors => {
@@ -106,7 +106,7 @@ export class List extends Component {
     if (event) {
       event.preventDefault();
     }
-    this.props.actions.loadMore({}, true);
+    this.props.actions.loadMore(true);
   }
 
   onQuickSearch(quickSearch) {
@@ -116,7 +116,7 @@ export class List extends Component {
       clearTimeout(timer);
     }
     timer = setTimeout(() => {
-      this.props.actions.loadMore({}, true);
+      this.props.actions.loadMore(true);
     }, 2000);
     this.setState({ timer: timer });
   }
@@ -128,7 +128,7 @@ export class List extends Component {
       clearTimeout(timer);
     }
     timer = setTimeout(() => {
-      this.props.actions.loadMore({}, true);
+      this.props.actions.loadMore(true);
     }, 2000);
     this.setState({ timer: timer });
   }
@@ -141,21 +141,29 @@ export class List extends Component {
       clearTimeout(timer);
     }
     timer = setTimeout(() => {
-      this.props.actions.loadMore({}, true);
+      this.props.actions.loadMore(true);
     }, 2000);
     this.setState({ timer: timer });
   }
 
-  onFiltersDefault(enable) {
-    this.props.actions.initFilters(enable);
+  /**
+   * Nettoyge des filtres et du tri,
+   *
+   * Le timer sert à gérer le multi action
+   *
+   * @param {Boolean} def Pour revenir ausi aux filtres par défaut
+   */
+  onClearFilters(def = false) {
+    console.log('JKJK', def);
+    this.props.actions.initFilters(def);
     this.props.actions.initSort();
     let timer = this.state.timer;
     if (timer) {
       clearTimeout(timer);
     }
     timer = setTimeout(() => {
-      this.props.actions.loadMore({}, true);
-    }, 2000);
+      this.props.actions.loadMore(true);
+    }, this.props.loadTimeOut);
     this.setState({ timer: timer });
   }
 
@@ -255,7 +263,7 @@ export class List extends Component {
       <div>
         <UiList
           title="Animaux"
-          icon=<CauseIcon />
+          icon={<CauseIcon />}
           cols={cols}
           items={items}
           quickSearch={quickSearch}
@@ -273,8 +281,7 @@ export class List extends Component {
           onSearch={this.onQuickSearch}
           onSort={this.onUpdateSort}
           onSetFiltersAndSort={this.onSetFiltersAndSort}
-          onClearFilters={() => this.onFiltersDefault(true)}
-          onClearFiltersDefault={() => this.onFiltersDefault(false)}
+          onClearFilters={this.onClearFilters}
           onLoadMore={this.onLoadMore}
           loadMorePending={this.props.cause.loadMorePending}
           loadMoreFinish={this.props.cause.loadMoreFinish}
@@ -321,9 +328,4 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default injectIntl(
-  connect(
-    mapStateToProps,
-    mapDispatchToProps,
-  )(List),
-);
+export default injectIntl(connect(mapStateToProps, mapDispatchToProps)(List));

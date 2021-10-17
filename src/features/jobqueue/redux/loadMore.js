@@ -1,7 +1,7 @@
-import { useEffect, useCallback } from 'react';
+import { useCallback } from 'react';
 import { useDispatch, useSelector, shallowEqual } from 'react-redux';
 import { freeAssoApi } from '../../../common';
-import { jsonApiNormalizer, objectToQueryString, getNewNormalizedObject } from 'jsonapi-front';
+import { jsonApiNormalizer, objectToQueryString } from 'jsonapi-front';
 import {
   JOBQUEUE_LOAD_MORE_INIT,
   JOBQUEUE_LOAD_MORE_BEGIN,
@@ -10,7 +10,7 @@ import {
   JOBQUEUE_LOAD_MORE_DISMISS_ERROR,
 } from './constants';
 
-export function loadMore(args = {}, reload = false) {
+export function loadMore(reload = false) {
   return (dispatch, getState) => {
     const loaded = getState().jobqueue.loadMoreFinish;
     const loading = getState().jobqueue.loadMorePending;
