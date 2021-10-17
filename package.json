@@ -75,7 +75,7 @@
     "react": "^16.8.6",
     "react-app-polyfill": "^0.2.0",
     "react-avatar": "^3.9.7",
-    "react-bootstrap-front": "^3.0.2",
+    "react-bootstrap-front": "^3.6.2",
     "react-cookies": "^0.1.1",
     "react-dev-utils": "^7.0.1",
     "react-dom": "^16.8.6",
