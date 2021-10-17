@@ -3,6 +3,7 @@ import { getInitFilters } from './initFilters';
 
 const initialState = {
   emptyItem: null,
+  totalItems: 0,
   items: getNewNormalizedObject('FreeFW_Alert'),
   filters: getInitFilters(),
   sort: [{ col: 'alert_from', way: 'up' }],
