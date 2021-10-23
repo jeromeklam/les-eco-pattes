@@ -164,10 +164,7 @@ export class Search extends Component {
     const cols = getCols(this);
     return (
       <SearchModal
-        title={this.props.intl.formatMessage({
-          id: 'app.features.sickness.search.title',
-          defaultMessage: 'Rechercher',
-        })}
+        title='Rechercher une maladie'
         show={this.props.show}
         loading={this.state.loading}
         onClose={this.props.onClose}

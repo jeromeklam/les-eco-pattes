@@ -30,27 +30,19 @@ export const waitingSelect = [
 ];
 
 export const displayItemPicker = item => {
-  if (item && item.id) {
+  if (item && item.id > 0) {
     return (
-      <>
-        <span>
-          {item.cau_code}
-        </span>
-      </>
+      <span>
+        {item.cau_code}
+      </span>
     );
   }
   return null;
 };
 
 export const getPickerDisplay = item => {
-  if (item && item.id) {
-    return (
-      <>
-        <span>
-          {item.cau_code}
-        </span>
-      </>
-    );
+  if (item && item.id > 0) {
+    return (item.cau_code + ' - ' + item.cau_name);
   }
   return null;
 };

@@ -6,7 +6,7 @@ import { InputPicker as DefaultInputPicker, InputSelect } from 'react-bootstrap-
 import { causeTypeAsOptions } from '../cause-type/functions.js';
 import { sexSelect } from '../cause';
 import { More, DelOne, Zoom } from '../icons';
-import { Search, Input } from './';
+import { Search, Input, displayItemPicker, getPickerDisplay } from './';
 
 export default class InputPickerEnhanced extends Component {
   static propTypes = {
@@ -28,7 +28,7 @@ export default class InputPickerEnhanced extends Component {
     let display = '';
     if (this.props.item) {
       value = props.item.id || '';
-      display = (props.item.type !== '' && props.item.cau_code) || (props.multi && props.item.id);
+      display = (props.item.type !== '' && getPickerDisplay(props.item)) || (props.multi && props.item.id);
     }
     this.state = {
       search: false,
@@ -55,7 +55,7 @@ export default class InputPickerEnhanced extends Component {
       let value = null;
       let display = '';
       value = props.item.id || '';
-      display = props.item.cau_code;
+      display = getPickerDisplay(props.item);
       return { item: props.item, value: value, display: display, list: props.list };
     }
     return null;
@@ -142,7 +142,7 @@ export default class InputPickerEnhanced extends Component {
               onSelect={this.onSelect}
               required={this.props.required || false}
               pickerId="cau_id"
-              pickerDisplay="cau_code"
+              pickerDisplay={displayItemPicker}
               filters={this.props.filters || {}}
               disabled={this.props.disabled}
               clearIcon={<DelOne className="text-warning" size={0.9} />}

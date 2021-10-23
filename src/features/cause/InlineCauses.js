@@ -12,7 +12,7 @@ export default class InlineCauses extends Component {
 
   static getDerivedStateFromProps(props, state) {
     if (props.siteId !== state.site_id || props.mode !== state.mode || props.cause !== state.item) {
-      return { site_id: props.siteId, site: props.site, mode: props.mode, item: props.cause };
+      return { site_id: props.siteId, mode: props.mode, item: props.cause };
     }
     return null;
   }
@@ -20,8 +20,7 @@ export default class InlineCauses extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      site: props.site || null,
-      site_id: props.site_id || 0,
+      site_id: props.siteId || 0,
       mode: props.mode || '',
       loading: true,
       item: props.cause || null,

@@ -69,7 +69,6 @@ function Form(props) {
   const cause_type = findCauseType(props.cause_types, values.cause_type.id);
   if (cause_type) {
     regexp = cause_type.caut_pattern || '';
-    console.log('JKJK', regexp, values.cause_type);
     if (regexp !== '') {
       validated = false;
       if (regPlaceholder === '' || caut_id !== values.cause_type.id) {

@@ -154,7 +154,6 @@ export class List extends Component {
    * @param {Boolean} def Pour revenir ausi aux filtres par défaut
    */
   onClearFilters(def = false) {
-    console.log('JKJK', def);
     this.props.actions.initFilters(def);
     this.props.actions.initSort();
     let timer = this.state.timer;
