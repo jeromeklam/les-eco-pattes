@@ -19,7 +19,9 @@ $theme-colors: (
   "picker": lighten(#5a4e4e, 54%),
   "alternative": #951b81,
   "gray": #aaaaaa,
-  "gray-light": #dee2e6
+  "gray-light": #dee2e6,
+  "evencol": #ffffff,
+  "oddcol": lighten(#5a4e4e, 64%),
 );
 $grid-breakpoints: (
   xxs: 0,

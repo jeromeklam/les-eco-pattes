@@ -11,16 +11,28 @@ import { Search, Input, displayItemPicker, getPickerDisplay } from './';
 export default class InputPickerEnhanced extends Component {
   static propTypes = {
     code: PropTypes.string.isRequired,
+    conditions: PropTypes.array,
     item: PropTypes.object,
     onChange: PropTypes.func.isRequired,
     multi: PropTypes.bool,
     disabled: PropTypes.bool,
   };
-
   static defaultProps = {
+    conditions: [],
     multi: false,
     disabled: false,
   };
+
+  static getDerivedStateFromProps(props, state) {
+    if (props.item !== state.item || props.list !== state.list) {
+      let value = null;
+      let display = '';
+      value = props.item.id || '';
+      display = getPickerDisplay(props.item);
+      return { item: props.item, value: value, display: display, list: props.list };
+    }
+    return null;
+  }
 
   constructor(props) {
     super(props);
@@ -48,17 +60,6 @@ export default class InputPickerEnhanced extends Component {
     this.onSelect = this.onSelect.bind(this);
     this.onCloseMore = this.onCloseMore.bind(this);
     this.handleChange = this.handleChange.bind(this);
-  }
-
-  static getDerivedStateFromProps(props, state) {
-    if (props.item !== state.item || props.list !== state.list) {
-      let value = null;
-      let display = '';
-      value = props.item.id || '';
-      display = getPickerDisplay(props.item);
-      return { item: props.item, value: value, display: display, list: props.list };
-    }
-    return null;
   }
 
   onChange(event) {
@@ -143,7 +144,7 @@ export default class InputPickerEnhanced extends Component {
               required={this.props.required || false}
               pickerId="cau_id"
               pickerDisplay={displayItemPicker}
-              filters={this.props.filters || {}}
+              conditions={this.props.conditions}
               disabled={this.props.disabled}
               clearIcon={<DelOne className="text-warning" size={0.9} />}
               moreIcon={<More className="text-secondary" size={0.9} />}
@@ -153,7 +154,7 @@ export default class InputPickerEnhanced extends Component {
               title={this.props.label}
               value={this.state.display}
               show={this.state.search}
-              filters={this.props.filters || {}}
+              conditions={this.props.conditions}
               onClose={this.onCloseMore}
               onSelect={this.onSelect}
             />

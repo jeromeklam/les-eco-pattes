@@ -41,8 +41,8 @@ export const displayItemPicker = item => {
 };
 
 export const getPickerDisplay = item => {
-  if (item && item.id > 0) {
-    return (item.cau_code + ' - ' + item.cau_name);
+  if (item && item.cau_code) {
+    return item.cau_code;
   }
   return null;
 };
@@ -282,7 +282,7 @@ export const getCols = ({ props }) => {
       mob_size: '36',
       title: true,
       sortable: true,
-      card: { role: 'FIELD' },
+      card: { role: 'FIELD', position: 5 },
     },
     {
       name: 'site',
@@ -293,7 +293,7 @@ export const getCols = ({ props }) => {
       title: true,
       sortable: true,
       filterable: { type: 'text' },
-      card: { role: 'FIELD' },
+      card: { role: 'FIELD', position: 10 },
     },
     {
       name: 'site2',
@@ -377,7 +377,7 @@ export const getCols = ({ props }) => {
       values: sexSelect,
       sortable: false,
       filterable: false,
-      card: { role: 'FIELD' },
+      card: { role: 'FIELD', position: 7 },
     },
     {
       name: 'year',

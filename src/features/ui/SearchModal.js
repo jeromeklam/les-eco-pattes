@@ -129,19 +129,28 @@ class SearchModal extends Component {
   render() {
     const buttons = [
       {
-        name: 'Filtrer',
+        name: this.props.intl.formatMessage({
+          id: 'app.features.ui.searchModal.filter',
+          defaultMessage: 'Filter',
+        }),
         function: this.onSearch,
         theme: 'primary',
         icon: <FilterIcon />,
       },
       {
-        name: 'Effacer',
+        name: this.props.intl.formatMessage({
+          id: 'app.features.ui.searchModal.delete',
+          defaultMessage: 'Delete',
+        }),
         function: this.onClear,
         theme: 'warning',
         icon: <ClearIcon />,
       },
       {
-        name: 'Annuler',
+        name: this.props.intl.formatMessage({
+          id: 'app.features.ui.searchModal.cancel',
+          defaultMessage: 'Cancel',
+        }),
         function: this.props.onClose,
         theme: 'secondary',
         icon: <CancelIcon />,
@@ -149,31 +158,24 @@ class SearchModal extends Component {
     ];
     return (
       <ResponsiveModal
-        size="lg"
+        size="md"
         title={this.props.title}
         show={this.props.show}
         onClose={this.props.onClose}
         buttons={buttons}
-        height="500px"
         scroll={false}
-        modalClassName="bg-light text-secondary"
+        modalClassName="bg-secondary-light text-secondary"
         closeClassName="text-light"
       >
         <Row className="ui-search-modal h-100 overflow-hidden no-gutters">
           <Col
             className="ui-search-modal-right border border-secondary-light p-0"
-            size={{ xxs: 36, sm: 22 }}
+            size={{ xxs: 36, sm: 18 }}
           >
             <div className="h-100 custom-scrollbar">{this.props.list}</div>
           </Col>
-          <Col className="ui-search-modal-left p-0 bg-light" size={{ xxs: 36, sm: 14 }}>
-            <div className="ui-search-modal-left-top p-2">
-              <h3>
-                {this.props.intl.formatMessage({
-                  id: 'app.search.filters.title',
-                  defaultMessage: 'Mes critères',
-                })}
-              </h3>
+          <Col className="ui-search-modal-left p-0" size={{ xxs: 36, sm: 18 }}>
+            <div className="ui-search-modal-left-top p-2 border border-secondary-light">
               <FilterHeader
                 filters={this.state.filters}
                 onMode={this.onFilterMode}
@@ -181,7 +183,7 @@ class SearchModal extends Component {
                 onFilterOperator={this.onFilterOperator}
               />
             </div>
-            <div className="ui-search-modal-left-bottom custom-scrollbar p-2">
+            <div className="ui-search-modal-left-bottom custom-scrollbar border border-secondary-light p-2">
               <FilterBuilder
                 {...this.props}
                 calIcon={<CalendarIcon className="text-secondary" />}

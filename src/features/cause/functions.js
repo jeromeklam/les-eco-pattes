@@ -1,7 +1,5 @@
 import { normalizedObjectModeler, objectToQueryString, jsonApiNormalizer } from 'jsonapi-front';
-import { FILTER_MODE_AND, FILTER_OPER_EQUAL } from 'react-bootstrap-front';
 import { freeAssoApi } from '../../common';
-import { getInitFilters } from './redux/initFilters';
 
 /**
  *

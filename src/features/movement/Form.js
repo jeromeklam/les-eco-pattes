@@ -1,5 +1,6 @@
 import React from 'react';
 import { injectIntl } from 'react-intl';
+import { isEmptyModel } from 'jsonapi-front';
 import { InputHidden, InputText, InputSelect, InputCheckbox, FILTER_OPER_EQUAL } from 'react-bootstrap-front';
 import { Movement as MovementIcon, Cause as CauseIcon } from '../icons';
 import { useForm, ResponsiveModalOrForm, InputDatetime } from '../ui';
@@ -115,7 +116,9 @@ function Form(props) {
   );
   let myTabs = tabs;
   myTabs = tabs.concat(tabsFrom, tabsTo);
-  myTabs = myTabs.concat(tabsEnd);
+  if (!isEmptyModel(values.from_site)) {
+    myTabs = myTabs.concat(tabsEnd);
+  }
   let disableSiteFrom = values.globalDisabled;
   let disableSiteTo = values.globalDisabled;
   if (!values.globalDisabled  && values.__modify) {
@@ -571,7 +574,7 @@ function Form(props) {
                 cause_types={props.cause_types}
                 onChange={handleChange}
                 disabled={values.globalDisabled}
-                filters={[{ name: 'site_id', value: values.from_site.id, oper: FILTER_OPER_EQUAL }]}
+                conditions={[{ name: 'site_id', value: values.from_site.id, oper: FILTER_OPER_EQUAL }]}
               />
             )}
           </div>

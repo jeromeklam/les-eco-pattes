@@ -91,7 +91,7 @@ export class Search extends Component {
       page = 1;
     }
     if (!this.state.loading) {
-      this.state.conditions.forEach(cond => filters.addFilter(cond.field, cond.value, cond.oper));
+      filters.addConditions(this.state.conditions);
       const crits = filters.asJsonApiObject();
       const dSort = [{"col":"cau_code","way":"up"},{"col":"cau_name","way":"up"}];
       let sort = '';
@@ -161,7 +161,7 @@ export class Search extends Component {
    */
   render() {
     let filters = this.state.filters;
-    this.state.conditions.forEach(cond => filters.addFilter(cond.field, cond.value, cond.oper));
+    filters.addConditions(this.state.conditions);
     const cols = getCols(this);
     return (
       <SearchModal
