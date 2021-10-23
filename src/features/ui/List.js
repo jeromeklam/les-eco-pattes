@@ -24,6 +24,8 @@ import {
   MenuDropDown as MenuDownIcon,
   Previous as PreviousIcon,
   Next as NextIcon,
+  ListSort as ListSortIcon,
+  ListTools as ListToolsIcon,
 } from '../icons';
 
 function selectMenu(selected) {
@@ -34,6 +36,7 @@ function selectMenu(selected) {
   return (
     <>
       <span className="no-selector">{nbSel}</span>
+      <ListToolsIcon />
       <MenuDownIcon />
     </>
   );
@@ -182,13 +185,14 @@ export class List extends Component {
         onClick={this.props.onClick}
         quickSearch={this.props.quickSearch}
         sort={this.props.sort}
+        sortIcon={<><SortNoneIcon /><MenuDownIcon /></>}
         sortDownIcon={<SortDownIcon color="secondary" />}
         sortNoneIcon={<SortNoneIcon />}
         sortUpIcon={<SortUpIcon color="secondary" />}
         titleMultiline={this.props.titleMultiline}
         validPanelIcon={<ValidPanelIcon />}
         selected={this.props.selected}
-        selectMenuIcon={selectMenu(this.props.selected)}
+        selectMenuIcon={<><ListToolsIcon /><MenuDownIcon /></>}
         selectMenu={this.props.selectMenu}
         onSelect={this.props.onSelect}
         onPrevious={this.props.onPrevious}

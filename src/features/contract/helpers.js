@@ -149,7 +149,7 @@ export const getCols = ({ props }) => {
       sortable: true,
       type: 'date',
       filterable: { type: 'date' },
-      card: { role: 'FIELD' },
+      card: { role: 'FIELD', position: 10 },
     },
     {
       name: 'site.site_name',
@@ -160,7 +160,7 @@ export const getCols = ({ props }) => {
       title: true,
       sortable: true,
       filterable: { type: 'text' },
-      card: { role: 'FIELD' },
+      card: { role: 'FIELD', position: 1 },
     },
     {
       name: 'site.site_name2',
@@ -181,7 +181,7 @@ export const getCols = ({ props }) => {
       fDisplay: (item, newContent) => {
         return getDataLabel(props.data.models, 'DUREECONTRAT', item.ct_duration);
       },
-      card: { role: 'FIELD' },
+      card: { role: 'FIELD', position: 20 },
     },
     {
       name: 'ct_amount',
@@ -221,7 +221,7 @@ export const getCols = ({ props }) => {
       sortable: true,
       type: 'date',
       filterable: { type: 'date' },
-      card: { role: 'FIELD' },
+      card: { role: 'FIELD', position: 30 },
     },
   ];
 };

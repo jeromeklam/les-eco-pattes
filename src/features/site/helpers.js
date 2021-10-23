@@ -237,6 +237,7 @@ export const getCols = ({ props }) => {
       title: true,
       sortable: true,
       filterable: { type: 'text' },
+      card: { role: 'FIELD', position: 1 },
     },
     {
       name: 'site_code',
@@ -247,7 +248,7 @@ export const getCols = ({ props }) => {
       title: true,
       sortable: true,
       filterable: { type: 'text' },
-      card: { role: 'FIELD' },
+      card: { role: 'FIELD', position: 20 },
     },
     {
       name: 'type',
@@ -257,7 +258,7 @@ export const getCols = ({ props }) => {
       mob_size: '36',
       title: true,
       sortable: true,
-      card: { role: 'FIELD' },
+      card: { role: 'FIELD', position: 10 },
     },
     {
       name: 'type',
@@ -319,7 +320,7 @@ export const getCols = ({ props }) => {
       filterable: false,
       last: true,
       fDisplay: townCol,
-      card: { role: 'FIELD' },
+      card: { role: 'FIELD', position: 2 },
     },
     {
       name: 'site_to',
