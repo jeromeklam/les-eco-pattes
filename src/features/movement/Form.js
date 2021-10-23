@@ -224,6 +224,7 @@ function Form(props) {
                   key="from_site"
                   name="from_site"
                   labelTop={true}
+                  required={true}
                   item={values.from_site || null}
                   onChange={handleChange}
                   disabled={disableSiteFrom}
@@ -393,6 +394,7 @@ function Form(props) {
                   key="to_site"
                   name="to_site"
                   labelTop={true}
+                  required={true}
                   item={values.to_site || null}
                   onChange={handleChange}
                   disabled={disableSiteTo}

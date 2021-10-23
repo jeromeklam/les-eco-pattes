@@ -67,7 +67,6 @@ export function reducer(state, action) {
       if (action.data.error && action.data.error.response) {
         error = jsonApiNormalizer(action.data.error.response);
       }
-      console.log("FK create alert ",error);
       return {
         ...state,
         createOnePending: false,

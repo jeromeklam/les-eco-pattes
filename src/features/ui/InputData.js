@@ -42,7 +42,6 @@ export default class InputData extends Component {
     if (this.state.data.data_type === 'LIST') {
       try {
         datas = JSON.parse(this.state.data.data_content);
-        console.log("FK liste data", datas);
         if (datas.length > 0) {
           datas.forEach(data => {
             if (!data.deleted) {

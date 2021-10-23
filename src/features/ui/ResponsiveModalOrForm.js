@@ -16,7 +16,6 @@ export default function ResponsiveModalOrForm(props) {
         icon: <SaveIcon title="Sauvegarder" />,
       });
     }
-    console.log("FK action buttons",props);
     if (props.actionsButtons) {
       
       props.actionsButtons.forEach(btnAction => {

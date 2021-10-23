@@ -39,7 +39,6 @@ export class InlineDocuments extends Component {
       uploading: false,
       comment: false,
     };
-    console.log("FK ctdoc props", props);
     this.onDropFiles = this.onDropFiles.bind(this);
     this.onConfirmClose = this.onConfirmClose.bind(this);
     this.onConfirmDocument = this.onConfirmDocument.bind(this);

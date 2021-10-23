@@ -86,7 +86,6 @@ export const getCauses = (mode, site_id, cause, ids = []) => {
     }
     params.sort = 'cau_code';
     const addUrl = objectToQueryString(params);
-    console.log('FK filtre linlinecause params', params);
     const doRequest = freeAssoApi.get('/v1/asso/cause' + addUrl, {});
     doRequest.then(
       res => {
