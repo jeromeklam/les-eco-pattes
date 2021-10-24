@@ -156,7 +156,7 @@ export const getCols = ({ props }) => {
       values: mvtTypes,
       sortable: true,
       filterable: { type: 'select', options: mvtTypes },
-      card: { role: 'FIELD' },
+      card: { role: 'FIELD', position: 1 },
     },
     {
       name: 'move_from',
@@ -179,7 +179,7 @@ export const getCols = ({ props }) => {
       title: true,
       sortable: true,
       filterable: { type: 'text' },
-      card: { role: 'FIELD' },
+      card: { role: 'FIELD', position: 5 },
     },
     {
       name: 'move_from_name2',
@@ -208,7 +208,7 @@ export const getCols = ({ props }) => {
       title: true,
       sortable: true,
       filterable: { type: 'text' },
-      card: { role: 'FIELD' },
+      card: { role: 'FIELD', position: 10 },
     },
     {
       name: 'move_to_name2',

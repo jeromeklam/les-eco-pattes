@@ -116,3 +116,4 @@ export { default as Email } from './Email';
 export { default as Fax } from './Fax';
 export { default as Phone } from './Phone';
 export { default as Information } from './Information';
+export { default as ListTools } from './ListTools';

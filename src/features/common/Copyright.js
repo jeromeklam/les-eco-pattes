@@ -16,7 +16,7 @@ export default class Copyright extends Component {
             >
               FreeAsso
             </a>{' '}
-            2019-2020
+            2019-2021
           </p>
         </div>
       </div>
