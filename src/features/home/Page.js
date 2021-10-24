@@ -102,6 +102,16 @@ export class Page extends Component {
         }
       }
     }
+    const crtVers = window.currentVersion || '0.0.0';
+    let cookVers  = '0.0.0';
+    if (cookie.load('APP_VERSION')) {
+      cookVers = cookie.load('APP_VERSION');
+    }
+    if (crtVers !== '0.0.0' && process.env.REACT_APP_VERSION !== crtVers && cookVers !== crtVers) {
+      // Must reload
+      cookie.save('APP_VERSION', crtVers);
+      setTimeout(() => window.location = window.location.href + '#upd=' + new Date().toISOString(), 200);
+    }
     const appMenu = globalMenu(authCookie);
     return (
       <div className="home-page">

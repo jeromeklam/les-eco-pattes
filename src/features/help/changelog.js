@@ -1,5 +1,7 @@
 export default `
 
+# Version 2.3.0 : 24/10/2021
+
 # Version 2.2.0 : 14/10/2021
   * Général
     * Nouvelle animation de chargement

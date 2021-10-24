@@ -1,0 +1,1 @@
+window.currentVersion = '2.3.0';
