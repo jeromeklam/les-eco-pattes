@@ -38,9 +38,10 @@ export class Input extends Component {
      * On récupère l'id et l'élément à afficher
      */
     this.state = {
-      movementId: props.id || props.move_id || 0,
+      id: props.id || props.move_id || 0,
       item: false,
       modal: this.props.modal || false,
+      saving: false,
     };
     /**
      * Bind des méthodes locales au contexte courant
@@ -55,7 +56,7 @@ export class Input extends Component {
      *  En async on va demander le chargement des données
      *  Lorsque fini le store sera modifié
      */
-    this.props.actions.loadOne(this.state.movementId).then(result => {
+    this.props.actions.loadOne(this.state.id).then(result => {
       const item = this.props.movement.loadOneItem;
       if (Array.isArray(this.props.selected) && this.props.selected.length > 0) {
         getCauses('list', null, null, this.props.selected).then(result => {
@@ -70,7 +71,7 @@ export class Input extends Component {
 
   componentDidUpdate(prevProps, prevState) {
     if (prevProps.move_id !== this.props.move_id) {
-      this.setState({ movementId: this.props.move_id });
+      this.setState({ id: this.props.move_id });
       this.props.actions.loadOne(this.props.move_id).then(result => {
         const item = this.props.movement.loadOneItem;
         this.setState({ item: item });
@@ -95,51 +96,47 @@ export class Input extends Component {
    * Sur enregistrement, sauvegarde, update store et retour à la liste
    * Sur erreur faut afficher les messages d'anomalie
    */
-  onSubmit(datas) {
-    // Conversion des données en objet pour le service web
-    let obj = getJsonApi(datas);
-    if (this.state.movementId > 0) {
+  onSubmit(datas = {}, close = true) {
+    this.setState({ saving: true });
+    if (this.state.id > 0) {
       this.props.actions
-        .updateOne(this.state.movementId, obj)
-        .then(result => {
+        .updateOne(this.state.id, datas)
+        .then(item => {
           modifySuccess();
-          this.props.actions.propagateModel('FreeAsso_Movement', result);
-          if (!this.props.modal) {
-            this.props.history.push('/movement');
+          if (this.props.onClose && close) {
+            this.setState({ saving: false });
+            this.props.onClose();
           } else {
-            if (this.props.onClose) {
-              this.props.onClose();
-            }
+            this.setState({ item: item, saving: false });
           }
         })
         .catch(errors => {
+          this.setState({ saving: false });
           showErrors(this.props.intl, errors, 'updateOneError');
         });
     } else {
       this.props.actions
-        .createOne(obj)
-        .then(result => {
+        .createOne(datas)
+        .then(item => {
           createSuccess();
-          this.props.actions.propagateModel('FreeAsso_Movement', result);
-          //this.props.actions.clearItems();
-          if (!this.props.modal) {
-            this.props.history.push('/movement');
+          if (this.props.onClose && close) {
+            this.setState({ saving: false });
+            this.props.onClose();
           } else {
-            if (this.props.onClose) {
-              this.props.onClose();
-            }
+            this.setState({ id: item.id, item: item, saving: false });
           }
         })
         .catch(errors => {
+          this.setState({ saving: false });
           showErrors(this.props.intl, errors, 'createOneError');
         });
     }
   }
 
   onValid() {
-    if (this.state.movementId > 0) {
+    if (this.state.id > 0) {
       this.props.actions
-        .validateOne(this.state.movementId)
+        .validateOne(this.state.id)
         .then(result => {
           validateSuccess();
           this.props.actions.propagateModel('FreeAsso_Movement', result);
@@ -173,7 +170,7 @@ export class Input extends Component {
                 config={this.props.config.items}
                 properties={this.props.movement.properties}
                 errors={
-                  this.state.movementId > 0
+                  this.state.id > 0
                     ? this.props.movement.updateOneError
                     : this.props.movement.createOneError
                 }
@@ -188,6 +185,7 @@ export class Input extends Component {
                 onSubmit={this.onSubmit}
                 onCancel={this.onCancel}
                 onClose={this.props.onClose}
+                saving={this.state.saving}
               />
             )}
           </div>

@@ -9,7 +9,7 @@ import {
   InputGroupText,
   ResponsiveConfirm,
 } from 'react-bootstrap-front';
-import { Upload as UploadIcon, GetOne as GetOneIcon, DelOne as DelOneIcon } from '../icons';
+import { Upload as UploadIcon, DelOne as DelOneIcon } from '../icons';
 
 export default class InputFileContent extends Component {
   static propTypes = {

@@ -1,32 +1,36 @@
 import { jsonApiNormalizer, normalizedObjectModeler } from 'jsonapi-front';
-import { freeAssoApi } from '../../../common';
 import {
   MOVEMENT_LOAD_ONE_BEGIN,
   MOVEMENT_LOAD_ONE_SUCCESS,
   MOVEMENT_LOAD_ONE_FAILURE,
   MOVEMENT_LOAD_ONE_DISMISS_ERROR,
 } from './constants';
+import { getOneMovement } from '../';
 
-export function loadOne(args = {}) {
+export function loadOne(id = 0) {
   return (dispatch) => {
     dispatch({
       type: MOVEMENT_LOAD_ONE_BEGIN,
     });
     const promise = new Promise((resolve, reject) => {
-      const doRequest = freeAssoApi.get('/v1/asso/movement/' + args);
+      const doRequest = getOneMovement(id);
       doRequest.then(
-        (res) => {
+        result => {
+          const object = jsonApiNormalizer(result.data);
+          const item   = normalizedObjectModeler(object, 'FreeAsso_Movement', id, { eager: true } );
           dispatch({
             type: MOVEMENT_LOAD_ONE_SUCCESS,
-            data: res,
-            id: args,
+            data: result,
+            item: item,
+            id: id,
           });
-          resolve(res);
+          resolve(item);
         },
         (err) => {
           dispatch({
             type: MOVEMENT_LOAD_ONE_FAILURE,
             data: { error: err },
+            id: id,
           });
           reject(err);
         },
@@ -57,16 +61,10 @@ export function reducer(state, action) {
 
     case MOVEMENT_LOAD_ONE_SUCCESS:
       // The request is success
-      let item = null;
-      let raw = null;
-      let object = jsonApiNormalizer(action.data.data);
-      raw = normalizedObjectModeler(object, 'FreeAsso_Movement', action.id);
-      item = normalizedObjectModeler(object, 'FreeAsso_Movement', action.id, {eager: true});
       return {
         ...state,
         loadOnePending: false,
-        loadOneItem: item,
-        loadOneRaw: raw,      
+        loadOneItem: action.item,
         loadOneError: null,
       };
 

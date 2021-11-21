@@ -1,4 +1,4 @@
-import { jsonApiNormalizer, normalizedObjectUpdate } from 'jsonapi-front';
+import { jsonApiNormalizer, getJsonApi, normalizedObjectModeler, normalizedObjectUpdate } from 'jsonapi-front';
 import {
   MOVEMENT_UPDATE_ONE_BEGIN,
   MOVEMENT_UPDATE_ONE_SUCCESS,
@@ -6,22 +6,29 @@ import {
   MOVEMENT_UPDATE_ONE_DISMISS_ERROR,
   MOVEMENT_UPDATE_ONE_UPDATE,
 } from './constants';
-import { freeAssoApi } from '../../../common';
+import { freeAssoApi, propagateModel } from '../../../common';
 
-export function updateOne(id, args = {}) {
+export function updateOne(id, obj = {}, propagate = true) {
   return (dispatch) => {
     dispatch({
       type: MOVEMENT_UPDATE_ONE_BEGIN,
     });
     const promise = new Promise((resolve, reject) => {
-      const doRequest = freeAssoApi.put('/v1/asso/movement/' + id, args);
+      const japiObj = getJsonApi(obj, 'FreeAsso_Movement');
+      const doRequest = freeAssoApi.put('/v1/asso/movement/' + id, japiObj);
       doRequest.then(
-        (res) => {
+        result => {
+          const object = jsonApiNormalizer(result.data);
+          const item   = normalizedObjectModeler(object, 'FreeAsso_Movement', id, { eager: true } );
+          if (propagate) {
+            dispatch(propagateModel('FreeAsso_Movement', result));
+          }
           dispatch({
             type: MOVEMENT_UPDATE_ONE_SUCCESS,
-            data: res,
+            data: result,
+            item: item,
           });
-          resolve(res);
+          resolve(item);
         },
         (err) => {
           dispatch({

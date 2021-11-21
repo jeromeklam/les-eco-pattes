@@ -15,6 +15,7 @@ import { InlineMovements } from '../cause-movement';
 import { InlineSicknesses } from '../cause-sickness';
 import { InlineGrowths } from '../cause-growth';
 import { Create as CreateMovement } from '../movement';
+import { getEditions } from '../edition';
 import {
   InlineCauses,
   InlinePhotos,
@@ -41,6 +42,8 @@ export class List extends Component {
       cauId: -1,
       menu: null,
       menuOption: null,
+      models: props.edition.models,
+      editions: getEditions(props.edition.models, 'FreeAsso_Cause'),
     };
     this.onCreate = this.onCreate.bind(this);
     this.onGetOne = this.onGetOne.bind(this);
@@ -56,6 +59,7 @@ export class List extends Component {
     this.onSelectMenu = this.onSelectMenu.bind(this);
     this.itemClassName = this.itemClassName.bind(this);
     this.onClearFilters = this.onClearFilters.bind(this);
+    this.onPrint = this.onPrint.bind(this);
   }
 
   componentDidMount() {
@@ -207,6 +211,12 @@ export class List extends Component {
     return '';
   }
 
+  onPrint(ediId, item) {
+    if (item) {
+      this.props.actions.printOne(item.id, ediId);
+    }
+  }
+
   render() {
     let items = [];
     if (this.props.cause.items.FreeAsso_Cause) {
@@ -292,7 +302,7 @@ export class List extends Component {
           fClassName={this.itemClassName}
         />
         {this.state.cauId > 0 && (
-          <Input modal={true} cauId={this.state.cauId} onClose={this.onClose} loader={false} />
+          <Input modal={true} cauId={this.state.cauId} onClose={this.onClose} loader={false} editions={this.state.editions} />
         )}
         {this.state.cauId === 0 && <Input modal={true} onClose={this.onClose} loader={false} />}
         {this.state.menu === 'movement' && (
@@ -315,6 +325,7 @@ function mapStateToProps(state) {
     site: state.site,
     causeType: state.causeType,
     causeMainType: state.causeMainType,
+    edition: state.edition,
   };
 }
 

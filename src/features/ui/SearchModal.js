@@ -129,28 +129,19 @@ class SearchModal extends Component {
   render() {
     const buttons = [
       {
-        name: this.props.intl.formatMessage({
-          id: 'app.features.ui.searchModal.filter',
-          defaultMessage: 'Filter',
-        }),
+        name: 'Filtrer',
         function: this.onSearch,
         theme: 'primary',
         icon: <FilterIcon />,
       },
       {
-        name: this.props.intl.formatMessage({
-          id: 'app.features.ui.searchModal.delete',
-          defaultMessage: 'Delete',
-        }),
+        name: 'Effacer',
         function: this.onClear,
         theme: 'warning',
         icon: <ClearIcon />,
       },
       {
-        name: this.props.intl.formatMessage({
-          id: 'app.features.ui.searchModal.cancel',
-          defaultMessage: 'Cancel',
-        }),
+        name: 'Annuler',
         function: this.props.onClose,
         theme: 'secondary',
         icon: <CancelIcon />,

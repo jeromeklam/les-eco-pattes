@@ -13,6 +13,15 @@ export class InlineInbox extends Component {
     actions: PropTypes.object.isRequired,
   };
 
+  constructor(props) {
+    super(props);
+    this.downloadInbox = this.downloadInbox.bind(this);
+  }
+
+  downloadInbox(ev, elem) {
+    this.props.actions.downloadOne(elem).then(result => { });
+  }
+
   render() {
     return (
       <div className="inbox-inline-inbox">
@@ -43,14 +52,12 @@ export class InlineInbox extends Component {
   }
 }
 
-/* istanbul ignore next */
 function mapStateToProps(state) {
   return {
     inbox: state.inbox,
   };
 }
 
-/* istanbul ignore next */
 function mapDispatchToProps(dispatch) {
   return {
     actions: bindActionCreators({ ...actions }, dispatch),

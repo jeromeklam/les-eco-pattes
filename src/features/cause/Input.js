@@ -4,8 +4,6 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { injectIntl } from 'react-intl';
 import * as actions from './redux/actions';
-import { getJsonApi } from 'jsonapi-front';
-import { propagateModel } from '../../common';
 import { PortalLoader, createSuccess, modifySuccess, showErrors } from '../ui';
 import Form from './Form';
 
@@ -25,7 +23,7 @@ export class Input extends Component {
      * On récupère l'id et l'élément à afficher
      */
     this.state = {
-      causeId: props.id || props.cauId || 0,
+      id: props.id || props.cauId || 0,
       modal: props.modal || false,
       item: false,
     };
@@ -34,6 +32,7 @@ export class Input extends Component {
      */
     this.onSubmit = this.onSubmit.bind(this);
     this.onCancel = this.onCancel.bind(this);
+    this.onPrint = this.onPrint.bind(this);
   }
 
   componentDidMount() {
@@ -41,7 +40,7 @@ export class Input extends Component {
      *  En async on va demander le chargement des données
      *  Lorsque fini le store sera modifié
      */
-    this.props.actions.loadOne(this.state.causeId).then(result => {
+    this.props.actions.loadOne(this.state.id).then(result => {
       const item = this.props.cause.loadOneItem;
       this.setState({ item: item });
     });
@@ -49,7 +48,7 @@ export class Input extends Component {
 
   componentDidUpdate(prevProps, prevState) {
     if (prevProps.cauId !== this.props.cauId) {
-      this.setState({ causeId: this.props.cauId });
+      this.setState({ id: this.props.cauId });
       this.props.actions.loadOne(this.props.cauId).then(result => {
         const item = this.props.cause.loadOneItem;
         this.setState({ item: item });
@@ -76,43 +75,50 @@ export class Input extends Component {
   /**
    * Sur enregistrement, sauvegarde, update store et retour à la liste
    */
-  onSubmit(datas = {}) {
-    let obj = getJsonApi(datas);
-    if (this.state.causeId > 0) {
+  onSubmit(datas = {}, close = true) {
+    this.setState({ saving: true });
+    delete datas.default_blob;
+    if (this.state.id > 0) {
       this.props.actions
-        .updateOne(this.state.causeId, obj)
-        .then(result => {
+        .updateOne(this.state.id, datas)
+        .then(item => {
           modifySuccess();
-          this.props.actions.propagateModel('FreeAsso_Cause', result);
-          if (!this.state.modal) {
-            this.props.history.push('/cause');
+          if (this.props.onClose && close) {
+            this.setState({ saving: false });
+            this.props.onClose();
           } else {
-            if (this.props.onClose) {
-              this.props.onClose();
-            }
+            this.setState({ item: item, saving: false });
           }
         })
         .catch(errors => {
+          this.setState({ saving: false });
           showErrors(this.props.intl, errors, 'updateOneError');
         });
     } else {
       this.props.actions
-        .createOne(obj)
-        .then(result => {
+        .createOne(datas)
+        .then(item => {
           createSuccess();
-          this.props.actions.propagateModel('FreeAsso_Cause', result);
-          if (!this.state.modal) {
-            this.props.history.push('/cause');
+          if (this.props.onClose && close) {
+            this.setState({ saving: false });
+            this.props.onClose();
           } else {
-            if (this.props.onClose) {
-              this.props.onClose();
-            }
+            this.setState({ id: item.id, item: item, saving: false });
           }
         })
         .catch(errors => {
+          this.setState({ saving: false });
           showErrors(this.props.intl, errors, 'createOneError');
         });
     }
+  }
+
+  onPrint(ediId = 0) {
+    let idx = this.props.editions.findIndex(elem => elem.id === ediId);
+    if (idx < 0) {
+      idx = 0;
+    }
+    this.props.actions.printOne(this.state.id, this.props.editions[idx].id);
   }
 
   render() {
@@ -139,13 +145,14 @@ export class Input extends Component {
               tabs={this.props.cause.tabs}
               properties={this.props.cause.properties}
               errors={
-                this.state.causeId > 0
+                this.state.id > 0
                   ? this.props.cause.updateOneError
                   : this.props.cause.createOneError
               }
               onSubmit={this.onSubmit}
               onCancel={this.onCancel}
               onClose={this.props.onClose}
+              saving={this.state.saving}
             />
           </div>
         )}
@@ -166,7 +173,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    actions: bindActionCreators({ ...actions, propagateModel }, dispatch),
+    actions: bindActionCreators({ ...actions }, dispatch),
   };
 }
 

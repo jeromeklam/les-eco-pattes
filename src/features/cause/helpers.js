@@ -13,6 +13,7 @@ import {
   Medical as MedicalIcon,
   Photo as PhotoIcon,
   Wait as WaitIcon,
+  Print as PrintIcon,
 } from '../icons';
 import { causeTypeAsOptions } from '../cause-type/functions';
 import { searchSite } from '../site';
@@ -72,6 +73,23 @@ const getComm = (item, content) => {
   } else {
     return item.cau_string_3;
   }
+};
+
+export const getActionsButtons = ({ onPrint, state, props }) => {
+  if (state.id > 0 && props.editions && props.editions.length > 0) {
+    let ediId = state.item.cause_type.identity_edition
+      ? state.item.cause_type.identity_edition.id
+      : null;
+    return [
+      {
+        theme: 'secondary',
+        hidden: false,
+        function: () => onPrint(ediId),
+        icon: <PrintIcon title="Imprimer" />,
+      },
+    ];
+  }
+  return [];
 };
 
 export const getSelectActions = ({ props, onSelectMenu }) => {
@@ -166,7 +184,14 @@ export const getGlobalActions = ({ onClearFilters, onCreate }) => {
   ];
 };
 
-export const getInlineActions = ({ onSelectList, onGetOne, onDelOne, state }) => {
+export const getInlineActions = ({ onSelectList, onGetOne, onDelOne, onPrint,state }) => {
+  let myEditions = [];
+  if (state && state.editions) {
+    const { editions } = state;
+    editions.forEach(edition => {
+      myEditions.push({ label: edition.edi_name, onClick: item => onPrint(edition.id, item) });
+    });
+  }
   return [
     {
       name: 'movement',
@@ -239,6 +264,17 @@ export const getInlineActions = ({ onSelectList, onGetOne, onDelOne, state }) =>
       icon: <PhotoIcon />,
       role: 'OTHER',
       active: state.mode === 'photo',
+    },
+    {
+      name: 'print',
+      label: 'Imprimer',
+      onClick: onPrint,
+      theme: 'secondary',
+      icon: <PrintIcon />,
+      role: 'PRINT',
+      param: 'object',
+      active: myEditions.length > 0,
+      options: myEditions,
     },
     {
       name: 'modify',

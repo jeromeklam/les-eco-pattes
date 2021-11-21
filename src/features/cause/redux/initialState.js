@@ -48,6 +48,12 @@ const initialState = {
   updateCauseMediaDescError: null,
   exportAsTabPending: false,
   exportAsTabError: null,
+  printOnePending: false,
+  printOneError: null,
+  checkOneMediaPending: false,
+  checkOneMediaError: null,
+  exportPending: false,
+  exportError: null,
 };
 
 export default initialState;

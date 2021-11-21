@@ -100,6 +100,7 @@ function Form(props) {
       itemNext={props.next}
       onClose={props.onClose}
       modal={props.modal || false}
+      saving={props.saving || false}
     >
       <InputHidden name="id" id="id" value={values.id} />
       <Row>

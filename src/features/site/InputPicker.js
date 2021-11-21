@@ -23,11 +23,11 @@ export default class InputPicker extends Component {
     labelTop: PropTypes.bool,
     required: PropTypes.bool,
     disabled: PropTypes.bool,
-    list: PropTypes.element.isRequired,
+    list: PropTypes.element,
     onChange: PropTypes.func.isRequired,
     onAdd: PropTypes.func,
     addIcon: PropTypes.element,
-    error: PropTypes.element,
+    error: PropTypes.bool,
     pickerButton: PropTypes.bool,
   };
   static defaultProps = {
@@ -201,7 +201,7 @@ export default class InputPicker extends Component {
               label={this.props.label}
               labelTop={this.props.labelTop || false}
               value={this.state.value || ''}
-              list={this.state.list}
+              list={this.props.list || this.state.list}
               display={this.state.display}
               onChange={this.props.onFineChange || this.onChange}
               onMore={this.onMore}

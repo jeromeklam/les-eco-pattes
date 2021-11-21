@@ -1,5 +1,5 @@
-import { jsonApiNormalizer } from 'jsonapi-front';
-import { freeAssoApi } from '../../../common';
+import { jsonApiNormalizer, getJsonApi, normalizedObjectFirstModel } from 'jsonapi-front';
+import { freeAssoApi, propagateModel } from '../../../common';
 import {
   MOVEMENT_CREATE_ONE_BEGIN,
   MOVEMENT_CREATE_ONE_SUCCESS,
@@ -7,20 +7,27 @@ import {
   MOVEMENT_CREATE_ONE_DISMISS_ERROR,
 } from './constants';
 
-export function createOne(args = {}) {
+export function createOne(obj = {}, propagate = true) {
   return (dispatch) => {
     dispatch({
       type: MOVEMENT_CREATE_ONE_BEGIN,
     });
     const promise = new Promise((resolve, reject) => {
-      const doRequest = freeAssoApi.post('/v1/asso/movement', args);
+      const japiObj = getJsonApi(obj, 'FreeAsso_Movement');
+      const doRequest = freeAssoApi.post('/v1/asso/movement', japiObj);
       doRequest.then(
-        (res) => {
+        (result) => {
+          const object = jsonApiNormalizer(result.data);
+          const item   = normalizedObjectFirstModel(object, 'FreeAsso_Movement', { eager: true } );
+          if (propagate) {
+            dispatch(propagateModel('FreeAsso_Movement', result));
+          }
           dispatch({
             type: MOVEMENT_CREATE_ONE_SUCCESS,
-            data: res,
+            data: result,
+            item: item,
           });
-          resolve(res);
+          resolve(item);
         },
         (err) => {
           dispatch({

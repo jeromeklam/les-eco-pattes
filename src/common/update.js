@@ -1,7 +1,7 @@
 import { AGENDA_PROPAGATE } from '../features/agenda/redux/constants';
 import { ALERT_UPDATE_ONE_UPDATE } from '../features/alert/redux/constants';
 import { AUTH_PROPAGATE } from '../features/auth/redux/constants';
-import { CAUSE_UPDATE_ONE_UPDATE } from '../features/cause/redux/constants';
+import { CAUSE_PROPAGATE } from '../features/cause/redux/constants';
 import { CAUSE_MAIN_TYPE_UPDATE_ONE_UPDATE } from '../features/cause-main-type/redux/constants';
 import { CAUSE_MOVEMENT_UPDATE_MODEL } from '../features/cause-movement/redux/constants';
 import { CAUSE_SICKNESS_UPDATE_ONE_UPDATE } from '../features/cause-sickness/redux/constants';
@@ -48,7 +48,7 @@ export function propagateModel(type, model) {
         break;
       case 'FreeAsso_Cause':
         dispatch({
-          type: CAUSE_UPDATE_ONE_UPDATE,
+          type: CAUSE_PROPAGATE,
           data: model,
         });
         break;
@@ -70,7 +70,7 @@ export function propagateModel(type, model) {
           data: model,
         });
         dispatch({
-          type: CAUSE_UPDATE_ONE_UPDATE,
+          type: CAUSE_PROPAGATE,
           data: model,
         });
         break;
@@ -80,7 +80,7 @@ export function propagateModel(type, model) {
           data: model,
         });
         dispatch({
-          type: CAUSE_UPDATE_ONE_UPDATE,
+          type: CAUSE_PROPAGATE,
           data: model,
         });
         break;

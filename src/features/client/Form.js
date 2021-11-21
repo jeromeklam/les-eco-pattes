@@ -105,6 +105,7 @@ function Form(props) {
       onNavTab={handleNavTab}
       onClose={props.onClose}
       modal={props.modal || false}
+      saving={props.saving || false}
     >
       <div className="card-body">
         <InputHidden name="id" id="id" value={values.id} />

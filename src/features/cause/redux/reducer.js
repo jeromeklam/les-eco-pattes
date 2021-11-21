@@ -23,11 +23,14 @@ import { reducer as loadDocumentsReducer } from './loadDocuments';
 import { reducer as uploadCauseMediaReducer } from './uploadCauseMedia';
 import { reducer as delCauseMediaReducer } from './delCauseMedia';
 import { reducer as loadDescendantsReducer } from './loadDescendants';
+import { reducer as printOneReducer } from './printOne';
+import { reducer as propagateReducer } from './propagate';
 import { reducer as onSelectReducer } from './onSelect';
 import { reducer as loadPhotosReducer } from './loadPhotos';
 import { reducer as selectNoneReducer } from './selectNone';
 import { reducer as selectAllReducer } from './selectAll';
 import { reducer as updateCauseMediaDescReducer } from './updateCauseMediaDesc';
+import { reducer as checkOneMediaReducer } from './checkOneMedia';
 import { reducer as exportAsTabReducer } from './exportAsTab';
 
 const reducers = [
@@ -47,11 +50,14 @@ const reducers = [
   uploadCauseMediaReducer,
   delCauseMediaReducer,
   loadDescendantsReducer,
+  printOneReducer,
+  propagateReducer,
   onSelectReducer,
   loadPhotosReducer,
   selectNoneReducer,
   selectAllReducer,
   updateCauseMediaDescReducer,
+  checkOneMediaReducer,
   exportAsTabReducer,
 ];
 

@@ -1,5 +1,5 @@
-import { jsonApiNormalizer } from 'jsonapi-front';
-import { freeAssoApi } from '../../../common';
+import { jsonApiNormalizer, getJsonApi, normalizedObjectFirstModel  } from 'jsonapi-front';
+import { freeAssoApi, propagateModel } from '../../../common';
 import {
   CAUSE_CREATE_ONE_BEGIN,
   CAUSE_CREATE_ONE_SUCCESS,
@@ -7,27 +7,27 @@ import {
   CAUSE_CREATE_ONE_DISMISS_ERROR,
 } from './constants';
 
-export function createOne(args = {}) {
+export function createOne(obj = {}, propagate = true) {
   return dispatch => {
     dispatch({
       type: CAUSE_CREATE_ONE_BEGIN,
     });
     const promise = new Promise((resolve, reject) => {
-      const doRequest = freeAssoApi.post('/v1/asso/cause', args);
+      const japiObj = getJsonApi(obj, 'FreeAsso_Cause');
+      const doRequest = freeAssoApi.post('/v1/asso/cause', japiObj);
       doRequest.then(
-        res => {
+        result => {
+          const object = jsonApiNormalizer(result.data);
+          const item   = normalizedObjectFirstModel(object, 'FreeAsso_Cause', { eager: true } );
+          if (propagate) {
+            dispatch(propagateModel('FreeAsso_Cause', result));
+          }
           dispatch({
             type: CAUSE_CREATE_ONE_SUCCESS,
-            data: res,
+            data: result,
+            item: item,
           });
-          resolve(res);
-        },
-        err => {
-          dispatch({
-            type: CAUSE_CREATE_ONE_FAILURE,
-            data: { error: err },
-          });
-          reject(err);
+          resolve(item);
         },
       );
     });

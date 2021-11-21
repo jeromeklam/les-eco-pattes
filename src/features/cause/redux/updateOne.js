@@ -1,27 +1,33 @@
-import { jsonApiNormalizer, normalizedObjectUpdate } from 'jsonapi-front';
-import { freeAssoApi } from '../../../common';
+import { jsonApiNormalizer, getJsonApi, normalizedObjectModeler } from 'jsonapi-front';
+import { freeAssoApi, propagateModel } from '../../../common';
 import {
   CAUSE_UPDATE_ONE_BEGIN,
   CAUSE_UPDATE_ONE_SUCCESS,
   CAUSE_UPDATE_ONE_FAILURE,
   CAUSE_UPDATE_ONE_DISMISS_ERROR,
-  CAUSE_UPDATE_ONE_UPDATE,
 } from './constants';
 
-export function updateOne(id, args = {}) {
+export function updateOne(id, obj = {}, propagate = true) {
   return dispatch => {
     dispatch({
       type: CAUSE_UPDATE_ONE_BEGIN,
     });
     const promise = new Promise((resolve, reject) => {
-      const doRequest = freeAssoApi.put('/v1/asso/cause/' + id, args);
+      const japiObj = getJsonApi(obj, 'FreeAsso_Cause');
+      const doRequest = freeAssoApi.put('/v1/asso/cause/' + id, japiObj);
       doRequest.then(
-        res => {
+        result => {
+          const object = jsonApiNormalizer(result.data);
+          const item   = normalizedObjectModeler(object, 'FreeAsso_Cause', id, { eager: true } );
+          if (propagate) {
+            dispatch(propagateModel('FreeAsso_Cause', result));
+          }
           dispatch({
             type: CAUSE_UPDATE_ONE_SUCCESS,
-            data: res,
+            data: result,
+            item: item,
           });
-          resolve(res);
+          resolve(item);
         },
         err => {
           dispatch({
@@ -77,16 +83,6 @@ export function reducer(state, action) {
       return {
         ...state,
         updateOneError: null,
-      };
-
-    case CAUSE_UPDATE_ONE_UPDATE:
-      let object = jsonApiNormalizer(action.data.data);
-      let myItems = state.items;      
-      let news = normalizedObjectUpdate(myItems, 'FreeAsso_Cause', object, action.ignoreAdd || false);
-      return {
-        ...state,
-        updateOneError: null,
-        items: news,
       };
 
     default:
